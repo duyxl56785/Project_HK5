@@ -1,0 +1,10 @@
+server:
+  port: 8104
+spring:
+  application:
+    name: product-service
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
