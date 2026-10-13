@@ -1,0 +1,10 @@
+server:
+  port: 8106
+spring:
+  application:
+    name: cart-service
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info

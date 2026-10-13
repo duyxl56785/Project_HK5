@@ -1,0 +1,13 @@
+@import "tailwindcss";
+:root { font-family: system-ui, sans-serif; color: #243042; background: #f5f7fb; }
+body { margin: 0; }
+.container { max-width: 1120px; margin: 48px auto; padding: 0 20px; }
+.tag { font-size: 12px; letter-spacing: .06em; color: #a34a21; font-weight: 700; }
+h1 { font-size: clamp(26px, 4vw, 42px); }
+p { color: #64748b; line-height: 1.6; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 30px; }
+.card { background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; }
+.card h2 { font-size: 18px; }
+.card small { color: #0f766e; font-weight: 700; }
+a { color: #b64f2c; text-decoration: none; }
+a:hover { text-decoration: underline; }

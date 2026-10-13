@@ -1,0 +1,23 @@
+# CODEOWNERS đề xuất. Review bắt buộc chỉ được thực thi nếu GitHub branch protection được cấu hình.
+/backend/auth-service/ @lexuanbao258-collab
+/backend/user-service/ @lexuanbao258-collab
+/backend/api-gateway/ @lexuanbao258-collab
+/backend/discovery-server/ @lexuanbao258-collab
+/backend/config-server/ @lexuanbao258-collab
+/docker/ @lexuanbao258-collab
+/frontend/src/app/ @lexuanbao258-collab
+/frontend/src/shared/ @lexuanbao258-collab
+/backend/seller-service/ @duyxl56785
+/backend/product-service/ @duyxl56785 @nguyenminhduy090-alt
+/backend/cart-service/ @tranvanchinhbg2006-alt
+/backend/order-service/ @tranvanchinhbg2006-alt @phamthecuong2022006-alt @nguyenminhduy090-alt
+/backend/inventory-service/ @phamthecuong2022006-alt
+/backend/notification-service/ @phamthecuong2022006-alt
+/frontend/src/features/seller/ @duyxl56785
+/frontend/src/features/catalog/ @duyxl56785
+/frontend/src/features/cart/ @tranvanchinhbg2006-alt
+/frontend/src/features/checkout/ @tranvanchinhbg2006-alt
+/frontend/src/features/fulfillment/ @phamthecuong2022006-alt
+/frontend/src/features/notifications/ @phamthecuong2022006-alt
+/frontend/src/features/reviews/ @nguyenminhduy090-alt
+/frontend/src/features/finance/ @nguyenminhduy090-alt
