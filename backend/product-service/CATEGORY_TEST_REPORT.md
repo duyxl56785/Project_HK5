@@ -89,7 +89,7 @@ The commit sequence keeps dependencies and relevant tests together: persistence 
 
 The documentation-only fourth commit does not change the tested sources. Both working-tree and staged whitespace checks passed. All 20 Category files are included in the four local commits, with no build outputs or files outside product-service. Read-only remote verification found main and the TV2 branch still at the original base SHA, so the local commits form a fast-forward candidate; no remote mutation was made.
 
-## Changed file inventory
+## Original Category delivery file inventory — 2026-10-13
 
 All paths below are relative to `backend/product-service`; no other module or shared build was edited.
 
@@ -122,3 +122,26 @@ Created (17):
 ## Review readiness
 
 Suitable for a scoped **draft PR** referencing #2 after user inspection. It is not a completed/deployable CRUD integration and must not close Issue #2. Before integration/merge, TV1 should review the fail-closed security boundary, JWT/permission/401/403/Gateway/CORS contracts, PostgreSQL environment variables and Gradle/Docker compatibility. TV2/TV5 should review Category schema/migration and future Product reference policy. Consumer agreement is required before promoting this module proposal to the shared API contract.
+
+## Architecture follow-up — 2026-10-14
+
+Retained the small feature package `com.projecthk5.productservice.category`. Layers already have separate responsibilities: controller validates/dispatches HTTP, service owns transactions/rules, repository owns JPA access, entity owns persistence mapping, DTOs carry data, and lock/security classes handle infrastructure. Moving all classes into layer subpackages would expand visibility changes without a demonstrated benefit at this scale.
+
+Two dependency issues were corrected without changing the API contract:
+
+- CategoryService/CategoryException depended on HttpStatus. Exceptions now contain typed domain codes; CategoryExceptionHandler maps those codes to the same HTTP statuses and error strings.
+- CategoryResponse contained Entity-to-DTO conversion. It is now a plain record with no JPA/entity reference; a small private conversion in the service replaces it without creating a mapper class.
+
+Adapted all affected unit/API/PostgreSQL tests to the internal enum. No original test was removed. REQUIRES_NEW, READ_COMMITTED, advisory-lock acquisition before reads, validation, schema/Flyway migration, endpoints/payloads and fail-closed security remain unchanged. Independent rollback semantics are intentional and remain covered by three actual-database cases.
+
+Verification executed on Java 21/Gradle 8.14.3:
+
+```powershell
+& 'C:\Users\ADMIN\AppData\Local\Temp\project-hk5-category-tools\gradle-8.14.3\bin\gradle.bat' -p backend :product-service:build :seller-service:build --rerun-tasks --no-daemon
+```
+
+Final command: **BUILD SUCCESSFUL**, exit 0; Category **52 PASS / 0 FAIL / 0 SKIPPED**, Seller **63 PASS / 0 FAIL / 0 SKIPPED**, total **115 PASS**. All test tasks executed in the final command, not UP-TO-DATE. This is full build for the two changed modules, not an E2E or full deployment verification for every microservice.
+
+Initial attempts failed at Docker/Testcontainers startup, so Category PostgreSQL test bodies were NOT_RUN in those attempts. Docker Desktop logs showed Secrets Engine could not rename its stale engine.sock (Windows ERROR_CANT_ACCESS_FILE). The runtime directory was observed already moved to backup on the machine; this task did not rename/delete it or reset Docker. After restarting Docker, Engine 29.8.2 responded and all tests passed. This failure is distinct from the older Docker API mismatch documented above. Similar startup failure is reported at https://github.com/docker/for-win/issues/15064.
+
+Files changed in this follow-up: CategoryException, CategoryExceptionHandler, CategoryResponse, CategoryService; CategoryControllerTest, CategoryIntegrationTest, CategoryServiceTest; README and this report. Existing four Category commits remain intact; follow-up changes use new commits only. Seller API/JWT/schema/persistence remain deferred following the user's explicit confirmation that TV1 has not agreed those contracts. No shared build, other member's module, main, applied migration, Store or Product implementation is changed; no push/PR/merge is performed.

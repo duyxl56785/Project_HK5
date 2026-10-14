@@ -17,8 +17,13 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class CategoryExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(CategoryException.class)
     ResponseEntity<CategoryError> handleCategory(CategoryException exception) {
-        return ResponseEntity.status(exception.getStatus())
-                .body(new CategoryError(exception.getCode(), exception.getMessage()));
+        HttpStatus status = switch (exception.getCode()) {
+            case VALIDATION_ERROR -> HttpStatus.BAD_REQUEST;
+            case CATEGORY_NOT_FOUND, CATEGORY_PARENT_NOT_FOUND -> HttpStatus.NOT_FOUND;
+            case CATEGORY_CYCLE, CATEGORY_HAS_CHILDREN -> HttpStatus.CONFLICT;
+        };
+        return ResponseEntity.status(status)
+                .body(new CategoryError(exception.getCode().name(), exception.getMessage()));
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)

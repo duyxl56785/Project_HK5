@@ -1,22 +1,22 @@
 package com.projecthk5.productservice.category;
 
-import org.springframework.http.HttpStatus;
-
 public class CategoryException extends RuntimeException {
-    private final HttpStatus status;
-    private final String code;
+    public enum Code {
+        VALIDATION_ERROR,
+        CATEGORY_NOT_FOUND,
+        CATEGORY_PARENT_NOT_FOUND,
+        CATEGORY_CYCLE,
+        CATEGORY_HAS_CHILDREN
+    }
 
-    CategoryException(HttpStatus status, String code, String message) {
+    private final Code code;
+
+    CategoryException(Code code, String message) {
         super(message);
-        this.status = status;
         this.code = code;
     }
 
-    HttpStatus getStatus() {
-        return status;
-    }
-
-    String getCode() {
+    Code getCode() {
         return code;
     }
 }

@@ -13,7 +13,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -97,21 +96,21 @@ class CategoryControllerTest {
 
     @Test
     void reportsMissingCategory() throws Exception {
-        when(service.get(id)).thenThrow(new CategoryException(HttpStatus.NOT_FOUND,
-                "CATEGORY_NOT_FOUND", "Category does not exist"));
+        when(service.get(id)).thenThrow(new CategoryException(
+                CategoryException.Code.CATEGORY_NOT_FOUND, "Category does not exist"));
         mvc.perform(get("/api/categories/{id}", id)).andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.code").value("CATEGORY_NOT_FOUND"));
     }
 
     @Test
     void reportsMissingParentAndCycle() throws Exception {
-        when(service.create(any())).thenThrow(new CategoryException(HttpStatus.NOT_FOUND,
-                "CATEGORY_PARENT_NOT_FOUND", "Parent category does not exist"));
+        when(service.create(any())).thenThrow(new CategoryException(
+                CategoryException.Code.CATEGORY_PARENT_NOT_FOUND, "Parent category does not exist"));
         mvc.perform(post("/api/categories").contentType(MediaType.APPLICATION_JSON)
                 .content("{\"name\":\"Name\"}"))
                 .andExpect(status().isNotFound()).andExpect(jsonPath("$.code").value("CATEGORY_PARENT_NOT_FOUND"));
-        when(service.update(eq(id), any())).thenThrow(new CategoryException(HttpStatus.CONFLICT,
-                "CATEGORY_CYCLE", "Category parent relationship would contain a cycle"));
+        when(service.update(eq(id), any())).thenThrow(new CategoryException(
+                CategoryException.Code.CATEGORY_CYCLE, "Category parent relationship would contain a cycle"));
         mvc.perform(put("/api/categories/{id}", id).contentType(MediaType.APPLICATION_JSON)
                 .content("{\"name\":\"Name\"}"))
                 .andExpect(status().isConflict()).andExpect(jsonPath("$.code").value("CATEGORY_CYCLE"));
@@ -119,7 +118,7 @@ class CategoryControllerTest {
 
     @Test
     void reportsChildrenConflictAndHidesDatabaseDetails() throws Exception {
-        doThrow(new CategoryException(HttpStatus.CONFLICT, "CATEGORY_HAS_CHILDREN", "Has children"))
+        doThrow(new CategoryException(CategoryException.Code.CATEGORY_HAS_CHILDREN, "Has children"))
                 .when(service).delete(id);
         mvc.perform(delete("/api/categories/{id}", id)).andExpect(status().isConflict())
                 .andExpect(jsonPath("$.code").value("CATEGORY_HAS_CHILDREN"));

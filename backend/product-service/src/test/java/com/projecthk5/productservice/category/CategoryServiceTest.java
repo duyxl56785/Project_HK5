@@ -17,7 +17,6 @@ import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpStatus;
 import org.springframework.test.util.ReflectionTestUtils;
 
 @ExtendWith(MockitoExtension.class)
@@ -68,7 +67,7 @@ class CategoryServiceTest {
         when(repository.findAll(Sort.by("name", "id"))).thenReturn(List.of(child, root));
         when(repository.findById(child.getId())).thenReturn(Optional.of(child));
         assertEquals(root.getId(), service.list().get(0).parentId());
-        assertEquals(CategoryResponse.from(child), service.get(child.getId()));
+        assertEquals(new CategoryResponse(child.getId(), "Child", root.getId()), service.get(child.getId()));
         verifyNoInteractions(hierarchyLock);
     }
 
@@ -148,7 +147,7 @@ class CategoryServiceTest {
         assertCode("CATEGORY_NOT_FOUND", () -> service.delete(missing));
         CategoryException error = assertCode("CATEGORY_PARENT_NOT_FOUND",
                 () -> service.create(new CategoryRequest("Name", missing)));
-        assertEquals(HttpStatus.NOT_FOUND, error.getStatus());
+        assertEquals(CategoryException.Code.CATEGORY_PARENT_NOT_FOUND, error.getCode());
     }
 
     @ParameterizedTest
@@ -196,7 +195,7 @@ class CategoryServiceTest {
 
     private CategoryException assertCode(String code, org.junit.jupiter.api.function.Executable action) {
         CategoryException error = assertThrows(CategoryException.class, action);
-        assertEquals(code, error.getCode());
+        assertEquals(code, error.getCode().name());
         return error;
     }
 }

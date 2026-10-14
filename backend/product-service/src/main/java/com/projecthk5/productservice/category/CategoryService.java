@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -24,11 +23,11 @@ public class CategoryService {
 
     public List<CategoryResponse> list() {
         return repository.findAll(Sort.by("name", "id")).stream()
-                .map(CategoryResponse::from).toList();
+                .map(this::toResponse).toList();
     }
 
     public CategoryResponse get(UUID id) {
-        return CategoryResponse.from(find(id));
+        return toResponse(find(id));
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.READ_COMMITTED)
@@ -36,7 +35,7 @@ public class CategoryService {
         hierarchyLock.acquire();
         String name = validatedName(request);
         Category parent = validatedParent(null, request.parentId());
-        return CategoryResponse.from(repository.saveAndFlush(new Category(name, parent)));
+        return toResponse(repository.saveAndFlush(new Category(name, parent)));
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.READ_COMMITTED)
@@ -46,7 +45,7 @@ public class CategoryService {
         String name = validatedName(request);
         Category parent = validatedParent(id, request.parentId());
         category.update(name, parent);
-        return CategoryResponse.from(repository.saveAndFlush(category));
+        return toResponse(repository.saveAndFlush(category));
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.READ_COMMITTED)
@@ -54,7 +53,7 @@ public class CategoryService {
         hierarchyLock.acquire();
         Category category = find(id);
         if (repository.existsByParent_Id(id)) {
-            throw new CategoryException(HttpStatus.CONFLICT, "CATEGORY_HAS_CHILDREN",
+            throw new CategoryException(CategoryException.Code.CATEGORY_HAS_CHILDREN,
                     "Cannot delete a category that has children");
         }
         repository.delete(category);
@@ -63,13 +62,13 @@ public class CategoryService {
 
     private Category find(UUID id) {
         return repository.findById(id).orElseThrow(() -> new CategoryException(
-                HttpStatus.NOT_FOUND, "CATEGORY_NOT_FOUND", "Category does not exist"));
+                CategoryException.Code.CATEGORY_NOT_FOUND, "Category does not exist"));
     }
 
     private String validatedName(CategoryRequest request) {
         if (request == null || request.name() == null || request.name().isBlank()
                 || request.name().length() > 255) {
-            throw new CategoryException(HttpStatus.BAD_REQUEST, "VALIDATION_ERROR",
+            throw new CategoryException(CategoryException.Code.VALIDATION_ERROR,
                     "Category name must contain 1 to 255 characters and not be blank");
         }
         return request.name().strip();
@@ -83,7 +82,7 @@ public class CategoryService {
             throw cycle();
         }
         Category parent = repository.findById(parentId).orElseThrow(() -> new CategoryException(
-                HttpStatus.NOT_FOUND, "CATEGORY_PARENT_NOT_FOUND", "Parent category does not exist"));
+                CategoryException.Code.CATEGORY_PARENT_NOT_FOUND, "Parent category does not exist"));
         Set<UUID> visited = new HashSet<>();
         for (Category ancestor = parent; ancestor != null; ancestor = ancestor.getParent()) {
             if (ancestor.getId().equals(categoryId) || !visited.add(ancestor.getId())) {
@@ -94,7 +93,13 @@ public class CategoryService {
     }
 
     private CategoryException cycle() {
-        return new CategoryException(HttpStatus.CONFLICT, "CATEGORY_CYCLE",
+        return new CategoryException(CategoryException.Code.CATEGORY_CYCLE,
                 "Category parent relationship would contain a cycle");
+    }
+
+    private CategoryResponse toResponse(Category category) {
+        Category parent = category.getParent();
+        return new CategoryResponse(category.getId(), category.getName(),
+                parent == null ? null : parent.getId());
     }
 }

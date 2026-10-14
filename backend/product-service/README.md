@@ -92,4 +92,12 @@ gradle :product-service:build
 
 The concurrent test pauses the first service transaction after it has acquired the real PostgreSQL lock, observes the second service transaction waiting on the exact advisory lock in pg_locks, lets A become a child of B and commit, and verifies B's attempted reverse reparent fails with CATEGORY_CYCLE. Only timing is coordinated by a spy; the lock/transactions are real. Another test verifies an older REPEATABLE_READ caller snapshot cannot bypass cycle checking.
 
+## Architecture review — 2026-10-14
+
+The existing `com.projecthk5.productservice.category` package is a single small feature with controller, DTO, service, repository/entity, exception handling, lock and security configuration responsibilities separated by class. This is Layered Architecture + Package-by-Feature; no module-wide controller/service/repository folders are introduced. With eleven production classes, additional layer subpackages would require broader visibility changes without improving a demonstrated integration problem, so the cohesive feature package is retained.
+
+Refactored two concrete dependency issues: CategoryService/CategoryException no longer import HTTP status types; the domain exception contains a typed code and CategoryExceptionHandler alone maps it to the existing HTTP status/error string. CategoryResponse is now a plain DTO without a Category/JPA reference; the small conversion is private to CategoryService, avoiding an unnecessary mapper class. Controller remains free of business rules; repository only accesses the product database.
+
+Endpoint/payload/error strings, validation, migration, security, transaction propagation/isolation and the advisory-lock protocol remain unchanged. REQUIRES_NEW is intentional and retained: actual PostgreSQL tests cover stale caller snapshots, lock contention, and create/update/delete remaining committed across an outer rollback. Integration callers still need to respect that boundary.
+
 See CATEGORY_TEST_REPORT.md for actual verification results and remaining integration work.

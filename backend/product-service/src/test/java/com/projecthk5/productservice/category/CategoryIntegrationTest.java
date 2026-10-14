@@ -91,7 +91,7 @@ class CategoryIntegrationTest {
         service.delete(child.id());
         assertTrue(service.list().isEmpty());
         assertEquals("CATEGORY_NOT_FOUND", assertThrows(CategoryException.class,
-                () -> service.get(child.id())).getCode());
+                () -> service.get(child.id())).getCode().name());
     }
 
     @Test
@@ -99,7 +99,7 @@ class CategoryIntegrationTest {
         CategoryResponse root = create("Root", null);
         create("Child", root.id());
         assertEquals("CATEGORY_HAS_CHILDREN", assertThrows(CategoryException.class,
-                () -> service.delete(root.id())).getCode());
+                () -> service.delete(root.id())).getCode().name());
         assertEquals(2, service.list().size());
     }
 
@@ -132,9 +132,9 @@ class CategoryIntegrationTest {
         CategoryResponse child = create("Child", root.id());
         CategoryResponse leaf = create("Leaf", child.id());
         assertEquals("CATEGORY_CYCLE", assertThrows(CategoryException.class,
-                () -> service.update(root.id(), new CategoryRequest("Changed", root.id()))).getCode());
+                () -> service.update(root.id(), new CategoryRequest("Changed", root.id()))).getCode().name());
         assertEquals("CATEGORY_CYCLE", assertThrows(CategoryException.class,
-                () -> service.update(root.id(), new CategoryRequest("Changed", leaf.id()))).getCode());
+                () -> service.update(root.id(), new CategoryRequest("Changed", leaf.id()))).getCode().name());
         assertEquals(root, service.get(root.id()));
         // A rejected transaction must release its advisory lock so later writes can proceed.
         create("After rollback", null);
@@ -143,13 +143,13 @@ class CategoryIntegrationTest {
     @Test
     void rejectsMissingParentAndCorruptAncestorCycle() {
         assertEquals("CATEGORY_PARENT_NOT_FOUND", assertThrows(CategoryException.class,
-                () -> create("Orphan", UUID.randomUUID())).getCode());
+                () -> create("Orphan", UUID.randomUUID())).getCode().name());
         CategoryResponse first = create("First", null);
         CategoryResponse second = create("Second", first.id());
         // Simulates legacy/direct-SQL corruption: multi-node cycles are a service invariant.
         jdbc.update("UPDATE categories SET parent_id = ? WHERE id = ?", second.id(), first.id());
         assertEquals("CATEGORY_CYCLE", assertThrows(CategoryException.class,
-                () -> create("New", first.id())).getCode());
+                () -> create("New", first.id())).getCode().name());
         assertEquals(2, service.list().size());
     }
 
@@ -209,7 +209,7 @@ class CategoryIntegrationTest {
             ExecutionException rejected = assertThrows(ExecutionException.class,
                     () -> secondWrite.get(15, TimeUnit.SECONDS));
             CategoryException conflict = assertInstanceOf(CategoryException.class, rejected.getCause());
-            assertEquals("CATEGORY_CYCLE", conflict.getCode());
+            assertEquals("CATEGORY_CYCLE", conflict.getCode().name());
             assertEquals(second.id(), service.get(first.id()).parentId());
             assertNull(service.get(second.id()).parentId());
         } finally {
@@ -238,7 +238,7 @@ class CategoryIntegrationTest {
                     throw new IllegalStateException("Concurrent write failed", exception);
                 }
                 assertEquals("CATEGORY_CYCLE", assertThrows(CategoryException.class,
-                        () -> service.update(second.id(), new CategoryRequest("Second", first.id()))).getCode());
+                        () -> service.update(second.id(), new CategoryRequest("Second", first.id()))).getCode().name());
             });
             assertEquals(second.id(), service.get(first.id()).parentId());
             assertNull(service.get(second.id()).parentId());
@@ -272,7 +272,7 @@ class CategoryIntegrationTest {
             case "UPDATE" -> assertEquals("Renamed", service.get(root.id()).name());
             case "DELETE" -> {
                 assertEquals("CATEGORY_NOT_FOUND", assertThrows(CategoryException.class,
-                        () -> service.get(root.id())).getCode());
+                        () -> service.get(root.id())).getCode().name());
                 assertTrue(service.list().isEmpty());
             }
             default -> fail("Unexpected test operation");
