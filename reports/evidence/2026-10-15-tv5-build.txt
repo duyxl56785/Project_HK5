@@ -1,0 +1,28 @@
+> Task :product-service:compileJava
+> Task :order-service:compileJava
+> Task :order-service:processResources
+> Task :product-service:processResources
+> Task :order-service:classes
+> Task :product-service:classes
+> Task :order-service:resolveMainClassName
+> Task :product-service:resolveMainClassName
+> Task :product-service:bootJar
+> Task :order-service:bootJar
+> Task :order-service:jar
+> Task :order-service:assemble
+> Task :product-service:jar
+> Task :product-service:assemble
+> Task :order-service:compileTestJava
+> Task :product-service:compileTestJava
+> Task :product-service:processTestResources NO-SOURCE
+> Task :order-service:processTestResources NO-SOURCE
+> Task :product-service:testClasses
+> Task :order-service:testClasses
+> Task :product-service:test
+> Task :product-service:check
+> Task :order-service:test
+> Task :product-service:build
+> Task :order-service:check
+> Task :order-service:build
+BUILD SUCCESSFUL in 17s
+14 actionable tasks: 14 executed

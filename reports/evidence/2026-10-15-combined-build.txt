@@ -1,0 +1,42 @@
+> Task :seller-service:compileJava
+> Task :order-service:compileJava
+> Task :order-service:processResources
+> Task :seller-service:processResources
+> Task :order-service:classes
+> Task :seller-service:classes
+> Task :order-service:resolveMainClassName
+> Task :seller-service:resolveMainClassName
+> Task :product-service:compileJava
+> Task :product-service:processResources
+> Task :product-service:classes
+> Task :product-service:resolveMainClassName
+> Task :seller-service:bootJar
+> Task :order-service:bootJar
+> Task :order-service:jar
+> Task :order-service:assemble
+> Task :seller-service:jar
+> Task :seller-service:assemble
+> Task :product-service:bootJar
+> Task :product-service:jar
+> Task :product-service:assemble
+> Task :order-service:compileTestJava
+> Task :order-service:processTestResources NO-SOURCE
+> Task :order-service:testClasses
+> Task :seller-service:compileTestJava
+> Task :seller-service:processTestResources NO-SOURCE
+> Task :seller-service:testClasses
+> Task :product-service:compileTestJava
+> Task :product-service:processTestResources NO-SOURCE
+> Task :product-service:testClasses
+> Task :order-service:test
+> Task :order-service:check
+> Task :order-service:build
+> Task :seller-service:test
+> Task :seller-service:check
+> Task :seller-service:build
+> Task :product-service:test
+> Task :product-service:integrationTest
+> Task :product-service:check
+> Task :product-service:build
+BUILD SUCCESSFUL in 51s
+22 actionable tasks: 22 executed
