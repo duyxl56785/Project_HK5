@@ -1,0 +1,37 @@
+{
+  "captured_at_utc": "2026-10-15T15:38:29.0120356Z",
+  "build_command": "gradle-8.14.3 -p backend :product-service:build :order-service:build --rerun-tasks --no-daemon",
+  "exit_code": 0,
+  "scope": "TV5 local rules only; not HTTP/Kafka/provider-consumer/E2E",
+  "tests": 63,
+  "pass": 63,
+  "fail": 0,
+  "not_run": 0,
+  "build_log_sha256": "229B50E26B71787ED1928763D587A37B74A2690DC9322616932BC135C7F86834",
+  "source_files": [
+    {
+      "path": "backend/product-service/src/main/java/com/projecthk5/productservice/review/ReviewRules.java",
+      "sha256": "07F7434F8929AFD1DEFB4AEAEABC1A90ED6AE2CDDD8A7A26D9236043F31F88ED"
+    },
+    {
+      "path": "backend/product-service/src/test/java/com/projecthk5/productservice/review/ReviewRulesTest.java",
+      "sha256": "C87B5C11344B6C4BBD82476FC1BC071365350FB88A96502F15E0CA87D98D06C0"
+    },
+    {
+      "path": "backend/product-service/src/test/java/com/projecthk5/productservice/review/ReviewRulesBoundaryTest.java",
+      "sha256": "F1E4CDECB1CA55680436BF58800F13646CBD50702FB0674A042EBFAB28AD71BF"
+    },
+    {
+      "path": "backend/order-service/src/main/java/com/projecthk5/orderservice/finance/FinanceRules.java",
+      "sha256": "AAC3FB15FE01C0CEF320E6ECCC92839B3534373347B88619376F69800AFEFBFA"
+    },
+    {
+      "path": "backend/order-service/src/test/java/com/projecthk5/orderservice/finance/FinanceRulesTest.java",
+      "sha256": "40D756F0A03610B6A531AED6E2261C65E44E47303ACE02B941445C74A4AB5B1C"
+    },
+    {
+      "path": "backend/order-service/src/test/java/com/projecthk5/orderservice/finance/FinanceRulesBoundaryTest.java",
+      "sha256": "346D802B0EF5FB64F1ACB47C95BE1218E88D3FCBD13FC7C0198BE9C739E1967E"
+    }
+  ]
+}

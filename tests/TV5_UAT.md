@@ -12,7 +12,7 @@ Refs #5. Mọi ca live bên dưới **NOT_RUN**: main còn scaffold, thiếu Aut
 | F02 | Store chuyển House sau khi tạo đơn | Settlement giữ phí snapshot cũ | TV5 + TV3 | NOT_RUN |
 | F03 | Tám tổ hợp delivered/paid/settled | Chỉ true/true/false đủ điều kiện | TV5 + TV4 | NOT_RUN |
 | F04 | Settle đồng thời/retry/restart | Một settlement, không cộng tiền hai lần | TV5 + TV3/4 | NOT_RUN |
-| F05 | Seller A gọi list/detail/aggregate/export Store B | Từ chối/không lộ dữ liệu theo contract | TV5 + TV1/2 | NOT_RUN |
+| F05 | Seller A gọi list/detail/aggregate Store B; export chỉ nếu được bổ sung sau này | Từ chối/không lộ dữ liệu theo contract; V2 §11.3 chưa có export | TV5 + TV1/2 | NOT_RUN |
 | C01 | Checkout 2 Store, Idempotency-Key cùng body/khác body | 1 MarketplaceOrder + 2 SellerOrders; replay không thêm | TV3 + TV5 | NOT_RUN |
 | C02 | Hai checkout tranh stock cuối; timeout từng service | Không âm kho; bù trừ đúng contract | TV3/4 + TV5 | NOT_RUN |
 | C03 | Hủy/từ chối và release lặp | Hoàn kho một lần, không settle đơn hủy | TV4 + TV5 | NOT_RUN |
@@ -30,11 +30,25 @@ Refs #5. Mọi ca live bên dưới **NOT_RUN**: main còn scaffold, thiếu Aut
 
 ## Checklist báo cáo V2
 
-- [ ] Nhận bản báo cáo 55 trang (chưa có trong repository).
+- [x] Đã nhận file DOCX ngoài repo ngày 15/10/2026, đọc nội dung và xác minh55 trang qua Word/PDF; bảng phát hiện tại reports/TV5_V2_RECONCILIATION.md.
 - [ ] Đối chiếu F02 thiếu use case với code và bản báo cáo thực.
 - [ ] Thay TODO B.1–B.5 bằng ảnh live có ngày/SHA/môi trường sau UAT.
 - [ ] Chạy admin-products-live và seed/thay ảnh; hiện NOT_RUN.
 - [ ] Đối chiếu NFR và trích dẫn với phép đo/nguồn thật; không tự điền số liệu.
 - [ ] Chốt phạm vi P1 Review/Finance của PR #19 và ảnh hưởng nghiệm thu V2.
 
-Các mục trên xuất phát Issue #5; chưa xác minh được số trang/nội dung khi thiếu file gốc.
+Các mục trên xuất phát Issue #5 và được đối chiếu với file V2 đã nhận; chưa sửa báo cáo gốc hoặc tạo ảnh live.
+
+## Bổ sung W1 sau khi nhận V2
+
+Locator và phương pháp phân trang ghi riêng trong báo cáo đối chiếu. Script UAT này chỉ được thiết kế trong tuần 1, chưa thực thi live.
+
+| ID | Tình huống bổ sung cần có khi chạy UAT sau này | Expected / phụ thuộc | Owner | Live |
+|---|---|---|---|---|
+| R05 | Chưa có visible review; hide hết rồi unhide; stars bị ẩn1/5 | Empty mapping theo D02; hidden không ảnh hưởng sum/count, unhide khôi phục | TV5/TV2 | NOT_RUN |
+| R06 | Hide không reason, reason quá500, comment quá1000; quyền Admin bị thu hồi giữa hai lần gọi | Validation/audit theo D05, backend kiểm quyền mỗi request | TV5/TV1/TV2 | BLOCKED D05 |
+| R07 | Event DELIVERED trùng, đến muộn, sai buyer/product/store; Kafka lỗi | Quyền review local không trùng; DLT/retry theo D03; không giả định HTTP Order lookup | TV5/TV3/TV4 | BLOCKED D03 |
+| F06 | Rounding quanh nửa đơn vị, subtotal precision và House0 | Ví dụ contract được duyệt D06; unit helper riêng đã chạy, không áp đặt currency production | TV5/TV3 | BLOCKED D06 |
+| F07 | Bốn nhóm doanh thu, chéo Store, cutoff và đơn hủy | Tên nhóm/công thức theo D07; chưa có expected số liệu hợp lệ để gọi API | TV5/TV3/TV4 | BLOCKED D07 |
+
+Quy ước: PASS/FAIL chỉ khi đã chạy; NOT_RUN là case đã thiết kế nhưng chưa thực thi; BLOCKED chỉ rõ phụ thuộc chưa thể chốt/setup. Không cộng BLOCKED/NOT_RUN của test plan vào tổng JUnit. Các bộ rules không phải consumer-driven contract tests. Truy vết từng yêu cầu: tests/TV5_TRACEABILITY.md.

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.projecthk5.orderservice.finance.FinanceRulesTest" tests="15" skipped="0" failures="0" errors="0" timestamp="2026-10-15T15:32:45.589Z" hostname="MDUY-LECO" time="0.038">
+  <properties/>
+  <testcase name="houseStoreHasZeroCommission()" classname="com.projecthk5.orderservice.finance.FinanceRulesTest" time="0.0"/>
+  <testcase name="deniesOtherStoreAndUnverifiedStore()" classname="com.projecthk5.orderservice.finance.FinanceRulesTest" time="0.001"/>
+  <testcase name="rejectsNegativeMoneyAndSilentPrecisionLoss()" classname="com.projecthk5.orderservice.finance.FinanceRulesTest" time="0.001"/>
+  <testcase name="[1] delivered=false, paid=false, settled=false" classname="com.projecthk5.orderservice.finance.FinanceRulesTest" time="0.007"/>
+  <testcase name="[2] delivered=false, paid=true, settled=false" classname="com.projecthk5.orderservice.finance.FinanceRulesTest" time="0.001"/>
+  <testcase name="[3] delivered=true, paid=false, settled=false" classname="com.projecthk5.orderservice.finance.FinanceRulesTest" time="0.001"/>
+  <testcase name="[4] delivered=true, paid=true, settled=true" classname="com.projecthk5.orderservice.finance.FinanceRulesTest" time="0.002"/>
+  <testcase name="[5] delivered=false, paid=false, settled=true" classname="com.projecthk5.orderservice.finance.FinanceRulesTest" time="0.001"/>
+  <testcase name="[6] delivered=false, paid=true, settled=true" classname="com.projecthk5.orderservice.finance.FinanceRulesTest" time="0.002"/>
+  <testcase name="[7] delivered=true, paid=false, settled=true" classname="com.projecthk5.orderservice.finance.FinanceRulesTest" time="0.001"/>
+  <testcase name="[1] subtotal=100000, commission=5000, net=95000" classname="com.projecthk5.orderservice.finance.FinanceRulesTest" time="0.001"/>
+  <testcase name="[2] subtotal=10, commission=1, net=9" classname="com.projecthk5.orderservice.finance.FinanceRulesTest" time="0.001"/>
+  <testcase name="[3] subtotal=0, commission=0, net=0" classname="com.projecthk5.orderservice.finance.FinanceRulesTest" time="0.0"/>
+  <testcase name="[4] subtotal=999999999999999999, commission=50000000000000000, net=949999999999999999" classname="com.projecthk5.orderservice.finance.FinanceRulesTest" time="0.001"/>
+  <testcase name="permitsOnlyDeliveredPaidUnsettledOrder()" classname="com.projecthk5.orderservice.finance.FinanceRulesTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

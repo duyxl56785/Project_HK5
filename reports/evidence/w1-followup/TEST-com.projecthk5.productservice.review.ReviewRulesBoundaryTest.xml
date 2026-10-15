@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.projecthk5.productservice.review.ReviewRulesBoundaryTest" tests="15" skipped="0" failures="0" errors="0" timestamp="2026-10-15T15:32:45.466Z" hostname="MDUY-LECO" time="0.096">
+  <properties/>
+  <testcase name="missingPurchaseIsRejectedInsteadOfAssumingDelivery()" classname="com.projecthk5.productservice.review.ReviewRulesBoundaryTest" time="0.018"/>
+  <testcase name="rejectsMalformedRatingCollectionAndDirectInvalidRating()" classname="com.projecthk5.productservice.review.ReviewRulesBoundaryTest" time="0.002"/>
+  <testcase name="eachModerationIncludingReplayRequiresFreshAccessCheck()" classname="com.projecthk5.productservice.review.ReviewRulesBoundaryTest" time="0.012"/>
+  <testcase name="visibilityChangesPublicCountAndAverageAndUnhideRestoresThem()" classname="com.projecthk5.productservice.review.ReviewRulesBoundaryTest" time="0.002"/>
+  <testcase name="[1] identity=null" classname="com.projecthk5.productservice.review.ReviewRulesBoundaryTest" time="0.014"/>
+  <testcase name="[2] identity=" classname="com.projecthk5.productservice.review.ReviewRulesBoundaryTest" time="0.002"/>
+  <testcase name="[3] identity= " classname="com.projecthk5.productservice.review.ReviewRulesBoundaryTest" time="0.002"/>
+  <testcase name="[4] identity=&#9;&#10;" classname="com.projecthk5.productservice.review.ReviewRulesBoundaryTest" time="0.002"/>
+  <testcase name="[5] identity= " classname="com.projecthk5.productservice.review.ReviewRulesBoundaryTest" time="0.001"/>
+  <testcase name="hiddenValuesAndInputOrderDoNotBiasPublicAverage()" classname="com.projecthk5.productservice.review.ReviewRulesBoundaryTest" time="0.0"/>
+  <testcase name="authorizedModerationStillRejectsMissingStoredReview()" classname="com.projecthk5.productservice.review.ReviewRulesBoundaryTest" time="0.001"/>
+  <testcase name="[1] identity=Buyer" classname="com.projecthk5.productservice.review.ReviewRulesBoundaryTest" time="0.001"/>
+  <testcase name="[2] identity= buyer" classname="com.projecthk5.productservice.review.ReviewRulesBoundaryTest" time="0.001"/>
+  <testcase name="[3] identity=buyer " classname="com.projecthk5.productservice.review.ReviewRulesBoundaryTest" time="0.001"/>
+  <testcase name="[4] identity=other" classname="com.projecthk5.productservice.review.ReviewRulesBoundaryTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
