@@ -6,8 +6,7 @@
 "com.projecthk5.productservice.review.ReviewRulesBoundaryTest","[1] identity=null","0.014","PASS"
 "com.projecthk5.productservice.review.ReviewRulesBoundaryTest","[2] identity=","0.002","PASS"
 "com.projecthk5.productservice.review.ReviewRulesBoundaryTest","[3] identity= ","0.002","PASS"
-"com.projecthk5.productservice.review.ReviewRulesBoundaryTest","[4] identity=	
-","0.002","PASS"
+"com.projecthk5.productservice.review.ReviewRulesBoundaryTest","[4] identity=\t\n","0.002","PASS"
 "com.projecthk5.productservice.review.ReviewRulesBoundaryTest","[5] identity= ","0.001","PASS"
 "com.projecthk5.productservice.review.ReviewRulesBoundaryTest","hiddenValuesAndInputOrderDoNotBiasPublicAverage()","0.0","PASS"
 "com.projecthk5.productservice.review.ReviewRulesBoundaryTest","authorizedModerationStillRejectsMissingStoredReview()","0.001","PASS"
@@ -38,8 +37,7 @@
 "com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest","[1] identity=null","0.003","PASS"
 "com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest","[2] identity=","0.001","PASS"
 "com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest","[3] identity= ","0.0","PASS"
-"com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest","[4] identity=	
-","0.001","PASS"
+"com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest","[4] identity=\t\n","0.001","PASS"
 "com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest","[5] identity= ","0.0","PASS"
 "com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest","rejectsMissingAmountInvalidScaleAndHousePrecisionLossToo()","0.002","PASS"
 "com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest","[1] other=Store-a","0.001","PASS"

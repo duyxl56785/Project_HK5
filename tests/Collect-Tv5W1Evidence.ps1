@@ -20,7 +20,9 @@ $suites=foreach($file in $xmlFiles){
     if($suite.name -notin $expected){throw "Unexpected suite: $($suite.name)"}
     foreach($case in $suite.testcase){
         $state=if($case.failure -or $case.error){'FAIL'}elseif($case.skipped){'NOT_RUN'}else{'PASS'}
-        $cases+=[pscustomobject]@{suite=$suite.name;test=$case.name;seconds=$case.time;status=$state}
+        # Escape control characters in the CSV display name; raw XML remains byte-for-byte intact.
+        $displayName=([string]$case.name).Replace("`t",'\t').Replace("`r",'\r').Replace("`n",'\n')
+        $cases+=[pscustomobject]@{suite=$suite.name;test=$displayName;seconds=$case.time;status=$state}
     }
     Copy-Item -LiteralPath $file.FullName -Destination (Join-Path $outputPath $file.Name)
     [pscustomobject]@{suite=$suite.name;tests=[int]$suite.tests;failures=[int]$suite.failures;errors=[int]$suite.errors;skipped=[int]$suite.skipped;xml_sha256=(Get-FileHash $file.FullName -Algorithm SHA256).Hash}

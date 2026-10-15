@@ -31,6 +31,8 @@ $env:JAVA_HOME='C:\Program Files\Java\jdk-21'
 
 Evidence: [full build log](evidence/w1-followup/build.log), [raw JUnit XML/suite counts](evidence/w1-followup/suites.csv), [63 testcase kết quả](evidence/w1-followup/test-cases.csv), [run manifest và source/log SHA256](evidence/w1-followup/run.json). Collector `tests/Collect-Tv5W1Evidence.ps1` sao chép XML gốc, đọc testcase và từ chối thiếu suite/failure; không sinh PASS từ tên test. Dùng sau build bằng `-BuildLogPath .verification/w1-followup-build.log -BuildExitCode 0`. Nó thu evidence, không tự chạy suite. Manifest chỉ ghi thời điểm thu UTC, không bịa thời điểm bắt đầu run.
 
+CSV testcase escape `\t/\r/\n` trong display name để review dễ đọc; raw XML giữ tên gốc. Locator CSV bỏ ký tự kết thúc cell của Word. Log build giữ nguyên byte và trailing space do Gradle sinh ra để hash trùng bản chạy; whitespace check code/tài liệu loại riêng raw log này, không chỉnh nội dung log để làm đẹp kết quả.
+
 ## Evidence ledger không cộng gộp
 
 | Nguồn / mốc | Kết quả ghi nhận | Ý nghĩa trong lần bàn giao này |
