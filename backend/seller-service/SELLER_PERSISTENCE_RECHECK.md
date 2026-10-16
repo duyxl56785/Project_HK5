@@ -1,5 +1,7 @@
 # Seller Persistence — kiểm tra lại ngày 16/10/2026
 
+**Báo cáo lịch sử:** blocker Docker và NOT_RUN dưới đây thuộc lần kiểm tra 08:33–08:38. Lần nghiệm thu mới lúc 15:30–15:32 đã chạy PostgreSQL thật: 21 Seller + 14 Category PASS, full backend build/check PASS với 231 tests. Xem [SELLER_TEST_REPORT.md](SELLER_TEST_REPORT.md) để đọc kết quả hiện tại. PR #7/#25 cũng đã merge theo các đích được ghi trong báo cáo mới; không dùng snapshot dưới đây thay trạng thái live.
+
 Refs #2. Kiểm tra tại 08:33–08:38 Asia/Saigon, source `73296d3` trên `feat/tv2-seller-persistence`. Báo cáo này bổ sung kết quả mới; không thay thế hoặc cộng lại các lượt PASS lịch sử.
 
 ## Git và phạm vi

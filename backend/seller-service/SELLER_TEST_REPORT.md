@@ -1,6 +1,56 @@
 # Seller domain verification — Refs #2
 
-**Latest recheck — 16/10/2026:** see [SELLER_PERSISTENCE_RECHECK.md](SELLER_PERSISTENCE_RECHECK.md). Seller 80 and Category/security 53 tests were rerun and PASS; assemble 11 modules PASS. Full backend build/check was actually executed and FAIL because both PostgreSQL suites failed Testcontainers initialization (21 Seller + 14 Category DB test bodies NOT_RUN). Docker Secrets Engine remains blocked. Persistence is PARTIAL, PR #25 stays Draft; historical PASS/NOT_RUN entries below are not the latest full-build result. Auth v1.0 decisions now exist in unmerged PR #24, while runtime/wire adapters remain pending.
+## Latest acceptance — 16/10/2026, 15:30–15:32 Asia/Saigon
+
+**Seller Persistence acceptance: PASS at module scope. Seller Management / Issue #2 remains PARTIAL.** Docker Server 29.8.2 (Linux) responded in the Codex session; Testcontainers started real PostgreSQL 16.6-alpine. The earlier Docker blockers and NOT_RUN entries below are historical, superseded by this execution.
+
+Git preflight: clean `feat/tv2-seller-persistence`, local/remote source `52bee9360a61d55c1cb9bc4a6cbe210b0081b620`. PR #7 was already merged into main at `98268c291ed30ed5df1c981073e23bfa9b5093b2`; PR #25 was already merged into `feat/tv2-seller-product` at `5581d59e36b68402aa15a5813869cd006408f21c`, not into main. PR #25 is closed/merged, no longer Draft. No PR merge was performed in this acceptance task.
+
+Environment: JDK 21.0.12.1, Gradle 8.10, Docker Engine 29.8.2. Verification commands:
+
+```text
+gradle -p backend :seller-service:integrationTest --rerun-tasks --no-daemon --console=plain
+backend/gradlew.bat -p backend build --rerun-tasks --continue --no-daemon --console=plain
+```
+
+The first command ran on the actual feature checkout: **21 PostgreSQL tests PASS**, exit 0, 23 seconds, 4 tasks executed. The full build ran in an isolated snapshot combining exact feature source `52bee93` with current main `98268c2`, using main's repository wrapper. Merge-tree/archive did not modify either branch or the working tree. **BUILD SUCCESSFUL, exit 0, 48 seconds, 63 tasks executed; all 11 backend modules assembled.** Both integrationTest tasks executed as dependencies of check/build.
+
+Final full-build XML totals:
+
+| Suite | PASS | FAIL | SKIPPED | NOT_RUN |
+|---|---:|---:|---:|---:|
+| Seller domain/entity/service unit | 80 | 0 | 0 | 0 |
+| Seller PostgreSQL integration | 21 | 0 | 0 | 0 |
+| Category/service/controller/security + Product fallback | 53 | 0 | 0 | 0 |
+| Category PostgreSQL integration | 14 | 0 | 0 | 0 |
+| Review / Finance rules from current main | 63 | 0 | 0 | 0 |
+| **Total in the final full build** | **231** | **0** | **0** | **0** |
+
+The initial standalone 21-test run is not added again to 231. Nine modules with NO-SOURCE are not counted as business test PASS. Real JWT/Seller REST/Gateway/Frontend/E2E remain NOT_RUN, outside these suite counts.
+
+PostgreSQL acceptance demonstrated by executed assertions:
+
+- Flyway V1 succeeds on a real empty PostgreSQL database, JPA validates and persists a separate Seller UUID, committed registration is readable via a separate repository call, no cross-database FK.
+- Exact owner reference semantics preserve case/trailing spaces; named UNIQUE constraint rejects duplicate owners. Two real concurrent registration transactions produce one committed Seller, with the second insert observed waiting on a PostgreSQL lock before rejection.
+- Reject/resubmit preserves Seller ID; state/reason/version changes persist and obsolete reasons clear.
+- REQUIRED registration and moderation roll back with their outer caller, including state/version.
+- Stale expectedVersion is rejected after reject/resubmit; two real transactions loading the same version cannot both moderate successfully, proving the @Version conflict path.
+- Eleven SQL invalid-row cases enforce owner/status/reason/version constraints; denied actors, self-moderation and invalid input leave stored state unchanged.
+- All 14 Category database regressions pass, including advisory-lock/concurrent hierarchy behavior and independent outer rollback semantics.
+
+No source defect occurred; production code, migrations and tests were unchanged. No artificial regression test was added. Docker containers and volumes present before the run were inventoried and all still existed afterward; no explicit delete/reset/prune command was run.
+
+Evidence (ignored local build output): `build/persistence-verification/acceptance-20261016-engine29/`, containing standalone log/XML, combined full-build log/raw XML, suites.csv, sources.txt, Docker Server and resource-preservation checks.
+
+| Evidence | SHA256 |
+|---|---|
+| combined-full-build.log | ED6ABCD53199A5880911CB30170DEA0B3B4BE826DBBEB70CFAAD276F9A717E1B |
+| Final Seller PostgreSQL XML | 909853191AA7B9EF12E255B9C2D1E27E4B3D5F5D6DF70A0C4C0E868EACEEE0CD |
+| Final Category PostgreSQL XML | A1FA907AB46C10B950B340031508B052A42861A03896E61F08B2ADEFA10EE44D |
+
+Remaining delivery gates: persistence is still on TV2 feature branches and needs a reviewed follow-up PR into main; merge status of #25 is not main inclusion. Production verified policy/transaction bean wiring, REST DTO/error contract, live authorization/role synchronization and Gateway/JWT tests remain separate integration work. Do not expose write endpoints based on fixture/mock policy. Next step: hand off this evidence to TV1/TV5 and prepare persistence delivery into main before Seller REST/JWT; Store/Product contract work can be planned separately. No new feature was implemented in this task.
+
+## Historical domain verification — 14/10/2026
 
 Verified 2026-10-14, Asia/Saigon, branch `feat/tv2-seller-product`.
 
