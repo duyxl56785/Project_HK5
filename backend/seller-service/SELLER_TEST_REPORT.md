@@ -1,5 +1,7 @@
 # Seller domain verification — Refs #2
 
+**Latest recheck — 16/10/2026:** see [SELLER_PERSISTENCE_RECHECK.md](SELLER_PERSISTENCE_RECHECK.md). Seller 80 and Category/security 53 tests were rerun and PASS; assemble 11 modules PASS. Full backend build/check was actually executed and FAIL because both PostgreSQL suites failed Testcontainers initialization (21 Seller + 14 Category DB test bodies NOT_RUN). Docker Secrets Engine remains blocked. Persistence is PARTIAL, PR #25 stays Draft; historical PASS/NOT_RUN entries below are not the latest full-build result. Auth v1.0 decisions now exist in unmerged PR #24, while runtime/wire adapters remain pending.
+
 Verified 2026-10-14, Asia/Saigon, branch `feat/tv2-seller-product`.
 
 Status: **PARTIAL for Seller Management integration**. Internal domain/lifecycle and unit tests are implemented. The user explicitly confirmed TV1 has not agreed the Auth/schema contract and requested domain/tests first, leaving API/persistence pending.
@@ -83,3 +85,37 @@ Verified local increments:
 - `5646445` — `feat(seller): implement guarded lifecycle transitions (refs #2)`.
 
 Documentation is committed separately after verification. The original four Category commits are preserved; no push, PR, merge or edits to main/other members' modules are performed. Suitable for a draft PR scoped to Category architecture and Seller domain, with integration blockers explicit; not sufficient to close F03-F04 or Issue #2, or deploy Seller Management.
+
+## Seller persistence verification — 2026-10-16
+
+The project owner supplied TV1's minimum persistence confirmation, recorded at Issue #2 comment 6205790432 and SELLER_PERSISTENCE_CONTRACT.md. Branch feat/tv2-seller-persistence depends on PR #7; only seller-service changes are introduced. Existing domain/lifecycle/policy and their 63 tests are unchanged.
+
+Implemented separate JPA entity/repository, Flyway V1, exact VARCHAR(128) unique owner, UUID Seller ID, status/reason checks and @Version. REQUIRED orchestration reuses lifecycle rules, keeps resubmission ID, clears obsolete reasons, accepts expectedVersion and translates the named owner-unique constraint/optimistic-lock failures into internal errors. No HTTP API/production Auth policy is registered; integration wiring exists only in tests.
+
+Actual verification: Java 21.0.12.1, Gradle 8.10.
+
+```text
+gradle -p backend assemble test --rerun-tasks --continue --no-daemon --console=plain
+```
+
+**PASS:** BUILD SUCCESSFUL, exit 0, 59 executed tasks; all 11 backend modules assemble. Latest XML totals:
+
+| Suite | PASS | FAIL | SKIPPED |
+|---|---:|---:|---:|
+| Existing SellerApplicationTest | 13 | 0 | 0 |
+| Existing SellerLifecycleServiceTest | 50 | 0 | 0 |
+| SellerProfileTest | 10 | 0 | 0 |
+| SellerPersistenceServiceTest | 7 | 0 | 0 |
+| Seller total | **80** | **0** | **0** |
+| Product/Category regression | 53 | 0 | 0 |
+| All executed unit/controller/security tests | **133** | **0** | **0** |
+
+Entity tests cover exact owner/length, fresh registration states, reason boundaries including supplementary Unicode, owner immutability and reason clearing. Service unit tests prove denied authentication/moderation cannot reach repository lookups/writes. Policy is mocked; these are not JWT tests.
+
+**FAIL — environment:** `:seller-service:integrationTest --rerun-tasks --no-daemon` executed, exit 1, Testcontainers initializationError because Docker Linux Engine is unavailable. It did not reach PostgreSQL test bodies. The suite defines 21 planned invocations (10 ordinary/concurrency cases plus 11 SQL-constraint rows); these are **NOT_RUN**, not PASS or skipped. All source/test classes compile. No test/tag/task was disabled to obtain the unit PASS result.
+
+The PostgreSQL suite is prepared to verify durable registration/Flyway/JPA, no cross-DB FK, duplicate/exact owner, resubmit ID/full lifecycle, REQUIRED registration/moderation outer rollback, stale expectedVersion, SQL null/length/status/reason/version constraints, a real unique-insert lock wait observed in pg_stat_activity, and two real transactions loading the same version before concurrent moderation. None of those DB/concurrency claims is considered proven until this suite runs.
+
+Docker Desktop startup was attempted. Host logs identify Secrets Engine failure to rename its existing zero-byte encrypted/reparse engine.sock. A non-destructive runtime backup attempt was denied by Windows; the original socket remains, and no images/volumes/factory reset or successful decryption occurred. Docker recovery requiring host access remains a blocker.
+
+Logs: build/persistence-verification/all-unit-build.log and postgresql-attempt.log; raw initialization XML preserved in initial-postgresql/. Generated artifacts are ignored. Full build/check including PostgreSQL, the 14 existing Category DB tests, live JWT/API/Gateway/E2E remain NOT_RUN in this final verification. Persistence AC is PARTIAL pending PostgreSQL PASS; Issue #2 stays OPEN/PARTIAL and the PR stays Draft.
