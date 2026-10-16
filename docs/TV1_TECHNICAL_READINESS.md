@@ -15,7 +15,7 @@ Refs #1. Kiểm chứng ngày 2026-10-16 trên Windows/PowerShell tại `D:\CMC\
 | Flyway | core + PostgreSQL module 10.10.0 theo BOM | 2 live JPA/JDBC tests + `validateWithResult`, 0 pending | PASS | Validate 0 migration; migrate nghiệp vụ NOT_RUN |
 | Auth dependencies | JPA/Hibernate 6.5.3.Final, JDBC 42.7.4 | dependency resolution; Security 6.3.4, Nimbus 9.37.3 ở test classpath; HS256 correct/wrong-key test | PASS | Chưa Security/JWT issuer runtime |
 | Gateway dependencies | Gateway 4.1.6/reactive scaffold | resolved runtimeClasspath, không servlet MVC | PASS | Chưa routes/verifier/CORS; HTTP security NOT_RUN |
-| CI | Thêm workflow Backend readiness, JDK21/PostgreSQL16 | Local chưa thay được GitHub runner | NOT_RUN | Chờ push/PR và run thật; xem cập nhật delivery bên dưới |
+| CI | Backend readiness, JDK21/PostgreSQL16 trên Ubuntu runner | Provision volume mới, rerun, isolation scripts, build/tests | PASS | [GitHub run thực tế](https://github.com/duyxl56785/Project_HK5/actions/runs/38839212118); branch protection/review vẫn do repository quản lý |
 | Security config | 4 secret độc lập runtime, 4 role không superuser/membership, HBA + ACL cách ly | positive/negative SQL, localhost bind, Git/secrets review | PASS | Admin secret baseline cũ đã công khai, không tự rotate; không chứng nhận production |
 
 Framework giữ nguyên Boot 3.3.5, Cloud 2023.0.5, dependency-management 1.1.6, Java 21, Gradle 8.10. Thêm persistence chỉ ở Auth/User để kiểm chứng readiness; Security/JOSE chỉ testImplementation ở Auth, không mở endpoint. BOM và hành vi Flyway đối chiếu [Boot v3.3.5 dependency definitions](https://github.com/spring-projects/spring-boot/blob/v3.3.5/spring-boot-project/spring-boot-dependencies/build.gradle), [Boot database initialization](https://docs.spring.io/spring-boot/3.3/how-to/data-initialization.html). Quyền database tham chiếu [PostgreSQL16 privileges](https://www.postgresql.org/docs/16/ddl-priv.html).
@@ -54,7 +54,7 @@ Sau provisioning:
 
 4 login mới: NOSUPERUSER/NOCREATEDB/NOCREATEROLE/NOREPLICATION/NOBYPASSRLS, không membership; mỗi role có secret CSPRNG độc lập 32 byte (Base64 trong environment). Migration role sở hữu đúng DB, runtime không sở hữu DB/schema. Không cấp blanket DML/future table rights: PR nghiệp vụ phải GRANT đúng bảng, giữ schema history ngoài quyền runtime. Không FK xuyên DB, không business migration V1, không seed.
 
-Provision trên **volume cũ** đã PASS. Chạy lại nhiều lần không đổi DB OID/owner/ACL, role OID/password verifier; so sánh schema-only dump `hk5_dev` trước/sau bằng nhau (loại nonce `\restrict` của pg_dump). Cả auth_db/user_db/hk5_dev vẫn 0 application table; Flyway chưa tạo schema history. Script chỉ CREATE nếu thiếu, không DROP/ALTER password/đổi owner. Recovery giữa CREATE DATABASE và COMMENT, owner lạ, secret sai và rollback giữ dữ liệu: [runbook](../docker/README.md#5-recovery--rollback-giữ-dữ-liệu).
+Provision trên **volume cũ Windows** và **volume mới GitHub runner** đã PASS. Chạy lại nhiều lần ở Windows không đổi DB OID/owner/ACL, role OID/password verifier; so sánh schema-only dump `hk5_dev` trước/sau bằng nhau (loại nonce `\restrict` của pg_dump). Cả auth_db/user_db/hk5_dev vẫn 0 application table; Flyway chưa tạo schema history. Script chỉ CREATE nếu thiếu, không DROP/ALTER password/đổi owner. Recovery giữa CREATE DATABASE và COMMENT, owner lạ, secret sai và rollback giữ dữ liệu: [runbook](../docker/README.md#5-recovery--rollback-giữ-dữ-liệu).
 
 Cổng 5432 đang do process PostgreSQL Windows giữ. Lần recreate đầu FAIL bind localhost; đổi local `.env` sang 5433 và kiểm tra lại PASS. Không kill/sửa process đó; chỉ recreate `docker-postgres-1`, cùng project/volume/network. Các container dự án khác không bị thao tác.
 
@@ -75,6 +75,9 @@ Các lệnh Gradle chạy tại `backend`, với JDK21 set trong process; Docker
 | HS256 smoke | `:auth-service:test --tests '*Hs256DependencyTest'` | PASS sau sửa fixture kid/JWK |
 | Live JPA/JDBC/Flyway | `TV1_DATABASE_TESTS=true`, `:auth-service:test :user-service:test --rerun-tasks --console=plain` | PASS: 3 tests, 0 skipped/failures/errors |
 | Final build | `TV1_DATABASE_TESTS=true`, `.\gradlew.bat build --console=plain` | PASS: 59 tasks, live DB tests executed; 9 module khác NO-SOURCE |
+| Không có DB credentials | Bỏ TV1_DATABASE_TESTS/runtime passwords, chạy Auth/User test | PASS: HS256 chạy, 2 live DB tests SKIPPED; không báo thành DB PASS |
+| Guard/config/secrets | Thiếu AUTH_DB_PASSWORD bị từ chối trước mutation; PowerShell parser; staged paths/diff --check; đối chiếu exact runtime/admin secrets với staged content và local logs; .env Git ignored | PASS; không thay full-history/CVE scan |
+| CI volume mới | [run 38839212118](https://github.com/duyxl56785/Project_HK5/actions/runs/38839212118), implementation commit 088a4de | PASS: provision + rerun + permission checks + JDK21/Gradle8.10 build; completed 2026-10-16T02:14:12Z |
 | Business unit/integration | Chưa entity/API/schema; không triển khai ở PHASE B | NOT_RUN |
 | Business migration | Không chạy migrate/clean/baseline; chỉ validate/info trên DB rỗng | NOT_RUN |
 | E2E / Gateway HTTP / production | Chưa implementation tương ứng; không tác động production | NOT_RUN |
@@ -91,9 +94,11 @@ FAIL quan sát và đã xử lý: sandbox Git ownership/network (chạy lại v�
 - **MINOR:** Gradle cảnh báo deprecated features cho Gradle9; không nâng wrapper để xử lý ngoài phạm vi. Flyway warning không có migrations là đúng PHASE B; Windows JDK global không được thay đổi.
 - **GOOD:** volume/data cũ giữ nguyên; opt-in migration profile, validate-only runtime, không schema nghiệp vụ; secrets runtime; test actual PostgreSQL; framework và contract không đổi; minimal CI có permissions contents:read và actions pinned SHA.
 
-## F. Delivery và kết luận tại thời điểm lập báo cáo local
+## F. Delivery và kết luận
 
-**PARTIAL — local readiness PASS; CI fresh-volume chưa chạy trước lần push đầu.** Commit/PR/run thật sẽ được ghi ở delivery update sau khi GitHub trả kết quả. Không dùng local build thay CI PASS. Không tạo commit rỗng, không push main, force-push hoặc tự merge.
+**READY cho PR Auth Database + Flyway.** Local Windows/volume cũ và GitHub CI/volume mới đã kiểm chứng thành công. Không có blocker nền tảng còn mở trong phạm vi PHASE B; chưa phải readiness nghiệp vụ/production.
+
+Implementation commit: `088a4de39c6c65d4eb10803169ea466d02e3c066`, branch `chore/tv1-auth-readiness`, [PR #27](https://github.com/duyxl56785/Project_HK5/pull/27) vào main, [CI PASS](https://github.com/duyxl56785/Project_HK5/actions/runs/38839212118). Báo cáo được cập nhật bằng commit docs tiếp theo để lưu kết quả CI thật. Issue #1 đã xác minh vẫn OPEN. PR không tự merge; Technical Lead cần review/merge theo quy trình trước PR persistence. Không push main/force-push; các file untracked ban đầu giữ nguyên.
 
 ## G. PR tiếp theo
 
