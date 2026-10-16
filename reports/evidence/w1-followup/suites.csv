@@ -1,0 +1,5 @@
+"suite","tests","failures","errors","skipped","xml_sha256"
+"com.projecthk5.productservice.review.ReviewRulesBoundaryTest","15","0","0","0","F6684EFBD262EC743E1357E0DF73AEE12CC9E710E660F46EF805D493EC1670B2"
+"com.projecthk5.productservice.review.ReviewRulesTest","15","0","0","0","782DB79722A1A3AC8BD187369227E90AE6751F3707F113E4899680A9D56A0BB1"
+"com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest","18","0","0","0","A274B5E13433E7399E71567F4A89C9DDA545B1380E05857AC2BD9D3DBC1642A1"
+"com.projecthk5.orderservice.finance.FinanceRulesTest","15","0","0","0","32E583E8F973D3A6FD8355479B0AED835005787B2EA62FE2AF8FB2F0CFA9CD7E"

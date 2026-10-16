@@ -1,0 +1,16 @@
+[
+  {
+    "pr": 7,
+    "exit_code": 0,
+    "command": "gradle-8.14.3 -p <snapshot>/backend :product-service:assemble :seller-service:assemble :product-service:test :seller-service:test --rerun-tasks --no-daemon",
+    "log": "pr7-unit-build.log",
+    "sha256": "F72843C561620584466170B7D86161ED3F676F172291223CFFECF01719AC6F94"
+  },
+  {
+    "pr": 25,
+    "exit_code": 0,
+    "command": "gradle-8.14.3 -p <snapshot>/backend :product-service:assemble :seller-service:assemble :product-service:test :seller-service:test --rerun-tasks --no-daemon",
+    "log": "pr25-unit-build.log",
+    "sha256": "43E07E03CE1A235DE056ACE433740755480F42845EDFC0BA9A86DB3820BA11E2"
+  }
+]

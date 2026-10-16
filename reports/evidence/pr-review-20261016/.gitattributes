@@ -1,0 +1,3 @@
+# Preserve original build log bytes and hashes; CSVs remain readable text.
+*.log -text
+*.csv text eol=lf

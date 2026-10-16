@@ -1,0 +1,4 @@
+# Preserve raw evidence bytes so committed artifacts match the recorded SHA256 values.
+build.log -text
+TEST-*.xml -text
+*.csv text eol=lf
