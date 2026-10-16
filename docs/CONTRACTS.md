@@ -10,3 +10,7 @@ Các yêu cầu nền tảng theo báo cáo:
 - Không thay tên topic, field, lỗi/response, ownership hoặc migration trước khi đã đối chiếu code V2 và có review liên quan.
 
 Tạo đề xuất thay đổi trong GitHub Issue; PR phải nêu tính tương thích và test 2 phía. **Chưa có endpoint hay Kafka event nào được triển khai trong scaffold.**
+
+## Đề xuất TV1 đang chờ review
+
+[Auth/JWT/Identity/Gateway Contract — draft v0.1](TV1_AUTH_IDENTITY_GATEWAY_CONTRACT.md) (Refs #1) ghi baseline, JWT/roles, endpoint/DTO, 401/403, refresh token, Gateway/internal boundary và contract consumer TV2–TV5. Các mục `OPEN DECISION` cần owner/consumer xác nhận; liên kết này không thay đổi contract đã thống nhất hoặc xác nhận chức năng đã triển khai.
