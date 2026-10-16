@@ -1,3 +1,32 @@
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.flywaydb:flyway-core'
+    runtimeOnly 'org.flywaydb:flyway-database-postgresql'
+    runtimeOnly 'org.postgresql:postgresql'
+
+    testImplementation 'org.springframework.security:spring-security-test'
+    testImplementation 'org.testcontainers:junit-jupiter'
+    testImplementation 'org.testcontainers:postgresql'
 }
+
+tasks.named('test') {
+    useJUnitPlatform { excludeTags 'postgresql' }
+}
+
+tasks.register('integrationTest', Test) {
+    description = 'Runs Category integration tests against PostgreSQL via Docker.'
+    group = 'verification'
+    testClassesDirs = sourceSets.test.output.classesDirs
+    classpath = sourceSets.test.runtimeClasspath
+    useJUnitPlatform { includeTags 'postgresql' }
+    // Boot's managed Docker client defaults to an API rejected by newer Docker engines.
+    systemProperty 'api.version', providers.gradleProperty('dockerApiVersion').getOrElse('1.44')
+    shouldRunAfter tasks.named('test')
+    reports.html.outputLocation = layout.buildDirectory.dir('reports/tests/integrationTest')
+    reports.junitXml.outputLocation = layout.buildDirectory.dir('test-results/integrationTest')
+}
+
+tasks.named('check') { dependsOn tasks.named('integrationTest') }
