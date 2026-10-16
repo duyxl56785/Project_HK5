@@ -5,6 +5,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import com.projecthk5.productservice.security.ProductSecurityConfiguration;
 import java.util.List;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
@@ -19,7 +20,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 @WebMvcTest(CategoryController.class)
-@Import(CategorySecurityConfiguration.class)
+@Import({CategorySecurityConfiguration.class, ProductSecurityConfiguration.class})
 class CategorySecurityTest {
     @Autowired private MockMvc mvc;
     @MockBean private CategoryService service;

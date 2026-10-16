@@ -6,14 +6,15 @@ Category Management is implemented in this module. Seller, Product, moderation, 
 
 ## Deployment status and Auth integration
 
-**Not ready for deployment as a Category CRUD API.** Auth/Gateway contracts have not been confirmed by TV1.
+**Not ready for deployment as a Category CRUD API.** Verified Auth/Gateway integration has not been implemented.
 
 - GET/HEAD Category endpoints are public.
 - Every other method under `/api/categories` and `/api/categories/**` is denied by the production SecurityFilterChain, including requests containing an unverified Bearer token or an authenticated ADMIN identity.
 - Writes return HTTP 403 with `CATEGORY_WRITE_AUTH_NOT_CONFIGURED`. No enable-write property, assumed JWT claims, HTTP Basic login or header-based permission bypass is provided.
 - Controller write behavior is tested without security in an isolated MockMvc test. These tests do not claim that production HTTP writes are usable. Security tests and full application integration tests separately verify write denial.
-- TV1 must confirm issuer/JWKS, audience, role/authority mapping, Category write permission, Gateway routes, CORS and the agreed 401/403 error contract before implementing authorized writes. Enforce verified permissions at the service boundary exposed to HTTP; a Gateway-only check is insufficient.
-- The Category filter chain and controller advice are scoped to Category. This change does not establish security for other future product-service endpoints.
+- Before authorized writes, record the agreed signing profile/issuer, audience, role/authority mapping, Category write permission, Gateway routes, CORS and 401/403 contract with TV1. JWKS is required only if the agreed signing profile uses it. Enforce verified permissions at the service boundary exposed to HTTP; a Gateway-only check is insufficient.
+- The Category filter chain and controller advice remain scoped to Category. A last-priority fallback chain denies every otherwise unmatched route, including future Product/Review/internal handlers and Actuator info/details. Its only exception is GET/HEAD of the exact `/actuator/health` path, preserving the existing operational health read. Gateway must not publish Actuator routes; detailed health exposure is not enabled here.
+- Unconfigured routes return 403 `PRODUCT_ROUTE_AUTH_NOT_CONFIGURED` before their handler executes, even for a mocked ADMIN or forged identity headers. A new feature needs its own reviewed chain before it can be exposed. This fallback is not a JWT verifier or a production authorization adapter.
 
 ## Module API proposal for integration
 
@@ -33,6 +34,8 @@ Response: `{ "id": "<uuid>", "name": "Electronics", "parentId": null }`.
 `PUT` replaces the name and parent association; omitted/null parentId makes the category a root. IDs are immutable. Names are required, not blank, at most 255 Java String characters, and stripped of leading/trailing whitespace before persistence. Name uniqueness, slug, depth limits, pagination and a dedicated tree endpoint are not part of this scope. Frontend can construct the hierarchy using id/parentId.
 
 Errors consistently contain `{ "code": "...", "message": "...", "errors": {} }`. Field validation fills the errors map. Internal SQL/exception messages are not returned to clients.
+
+This existing Category errors map is preserved. The TV1 Auth draft proposes an optional errors array for its APIs; it does not silently change Category's contract. Agree any future alignment and consumer tests in a separate integration PR. The generic fallback uses only code/message, with no field-validation details.
 
 | HTTP | Code | Meaning |
 |---|---|---|

@@ -145,3 +145,25 @@ Final command: **BUILD SUCCESSFUL**, exit 0; Category **52 PASS / 0 FAIL / 0 SKI
 Initial attempts failed at Docker/Testcontainers startup, so Category PostgreSQL test bodies were NOT_RUN in those attempts. Docker Desktop logs showed Secrets Engine could not rename its stale engine.sock (Windows ERROR_CANT_ACCESS_FILE). The runtime directory was observed already moved to backup on the machine; this task did not rename/delete it or reset Docker. After restarting Docker, Engine 29.8.2 responded and all tests passed. This failure is distinct from the older Docker API mismatch documented above. Similar startup failure is reported at https://github.com/docker/for-win/issues/15064.
 
 Files changed in this follow-up: CategoryException, CategoryExceptionHandler, CategoryResponse, CategoryService; CategoryControllerTest, CategoryIntegrationTest, CategoryServiceTest; README and this report. Existing four Category commits remain intact; follow-up changes use new commits only. Seller API/JWT/schema/persistence remain deferred following the user's explicit confirmation that TV1 has not agreed those contracts. No shared build, other member's module, main, applied migration, Store or Product implementation is changed; no push/PR/merge is performed.
+
+## TV1 review remediation — 2026-10-16
+
+Responds to the TV1 technical review on PR #7. The previous Category-only chain left otherwise unmatched requests without a security chain. A test-only Product/Review/internal controller reproduced the defect: all nine selected anonymous requests returned 200 instead of the expected 403. That red run is preserved in `build/pr7-security-red.log` and `build/pr7-review-20261016/red/`.
+
+Added `security/ProductSecurityConfiguration`: a last-priority, stateless fallback denies every request not matched by a feature chain. Only GET/HEAD of the exact `/actuator/health` path remains permitted for operational health reads. Unconfigured routes return 403 `PRODUCT_ROUTE_AUTH_NOT_CONFIGURED` with code/message; this is a fail-closed boundary, not JWT authentication. The existing Category chain still runs first and its API/error contract is unchanged. New routes require an explicit reviewed security policy.
+
+Added 15 `ProductServiceSecurityTest` cases with real Spring Security filters and test-only handlers: Product verbs, Review/internal paths, a Category-like prefix, mocked Admin, forged headers/Bearer, unmatched routes and health read/write policy. Handler invocation counters verify denial before business execution. The health handler is a policy fixture, not a live Actuator/database health check. Existing CategorySecurityTest now imports both chains, preserving all seven regressions.
+
+Verification executed on Java 21.0.12.1 / Gradle 8.10:
+
+```text
+gradle -p backend assemble test --rerun-tasks --continue --no-daemon --console=plain
+```
+
+**PASS:** BUILD SUCCESSFUL, exit 0, 59 tasks executed; all 11 modules assemble. Product has 53 tests (18 service + 13 controller + 7 Category security + 15 fallback security), Seller has 63, total **116 PASS / 0 FAIL / 0 SKIPPED**. Other modules report NO-SOURCE, which is not business-test PASS. Log: `build/pr7-review-20261016/green-unit-build.log`.
+
+**NOT_RUN:** 14 PostgreSQL integration tests, full build/check including integrationTest, live JWT/Gateway/UI/E2E. Docker Engine does not expose the dockerDesktopLinuxEngine pipe on this machine. Historical PostgreSQL PASS results above are not counted as newly executed. No test is removed or disabled; the existing test/integrationTest split is preserved.
+
+REQUIRES_NEW/READ_COMMITTED, lock key/acquisition order, all 14 PostgreSQL tests and the V1 migration remain unchanged. The rollback, additional-connection, suspended-lock and stale-persistence-context limits remain documented in README; this fix does not make Category writes atomic with a future Product transaction. PRODUCT_DB_URL/USERNAME/PASSWORD remain required, Flyway remains enabled and JPA ddl-auto remains validate; no shared database/runtime configuration is changed.
+
+Category's existing errors map is retained; TV1's proposed optional errors array requires a separately agreed integration change. The signing/identity/role adapter is not implemented here. This addresses the fallback finding for re-review; independent approval is still required before merge, and Issue #2 remains PARTIAL.
