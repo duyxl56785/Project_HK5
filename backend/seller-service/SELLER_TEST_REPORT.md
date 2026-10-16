@@ -1,5 +1,7 @@
 # Seller domain verification — Refs #2
 
+**Latest recheck — 16/10/2026:** see [SELLER_PERSISTENCE_RECHECK.md](SELLER_PERSISTENCE_RECHECK.md). Seller 80 and Category/security 53 tests were rerun and PASS; assemble 11 modules PASS. Full backend build/check was actually executed and FAIL because both PostgreSQL suites failed Testcontainers initialization (21 Seller + 14 Category DB test bodies NOT_RUN). Docker Secrets Engine remains blocked. Persistence is PARTIAL, PR #25 stays Draft; historical PASS/NOT_RUN entries below are not the latest full-build result. Auth v1.0 decisions now exist in unmerged PR #24, while runtime/wire adapters remain pending.
+
 Verified 2026-10-14, Asia/Saigon, branch `feat/tv2-seller-product`.
 
 Status: **PARTIAL for Seller Management integration**. Internal domain/lifecycle and unit tests are implemented. The user explicitly confirmed TV1 has not agreed the Auth/schema contract and requested domain/tests first, leaving API/persistence pending.
