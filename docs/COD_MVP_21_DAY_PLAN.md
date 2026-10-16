@@ -17,7 +17,7 @@
 - Giao diện React hoạt động thật (không chỉ mock): đăng nhập, catalog/detail, cart/checkout COD, lịch sử đơn, seller store/product/orders, admin duyệt seller/product và ghi nhận COD.
 - PostgreSQL/Flyway, cấu hình môi trường, hướng dẫn chạy một lần cho cả FE/BE, kiểm thử bảo mật cơ bản và E2E luồng 2 Store.
 
-**P1 — Làm nếu P0 chạy ổn trước D14:** Review 1–5 sao sau DELIVERED (mỗi order-item một review, Admin ẩn), thông báo trong ứng dụng dạng polling hoặc cơ chế sẵn có, báo cáo doanh thu/hoa hồng COD cơ bản (tham chiếu quy tắc phí sàn 5%, house-store 0% từ báo cáo; cần xác nhận cùng TV3/TV4/TV5). Không được trì hoãn P0 để đạt P1.
+**P1 — Làm nếu P0 chạy ổn trước D14:** Review 1–5 sao do chính người mua sản phẩm của đơn DELIVERED thực hiện; mỗi cặp (order, product) chỉ một review kể cả khi có nhiều line/SKU cùng product. Admin được ẩn/hiện; review ẩn không tính vào tổng điểm hoặc số review công khai. Thông báo trong ứng dụng dạng polling hoặc cơ chế sẵn có; báo cáo doanh thu/hoa hồng COD cơ bản với phí sàn 5%, house-store 0%, `seller_net = subtotal - commission`. Chụp subtotal/rate/commission/net/currency khi tạo SellerOrder; không tính lại phí từ trạng thái Store hiện tại khi quyết toán. Chỉ quyết toán DELIVERED + COD PAID, chống quyết toán trùng bằng unique SellerOrder và transaction; Seller chỉ truy cập Finance thuộc Store của mình. TV3/TV4/TV5 chốt order key, currency/scale, quy tắc làm tròn và bốn nhóm doanh thu trước API/schema. Không được trì hoãn P0 để đạt P1; nhóm/chủ dự án cần xác nhận ảnh hưởng của việc hoãn F15/F16 đến nghiệm thu báo cáo V2, không tự coi các mục đó đã hoàn thành.
 
 **Ngoài phạm vi:** VNPay/MoMo/Stripe, trả tiền online, kết nối hãng vận chuyển, hoàn tiền tự động, vận chuyển định vị, chatbot/AI/recommender, voucher/phức tạp, mobile app, production scale/HA. Bảo mật tối thiểu và tính nhất quán tiền/tồn kho **không** bị bỏ qua.
 
@@ -111,7 +111,7 @@ Thiết lập: Admin A, Seller S1/S2 đã APPROVED với Store1/Store2, Customer
 
 - **Per task:** code trong module owner, test + kết quả thực thi, OpenAPI/contract/DTO/migration cập nhật, commit nhỏ → push feature branch → PR → reviewer; chỉ tích [x] nếu tiêu chí có bằng chứng.
 - **Security:** JWT verified; ownership backend, không tin storeId/customerId/role từ client; mặc định từ chối endpoint chưa được bảo vệ; không log secret/PII.
-- **Database:** migration Flyway chỉ tiến lên, DB per service, FK nội bộ DB; tiền BigDecimal/numeric, không double; stock không âm; unique SKU/idempotency/order-item review.
+- **Database:** migration Flyway chỉ tiến lên, DB per service, FK nội bộ DB; tiền BigDecimal/numeric, không double; stock không âm; unique SKU/idempotency, unique review theo (order, product) và settlement theo SellerOrder. Owner chốt order identity trước migration; precheck trong bộ nhớ không thay thế unique DB/transaction chống race.
 - **Transaction/timeout:** Category REQUIRES_NEW cần review khi phối hợp Product; Checkout/Inventory có bù trừ và retry, không transaction phân tán tùy tiện; test cạnh tranh và replay.
 - **Release blocker (P0):** luồng COD 2 Store hỏng, đặt trùng, bán âm, xem/sửa dữ liệu người khác, unverified JWT vượt quyền, leak secret, không chạy được FE→Gateway→DB, lỗi mất dữ liệu.
 - **P1 không đạt:** ghi PARTIAL và để backlog; không coi toàn bộ sản phẩm thất bại nếu UAT P0 đạt.
