@@ -11,6 +11,6 @@ Các yêu cầu nền tảng theo báo cáo:
 
 Tạo đề xuất thay đổi trong GitHub Issue; PR phải nêu tính tương thích và test 2 phía. **Chưa có endpoint hay Kafka event nào được triển khai trong scaffold.**
 
-## Đề xuất TV1 đang chờ review
+## Contract TV1 v1.0 — quyết định của Technical Lead
 
-[Auth/JWT/Identity/Gateway Contract — draft v0.1](TV1_AUTH_IDENTITY_GATEWAY_CONTRACT.md) (Refs #1) ghi baseline, JWT/roles, endpoint/DTO, 401/403, refresh token, Gateway/internal boundary và contract consumer TV2–TV5. Các mục `OPEN DECISION` cần owner/consumer xác nhận; liên kết này không thay đổi contract đã thống nhất hoặc xác nhận chức năng đã triển khai.
+[Auth/JWT/Identity/Gateway Contract v1.0](TV1_AUTH_IDENTITY_GATEWAY_CONTRACT.md) (Refs #1): Technical Lead Lê Xuân Bảo chốt OD-01–OD-09 ngày 2026-10-16; HS256, identity UUID nội bộ/opaque string wire, API/roles, refresh, database ownership và internal security. [ADR-0001](adr/0001-tv1-mvp-auth-trust-boundaries.md) lưu đánh đổi; [roadmap](TV1_AUTH_IMPLEMENTATION_ROADMAP.md) ghi readiness gates và các PR tiếp theo. Lịch sử draft v0.1 và review được giữ trong contract. Không khẳng định consumer đã xác nhận từng chi tiết hoặc implementation đã hoàn thành; không thay contract nghiệp vụ TV2–TV5.
