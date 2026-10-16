@@ -4,10 +4,10 @@ Java 21 + Gradle multi-project + Spring Boot 3.3.5. Các service hiện chỉ ch
 
 Từ thư mục backend:
 ```bash
-gradle :auth-service:bootRun
-gradle test
+./gradlew :auth-service:bootRun
+./gradlew build
 ```
-Máy cần cài Java 21 và Gradle 8.x tương thích Spring Boot 3.3.5 (khung chưa có Gradle Wrapper; người phụ trách TV1 cần bổ sung wrapper từ môi trường đáng tin cậy). Không coi ứng dụng đã chạy nếu chưa thực thi lệnh trên.
+Máy cần cài JDK 21 và đặt `JAVA_HOME` trỏ tới JDK đó. Gradle Wrapper ghim Gradle 8.10, tự tải bản phân phối và kiểm tra SHA-256; không cần cài Gradle toàn máy. Trên Windows PowerShell dùng `.\gradlew.bat` thay cho `./gradlew`. Lần đầu cần mạng để tải Gradle và dependency.
 
 Tất cả package mã nguồn hiện theo convention com.projecthk5.<module>. Service nào cần PostgreSQL/JPA/Flyway, Kafka hoặc Spring Security phải thêm dependency cùng cấu hình theo API contract đã chốt, không bật tùy tiện ở toàn bộ subprojects.
 

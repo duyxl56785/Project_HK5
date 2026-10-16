@@ -2,7 +2,7 @@
 
 ## Yêu cầu máy
 
-- Git, JDK 21, Gradle 8.x, Node.js 20.19+ hoặc 22.12+, npm, Docker Desktop/Engine.
+- Git, JDK 21, Node.js 20.19+ hoặc 22.12+, npm, Docker Desktop/Engine. Backend dùng Gradle Wrapper 8.10, không cần cài Gradle toàn máy.
 - Trước khi sử dụng cần kiểm tra phiên bản thực tế trong source V2 gốc nếu được import.
 
 ## Lấy code
@@ -18,12 +18,25 @@ git pull --ff-only origin main
 
 ```bash
 cd backend
-gradle :auth-service:bootRun
+./gradlew --version
+./gradlew build
+./gradlew :auth-service:bootRun
 # ở terminal khác:
 curl http://localhost:8101/actuator/health
 ```
 
-Lệnh này **chưa được kiểm thử tại thời điểm tạo scaffold** và mới áp dụng cho service mẫu, không phải xác nhận luồng nghiệp vụ hoạt động. Gradle Wrapper hiện chưa có; TV1 cần bổ sung `gradlew` để thống nhất phiên bản cho nhóm.
+Đặt `JAVA_HOME` trỏ tới JDK 21 trước khi chạy. Trên Windows PowerShell, thay `./gradlew` bằng `.\gradlew.bat`:
+
+```powershell
+$env:JAVA_HOME = 'C:\path\to\jdk-21'
+$env:Path = "$env:JAVA_HOME\bin;$env:Path"
+cd backend
+.\gradlew.bat --version
+.\gradlew.bat build
+.\gradlew.bat :auth-service:bootRun
+```
+
+Chạy `cd backend` từ thư mục gốc repository; bỏ lệnh này nếu đã ở `backend`. Wrapper và dependency cần mạng trong lần tải đầu; bản phân phối được xác minh bằng `distributionSha256Sum` trong `backend/gradle/wrapper/gradle-wrapper.properties`. Các service mới là scaffold, health `UP` không xác nhận Auth/User hay tích hợp đã hoạt động. Task `test` báo `NO-SOURCE` nghĩa là chưa có test, không phải unit test PASS.
 
 ## Frontend scaffold
 
