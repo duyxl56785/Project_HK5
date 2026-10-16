@@ -13,12 +13,12 @@ spring:
       ddl-auto: validate
   flyway:
     enabled: true
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: ${JWT_ISSUER_URI:}
-          jwk-set-uri: ${JWT_JWK_SET_URI:}
+
 app:
   security:
-    audience: ${JWT_AUDIENCE:smart-ecommerce-api}
+    issuer: ${JWT_ISSUER_URI:}
+    audience: ${JWT_AUDIENCE:}
+    current-kid: ${JWT_HS256_CURRENT_KID:}
+    current-key-b64: ${JWT_HS256_CURRENT_KEY_B64:}
+    previous-kid: ${JWT_HS256_PREVIOUS_KID:}
+    previous-key-b64: ${JWT_HS256_PREVIOUS_KEY_B64:}

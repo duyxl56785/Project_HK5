@@ -8,10 +8,15 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CheckoutRulesTest {
-    @Test void merchantFeeFivePercentAndHouseFeeZero() {
-        assertEquals(new BigDecimal("501"),MoneyRules.fee(new BigDecimal("10010"),false));
-        assertEquals(BigDecimal.ZERO,MoneyRules.fee(new BigDecimal("10010"),true));
+    @Test void financePolicyRequiresExplicitApprovalAndInputs() {
+        MoneyRules denied = new MoneyRules(false,"","","");
+        assertThrows(IllegalStateException.class,()->denied.fee(new BigDecimal("10010"),false));
+        assertThrows(IllegalStateException.class,()->new MoneyRules(true,"","",""));
+        MoneyRules approved = new MoneyRules(true,"0.05","0","true");
+        assertEquals(new BigDecimal("501"),approved.fee(new BigDecimal("10010"),false));
+        assertEquals(new BigDecimal("0"),approved.fee(new BigDecimal("10010"),true));
         assertEquals(new BigDecimal("30000"),MoneyRules.lineTotal(new BigDecimal("10000"),3));
+        assertThrows(ArithmeticException.class,()->approved.fee(new BigDecimal("100.50"),false));
     }
     @Test void expectedItemsMustExactlyMatchCart() {
         var actual=List.of(new CartPort.Item("p1","store1","seller1",2,new BigDecimal("10000")));

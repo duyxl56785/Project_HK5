@@ -1,54 +1,34 @@
-# TV3 Week 1 — Checkout & Idempotency (Issue #3)
+# TV3 W1 — Checkout COD / CHANGES_REQUESTED followup PR #28
 
-**Owner:** Trần Văn Chính (`@tranvanchinhbg2006-alt`). **Status: PARTIAL / NEEDS CROSS-TEAM REVIEW.** Prototype baseline prepared from 16/10/2026 ZIP; not merged or tested end-to-end.
+Status: PARTIAL / NOT PRODUCTION READY. No shared contract or other owners' module changed.
 
-## Implemented baseline (only TV3 checkout/order creation area)
+## Idempotency / crash safety
+- Unique (customer_id,idempotency_key) in Order DB; same key with different payload returns 409.
+- Persistent attempt UUID is deterministic Order and Inventory reservation correlation ID; never generate a fresh Order ID on replay.
+- Only newly created PROCESSING requests may call Inventory. Existing PROCESSING/FAILED/NEEDS_RECONCILIATION requests never reserve again.
+- Before reserve, confirmed Cart claims can be released on deterministic business failures.
+- After Inventory reserve was attempted, or after uncertain DB commit, never release Inventory/Cart automatically.
+- After write timeout, Order DB read may prove success; otherwise mark NEEDS_RECONCILIATION or leave PROCESSING for scanner if database is unavailable.
+- Scheduled scanner marks old PROCESSING as NEEDS_RECONCILIATION without remote compensation. Operator-led reconciliation with TV4 is mandatory; this is NOT a complete automatic recovery worker.
+- See TV3_RECONCILIATION_RUNBOOK.md. Production gate remains blocked until TV4 Inventory status/reconcile contract is verified.
 
-- `POST /api/orders` with mandatory `Idempotency-Key`, JSON `{ "expectedItems": [{"productId":"...","quantity":1}], "expectedRevision":null }`.
-- Authenticate bearer JWT (signature, issuer, audience) and require CUSTOMER role; derive customerId from verified `sub`.
-- `RequestFingerprint` SHA-256 of canonical request, `(customerId,key)` unique in DB, same-key + different payload = HTTP 409, same-key success returns existing order, concurrent duplicate processing = HTTP 409.
-- Cart claim → exact expectedItems validation → authoritative Product/Seller/Store/Price snapshot; giá đổi so với snapshot Cart bị từ chối → Inventory reservation → persist 1 `orders`, 1 `seller_orders` **per Store**, order line snapshots, idempotency state, outbox row atomically → finalize Cart.
-- `MoneyRules` uses BigDecimal and HALF_UP; assumed VND whole-dong rounding, platform fee 5%, house store fee 0. **TV5 MUST APPROVE rounding/currency before merge.**
-- Compensating release cart/inventory when an intermediate step fails; failed release marks attempt `NEEDS_RECONCILIATION` to block unsafe retries. Successful order but failed cart finalization can be retried with the same key. **Not a fully automated recovery worker**.
-- Flyway migration `V1__checkout_baseline.sql`: `orders`, `seller_orders`, `order_items`, `checkout_attempts`, `outbox_events`.
-- Persist `order.placed.v1` outbox record atomically; **no Kafka publisher/consumer yet**. No fabricated delivery or COD implementation.
+## Money / TV5
+- No hardcoded commission rate or currency scale in TV3 MoneyRules. Default HK5_FINANCE_POLICY_APPROVED=false refuses Checkout before Inventory reserve.
+- Only after written TV5/TV4 approval: set HK5_FINANCE_POLICY_APPROVED=true, HK5_FINANCE_PLATFORM_RATE, HK5_FINANCE_CURRENCY_SCALE, HK5_FINANCE_HOUSE_EXEMPT from controlled runtime configuration.
+- TV5 must explicitly approve gross/platform_fee/seller_net, House Store exemption and rounding. Do not infer policy approval from mock tests or FinanceRules sample in main.
 
-## Strict integration blockers
+## JWT (TV1 Contract v1.0 merged #24)
+- HS256 only: JWT_ISSUER_URI, JWT_AUDIENCE, JWT_HS256_CURRENT_KID, JWT_HS256_CURRENT_KEY_B64 and optional previous kid/key pair; no JWKS or fallback.
+- Roles and ownership verified on server; /internal/** never open via public Gateway.
 
-- **TV1:** approve JWT verifier (issuer/JWK/audience), gateway route `POST /api/orders`, internal pair credential; no public `/internal/**`.
-- **TV2:** `CatalogPort.verify(productId)` adapter not connected. MUST verify authoritative sellerId/storeId, seller/store status, current price, house store policy. Default `UnconfiguredCatalogAdapter` returns 503.
-- **TV4:** `InventoryPort.reserve/release(orderId,items)` contract and implementation not connected. Must ensure idempotent reserve/release per operationId, prevent negative stock, guarantee reconcile for ambiguous timeout. Default adapter returns 503. Shared order state/fulfillment entity and migration require TV4 review.
-- **TV5:** approve money rounding, snapshot semantics, status enum/order schema, ownership of finance and outbox. Shared migration requires TV4+TV5 review.
-- **V2 original:** contract is NOT included in repo. Existing tracked code has only scaffold; do not claim backward compatibility with original V2.
-
-## Local requirements and tests
-
-```sql
-CREATE DATABASE hk5_order OWNER hk5;
-```
-
-Dev env: `HK5_ORDER_JDBC_URL`, `HK5_ORDER_DB_USER`, `HK5_ORDER_DB_PASSWORD`, `JWT_ISSUER_URI`, `JWT_JWK_SET_URI`, `JWT_AUDIENCE`; `APP_CART_INTERNAL_URL`, `APP_CART_INTERNAL_TOKEN`, Cart service `APP_INTERNAL_CHECKOUT_TOKEN` must match, with secrets provided at runtime only.
-
-```bash
+## Test commands / evidence
 cd backend
-gradle :order-service:test
-gradle :order-service:bootRun
-```
+./gradlew :cart-service:test :order-service:test --rerun-tasks --console=plain
+./gradlew :cart-service:postgresIntegrationTest :order-service:postgresIntegrationTest --rerun-tasks --console=plain
+git rev-parse HEAD
 
-| Test | Intended result | Status (offline) |
-|---|---|---|
-| 2 sellers / 2 stores → 1 order / 2 seller orders | Test with mocked ports | JUnit **NOT_RUN** |
-| Same key, same payload → same orderId | Test with mocked ports | JUnit **NOT_RUN** |
-| Same key, different payload → 409 | Requires real coordinator test | **NOT_RUN** |
-| Inventory exception → cart release / attempt fail | Test with mocked ports | JUnit **NOT_RUN** |
-| Failed inventory release during timeout | NEEDS_RECONCILIATION, manual reconciliation | **NOT_RUN** |
-| Real Postgres transactions, HTTP, JWT, TV2/TV4 services, Kafka | End-to-end | **BLOCKED** |
-
-**Release/Retry caution:** reserve timeout may have succeeded remotely; compensation must be idempotent. Automated background reconciliation and outbox relay are outstanding; do not label checkout production-ready.
-
-## PR review requirements
-
-1. Request review TV3 (owner), TV4 (inventory/status/migration), TV5 (finance/fee/schema), TV1 (security/gateway), TV2 (Product/Store contract).
-2. Sync origin/main and inspect diff/conflicts **before** merge (not possible from this offline copy).
-3. Execute real Gradle tests, Postgres migration, mocked + live contract tests, security regression and verify outbox relay before closing Issue #3.
-4. Do not push directly to main or force-push. Branch `feat/tv3-cart-checkout-week1`.
+PASS (earlier c3150c6 only): author's Windows Gradle build and unit test log.
+NOT_RUN (revised head): security tests, recovery tests, PostgreSQL16/Flyway/Hibernate, live Auth/Product/Inventory, Kafka, E2E.
+FAIL: No new test run executed in current environment; this does NOT imply no defects.
+PostgreSQL tests use Testcontainers and Docker, need real logs and SHA before TV1 re-review.
+Migration V1 remains unchanged; create V2+ if deployed schema needs changes.

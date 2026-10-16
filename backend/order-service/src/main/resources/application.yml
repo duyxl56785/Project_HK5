@@ -20,5 +20,14 @@ spring:
           issuer-uri: ${JWT_ISSUER_URI:}
           jwk-set-uri: ${JWT_JWK_SET_URI:}
 app:
+  finance:
+    # Set only after written TV5 policy approval; otherwise Checkout fails closed.
+    policy-approved: ${HK5_FINANCE_POLICY_APPROVED:false}
+    platform-rate: ${HK5_FINANCE_PLATFORM_RATE:}
+    currency-scale: ${HK5_FINANCE_CURRENCY_SCALE:}
+    house-exempt: ${HK5_FINANCE_HOUSE_EXEMPT:}
+  checkout:
+    stale-seconds: ${HK5_CHECKOUT_STALE_SECONDS:600}
+    reconcile-scan-ms: ${HK5_CHECKOUT_RECONCILE_SCAN_MS:60000}
   security:
     audience: ${JWT_AUDIENCE:smart-ecommerce-api}
