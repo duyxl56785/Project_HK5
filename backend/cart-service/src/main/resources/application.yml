@@ -3,8 +3,22 @@ server:
 spring:
   application:
     name: cart-service
-management:
-  endpoints:
-    web:
-      exposure:
-        include: health,info
+  datasource:
+    url: ${HK5_CART_JDBC_URL:jdbc:postgresql://localhost:5432/hk5_cart}
+    username: ${HK5_CART_DB_USER:hk5}
+    password: ${HK5_CART_DB_PASSWORD:}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    enabled: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${JWT_ISSUER_URI:}
+          jwk-set-uri: ${JWT_JWK_SET_URI:}
+app:
+  security:
+    audience: ${JWT_AUDIENCE:smart-ecommerce-api}
