@@ -16,6 +16,8 @@ git pull --ff-only origin main
 
 ## Backend scaffold
 
+Auth/User cần provision PostgreSQL và nạp biến runtime theo [runbook TV1](../docker/README.md) trước `bootRun`. Build thông thường không cần DB; test DB chỉ chạy khi `TV1_DATABASE_TESTS=true`.
+
 ```bash
 cd backend
 ./gradlew --version
@@ -48,14 +50,24 @@ npm run dev
 
 Giao diện chỉ có shell giới thiệu các miền nghiệp vụ, chưa gọi Backend.
 
-## Hạ tầng mẫu local
+## PostgreSQL và kiểm chứng readiness
 
-```bash
-docker compose -f docker/compose.dev.yml up -d
+Làm theo [runbook provisioning](../docker/README.md) để kiểm kê volume cũ, cấu hình `.env`, nạp biến vào tiến trình và tạo `auth_db`/`user_db`. Sau đó từ gốc repository:
+
+```powershell
+docker compose --env-file .env -f docker/compose.dev.yml config --quiet
+docker compose --env-file .env -f docker/compose.dev.yml up -d --no-deps --wait --wait-timeout 60 postgres
 docker compose -f docker/compose.dev.yml ps
+./docker/provision-tv1.ps1
+./docker/test-tv1-databases.ps1
+$env:TV1_DATABASE_TESTS = 'true'
+cd backend
+.\gradlew.bat build --console=plain
 ```
 
-Compose này chỉ có Postgres/Redis/Kafka, chưa tạo 8 service DB và không chạy FE/BE.
+Auth có 1 smoke test HS256 và 1 test JPA/JDBC/Flyway; User có 1 test JPA/JDBC/Flyway. Khi bật biến trên, test DB không lấy kết quả từ cache/up-to-date. Không bật biến thì 2 test DB SKIPPED; 9 module khác vẫn `test NO-SOURCE`. Validate DB chưa có migration không thay migration/business tests. Kết quả và giới hạn: [PHASE B readiness](TV1_TECHNICAL_READINESS.md).
+
+Compose không chạy FE/BE. Không bật profile `migration` cho PHASE B; runtime Auth/User vẫn là scaffold chưa có endpoint nghiệp vụ/security. Không dùng health UP để kết luận API an toàn. Secret quản trị volume cũ không được tự đổi bằng cách thay `.env`.
 
 ## Làm việc theo Issue
 

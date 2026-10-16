@@ -1,0 +1,48 @@
+name: Backend readiness
+on:
+  pull_request:
+    paths: ['backend/**', 'docker/**', '.github/workflows/backend-readiness.yml']
+  push:
+    branches: [main, chore/tv1-auth-readiness]
+    paths: ['backend/**', 'docker/**', '.github/workflows/backend-readiness.yml']
+permissions:
+  contents: read
+jobs:
+  readiness:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-java@c5195efecf7bdfc987ee8bae7a71cb8b11521c00 # v4.7.1
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Provision, verify isolation, and build
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          foreach ($name in @('POSTGRES_PASSWORD','AUTH_DB_PASSWORD','AUTH_MIGRATION_PASSWORD','USER_DB_PASSWORD','USER_MIGRATION_PASSWORD')) {
+            $secret = [Convert]::ToBase64String([Security.Cryptography.RandomNumberGenerator]::GetBytes(32))
+            Write-Output "::add-mask::$secret"
+            [Environment]::SetEnvironmentVariable($name, $secret, 'Process')
+          }
+          $env:TV1_DATABASE_TESTS = 'true'
+          try {
+            docker compose -f docker/compose.dev.yml config --quiet
+            if ($LASTEXITCODE -ne 0) { throw 'Compose config failed' }
+            docker compose -f docker/compose.dev.yml up -d --no-deps --wait --wait-timeout 60 postgres
+            if ($LASTEXITCODE -ne 0) { throw 'PostgreSQL startup failed' }
+            ./docker/provision-tv1.ps1
+            ./docker/test-tv1-databases.ps1
+            ./docker/provision-tv1.ps1
+            ./docker/test-tv1-databases.ps1
+            Push-Location backend
+            try {
+              ./gradlew --version
+              if ($LASTEXITCODE -ne 0) { throw 'Wrapper failed' }
+              ./gradlew build --console=plain
+              if ($LASTEXITCODE -ne 0) { throw 'Backend build/tests failed' }
+            } finally { Pop-Location }
+          } finally {
+            docker compose -f docker/compose.dev.yml stop postgres
+          }

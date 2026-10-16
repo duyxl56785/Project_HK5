@@ -3,6 +3,20 @@ server:
 spring:
   application:
     name: user-service
+  datasource:
+    url: jdbc:postgresql://${USER_DB_HOST:localhost}:${USER_DB_PORT:5432}/user_db
+    username: user_app
+    password: ${USER_DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+  flyway:
+    # PHASE B must not create even the schema history table.
+    enabled: false
+    clean-disabled: true
+    baseline-on-migrate: false
+    locations: classpath:db/migration
 management:
   endpoints:
     web:

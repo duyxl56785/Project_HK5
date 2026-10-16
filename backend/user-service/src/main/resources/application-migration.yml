@@ -1,0 +1,5 @@
+spring:
+  flyway:
+    enabled: true
+    user: user_migrator
+    password: ${USER_MIGRATION_PASSWORD}
