@@ -1,0 +1,6 @@
+# Keep original evidence bytes so SHA256 remains valid after clone.
+*.log -text
+*.xml -text
+*.txt -text
+*.json -text
+manifest.sha256 -text

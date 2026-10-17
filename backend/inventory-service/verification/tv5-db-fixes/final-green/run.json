@@ -1,0 +1,10 @@
+{
+  "command": "gradle -p .verification/fixes/pr31-db/backend :inventory-service:build :inventory-service:postgresIntegrationTest --rerun-tasks --no-daemon --continue --console=plain",
+  "head": "6c6cf8c9cc9a1582156e127dfa18165a5ce96661",
+  "exit": 0,
+  "docker": "29.8.1",
+  "jvmOptions": "-Duser.timezone=UTC -Dapi.version=1.44",
+  "gradle": "8.14.3",
+  "time": "2026-10-17T23:10:32.6453489+07:00",
+  "java": "21.0.7"
+}

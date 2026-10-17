@@ -1,0 +1,11 @@
+{
+  "durationSeconds": 25,
+  "command": "gradle -p .verification/fixes/pr31-db/backend :inventory-service:postgresIntegrationTest --tests *InventorySchemaPostgresIT --rerun-tasks --no-daemon --console=plain",
+  "jvmOptions": "-Duser.timezone=UTC -Dapi.version=1.44",
+  "exit": 1,
+  "scope": "Added regression harness only; production mapping unchanged",
+  "java": "21.0.7",
+  "head": "21d8450dae5e4afd7987e1a33fb157fc4b973f9d",
+  "docker": "29.8.1",
+  "gradle": "8.14.3"
+}

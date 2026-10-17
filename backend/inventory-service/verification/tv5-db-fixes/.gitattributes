@@ -1,0 +1,6 @@
+# Preserve generated evidence byte-for-byte for SHA256 verification.
+*.log -text
+*.xml -text
+*.txt -text
+*.json -text
+manifest.sha256 -text
