@@ -1,0 +1,22 @@
+{
+  "gradle": "8.14.3",
+  "httpSecurity": "NOT_RUN",
+  "red": {
+    "exit": 1,
+    "result": "compileTestJava FAILED; no tests executed"
+  },
+  "jvmOptions": "-Duser.timezone=UTC -Dapi.version=1.44",
+  "command": ":inventory-service:test --rerun-tasks --no-daemon --console=plain",
+  "java": "21.0.7",
+  "green": {
+    "tests": 15,
+    "skipped": 0,
+    "errors": 0,
+    "exit": 0,
+    "failures": 0
+  },
+  "baseHead": "1abfd4fc6a71fb6ba9d0daec902f8c8a53cf7e30",
+  "fix": "Declare NoSuchMethodException in the existing test method; all assertions unchanged",
+  "liveE2E": "NOT_RUN",
+  "postgres": "NOT_RUN"
+}

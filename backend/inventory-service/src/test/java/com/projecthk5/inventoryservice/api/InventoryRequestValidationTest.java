@@ -61,7 +61,7 @@ class InventoryRequestValidationTest {
     }
 
     @Test
-    void invalidArgumentAndOverflowUseBadRequestErrorCodes() {
+    void invalidArgumentAndOverflowUseBadRequestErrorCodes() throws NoSuchMethodException {
         InventoryExceptionHandler handler = new InventoryExceptionHandler();
 
         Map<String, Object> invalid = handler.invalidArgument(new IllegalArgumentException("private detail"));
