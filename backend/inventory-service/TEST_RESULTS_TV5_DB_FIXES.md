@@ -41,4 +41,18 @@ Owner follow-up unit tests also introduced mixed Mockito matchers: two verifies 
 - [x] Owner atomic operationId arbitration verified by deterministic PostgreSQL race/rollback regressions.
 - [ ] Owner review/integration and external auth/identity/lifecycle contracts.
 
+## Final committed-source verification — 17/10/2026
+
+Source `6c6cf8c9cc9a1582156e127dfa18165a5ce96661` (all new regression Java files committed). Command: `:inventory-service:build :inventory-service:postgresIntegrationTest --rerun-tasks --no-daemon --continue --console=plain` → **BUILD SUCCESSFUL, exit0/31s, 8 tasks; 16 unit +13 PostgreSQL PASS**, 0 failure/error/skipped. Module build only; not a full-backend or live E2E result.
+
+Unit16 = validation3 + domain7 + service6. PG13 = owner existing3 + TV5 schema/upgrade2 + initialize3 + operation/concurrency/rollback5. PG tests execute in the explicit task, not the unit count. Do not sum earlier runs into these counts. `final-green/run.json` records the source/command/options; raw logs and seven XML files are unchanged bytes. Later commits only add docs/evidence.
+
+The final production `src/main` (including V1/V2) matches owner `adc705e` byte-for-byte in Git. The three DB fixes are the owner's concurrently delivered source; TV5 independently reproduced the old defects, retained that source, added deterministic real-DB/HTTP/upgrade regressions and fixed the two invalid Mockito verify calls. No alternative CHAR annotation remains in current source. V1 is unchanged; V2 is the owner's forward migration.
+
+Docker inventories after all runs show **0 missing prior containers and 0 missing prior volumes**. Testcontainers used newly created databases/resources only. No Docker down -v, prune or existing-data deletion. Resource inventories and preservation JSON are retained; generated fixture credentials are not printed.
+
+Whitespace verification is scoped explicitly: Java/Gradle/SQL/Markdown/Git-attributes diff checks PASS. Unscoped `git diff --check` reports trailing whitespace for CRLF in generated raw manifest/evidence kept with `-text`; these bytes are preserved and verified by SHA256/Git blobs, not normalized to hide the warnings. This is an evidence-format warning, not a runtime test failure.
+
+The [TV5 QA matrix](../../reports/TV5_PR31_DB_REGRESSION_2026-10-17.md) maps each defect to a test/evidence. PR #35 was merged by the owner; parent #31 is now Ready (owner action) at `adc705e`, not a claim of acceptance. Review/integration of this supplement and shared auth/identity/lifecycle decisions remain pending. No Approve/Merge/Close or reviewer-thread resolution by TV5.
+
 Auth service-pair/role design, Product↔SKU/Store identity, reserve/consume/release timing, live dependencies and E2E remain owner decisions/NOT_RUN. This bugfix does not enable the checkout adapter, settle Finance policy or expand to new week 2–3 features. Issue #5 remains OPEN/PARTIAL.
