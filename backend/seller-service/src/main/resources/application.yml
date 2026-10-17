@@ -3,6 +3,16 @@ server:
 spring:
   application:
     name: seller-service
+  datasource:
+    url: ${SELLER_DB_URL}
+    username: ${SELLER_DB_USERNAME}
+    password: ${SELLER_DB_PASSWORD}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    enabled: true
 management:
   endpoints:
     web:

@@ -2,7 +2,7 @@
 
 **Owner:** TV2.
 
-Seller's internal domain and lifecycle rules are implemented. HTTP API, verified Auth integration, JPA persistence, migrations, events and Store are pending agreed contracts. Read ../../docs/OWNERSHIP.md before edits. Refs #2; this work does not complete the full Issue.
+Seller's internal domain/lifecycle and persistence implementation are present. HTTP API, verified Auth integration, events and Store remain separate integration work. Read ../../docs/OWNERSHIP.md before edits. Refs #2; this work does not complete the full Issue. The TV1 persistence confirmation supplied by the project owner is recorded in [SELLER_PERSISTENCE_CONTRACT.md](SELLER_PERSISTENCE_CONTRACT.md).
 
 ## Actual package structure
 
@@ -17,9 +17,15 @@ com.projecthk5.sellerservice
   seller.service
     SellerLifecycleService
     SellerAccessPolicy
+    SellerPersistenceService
+    SellerPersistenceException
+  seller.entity
+    SellerProfile
+  seller.repository
+    SellerProfileRepository
 ```
 
-Layered Architecture + Package-by-Feature: the seller feature owns its domain and service layers. Additional controller/dto/repository/entity/infrastructure packages should be added when those implementations exist. The current domain is immutable Java data, not a JPA entity or an HTTP DTO. State transitions and ownership checks live in the lifecycle service. No Service/ServiceImpl pair, mapper, fake repository or in-memory persistence is introduced.
+Layered Architecture + Package-by-Feature: seller.entity now contains SellerProfile, seller.repository contains SellerProfileRepository, and seller.service adds REQUIRED SellerPersistenceService orchestration. The domain stays immutable Java data, not a JPA entity or HTTP DTO. State/ownership rules remain in the existing lifecycle. No Service/ServiceImpl pair, fake repository or in-memory persistence is introduced.
 
 ## Domain behavior implemented
 
@@ -34,7 +40,7 @@ Internal model: an opaque owner identity reference, lifecycle state and latest r
 | suspend | APPROVED | SUSPENDED | Separate actor with moderation permission; nonblank reason |
 | reinstate | SUSPENDED | APPROVED | Separate actor with moderation permission |
 
-All other state/action combinations fail with an internal INVALID_STATE rule violation. Resubmission and transitions to APPROVED clear the prior review reason. Identity references are exact opaque values: no lowercase/trim normalization or assumed UUID/JWT subject format. Review reasons are stripped and must be nonblank for REJECTED/SUSPENDED. Length limits and profile-field validation belong to the future agreed request/schema contract.
+All other state/action combinations fail with an internal INVALID_STATE rule violation. Resubmission and transitions to APPROVED clear the prior review reason. Identity references are exact opaque values: no lowercase/trim normalization or consumer-side UUID parsing. Review reasons are stripped and must be nonblank for REJECTED/SUSPENDED. Persistence enforces the confirmed owner/reason limits; future profile/request validation needs its own HTTP contract.
 
 For now all self-moderation is denied, including self-approval and self-reinstatement, even for an actor granted moderation permission. This conservative internal separation-of-duties rule needs TV1/TV2 confirmation before exposing an API. Returning a new immutable application leaves the original unchanged on both success and failure.
 
@@ -44,23 +50,31 @@ SellerLifecycleService requires a SellerAccessPolicy implementation. This interf
 
 **No production policy implementation, Spring service bean, controller or business HTTP endpoint is registered.** Test mocks permit selected cases only to exercise the rules. They do not prove real JWT authorization. Registration takes the verified applicant identity; resubmission checks exact ownership; all moderation paths call the permission policy and deny self-moderation. There is no default allow-all implementation or public write route.
 
-TV1 must confirm JWT issuer/audience/JWKS, stable identity namespace (including issuer if needed), role/permission mapping, moderation duties, endpoint/DTO/error contract, Gateway routes and CORS. Do not publish internal enum names as a shared Seller contract without agreement.
+The verified Auth adapter still needs the approved signing profile/issuer/audience, role/permission mapping, endpoint/DTO/error contract, Gateway routes and CORS. JWKS is relevant only if the selected signing profile uses it. Do not publish internal enums as a shared HTTP contract without agreement; the persistence decisions below do not implement JWT verification.
 
-## Persistence and transactions pending schema review
+## Confirmed persistence and transactions
 
-The user confirmed TV1 has not agreed the Seller schema/Auth contract. Therefore no JPA mapping, repository, Flyway migration, database configuration or new dependency is added. Seller writes are not durable yet, and duplicate registrations/profile validation/concurrent state changes cannot be claimed as complete.
+TV1 has now confirmed the minimum persistence contract through the project owner. Flyway V1 creates seller_profiles in seller-service's own logical PostgreSQL database: separate UUID ID, exact VARCHAR(128) owner with UNIQUE/collation C and no cross-service FK, four checked states, reason <=500 and JPA @Version. Registration inserts once; REJECTED resubmission keeps ID. Reasons are cleared outside REJECTED/SUSPENDED. No additional profile fields or Store ownership boundary is assumed.
 
-Once agreed, create persistence only in seller-service's own logical PostgreSQL database. Use logical owner references, not a cross-database FK to user/auth-service. Place the persistence transaction in the orchestration service: load the existing application, enforce verified access/state rules, persist and protect concurrent updates with the reviewed locking/version strategy. Do not copy Category's REQUIRES_NEW/advisory lock automatically; Seller needs its own atomic transaction policy. No transaction annotation is added to pure in-memory rule evaluation.
+SellerPersistenceService uses REQUIRED and joins the caller transaction; outer rollback undoes writes/version. Commands require expectedVersion, stale requests/DB optimistic lock failures become internal SELLER_VERSION_CONFLICT. UNIQUE owner is the final concurrent registration guard; only its violation maps to SELLER_ALREADY_EXISTS. No automatic retry, REQUIRES_NEW or Category advisory lock is introduced. No transaction annotation is added to pure lifecycle evaluation.
+
+The orchestration is deliberately not component-scanned as a production bean. Future verified Auth integration must explicitly wire it as a Spring bean with SellerAccessPolicy so @Transactional is applied; manually constructing it is not a supported transactional integration. Test-only wiring registers the real transaction proxy with fixture identities/Admin grants, not a production JWT adapter. Authentication/moderation is checked before update lookup, with domain owner/state/self-moderation checks retained. There is no new public Seller HTTP write endpoint or default allow-all production policy.
+
+Set SELLER_DB_URL/USERNAME/PASSWORD for this service's own DB. Flyway is enabled, JPA ddl-auto validates and open-in-view is false. API/error DTO/verified JWT/Gateway/CORS/role synchronization/Store/Product remain separate PRs. Internal result/exception types are not shared HTTP contracts.
 
 ## Verification
 
 From backend using Java 21 and Gradle 8.x:
 
 ```bash
+gradle :seller-service:assemble :seller-service:test
+gradle :seller-service:integrationTest
 gradle :seller-service:build
 gradle :product-service:build :seller-service:build
 ```
 
-Seller tests need no Docker/database: immutable model/identity validation, the full lifecycle, all 20 state/action combinations, authentication/permission denial, ownership, self-moderation and invalid input. Reported authorization tests use a mocked access policy; real JWT/API/database integration remains NOT_RUN.
+The test task needs no Docker: existing domain/lifecycle regressions plus entity boundaries and persistence policy denial tests. The tagged integrationTest task requires PostgreSQL 16.6 Testcontainers/Docker and is included in check/build, never silently disabled. It covers migration, durable/unique/exact owner, lifecycle, REQUIRED rollback, stale version, SQL constraints, real concurrent unique wait and optimistic locking. Docker API 1.44 is scoped to that task, overridable with -PdockerApiVersion. No H2 substitution is used. Fixture/mock policy is not JWT verification; actual results are in SELLER_TEST_REPORT.md.
+
+This persistence branch temporarily targets feat/tv2-seller-product while PR #7 is unmerged. Retarget after the dependency merges without rewriting the existing history.
 
 See SELLER_TEST_REPORT.md for actual verification and pending work. Shared build/settings and other members' modules remain unchanged.
