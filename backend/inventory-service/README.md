@@ -36,4 +36,4 @@ Flyway owns schema creation; Hibernate is configured with `ddl-auto: validate`.
 
 - TV3 must confirm `sku` vs `productId`, operation-ID derivation from checkout/order, and when reserve/consume/release is called. Until that is confirmed, do not wire this endpoint into checkout.
 - The shared JWT/service-auth contract is not yet wired into this service. The internal token is a fail-closed temporary boundary, not a replacement for the team's approved service authentication.
-- Unit tests cover stock invariants only. PostgreSQL migration, concurrent idempotency, runtime security, and checkout E2E tests remain NOT_RUN until executed in a suitable environment.
+- Unit tests cover stock invariants, multi-SKU operations, insufficient stock, and idempotent replay. PostgreSQL migration, concurrent idempotency, runtime security, and checkout E2E tests remain NOT_RUN until executed in a suitable environment.
