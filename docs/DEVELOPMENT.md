@@ -14,11 +14,28 @@ git switch main
 git pull --ff-only origin main
 ```
 
+## JVM timezone cho Auth/User trên PowerShell
+
+Review PR #27 trên PostgreSQL 16.15 đã ghi nhận JVM `Asia/Saigon` khiến pgJDBC gửi startup parameter `TimeZone` không có trong `pg_timezone_names` của môi trường đó; PostgreSQL từ chối kết nối với SQLState `22023`. Cùng source/database, đổi riêng JVM sang `UTC` cho kết quả 3 PASS, 0 FAIL/SKIPPED. Vì vậy dùng UTC cho lượt kiểm chứng hiện tại; đây là khác biệt timezone của môi trường đã kiểm thử, không phải lỗi credentials hay Hibernate dialect.
+
+Trong **mỗi terminal PowerShell** chạy Gradle test/build hoặc Auth/User `bootRun`, lưu giá trị cũ rồi đặt UTC **một lần trước khi chạy Gradle**:
+
+```powershell
+$previousJavaToolOptions = $env:JAVA_TOOL_OPTIONS
+$env:JAVA_TOOL_OPTIONS = "-Duser.timezone=UTC"
+```
+
+Lệnh trên tạm thay giá trị `JAVA_TOOL_OPTIONS`, chỉ áp dụng cho terminal hiện tại và các tiến trình Java con; không đổi timezone toàn hệ điều hành Windows. Giữ terminal đó cho các lệnh bên dưới. Sau khi Gradle hoàn tất hoặc đã dừng `bootRun` bằng Ctrl+C, khôi phục trong cùng terminal (giá trị `$null` sẽ bỏ biến nếu trước đó chưa có):
+
+```powershell
+$env:JAVA_TOOL_OPTIONS = $previousJavaToolOptions
+```
+
+Không sửa PostgreSQL HBA, quyền DB, credentials, `.env` hoặc Docker volumes để xử lý lỗi timezone. Bằng chứng đối chiếu nằm trong [báo cáo readiness](TV1_TECHNICAL_READINESS.md#d1-đối-chiếu-jvm-timezone-pr-27).
+
 ## Backend scaffold
 
 Auth/User cần provision PostgreSQL và nạp biến runtime theo [runbook TV1](../docker/README.md) trước `bootRun`. Build thông thường không cần DB; test DB chỉ chạy khi `TV1_DATABASE_TESTS=true`.
-
-**JVM timezone:** trước các lệnh Java bên dưới, chọn timezone được PostgreSQL hỗ trợ. Windows Java mặc định `Asia/Saigon` có thể bị PostgreSQL16.15 Debian từ chối ngay lúc mở connection (SQLState22023). Cấu hình process-only `JAVA_TOOL_OPTIONS=-Duser.timezone=UTC` áp dụng cho cả Gradle test forks và bootRun; giữ các JVM options khác đang cần và khôi phục environment sau lệnh theo [block PowerShell trong runbook](../docker/README.md#jvm-timezone-trước-khi-chạy-java). Đây là cấu hình môi trường, không đổi test assertions/credentials/dialect hoặc timezone hệ điều hành. Packaged service dùng `java -Duser.timezone=UTC -jar ...`; không giả định `hibernate.jdbc.time_zone` sửa được startup parameters.
 
 ```bash
 cd backend
@@ -29,7 +46,7 @@ cd backend
 curl http://localhost:8101/actuator/health
 ```
 
-Đặt `JAVA_HOME` trỏ tới JDK 21 trước khi chạy. Trên Windows PowerShell, thay `./gradlew` bằng `.\gradlew.bat`:
+Đặt `JAVA_HOME` trỏ tới JDK 21 trước khi chạy. Trên Windows PowerShell, [đặt JVM UTC](#jvm-timezone-cho-authuser-trên-powershell) trước, thay `./gradlew` bằng `.\gradlew.bat`:
 
 ```powershell
 $env:JAVA_HOME = 'C:\path\to\jdk-21'
@@ -37,7 +54,9 @@ $env:Path = "$env:JAVA_HOME\bin;$env:Path"
 cd backend
 .\gradlew.bat --version
 .\gradlew.bat build
-.\gradlew.bat :auth-service:bootRun
+.\gradlew.bat :auth-service:bootRun --no-daemon --console=plain
+# User: ở terminal riêng, nạp runtime env và đặt JVM UTC như trên, rồi từ backend:
+# .\gradlew.bat :user-service:bootRun --no-daemon --console=plain
 ```
 
 Chạy `cd backend` từ thư mục gốc repository; bỏ lệnh này nếu đã ở `backend`. Wrapper và dependency cần mạng trong lần tải đầu; bản phân phối được xác minh bằng `distributionSha256Sum` trong `backend/gradle/wrapper/gradle-wrapper.properties`. Các service mới là scaffold, health `UP` không xác nhận Auth/User hay tích hợp đã hoạt động. Task `test` báo `NO-SOURCE` nghĩa là chưa có test, không phải unit test PASS.
@@ -54,7 +73,7 @@ Giao diện chỉ có shell giới thiệu các miền nghiệp vụ, chưa gọ
 
 ## PostgreSQL và kiểm chứng readiness
 
-Làm theo [runbook provisioning](../docker/README.md) để kiểm kê volume cũ, cấu hình `.env`, nạp biến vào tiến trình và tạo `auth_db`/`user_db`. Sau đó từ gốc repository:
+Làm theo [runbook provisioning](../docker/README.md) để kiểm kê volume cũ, cấu hình `.env`, nạp biến vào tiến trình và tạo `auth_db`/`user_db`. [Đặt JVM UTC](#jvm-timezone-cho-authuser-trên-powershell) trong cùng terminal trước Gradle. Sau đó từ gốc repository:
 
 ```powershell
 docker compose --env-file .env -f docker/compose.dev.yml config --quiet
@@ -64,6 +83,7 @@ docker compose -f docker/compose.dev.yml ps
 ./docker/test-tv1-databases.ps1
 $env:TV1_DATABASE_TESTS = 'true'
 cd backend
+.\gradlew.bat :auth-service:test :user-service:test --rerun-tasks --no-daemon --console=plain
 .\gradlew.bat build --console=plain
 ```
 

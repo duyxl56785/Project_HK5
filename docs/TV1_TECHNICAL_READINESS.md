@@ -1,6 +1,6 @@
 # TV1 — PHASE B Technical Readiness
 
-**Bổ sung17/10/2026 — cấu hình timezone:** [TV1_TIMEZONE_RECHECK.md](TV1_TIMEZONE_RECHECK.md) lưu kiểm chứng riêng về SQLState22023 với JVM Asia/Saigon và cấu hình process-only UTC/IANA được server hỗ trợ. Runbook/development guide đã bổ sung cách cấu hình trước test/bootRun; các số liệu bên dưới là lịch sử PHASE B16/10, không phải lượt kiểm lại timezone hoặc nghiệm thu API mới.
+**TV5 independent recheck17/10/2026:** [TV1_TIMEZONE_RECHECK.md](TV1_TIMEZONE_RECHECK.md) and raw log/XML preserve the Asia/Saigon diagnostic failure, UTC success and verified Asia/Ho_Chi_Minh alternative on unchanged Auth/User source. This evidence supplements the owner runbook fix a810312 and the historical results below; it does not add source/API/migration behavior.
 
 Refs #1. Kiểm chứng ngày 2026-10-16 trên Windows/PowerShell tại `D:\CMC\Project-HK5-Git`. Baseline main `1a9d579cdf42c8aa170577a137624c4ec0cfdcce`; [PR #24](https://github.com/duyxl56785/Project_HK5/pull/24) MERGED lúc `2026-10-16T01:46:47Z`, đã kiểm tra bằng GitHub CLI và `merge-base --is-ancestor`. Main fast-forward không phát sinh thay đổi; branch `chore/tv1-auth-readiness`. Không merge PR/đóng Issue #1; giữ `.serena/` và mọi `backend/*/bin/`.
 
@@ -87,6 +87,21 @@ Các lệnh Gradle chạy tại `backend`, với JDK21 set trong process; Docker
 Bằng chứng local (generated, Git ignored): `backend/build/readiness/{runtime-dependencies,security-dependencies,final-build}.log`; JUnit XML tại `backend/auth-service/build/test-results/test/TEST-*.xml` và tương tự User. Suite: Auth DatabaseReadinessTest 1/0/0/0, Hs256DependencyTest 1/0/0/0, User DatabaseReadinessTest 1/0/0/0 (tests/skipped/failures/errors). CI lưu log runner ở link delivery khi có run thực tế. Nguồn kiểm tra nằm trong các test/script committed để chạy lại.
 
 FAIL quan sát và đã xử lý: sandbox Git ownership/network (chạy lại với quyền phù hợp, không đổi safe.directory toàn máy); Docker port5432 conflict (dùng5433); HS256 fixture có kid nhưng ImmutableSecret không mang kid (đổi fixture sang JWK có cùng key ID); psql connection errors không in SQLSTATE như SQL execution errors (negative check khớp thông báo authentication/HBA và bắt buộc exit khác0). Các lỗi không được tính là PASS cho đến lần chạy lại đạt.
+
+### D.1. Đối chiếu JVM timezone PR #27
+
+Bổ sung ngày 2026-10-17 cho head `6a7f1724bb533cc5ee92c431afb24d9844dff631`. [Review TV2/TV5](https://github.com/duyxl56785/Project_HK5/pull/27) so sánh cùng source/database, chỉ đổi JVM timezone:
+
+| JVM timezone | Kết quả readiness Auth/User | Kết luận |
+|---|---|---|
+| `Asia/Saigon` | 1 PASS, 2 FAIL, 0 SKIPPED; Gradle exit 1 | PostgreSQL 16.15 của môi trường review không có tên này trong `pg_timezone_names`; từ chối startup parameter `TimeZone`, SQLState `22023` trước test body |
+| `UTC` | 3 PASS, 0 FAIL/error/SKIPPED; Gradle exit 0 | UTC được PostgreSQL đó chấp nhận; cả hai test DB thực sự chạy với `TV1_DATABASE_TESTS=true` |
+
+[Log/XML và SHA256 của TV5](https://github.com/duyxl56785/Project_HK5/tree/c9d39217993970563ab9917ef2fdd911483f62bf/reports/evidence/w1-gates-20261017) giữ riêng lượt FAIL và lượt UTC PASS. [CI readiness tại đúng head trên](https://github.com/duyxl56785/Project_HK5/actions/runs/38839525314/job/116776151812) cũng SUCCESS; đây là bằng chứng trước thay đổi tài liệu này. Không quy lỗi timezone thành lỗi credentials/dialect hoặc suy rộng rằng mọi PostgreSQL đều thiếu `Asia/Saigon`.
+
+Dùng [hướng dẫn PowerShell UTC và khôi phục `JAVA_TOOL_OPTIONS`](DEVELOPMENT.md#jvm-timezone-cho-authuser-trên-powershell) trước Gradle test/build và Auth/User `bootRun`, áp dụng riêng từng terminal; không đổi timezone Windows, HBA, quyền DB, credentials hoặc volumes.
+
+Kiểm tra lại local ngày 2026-10-17: `docker-postgres-1` đang Exited, credentials Auth/User chưa nạp vào tiến trình; readiness DB và `bootRun` **NOT_RUN**, không tự khởi động/provision hay dùng PostgreSQL của dự án khác. Full backend `build --no-daemon --console=plain` với JDK 21/UTC, bỏ `TV1_DATABASE_TESTS`, **PASS (exit 0)**: XML ghi 1 PASS (HS256), 2 DB tests SKIPPED, 0 failure/error; không tính SKIPPED thành DB PASS. Lượt build trước có `--rerun-tasks` cũng tạo lại ba XML này. Đoạn đặt/khôi phục JVM options được kiểm tra với biến ban đầu chưa có và đã có giá trị.
 
 ## E. Architecture / security review
 

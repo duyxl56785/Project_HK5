@@ -1,12 +1,12 @@
 # TV1 readiness — TV5 environment/timezone fix verification
 
-Refs #1/#5/#27. Separate fix branch based on exact6a7f172. This fix updates docker/README.md and docs/DEVELOPMENT.md with explicit process-scoped JVM timezone configuration for tests and running services. Auth/User application code, test assertions, dependencies, credentials model and DB/schema are unchanged. The original readiness report remains historical.
+Refs #1/#5/#27. TV5 first prepared fix7175ea2 from6a7f172, then TV1 independently pushed the runbook correction a810312 before this supplemental PR was opened. The TV5 branch is synchronized with a810312 and preserves the owner's docker/README.md and docs/DEVELOPMENT.md instructions. The remaining diff adds fresh independent diagnostic evidence and this report. Auth/User application code, test assertions, dependencies, credentials model and DB/schema are identical at6a7f172 and a810312; the three runs below test that unchanged Java source. The original readiness report remains historical.
 
 ## Cause and selected fix
 
 With Java21/pgJDBC42.7.4, JVM Asia/Saigon is sent during connection startup; the tested PostgreSQL16.15 Debian image does not recognize that name and rejects with SQLState22023. Hibernate's later metadata/dialect error is secondary; changing dialect, credentials or hibernate.jdbc.time_zone does not correct the refused startup parameter.
 
-Use a server-supported JVM timezone, documented as process-only JAVA_TOOL_OPTIONS=-Duser.timezone=UTC while retaining other required Java options. Apply the same configuration to tests/bootRun, or java -Duser.timezone=UTC -jar for a packaged process. Restore the calling shell's prior options afterward. Do not change Windows timezone, map aliases silently, rotate passwords or rewrite application/business dates. A different supported IANA zone requires the environment/owner's choice; Asia/Ho_Chi_Minh is also verified below, not mandated as business policy.
+Use a server-supported JVM timezone. The owner's a810312 runbook saves existing JAVA_TOOL_OPTIONS, temporarily sets -Duser.timezone=UTC for the current shell and child Java processes, then restores the previous value after test/bootRun. A packaged process can select java -Duser.timezone=UTC -jar. Do not change Windows timezone, map aliases silently, rotate passwords or rewrite application/business dates. A different supported IANA zone requires the environment/owner's choice; Asia/Ho_Chi_Minh is also verified below, not mandated as business policy.
 
 ## New TV5 execution — 17/10/2026
 
@@ -22,4 +22,4 @@ Command for each run: `gradle -p backend :auth-service:test :user-service:test -
 
 Raw [logs/XML/suite counts](verification/tv5-timezone/), PostgreSQL version/timezone list, provision/isolation outputs, exit files and resource inventories are retained with manifest.sha256. Generated secrets were compared against the local evidence contents before publication; no values were found. Raw bytes remain unchanged. The isolated service was stopped after tests, its new volume kept, and0pre-existing containers/volumes were lost. No down -v, prune, DROP DATABASE or host timezone change.
 
-The fix addresses the missing environment configuration/runbook, not a new Auth API implementation or PostgreSQL timezone database patch. bootRun/packaged-JAR HTTP smoke, Auth business migrations/API/security and live integration/E2E are NOT_RUN here. Owner TV1 must review/accept the supplemental PR before declaring the parent#27 finding resolved. Issue#5 remains OPEN/PARTIAL.
+The owner's a810312 addresses the missing environment configuration/runbook; this supplement provides independent execution evidence, not a new Auth API implementation or PostgreSQL timezone database patch. bootRun/packaged-JAR HTTP smoke, Auth business migrations/API/security and live integration/E2E are NOT_RUN here. Owner/reviewer acceptance of#27 and this supplemental evidence is still required; no automatic thread resolution/approval/merge is performed. Issue#5 remains OPEN/PARTIAL.
