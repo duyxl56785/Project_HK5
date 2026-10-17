@@ -2,6 +2,10 @@
 
 Status: PARTIAL / NOT PRODUCTION READY. No shared contract or other owners' module changed.
 
+## 18/10/2026 — latest PR #28 review / cross-team contract gate
+
+TV1 confirmed the former HS256 environment, replay-lazy and scanner-race P1 fixes at HEAD `89c20bc`; TV2 has resolved its replay/scanner review threads. TV5's HS256 comment remains awaiting its review. Follow-up reviews from TV2/TV4 now require an approved Product/SKU and Inventory reservation workflow before any live adapter is enabled. TV4 PR #31 has merged an Inventory API but **not** the Checkout consumer contract. The new document [TV3_PROVIDER_CONSUMER_DECISIONS.md](TV3_PROVIDER_CONSUMER_DECISIONS.md) records TV3's **DRAFT proposal** and owner questions. Keep `UnconfiguredCatalogAdapter` / `UnconfiguredInventoryAdapter` fail-closed, Finance gate false; no shared contract or migration V1 changes. Unit/PG GREEN evidence remains historical from the same source snapshot, **not** a new test run. Live integration NOT_RUN.
+
 ## TV5 supplemental regression fixes — 17/10/2026
 
 See TEST_RESULTS_TV5_FIXES.md for RED/GREEN evidence on the separate fix branch. Order JWT environment now binds the actual HS256 decoder; successful/uncertain-commit reads fetch SellerOrders scoped to customer; stale scanner and failure-handler transitions condition their UPDATE on PROCESSING. Final two-service build:56unit +11PostgreSQL PASS,0fail/error/skip. Historical NOT_RUN statements below describe TV3's original followup head63f63c1, not this tested fix branch. Parent integration and owner reviews remain pending. Finance policy and shared contracts are unchanged.
