@@ -20,6 +20,8 @@ import java.util.TreeMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 class InventoryOperationServiceTest {
@@ -31,6 +33,7 @@ class InventoryOperationServiceTest {
     void setUp() {
         items = mock(InventoryItemRepository.class);
         operations = mock(InventoryOperationRepository.class);
+        when(operations.claimOperationId(anyString(), anyString(), anyString())).thenReturn(1);
         service = new InventoryOperationService(items, operations);
     }
 
@@ -50,11 +53,11 @@ class InventoryOperationServiceTest {
         assertEquals(4, b.getAvailableQuantity());
         assertEquals(3, b.getReservedQuantity());
         assertFalse(result.replayed());
-        verify(operations).saveAndFlush(any(InventoryOperation.class));
+        verify(operations).claimOperationId(eq("checkout-1"), eq("RESERVE"), anyString());
     }
 
     @Test
-    void insufficientStockDoesNotRecordSuccessfulOperation() {
+    void insufficientStockDoesNotChangeBalance() {
         InventoryItem a = new InventoryItem("A", 1);
         when(items.findAllBySkuForUpdate(any())).thenReturn(List.of(a));
         when(operations.findById("checkout-2")).thenReturn(Optional.empty());
@@ -65,7 +68,7 @@ class InventoryOperationServiceTest {
 
         assertEquals(1, a.getAvailableQuantity());
         assertEquals(0, a.getReservedQuantity());
-        verify(operations, never()).saveAndFlush(any(InventoryOperation.class));
+        verify(operations).claimOperationId(eq("checkout-2"), eq("RESERVE"), anyString());
     }
 
     @Test
@@ -81,7 +84,7 @@ class InventoryOperationServiceTest {
 
         assertTrue(result.replayed());
         assertEquals(3, a.getAvailableQuantity());
-        verify(operations, never()).saveAndFlush(any(InventoryOperation.class));
+        verify(operations, never()).claimOperationId(anyString(), anyString(), anyString());
     }
 
     @Test
@@ -95,7 +98,23 @@ class InventoryOperationServiceTest {
                 () -> service.apply(new InventoryOperationRequest("same-id", InventoryOperationType.DECREASE,
                         List.of(new InventoryOperationRequest.ItemQuantity("A", 1)))));
         assertEquals(3, a.getAvailableQuantity());
-        verify(operations, never()).saveAndFlush(any(InventoryOperation.class));
+        verify(operations, never()).claimOperationId(anyString(), anyString(), anyString());
+    }
+
+    @Test
+    void concurrentClaimWithSamePayloadIsTreatedAsReplay() throws Exception {
+        InventoryItem a = new InventoryItem("A", 3);
+        when(items.findAllBySkuForUpdate(any())).thenReturn(List.of(a));
+        String hash = hash(InventoryOperationType.DECREASE, Map.of("A", 2L));
+        when(operations.findById("race-id")).thenReturn(Optional.empty(),
+                Optional.of(new InventoryOperation("race-id", "DECREASE", hash)));
+        when(operations.claimOperationId("race-id", "DECREASE", hash)).thenReturn(0);
+
+        var result = service.apply(new InventoryOperationRequest("race-id", InventoryOperationType.DECREASE,
+                List.of(new InventoryOperationRequest.ItemQuantity("A", 2))));
+
+        assertTrue(result.replayed());
+        assertEquals(3, a.getAvailableQuantity());
     }
 
     @Test
@@ -115,7 +134,7 @@ class InventoryOperationServiceTest {
 
         assertEquals(10, a.getAvailableQuantity());
         assertEquals(10, b.getAvailableQuantity());
-        verify(operations, never()).saveAndFlush(any(InventoryOperation.class));
+        verify(operations, never()).claimOperationId(anyString(), anyString(), anyString());
     }
 
     private static String hash(InventoryOperationType type, Map<String, Long> input) throws Exception {

@@ -1,0 +1,10 @@
+{
+  "jvmOptions": "-Duser.timezone=UTC -Dapi.version=1.44",
+  "gradle": "8.14.3",
+  "command": "gradle -p .verification/fixes/pr31-db/backend :inventory-service:test --tests *InventoryOperationServiceTest --rerun-tasks --no-daemon --console=plain",
+  "durationSeconds": 13,
+  "exit": 1,
+  "java": "21.0.7",
+  "result": "6 tests:4PASS/2FAIL due InvalidUseOfMatchersException; assertions unchanged",
+  "head": "adc705ea69fee23049d0c02528c363aa7085e98e"
+}

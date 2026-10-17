@@ -21,7 +21,14 @@ public class InventoryController {
     @PostMapping("/items")
     @ResponseStatus(HttpStatus.CREATED)
     public InventoryBalanceResponse initialize(@Valid @RequestBody InitializeInventoryRequest request) {
-        InventoryItem item = items.saveAndFlush(new InventoryItem(request.sku().trim(), request.availableQuantity()));
+        String sku = request.sku().trim();
+        int inserted = items.insertIfAbsent(sku, request.availableQuantity());
+        if (inserted == 0) {
+            throw new InventoryOperationServiceException("INVENTORY_ITEM_EXISTS",
+                    "Inventory item already exists for sku: " + sku);
+        }
+        InventoryItem item = items.findBySku(sku)
+                .orElseThrow(() -> new InventoryNotFoundException(sku));
         return new InventoryBalanceResponse(item.getSku(), item.getAvailableQuantity(),
                 item.getReservedQuantity(), item.getUpdatedAt());
     }

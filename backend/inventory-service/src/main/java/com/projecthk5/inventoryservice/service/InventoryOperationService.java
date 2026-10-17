@@ -2,7 +2,6 @@ package com.projecthk5.inventoryservice.service;
 
 import com.projecthk5.inventoryservice.api.*;
 import com.projecthk5.inventoryservice.model.InventoryItem;
-import com.projecthk5.inventoryservice.model.InventoryOperation;
 import com.projecthk5.inventoryservice.repository.InventoryItemRepository;
 import com.projecthk5.inventoryservice.repository.InventoryOperationRepository;
 import org.springframework.stereotype.Service;
@@ -42,11 +41,17 @@ public class InventoryOperationService {
         String hash = requestHash(request.type(), quantities);
         var prior = operations.findById(request.operationId());
         if (prior.isPresent()) {
-            if (!prior.get().getRequestHash().equals(hash)) {
-                throw new InventoryOperationServiceException("IDEMPOTENCY_KEY_REUSED",
-                        "operationId was already used with a different request");
+            return replayOrReject(request, hash, locked, prior.get().getRequestHash());
+        }
+
+        int claimed = operations.claimOperationId(request.operationId(), request.type().name(), hash);
+        if (claimed == 0) {
+            var concurrent = operations.findById(request.operationId());
+            if (concurrent.isEmpty()) {
+                throw new InventoryOperationServiceException("IDEMPOTENCY_CLAIM_CONFLICT",
+                        "operationId could not be claimed; retry the operation");
             }
-            return response(request.operationId(), request.type(), true, locked);
+            return replayOrReject(request, hash, locked, concurrent.get().getRequestHash());
         }
 
         Map<String, InventoryItem> bySku = locked.stream()
@@ -63,9 +68,19 @@ public class InventoryOperationService {
             }
         }
 
-        operations.saveAndFlush(new InventoryOperation(request.operationId(), request.type().name(), hash));
         items.flush();
         return response(request.operationId(), request.type(), false, locked);
+    }
+
+    private static InventoryOperationResponse replayOrReject(InventoryOperationRequest request,
+                                                               String hash,
+                                                               List<InventoryItem> locked,
+                                                               String priorHash) {
+        if (!priorHash.equals(hash)) {
+            throw new InventoryOperationServiceException("IDEMPOTENCY_KEY_REUSED",
+                    "operationId was already used with a different request");
+        }
+        return response(request.operationId(), request.type(), true, locked);
     }
 
     private static Map<String, Long> canonicalItems(InventoryOperationRequest request) {
