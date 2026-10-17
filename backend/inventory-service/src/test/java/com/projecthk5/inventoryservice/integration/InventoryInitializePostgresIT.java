@@ -5,6 +5,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.projecthk5.inventoryservice.api.*;
+import java.net.URI;
 import java.util.List;
 import java.util.concurrent.*;
 import org.junit.jupiter.api.Test;
@@ -77,11 +78,11 @@ class InventoryInitializePostgresIT extends InventoryPostgresSupport {
             String sku = id("auth-path");
             String body = "{\"sku\":\"" + sku + "\",\"availableQuantity\":1}";
 
-            http.perform(post(path).contentType("application/json").content(body))
+            http.perform(post(URI.create(path)).contentType("application/json").content(body))
                     .andExpect(status().isUnauthorized());
             assertNoInventoryRow(sku);
 
-            http.perform(post(path).header("X-Inventory-Internal-Token", "wrong-token")
+            http.perform(post(URI.create(path)).header("X-Inventory-Internal-Token", "wrong-token")
                             .contentType("application/json").content(body))
                     .andExpect(status().isUnauthorized());
             assertNoInventoryRow(sku);
