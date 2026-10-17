@@ -14,7 +14,28 @@ git switch main
 git pull --ff-only origin main
 ```
 
+## JVM timezone cho Auth/User trên PowerShell
+
+Review PR #27 trên PostgreSQL 16.15 đã ghi nhận JVM `Asia/Saigon` khiến pgJDBC gửi startup parameter `TimeZone` không có trong `pg_timezone_names` của môi trường đó; PostgreSQL từ chối kết nối với SQLState `22023`. Cùng source/database, đổi riêng JVM sang `UTC` cho kết quả 3 PASS, 0 FAIL/SKIPPED. Vì vậy dùng UTC cho lượt kiểm chứng hiện tại; đây là khác biệt timezone của môi trường đã kiểm thử, không phải lỗi credentials hay Hibernate dialect.
+
+Trong **mỗi terminal PowerShell** chạy Gradle test/build hoặc Auth/User `bootRun`, lưu giá trị cũ rồi đặt UTC **một lần trước khi chạy Gradle**:
+
+```powershell
+$previousJavaToolOptions = $env:JAVA_TOOL_OPTIONS
+$env:JAVA_TOOL_OPTIONS = "-Duser.timezone=UTC"
+```
+
+Lệnh trên tạm thay giá trị `JAVA_TOOL_OPTIONS`, chỉ áp dụng cho terminal hiện tại và các tiến trình Java con; không đổi timezone toàn hệ điều hành Windows. Giữ terminal đó cho các lệnh bên dưới. Sau khi Gradle hoàn tất hoặc đã dừng `bootRun` bằng Ctrl+C, khôi phục trong cùng terminal (giá trị `$null` sẽ bỏ biến nếu trước đó chưa có):
+
+```powershell
+$env:JAVA_TOOL_OPTIONS = $previousJavaToolOptions
+```
+
+Không sửa PostgreSQL HBA, quyền DB, credentials, `.env` hoặc Docker volumes để xử lý lỗi timezone. Bằng chứng đối chiếu nằm trong [báo cáo readiness](TV1_TECHNICAL_READINESS.md#d1-đối-chiếu-jvm-timezone-pr-27).
+
 ## Backend scaffold
+
+Auth/User cần provision PostgreSQL và nạp biến runtime theo [runbook TV1](../docker/README.md) trước `bootRun`. Build thông thường không cần DB; test DB chỉ chạy khi `TV1_DATABASE_TESTS=true`.
 
 ```bash
 cd backend
@@ -25,7 +46,7 @@ cd backend
 curl http://localhost:8101/actuator/health
 ```
 
-Đặt `JAVA_HOME` trỏ tới JDK 21 trước khi chạy. Trên Windows PowerShell, thay `./gradlew` bằng `.\gradlew.bat`:
+Đặt `JAVA_HOME` trỏ tới JDK 21 trước khi chạy. Trên Windows PowerShell, [đặt JVM UTC](#jvm-timezone-cho-authuser-trên-powershell) trước, thay `./gradlew` bằng `.\gradlew.bat`:
 
 ```powershell
 $env:JAVA_HOME = 'C:\path\to\jdk-21'
@@ -33,7 +54,9 @@ $env:Path = "$env:JAVA_HOME\bin;$env:Path"
 cd backend
 .\gradlew.bat --version
 .\gradlew.bat build
-.\gradlew.bat :auth-service:bootRun
+.\gradlew.bat :auth-service:bootRun --no-daemon --console=plain
+# User: ở terminal riêng, nạp runtime env và đặt JVM UTC như trên, rồi từ backend:
+# .\gradlew.bat :user-service:bootRun --no-daemon --console=plain
 ```
 
 Chạy `cd backend` từ thư mục gốc repository; bỏ lệnh này nếu đã ở `backend`. Wrapper và dependency cần mạng trong lần tải đầu; bản phân phối được xác minh bằng `distributionSha256Sum` trong `backend/gradle/wrapper/gradle-wrapper.properties`. Các service mới là scaffold, health `UP` không xác nhận Auth/User hay tích hợp đã hoạt động. Task `test` báo `NO-SOURCE` nghĩa là chưa có test, không phải unit test PASS.
@@ -48,14 +71,25 @@ npm run dev
 
 Giao diện chỉ có shell giới thiệu các miền nghiệp vụ, chưa gọi Backend.
 
-## Hạ tầng mẫu local
+## PostgreSQL và kiểm chứng readiness
 
-```bash
-docker compose -f docker/compose.dev.yml up -d
+Làm theo [runbook provisioning](../docker/README.md) để kiểm kê volume cũ, cấu hình `.env`, nạp biến vào tiến trình và tạo `auth_db`/`user_db`. [Đặt JVM UTC](#jvm-timezone-cho-authuser-trên-powershell) trong cùng terminal trước Gradle. Sau đó từ gốc repository:
+
+```powershell
+docker compose --env-file .env -f docker/compose.dev.yml config --quiet
+docker compose --env-file .env -f docker/compose.dev.yml up -d --no-deps --wait --wait-timeout 60 postgres
 docker compose -f docker/compose.dev.yml ps
+./docker/provision-tv1.ps1
+./docker/test-tv1-databases.ps1
+$env:TV1_DATABASE_TESTS = 'true'
+cd backend
+.\gradlew.bat :auth-service:test :user-service:test --rerun-tasks --no-daemon --console=plain
+.\gradlew.bat build --console=plain
 ```
 
-Compose này chỉ có Postgres/Redis/Kafka, chưa tạo 8 service DB và không chạy FE/BE.
+Auth có 1 smoke test HS256 và 1 test JPA/JDBC/Flyway; User có 1 test JPA/JDBC/Flyway. Khi bật biến trên, test DB không lấy kết quả từ cache/up-to-date. Không bật biến thì 2 test DB SKIPPED; 9 module khác vẫn `test NO-SOURCE`. Validate DB chưa có migration không thay migration/business tests. Kết quả và giới hạn: [PHASE B readiness](TV1_TECHNICAL_READINESS.md).
+
+Compose không chạy FE/BE. Không bật profile `migration` cho PHASE B; runtime Auth/User vẫn là scaffold chưa có endpoint nghiệp vụ/security. Không dùng health UP để kết luận API an toàn. Secret quản trị volume cũ không được tự đổi bằng cách thay `.env`.
 
 ## Làm việc theo Issue
 

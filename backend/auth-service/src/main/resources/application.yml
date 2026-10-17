@@ -3,6 +3,20 @@ server:
 spring:
   application:
     name: auth-service
+  datasource:
+    url: jdbc:postgresql://${AUTH_DB_HOST:localhost}:${AUTH_DB_PORT:5432}/auth_db
+    username: auth_app
+    password: ${AUTH_DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+  flyway:
+    # PHASE B must not create even the schema history table.
+    enabled: false
+    clean-disabled: true
+    baseline-on-migrate: false
+    locations: classpath:db/migration
 management:
   endpoints:
     web:
