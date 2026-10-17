@@ -7,6 +7,7 @@ import com.projecthk5.inventoryservice.api.InventoryOperationServiceException;
 import com.projecthk5.inventoryservice.api.InventoryOperationType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -24,7 +25,8 @@ import java.util.concurrent.Future;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@Testcontainers(disabledWithoutDocker = true)
+@Tag("postgres-integration")
+@Testcontainers
 @SpringBootTest(classes = InventoryServiceApplication.class)
 class InventoryPostgresIntegrationTest {
     @Container

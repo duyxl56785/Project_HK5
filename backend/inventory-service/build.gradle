@@ -8,3 +8,13 @@ dependencies {
     testImplementation 'org.testcontainers:junit-jupiter'
     testImplementation 'org.testcontainers:postgresql'
 }
+
+tasks.named('test') { useJUnitPlatform { excludeTags 'postgres-integration' } }
+tasks.register('postgresIntegrationTest', Test) {
+    description = 'Runs Inventory PostgreSQL/Flyway/Hibernate regressions (Docker required).'
+    group = 'verification'
+    testClassesDirs = sourceSets.test.output.classesDirs
+    classpath = sourceSets.test.runtimeClasspath
+    useJUnitPlatform { includeTags 'postgres-integration' }
+    shouldRunAfter tasks.named('test')
+}

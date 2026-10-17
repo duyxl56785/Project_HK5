@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.projecthk5.inventoryservice.service.InventoryOperationServiceTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-10-17T16:10:13.765Z" hostname="MDUY-LECO" time="1.0">
+  <properties/>
+  <testcase name="replayWithSameIdAndPayloadDoesNotApplyStockTwice()" classname="com.projecthk5.inventoryservice.service.InventoryOperationServiceTest" time="0.972"/>
+  <testcase name="insufficientStockDoesNotChangeBalance()" classname="com.projecthk5.inventoryservice.service.InventoryOperationServiceTest" time="0.011"/>
+  <testcase name="operationIdCannotBeReusedForDifferentPayload()" classname="com.projecthk5.inventoryservice.service.InventoryOperationServiceTest" time="0.003"/>
+  <testcase name="successfulMultiSkuReserveChangesAllRequestedBalances()" classname="com.projecthk5.inventoryservice.service.InventoryOperationServiceTest" time="0.005"/>
+  <testcase name="concurrentClaimWithSamePayloadIsTreatedAsReplay()" classname="com.projecthk5.inventoryservice.service.InventoryOperationServiceTest" time="0.004"/>
+  <testcase name="delimiterContainingSkuCannotCollideWithMultipleItems()" classname="com.projecthk5.inventoryservice.service.InventoryOperationServiceTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[WARNING: A Java agent has been loaded dynamically (C:\Users\Admin\.gradle\caches\modules-2\files-2.1\net.bytebuddy\byte-buddy-agent\1.14.19\154da3a65b4f4a909d3e5bdec55d1b2b4cbb6ce1\byte-buddy-agent-1.14.19.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+]]></system-err>
+</testsuite>

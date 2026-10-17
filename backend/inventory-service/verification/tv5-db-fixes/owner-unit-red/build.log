@@ -1,0 +1,47 @@
+Picked up JAVA_TOOL_OPTIONS: -Duser.timezone=UTC -Dapi.version=1.44
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :inventory-service:compileJava
+> Task :inventory-service:processResources
+> Task :inventory-service:classes
+
+> Task :inventory-service:compileTestJava
+
+> Task :inventory-service:processTestResources NO-SOURCE
+> Task :inventory-service:testClasses
+Note: D:\CMC Uni\5 Ky Dong\WEB\BCK WEB\Project_HK5\.verification\fixes\pr31-db\backend\inventory-service\src\test\java\com\projecthk5\inventoryservice\service\InventoryOperationServiceTest.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+
+Picked up JAVA_TOOL_OPTIONS: -Duser.timezone=UTC -Dapi.version=1.44
+> Task :inventory-service:test
+
+InventoryOperationServiceTest > insufficientStockDoesNotChangeBalance() FAILED
+    org.mockito.exceptions.misusing.InvalidUseOfMatchersException at InventoryOperationServiceTest.java:70
+
+InventoryOperationServiceTest > successfulMultiSkuReserveChangesAllRequestedBalances() FAILED
+    org.mockito.exceptions.misusing.InvalidUseOfMatchersException at InventoryOperationServiceTest.java:55
+
+6 tests completed, 2 failed
+
+
+FAILURE: Build failed with an exception.
+
+> Task :inventory-service:test FAILED
+
+[Incubating] Problems report is available at: file:///D:/CMC%20Uni/5%20Ky%20Dong/WEB/BCK%20WEB/Project_HK5/.verification/fixes/pr31-db/backend/build/reports/problems/problems-report.html
+* What went wrong:
+Execution failed for task ':inventory-service:test'.
+> There were failing tests. See the report at: file:///D:/CMC%20Uni/5%20Ky%20Dong/WEB/BCK%20WEB/Project_HK5/.verification/fixes/pr31-db/backend/inventory-service/build/reports/tests/test/index.html
+
+* Try:
+> Run with --scan to get full insights.
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+4 actionable tasks: 4 executed
+BUILD FAILED in 13s

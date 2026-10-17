@@ -1,0 +1,10 @@
+{
+  "gradle": "8.14.3",
+  "head": "9ee299cfeb42db3cdff905f56d6cbe9778217ce6 + identical new regression test files",
+  "docker": "29.8.1",
+  "time": "2026-10-17T23:07:39.7285099+07:00",
+  "exit": 1,
+  "java": "21.0.7",
+  "command": "gradle -p .verification/pr31-db-red/backend :inventory-service:postgresIntegrationTest --tests *InventoryOperationPostgresIT --rerun-tasks --no-daemon --continue --console=plain",
+  "jvmOptions": "-Duser.timezone=UTC -Dapi.version=1.44"
+}

@@ -21,6 +21,7 @@ import java.util.TreeMap;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 class InventoryOperationServiceTest {
@@ -52,7 +53,7 @@ class InventoryOperationServiceTest {
         assertEquals(4, b.getAvailableQuantity());
         assertEquals(3, b.getReservedQuantity());
         assertFalse(result.replayed());
-        verify(operations).claimOperationId("checkout-1", "RESERVE", anyString());
+        verify(operations).claimOperationId(eq("checkout-1"), eq("RESERVE"), anyString());
     }
 
     @Test
@@ -67,7 +68,7 @@ class InventoryOperationServiceTest {
 
         assertEquals(1, a.getAvailableQuantity());
         assertEquals(0, a.getReservedQuantity());
-        verify(operations).claimOperationId("checkout-2", "RESERVE", anyString());
+        verify(operations).claimOperationId(eq("checkout-2"), eq("RESERVE"), anyString());
     }
 
     @Test
