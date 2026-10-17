@@ -24,7 +24,9 @@ public class IdempotencyCoordinator {
     public record BeginResult(CheckoutAttempt attempt, boolean created) {}
     @Transactional
     public void fail(java.util.UUID attemptId,boolean uncertain){
-        var attempt=repo.findById(attemptId).orElseThrow();
-        if (attempt.getState()==CheckoutAttempt.State.PROCESSING){ attempt.fail(uncertain);repo.save(attempt); }
+        // An uncertain response must not overwrite SUCCEEDED if the writer won the race.
+        int changed=repo.failIfProcessing(attemptId, CheckoutAttempt.State.PROCESSING,
+            uncertain ? CheckoutAttempt.State.NEEDS_RECONCILIATION : CheckoutAttempt.State.FAILED);
+        if (changed==0 && !repo.existsById(attemptId)) throw new java.util.NoSuchElementException();
     }
 }

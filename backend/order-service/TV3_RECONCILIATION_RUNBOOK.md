@@ -11,3 +11,5 @@
 7. Document operator, external evidence, outcome, timestamps, and manual state transitions. No unreviewed direct SQL correction.
 
 **Production remains blocked** pending TV4 reserve/query/release semantics, audited reconciliation implementation and live crash/retry tests.
+
+TV5 regression fix: stale scanner and uncertain-failure marking use conditional DB UPDATEs restricted to PROCESSING. A concurrently committed SUCCEEDED row is retained. Successful replay and committed-outcome reads load the response collection with the verified customer's ID scope before returning from the repository. These guards do not perform remote compensation or replace the operator-led steps above; see TEST_RESULTS_TV5_FIXES.md for real PostgreSQL race/replay tests.

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.projecthk5.orderservice.security.ContractJwtDecoderTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-10-17T15:21:50.400Z" hostname="MDUY-LECO" time="0.241">
+  <properties/>
+  <testcase name="currentAndPreviousKidsAccepted()" classname="com.projecthk5.orderservice.security.ContractJwtDecoderTest" time="0.235"/>
+  <testcase name="missingShortAndMismatchedKeyringRejectStartup()" classname="com.projecthk5.orderservice.security.ContractJwtDecoderTest" time="0.001"/>
+  <testcase name="wrongKidSignatureIssuerRoleAndTtlRejected()" classname="com.projecthk5.orderservice.security.ContractJwtDecoderTest" time="0.005"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

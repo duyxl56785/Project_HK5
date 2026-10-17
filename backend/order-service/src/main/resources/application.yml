@@ -13,12 +13,6 @@ spring:
       ddl-auto: validate
   flyway:
     enabled: true
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: ${JWT_ISSUER_URI:}
-          jwk-set-uri: ${JWT_JWK_SET_URI:}
 app:
   finance:
     # Set only after written TV5 policy approval; otherwise Checkout fails closed.
@@ -30,4 +24,9 @@ app:
     stale-seconds: ${HK5_CHECKOUT_STALE_SECONDS:600}
     reconcile-scan-ms: ${HK5_CHECKOUT_RECONCILE_SCAN_MS:60000}
   security:
-    audience: ${JWT_AUDIENCE:smart-ecommerce-api}
+    issuer: ${JWT_ISSUER_URI:}
+    audience: ${JWT_AUDIENCE:}
+    current-kid: ${JWT_HS256_CURRENT_KID:}
+    current-key-b64: ${JWT_HS256_CURRENT_KEY_B64:}
+    previous-kid: ${JWT_HS256_PREVIOUS_KID:}
+    previous-key-b64: ${JWT_HS256_PREVIOUS_KEY_B64:}

@@ -25,10 +25,10 @@ public class CheckoutReconciliationScanner {
     @Scheduled(fixedDelayString="${app.checkout.reconcile-scan-ms:60000}")
     @Transactional
     public void flagAbandonedAttempts() {
-        for (CheckoutAttempt attempt : attempts.findByStateAndCreatedAtBefore(
-                CheckoutAttempt.State.PROCESSING,Instant.now().minusSeconds(staleSeconds))) {
-            if (attempt.getState()==CheckoutAttempt.State.PROCESSING)
-                attempt.fail(true); // NEVER compensate on timeout/crash.
-        }
+        // Predicate and transition are one DB operation. A writer committing SUCCEEDED
+        // while this UPDATE waits on its row lock must not be overwritten by a stale entity.
+        // No remote compensation or mutation of a committed order/reservation is attempted.
+        attempts.flagStaleProcessing(CheckoutAttempt.State.PROCESSING,
+            CheckoutAttempt.State.NEEDS_RECONCILIATION, Instant.now().minusSeconds(staleSeconds));
     }
 }
