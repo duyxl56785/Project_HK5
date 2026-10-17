@@ -45,6 +45,18 @@ public class InventoryExceptionHandler {
         return Map.of("code", "INVALID_REQUEST", "message", "Request validation failed");
     }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Map<String, Object> invalidArgument(IllegalArgumentException ex) {
+        return Map.of("code", "INVALID_REQUEST", "message", "Request contains an invalid value");
+    }
+
+    @ExceptionHandler(ArithmeticException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Map<String, Object> quantityOverflow(ArithmeticException ex) {
+        return Map.of("code", "QUANTITY_OVERFLOW", "message", "Quantity exceeds the supported range");
+    }
+
     @ExceptionHandler(DataIntegrityViolationException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public Map<String, Object> dataConflict(DataIntegrityViolationException ex) {
