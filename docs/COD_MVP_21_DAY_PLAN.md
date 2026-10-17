@@ -2,7 +2,9 @@
 
 **Trạng thái:** Đề xuất thay thế kế hoạch thực thi cũ, chờ nhóm review/merge tài liệu. **Thời hạn:** D1–D21 là ngày làm việc tương đối tính từ mốc nhóm xác nhận; không tự đặt lại hoặc xóa tiến độ đã thực hiện trước đây. **Nhóm:** 5 người, một owner cho mỗi đầu việc, phối hợp qua GitHub Issues/PR.
 
-**Nguồn đối chiếu:** Báo cáo bàn giao V2, docs/ARCHITECTURE.md, docs/CONTRACTS.md, docs/OWNERSHIP.md, CONTRIBUTING.md và Issue #1–#5. Repository hiện phần lớn còn là scaffold; PR #7 (TV2 Category/Seller domain) là mã nguồn chưa merge vào main. Không mặc định các module khác đã chạy thật.
+**Nguồn đối chiếu:** Báo cáo bàn giao V2, docs/ARCHITECTURE.md, docs/CONTRACTS.md, docs/OWNERSHIP.md, CONTRIBUTING.md và Issue #1–#5. **Checkpoint 17/10/2026:** PR #7 (Category/Seller domain) đã merge vào main tại `98268c2`; PR #20 (Review/Finance rules và QA) cũng đã merge. PR #25 đã merge persistence vào nhánh TV2 tại `5581d59`, còn PR #29 (`f8b0ff4`, base main) đang mở, chưa merge vào main. Các gate D1–D21 bên dưới là kế hoạch, không phải xác nhận mọi module/API đã chạy thật.
+
+**Auth checkpoint:** Contract v1.0 đã được TV1 chốt qua [PR #24](https://github.com/duyxl56785/Project_HK5/pull/24), commit `1a9d579`: HS256 với current+previous `kid` keyring và trusted claims; không dùng JWKS/RS256 discovery trong MVP. Đây là quyết định contract, chưa xác nhận Auth issuer/Gateway hoặc consumer runtime đã hoàn tất.
 
 ## 1. Quyết định phạm vi sản phẩm
 
@@ -39,7 +41,7 @@ Các phần dùng chung (đặc biệt order-service và product-service) tuân 
 
 | Contract/đầu ra | Owner chốt | Consumer | Deadline | Điều kiện bàn giao |
 |---|---|---|---|---|
-| JWT verified identity (issuer/audience/JWKS/subject, role/permission), 401/403 | TV1 | TV2–TV5 | D2 | Ví dụ token test + test quyền; không tin headers giả, không để secret lên Git |
+| JWT verified identity theo Auth v1.0: HS256 current+previous kid keyring, issuer/audience/sub/roles/claims, 401/403 | TV1 | TV2–TV5 | D2 | Contract đã chốt qua #24; consumer đối chiếu profile, ví dụ token test + test quyền; không tin headers giả, không để secret lên Git |
 | API path Gateway + CORS, response error code, frontend API client | TV1 | tất cả | D2 | docs/CONTRACTS.md có endpoint/DTO/HTTP status, phân biệt public/internal |
 | Seller/Store identity, APPROVED/SUSPENDED, unique owner + slug, profile minimum | TV2 + TV1 | TV3/TV4 | D2 | DTO/schema đề xuất/transition và ownership được chốt |
 | Category slug/status; Product SKU, categoryId, storeId, price, visibility | TV2 + TV5 | TV3/TV4 | D2 | Catalog read/validate-product response có trạng thái/giá/seller |
@@ -117,7 +119,7 @@ Thiết lập: Admin A, Seller S1/S2 đã APPROVED với Store1/Store2, Customer
 - **P1 không đạt:** ghi PARTIAL và để backlog; không coi toàn bộ sản phẩm thất bại nếu UAT P0 đạt.
 - **Test trạng thái:** PASS / FAIL / NOT_RUN (+ reason). Unit mock không được gọi là integration thật; báo cáo CI chỉ khi workflow chạy.
 - **Definition of Done:** PR có review + merge main, acceptance test có log/ảnh, không còn P0 blockers, documented startup từ clone sạch; Issue tuần chỉ đóng khi toàn bộ checklist bắt buộc của tuần đạt.
-- **Hiện trạng baseline:** PR #7 đang Draft, có Category và Seller domain, chưa merge, Seller HTTP/JPA/JWT chưa hoàn thành. Giữ PR #7 để review/chốt schema/security; không xóa, không tự merge. Có thể tách PR Seller persistence tiếp theo để review nhỏ.
+- **Hiện trạng baseline (17/10/2026):** #7 đã merge Category/Seller domain vào main; #25 đã merge vào nhánh TV2; #29 là PR persistence vào main. Review/Finance rules và QA từ #20 cũng đã vào main. Seller HTTP/JWT/Gateway và các tích hợp còn thiếu phải được ghi theo từng PR/evidence, không suy từ domain hoặc DB tests thành nghiệm thu API.
 
 ## 9. Kiểm tra tính khả thi của kế hoạch (pre-flight review)
 
@@ -128,7 +130,7 @@ Thiết lập: Admin A, Seller S1/S2 đã APPROVED với Store1/Store2, Customer
 | 5 người/21 ngày quá tải | P0 tối thiểu + P1 cắt nếu chậm, ưu tiên E2E từ D10 | Khả thi có điều kiện, không đảm bảo đúng hạn |
 | Service phát triển riêng không tích hợp | Contract owner/consumer, CI, 2 Store UAT, daily PR | Kiểm soát được bằng gate |
 | Auth/ACL/stock/COD sai | Security deny-default, replay/concurrency/negative tests | Không được cắt |
-| Code TV2 đã viết và Draft PR #7 | Bảo toàn Issue #2 checkbox + commit/PR, review trước merge | Không làm lại |
+| Code TV2 đã merge qua #7 và persistence đang bàn giao qua #29 | Bảo toàn Issue #2 checkbox + commit/PR/evidence, review phần bổ sung đúng scope | Không làm lại |
 | Phạm vi khác báo cáo V2 | COD-only & bỏ tính năng nâng cao do chủ dự án yêu cầu; owner ký chốt thay đổi contract | Cần nhóm xác nhận |
 | Bảo vệ main và CI chưa rõ | Kiểm tra ruleset enforcement, bổ sung CI, review PR | Không giả định đã bảo vệ/CI PASS |
 
@@ -140,5 +142,5 @@ Thiết lập: Admin A, Seller S1/S2 đã APPROVED với Store1/Store2, Customer
 - Tạo 5 Issue W2, 5 Issue W3, đúng owner và Acceptance Criteria, liên kết các Issue tương ứng.
 - Các PR tính năng liên kết đúng Issue bằng "Refs #N"; chỉ "Closes #N" khi đáp ứng toàn bộ tiêu chí.
 - Không push/merge trực tiếp main; workflow commit nhỏ, push nhánh cá nhân, Draft PR khi chưa sẵn sàng, review ≥1 người khác.
-- PR #7 của TV2 cần giữ mở (Draft) để TV1/TV5 review. PR tài liệu kế hoạch là PR **khác**, không phải PR thay thế PR #7.
+- PR #7 đã merge; giữ lịch sử review/commit và theo dõi bàn giao persistence vào main qua #29. PR tài liệu kế hoạch không thay thế PR tính năng hoặc tự hoàn thành Issue #2.
 - Mỗi ngày cập nhật blocker, commit/PR link, PASS/FAIL/NOT_RUN. Ngày D7/D14/D21 đánh giá gate chung.
