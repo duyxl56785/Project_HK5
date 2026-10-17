@@ -1,5 +1,7 @@
 # TV1 — PHASE B Technical Readiness
 
+**Bổ sung17/10/2026 — cấu hình timezone:** [TV1_TIMEZONE_RECHECK.md](TV1_TIMEZONE_RECHECK.md) lưu kiểm chứng riêng về SQLState22023 với JVM Asia/Saigon và cấu hình process-only UTC/IANA được server hỗ trợ. Runbook/development guide đã bổ sung cách cấu hình trước test/bootRun; các số liệu bên dưới là lịch sử PHASE B16/10, không phải lượt kiểm lại timezone hoặc nghiệm thu API mới.
+
 Refs #1. Kiểm chứng ngày 2026-10-16 trên Windows/PowerShell tại `D:\CMC\Project-HK5-Git`. Baseline main `1a9d579cdf42c8aa170577a137624c4ec0cfdcce`; [PR #24](https://github.com/duyxl56785/Project_HK5/pull/24) MERGED lúc `2026-10-16T01:46:47Z`, đã kiểm tra bằng GitHub CLI và `merge-base --is-ancestor`. Main fast-forward không phát sinh thay đổi; branch `chore/tv1-auth-readiness`. Không merge PR/đóng Issue #1; giữ `.serena/` và mọi `backend/*/bin/`.
 
 ## A. Technical readiness

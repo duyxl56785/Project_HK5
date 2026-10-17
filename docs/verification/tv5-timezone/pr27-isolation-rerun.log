@@ -1,0 +1,4 @@
+PASS: auth_app own DB login, wrong password, cross-DB denial and DDL privileges.
+PASS: auth_migrator own DB login, wrong password, cross-DB denial and DDL privileges.
+PASS: user_app own DB login, wrong password, cross-DB denial and DDL privileges.
+PASS: user_migrator own DB login, wrong password, cross-DB denial and DDL privileges.

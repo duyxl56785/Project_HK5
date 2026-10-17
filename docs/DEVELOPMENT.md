@@ -18,6 +18,8 @@ git pull --ff-only origin main
 
 Auth/User cần provision PostgreSQL và nạp biến runtime theo [runbook TV1](../docker/README.md) trước `bootRun`. Build thông thường không cần DB; test DB chỉ chạy khi `TV1_DATABASE_TESTS=true`.
 
+**JVM timezone:** trước các lệnh Java bên dưới, chọn timezone được PostgreSQL hỗ trợ. Windows Java mặc định `Asia/Saigon` có thể bị PostgreSQL16.15 Debian từ chối ngay lúc mở connection (SQLState22023). Cấu hình process-only `JAVA_TOOL_OPTIONS=-Duser.timezone=UTC` áp dụng cho cả Gradle test forks và bootRun; giữ các JVM options khác đang cần và khôi phục environment sau lệnh theo [block PowerShell trong runbook](../docker/README.md#jvm-timezone-trước-khi-chạy-java). Đây là cấu hình môi trường, không đổi test assertions/credentials/dialect hoặc timezone hệ điều hành. Packaged service dùng `java -Duser.timezone=UTC -jar ...`; không giả định `hibernate.jdbc.time_zone` sửa được startup parameters.
+
 ```bash
 cd backend
 ./gradlew --version

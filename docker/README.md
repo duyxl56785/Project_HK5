@@ -48,6 +48,29 @@ Nếu `5432` bị chiếm, chọn cổng trống rồi đặt cùng giá trị c
 
 ## 3. Khởi động, provision, kiểm tra
 
+### JVM timezone trước khi chạy Java
+
+Trên một số máy Windows, Java21 lấy mặc định `Asia/Saigon`. Image PostgreSQL16.15 Debian được kiểm tra không có tên này trong `pg_timezone_names`; pgJDBC42.7.4 gửi timezone mặc định trong startup parameters, khiến server trả SQLState22023 trước khi Hibernate đọc metadata. Đây là lỗi tương thích cấu hình môi trường, không phải bằng chứng sai credentials hoặc thiếu Hibernate dialect. `hibernate.jdbc.time_zone` hay connection-init SQL chạy quá muộn để sửa startup bị từ chối.
+
+Sau khi nạp credentials/ports, đặt timezone **cho tiến trình Java đang chạy test/service**, không thay timezone Windows hoặc dữ liệu PostgreSQL. Ví dụ PowerShell từ gốc repository:
+
+```powershell
+$tv1PreviousJavaOptions = $env:JAVA_TOOL_OPTIONS
+$env:JAVA_TOOL_OPTIONS = (@($tv1PreviousJavaOptions, '-Duser.timezone=UTC') | Where-Object { $_ }) -join ' '
+try {
+    $env:TV1_DATABASE_TESTS = 'true'
+    ./backend/gradlew.bat -p backend :auth-service:test :user-service:test --rerun-tasks --no-daemon
+    # Khi chạy service, dùng cùng cấu hình và credentials runtime:
+    # ./backend/gradlew.bat -p backend :auth-service:bootRun
+} finally {
+    $env:JAVA_TOOL_OPTIONS = $tv1PreviousJavaOptions
+}
+```
+
+Linux/macOS: `JAVA_TOOL_OPTIONS="${JAVA_TOOL_OPTIONS:+$JAVA_TOOL_OPTIONS }-Duser.timezone=UTC" ./backend/gradlew -p backend :auth-service:test :user-service:test --rerun-tasks --no-daemon`. Chạy packaged app bằng `java -Duser.timezone=UTC -jar <service.jar>` sau khi nạp environment. Kiểm cả tham số JVM trên command line nếu nó đang ghi đè timezone từ environment.
+
+Có thể chọn một IANA timezone khác **được server hỗ trợ** khi owner có yêu cầu; xác minh bằng `SELECT name FROM pg_timezone_names WHERE name IN ('UTC','Asia/Saigon','Asia/Ho_Chi_Minh');`. Không tự map alias hay đổi business date policy. Lượt diagnostic với `Asia/Saigon` vẫn phải ghi FAIL nếu server từ chối, không sửa/skip test để che lỗi. [Báo cáo kiểm lại TV5](../docs/TV1_TIMEZONE_RECHECK.md) giữ source/version và từng lượt FAIL/PASS riêng.
+
 ```powershell
 docker compose --env-file .env -f docker/compose.dev.yml config --quiet
 docker compose --env-file .env -f docker/compose.dev.yml up -d --no-deps --wait --wait-timeout 60 postgres
@@ -71,6 +94,8 @@ Database lấy từ `template0`; thu hồi quyền PUBLIC trên hai DB và schem
 `postgres/pg_hba.conf` ép bốn role dùng SCRAM, chỉ kết nối đúng DB của mình kể cả Unix socket; chặn `hk5_dev`/`postgres` mà không sửa ACL/data của chúng. TCP login khác cũng cần SCRAM; container-local administration vẫn trust, chỉ dành cho dev. Giới hạn quyền truy cập Docker; đây không phải cấu hình production/TLS.
 
 Script test thực hiện login, password sai, cross-DB denial, runtime DDL denial, migration DDL trong transaction rồi ROLLBACK; không để lại bảng. Healthcheck không thay kiểm thử xác thực/quyền.
+
+Các lệnh Docker/provision không cần JVM timezone; trước `build`, `test` hoặc `bootRun` Java, áp dụng block process-only ở trên. Không đưa credentials hoặc toàn bộ environment vào log chia sẻ.
 
 ```powershell
 $pg = docker compose -f docker/compose.dev.yml ps -q postgres
