@@ -45,3 +45,10 @@ Các file trên giữ bằng chứng và trạng thái của từng lần bàn g
 - [x] Cập nhật QA/TEST_RESULTS, Issue và PR gốc; dùng branch riêng đúngbase, không tự resolve thread/re-add reviewer đã bị gỡ hoặc Approve/Merge/Close trong đợt sửa này.
 - [ ] Owner tiếp nhận patch/evidence vào#19/#28/#27, kiểm head mới và ra quyết định review chính thức.
 - [ ] D02–D10/provider-consumer Review/Finance và toàn gate W1 được owner xác nhận; Issue#5 vẫn PARTIAL.
+
+## Audit reviewers và head sau tích hợp
+
+- [x] Kiểm toàn bộ Open/Draft, reviews/comments/threads/CI và removal events; [bảng audit](../reports/PR_REVIEWERS_AUDIT_2026-10-17.md).
+- [x] Xác minh #32/#33 đã được tác giả nhận vào #19/#28; Git tree giống bản sửa đã kiểm, request lại reviewer phù hợp. Không tự đóng review/thread cũ.
+- [x] Sửa lỗi biên dịch test mới của #31 trên branch riêng; RED compile FAIL trước sửa, GREEN 15 unit PASS; commit `afc9461`/`14df61b`, push và mở #35 đúng base, raw log/XML/hash đầy đủ.
+- [ ] TV4 tiếp nhận #35; reviewer quyết định lại #19/#27/#28 và nghiệm thu QA/evidence #30/#34. Parent #31 vẫn Draft; các contract/gate owner chưa đủ thì không tick DONE.
