@@ -26,11 +26,19 @@ Owner follow-up unit tests also introduced mixed Mockito matchers: two verifies 
 - GREEN in the combined execution: all3 initialize PG cases PASS. They verify real HTTP201/409 with the actual token filter, unchanged available/reserved/version/timestamp after duplicate requests, and a competing initialize blocked on a real DB lock before the winner commits. No repository mock, shared existing DB or volume is used.
 - Source regression: `InventoryInitializePostgresIT`; raw RED: `initialize-red/`. The combined/final GREEN ledger below records the complete source checkpoint and separate unit/PG totals.
 
+## Group 3 — same operationId concurrency and transactional rollback
+
+- RED against `9ee299c` plus identical new operation regressions: **5 PG invocations: 4 PASS/1 FAIL**, exit1/23s. A real repository SELECT sees no ledger row and is paused; another real transaction commits the same key for a disjoint SKU; the first request resumes and the original merge path also commits. The losing SKU becomes9 instead of remaining10 and the winner's hash can be replaced.
+- The owner's current `claimOperationId` uses `INSERT ... ON CONFLICT DO NOTHING` before stock changes. The loser reads the committed winner and rejects a different payload; no JPA ledger merge overwrites the winning hash. TV5 preserves this source.
+- Five new GREEN cases cover the deterministic disjoint-SKU race, same-key/same-payload replay after row-lock wait, same-key/different-payload conflict after row-lock wait, multi-SKU failure rolling back earlier stock and the ledger claim, and concurrent different-key reservations preventing oversell/rolling back the losing claim.
+- The AOP scheduling hook executes the real repository call before waiting; it never substitutes data or mocks persistence. Other lock interleavings are observed in pg_stat_activity, not inferred from a sleep. Futures/gates have bounded waits.
+- Source regression: `InventoryOperationPostgresIT`; raw RED: `operation-red/`. The initial combined GREEN (`owner-full-green/`) has16 unit +13 PG PASS, exit0/37s on the merged working tree before the source commits, **not clean HEAD9ee299c** merely because that was the last committed HEAD recorded during merge. The final run below verifies the fully committed regression source.
+
 ## Remaining work at this checkpoint
 
 - [x] Schema regression RED→GREEN and owner V2 upgrade checks; V1 unchanged, superseded CHAR candidate removed from final source.
 - [x] Duplicate initialization owner insert-only fix checked with PostgreSQL/HTTP/concurrent regressions.
-- [ ] Atomic operationId arbitration + PostgreSQL race/rollback regressions.
+- [x] Owner atomic operationId arbitration verified by deterministic PostgreSQL race/rollback regressions.
 - [ ] Owner review/integration and external auth/identity/lifecycle contracts.
 
 Auth service-pair/role design, Product↔SKU/Store identity, reserve/consume/release timing, live dependencies and E2E remain owner decisions/NOT_RUN. This bugfix does not enable the checkout adapter, settle Finance policy or expand to new week 2–3 features. Issue #5 remains OPEN/PARTIAL.
