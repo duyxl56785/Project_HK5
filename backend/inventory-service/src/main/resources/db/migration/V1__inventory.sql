@@ -2,6 +2,7 @@ CREATE TABLE inventory_item (
     sku VARCHAR(128) PRIMARY KEY,
     available_quantity BIGINT NOT NULL DEFAULT 0 CHECK (available_quantity >= 0),
     reserved_quantity BIGINT NOT NULL DEFAULT 0 CHECK (reserved_quantity >= 0),
+    version BIGINT NOT NULL DEFAULT 0,
     updated_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
