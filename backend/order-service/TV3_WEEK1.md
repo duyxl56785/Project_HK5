@@ -1,5 +1,8 @@
 # TV3 W1 — Checkout COD / CHANGES_REQUESTED followup PR #28
 
+**[Cross-owner sign-off ledger](TV3_CONTRACT_SIGNOFF_LEDGER.md):** Six contract gates S01, C01, E01, M01, Inventory, Security; TV1 OD-09 decided as baseline, but pair-specific integrations PENDING. PR #39 introduces a competing SellerOrder state-name proposal requiring TV3/TV4 reconciliation. This W1 report does not constitute approval.
+
+
 Status: PARTIAL / NOT PRODUCTION READY. No shared contract or other owners' module changed.
 
 ## 18/10/2026 — TV2 C01/M01/E01 consumer review at 9c28338

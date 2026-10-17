@@ -1,6 +1,8 @@
 # TV3 — Checkout Product/Inventory/Finance consumer decisions (PR #28)
 
 **Owner:** TV3 · **Refs:** Issue #3; PR #28; TV2/TV4 follow-ups on 18/10/2026.
+**[Cross-owner sign-off ledger](TV3_CONTRACT_SIGNOFF_LEDGER.md):** S01, C01, E01, M01, Inventory and Security decision/owner/signers/evidence/implementation gate (18/10/2026). No six-contract group has complete multi-party approval.
+
 **Status:** DRAFT / NEEDS OWNER APPROVAL. This document records a **proposal for review**, not an adopted wire contract, not a rollout instruction, and not runtime implementation. Keep current adapters fail-closed.
 
 ## TV3 integration-readiness checkpoint — C01 batch and PR #38 (18/10/2026)
