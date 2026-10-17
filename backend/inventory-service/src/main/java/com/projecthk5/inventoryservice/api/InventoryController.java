@@ -7,8 +7,6 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
-
 @RestController
 @RequestMapping("/api/inventory")
 public class InventoryController {
@@ -41,9 +39,4 @@ public class InventoryController {
         return operations.apply(request);
     }
 
-    @ExceptionHandler(InventoryNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public Map<String, Object> notFound(InventoryNotFoundException exception) {
-        return Map.of("code", "INVENTORY_ITEM_NOT_FOUND", "message", exception.getMessage());
-    }
 }
