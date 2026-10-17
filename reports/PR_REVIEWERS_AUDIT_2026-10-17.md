@@ -9,13 +9,13 @@ Ban đầu có 8 PR mở, gồm 7 Ready và 1 Draft (#31). Sau khi bàn giao b�
 | PR / head | Kết luận trong scope W1 | Reviewer / bước còn chờ |
 |---|---|---|
 | [#19](https://github.com/duyxl56785/Project_HK5/pull/19) / `804d6f1` | Đã nhận #32; HS256 và baseline #7 đã sửa trong parent. Static PASS; cần quyết định review lại | Re-request TV1; `duyxl56785` là tác giả nên không request. TV1/TV5 CHANGES_REQUESTED cũ vẫn ở `1407e9d`; không tự dismiss/Approve |
-| [#26](https://github.com/duyxl56785/Project_HK5/pull/26) / `c4288d5` | Không đổi head. TV5 đã APPROVED phạm vi 3 tài liệu; 21 test plan cases vẫn NOT_RUN | Giữ TV2 `duyxl56785` và TV3 đang requested; TV2 cần xử lý review CHANGES_REQUESTED cũ sau khi đọc bản sửa. Không request trùng |
-| [#27](https://github.com/duyxl56785/Project_HK5/pull/27) / `a810312` | Owner đã sửa runbook timezone; 2 readiness checks success tại chính head này | Re-request `duyxl56785` vì review trước ở `6a7f172`, chưa có request/review head mới. Thread timezone vẫn mở; giữ nguyên cho reviewer xác nhận |
-| [#28](https://github.com/duyxl56785/Project_HK5/pull/28) / `89c20bc` | Đã nhận #33; JWT/replay/scanner/failure-handler fixes có trong parent. Chưa chốt external contracts hoặc recovery/E2E | Re-request TV1 và `duyxl56785`; giữ TV4 requested. Không thêm lại TV5 từng bị gỡ. 3 threads cũ chưa resolve; TV1 review cũ còn CHANGES_REQUESTED ở `63f63c1` |
+| [#26](https://github.com/duyxl56785/Project_HK5/pull/26) / `c4288d5` | Không đổi head. TV5 đã APPROVED phạm vi 3 tài liệu; 21 test plan cases vẫn NOT_RUN | TV2 đã COMMENT cùng head xác nhận findings tài liệu đã sửa; không biến COMMENT thành APPROVE. TV3 vẫn requested; không request trùng |
+| [#27](https://github.com/duyxl56785/Project_HK5/pull/27) / `a810312` | Owner đã sửa runbook timezone; 2 readiness checks success tại chính head này | Đã re-request `duyxl56785`, sau đó TV2 COMMENT/reply xác nhận finding đã sửa ở đúng head; không request lần nữa. Thread timezone vẫn mở, không đồng nhất với source chưa sửa |
+| [#28](https://github.com/duyxl56785/Project_HK5/pull/28) / `89c20bc` | Đã nhận #33; JWT/replay/scanner/failure-handler fixes có trong parent. Chưa chốt external contracts hoặc recovery/E2E | Đã re-request TV1/TV2; TV2 đã COMMENT/reply cùng head xác nhận các fixes, không request lại. TV1/TV4 requested; 3 threads cũ chưa resolve và TV1 CHANGES_REQUESTED cũ cần quyết định lại. Không thêm lại TV5 từng bị gỡ |
 | [#29](https://github.com/duyxl56785/Project_HK5/pull/29) / `f8b0ff4` | Không đổi head; TV5 APPROVED Seller persistence nội bộ, TV1 COMMENT cùng head không thấy blocker mới | `duyxl56785` là tác giả; không self-request. Không lặp request TV1 khi đã review cùng head và không có source thay đổi; chưa coi Seller API/JWT/E2E DONE |
 | [#30](https://github.com/duyxl56785/Project_HK5/pull/30) / `f346774` trước audit commit | QA/evidence; không có feedback yêu cầu sửa mới. Lượt này bổ sung ledger thực tế sau tích hợp | TV1 đang requested; `duyxl56785` từng bị gỡ nên giữ nguyên, không thêm lại sau push |
-| [#31](https://github.com/duyxl56785/Project_HK5/pull/31) / `1abfd4f` | **DRAFT / FAIL compileTestJava**. Bản sửa tối thiểu và 15 unit PASS nằm riêng ở #35, parent chưa tự được coi đã sửa | Giữ removal TV2/TV3, không đổi Draft hoặc request lại. TV4 cần nhận #35; TV1/TV3/TV4 còn chốt auth/Inventory contract và DB evidence |
-| [#34](https://github.com/duyxl56785/Project_HK5/pull/34) / `369b4f8` | Evidence timezone bổ sung, target branch #27; chưa có review | Giữ TV1 requested; giữ removal `duyxl56785` |
+| [#31](https://github.com/duyxl56785/Project_HK5/pull/31) / `1abfd4f` | **DRAFT / FAIL compileTestJava**. Bản sửa tối thiểu và 15 unit PASS nằm riêng ở #35; TV2 còn báo 3 DB defects (§6), chưa được #35 sửa | Giữ removal TV2/TV3, không đổi Draft hoặc request lại. TV4 cần nhận #35 và xử lý DB findings; TV1/TV3/TV4 còn chốt auth/Inventory contract |
+| [#34](https://github.com/duyxl56785/Project_HK5/pull/34) / `369b4f8` | **TV1 APPROVED đúng head**, TV2 COMMENT không thấy blocker mới cho docs/evidence; target branch #27 | Review đã đáp ứng, không lặp request; giữ removal `duyxl56785`. Chờ TV1 quyết định tiếp nhận vào branch #27, không tự merge |
 | [#35](https://github.com/duyxl56785/Project_HK5/pull/35) / `14df61b` | Bản sửa test #31, target `feat/tv4-inventory-w1`, không main; 15 unit PASS trên branch sửa | PR mới đã request TV4 và `duyxl56785`. Không thay reviewer trên parent Draft; WAITING_REVIEW/INTEGRATION |
 
 GitHub báo tất cả 8 PR gốc mergeable=true tại checkpoint; điều này chỉ xác nhận xung đột văn bản, không chứng minh contract/tích hợp đạt. #31 vẫn có gate auth, productId↔sku/Store namespace/operation IDs, thời điểm reserve/consume/release và DB/concurrency/HTTP evidence. Checkout #28 vẫn dùng các adapter fail-closed chưa cấu hình; không tự wire Inventory hoặc bật Finance gate.
@@ -59,5 +59,27 @@ PostgreSQL/concurrency/HTTP-security/live E2E #31 **NOT_RUN**: đây là sửa b
 - [x] Tái hiện lỗi test #31, sửa trên branch riêng, chạy GREEN, commit/push, mở #35 đúng base và giữ raw evidence.
 - [x] Giữ request hiện hữu, tránh self-request, không thêm lại reviewer bị gỡ trên #30/#31/#34.
 - [ ] TV1/TV2/TV4 ra quyết định review tại head mới #19/#27/#28; TV4 tiếp nhận #35 rồi kiểm parent #31.
-- [ ] TV1 review #30/#34; owner/provider-consumer chốt D02–D10 và các gate Review/Finance/Inventory còn mở.
+- [x] TV1 đã APPROVED #34 đúng `369b4f8`; TV2 review các parent mới và xác nhận fixes, không coi COMMENT là approval.
+- [ ] TV1 review head mới #30, tiếp nhận #34 khi phù hợp; owner/provider-consumer chốt D02–D10 và các gate Review/Finance/Inventory còn mở.
 - [ ] Toàn bộ điều kiện nghiệm thu Issue #5 đạt. **OPEN/PARTIAL — WAITING_REVIEW/INTEGRATION**.
+
+## 6. Phản hồi đến trong lúc audit
+
+Các cập nhật dưới đây đến sau snapshot ban đầu; đã đọc review mới và inline replies, không tự tạo lại finding trùng.
+
+- [TV1 APPROVE #34](https://github.com/duyxl56785/Project_HK5/pull/34#pullrequestreview-5558571856) tại `369b4f8`: docs + independent diagnostic evidence; không tự chạy DB, không approve toàn bộ #27/Auth/E2E. TV2 cũng xác minh 32/32 raw hashes trong review riêng, không coi đó là lượt TV5 hoặc runtime run mới.
+- [TV2 COMMENT #26](https://github.com/duyxl56785/Project_HK5/pull/26#pullrequestreview-5558577311): xác nhận findings số case/Wrapper/metadata đã sửa; 21 case vẫn NOT_RUN, chưa ra approval thay review cũ.
+- TV2 đã reply tại head hiện tại của [#27 timezone](https://github.com/duyxl56785/Project_HK5/pull/27#discussion_r4303318876) và [#28 replay](https://github.com/duyxl56785/Project_HK5/pull/28#discussion_r4303319200), [scanner](https://github.com/duyxl56785/Project_HK5/pull/28#discussion_r4303319537), [JWT](https://github.com/duyxl56785/Project_HK5/pull/28#discussion_r4303319933): nội dung đã sửa, thread vẫn mở. TV2 báo chạy độc lập 56 unit + 11 PG ở cùng source; đây là **kết quả TV2**, không cộng vào lần chạy TV5.
+- [TV2 COMMENT #30](https://github.com/duyxl56785/Project_HK5/pull/30#pullrequestreview-5558578452) tại `f346774`: không thấy blocker QA/docs mới, đề nghị cập nhật trạng thái #32/#33 đã tích hợp. Yêu cầu đó đã được cập nhật trong audit commit `73a4231`; review này không bao phủ các commit sau chỉ vì cùng PR.
+
+### Ba DB defects #31 — nguồn kiểm chứng TV2, TV5 chưa chạy lại
+
+[TV2 CHANGES_REQUESTED tại `1abfd4f`](https://github.com/duyxl56785/Project_HK5/pull/31#pullrequestreview-5558570162) báo 3 PostgreSQL probes FAIL, ngoài lỗi compile mà TV5 đã sửa riêng:
+
+1. [Schema validation](https://github.com/duyxl56785/Project_HK5/pull/31#discussion_r4303308985): Flyway tạo `request_hash CHAR(64)` trong khi entity String mong VARCHAR(64), startup `ddl-auto=validate` FAIL. Không tắt validation để coi là sửa; migration đã áp dụng phải tiến tới.
+2. [Duplicate initialize](https://github.com/duyxl56785/Project_HK5/pull/31#discussion_r4303308987): `saveAndFlush` với SKU tự gán có thể merge bản ghi hiện có; probe initialize 5 rồi 99 làm balance thành 99 thay vì conflict. Cần insert-only/DB protection, duplicate/concurrent regression và HTTP mapping.
+3. [Concurrent operationId](https://github.com/duyxl56785/Project_HK5/pull/31#discussion_r4303308990): hai payload trên hai SKU khác nhau dùng cùng operationId đều commit do ledger save đi qua merge; cần claim insert nguyên tử/unique và rollback phù hợp, không chỉ khóa SKU.
+
+TV2 dùng schema nguyên trạng cho probe startup; hai behavior probes chủ động dùng `ddl-auto=none` để cô lập hành vi, vẫn PostgreSQL/repository/service/transaction thật. Không gọi hai diagnostic probes đó là startup production PASS. **TV5 chưa thực thi lại 3 probes**; local log/harness do TV2 cung cấp khác với raw evidence compile/unit của TV5 tại #35.
+
+Owner xử lý: **TV4** sửa source và bổ sung DB regressions; **TV1** review schema/auth, **TV3/TV4** chốt contract/lifecycle. #35 chỉ sửa checked exception, không giải quyết hoặc nghiệm thu ba DB defects. Parent #31 vẫn Draft/NEEDS_CHANGES; Issue #5 PARTIAL. Không sửa branch TV4, lặp thread, tự resolve hoặc Approve trong lượt audit.

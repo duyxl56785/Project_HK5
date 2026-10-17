@@ -52,3 +52,5 @@ Các file trên giữ bằng chứng và trạng thái của từng lần bàn g
 - [x] Xác minh #32/#33 đã được tác giả nhận vào #19/#28; Git tree giống bản sửa đã kiểm, request lại reviewer phù hợp. Không tự đóng review/thread cũ.
 - [x] Sửa lỗi biên dịch test mới của #31 trên branch riêng; RED compile FAIL trước sửa, GREEN 15 unit PASS; commit `afc9461`/`14df61b`, push và mở #35 đúng base, raw log/XML/hash đầy đủ.
 - [ ] TV4 tiếp nhận #35; reviewer quyết định lại #19/#27/#28 và nghiệm thu QA/evidence #30/#34. Parent #31 vẫn Draft; các contract/gate owner chưa đủ thì không tick DONE.
+- [x] Đọc phản hồi mới trong lúc audit: ghi nhận TV1 APPROVED #34, TV2 xác nhận fixes và tách 3 DB probes FAIL #31 do TV2 cung cấp khỏi unit evidence TV5. Không coi #35 đã sửa DB hoặc review COMMENT là approval.
+- [ ] TV4 xử lý ba DB findings #31 và cung cấp regressions; TV1/TV3 review phần schema/auth/contract thuộc ownership. TV5 chưa chạy lại các probes đó.
