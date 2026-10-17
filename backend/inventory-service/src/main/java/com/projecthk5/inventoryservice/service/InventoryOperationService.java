@@ -89,16 +89,24 @@ public class InventoryOperationService {
     }
 
     private static String requestHash(InventoryOperationType type, Map<String, Long> quantities) {
-        String canonical = type.name() + "\n" + quantities.entrySet().stream()
-                .map(entry -> entry.getKey() + ":" + entry.getValue())
-                .collect(Collectors.joining("\n"));
+        StringBuilder canonical = new StringBuilder();
+        appendLengthPrefixed(canonical, type.name());
+        appendLengthPrefixed(canonical, Integer.toString(quantities.size()));
+        quantities.forEach((sku, quantity) -> {
+            appendLengthPrefixed(canonical, sku);
+            appendLengthPrefixed(canonical, Long.toString(quantity));
+        });
         try {
             byte[] digest = MessageDigest.getInstance("SHA-256")
-                    .digest(canonical.getBytes(StandardCharsets.UTF_8));
+                    .digest(canonical.toString().getBytes(StandardCharsets.UTF_8));
             return HexFormat.of().formatHex(digest);
         } catch (NoSuchAlgorithmException impossible) {
             throw new IllegalStateException("SHA-256 is not available", impossible);
         }
+    }
+
+    private static void appendLengthPrefixed(StringBuilder canonical, String value) {
+        canonical.append(value.length()).append(':').append(value);
     }
 
     private static InventoryOperationResponse response(String operationId, InventoryOperationType type,
