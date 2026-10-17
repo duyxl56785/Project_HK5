@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.TreeMap;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -99,12 +98,40 @@ class InventoryOperationServiceTest {
         verify(operations, never()).saveAndFlush(any(InventoryOperation.class));
     }
 
+    @Test
+    void delimiterContainingSkuCannotCollideWithMultipleItems() throws Exception {
+        InventoryItem a = new InventoryItem("A", 10);
+        InventoryItem b = new InventoryItem("B", 10);
+        when(items.findAllBySkuForUpdate(any())).thenReturn(List.of(a, b));
+
+        String firstPayloadHash = hash(InventoryOperationType.INCREASE, Map.of("A:1\nB", 2L));
+        when(operations.findById("same-id")).thenReturn(Optional.of(
+                new InventoryOperation("same-id", "INCREASE", firstPayloadHash)));
+
+        assertThrows(com.projecthk5.inventoryservice.api.InventoryOperationServiceException.class,
+                () -> service.apply(new InventoryOperationRequest("same-id", InventoryOperationType.INCREASE,
+                        List.of(new InventoryOperationRequest.ItemQuantity("A", 1),
+                                new InventoryOperationRequest.ItemQuantity("B", 2)))));
+
+        assertEquals(10, a.getAvailableQuantity());
+        assertEquals(10, b.getAvailableQuantity());
+        verify(operations, never()).saveAndFlush(any(InventoryOperation.class));
+    }
+
     private static String hash(InventoryOperationType type, Map<String, Long> input) throws Exception {
         Map<String, Long> sorted = new TreeMap<>(input);
-        String canonical = type.name() + "\n" + sorted.entrySet().stream()
-                .map(entry -> entry.getKey() + ":" + entry.getValue())
-                .collect(Collectors.joining("\n"));
+        StringBuilder canonical = new StringBuilder();
+        appendLengthPrefixed(canonical, type.name());
+        appendLengthPrefixed(canonical, Integer.toString(sorted.size()));
+        sorted.forEach((sku, quantity) -> {
+            appendLengthPrefixed(canonical, sku);
+            appendLengthPrefixed(canonical, Long.toString(quantity));
+        });
         return HexFormat.of().formatHex(MessageDigest.getInstance("SHA-256")
-                .digest(canonical.getBytes(StandardCharsets.UTF_8)));
+                .digest(canonical.toString().getBytes(StandardCharsets.UTF_8)));
+    }
+
+    private static void appendLengthPrefixed(StringBuilder canonical, String value) {
+        canonical.append(value.length()).append(':').append(value);
     }
 }
