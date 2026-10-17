@@ -46,7 +46,7 @@ public class CheckoutService {
         }
         CheckoutAttempt attempt=started.attempt();
         if (attempt.getState()==CheckoutAttempt.State.SUCCEEDED) {
-            Order placed=orders.findById(attempt.getOrderId())
+            Order placed=orders.findByIdAndCustomerId(attempt.getOrderId(), customerId)
                 .orElseThrow(() -> new IllegalStateException("Placed order needs reconciliation"));
             try { carts.finalizeCart(bearer,key); } catch (Exception ignored) {
                 // Committed outcome is authoritative; leave cart cleanup for reconciliation.
@@ -85,7 +85,7 @@ public class CheckoutService {
             if (writeRequested) {
                 // Query can prove success, but failure to query proves nothing.
                 try {
-                    Optional<Order> committed=orders.findById(orderId);
+                    Optional<Order> committed=orders.findByIdAndCustomerId(orderId, customerId);
                     if (committed.isPresent()) {
                         try { carts.finalizeCart(bearer,key); } catch (Exception ignored) { }
                         return asResult(committed.get());

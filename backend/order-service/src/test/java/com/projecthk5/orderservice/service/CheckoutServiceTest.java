@@ -56,7 +56,7 @@ class CheckoutServiceTest {
         CheckoutAttempt attempt=new CheckoutAttempt(customer,key,RequestFingerprint.compute(request));
         attempt.succeed(previous.getId());
         when(keys.begin(eq(customer),eq(key),anyString())).thenReturn(new IdempotencyCoordinator.BeginResult(attempt,false));
-        when(repo.findById(previous.getId())).thenReturn(Optional.of(previous));
+        when(repo.findByIdAndCustomerId(previous.getId(), customer)).thenReturn(Optional.of(previous));
         CheckoutResult replay=svc.checkout(customer,bearer,key,request);
         assertEquals(previous.getId(),replay.orderId());
         verifyNoInteractions(catalog,inventory,write);
@@ -74,7 +74,7 @@ class CheckoutServiceTest {
         CheckoutAttempt attempt=fresh();catalogAndCart();
         doThrow(new IllegalStateException("DB timeout after commit?")).when(write)
             .savePlaced(any(Order.class),eq(attempt.getId()),anyString());
-        when(repo.findById(attempt.getId())).thenReturn(Optional.empty());
+        when(repo.findByIdAndCustomerId(attempt.getId(), customer)).thenReturn(Optional.empty());
         assertThrows(ResponseStatusException.class,()->svc.checkout(customer,bearer,key,request));
         verify(cart,never()).release(anyString(),anyString());
         verify(inventory,never()).release(any());
@@ -85,7 +85,7 @@ class CheckoutServiceTest {
         final Order[] saved=new Order[1];
         doAnswer(inv -> { saved[0]=inv.getArgument(0);throw new IllegalStateException("Client lost COMMIT response"); })
             .when(write).savePlaced(any(Order.class),eq(attempt.getId()),anyString());
-        when(repo.findById(attempt.getId())).thenAnswer(inv -> Optional.of(saved[0]));
+        when(repo.findByIdAndCustomerId(attempt.getId(), customer)).thenAnswer(inv -> Optional.of(saved[0]));
         assertEquals(attempt.getId(),svc.checkout(customer,bearer,key,request).orderId());
         verify(inventory,never()).release(any());
         verify(cart,never()).release(anyString(),anyString());
