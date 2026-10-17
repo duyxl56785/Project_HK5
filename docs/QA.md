@@ -34,3 +34,10 @@ PASS: đã chạy đạt; FAIL: đã chạy lỗi; NOT_RUN: chưa thực thi; BL
 - [Raw log/XML, suite counts và SHA256](../reports/evidence/w1-gates-20261017/README.md).
 - TV5 chạy mới: Review/Finance63 unit PASS; Seller21 PostgreSQL PASS; Cart/Order3 PostgreSQL PASS; Auth/User timezone Asia/Saigon1 PASS/2 FAIL, rerun UTC3 PASS. Không cộng các lượt hoặc xóa FAIL lịch sử.
 - Issue #5 vẫn PARTIAL: test DB Seller/Cart/Order không chứng minh DB Review/settlement, mapping JWT runtime hoặc shared Finance contract đã nghiệm thu.
+
+## Bản sửa bổ sung theo finding — 17/10/2026
+
+- [PR #32](https://github.com/duyxl56785/Project_HK5/pull/32) → branch PR #19: sửa HS256/JWKS và checkpoint PR #7; giữ F15/F16. TV1 đã Approve đúng `0c77df6`; còn chờ tác giả tiếp nhận vào #19.
+- [PR #33](https://github.com/duyxl56785/Project_HK5/pull/33) → branch PR #28: JWT YAML mapping, replay/customer scope và scanner/failure-handler CAS; final build Cart/Order **56 unit + 11 PostgreSQL PASS** tại `11dcf39`. RED/GREEN logs, test source và manifest nằm trong `backend/order-service/verification/tv5-fixes` của PR bổ sung. Không cộng với 63 rules/21 Seller/3 PG của lượt bàn giao trước.
+- [PR #34](https://github.com/duyxl56785/Project_HK5/pull/34) → branch PR #27: owner đã sửa runbook ở `a810312`; TV5 giữ phần đó và bổ sung evidence cùng source Java: Asia/Saigon 1 PASS/2 FAIL, UTC 3 PASS, Asia/Ho_Chi_Minh 3 PASS. Không che lỗi của alias không được server hỗ trợ.
+- Ba PR là patch/evidence bổ sung, không đưa source PR gốc chưa duyệt vào main. [Ledger bàn giao và owner](../reports/TV5_W1_ACCEPTANCE_2026-10-17.md#7-bản-sửa-bổ-sung-cho-các-finding) giữ WAITING_REVIEW/INTEGRATION; contract Review/Finance, live dependencies và E2E vẫn chưa được nghiệm thu.

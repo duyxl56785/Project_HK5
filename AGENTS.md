@@ -23,8 +23,17 @@
 - Reviewer mặc định cần kiểm tra sau mỗi push là **`duyxl56785`**. Không tự yêu cầu chính tác giả PR review PR đó.
 - Nếu tài khoản này đang ở requested reviewers thì giữ nguyên, không request trùng. Nếu đã review tại head hiện tại và không có thay đổi đáng kể thì giữ review đó, không lặp yêu cầu chỉ vì danh sách requested reviewers đã trống.
 - Nếu chưa có review/request phù hợp thì thêm reviewer. Khi có thay đổi đáng kể cần xem lại sau review cũ, re-request một lần; cập nhật mô tả để nêu phần cần xem lại.
+- Trước khi request, kiểm tra sự kiện gỡ reviewer. Nếu reviewer đã chủ động bị gỡ thì giữ quyết định đó, không tự thêm lại dù có push mới; chỉ request lại khi có ủy quyền mới phù hợp. Không lặp lời nhắc khi đã có phản hồi hoặc lời nhắc còn hiệu lực.
 - Không request review trên PR đã đóng/merge. Kiểm tra quyền, tài khoản đăng nhập và phản hồi GitHub; nếu GitHub từ chối thì báo nguyên nhân thật, không tự nhận đã gán reviewer.
 - Owner bị ảnh hưởng vẫn cần review theo OWNERSHIP/CONTRIBUTING; reviewer mặc định không thay review bắt buộc của TV1–TV4. Không tự approve, merge, close, xóa PR hoặc bỏ qua branch protection.
+- Không tự resolve thread của reviewer khác nếu chưa được cho phép. Báo commit/bản sửa và evidence để reviewer xác nhận; không đồng nhất test PASS trên nhánh bổ sung với finding ở head PR gốc đã được khép.
+
+## Khi được ủy quyền sửa PR ngoài ownership TV5
+
+- Chỉ thực hiện khi yêu cầu người dùng cho phép rõ phạm vi sửa. Xác minh head hiện tại và tạo nhánh riêng từ đúng head PR gốc; không push trực tiếp vào branch thành viên.
+- PR bổ sung phải nhắm vào branch PR gốc nếu cần giữ phần source chưa được duyệt tách khỏi main. Nhóm lỗi độc lập có commit/test/evidence riêng, giữ RED và GREEN thật.
+- Nếu owner cập nhật trong lúc sửa, đọc delta, bảo toàn phần mới và loại nội dung sửa trùng. Đồng bộ branch riêng bằng lịch sử tiến tới, không force push/reset để ghi đè công việc.
+- Giữ WAITING_REVIEW/INTEGRATION cho việc tiếp nhận patch. Không tự quyết định contract đang chờ owner hoặc mở rộng sang tính năng ngoài nhiệm vụ.
 
 ## Checklist, evidence và trạng thái
 

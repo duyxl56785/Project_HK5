@@ -79,3 +79,39 @@ Fee5%, House0%, net=subtotal-commission là yêu cầu đã ghi; chưa bật gat
 - [ ] Bàn giao QA/evidence mới được reviewer xác nhận; Issue #5 đủ DONE.
 
 **Kết luận:** phần QA kiểm chứng có thể làm độc lập đã được bàn giao; Issue #5 chưa đủ DONE. G02/G03–G05 và G07 cần owner; G08 ghi rõ chưa kiểm chứng, không tạo bằng chứng giả hoặc mở rộng scope.
+
+## 7. Bản sửa bổ sung cho các finding
+
+Người dùng đã ủy quyền TV5 trực tiếp sửa những lỗi kỹ thuật/tài liệu đủ căn cứ trên branch riêng. Các bảng1–6 và evidence c9d3921 ở trên là snapshot bàn giao trước; phần này cập nhật tiến độ mà không sửa/xóa bằng chứng lịch sử.
+
+| Parent / fix PR | Source / commit đã push | Kết quả mới và giới hạn |
+|---|---|---|
+| #19 ← [#32](https://github.com/duyxl56785/Project_HK5/pull/32) | base1407e9d →0c77df6 | Đã sửa JWKS thành profile HS256/#24 và các câu#7Draft/chưa merge; static checks PASS, F15/F16 giữ nguyên. Runtime NOT_RUN/docs-only. TV1 đã APPROVED đúng0c77df6; parent#19 vẫn chờ tác giả tiếp nhận. Metadata PR#19 cũng đã sửa câu trạng thái cũ có kiểm phiên bản |
+| #28 ← [#33](https://github.com/duyxl56785/Project_HK5/pull/33) | base63f63c1 →4e4ab83→59dc952→11dcf39 | JWT YAML real-env, replay/unknown-commit fetch graph có customer scope, scanner/failure-handler conditional DB transitions; final build56unit+11PG PASS. Chưa claim parent#28 resolved trước tích hợp; Finance policy/contract/V1 không đổi |
+| #27 ← [#34](https://github.com/duyxl56785/Project_HK5/pull/34) | TV1a810312; TV5 giữ owner fix trong369b4f8 | Ban đầu TV5 chuẩn bị7175ea2; owner đồng thời sửa runbook nên đã đồng bộ, bỏ phần hướng dẫn trùng và chỉ thêm evidence. Java source6a7f172=a810312; Asia/Saigon1PASS2FAIL, UTC3PASS, Asia/Ho_Chi_Minh3PASS. Không đổi assertions để che lỗi, không vá timezone DB/Windows |
+
+### RED/GREEN ledger của bản sửa Order
+
+| Run độc lập | PASS/FAIL thực tế | Evidence trong fix PR#33 |
+|---|---|---|
+| JWT RED trước YAML |1PASS/1FAIL,exit1 | jwt-red |
+| JWT GREEN |56unitPASS,exit0 | jwt-green (Order XML/log; Cart task/count được đối chiếu ở lượt chạy) |
+| Replay RED sau JWT-only fix |1PASS/3FAIL,exit1 | replay-red |
+| Replay GREEN |56unit+7PG PASS,exit0 | replay-green |
+| Scanner RED ban đầu |2PASS/1FAIL,exit1 | scanner-red |
+| Thêm failure-handler cùng race, RED |2PASS/2FAIL,exit1 | transitions-red |
+| Final Cart/Order build +PG tasks |56unit+11PG PASS,0fail/error/skip,exit0/41s | final-green;43raw hashes/blob bytes verified |
+
+PG11 gồm1Cart+2Order có sẵn+4replay+4scanner/failure-handler invocations. Test race giữ writer row lock thật, quan sát scanner/failure UPDATE chờ trong pg_stat_activity rồi cho writer commit; bản cũ ghi đè SUCCEEDED, bản mới giữ state/orderId. Kiểm thêm scanner thắng trước writer thì Order/outbox rollback. Không dùng mock repository hoặc sleep-only để giả concurrency. Replay tests dùng real writer/transactions/PostgreSQL, ports liên service mocked; policy tính tiền trong fixture không bật cờ Finance production.
+
+Evidence#33: [TEST_RESULTS](https://github.com/duyxl56785/Project_HK5/blob/11dcf3969dc61ced0b819931cd946d8719617763/backend/order-service/TEST_RESULTS_TV5_FIXES.md), [raw artifacts](https://github.com/duyxl56785/Project_HK5/tree/11dcf3969dc61ced0b819931cd946d8719617763/backend/order-service/verification/tv5-fixes). Evidence#34: [timezone report](https://github.com/duyxl56785/Project_HK5/blob/369b4f8184fb70b32ea870e5d9e1fc5d572a6199/docs/TV1_TIMEZONE_RECHECK.md), [raw artifacts](https://github.com/duyxl56785/Project_HK5/tree/369b4f8184fb70b32ea870e5d9e1fc5d572a6199/docs/verification/tv5-timezone) với32hashes/blob bytes verified. Các lượt mới tách khỏi63rules/21Seller/3PG/231TV2/V2 cũ; không cộng thành một release total.
+
+### Điều kiện tiếp nhận còn mở
+
+- G01/#26 và#29: TV5 đã Approve đúng scope/docs c4288d5 vàpersistence f8b0ff4 trong đợt trước; đợt sửa này không thay source#26/#29. Approval không tự merge hoặc đóng Issue.
+- G02: runbook đã được **TV1** sửa trong parent#27a810312. Evidence độc lập3timezone ở#34 đang chờ review/tiếp nhận; alias Asia/Saigon vẫn không hợp lệ trên image đã kiểm. Không ghi unsupported diagnostic là PASS.
+- G03–G05 và failure-handler liên quan: đã sửa/test tại#33; **WAITING_REVIEW/INTEGRATION** vào#28. TV1 đã yêu cầu scanner trên head59dc952; bản11dcf39 bổ sung CAS/race evidence trả lời yêu cầu đó, không tự resolve/dismiss review của TV1/TV2.
+- G07/G08: D02–D10, tiền/currency/scale/snapshots,4nhóm doanh thu, Review key/event/Store identity, COD/settlement truth source và cross-service recovery còn chờ owner. Không tự chốt contract, triển khai API/UI/E2E mới hoặc gọi source bugfix là production acceptance.
+- Reviewer sau push được kiểm tra qua request/review/events. Giữ người đã chủ động bị gỡ, không tự thêm lại. Các PR mới nhắm branch parent, không main; không force push hoặc ghi đè source thành viên.
+
+**Trạng thái cuối đợt sửa:** patch/evidence đã bàn giao, Issue#5 OPEN/PARTIAL. Chờ tác giả tiếp nhận các PR bổ sung, owner re-review head mới và xác nhận các quyết định còn mở.

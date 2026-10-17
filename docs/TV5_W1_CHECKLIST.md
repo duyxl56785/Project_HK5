@@ -36,3 +36,12 @@ Các file trên giữ bằng chứng và trạng thái của từng lần bàn g
 - [x] Lập [QA matrix và ledger owner/blocker](../reports/TV5_W1_ACCEPTANCE_2026-10-17.md), có evidence cho từng kết luận.
 - [ ] TV1 xác nhận hướng dẫn timezone; TV3 sửa3 finding #28; owner/consumer chốt các quyết định Finance/Review còn mở.
 - [ ] Bàn giao QA mới được reviewer xác nhận; Issue #5 đủ gate nghiệm thu. Giữ OPEN/PARTIAL.
+
+## Bản sửa đã được ủy quyền — supplemental PRs
+
+- [x] #19: sửa HS256/profile và toàn bộ chỉ đạo PR #7 lỗi thời, giữ nội dung F15/F16; commit `0c77df6`/PR #32 đã push, static checks PASS; TV1 đã Approve đúng head.
+- [x] #28: test tái hiện JWT/replay/scanner và failure-handler race; sửa theo nguyên nhân, giữ V1/enum/money policy. Commits `4e4ab83`/`59dc952`/`11dcf39`, PR #33; final 56 unit + 11 PG PASS, raw FAIL/PASS và 43 artifact hashes khớp Git.
+- [x] #27: kiểm lại timezone bằng DB riêng, giữ FAIL Asia/Saigon; UTC và Asia/Ho_Chi_Minh đều 3 PASS. Khi owner push `a810312`, đã giữ bản sửa đó và bàn giao evidence bổ sung qua `369b4f8`/PR #34; 32 hashes khớp Git, dữ liệu Docker có sẵn được giữ.
+- [x] Cập nhật QA/TEST_RESULTS, Issue và PR gốc; dùng branch riêng đúngbase, không tự resolve thread/re-add reviewer đã bị gỡ hoặc Approve/Merge/Close trong đợt sửa này.
+- [ ] Owner tiếp nhận patch/evidence vào#19/#28/#27, kiểm head mới và ra quyết định review chính thức.
+- [ ] D02–D10/provider-consumer Review/Finance và toàn gate W1 được owner xác nhận; Issue#5 vẫn PARTIAL.
