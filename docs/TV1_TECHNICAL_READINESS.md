@@ -86,6 +86,21 @@ Bằng chứng local (generated, Git ignored): `backend/build/readiness/{runtime
 
 FAIL quan sát và đã xử lý: sandbox Git ownership/network (chạy lại với quyền phù hợp, không đổi safe.directory toàn máy); Docker port5432 conflict (dùng5433); HS256 fixture có kid nhưng ImmutableSecret không mang kid (đổi fixture sang JWK có cùng key ID); psql connection errors không in SQLSTATE như SQL execution errors (negative check khớp thông báo authentication/HBA và bắt buộc exit khác0). Các lỗi không được tính là PASS cho đến lần chạy lại đạt.
 
+### D.1. Đối chiếu JVM timezone PR #27
+
+Bổ sung ngày 2026-10-17 cho head `6a7f1724bb533cc5ee92c431afb24d9844dff631`. [Review TV2/TV5](https://github.com/duyxl56785/Project_HK5/pull/27) so sánh cùng source/database, chỉ đổi JVM timezone:
+
+| JVM timezone | Kết quả readiness Auth/User | Kết luận |
+|---|---|---|
+| `Asia/Saigon` | 1 PASS, 2 FAIL, 0 SKIPPED; Gradle exit 1 | PostgreSQL 16.15 của môi trường review không có tên này trong `pg_timezone_names`; từ chối startup parameter `TimeZone`, SQLState `22023` trước test body |
+| `UTC` | 3 PASS, 0 FAIL/error/SKIPPED; Gradle exit 0 | UTC được PostgreSQL đó chấp nhận; cả hai test DB thực sự chạy với `TV1_DATABASE_TESTS=true` |
+
+[Log/XML và SHA256 của TV5](https://github.com/duyxl56785/Project_HK5/tree/c9d39217993970563ab9917ef2fdd911483f62bf/reports/evidence/w1-gates-20261017) giữ riêng lượt FAIL và lượt UTC PASS. [CI readiness tại đúng head trên](https://github.com/duyxl56785/Project_HK5/actions/runs/38839525314/job/116776151812) cũng SUCCESS; đây là bằng chứng trước thay đổi tài liệu này. Không quy lỗi timezone thành lỗi credentials/dialect hoặc suy rộng rằng mọi PostgreSQL đều thiếu `Asia/Saigon`.
+
+Dùng [hướng dẫn PowerShell UTC và khôi phục `JAVA_TOOL_OPTIONS`](DEVELOPMENT.md#jvm-timezone-cho-authuser-trên-powershell) trước Gradle test/build và Auth/User `bootRun`, áp dụng riêng từng terminal; không đổi timezone Windows, HBA, quyền DB, credentials hoặc volumes.
+
+Kiểm tra lại local ngày 2026-10-17: `docker-postgres-1` đang Exited, credentials Auth/User chưa nạp vào tiến trình; readiness DB và `bootRun` **NOT_RUN**, không tự khởi động/provision hay dùng PostgreSQL của dự án khác. Full backend `build --no-daemon --console=plain` với JDK 21/UTC, bỏ `TV1_DATABASE_TESTS`, **PASS (exit 0)**: XML ghi 1 PASS (HS256), 2 DB tests SKIPPED, 0 failure/error; không tính SKIPPED thành DB PASS. Lượt build trước có `--rerun-tasks` cũng tạo lại ba XML này. Đoạn đặt/khôi phục JVM options được kiểm tra với biến ban đầu chưa có và đã có giá trị.
+
 ## E. Architecture / security review
 
 - **CRITICAL:** không phát hiện lỗi phá dữ liệu/secret mới trong thay đổi đã kiểm tra; không chứng nhận Auth production. Rủi ro HS256 shared trust theo ADR vẫn giữ nguyên, không RS256/JWKS.

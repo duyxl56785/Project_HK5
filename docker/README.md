@@ -84,6 +84,8 @@ Không phụ thuộc init script: volume mới/cũ dùng cùng provisioning **sa
 
 Auth/User có JPA, JDBC, `flyway-core`, `flyway-database-postgresql` theo Boot 3.3.5 BOM; không nâng/pin version riêng. Mỗi service có datasource riêng, `ddl-auto=validate`, `open-in-view=false`; Flyway mặc định **disabled** ở PHASE B. Service cần runtime password trong environment.
 
+Trước Gradle readiness tests và Auth/User `bootRun` trên PowerShell, [lưu `JAVA_TOOL_OPTIONS` cũ và đặt JVM UTC trong terminal hiện tại](../docs/DEVELOPMENT.md#jvm-timezone-cho-authuser-trên-powershell), rồi khôi phục sau khi chạy. Review PR #27 ghi nhận `Asia/Saigon` bị PostgreSQL của môi trường kiểm thử từ chối với SQLState `22023`; UTC đã vượt qua cùng bộ test. Không đổi timezone Windows, HBA, quyền DB, credentials hay volumes vì lỗi này.
+
 Profile `migration` chuẩn bị cho PR database tiếp theo: bật Flyway bằng `*_migrator` và `*_MIGRATION_PASSWORD` riêng. Chỉ cấp migration secret cho tiến trình startup/migration được phép DDL; runtime thông thường chỉ cần `*_DB_PASSWORD`. `clean-disabled=true`, `baseline-on-migrate=false`. Không bật profile trong PHASE B.
 
 Convention: mỗi service quản lý `src/main/resources/db/migration/V<N>__<snake_case_description>.sql`, bắt đầu V1 ở PR tiếp theo, tăng số nguyên riêng từng database. Auth V1/User V1 không xung đột; phối hợp nhánh cùng service trước khi chọn version. Không sửa migration đã áp dụng. Chưa có migration/schema history/business table; validate 0 migrations chỉ là readiness.
