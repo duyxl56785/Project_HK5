@@ -137,6 +137,44 @@ class InventoryOperationPostgresIT extends InventoryPostgresSupport {
         }
     }
 
+    @Test void reserveConsumeAndReleaseRetriesDoNotApplyStockTwice() {
+        String sku = initialize("lifecycle-retry", 10);
+        String reserveId = id("lifecycle-reserve");
+        String consumeId = id("lifecycle-consume");
+        String releaseId = id("lifecycle-release");
+
+        var reserve = request(reserveId, InventoryOperationType.RESERVE, sku, 4);
+        assertFalse(controller.operate(reserve).replayed());
+        var afterReserve = controller.getBalance(sku);
+        var reserveReplay = controller.operate(reserve);
+        assertTrue(reserveReplay.replayed());
+        assertEquals(afterReserve, controller.getBalance(sku));
+        assertEquals(6, afterReserve.availableQuantity());
+        assertEquals(4, afterReserve.reservedQuantity());
+
+        var consume = request(consumeId, InventoryOperationType.CONSUME, sku, 3);
+        assertFalse(controller.operate(consume).replayed());
+        var afterConsume = controller.getBalance(sku);
+        assertTrue(controller.operate(consume).replayed());
+        assertEquals(afterConsume, controller.getBalance(sku));
+        assertEquals(6, afterConsume.availableQuantity());
+        assertEquals(1, afterConsume.reservedQuantity());
+
+        var release = request(releaseId, InventoryOperationType.RELEASE, sku, 1);
+        assertFalse(controller.operate(release).replayed());
+        var afterRelease = controller.getBalance(sku);
+        assertTrue(controller.operate(release).replayed());
+        assertEquals(afterRelease, controller.getBalance(sku));
+        assertEquals(7, afterRelease.availableQuantity());
+        assertEquals(0, afterRelease.reservedQuantity());
+
+        var mismatch = request(releaseId, InventoryOperationType.RELEASE, sku, 2);
+        var conflict = assertThrows(InventoryOperationServiceException.class,
+                () -> controller.operate(mismatch));
+        assertEquals("IDEMPOTENCY_KEY_REUSED", conflict.getCode());
+        assertEquals(afterRelease, controller.getBalance(sku));
+    }
+
     private String initialize(String prefix, long quantity) {
         String sku = id(prefix);
         controller.initialize(new InitializeInventoryRequest(sku, quantity));
