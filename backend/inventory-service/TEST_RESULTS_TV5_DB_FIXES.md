@@ -19,10 +19,17 @@ The current schema regression now checks the owner's intentional VARCHAR/V1+V2 t
 
 Owner follow-up unit tests also introduced mixed Mockito matchers: two verifies combined raw strings with anyString(). TV5 independently reproduced **6 unit tests: 4 PASS/2 FAIL**, exit1/13s (`owner-unit-red/`). The fix uses eq(...) for those exact strings, preserving the expected arguments and every assertion. PostgreSQL cases are tagged into an explicit Docker-required `postgresIntegrationTest` task; unit runs no longer silently include/skip DB tests.
 
+## Group 2 — duplicate initialization
+
+- RED uses the old production source at `9ee299c` (only the proven schema-mapping isolation fix) plus the exact same new initialize regression file. **3 PG invocations: 1 PASS/2 FAIL**, exit1/24s. Fresh duplicate initialization returns201 instead of409 and overwrites a version0 row; the reserved/versioned-row case also fails the required conflict behavior. No assertions are changed between RED and GREEN.
+- The owner now uses `InventoryItemRepository.insertIfAbsent` with `ON CONFLICT (sku) DO NOTHING`, returning409 through the existing handler if no row was inserted. TV5 preserves that implementation, with no duplicate rewrite.
+- GREEN in the combined execution: all3 initialize PG cases PASS. They verify real HTTP201/409 with the actual token filter, unchanged available/reserved/version/timestamp after duplicate requests, and a competing initialize blocked on a real DB lock before the winner commits. No repository mock, shared existing DB or volume is used.
+- Source regression: `InventoryInitializePostgresIT`; raw RED: `initialize-red/`. The combined/final GREEN ledger below records the complete source checkpoint and separate unit/PG totals.
+
 ## Remaining work at this checkpoint
 
 - [x] Schema regression RED→GREEN and owner V2 upgrade checks; V1 unchanged, superseded CHAR candidate removed from final source.
-- [ ] Duplicate initialization insert-only + PostgreSQL/HTTP/concurrent regressions.
+- [x] Duplicate initialization owner insert-only fix checked with PostgreSQL/HTTP/concurrent regressions.
 - [ ] Atomic operationId arbitration + PostgreSQL race/rollback regressions.
 - [ ] Owner review/integration and external auth/identity/lifecycle contracts.
 
