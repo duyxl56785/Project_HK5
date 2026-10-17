@@ -112,3 +112,9 @@ The top-level Issue #2 boxes combine API/JWT/database/end-to-end behavior. No ad
 - Both module READMEs, this progress/report and `TV2_WEEK1_TEST_SUMMARY.csv`: accurate readiness and recovery instructions.
 
 No new API or migration. Draft PR #37 is the single delivery PR with Refs #2; report/README commit follows the four verified code commits. Request TV1/TV3/TV4/TV5 review and record granular progress on Issue #2 without checking its composite unfulfilled acceptance items. Do not Approve/Merge or close Issue #2. Before any future runtime wiring, first obtain the missing contracts and replace test-only policies with verified adapters; do not expose these domain types directly as request DTOs.
+
+## Catalog follow-up checkpoint — 2026-10-18
+
+The preceding sections and CSV preserve the historical baseline. Latest tested source is `1f2ebf5366e6046108825fd677f74aba253a3517`: internal batch validator (23 unit cases), five proposed-route security-denial cases and eleven isolated PostgreSQL SQL-prototype cases. Two-module build rerun: **340 PASS / 0 FAIL / 0 SKIPPED**, including 24 Seller +14 Category production PostgreSQL regressions and 11 prototype PostgreSQL invocations. This is a different scope from the historical full-backend run; do not combine totals.
+
+See [Catalog handoff and pending contract decisions](TV2_CATALOG_HANDOFF.md) and [current run CSV](TV2_CATALOG_TEST_SUMMARY.csv) for DTO proposal, exact commands/log hashes, initial compile failure and correction, limitations and next implementation gates. No Catalog API, Store/Product JPA/runtime migration or live seed has been introduced. S01/C01/M01/E01 are still pending owner confirmation; Issue #2 remains PARTIAL. PR #37 is now observed OPEN/non-draft; earlier Draft references above describe the original handoff, not an automatic change by this task.
