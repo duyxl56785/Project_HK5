@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest" tests="21" skipped="0" failures="0" errors="0" timestamp="2026-10-17T14:20:25.721Z" hostname="MDUY-LECO" time="1.559">
+  <properties/>
+  <testcase name="resubmitKeepsIdAndLifecyclePersistsReasonsAndVersions()" classname="com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest" time="0.633"/>
+  <testcase name="migrationAndJpaPersistASeparateSellerIdentity()" classname="com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest" time="0.158"/>
+  <testcase name="twoRealTransactionsWithTheSameLoadedVersionCannotBothModerate()" classname="com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest" time="0.04"/>
+  <testcase name="requiredRegistrationRollsBackWithItsCaller()" classname="com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest" time="0.293"/>
+  <testcase name="database rejects null owner" classname="com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest" time="0.05"/>
+  <testcase name="database rejects blank owner" classname="com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest" time="0.013"/>
+  <testcase name="database rejects long owner" classname="com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest" time="0.01"/>
+  <testcase name="database rejects null status" classname="com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest" time="0.013"/>
+  <testcase name="database rejects unknown status" classname="com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest" time="0.012"/>
+  <testcase name="database rejects missing reason" classname="com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest" time="0.014"/>
+  <testcase name="database rejects blank reason" classname="com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest" time="0.01"/>
+  <testcase name="database rejects long reason" classname="com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest" time="0.007"/>
+  <testcase name="database rejects obsolete reason" classname="com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest" time="0.015"/>
+  <testcase name="database rejects null version" classname="com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest" time="0.011"/>
+  <testcase name="database rejects negative version" classname="com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest" time="0.01"/>
+  <testcase name="permissionsAndInvalidInputLeaveDatabaseUnchanged()" classname="com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest" time="0.041"/>
+  <testcase name="staleExpectedVersionCannotApproveAfterRejectAndResubmit()" classname="com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest" time="0.035"/>
+  <testcase name="duplicateOwnerIsRejectedWithoutCreatingAnotherSeller()" classname="com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest" time="0.035"/>
+  <testcase name="databaseOwnerComparisonDoesNotTrimOrFoldCase()" classname="com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest" time="0.042"/>
+  <testcase name="requiredModerationRollsBackStateAndVersionWithItsCaller()" classname="com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest" time="0.018"/>
+  <testcase name="concurrentRegistrationWaitsForTheUniqueConstraintAndOnlyOneCommits()" classname="com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest" time="0.041"/>
+  <system-out><![CDATA[14:20:11.216 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.projecthk5.sellerservice.SellerServiceApplication for test class com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest
+14:20:11.358 [Test worker] INFO org.testcontainers.images.PullPolicy -- Image pull policy will be performed by: DefaultPullPolicy()
+14:20:11.360 [Test worker] INFO org.testcontainers.utility.ImageNameSubstitutor -- Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+14:20:11.569 [Test worker] INFO org.testcontainers.dockerclient.DockerClientProviderStrategy -- Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+14:20:11.856 [Test worker] INFO org.testcontainers.dockerclient.DockerClientProviderStrategy -- Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
+14:20:11.858 [Test worker] INFO org.testcontainers.DockerClientFactory -- Docker host IP address is localhost
+14:20:11.871 [Test worker] INFO org.testcontainers.DockerClientFactory -- Connected to docker: 
+  Server Version: 29.8.1
+  API Version: 1.56
+  Operating System: Docker Desktop (containerized)
+  Total Memory: 7571 MB
+14:20:11.891 [Test worker] INFO tc.testcontainers/ryuk:0.7.0 -- Creating container for image: testcontainers/ryuk:0.7.0
+14:20:16.025 [Test worker] INFO tc.testcontainers/ryuk:0.7.0 -- Container testcontainers/ryuk:0.7.0 is starting: 266cb19587bfe77f088f4c7763943ab59951b9ecfdabc6968fc628ec383fa1e9
+14:20:16.837 [Test worker] INFO tc.testcontainers/ryuk:0.7.0 -- Container testcontainers/ryuk:0.7.0 started in PT4.946612S
+14:20:16.844 [Test worker] INFO org.testcontainers.utility.RyukResourceReaper -- Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+14:20:16.844 [Test worker] INFO org.testcontainers.DockerClientFactory -- Checking the system...
+14:20:16.845 [Test worker] INFO org.testcontainers.DockerClientFactory -- ✔︎ Docker server version should be at least 1.6.0
+14:20:16.845 [Test worker] INFO tc.postgres:16.6-alpine -- Creating container for image: postgres:16.6-alpine
+14:20:17.028 [Test worker] INFO tc.postgres:16.6-alpine -- Container postgres:16.6-alpine is starting: c70b54b00bf85579b6664edc3760781bdf598eaeb6014cb4c95f09bc547a2947
+14:20:19.720 [Test worker] INFO tc.postgres:16.6-alpine -- Container postgres:16.6-alpine started in PT2.8744895S
+14:20:19.720 [Test worker] INFO tc.postgres:16.6-alpine -- Container is started (JDBC URL: jdbc:postgresql://localhost:50282/test?loggerLevel=OFF)
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.5)
+
+2026-10-17T14:20:20.026Z  INFO 36340 --- [seller-service] [    Test worker] c.p.s.s.SellerPersistenceIntegrationTest : Starting SellerPersistenceIntegrationTest using Java 21.0.7 with PID 36340 (started by Minh Duy in D:\CMC Uni\5 Ky Dong\WEB\BCK WEB\Project_HK5\.verification\pr-audit-20261017\29-f8b0ff4\backend\seller-service)
+2026-10-17T14:20:20.028Z  INFO 36340 --- [seller-service] [    Test worker] c.p.s.s.SellerPersistenceIntegrationTest : No active profile set, falling back to 1 default profile: "default"
+2026-10-17T14:20:20.919Z  INFO 36340 --- [seller-service] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-10-17T14:20:20.986Z  INFO 36340 --- [seller-service] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 58 ms. Found 1 JPA repository interface.
+2026-10-17T14:20:21.813Z  INFO 36340 --- [seller-service] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-10-17T14:20:22.022Z  INFO 36340 --- [seller-service] [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@44f23927
+2026-10-17T14:20:22.024Z  INFO 36340 --- [seller-service] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-10-17T14:20:22.058Z  INFO 36340 --- [seller-service] [    Test worker] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://localhost:50282/test (PostgreSQL 16.6)
+2026-10-17T14:20:22.100Z  INFO 36340 --- [seller-service] [    Test worker] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table "public"."flyway_schema_history" does not exist yet
+2026-10-17T14:20:22.104Z  INFO 36340 --- [seller-service] [    Test worker] o.f.core.internal.command.DbValidate     : Successfully validated 1 migration (execution time 00:00.020s)
+2026-10-17T14:20:22.126Z  INFO 36340 --- [seller-service] [    Test worker] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table "public"."flyway_schema_history" ...
+2026-10-17T14:20:22.172Z  INFO 36340 --- [seller-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Current version of schema "public": << Empty Schema >>
+2026-10-17T14:20:22.185Z  INFO 36340 --- [seller-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "1 - create seller profiles"
+2026-10-17T14:20:22.228Z  INFO 36340 --- [seller-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Successfully applied 1 migration to schema "public", now at version v1 (execution time 00:00.016s)
+2026-10-17T14:20:22.360Z  INFO 36340 --- [seller-service] [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-10-17T14:20:22.443Z  INFO 36340 --- [seller-service] [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2026-10-17T14:20:22.488Z  INFO 36340 --- [seller-service] [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-10-17T14:20:22.860Z  INFO 36340 --- [seller-service] [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-10-17T14:20:23.790Z  INFO 36340 --- [seller-service] [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-10-17T14:20:23.837Z  INFO 36340 --- [seller-service] [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-10-17T14:20:25.502Z  INFO 36340 --- [seller-service] [    Test worker] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoints beneath base path '/actuator'
+2026-10-17T14:20:25.594Z  INFO 36340 --- [seller-service] [    Test worker] c.p.s.s.SellerPersistenceIntegrationTest : Started SellerPersistenceIntegrationTest in 5.836 seconds (process running for 15.766)
+2026-10-17T14:20:27.154Z  WARN 36340 --- [seller-service] [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Error: 0, SQLState: 23505
+2026-10-17T14:20:27.154Z ERROR 36340 --- [seller-service] [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : ERROR: duplicate key value violates unique constraint "uk_seller_profiles_owner_reference"
+  Detail: Key (owner_reference)=(d1f87152-b93c-4eab-b1af-cc9dab67ff60) already exists.
+2026-10-17T14:20:27.262Z  WARN 36340 --- [seller-service] [pool-2-thread-2] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Error: 0, SQLState: 23505
+2026-10-17T14:20:27.262Z ERROR 36340 --- [seller-service] [pool-2-thread-2] o.h.engine.jdbc.spi.SqlExceptionHelper   : ERROR: duplicate key value violates unique constraint "uk_seller_profiles_owner_reference"
+  Detail: Key (owner_reference)=(d1f87152-b93c-4eab-b1af-cc9dab67ff60) already exists.
+]]></system-out>
+  <system-err><![CDATA[WARNING: A Java agent has been loaded dynamically (C:\Users\Admin\.gradle\caches\modules-2\files-2.1\net.bytebuddy\byte-buddy-agent\1.14.19\154da3a65b4f4a909d3e5bdec55d1b2b4cbb6ce1\byte-buddy-agent-1.14.19.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+]]></system-err>
+</testsuite>

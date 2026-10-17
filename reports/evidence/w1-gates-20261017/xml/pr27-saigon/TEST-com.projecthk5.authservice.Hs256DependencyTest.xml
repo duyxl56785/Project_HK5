@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.projecthk5.authservice.Hs256DependencyTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-10-17T14:21:43.976Z" hostname="MDUY-LECO" time="0.163">
+  <properties/>
+  <testcase name="managedJoseDependenciesSupportHs256AndRejectAnotherKey()" classname="com.projecthk5.authservice.Hs256DependencyTest" time="0.163"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.projecthk5.orderservice.integration.OrderPostgres16IT" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-10-17T14:20:38.066Z" hostname="MDUY-LECO" time="0.501">
+  <properties/>
+  <testcase name="realFlywayValidateTwoSellerOrdersCascadeAndUniqueCustomerKey()" classname="com.projecthk5.orderservice.integration.OrderPostgres16IT" time="0.484"/>
+  <testcase name="concurrentSameKeyOnlyOneRecordCanCommit()" classname="com.projecthk5.orderservice.integration.OrderPostgres16IT" time="0.015"/>
+  <system-out><![CDATA[14:20:12.075 [Test worker] INFO org.testcontainers.images.PullPolicy -- Image pull policy will be performed by: DefaultPullPolicy()
+14:20:12.081 [Test worker] INFO org.testcontainers.utility.ImageNameSubstitutor -- Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+14:20:12.228 [Test worker] INFO org.testcontainers.dockerclient.DockerClientProviderStrategy -- Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+14:20:12.497 [Test worker] INFO org.testcontainers.dockerclient.DockerClientProviderStrategy -- Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
+14:20:12.498 [Test worker] INFO org.testcontainers.DockerClientFactory -- Docker host IP address is localhost
+14:20:12.509 [Test worker] INFO org.testcontainers.DockerClientFactory -- Connected to docker: 
+  Server Version: 29.8.1
+  API Version: 1.56
+  Operating System: Docker Desktop (containerized)
+  Total Memory: 7571 MB
+14:20:12.525 [Test worker] INFO tc.testcontainers/ryuk:0.7.0 -- Creating container for image: testcontainers/ryuk:0.7.0
+14:20:16.034 [Test worker] INFO tc.testcontainers/ryuk:0.7.0 -- Container testcontainers/ryuk:0.7.0 is starting: 7300e3d6737e4653dc471c58168dc92c8b43d567a19b50f7c3771df8d67a8eb5
+14:20:16.796 [Test worker] INFO tc.testcontainers/ryuk:0.7.0 -- Container testcontainers/ryuk:0.7.0 started in PT4.2704603S
+14:20:16.816 [Test worker] INFO org.testcontainers.utility.RyukResourceReaper -- Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+14:20:16.817 [Test worker] INFO org.testcontainers.DockerClientFactory -- Checking the system...
+14:20:16.818 [Test worker] INFO org.testcontainers.DockerClientFactory -- ✔︎ Docker server version should be at least 1.6.0
+14:20:16.840 [Test worker] INFO tc.postgres:16-alpine -- Pulling docker image: postgres:16-alpine. Please be patient; this may take some time but only needs to be done once.
+14:20:18.841 [docker-java-stream-2051517122] INFO tc.postgres:16-alpine -- Starting to pull image
+14:20:18.853 [docker-java-stream-2051517122] INFO tc.postgres:16-alpine -- Pulling image layers:  0 pending,  0 downloaded,  0 extracted, (0 bytes/0 bytes)
+14:20:19.972 [docker-java-stream-2051517122] INFO tc.postgres:16-alpine -- Pulling image layers:  9 pending,  1 downloaded,  0 extracted, (185 bytes/? MB)
+14:20:20.072 [docker-java-stream-2051517122] INFO tc.postgres:16-alpine -- Pulling image layers:  8 pending,  2 downloaded,  0 extracted, (186 bytes/? MB)
+14:20:20.373 [docker-java-stream-2051517122] INFO tc.postgres:16-alpine -- Pulling image layers:  7 pending,  3 downloaded,  0 extracted, (186 bytes/? MB)
+14:20:20.374 [docker-java-stream-2051517122] INFO tc.postgres:16-alpine -- Pulling image layers:  6 pending,  4 downloaded,  0 extracted, (186 bytes/? MB)
+14:20:20.571 [docker-java-stream-2051517122] INFO tc.postgres:16-alpine -- Pulling image layers:  5 pending,  5 downloaded,  0 extracted, (3 MB/? MB)
+14:20:20.671 [docker-java-stream-2051517122] INFO tc.postgres:16-alpine -- Pulling image layers:  4 pending,  6 downloaded,  0 extracted, (6 MB/? MB)
+14:20:20.871 [docker-java-stream-2051517122] INFO tc.postgres:16-alpine -- Pulling image layers:  3 pending,  7 downloaded,  0 extracted, (12 MB/? MB)
+14:20:20.872 [docker-java-stream-2051517122] INFO tc.postgres:16-alpine -- Pulling image layers:  2 pending,  8 downloaded,  0 extracted, (12 MB/? MB)
+14:20:21.171 [docker-java-stream-2051517122] INFO tc.postgres:16-alpine -- Pulling image layers:  1 pending,  9 downloaded,  0 extracted, (16 MB/? MB)
+14:20:21.173 [docker-java-stream-2051517122] INFO tc.postgres:16-alpine -- Pulling image layers:  1 pending,  9 downloaded,  1 extracted, (19 MB/? MB)
+14:20:21.272 [docker-java-stream-2051517122] INFO tc.postgres:16-alpine -- Pulling image layers:  1 pending,  9 downloaded,  2 extracted, (22 MB/? MB)
+14:20:21.373 [docker-java-stream-2051517122] INFO tc.postgres:16-alpine -- Pulling image layers:  1 pending,  9 downloaded,  3 extracted, (24 MB/? MB)
+14:20:21.378 [docker-java-stream-2051517122] INFO tc.postgres:16-alpine -- Pulling image layers:  1 pending,  9 downloaded,  4 extracted, (24 MB/? MB)
+14:20:21.472 [docker-java-stream-2051517122] INFO tc.postgres:16-alpine -- Pulling image layers:  1 pending, 10 downloaded,  4 extracted, (24 MB/? MB)
+14:20:21.672 [docker-java-stream-2051517122] INFO tc.postgres:16-alpine -- Pulling image layers:  1 pending, 11 downloaded,  4 extracted, (31 MB/? MB)
+14:20:24.672 [docker-java-stream-2051517122] INFO tc.postgres:16-alpine -- Pulling image layers:  0 pending, 12 downloaded,  4 extracted, (106 MB/106 MB)
+14:20:26.681 [docker-java-stream-2051517122] INFO tc.postgres:16-alpine -- Pulling image layers:  0 pending, 12 downloaded,  5 extracted, (106 MB/106 MB)
+14:20:26.689 [docker-java-stream-2051517122] INFO tc.postgres:16-alpine -- Pulling image layers:  0 pending, 12 downloaded,  6 extracted, (106 MB/106 MB)
+14:20:26.773 [docker-java-stream-2051517122] INFO tc.postgres:16-alpine -- Pulling image layers:  0 pending, 12 downloaded,  7 extracted, (106 MB/106 MB)
+14:20:26.778 [docker-java-stream-2051517122] INFO tc.postgres:16-alpine -- Pulling image layers:  0 pending, 12 downloaded,  8 extracted, (106 MB/106 MB)
+14:20:26.873 [docker-java-stream-2051517122] INFO tc.postgres:16-alpine -- Pulling image layers:  0 pending, 12 downloaded,  9 extracted, (106 MB/106 MB)
+14:20:26.874 [docker-java-stream-2051517122] INFO tc.postgres:16-alpine -- Pulling image layers:  0 pending, 12 downloaded, 10 extracted, (106 MB/106 MB)
+14:20:28.191 [docker-java-stream-2051517122] INFO tc.postgres:16-alpine -- Pull complete. 12 layers, pulled in 9s (downloaded 106 MB at 11 MB/s)
+14:20:28.192 [Test worker] INFO tc.postgres:16-alpine -- Image postgres:16-alpine pull took PT11.3514294S
+14:20:28.290 [Test worker] INFO tc.postgres:16-alpine -- Creating container for image: postgres:16-alpine
+14:20:28.479 [Test worker] INFO tc.postgres:16-alpine -- Container postgres:16-alpine is starting: 6c6710bd2dd8f3ee27372116c386f5da6adf570a9ace780524a3bb9991f87c46
+14:20:31.466 [Test worker] INFO tc.postgres:16-alpine -- Container postgres:16-alpine started in PT3.1760507S
+14:20:31.467 [Test worker] INFO tc.postgres:16-alpine -- Container is started (JDBC URL: jdbc:postgresql://localhost:50306/test?loggerLevel=OFF)
+14:20:31.528 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.projecthk5.orderservice.integration.OrderPostgres16IT]: OrderPostgres16IT does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+14:20:31.606 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.projecthk5.orderservice.OrderServiceApplication for test class com.projecthk5.orderservice.integration.OrderPostgres16IT
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.5)
+
+2026-10-17T14:20:31.932Z  INFO 3928 --- [order-service] [    Test worker] c.p.o.integration.OrderPostgres16IT      : Starting OrderPostgres16IT using Java 21.0.7 with PID 3928 (started by Minh Duy in D:\CMC Uni\5 Ky Dong\WEB\BCK WEB\Project_HK5\.verification\pr-recheck-20261016\28-63f63c1\backend\order-service)
+2026-10-17T14:20:31.935Z  INFO 3928 --- [order-service] [    Test worker] c.p.o.integration.OrderPostgres16IT      : No active profile set, falling back to 1 default profile: "default"
+2026-10-17T14:20:32.835Z  INFO 3928 --- [order-service] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-10-17T14:20:32.896Z  INFO 3928 --- [order-service] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 52 ms. Found 3 JPA repository interfaces.
+2026-10-17T14:20:33.842Z  INFO 3928 --- [order-service] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-10-17T14:20:34.052Z  INFO 3928 --- [order-service] [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@2dbb8da0
+2026-10-17T14:20:34.054Z  INFO 3928 --- [order-service] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-10-17T14:20:34.091Z  INFO 3928 --- [order-service] [    Test worker] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://localhost:50306/test (PostgreSQL 16.15)
+2026-10-17T14:20:34.132Z  INFO 3928 --- [order-service] [    Test worker] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table "public"."flyway_schema_history" does not exist yet
+2026-10-17T14:20:34.138Z  INFO 3928 --- [order-service] [    Test worker] o.f.core.internal.command.DbValidate     : Successfully validated 1 migration (execution time 00:00.019s)
+2026-10-17T14:20:34.157Z  INFO 3928 --- [order-service] [    Test worker] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table "public"."flyway_schema_history" ...
+2026-10-17T14:20:34.211Z  INFO 3928 --- [order-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Current version of schema "public": << Empty Schema >>
+2026-10-17T14:20:34.221Z  INFO 3928 --- [order-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "1 - checkout baseline"
+2026-10-17T14:20:34.280Z  INFO 3928 --- [order-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Successfully applied 1 migration to schema "public", now at version v1 (execution time 00:00.031s)
+2026-10-17T14:20:34.458Z  INFO 3928 --- [order-service] [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-10-17T14:20:34.549Z  INFO 3928 --- [order-service] [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2026-10-17T14:20:34.588Z  INFO 3928 --- [order-service] [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-10-17T14:20:34.814Z  INFO 3928 --- [order-service] [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-10-17T14:20:35.594Z  INFO 3928 --- [order-service] [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-10-17T14:20:35.631Z  INFO 3928 --- [order-service] [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-10-17T14:20:37.055Z  INFO 3928 --- [order-service] [    Test worker] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-10-17T14:20:37.962Z  INFO 3928 --- [order-service] [    Test worker] c.p.o.integration.OrderPostgres16IT      : Started OrderPostgres16IT in 6.259 seconds (process running for 26.841)
+2026-10-17T14:20:38.487Z  WARN 3928 --- [order-service] [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Error: 0, SQLState: 23505
+2026-10-17T14:20:38.487Z ERROR 3928 --- [order-service] [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : ERROR: duplicate key value violates unique constraint "uq_checkout_customer_key"
+  Detail: Key (customer_id, idempotency_key)=(order-test-d7a7713c-595c-4c8b-80c8-f7268ecc74ad, key) already exists.
+2026-10-17T14:20:38.561Z  WARN 3928 --- [order-service] [pool-1-thread-2] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Error: 0, SQLState: 23505
+2026-10-17T14:20:38.561Z ERROR 3928 --- [order-service] [pool-1-thread-2] o.h.engine.jdbc.spi.SqlExceptionHelper   : ERROR: duplicate key value violates unique constraint "uq_checkout_customer_key"
+  Detail: Key (customer_id, idempotency_key)=(concurrent-c8df7a95-1c75-47d2-912b-f997eb297543, shared-key) already exists.
+]]></system-out>
+  <system-err><![CDATA[WARNING: A Java agent has been loaded dynamically (C:\Users\Admin\.gradle\caches\modules-2\files-2.1\net.bytebuddy\byte-buddy-agent\1.14.19\154da3a65b4f4a909d3e5bdec55d1b2b4cbb6ce1\byte-buddy-agent-1.14.19.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+]]></system-err>
+</testsuite>
