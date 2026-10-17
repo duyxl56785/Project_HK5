@@ -1,0 +1,42 @@
+Picked up JAVA_TOOL_OPTIONS: -Duser.timezone=Asia/Ho_Chi_Minh
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :auth-service:compileJava
+> Task :user-service:compileJava
+> Task :user-service:processResources
+> Task :user-service:classes
+> Task :auth-service:processResources
+> Task :auth-service:classes
+> Task :user-service:compileTestJava
+> Task :user-service:processTestResources NO-SOURCE
+> Task :user-service:testClasses
+> Task :auth-service:compileTestJava
+> Task :auth-service:processTestResources NO-SOURCE
+> Task :auth-service:testClasses
+
+> Task :user-service:test
+Picked up JAVA_TOOL_OPTIONS: -Duser.timezone=Asia/Ho_Chi_Minh
+
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+
+> Task :auth-service:test
+Picked up JAVA_TOOL_OPTIONS: -Duser.timezone=Asia/Ho_Chi_Minh
+
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+2026-10-17T22:26:29.325+07:00  INFO 33188 --- [user-service] [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-10-17T22:26:29.327+07:00  INFO 33188 --- [user-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-10-17T22:26:29.332+07:00  INFO 33188 --- [user-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-10-17T22:26:29.520+07:00  INFO 33288 --- [auth-service] [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-10-17T22:26:29.522+07:00  INFO 33288 --- [auth-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-10-17T22:26:29.526+07:00  INFO 33288 --- [auth-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+
+[Incubating] Problems report is available at: file:///D:/CMC%20Uni/5%20Ky%20Dong/WEB/BCK%20WEB/Project_HK5/.verification/fixes/pr27/backend/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 17s
+8 actionable tasks: 8 executed

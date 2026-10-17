@@ -1,5 +1,7 @@
 # TV1 — PHASE B Technical Readiness
 
+**TV5 independent recheck17/10/2026:** [TV1_TIMEZONE_RECHECK.md](TV1_TIMEZONE_RECHECK.md) and raw log/XML preserve the Asia/Saigon diagnostic failure, UTC success and verified Asia/Ho_Chi_Minh alternative on unchanged Auth/User source. This evidence supplements the owner runbook fix a810312 and the historical results below; it does not add source/API/migration behavior.
+
 Refs #1. Kiểm chứng ngày 2026-10-16 trên Windows/PowerShell tại `D:\CMC\Project-HK5-Git`. Baseline main `1a9d579cdf42c8aa170577a137624c4ec0cfdcce`; [PR #24](https://github.com/duyxl56785/Project_HK5/pull/24) MERGED lúc `2026-10-16T01:46:47Z`, đã kiểm tra bằng GitHub CLI và `merge-base --is-ancestor`. Main fast-forward không phát sinh thay đổi; branch `chore/tv1-auth-readiness`. Không merge PR/đóng Issue #1; giữ `.serena/` và mọi `backend/*/bin/`.
 
 ## A. Technical readiness

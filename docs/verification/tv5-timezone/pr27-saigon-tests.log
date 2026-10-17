@@ -1,0 +1,74 @@
+Picked up JAVA_TOOL_OPTIONS: -Duser.timezone=Asia/Saigon
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :user-service:compileJava
+> Task :auth-service:compileJava
+> Task :auth-service:processResources
+> Task :user-service:processResources
+> Task :user-service:classes
+> Task :auth-service:classes
+> Task :user-service:compileTestJava
+> Task :user-service:processTestResources NO-SOURCE
+> Task :user-service:testClasses
+> Task :auth-service:compileTestJava
+> Task :auth-service:processTestResources NO-SOURCE
+> Task :auth-service:testClasses
+
+> Task :user-service:test
+Picked up JAVA_TOOL_OPTIONS: -Duser.timezone=Asia/Saigon
+
+DatabaseReadinessTest > jpaConnectsAsRuntimeRoleAndFlywayValidatesWithoutMigrating() FAILED
+    java.lang.IllegalStateException at DefaultCacheAwareContextLoaderDelegate.java:180
+        Caused by: org.springframework.beans.factory.BeanCreationException at AbstractAutowireCapableBeanFactory.java:1806
+            Caused by: org.hibernate.service.spi.ServiceException at AbstractServiceRegistryImpl.java:276
+                Caused by: org.hibernate.HibernateException at DialectFactoryImpl.java:191
+
+1 test completed, 1 failed
+
+> Task :user-service:test FAILED
+
+> Task :auth-service:test
+Picked up JAVA_TOOL_OPTIONS: -Duser.timezone=Asia/Saigon
+
+DatabaseReadinessTest > jpaConnectsAsRuntimeRoleAndFlywayValidatesWithoutMigrating() FAILED
+    java.lang.IllegalStateException at DefaultCacheAwareContextLoaderDelegate.java:180
+        Caused by: org.springframework.beans.factory.BeanCreationException at AbstractAutowireCapableBeanFactory.java:1806
+            Caused by: org.hibernate.service.spi.ServiceException at AbstractServiceRegistryImpl.java:276
+                Caused by: org.hibernate.HibernateException at DialectFactoryImpl.java:191
+
+2 tests completed, 1 failed
+
+> Task :auth-service:test FAILED
+
+[Incubating] Problems report is available at: file:///D:/CMC%20Uni/5%20Ky%20Dong/WEB/BCK%20WEB/Project_HK5/.verification/fixes/pr27/backend/build/reports/problems/problems-report.html
+
+FAILURE: Build completed with 2 failures.
+
+1: Task failed with an exception.
+-----------
+* What went wrong:
+Execution failed for task ':user-service:test'.
+> There were failing tests. See the report at: file:///D:/CMC%20Uni/5%20Ky%20Dong/WEB/BCK%20WEB/Project_HK5/.verification/fixes/pr27/backend/user-service/build/reports/tests/test/index.html
+
+* Try:
+> Run with --scan to get full insights.
+==============================================================================
+
+2: Task failed with an exception.
+-----------
+* What went wrong:
+Execution failed for task ':auth-service:test'.
+> There were failing tests. See the report at: file:///D:/CMC%20Uni/5%20Ky%20Dong/WEB/BCK%20WEB/Project_HK5/.verification/fixes/pr27/backend/auth-service/build/reports/tests/test/index.html
+
+* Try:
+> Run with --scan to get full insights.
+==============================================================================
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD FAILED in 15s
+8 actionable tasks: 8 executed
