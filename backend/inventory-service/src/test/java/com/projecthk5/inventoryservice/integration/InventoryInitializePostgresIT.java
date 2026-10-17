@@ -72,6 +72,27 @@ class InventoryInitializePostgresIT extends InventoryPostgresSupport {
         }
     }
 
+    @Test void encodedAndMatrixPathsRequireTokenAndNeverWriteWithoutIt() throws Exception {
+        for (String path : new String[]{"/api/inventory;review=1/items", "/api/%69nventory/items"}) {
+            String sku = id("auth-path");
+            String body = "{\"sku\":\"" + sku + "\",\"availableQuantity\":1}";
+
+            http.perform(post(path).contentType("application/json").content(body))
+                    .andExpect(status().isUnauthorized());
+            assertNoInventoryRow(sku);
+
+            http.perform(post(path).header("X-Inventory-Internal-Token", "wrong-token")
+                            .contentType("application/json").content(body))
+                    .andExpect(status().isUnauthorized());
+            assertNoInventoryRow(sku);
+        }
+    }
+
+    private void assertNoInventoryRow(String sku) {
+        assertEquals(0, sql.queryForObject(
+                "select count(*) from inventory_item where sku=?", Integer.class, sku));
+    }
+
     private void initializeOverHttp(String sku, long quantity, int status) throws Exception {
         http.perform(post("/api/inventory/items").header("X-Inventory-Internal-Token", TOKEN)
                 .contentType("application/json").content("{\"sku\":\"" + sku

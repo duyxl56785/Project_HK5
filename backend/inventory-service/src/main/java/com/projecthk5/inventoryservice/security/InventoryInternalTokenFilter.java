@@ -7,6 +7,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.util.ServletRequestPathUtils;
+import org.springframework.web.util.pattern.PathPattern;
+import org.springframework.web.util.pattern.PathPatternParser;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -14,6 +17,9 @@ import java.security.MessageDigest;
 
 @Component
 public class InventoryInternalTokenFilter extends OncePerRequestFilter {
+    private static final PathPattern INVENTORY_API =
+            PathPatternParser.defaultInstance.parse("/api/inventory/**");
+
     private final String configuredToken;
 
     public InventoryInternalTokenFilter(@Value("${inventory.internal-token:}") String configuredToken) {
@@ -22,7 +28,8 @@ public class InventoryInternalTokenFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
-        return !request.getRequestURI().startsWith("/api/inventory/");
+        return !INVENTORY_API.matches(
+                ServletRequestPathUtils.parseAndCache(request).pathWithinApplication());
     }
 
     @Override
