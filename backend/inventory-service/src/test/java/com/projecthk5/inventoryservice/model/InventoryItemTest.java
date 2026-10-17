@@ -62,4 +62,12 @@ class InventoryItemTest {
         assertThrows(IllegalArgumentException.class, () -> item.increaseAvailable(0));
         assertThrows(IllegalArgumentException.class, () -> item.reserve(-1));
     }
+
+    @Test
+    void increasingBeyondLongRangeThrowsWithoutChangingBalance() {
+        InventoryItem item = new InventoryItem("SKU-1", Long.MAX_VALUE);
+
+        assertThrows(ArithmeticException.class, () -> item.increaseAvailable(1));
+        assertEquals(Long.MAX_VALUE, item.getAvailableQuantity());
+    }
 }
