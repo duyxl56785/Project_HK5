@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.projecthk5.cartservice.integration.CartPostgres16IT" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-10-17T14:20:38.014Z" hostname="MDUY-LECO" time="0.511">
+  <properties/>
+  <testcase name="migrationHibernateValidateCascadeTwoStoresAndUniqueProduct()" classname="com.projecthk5.cartservice.integration.CartPostgres16IT" time="0.511"/>
+  <system-out><![CDATA[14:20:12.039 [Test worker] INFO org.testcontainers.images.PullPolicy -- Image pull policy will be performed by: DefaultPullPolicy()
+14:20:12.045 [Test worker] INFO org.testcontainers.utility.ImageNameSubstitutor -- Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+14:20:12.209 [Test worker] INFO org.testcontainers.dockerclient.DockerClientProviderStrategy -- Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+14:20:12.469 [Test worker] INFO org.testcontainers.dockerclient.DockerClientProviderStrategy -- Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
+14:20:12.470 [Test worker] INFO org.testcontainers.DockerClientFactory -- Docker host IP address is localhost
+14:20:12.487 [Test worker] INFO org.testcontainers.DockerClientFactory -- Connected to docker: 
+  Server Version: 29.8.1
+  API Version: 1.56
+  Operating System: Docker Desktop (containerized)
+  Total Memory: 7571 MB
+14:20:12.510 [Test worker] INFO tc.testcontainers/ryuk:0.7.0 -- Creating container for image: testcontainers/ryuk:0.7.0
+14:20:16.028 [Test worker] INFO tc.testcontainers/ryuk:0.7.0 -- Container testcontainers/ryuk:0.7.0 is starting: dd665d7d873bb3fb85067f488f1580c0062d269d4085aec8c505269c0c3799b2
+14:20:16.804 [Test worker] INFO tc.testcontainers/ryuk:0.7.0 -- Container testcontainers/ryuk:0.7.0 started in PT4.2933453S
+14:20:16.816 [Test worker] INFO org.testcontainers.utility.RyukResourceReaper -- Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+14:20:16.817 [Test worker] INFO org.testcontainers.DockerClientFactory -- Checking the system...
+14:20:16.818 [Test worker] INFO org.testcontainers.DockerClientFactory -- ✔︎ Docker server version should be at least 1.6.0
+14:20:16.840 [Test worker] INFO tc.postgres:16-alpine -- Pulling docker image: postgres:16-alpine. Please be patient; this may take some time but only needs to be done once.
+14:20:18.729 [docker-java-stream-2051517122] INFO tc.postgres:16-alpine -- Starting to pull image
+14:20:18.748 [docker-java-stream-2051517122] INFO tc.postgres:16-alpine -- Pulling image layers:  0 pending,  0 downloaded,  0 extracted, (0 bytes/0 bytes)
+14:20:19.977 [docker-java-stream-2051517122] INFO tc.postgres:16-alpine -- Pulling image layers:  9 pending,  1 downloaded,  0 extracted, (0 bytes/? MB)
+14:20:20.077 [docker-java-stream-2051517122] INFO tc.postgres:16-alpine -- Pulling image layers:  8 pending,  2 downloaded,  0 extracted, (1 bytes/? MB)
+14:20:20.277 [docker-java-stream-2051517122] INFO tc.postgres:16-alpine -- Pulling image layers:  7 pending,  3 downloaded,  0 extracted, (1 bytes/? MB)
+14:20:20.378 [docker-java-stream-2051517122] INFO tc.postgres:16-alpine -- Pulling image layers:  6 pending,  4 downloaded,  0 extracted, (1 bytes/? MB)
+14:20:20.578 [docker-java-stream-2051517122] INFO tc.postgres:16-alpine -- Pulling image layers:  5 pending,  5 downloaded,  0 extracted, (4 MB/? MB)
+14:20:20.678 [docker-java-stream-2051517122] INFO tc.postgres:16-alpine -- Pulling image layers:  4 pending,  6 downloaded,  0 extracted, (6 MB/? MB)
+14:20:20.876 [docker-java-stream-2051517122] INFO tc.postgres:16-alpine -- Pulling image layers:  3 pending,  7 downloaded,  0 extracted, (9 MB/? MB)
+14:20:20.877 [docker-java-stream-2051517122] INFO tc.postgres:16-alpine -- Pulling image layers:  2 pending,  8 downloaded,  0 extracted, (9 MB/? MB)
+14:20:21.177 [docker-java-stream-2051517122] INFO tc.postgres:16-alpine -- Pulling image layers:  1 pending,  9 downloaded,  0 extracted, (20 MB/? MB)
+14:20:21.179 [docker-java-stream-2051517122] INFO tc.postgres:16-alpine -- Pulling image layers:  1 pending,  9 downloaded,  1 extracted, (20 MB/? MB)
+14:20:21.279 [docker-java-stream-2051517122] INFO tc.postgres:16-alpine -- Pulling image layers:  1 pending,  9 downloaded,  2 extracted, (22 MB/? MB)
+14:20:21.380 [docker-java-stream-2051517122] INFO tc.postgres:16-alpine -- Pulling image layers:  1 pending,  9 downloaded,  3 extracted, (24 MB/? MB)
+14:20:21.383 [docker-java-stream-2051517122] INFO tc.postgres:16-alpine -- Pulling image layers:  1 pending,  9 downloaded,  4 extracted, (24 MB/? MB)
+14:20:21.477 [docker-java-stream-2051517122] INFO tc.postgres:16-alpine -- Pulling image layers:  1 pending, 10 downloaded,  4 extracted, (26 MB/? MB)
+14:20:21.679 [docker-java-stream-2051517122] INFO tc.postgres:16-alpine -- Pulling image layers:  1 pending, 11 downloaded,  4 extracted, (31 MB/? MB)
+14:20:24.676 [docker-java-stream-2051517122] INFO tc.postgres:16-alpine -- Pulling image layers:  0 pending, 12 downloaded,  4 extracted, (106 MB/106 MB)
+14:20:26.687 [docker-java-stream-2051517122] INFO tc.postgres:16-alpine -- Pulling image layers:  0 pending, 12 downloaded,  5 extracted, (106 MB/106 MB)
+14:20:26.694 [docker-java-stream-2051517122] INFO tc.postgres:16-alpine -- Pulling image layers:  0 pending, 12 downloaded,  6 extracted, (106 MB/106 MB)
+14:20:26.783 [docker-java-stream-2051517122] INFO tc.postgres:16-alpine -- Pulling image layers:  0 pending, 12 downloaded,  7 extracted, (106 MB/106 MB)
+14:20:26.789 [docker-java-stream-2051517122] INFO tc.postgres:16-alpine -- Pulling image layers:  0 pending, 12 downloaded,  8 extracted, (106 MB/106 MB)
+14:20:26.876 [docker-java-stream-2051517122] INFO tc.postgres:16-alpine -- Pulling image layers:  0 pending, 12 downloaded,  9 extracted, (106 MB/106 MB)
+14:20:26.877 [docker-java-stream-2051517122] INFO tc.postgres:16-alpine -- Pulling image layers:  0 pending, 12 downloaded, 10 extracted, (106 MB/106 MB)
+14:20:26.900 [docker-java-stream-2051517122] INFO tc.postgres:16-alpine -- Pull complete. 12 layers, pulled in 8s (downloaded 106 MB at 13 MB/s)
+14:20:26.900 [Test worker] INFO tc.postgres:16-alpine -- Image postgres:16-alpine pull took PT10.0598768S
+14:20:27.014 [Test worker] INFO tc.postgres:16-alpine -- Creating container for image: postgres:16-alpine
+14:20:27.566 [Test worker] INFO tc.postgres:16-alpine -- Container postgres:16-alpine is starting: 245468c8df50a765d27c84f835475ef97adb4159b914bb7e20cafe65e2bd17b2
+14:20:31.092 [Test worker] INFO tc.postgres:16-alpine -- Container postgres:16-alpine started in PT4.0779707S
+14:20:31.093 [Test worker] INFO tc.postgres:16-alpine -- Container is started (JDBC URL: jdbc:postgresql://localhost:50303/test?loggerLevel=OFF)
+14:20:31.154 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.projecthk5.cartservice.integration.CartPostgres16IT]: CartPostgres16IT does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+14:20:31.230 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.projecthk5.cartservice.CartServiceApplication for test class com.projecthk5.cartservice.integration.CartPostgres16IT
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.5)
+
+2026-10-17T14:20:31.566Z  INFO 37192 --- [cart-service] [    Test worker] c.p.c.integration.CartPostgres16IT       : Starting CartPostgres16IT using Java 21.0.7 with PID 37192 (started by Minh Duy in D:\CMC Uni\5 Ky Dong\WEB\BCK WEB\Project_HK5\.verification\pr-recheck-20261016\28-63f63c1\backend\cart-service)
+2026-10-17T14:20:31.568Z  INFO 37192 --- [cart-service] [    Test worker] c.p.c.integration.CartPostgres16IT       : No active profile set, falling back to 1 default profile: "default"
+2026-10-17T14:20:32.452Z  INFO 37192 --- [cart-service] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-10-17T14:20:32.506Z  INFO 37192 --- [cart-service] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 47 ms. Found 1 JPA repository interface.
+2026-10-17T14:20:33.379Z  INFO 37192 --- [cart-service] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-10-17T14:20:33.573Z  INFO 37192 --- [cart-service] [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@35f6f105
+2026-10-17T14:20:33.576Z  INFO 37192 --- [cart-service] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-10-17T14:20:33.615Z  INFO 37192 --- [cart-service] [    Test worker] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://localhost:50303/test (PostgreSQL 16.15)
+2026-10-17T14:20:33.661Z  INFO 37192 --- [cart-service] [    Test worker] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table "public"."flyway_schema_history" does not exist yet
+2026-10-17T14:20:33.665Z  INFO 37192 --- [cart-service] [    Test worker] o.f.core.internal.command.DbValidate     : Successfully validated 1 migration (execution time 00:00.023s)
+2026-10-17T14:20:33.693Z  INFO 37192 --- [cart-service] [    Test worker] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table "public"."flyway_schema_history" ...
+2026-10-17T14:20:33.771Z  INFO 37192 --- [cart-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Current version of schema "public": << Empty Schema >>
+2026-10-17T14:20:33.789Z  INFO 37192 --- [cart-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "1 - cart baseline"
+2026-10-17T14:20:33.837Z  INFO 37192 --- [cart-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Successfully applied 1 migration to schema "public", now at version v1 (execution time 00:00.027s)
+2026-10-17T14:20:34.001Z  INFO 37192 --- [cart-service] [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-10-17T14:20:34.089Z  INFO 37192 --- [cart-service] [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2026-10-17T14:20:34.131Z  INFO 37192 --- [cart-service] [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-10-17T14:20:34.473Z  INFO 37192 --- [cart-service] [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-10-17T14:20:35.318Z  INFO 37192 --- [cart-service] [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-10-17T14:20:35.351Z  INFO 37192 --- [cart-service] [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-10-17T14:20:35.648Z  INFO 37192 --- [cart-service] [    Test worker] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-10-17T14:20:36.879Z  INFO 37192 --- [cart-service] [    Test worker] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-10-17T14:20:37.907Z  INFO 37192 --- [cart-service] [    Test worker] c.p.c.integration.CartPostgres16IT       : Started CartPostgres16IT in 6.561 seconds (process running for 26.796)
+]]></system-out>
+  <system-err><![CDATA[WARNING: A Java agent has been loaded dynamically (C:\Users\Admin\.gradle\caches\modules-2\files-2.1\net.bytebuddy\byte-buddy-agent\1.14.19\154da3a65b4f4a909d3e5bdec55d1b2b4cbb6ce1\byte-buddy-agent-1.14.19.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+]]></system-err>
+</testsuite>

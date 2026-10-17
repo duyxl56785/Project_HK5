@@ -1,0 +1,15 @@
+{
+  "date": "2026-10-17",
+  "timezone": "Asia/Bangkok",
+  "java": "21.0.7",
+  "gradle": "8.14.3",
+  "docker": "29.8.1",
+  "main": "98268c291ed30ed5df1c981073e23bfa9b5093b2",
+  "pr19": "1407e9d9f4f5b13286474728f1beefebcb163abc",
+  "pr26": "c4288d5c8c0cc4b8e3919dfce988b05c95a726a6",
+  "pr27": "6a7f1724bb533cc5ee92c431afb24d9844dff631",
+  "pr28": "63f63c16d8e031f080e88d9e60a82f7d64bdf1af",
+  "pr29": "f8b0ff4c3d0fbb4fc141cdf9ff98150b230142b8",
+  "testActor": "TV5 nguyenminhduy090-alt",
+  "status": "OPEN/PARTIAL"
+}

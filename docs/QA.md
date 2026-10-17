@@ -1,6 +1,6 @@
 # Kiểm thử và bằng chứng
 
-Main scaffold chưa có test nghiệp vụ; branch PR #20 đã có unit tests rules Review/Finance của TV5. Mỗi thành viên tự chạy test liên quan và báo cáo:
+Main đã nhận rules/unit tests Review/Finance qua PR #20 và Category/Seller domain qua PR #7. API/persistence/JWT production của F15/F16 chưa được chứng minh hoàn tất. Mỗi thành viên tự chạy test liên quan và báo cáo:
 
 | Hạng mục | Test command | PASS | FAIL | NOT_RUN | Bằng chứng |
 |---|---|---|---|---|---|
@@ -27,3 +27,10 @@ Rules Review/Finance có unit tests; chưa có API/persistence/JWT adapter produ
 - [Kết quả chạy follow-up và phân loại bằng chứng](../reports/TV5_W1_FOLLOWUP.md).
 
 PASS: đã chạy đạt; FAIL: đã chạy lỗi; NOT_RUN: chưa thực thi; BLOCKED: chưa thể chuẩn bị/chốt ca do phụ thuộc được ghi rõ. Không cộng test của các mốc khác nhau, unit với E2E hoặc claim báo cáo V2 vào cùng tổng hiện tại. Việc thiết kế UAT/contract trong W1 không đồng nghĩa đã triển khai/chạy luồng tuần 2–3.
+
+## Kiểm chứng điều kiện tuần 1 — 17/10/2026
+
+- [QA matrix, PR heads, owner/blocker và ledger nguồn kết quả](../reports/TV5_W1_ACCEPTANCE_2026-10-17.md).
+- [Raw log/XML, suite counts và SHA256](../reports/evidence/w1-gates-20261017/README.md).
+- TV5 chạy mới: Review/Finance63 unit PASS; Seller21 PostgreSQL PASS; Cart/Order3 PostgreSQL PASS; Auth/User timezone Asia/Saigon1 PASS/2 FAIL, rerun UTC3 PASS. Không cộng các lượt hoặc xóa FAIL lịch sử.
+- Issue #5 vẫn PARTIAL: test DB Seller/Cart/Order không chứng minh DB Review/settlement, mapping JWT runtime hoặc shared Finance contract đã nghiệm thu.

@@ -1,0 +1,6 @@
+PR19/21 plan blob equality PASS: 5e3d39835fcfbcd5b8a35c267ba34aa2d94dbca2
+PR26:21 rows,21 unique IDs,21 NOT_RUN PASS
+PR26 group counts: Inventory6 Fulfillment6 COD4 Notification5
+PR26 wrapper files confirmed in branch; main includes230d760
+Commands: git rev-parse <sha>:docs/COD_MVP_21_DAY_PLAN.md; git show origin/tv4/week1-analysis:WEEK1_TEST_BASELINE.md; git ls-tree origin/tv4/week1-analysis backend/gradlew backend/gradlew.bat
+git diff --check docs/report-only changes: run before commit; raw evidence kept byte-for-byte
