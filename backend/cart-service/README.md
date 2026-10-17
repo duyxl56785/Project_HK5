@@ -1,5 +1,5 @@
-# cart-service
+# Cart Service — TV3 (Issue #3)
 
-**Owner:** TV3.
+Spring Boot 3.3 / Java 21, PostgreSQL/Flyway scaffold extension.
 
-Scaffold contains Spring Boot application entry point and minimal configuration only. No real business endpoints, migrations, events or authentication have been implemented. Read ../../docs/OWNERSHIP.md before edits.
+See [TV3_WEEK1.md](TV3_WEEK1.md) for API, setup, blockers, review and tests. ProductCatalog integration is **fail-closed** until TV2 approves its contract; not production-ready.

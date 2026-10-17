@@ -1,3 +1,24 @@
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+    implementation 'org.flywaydb:flyway-core'
+    runtimeOnly 'org.flywaydb:flyway-database-postgresql'
+    runtimeOnly 'org.postgresql:postgresql'
+    testImplementation 'org.springframework.security:spring-security-test'
+    testImplementation 'org.testcontainers:postgresql:1.20.2'
+    testImplementation 'org.testcontainers:junit-jupiter:1.20.2'
+}
+
+// PostgreSQL 16 integration tests require Docker; never report PASS from unit tests.
+tasks.named('test') { useJUnitPlatform { excludeTags 'postgres-integration' } }
+tasks.register('postgresIntegrationTest', Test) {
+    description = 'Runs real PostgreSQL16/Flyway/Hibernate integration tests (Docker required).'
+    group = 'verification'
+    testClassesDirs = sourceSets.test.output.classesDirs
+    classpath = sourceSets.test.runtimeClasspath
+    useJUnitPlatform { includeTags 'postgres-integration' }
+    shouldRunAfter tasks.named('test')
 }

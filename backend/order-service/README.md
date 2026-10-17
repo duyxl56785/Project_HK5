@@ -1,5 +1,5 @@
-# order-service
+# Order Service — TV3 Checkout area (Issue #3)
 
-**Owner:** TV3 (Checkout) + TV4 (Fulfillment/COD) + TV5 (Finance).
+**Shared module** with TV4 fulfillment/COD and TV5 finance; migrations and order entity need reviews.
 
-Scaffold contains Spring Boot application entry point and minimal configuration only. No real business endpoints, migrations, events or authentication have been implemented. Read ../../docs/OWNERSHIP.md before edits.
+See [TV3_WEEK1.md](TV3_WEEK1.md) for API, limitations, retry/reconciliation, setup and tests. Default Product + Inventory adapters fail-closed until TV2/TV4 integrations are approved.

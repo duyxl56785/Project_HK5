@@ -1,0 +1,89 @@
+# TV3 — Checkout Product/Inventory/Finance consumer decisions (PR #28)
+
+**Owner:** TV3 · **Refs:** Issue #3; PR #28; TV2/TV4 follow-ups on 18/10/2026.
+**Status:** DRAFT / NEEDS OWNER APPROVAL. This document records a **proposal for review**, not an adopted wire contract, not a rollout instruction, and not runtime implementation. Keep current adapters fail-closed.
+
+## Baseline confirmed from current source
+
+- Order `CatalogPort.verify(productId)` currently returns `productId, sellerId, storeId, available, sellerApproved, storeOpen, houseStore, unitPrice`; it has **no SKU/currency field**.
+- Order `InventoryPort.reserve(orderId, List<Reservation(productId,int)>)` and `release(orderId)` **cannot be safely connected** to TV4 Inventory API as-is.
+- Inventory module (PR #31 merged to main) supports `POST /api/inventory/operations` accepting `operationId` (string, max 128), `type` (`RESERVE`, `RELEASE`, `CONSUME`, etc.), `items[]: {sku: string, quantity: long}`. A replay must retain the **same operationId, type, line set and quantities**. It has no current reservation lookup by orderId and no verified Store scope.
+- TV2 reports current Product service lacks authoritative Product/Store endpoints. Proposed `GET /internal/products/{productId}/checkout-snapshot` is **DRAFT only**, not an available API.
+- Auth contract #24 is HS256 JWT current/previous keyring; any internal route's caller credentials, exposure and error mapping require TV1 approval; never expose `/internal/**` on public Gateway.
+- TV3 Finance policy remains disabled: `HK5_FINANCE_POLICY_APPROVED=false`. No fee/currency/rounding can be inferred from existing test fixtures.
+
+## Consumer proposal and open decisions
+
+| ID | TV3 proposal for owner/consumer review | Required decision / owner | Status |
+|---|---|---|---|
+| C01 | TV3 accepts TV2's **proposed** checkout snapshot route/fields as a discussion basis, using backend-derived IDs, statuses and current price, never request headers/body as authority. | TV2 Product endpoint/DTO/status truth source; TV1 internal auth/error semantics. | PENDING |
+| C02 | **Proposed** authoritative `inventorySku` resolution from TV2 Product; `productId`, `sku`, `storeId` and `sellerId` are distinct opaque identifiers. **TV4 explicitly does not provide** Product→SKU/Store mapping, SKU namespace or Seller/Store ownership from Inventory. Never infer `productId == sku`. | **TV2 Product/Store:** authoritative source, mapping cardinality/uniqueness and `inventorySku` exposure. **TV4 Inventory:** validates compatible SKU namespace after TV2 decision. **TV3:** consumer DTO approval. **TV1:** service identity. | PENDING |
+| C03 | **TV4 APPROVE PROPOSAL (Inventory scope):** Order PostgreSQL owns an immutable exact SKU/positive long quantity line set and the operation type/ID, persisted and committed **before Inventory HTTP**; record response in a separate local DB transaction after HTTP. Proposed Order-owned journal/lines in reviewed Flyway V2+, not an existing implementation. No Order DB transaction spans a network call. | **TV3:** design and persist immutable journal, local transaction/recovery boundary + tests. **TV2:** authoritative Product→SKU/Store source. **TV4:** confirmed Inventory payload requirements only. **TV1:** service credentials. | TV4: **APPROVE PROPOSAL**; cross-team: **PENDING** |
+| C04 | **TV4 APPROVE PROPOSAL with constraints:** a distinct, persisted, retry-stable `operationId` per `RESERVE` / `RELEASE` / `CONSUME` step; `orderId`/attempt ID only correlate. TV4's current request hash is SHA-256 of **operation type + sorted/canonicalized SKU/long quantity list** (length-prefixed fields); same `operationId` + changed canonical payload is rejected. Do not reuse an ID for a different operation; retries must preserve type, ID and exact line set. | **TV3:** step ID generation/durable storage, retry and concurrency tests. **TV4:** confirmed current hash/replay semantics; review consumer canonicalization. Remaining cross-team error/recovery contract not globally approved. | TV4: **APPROVE PROPOSAL with constraints**; cross-team: **PENDING** |
+| C05 | **TV4 APPROVE PROPOSAL (Inventory scope):** `RESERVE` occurs after Cart claim and authoritative Catalog+Finance checks but **before Order placement confirmation**; commit durable Inventory intent before HTTP. Must not enable flow while Finance gate is disabled or SKU/Store source is unverified. | **TV3:** implement Order orchestration only after approved dependencies. **TV2:** Product/Store/SKU truth. **TV4:** approves Inventory RESERVE timing proposal. **TV5:** Finance policy and COD gate still PENDING. | TV4: **APPROVE PROPOSAL**; TV2/TV5: **PENDING** |
+| C06 | **TV4 REVISE — proposed lifecycle (NOT yet agreed jointly):** `RELEASE` only after confirmed cancellation/rejection while reservation is not consumed and goods have **not departed fulfillment**; `CONSUME` when SellerOrder is **handed to carrier/dispatch** (stock leaves warehouse custody), **not** at COD collection or `DELIVERED`. Returns after dispatch require a distinct verified `INCREASE` after actual receiving/inspection, **not RELEASE** of consumed reservation. Requires an authoritative SellerOrder state/event and COD truth source before implementation. | **TV3:** propose/identify trusted SellerOrder dispatch/cancel state & event ownership; **TV4:** confirm Fulfillment handoff/warehouse boundary and Inventory effects; **TV5:** confirm COD PAID/DELIVERED/settlement remain separate; **TV1:** event/auth review where applicable. No state/event assumed existing. | TV4: **REVISE**; TV3/TV5: **PENDING** |
+| C07 | **TV4 APPROVE PROPOSAL for bounded idempotent retry only:** after Inventory timeout, TV3 may resend **the original stored** `operationId` + operation type + canonical SKU/quantity payload; Inventory ledger commits at most once and returns `replayed` for a previously committed request. No new status-lookup API is required **for this first-stage retry proposal**. A retry is a replay of the same operation, **not proof of outcome if it still times out**. No new IDs or compensating `RELEASE`/`CONSUME` while outcome unknown. After an owner-approved retry window expires, hold Order in `NEEDS_RECONCILIATION`/manual state and alert ops; exact retry budget, backoff and SLA remain PENDING. | **TV3:** durable line set/IDs, bounded retry worker, unknown state/ops alert and tests. **TV4:** approves Inventory ledger replay behavior, no first-stage lookup requirement; may advise later reconciliation. **TV1:** service auth; **TV5:** COD/cancel handling; **TV2:** SKU authority. | TV4: **APPROVE PROPOSAL (idempotent retry only)**; cross-team: **PENDING**, live **BLOCKED** |
+| C08 | No business policy fallback. Keep finance gate false until written fee, currency scale/rounding, House Store, snapshot, COD and settlement decisions. | TV5/TV4/TV3 approval. | BLOCKED |
+| C09 | Keep Catalog and Inventory adapters fail-closed until provider/consumer contract tests pass. Preserve caller identity; return documented status/errors, do not infer HTTP statuses from placeholder adapters. | TV1/TV2/TV4 review service-pair auth, timeouts, permissions and status/error contract. | BLOCKED |
+
+## TV4 follow-up confirmation — 18/10/2026 (HEAD before this update: `34d451d`)
+
+TV4 replied on [PR #28](https://github.com/duyxl56785/Project_HK5/pull/28#issuecomment-6237872079). **Confirmed only within current Inventory implementation** (PR #31 merged to main): the operations endpoint receives `sku`, positive `long quantity`, operation `type` and `operationId`; idempotency replays an unchanged operationId/payload and rejects reused IDs with changed payload via payload hashing. Inventory **does not** provide authoritative Product↔SKU/Store mapping, a reservation line-set by `orderId`, or a status lookup that proves unknown request outcome. This is **NOT APPROVAL** of the shared consumer API or COD/Fulfillment timing.
+
+**Historical TV3 proposals (before TV4's newer C03–C07 review); cross-team decisions remained PENDING:**
+
+1. **Reservation persistence — C03 (TV3 owns; TV2/TV4 dependencies).** Proposed Order-service **V2+** tables: `checkout_inventory_operations` (attempt/order correlation ID, separate step operationId, operation type, canonical payload digest, request/response/unknown state, audit timestamps) and `checkout_inventory_operation_lines` (exact immutable SKU and quantity per operation, order/reference Store only when trusted). Columns, constraints, enum/status names and SQL are *design proposals, not implemented migrations*. In a short **Order DB transaction T1**, validate preconditions and persist step intent, immutable line set and operationId; **commit T1 before HTTP** to Inventory. After a response, use a separate **T2 local transaction** to record confirmed outcome and proceed. A lost response leaves the durable outcome UNKNOWN; transaction rollback in Order cannot undo remote inventory. Never hold an Order DB transaction open across network calls.
+2. **Idempotency — C04 (TV3 owns IDs/journal, TV4 confirms hash).** Generate/persist **one distinct, stable operationId per step**; retain exact type+SKU/quantity line payload across retry/crash. `checkoutAttempt.id` and `orderId` are correlation only. An unchanged retry is supported by Inventory ledger idempotency when it returns a successful/replayed response; an unanswered retry leaves outcome unknown. See the newer TV4 decision below.
+3. **Lifecycle — C05/C06 (TV3 proposes; TV4+TV5 approve).** `RESERVE` is proposed after successful Cart claim, authoritative Product/Store/SKU/price check and Finance gate, with durable intent. TV4 later proposed CONSUME at carrier handoff/dispatch rather than COD/DELIVERED; TV3 and TV5 must approve authoritative status/event and financial separation before any runtime implementation.
+4. **Unknown outcome — C07 (TV4 supplies authoritative source, TV3 implements reconciliation).** TV4's newer review allows exact-ID/exact-payload bounded idempotent retry without a new lookup in the first stage; only a confirmed response proves outcome. Unresolved exhausted retries require an owner-approved manual hold/ops process; no invented new ID or compensation. Current adapters remain fail-closed.
+
+**Open approval dependencies:** TV2 owns Product/Store identity and persistent SKU mapping; TV4 owns Inventory operation/status semantics and Fulfillment timing; TV5 owns approved COD/DELIVERED and finance boundary; TV1 owns service-to-service security; TV3 owns Order-side journal/transaction boundary. No owner has approved the joint contract in this comment. Cross-team C02–C07 remain **PENDING**, but TV4's later scope review approved C03/C04/C05 proposals and C07 retry semantics, and requested C06 revision; C08/C09 remain **BLOCKED**. Source Java/API/contracts/Flyway V1 remain untouched.
+
+## TV4 per-decision review — 18/10/2026 (latest review at HEAD `8619ed1`)
+
+[TV4 review on PR #28](https://github.com/duyxl56785/Project_HK5/pull/28#issuecomment-6237964074) checked Inventory request/service at PR #31 `6fa018c`. These are **TV4 Inventory-scope decisions only**; TV2/TV3/TV5/TV1 approvals, complete shared contract and checkout E2E do **not** follow automatically.
+
+| Decision | TV4 review | Still required before implementation |
+|---|---|---|
+| **C03** | **APPROVE PROPOSAL**: exact immutable SKU/positive long quantity, type and operationId in Order PostgreSQL journal; commit intent before HTTP, persist result afterwards; no long-running DB transaction through network. | TV3 owns schema, transaction/recovery logic; TV2 confirms SKU/Store authority; reviewed V2+ and tests needed. |
+| **C04** | **APPROVE PROPOSAL with constraints**: per-step stable ID; Inventory hashes operation type + SKU/quantity canonicalized/sorted, replay same input, reject changed input under same ID. | TV3 persists original canonical operation and tests replay/change/concurrency; never share operationId across operations. |
+| **C05** | **APPROVE PROPOSAL**: RESERVE after Cart claim and authoritative Catalog/Finance validation, before Order confirmation, with journal intent committed first. | TV2 Product/Store, TV5 Finance approval. Finance gate still false. |
+| **C06** | **REVISE**: consume at SellerOrder **carrier handoff / dispatch**, not at COD payment or DELIVERED; release only on proven pre-dispatch rejection/cancellation when stock remains reserved; post-dispatch physical returns use verified INCREASE, not RELEASE. | **TV3:** authoritative SellerOrder state/event and transition owner. **TV4:** Fulfillment handoff and stock semantics. **TV5:** COD/DELIVERED/settlement truth source. Joint approval still pending. |
+| **C07** | **APPROVE PROPOSAL for idempotent bounded retry**: resend **exact persisted** type + ID + SKU/quantity. Ledger returns replay when already committed. **No new status lookup required in first stage**. | **TV3/TV4:** agree retry window, backoff, attempts, ops alert/manual hold after budget exhausted; **TV1** internal auth. Unresolved requests cannot be declared successful, auto-released or auto-consumed. |
+
+**Revised timeout boundary:** A prior document revision demanded a status lookup **before any retry**. This requirement is superseded in **TV4's first-stage proposal** by exact-payload, same-operationId retry against its transaction-backed idempotency ledger. It is still **not a deployed TV3 consumer/worker** and still does not settle prolonged uncertainty once attempts are exhausted. Owner-approved monitoring/manual reconciliation remains required for unresolved outcomes.
+
+**Status vocabulary:** `TV4: APPROVE PROPOSAL` means approval *only within TV4's Inventory boundary*. `cross-team: PENDING` means the overall Checkout contract, TV3 implementation and live acceptance are not yet approved. C06 remains `REVISE / PENDING`; C07 remains `PENDING / BLOCKED live` despite TV4 approval of retry semantics.
+
+## Why implementation is currently blocked
+
+The current CheckoutService generates reservations from **productId**, not validated SKU, and InventoryPort's `release(orderId)` has **no persisted lines**. Directly forwarding those calls to TV4 would risk applying stock operations to the wrong product or an unrecoverable reservation. Adding a fake product-to-SKU mapping, enabling Finance gate for tests, or calling the Inventory API without a durable per-step operation ID is **not an acceptable fix**. Existing Cart/Checkout unit and PostgreSQL tests use mocks for Product/Inventory adapters.
+
+**Not approved / not implemented:** Catalog HTTP adapter, Inventory HTTP adapter, persistent reservation journal, consumer-specific V2 migration, status lookup/reconciliation worker, authenticated real-service E2E, Kafka outbox relay. Existing V1 migrations and shared contracts remain unchanged.
+
+## Proposed acceptance & evidence matrix (future execution only)
+
+| Case | Expected check | Current status |
+|---|---|---|
+| Product availability / price / Seller / Store changes between Cart and Checkout | Refuse stale snapshot, no reservation; server-derived identities only | NOT_RUN live |
+| 1 Customer, 2 Stores, COD checkout | 1 Order, 2 SellerOrders, correct SKU/qty/fee snapshots in separate service DBs | NOT_RUN live |
+| Identical idempotency key/payload concurrent and retried | Same one Order and at most one effective RESERVE; replay returns response | NOT_RUN live |
+| Same key with changed payload | HTTP 409, no second Inventory operation | NOT_RUN live |
+| Inventory timeout before/after reserve commit | Reuse unchanged step operationId and original line set; reconcile without extra stock movement | NOT_RUN live |
+| Order save succeeds but response is lost | Return committed Order on retry, do not release Cart/Inventory | PASS in existing *PostgreSQL mock-port regression* only; NOT_RUN live |
+| RELEASE and CONSUME repeated/concurrent | Exactly-once effective inventory transition under approved lifecycle | NOT_RUN live |
+| Auth JWT/Gateway and service-pair credential | Valid authorized calls pass; forged/expired/missing credentials fail closed | NOT_RUN live |
+
+## Existing tested evidence (not new results)
+
+At HEAD `89c20bc`, review evidence under `backend/order-service/verification/tv5-fixes/final-green/`: **56 unit PASS + 11 PostgreSQL16 integration PASS, 0 fail/error/skip**, with 13 JUnit XML suites and raw Gradle log. TV1/TV2 reviewed this code snapshot. These tests do **not** establish live Product/Inventory/Gateway/Finance/COD/E2E PASS. A docs-only follow-up commit changes documentation, not those historical test results; tests on a new post-merge integration SHA remain NOT_RUN until executed.
+
+## Owner responses requested
+
+- **TV2 @duyxl56785:** confirm the Product snapshot route and backend authoritative data, whether SKU will be returned and how Store→Seller ownership/status can be verified without cross-DB joins. No Catalog provider today.
+- **TV4 @phamthecuong2022006-alt:** confirm any remaining SKU namespace + Store mapping constraints, the dispatch/release Fulfillment boundary, and retry budget/backoff/manual-hold handling; TV4 has already endorsed C03/C04/C05 and initial C07 replay semantics (see review), not the entire shared contract.
+- **TV5 @nguyenminhduy090-alt:** confirm signed-off money rules, House policy, scale/rounding, COD truth source, refunds/settlement, and who owns each status transition.
+- **TV1 @lexuanbao258-collab:** confirm internal service authentication, Gateway allowlist and error/status behavior.
+- **TV3:** after owner decisions, implement only Cart/Order consumer interfaces/adapters/journal and **new** migration if necessary, run Java21 unit, PostgreSQL16/Flyway, concurrency, provider-consumer and 2-Store E2E with commit SHA + raw logs. Request re-review only with those results.
+
+**Do not merge PR #28 or close Issue #3 based on this proposal.**
