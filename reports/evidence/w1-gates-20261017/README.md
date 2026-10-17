@@ -1,6 +1,6 @@
 # TV5 — raw evidence W1 gates, 17/10/2026
 
-Refs #5. [QA matrix và giới hạn](../../TV5_W1_ACCEPTANCE_2026-10-17.md). Source heads/môi trường ở sources.json; JUnit counts ở suites.csv; SHA256 cho từng raw file ở manifest.sha256. Log/XML giữ nguyên byte; CRLF/trailing spaces của output Java/psql có thể làm diff-check raw báo whitespace, không được sửa để làm sạch log. `.gitattributes` tắt text conversion cho log/XML/txt.
+Refs #5. [QA matrix và giới hạn](../../TV5_W1_ACCEPTANCE_2026-10-17.md). Source heads/môi trường ở sources.json; JUnit counts ở suites.csv; SHA256 cho từng raw file ở manifest.sha256. Log/XML giữ nguyên byte; CRLF/trailing spaces của output Java/psql có thể làm diff-check raw báo whitespace, không được sửa để làm sạch log. `.gitattributes` tắt text conversion cho log/XML/txt và metadata JSON/CSV có hash để blob Git khớp byte local.
 
 | Run | Lệnh (tại snapshot tương ứng, `-p backend`) | Exit / kết quả |
 |---|---|---|
