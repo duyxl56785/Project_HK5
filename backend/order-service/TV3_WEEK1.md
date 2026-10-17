@@ -2,6 +2,16 @@
 
 Status: PARTIAL / NOT PRODUCTION READY. No shared contract or other owners' module changed.
 
+## 18/10/2026 — TV3 independently verified Inventory payload preparation, provider contract updates
+
+**Source commit:** `792b49fdbaa9d3955d3ad5c8b88360f63928d4d6` on TV3 branch, only two new Java files: `domain/InventoryOperationIntent.java` and `domain/InventoryOperationIntentTest.java`. The new class canonicalizes immutable SKU/long quantity lines, carries a caller-assigned stable per-step operationId and validates a stored SHA-256 fingerprint, matching TV4 provider hash format. It is **not connected to the active Checkout flow** and cannot survive a crash without a future Order DB journal.
+
+**Local evidence on those committed bytes:** Java 21.0.12.1 javac PASS; 21 dependency-free standalone assertions PASS / 0 FAIL, golden provider hash independently matched. Five JUnit-style test methods were also exercised with **local JUnit stubs**, **not actual JUnit/Gradle**. **Gradle/JUnit, PostgreSQL16, Testcontainers, live Catalog, Inventory, JWT/Gateway, COD and E2E all NOT_RUN** in this environment due to absent Gradle distribution/cache, Docker and network. Existing 56 unit + 11 PostgreSQL16 PASS is **historical for code snapshot 89c20bc**, never add these 21 standalone assertions as part of that count.
+
+**TV2 batch consumer reply:** [PR #37 TV3 response](https://github.com/duyxl56785/Project_HK5/pull/37#issuecomment-6238558286). C01 batch validator / global SKU unique are **owner design proposals**, no production enforcement/API. **TV4 PR #38:** [TV3 response](https://github.com/duyxl56785/Project_HK5/pull/38#issuecomment-6238569348), provider contract observed but no service-pair op-scoped identity and new PG regression NOT_RUN. **NEVER pass Inventory's broad X-Inventory-Internal-Token to Checkout.** No fake Product values, Finance override, stock mutations, unknown-outcome releases, or automatic retries without durable intent.
+
+**Next on TV3 only after written owner decisions:** integrate C01/C02 server-authenticated product source, Order-owned V2+ journal persisted before any RESERVE HTTP, safe same-ID replay worker with manual hold, SellerOrder/outbox committed dispatch transitions, PG/concurrency tests and real two-Store E2E. See [decision matrix](TV3_PROVIDER_CONSUMER_DECISIONS.md#tv3-integration-readiness-checkpoint--c01-batch-and-pr-38-18102026). PR #28 remains PARTIAL/BLOCKED.
+
 ## 18/10/2026 — TV1 P0 owner gate and evidence
 
 The source fixes were verified at 89c20bc: JWT YAML real-env, replay/uncertain-commit fetch graph, and scanner/failure-handler conditional DB transitions. Historical Cart+Order 56 unit +11 PostgreSQL16 PASS (0 fail/error/skip) uses mocked external ports and is NOT live Checkout E2E; no fresh Gradle run on docs-only HEAD.
@@ -49,6 +59,6 @@ Capture exit code, task logs, JUnit XML, SHA, exact PASS/FAIL/SKIP count and pro
 
 **PASS historical source 89c20bc:** 56 unit + 11 PostgreSQL16/Flyway, zero fail/error/skip, Cart+Order only, with mocked Cart/Catalog/Inventory ports as applicable. See verification/tv5-fixes/final-green/ and TEST_RESULTS_TV5_FIXES.md; RED attempts kept separately.
 
-**NOT_RUN at current docs-only HEAD:** fresh unit/PG/E2E. **NOT_RUN live:** Auth JWT/Gateway, Product/Seller/Store, Inventory actual stock changes/timeout recovery, SellerOrder transition/event publishing, Finance/COD, FE two-Store UAT. No production contract sign-off or owner approval is inferred from historical PASS results.
+**NOT_RUN on the current new-source+docs HEAD:** full Gradle/JUnit, PostgreSQL16/Flyway and E2E. Only isolated Java21 standalone checks ran for the new utility at its specific source SHA. **NOT_RUN live:** Auth JWT/Gateway, Product/Seller/Store, Inventory actual stock changes/timeout recovery, SellerOrder transition/event publishing, Finance/COD, FE two-Store UAT. No production contract sign-off or owner approval is inferred from historical PASS results.
 
 Do not change existing Flyway V1. Create reviewed V2+ for new Order-owned persistence only after all providers approve.
