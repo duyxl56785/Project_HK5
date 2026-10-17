@@ -55,6 +55,38 @@ TV4 replied on [PR #28](https://github.com/duyxl56785/Project_HK5/pull/28#issuec
 
 **Status vocabulary:** `TV4: APPROVE PROPOSAL` means approval *only within TV4's Inventory boundary*. `cross-team: PENDING` means the overall Checkout contract, TV3 implementation and live acceptance are not yet approved. C06 remains `REVISE / PENDING`; C07 remains `PENDING / BLOCKED live` despite TV4 approval of retry semantics.
 
+## TV1 P0 owner and acceptance handoff — 18/10/2026 (docs only)
+
+TV1's review at code SHA 89c20bc confirmed all three old P1 findings fixed in tested scope: JWT HS256 YAML and environment mapping, scoped Checkout replay/unknown commit, and scanner/failure-handler conditional updates. This is COMMENT, not approval or a live E2E result. [TV3's coordination response](https://github.com/duyxl56785/Project_HK5/pull/28#issuecomment-6238357094) is a draft owner handoff, NOT an adopted wire contract.
+
+| Gate / owner | Source-backed position | Next proof or decision | State |
+|---|---|---|---|
+| P0-A — TV2 Product/Catalog | Proposed internal checkout-snapshot URL/DTO is not an approved live Product/Store provider. [PR #37](https://github.com/duyxl56785/Project_HK5/pull/37) is OPEN; fixture/domain work does not prove Product, price, Seller/Store authority to Checkout. | TV2 implements and confirms provider endpoint/DTO, current status and price, Store/Seller authorization and errors; TV1 internal auth; TV3 maps Catalog consumer after review. | PENDING |
+| P0-B — TV2/TV4 SKU | Inventory speaks opaque SKU, positive long quantity; productId, SKU, Seller and Store are not interchangeable. | TV2 confirms productId to inventorySku source, uniqueness/cardinality and Store scope/ownership; TV4 validates Inventory key namespace. | PENDING |
+| P0-C — TV4 Inventory errors | [TV4 provider confirmation](https://github.com/duyxl56785/Project_HK5/pull/28#issuecomment-6238202705): POST operations return HTTP 409 INSUFFICIENT_STOCK (sku,available,requested), INSUFFICIENT_RESERVATION (sku,reserved,requested), INVENTORY_ITEM_NOT_FOUND, IDEMPOTENCY_KEY_REUSED; malformed input HTTP 400 INVALID_REQUEST; GET unknown SKU HTTP 404. One multi-SKU operation rolls back locally on failure, not across separate service databases. | TV3 maps exact provider errors/timeouts in the consumer only after SKU/security acceptance and consumer tests. | PROVIDER CONFIRMED / CONSUMER BLOCKED |
+| P0-D — TV3/TV4 journal/retry | TV4 scope-approved C03/C04/C05 and C07 same-operationId+same-type+same-canonical-SKU/qty bounded retry. Order-owned immutable journal records T1 intent before HTTP and T2 result afterwards, no DB transaction over HTTP. | TV3 builds proposed V2+ journal/adapters/worker after owner approval; TV4 and TV1 decide retry budget, backoff, SLA, operator escalation and service identity. Unknown timeout remains blocked/manual when retry exhausts. | PENDING / NOT_IMPLEMENTED |
+| P0-E — TV3/TV4 SellerOrder + outbox | [TV4 fulfillment proposal](https://github.com/duyxl56785/Project_HK5/pull/28#issuecomment-6238210221): authorized backend READY_FOR_HANDOFF to DISPATCHED is authoritative CONSUME trigger **only after Order commit**. Pre-dispatch verified cancel/reject can RELEASE once; post-dispatch inspected return needs INCREASE, not RELEASE. COD is independent. | TV3 proposes Order DB owns SellerOrder status/transition and seller-order.status-changed.v1 outbox in one atomic transaction; TV4 owns fulfillment transition rules; TV2 verifies current Seller-Store rights, TV1 actor authentication, TV5 COD boundary. Versioned payload and producer/consumer NOT APPROVED. | C06 REVISE / JOINT PENDING |
+| P0-F — TV5 Finance/COD | Finance gate remains false. TV4 proposes only current ADMIN records COD once after DELIVERED, independent of Inventory CONSUME. | TV5 signs off fee/House exemption/currency scale/rounding/snapshots, COD idempotency/refund/settlement and owner; TV1 verifies ADMIN authorization. | BLOCKED |
+| P0-G — TV1 Auth/Gateway | JWT unit/config regressions passed but no live Auth-issued JWT/Gateway/Inventory service pair verified. Temporary Inventory internal token is not trusted integration approval. | TV1 supplies service credential/allowlist/current Seller ownership actor boundary, denies unauthorized traffic, coordinates FE/Gateway UAT. | BLOCKED / NOT_RUN |
+| P0-H — TV3/TV4 outbox publisher | order.placed.v1 has Order outbox persistence; no proven relay/publisher and no implemented seller-order.status-changed.v1 producer/consumer. | TV3/TV4/TV1 agree event schema v1, persisted status/ownership, producer, relay, consumer, delivery/deduplication and tests before implementation. | BLOCKED |
+
+**Draft only — proposed SellerOrder event:** eventId, schemaVersion, orderId, sellerOrderId, sellerId, storeId, previousStatus, newStatus, occurredAt, correlationId, aggregateVersion, with actor identity limited by TV1 security review. No status transition source, enum, migration, publisher or event schema is implemented by this document.
+
+### P0 UAT / verification — current evidence is NOT live integration
+
+| Scenario | Acceptance expectation | Actual status |
+|---|---|---|
+| JWT config + replay/unknown-commit + scanner/writer and failure-handler race | P1 no longer reproducible in source-level regressions | HISTORICAL PASS: 56 unit + 11 PostgreSQL16 tests, zero failure/error/skip, at code snapshot 89c20bc. See verification/tv5-fixes/final-green and TEST_RESULTS_TV5_FIXES.md. Ports were mocked. |
+| Product/Seller/Store status and price change | Verify backend values; reject stale cart before reserve | NOT_RUN live (TV2 provider pending) |
+| Multi-SKU Inventory reserve with second SKU insufficient | No partial stock change; correct 409 | NOT_RUN TV3 provider-consumer/live (TV4 module checks are separate) |
+| One Customer, two Stores, COD checkout | Exactly one Order and two SellerOrders; approved SKU/price/fee snapshots | NOT_RUN live |
+| Same checkout key/payload concurrent; changed payload | One Order/one effective reserve, changed payload 409 | Mock-port regression only; NOT_RUN live |
+| Inventory response loss / remote commit / retry exhaustion | Retry exact persisted operationId/type/lines only; unknown held for operator, never double release/consume | NOT_RUN live; Order database lost-response case has mock-port PG regression |
+| DISPATCHED/return/COD after DELIVERED | Authorized once-only transition and CONSUME; inspected return restock; ADMIN COD once | NOT_RUN; state/Finance contract pending |
+| FE to Gateway to Auth/Product/Inventory/Order + Kafka publisher | Real 2-Store UAT, permission failures, actual event delivery | NOT_RUN |
+
+**Next decision:** ask TV2, TV4, TV5 and TV1 for APPROVED / REVISE / PENDING with actual provider branch/PR and test evidence. TV3 will then implement only Cart/Order consumer changes, create reviewed V2+ migrations (never edit V1), run fresh Java21 build + PostgreSQL16 + provider-consumer + two-Store E2E, and attach source SHA, raw logs and JUnit counts before re-requesting review. Do not enable fake adapters or Finance, merge PR #28 or close Issue #3.
+
 ## Why implementation is currently blocked
 
 The current CheckoutService generates reservations from **productId**, not validated SKU, and InventoryPort's `release(orderId)` has **no persisted lines**. Directly forwarding those calls to TV4 would risk applying stock operations to the wrong product or an unrecoverable reservation. Adding a fake product-to-SKU mapping, enabling Finance gate for tests, or calling the Inventory API without a durable per-step operation ID is **not an acceptable fix**. Existing Cart/Checkout unit and PostgreSQL tests use mocks for Product/Inventory adapters.
