@@ -5,13 +5,14 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 
 import java.util.List;
 
 public record InventoryOperationRequest(
-        @NotBlank String operationId,
+        @NotBlank @Size(max = 128) String operationId,
         @NotNull InventoryOperationType type,
         @NotEmpty List<@Valid ItemQuantity> items
 ) {
-    public record ItemQuantity(@NotBlank String sku, @Positive long quantity) {}
+    public record ItemQuantity(@NotBlank @Size(max = 128) String sku, @Positive long quantity) {}
 }
