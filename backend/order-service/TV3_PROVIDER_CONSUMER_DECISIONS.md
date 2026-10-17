@@ -17,6 +17,24 @@
 
 **Delivery blockers:** before any live wiring, request precise written owner responses with **APPROVE/REVISE/PENDING**, provider PR + DTO/error/auth contract and test proof for Catalog batch/SKU, Inventory reservation auth/timeout and SellerOrder outbox+Finance. Then TV3 can implement Order V2+ journal T1/T2, safe worker/adapters in separate tested commits, run fresh Cart+Order Gradle/JUnit, PostgreSQL16 with Flyway, concurrency, real service-pair JWT and 1 Customer / 2 Store COD E2E. Current PR is **PARTIAL/BLOCKED**, not merge-ready.
 
+## TV2 Catalog handoff 9c28338 — TV3 owner response (18/10/2026)
+
+**TV3 review:** [PR #37 COMMENT at exact HEAD `9c28338`](https://github.com/duyxl56785/Project_HK5/pull/37#pullrequestreview-5559408327). This is a consumer/contract design response, **not** PR approval or authorization to enable an adapter. TV2's [source-based handoff](https://github.com/duyxl56785/Project_HK5/blob/9c283386f791cc3eb3284650da8b1f356d128835/docs/TV2_CATALOG_HANDOFF.md) distinguishes unregistered `CatalogBatchValidator` and Testcontainers SQL candidate from absent production Product/Store JPA/API.
+
+| Decision | TV3 answer | Actual integration status / required owner |
+|---|---|---|
+| SKU identity | **APPROVE target invariant only:** Product owns global exact, immutable, unique inventorySku mapped to distinct productId. Inventory stays SKU-only. | **PENDING DB/API enforcement** by TV2 and production Seller/Store source; TV4 validates compatibility. Do not infer productId=SKU or trust test-only fixture. |
+| C01 batch | **APPROVE direction; REVISE before adopting wire:** draft `POST /internal/catalog/checkout/validate` with 1–100 distinct IDs, server-verified Product/Seller/Store/Category/price/currency/SKU, each result maps to one requested Product; any non-READY/invalid/incomplete/timeout aborts Checkout before RESERVE. Expected fields are only stale-snapshot comparators. | **PENDING**: versioned authenticated DTO+HTTP route, exact UUID ↔ String mapping, per-item/batch errors, source consistency/freshness, TV1 service identity and TV2 persistence. |
+| M01 money | **APPROVE numeric BigDecimal.compareTo semantics only**, never round, convert, default currency or invent scale. | **P0 real Cart incompatibility:** `cart_items.unit_price_snapshot NUMERIC(19,2)`, `CartItem` scale=2, `CartPort.Item`/Cart DTO **lack currency**. TV2's SQL candidate exercises prices beyond scale 2. TV3 needs approved **V2+** migration/Cart+Order versioned DTO to retain original currency and precise price, and TV5's explicit currency/precision/scale/fee policy. V1 untouched. |
+| E01 errors | **APPROVE domain codes for discussion, REVISE/PENDING HTTP mapping**; not-READY item snapshot null; reject whole Checkout even if a batch contains other READY results. | TV2+TV1 distinguish authoritative PRODUCT_NOT_FOUND from incomplete/unavailable source, agree status mapping, privacy, timeout and serialization. A 403 fallback proves route denial, not a working Catalog API. |
+| S01 Store | **PENDING**; TV3 does not own Seller/Store persistence or current ownership authority. | TV1+TV2 approval for Seller DB Store boundary, Seller APPROVED / Store OPEN source and service authorization, then production JPA/Flyway and tests. |
+
+**TV2 evidence under review:** Product 188 unit/security + 25 real PostgreSQL tests (14 Category runtime + 11 isolated candidate SQL) and Seller 103 unit + 24 PostgreSQL = **340 PASS / 0 FAIL / 0 SKIP** on source `1f2ebf5`; `9c28338` is docs-only after that tested source. The 11 candidate SQL tests **do not prove** production Product/Store persistence. Five negative HTTP checks prove the proposed route returns 403; no positive authenticated Catalog HTTP response exists. No Checkout↔Catalog integration or 1-Customer/2-Store E2E occurred. Do not combine these counts with TV3 historical 56 unit+11 PG.
+
+**TV3 current code boundary:** `CatalogPort.verify(String productId)` has no SKU/currency; Cart/Order use String identity and Cart stores unit price at scale=2. Any authenticated batch and exact-price comparison must be reconciled against this source and TV5 money policy before implementation. Outbox/reconciliation, Inventory adapter and Finance policy remain separately blocked. Both unconfigured adapters fail closed.
+
+**Next:** TV2 supplies reviewed, enforceable Product/SKU/Store provider with immutable SKU and security proof; TV1 approves caller-scoped service pair; TV5 approves currency/precision/fee/COD; TV3 then designs V2+ Cart snapshot/migration and batch CatalogPort adapter with rollback/security/price-change tests, followed by integrated PG/E2E proof. No new Cart/Order schema or active adapter was changed in this checkpoint.
+
 ## Baseline confirmed from current source
 
 - Order `CatalogPort.verify(productId)` currently returns `productId, sellerId, storeId, available, sellerApproved, storeOpen, houseStore, unitPrice`; it has **no SKU/currency field**.

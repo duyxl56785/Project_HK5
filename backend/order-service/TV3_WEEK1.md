@@ -2,6 +2,10 @@
 
 Status: PARTIAL / NOT PRODUCTION READY. No shared contract or other owners' module changed.
 
+## 18/10/2026 — TV2 C01/M01/E01 consumer review at 9c28338
+
+TV3 [COMMENT review of TV2 PR #37](https://github.com/duyxl56785/Project_HK5/pull/37#pullrequestreview-5559408327) gave **APPROVE target SKU uniqueness and batch direction only**, **REVISE wire/adapters**, **PENDING source/auth/money**. Current CartItem + V1 DB store unit_price_snapshot NUMERIC(19,2) and no currency; CartPort.Item has no currency, while TV2's Product proposal requires expectedCurrency and tests high-precision price. TV3 must not fake/default currency, silently round, or alter applied V1. Need TV5 approved precision/currency, TV2 production Product/Store JPA+SKU uniqueness, TV1 scoped internal auth; then implement reviewed Cart V2+/DTO and secure Catalog batch port. TV2 historical Product188 unit+25PG, Seller103 unit+24PG = 340PASS,0FAIL/skip at source 1f2ebf5; 11 PG use a candidate schema only, not the production provider. **Live Catalog/Checkout and new TV3 Gradle/PG E2E still NOT_RUN.**
+
 ## 18/10/2026 — TV3 independently verified Inventory payload preparation, provider contract updates
 
 **Source commit:** `792b49fdbaa9d3955d3ad5c8b88360f63928d4d6` on TV3 branch, only two new Java files: `domain/InventoryOperationIntent.java` and `domain/InventoryOperationIntentTest.java`. The new class canonicalizes immutable SKU/long quantity lines, carries a caller-assigned stable per-step operationId and validates a stored SHA-256 fingerprint, matching TV4 provider hash format. It is **not connected to the active Checkout flow** and cannot survive a crash without a future Order DB journal.
