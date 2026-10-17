@@ -2,6 +2,10 @@
 
 Status: PARTIAL / NOT PRODUCTION READY. No shared contract or other owners' module changed.
 
+## TV5 supplemental regression fixes — 17/10/2026
+
+See TEST_RESULTS_TV5_FIXES.md for RED/GREEN evidence on the separate fix branch. Order JWT environment now binds the actual HS256 decoder; successful/uncertain-commit reads fetch SellerOrders scoped to customer; stale scanner and failure-handler transitions condition their UPDATE on PROCESSING. Final two-service build:56unit +11PostgreSQL PASS,0fail/error/skip. Historical NOT_RUN statements below describe TV3's original followup head63f63c1, not this tested fix branch. Parent integration and owner reviews remain pending. Finance policy and shared contracts are unchanged.
+
 ## Idempotency / crash safety
 - Unique (customer_id,idempotency_key) in Order DB; same key with different payload returns 409.
 - Persistent attempt UUID is deterministic Order and Inventory reservation correlation ID; never generate a fresh Order ID on replay.

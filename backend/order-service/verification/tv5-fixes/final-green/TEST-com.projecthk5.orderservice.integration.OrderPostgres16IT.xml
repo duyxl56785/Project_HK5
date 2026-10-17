@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.projecthk5.orderservice.integration.OrderPostgres16IT" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-10-17T15:22:16.382Z" hostname="MDUY-LECO" time="0.082">
+  <properties/>
+  <testcase name="realFlywayValidateTwoSellerOrdersCascadeAndUniqueCustomerKey()" classname="com.projecthk5.orderservice.integration.OrderPostgres16IT" time="0.064"/>
+  <testcase name="concurrentSameKeyOnlyOneRecordCanCommit()" classname="com.projecthk5.orderservice.integration.OrderPostgres16IT" time="0.017"/>
+  <system-out><![CDATA[2026-10-17T15:22:12.598Z  INFO 27460 --- [order-service] [    Test worker] tc.postgres:16-alpine                    : Creating container for image: postgres:16-alpine
+2026-10-17T15:22:12.756Z  INFO 27460 --- [order-service] [    Test worker] tc.postgres:16-alpine                    : Container postgres:16-alpine is starting: da8c0778c967705acefe26bb9ff6622e9d04712dbc157c3263c84b1354f26fd1
+2026-10-17T15:22:14.890Z  INFO 27460 --- [order-service] [    Test worker] tc.postgres:16-alpine                    : Container postgres:16-alpine started in PT2.2917175S
+2026-10-17T15:22:14.890Z  INFO 27460 --- [order-service] [    Test worker] tc.postgres:16-alpine                    : Container is started (JDBC URL: jdbc:postgresql://localhost:59406/test?loggerLevel=OFF)
+2026-10-17T15:22:14.892Z  INFO 27460 --- [order-service] [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.projecthk5.orderservice.integration.OrderPostgres16IT]: OrderPostgres16IT does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-17T15:22:14.894Z  INFO 27460 --- [order-service] [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.projecthk5.orderservice.OrderServiceApplication for test class com.projecthk5.orderservice.integration.OrderPostgres16IT
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.5)
+
+2026-10-17T15:22:14.926Z  INFO 27460 --- [order-service] [    Test worker] c.p.o.integration.OrderPostgres16IT      : Starting OrderPostgres16IT using Java 21.0.7 with PID 27460 (started by Minh Duy in D:\CMC Uni\5 Ky Dong\WEB\BCK WEB\Project_HK5\.verification\fixes\pr28\backend\order-service)
+2026-10-17T15:22:14.926Z  INFO 27460 --- [order-service] [    Test worker] c.p.o.integration.OrderPostgres16IT      : No active profile set, falling back to 1 default profile: "default"
+2026-10-17T15:22:15.277Z  INFO 27460 --- [order-service] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-10-17T15:22:15.295Z  INFO 27460 --- [order-service] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 17 ms. Found 3 JPA repository interfaces.
+2026-10-17T15:22:15.427Z  INFO 27460 --- [order-service] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Starting...
+2026-10-17T15:22:15.451Z  INFO 27460 --- [order-service] [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-3 - Added connection org.postgresql.jdbc.PgConnection@168af28a
+2026-10-17T15:22:15.452Z  INFO 27460 --- [order-service] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Start completed.
+2026-10-17T15:22:15.454Z  INFO 27460 --- [order-service] [    Test worker] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://localhost:59406/test (PostgreSQL 16.15)
+2026-10-17T15:22:15.470Z  INFO 27460 --- [order-service] [    Test worker] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table "public"."flyway_schema_history" does not exist yet
+2026-10-17T15:22:15.471Z  INFO 27460 --- [order-service] [    Test worker] o.f.core.internal.command.DbValidate     : Successfully validated 1 migration (execution time 00:00.006s)
+2026-10-17T15:22:15.486Z  INFO 27460 --- [order-service] [    Test worker] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table "public"."flyway_schema_history" ...
+2026-10-17T15:22:15.517Z  INFO 27460 --- [order-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Current version of schema "public": << Empty Schema >>
+2026-10-17T15:22:15.522Z  INFO 27460 --- [order-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "1 - checkout baseline"
+2026-10-17T15:22:15.555Z  INFO 27460 --- [order-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Successfully applied 1 migration to schema "public", now at version v1 (execution time 00:00.026s)
+2026-10-17T15:22:15.589Z  INFO 27460 --- [order-service] [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-10-17T15:22:15.593Z  INFO 27460 --- [order-service] [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-10-17T15:22:15.603Z  INFO 27460 --- [order-service] [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-10-17T15:22:15.726Z  INFO 27460 --- [order-service] [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-10-17T15:22:15.744Z  INFO 27460 --- [order-service] [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-10-17T15:22:16.133Z  INFO 27460 --- [order-service] [    Test worker] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-10-17T15:22:16.380Z  INFO 27460 --- [order-service] [    Test worker] c.p.o.integration.OrderPostgres16IT      : Started OrderPostgres16IT in 1.482 seconds (process running for 22.316)
+2026-10-17T15:22:16.405Z  WARN 27460 --- [order-service] [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Error: 0, SQLState: 23505
+2026-10-17T15:22:16.405Z ERROR 27460 --- [order-service] [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : ERROR: duplicate key value violates unique constraint "uq_checkout_customer_key"
+  Detail: Key (customer_id, idempotency_key)=(order-test-bd6c150b-9922-489f-85cc-9f9085f3e37d, key) already exists.
+2026-10-17T15:22:16.457Z  WARN 27460 --- [order-service] [pool-3-thread-2] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Error: 0, SQLState: 23505
+2026-10-17T15:22:16.458Z ERROR 27460 --- [order-service] [pool-3-thread-2] o.h.engine.jdbc.spi.SqlExceptionHelper   : ERROR: duplicate key value violates unique constraint "uq_checkout_customer_key"
+  Detail: Key (customer_id, idempotency_key)=(concurrent-94f20d68-4cbd-4196-a373-7a498c3b9997, shared-key) already exists.
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
