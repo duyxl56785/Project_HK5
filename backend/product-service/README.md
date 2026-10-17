@@ -104,3 +104,9 @@ Refactored two concrete dependency issues: CategoryService/CategoryException no 
 Endpoint/payload/error strings, validation, migration, security, transaction propagation/isolation and the advisory-lock protocol remain unchanged. REQUIRES_NEW is intentional and retained: actual PostgreSQL tests cover stale caller snapshots, lock contention, and create/update/delete remaining committed across an outer rollback. Integration callers still need to respect that boundary.
 
 See CATEGORY_TEST_REPORT.md for actual verification results and remaining integration work.
+
+## Week 1 independent follow-up — 2026-10-18
+
+`product` now contains an internal immutable Product model, lifecycle/policy proposal and public-visibility projection; it is not a Product JPA model or a running Catalog API. No policy implementation or lifecycle Spring bean is registered. Existing Category security and the unmatched-route deny-all chain are unchanged.
+
+The two-Store JSON fixture is test-only and not persisted; prices have no newly approved currency/rounding policy, and candidate quantities are not actual stock. Product/Store schema, global SKU uniqueness, Product→Category restrictive FK, upload/storage and provider/consumer APIs still require their own reviewed integration. Earlier Category-only statements above describe the original baseline; Product persistence remains absent. See [TV2 week 1 progress](../../docs/TV2_WEEK1_PROGRESS.md) for details and actual test results.

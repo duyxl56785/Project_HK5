@@ -78,3 +78,9 @@ The test task needs no Docker: existing domain/lifecycle regressions plus entity
 This persistence branch temporarily targets feat/tv2-seller-product while PR #7 is unmerged. Retarget after the dependency merges without rewriting the existing history.
 
 See SELLER_TEST_REPORT.md for actual verification and pending work. Shared build/settings and other members' modules remain unchanged.
+
+## Week 1 independent follow-up — 2026-10-18
+
+Guarded read-only queries now support exact own-profile lookup and permission-checked moderation lookup, with PostgreSQL regression. They remain internal methods; no new HTTP route or verified production policy is registered.
+
+`store` contains an immutable model, policy boundary and lifecycle proposal. Store operations recheck the resolved Seller's identity and APPROVED state, but Store persistence, slug uniqueness, one-Store-per-Seller, JWT/API and the database boundary are not implemented or approved. Unit fixtures do not prove those properties. See [TV2 week 1 progress](../../docs/TV2_WEEK1_PROGRESS.md) for scope, evidence and pending decisions.
