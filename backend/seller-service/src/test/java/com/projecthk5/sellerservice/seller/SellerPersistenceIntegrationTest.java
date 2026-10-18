@@ -80,6 +80,40 @@ class SellerPersistenceIntegrationTest {
     }
 
     @Test
+    void ownReadUsesExactIdentityAndCannotSelectAnotherOwnersId() {
+        PersistedSeller first = service.register(OWNER);
+        PersistedSeller second = service.register(OTHER);
+        assertEquals(first, service.findOwn(OWNER));
+        assertEquals(second, service.findOwn(OTHER));
+        assertCode(SellerPersistenceException.Code.SELLER_NOT_FOUND,
+                assertThrows(SellerPersistenceException.class, () -> service.findOwn(ADMIN)));
+        assertThrows(SellerRuleException.class, () -> service.findOwn(new SellerIdentity("unknown")));
+        assertEquals(2, repository.count());
+    }
+
+    @Test
+    void moderationReadChecksPermissionAndReturnsCommittedVersionWithoutWriting() {
+        PersistedSeller seller = service.register(OWNER);
+        PersistedSeller approved = service.approve(seller.id(), seller.version(), ADMIN);
+        assertThrows(SellerRuleException.class, () -> service.findForModeration(seller.id(), OTHER));
+        assertEquals(approved, service.findForModeration(seller.id(), ADMIN));
+        assertEquals(approved.version(), repository.findById(seller.id()).orElseThrow().getVersion());
+        assertCode(SellerPersistenceException.Code.SELLER_NOT_FOUND,
+                assertThrows(SellerPersistenceException.class,
+                        () -> service.findForModeration(UUID.randomUUID(), ADMIN)));
+    }
+
+    @Test
+    void ownReadDoesNotNormalizeOpaqueIdentity() {
+        for (String owner : new String[]{"OpaqueRead", "opaqueread", "OpaqueRead "}) {
+            policy.known.add(owner);
+            PersistedSeller seller = service.register(new SellerIdentity(owner));
+            assertEquals(seller, service.findOwn(new SellerIdentity(owner)));
+        }
+        assertEquals(3, repository.count());
+    }
+
+    @Test
     void migrationAndJpaPersistASeparateSellerIdentity() {
         PersistedSeller seller = service.register(OWNER);
         assertNotEquals(UUID.fromString(OWNER.reference()), seller.id());

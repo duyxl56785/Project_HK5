@@ -68,4 +68,32 @@ class SellerPersistenceServiceTest {
     private SellerRuleException denied() {
         return new SellerRuleException(SellerRuleException.Code.ACCESS_DENIED, "Denied fixture");
     }
+
+    @Test
+    void deniedReadsCannotProbeProfiles() {
+        doThrow(denied()).when(policy).requireAuthenticated(actor);
+        assertThrows(SellerRuleException.class, () -> service.findOwn(actor));
+        assertThrows(SellerRuleException.class, () -> service.findForModeration(UUID.randomUUID(), actor));
+        verifyNoInteractions(repository);
+    }
+
+    @Test
+    void nonModeratorCannotReadAnotherProfile() {
+        doThrow(denied()).when(policy).requireSellerModerationPermission(actor);
+        assertThrows(SellerRuleException.class, () -> service.findForModeration(UUID.randomUUID(), actor));
+        verifyNoInteractions(repository);
+    }
+
+    @Test
+    void missingReadActorIsRejectedBeforePolicyOrLookup() {
+        assertThrows(SellerRuleException.class, () -> service.findOwn(null));
+        assertThrows(SellerRuleException.class, () -> service.findForModeration(UUID.randomUUID(), null));
+        verifyNoInteractions(repository, policy);
+    }
+
+    @Test
+    void missingModerationIdDoesNotReachRepository() {
+        assertThrows(SellerRuleException.class, () -> service.findForModeration(null, actor));
+        verifyNoInteractions(repository);
+    }
 }
