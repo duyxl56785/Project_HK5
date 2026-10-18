@@ -1,0 +1,173 @@
+ Image postgres:16 Pulling 
+ ecc510c1e359 Pulling fs layer 0B
+ 50c25daa0302 Pulling fs layer 0B
+ 8309db3ae5b6 Pulling fs layer 0B
+ 83d1a2a3917c Pulling fs layer 0B
+ 6456bfbf35e7 Pulling fs layer 0B
+ b353db459ed1 Pulling fs layer 0B
+ 99f49de4fe2b Pulling fs layer 0B
+ 9731e27f2541 Pulling fs layer 0B
+ 770ef8b308ea Pulling fs layer 0B
+ e7d675f11ded Pulling fs layer 0B
+ 79faf13a8736 Pulling fs layer 0B
+ 715ea0948cb1 Pulling fs layer 0B
+ 486e8305f56f Pulling fs layer 0B
+ c49864c27f35 Pulling fs layer 0B
+ 8309db3ae5b6 Download complete 0B
+ 99f49de4fe2b Downloading 1.049MB
+ 99f49de4fe2b Downloading 3.146MB
+ 50c25daa0302 Download complete 0B
+ 99f49de4fe2b Downloading 5.243MB
+ 99f49de4fe2b Downloading 8.204MB
+ ecc510c1e359 Downloading 2.097MB
+ 6456bfbf35e7 Downloading 1.049MB
+ 99f49de4fe2b Download complete 0B
+ 6456bfbf35e7 Downloading 4.194MB
+ ecc510c1e359 Downloading 4.194MB
+ ecc510c1e359 Downloading 6.291MB
+ 6456bfbf35e7 Download complete 0B
+ ecc510c1e359 Downloading 9.437MB
+ 83d1a2a3917c Downloading 1.312MB
+ ecc510c1e359 Downloading 10.49MB
+ 83d1a2a3917c Download complete 0B
+ 9731e27f2541 Download complete 0B
+ ecc510c1e359 Downloading 12.58MB
+ 770ef8b308ea Download complete 0B
+ ecc510c1e359 Downloading 14.68MB
+ ecc510c1e359 Downloading 16.78MB
+ 79faf13a8736 Download complete 0B
+ ecc510c1e359 Downloading 19.92MB
+ ecc510c1e359 Downloading 22.02MB
+ b353db459ed1 Download complete 0B
+ ecc510c1e359 Downloading 24.12MB
+ e7d675f11ded Downloading 1.049MB
+ ecc510c1e359 Downloading 26.21MB
+ e7d675f11ded Downloading 3.146MB
+ ecc510c1e359 Downloading 29.36MB
+ e7d675f11ded Downloading 5.243MB
+ c49864c27f35 Download complete 0B
+ ecc510c1e359 Download complete 0B
+ e7d675f11ded Downloading 7.34MB
+ ecc510c1e359 Extracting 1B
+ e7d675f11ded Downloading 11.53MB
+ 486e8305f56f Downloading 3.144kB
+ ecc510c1e359 Extracting 1B
+ e7d675f11ded Downloading 13.63MB
+ 486e8305f56f Download complete 0B
+ 715ea0948cb1 Download complete 0B
+ ecc510c1e359 Extracting 1B
+ e7d675f11ded Downloading 15.73MB
+ ecc510c1e359 Extracting 1B
+ e7d675f11ded Downloading 18.87MB
+ ecc510c1e359 Extracting 1B
+ e7d675f11ded Downloading 20.97MB
+ ecc510c1e359 Extracting 1B
+ e7d675f11ded Downloading 23.07MB
+ ecc510c1e359 Extracting 1B
+ e7d675f11ded Downloading 25.17MB
+ 64b26645b0da Download complete 0B
+ ecc510c1e359 Extracting 1B
+ 7940de88f6c7 Downloading 2.097MB
+ e7d675f11ded Downloading 27.26MB
+ ecc510c1e359 Extracting 1B
+ e7d675f11ded Downloading 29.36MB
+ 7940de88f6c7 Downloading 5.243MB
+ ecc510c1e359 Extracting 1B
+ 7940de88f6c7 Download complete 0B
+ e7d675f11ded Downloading 32.51MB
+ ecc510c1e359 Extracting 1B
+ e7d675f11ded Downloading 34.6MB
+ ecc510c1e359 Extracting 2B
+ e7d675f11ded Downloading 36.7MB
+ ecc510c1e359 Extracting 2B
+ e7d675f11ded Downloading 39.85MB
+ 79faf13a8736 Extracting 1B
+ ecc510c1e359 Pull complete 0B
+ e7d675f11ded Downloading 41.94MB
+ 6456bfbf35e7 Extracting 1B
+ 79faf13a8736 Pull complete 0B
+ e7d675f11ded Downloading 45.09MB
+ 6456bfbf35e7 Extracting 1B
+ e7d675f11ded Downloading 47.19MB
+ 6456bfbf35e7 Pull complete 0B
+ b353db459ed1 Pull complete 0B
+ e7d675f11ded Downloading 50.33MB
+ 99f49de4fe2b Extracting 1B
+ e7d675f11ded Downloading 52.43MB
+ 99f49de4fe2b Extracting 1B
+ e7d675f11ded Downloading 55.57MB
+ 99f49de4fe2b Pull complete 0B
+ e7d675f11ded Downloading 57.67MB
+ 83d1a2a3917c Pull complete 0B
+ e7d675f11ded Downloading 59.77MB
+ 486e8305f56f Pull complete 0B
+ 715ea0948cb1 Pull complete 0B
+ e7d675f11ded Downloading 61.87MB
+ e7d675f11ded Downloading 63.96MB
+ e7d675f11ded Downloading 67.11MB
+ e7d675f11ded Downloading 69.21MB
+ e7d675f11ded Downloading 71.3MB
+ e7d675f11ded Downloading 74.45MB
+ e7d675f11ded Downloading 76.55MB
+ e7d675f11ded Downloading 78.64MB
+ e7d675f11ded Downloading 80.74MB
+ e7d675f11ded Downloading 81.79MB
+ e7d675f11ded Downloading 83.89MB
+ e7d675f11ded Downloading 85.98MB
+ e7d675f11ded Downloading 88.08MB
+ e7d675f11ded Downloading 90.18MB
+ e7d675f11ded Downloading 92.27MB
+ e7d675f11ded Downloading 93.32MB
+ e7d675f11ded Downloading 95.42MB
+ e7d675f11ded Downloading 97.52MB
+ e7d675f11ded Downloading 98.57MB
+ e7d675f11ded Downloading 100.7MB
+ e7d675f11ded Downloading 102.8MB
+ e7d675f11ded Downloading 104.9MB
+ e7d675f11ded Downloading 107MB
+ e7d675f11ded Downloading 108MB
+ e7d675f11ded Downloading 110.1MB
+ e7d675f11ded Downloading 112.2MB
+ e7d675f11ded Download complete 0B
+ e7d675f11ded Extracting 1B
+ e7d675f11ded Extracting 1B
+ e7d675f11ded Extracting 1B
+ e7d675f11ded Extracting 1B
+ e7d675f11ded Extracting 1B
+ e7d675f11ded Extracting 1B
+ e7d675f11ded Extracting 1B
+ e7d675f11ded Extracting 1B
+ e7d675f11ded Extracting 1B
+ e7d675f11ded Extracting 1B
+ e7d675f11ded Extracting 1B
+ e7d675f11ded Extracting 2B
+ e7d675f11ded Extracting 2B
+ e7d675f11ded Extracting 2B
+ e7d675f11ded Extracting 2B
+ e7d675f11ded Extracting 2B
+ e7d675f11ded Extracting 2B
+ e7d675f11ded Extracting 2B
+ e7d675f11ded Extracting 2B
+ e7d675f11ded Extracting 2B
+ c49864c27f35 Pull complete 0B
+ e7d675f11ded Pull complete 0B
+ 8309db3ae5b6 Extracting 1B
+ 50c25daa0302 Pull complete 0B
+ 770ef8b308ea Pull complete 0B
+ 8309db3ae5b6 Pull complete 0B
+ 9731e27f2541 Pull complete 0B
+ Image postgres:16 Pulled 
+ Network tv5-w1-gates-20261017142049_default Creating 
+ Volume tv5-w1-gates-20261017142049_pgdev Creating 
+ Volume tv5-w1-gates-20261017142049_pgdev Creating 
+ Network tv5-w1-gates-20261017142049_default Creating 
+ Volume tv5-w1-gates-20261017142049_pgdev Created 
+ Volume tv5-w1-gates-20261017142049_pgdev Created 
+ Network tv5-w1-gates-20261017142049_default Created 
+ Network tv5-w1-gates-20261017142049_default Created 
+ Container tv5-w1-gates-20261017142049-postgres-1 Creating 
+ Container tv5-w1-gates-20261017142049-postgres-1 Created 
+ Container tv5-w1-gates-20261017142049-postgres-1 Starting 
+ Container tv5-w1-gates-20261017142049-postgres-1 Started 
+ Container tv5-w1-gates-20261017142049-postgres-1 Waiting 
+ Container tv5-w1-gates-20261017142049-postgres-1 Healthy 

@@ -1,0 +1,6 @@
+{
+  "missingPriorVolumes": [],
+  "actions": "Only own newly created Testcontainers resources; no existing DB/volume used, no down -v/prune/delete commands",
+  "missingPriorContainers": [],
+  "time": "2026-10-17T23:10:47.6984206+07:00"
+}

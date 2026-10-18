@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.projecthk5.productservice.review.ReviewRulesTest" tests="15" skipped="0" failures="0" errors="0" timestamp="2026-10-17T14:21:57.193Z" hostname="MDUY-LECO" time="0.02">
+  <properties/>
+  <testcase name="adminCanHideUnhideAndRepeatWithoutChangingStars()" classname="com.projecthk5.productservice.review.ReviewRulesTest" time="0.002"/>
+  <testcase name="rejectsOtherBuyerAndMissingVerifiedIdentity()" classname="com.projecthk5.productservice.review.ReviewRulesTest" time="0.001"/>
+  <testcase name="[1] stars=-1" classname="com.projecthk5.productservice.review.ReviewRulesTest" time="0.005"/>
+  <testcase name="[2] stars=0" classname="com.projecthk5.productservice.review.ReviewRulesTest" time="0.001"/>
+  <testcase name="[3] stars=6" classname="com.projecthk5.productservice.review.ReviewRulesTest" time="0.001"/>
+  <testcase name="[4] stars=2147483647" classname="com.projecthk5.productservice.review.ReviewRulesTest" time="0.0"/>
+  <testcase name="[1] stars=1" classname="com.projecthk5.productservice.review.ReviewRulesTest" time="0.0"/>
+  <testcase name="[2] stars=2" classname="com.projecthk5.productservice.review.ReviewRulesTest" time="0.0"/>
+  <testcase name="[3] stars=3" classname="com.projecthk5.productservice.review.ReviewRulesTest" time="0.0"/>
+  <testcase name="[4] stars=4" classname="com.projecthk5.productservice.review.ReviewRulesTest" time="0.001"/>
+  <testcase name="[5] stars=5" classname="com.projecthk5.productservice.review.ReviewRulesTest" time="0.001"/>
+  <testcase name="roundsPublicAverageHalfUp()" classname="com.projecthk5.productservice.review.ReviewRulesTest" time="0.0"/>
+  <testcase name="rejectsUndeliveredUnpurchasedAndDuplicateReview()" classname="com.projecthk5.productservice.review.ReviewRulesTest" time="0.001"/>
+  <testcase name="hiddenReviewDoesNotAffectPublicSumOrCount()" classname="com.projecthk5.productservice.review.ReviewRulesTest" time="0.0"/>
+  <testcase name="deniedAdminPolicyCannotModerate()" classname="com.projecthk5.productservice.review.ReviewRulesTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

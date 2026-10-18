@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.projecthk5.inventoryservice.model.InventoryItemTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-10-17T16:10:13.751Z" hostname="MDUY-LECO" time="0.01">
+  <properties/>
+  <testcase name="cannotDecreaseAvailableStockBelowZero()" classname="com.projecthk5.inventoryservice.model.InventoryItemTest" time="0.002"/>
+  <testcase name="releaseRestoresAvailableQuantityOnlyOncePerRequestedAmount()" classname="com.projecthk5.inventoryservice.model.InventoryItemTest" time="0.001"/>
+  <testcase name="consumeReducesReservedQuantityWithoutIncreasingAvailableStock()" classname="com.projecthk5.inventoryservice.model.InventoryItemTest" time="0.001"/>
+  <testcase name="quantitiesMustBePositiveForOperations()" classname="com.projecthk5.inventoryservice.model.InventoryItemTest" time="0.001"/>
+  <testcase name="reserveMovesQuantityFromAvailableToReserved()" classname="com.projecthk5.inventoryservice.model.InventoryItemTest" time="0.0"/>
+  <testcase name="increasingBeyondLongRangeThrowsWithoutChangingBalance()" classname="com.projecthk5.inventoryservice.model.InventoryItemTest" time="0.0"/>
+  <testcase name="cannotReleaseMoreThanReserved()" classname="com.projecthk5.inventoryservice.model.InventoryItemTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

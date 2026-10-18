@@ -57,7 +57,7 @@ docs/
 .github/
 ```
 
-`backend` có bộ khởi tạo Spring Boot từng module, chưa bao gồm API, database, security hoặc nghiệp vụ. `frontend` là shell React; không được xem trang demo là chức năng thật. `docker/compose.dev.yml` dành cho hạ tầng phát triển cục bộ, không phải docker compose 16 service V2 đã nghiệm thu.
+`backend` có bộ khởi tạo Spring Boot từng module, chưa có API/security/nghiệp vụ. Auth/User đã có cấu hình database riêng và dependency persistence cho [PHASE B readiness](docs/TV1_TECHNICAL_READINESS.md), chưa có entity/migration. `frontend` là shell React; trang demo chưa phải chức năng thật. `docker/compose.dev.yml` dành cho hạ tầng local; xem [runbook](docker/README.md) trước khi khởi động/provision, đặc biệt với volume cũ.
 
 ## Quy ước nghiệm thu
 

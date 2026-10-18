@@ -15,4 +15,11 @@ Refs #5/#20/#21. Đây là danh sách bàn giao D1–D7, **không phải quyết
 | D09 | Seller suspended có được đọc Finance không? Store mapping từ verified identity và chính sách Admin/House cụ thể? | TV1 + TV2 + TV3/TV5 | Ma trận role/status/ownership cho list/detail/aggregate; không dùng storeId client để cấp quyền |
 | D10 | PR #19 P1 và báo cáo V2 SHOULD M6 có ảnh hưởng tiêu chí nghiệm thu học phần không? | Chủ dự án + TV1–TV5 | Xác nhận scope; không tự tích DONE F15/F16 |
 
-TV5 có thể hoàn thành độc lập: rules/unit tests hiện hữu, kiểm tra tài liệu, QA matrix, UAT script, defect/traceability/evidence ledger. Các quyết định trên vẫn PENDING cho đến khi có link comment/review/commit chấp thuận của owner.
+TV5 có thể hoàn thành độc lập: rules/unit tests hiện hữu, kiểm tra tài liệu, QA matrix, UAT script, defect/traceability/evidence ledger. Những quyết định chưa có bằng chứng owner chấp thuận vẫn PENDING; xem cập nhật D01 bên dưới để không coi câu hỏi lịch sử là trạng thái hiện tại.
+
+## Cập nhật bằng chứng owner — 17/10/2026
+
+- **D01: phần Auth contract đã được chốt**, qua [PR #24](https://github.com/duyxl56785/Project_HK5/pull/24), main1a9d579: HS256/current+previous kid, trusted claims và Gateway/internal boundary theo `docs/CONTRACTS.md`. Không còn tự đặt lựa chọn JWKS/RS256 như một blocker contract chưa quyết định. Điều này chưa chứng minh runtime adapters; PR #28 còn lỗi binding cấu hình và PR #27 còn runbook timezone. Chính sách resource/Store của D09 vẫn cần owner.
+- **D02–D09:** chưa có bằng chứng thống nhất đầy đủ Review/Finance HTTP mapping, event/reviewable identity, order key, moderation reason/comment, money/currency/snapshots, bốn nhóm doanh thu, atomic settlement hoặc Seller↔Store access matrix. Không suy ra đã chốt từ rules PASS, Seller DB PASS hay cờ Finance policy-approved.
+- **D10:** PR #19 đã nhận toàn bộ bản sửa #21 (blob kế hoạch5e3d398). PR #19 vẫn mở; xác nhận scope P1/tiêu chí học phần của chủ dự án và nhóm còn chờ. Không tự đóng review hoặc coi F15/F16 là DONE.
+- [Ma trận nghiệm thu và bằng chứng mới](../reports/TV5_W1_ACCEPTANCE_2026-10-17.md) tách quyết định contract, source implementation và kết quả chạy test. Không thay contract owner bằng test phía consumer.
