@@ -11,8 +11,10 @@ spring:
     hibernate:
       ddl-auto: validate
     open-in-view: false
+    properties:
+      hibernate.jdbc.time_zone: UTC
   flyway:
-    # PHASE B must not create even the schema history table.
+    # DDL runs only with the separate migration profile and credentials.
     enabled: false
     clean-disabled: true
     baseline-on-migrate: false

@@ -5,10 +5,11 @@ dependencies {
     runtimeOnly 'org.flywaydb:flyway-database-postgresql'
     runtimeOnly 'org.postgresql:postgresql'
     testImplementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+    testImplementation 'org.testcontainers:postgresql'
 }
 
 tasks.named('test') {
     inputs.property 'databaseReadiness', System.getenv('TV1_DATABASE_TESTS') ?: 'false'
-    outputs.upToDateWhen { System.getenv('TV1_DATABASE_TESTS') != 'true' }
-    outputs.doNotCacheIf('Live database state must be checked') { System.getenv('TV1_DATABASE_TESTS') == 'true' }
+    outputs.upToDateWhen { false }
+    outputs.doNotCacheIf('PostgreSQL state must be checked') { true }
 }
