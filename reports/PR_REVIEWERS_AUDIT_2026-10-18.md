@@ -55,6 +55,22 @@ Batch validator gọi source một lần, giữ exact BigDecimal/currency, misma
 - [x] Audit đủ5 Open PR, merge history, CI, reviews/events/threads; bảo toàn working tree và không request PR đóng.
 - [x] Chạy các suite bị ảnh hưởng trên exact heads; lưu commands/exit/log/XML/counters, giữ raw bytes và loại credential-bearing artifacts khỏi publication.
 - [x] Đối chiếu Finance/COD/Store/Inventory và ID baseline với tài liệu #39; không tự chốt contract hoặc triển khai tuần2–3.
-- [ ] Đăng review phù hợp và hoàn tất reviewer reconciliation; cập nhật link kết quả sau khi publish.
+- [x] Đăng review phù hợp và hoàn tất reviewer reconciliation; các link thực tế ở mục5.
 - [ ] Owner sửa tài liệu #38/#39, ra quyết định #19, chốt M01/S01/C01/E01/Inventory/auth và nghiệm thu tích hợp.
 - [ ] Issue #5 đủ toàn gate DONE. **OPEN/PARTIAL — WAITING_REVIEW/OWNER_DECISIONS**.
+
+## 5. Review đã đăng và reviewer đã đối chiếu
+
+Sau khi evidence được commit/push tại `8ba0243` và bàn giao qua [PR #40](https://github.com/duyxl56785/Project_HK5/pull/40), TV5 đã gửi review gắn đúng inspected SHA:
+
+| PR | Review thực tế của TV5 | Kết quả |
+|---|---|---|
+| #19 | [5561476780](https://github.com/duyxl56785/Project_HK5/pull/19#pullrequestreview-5561476780) | COMMENTED: findings đã sửa, đủ điều kiện quyết định docs; không tự Approve/dismiss review cũ |
+| #28 | [5561476940](https://github.com/duyxl56785/Project_HK5/pull/28#pullrequestreview-5561476940) | COMMENTED:61unit verified, xác nhận Finance yêu cầu có sẵn; M01/integration còn gated |
+| #37 | [5561477118](https://github.com/duyxl56785/Project_HK5/pull/37#pullrequestreview-5561477118) | COMMENTED:291unit+49PG verified trong domain/prototype scope, không positive provider/API acceptance |
+| #38 | [5561477307](https://github.com/duyxl56785/Project_HK5/pull/38#pullrequestreview-5561477307) | COMMENTED:17unit+15PG verified; đồng thuận docs revision hiện hữu và COD/settlement separation |
+| #39 | [5561477514](https://github.com/duyxl56785/Project_HK5/pull/39#pullrequestreview-5561477514) | CHANGES_REQUESTED:19/21 và ID RTM; giữ enum/event/currency/authority owner decisions |
+
+Reviewer `duyxl56785`: #19/#37 skip vì là tác giả; #28 có APPROVED đúnghead, #38/#39 có COMMENT đúnghead, nên không gửi request trùng hoặc re-add theo removal cũ. **Đã request TV1 một lần ở #39** vì phần actor/auth/event chưa có review/request phù hợp. TV3 đã phản hồi lifecycle trong conversation, không tạo thêm lời nhắc lặp. Giữ TV1 và các owner đang requested trên PR khác; không resolve thread.
+
+PR #40 reviewer ban đầu là TV1 + duyxl56785; đây là PR QA mới vì PR #30/#36 đã merge, không phải re-add trên PR cũ. Evidence raw/manifest không đổi trong commit cập nhật links/checklist này; runtime NOT_RUN/docs-only, Markdown/link/diff-check áp dụng cho docs. Không tạo commit implementation hoặc tuyên bố các contract đã được phê duyệt.

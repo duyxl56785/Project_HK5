@@ -63,5 +63,6 @@ Các checklist trước giữ snapshot lịch sử; không tick các mục ghép
 - [x] Audit đủ5 PR đang mở #19/#28/#37/#38/#39 và kiểm reviewer events/current-head reviews trước khi request.
 - [x] Chạy mới exact-head suites: #28 61unit; #37 291unit+49PG; #38 17unit+15PG, tất cả0fail/error/skip; giữ source/prototype/live scope riêng.
 - [x] QA/RTM kiểm #39 có19case và ID baseline thay nghĩa; xác nhận nguyên tắc COD/Finance có sẵn, giữ M01/currency/state/auth/schema PENDING.
-- [ ] Đăng reviews/reviewer reconciliation và owner xác nhận tương ứng; không tự Approve/Merge/Close/resolve threads.
+- [x] Đăng5 review đúng inspected heads và reconcile reviewer: COMMENT #19/#28/#37/#38, CHANGES_REQUESTED #39; request TV1/#39, không request trùng hoặc self-request tác giả. [Links](../reports/PR_REVIEWERS_AUDIT_2026-10-18.md#5-review-đã-đăng-và-reviewer-đã-đối-chiếu).
+- [ ] Owner xác nhận các quyết định/tài liệu tương ứng; không tự Approve/Merge/Close/resolve threads hoặc chốt toàn contract.
 - [ ] Toàn bộ điều kiện Issue #5 đủ DONE. Giữ OPEN/PARTIAL.
