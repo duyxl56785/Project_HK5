@@ -67,3 +67,7 @@ diagnostic or automatically run tagged PostgreSQL tasks. Do not mark F15/F16/Iss
 Raw evidence, timestamps, commands, hashes và publication limits: [manifest](../reports/evidence/finance-acceptance-20261018/manifest.json).
 
 Post-merge checkpoint E: owner đã nhận44 tại ccfb38d; Cart.claim fix củaTV3 ởca639bb được chạy riêng trên0834f23:Cart9unit+1PG PASS/exit0/33s. Order source unchanged, không rerun hoặc cộng81unit/16PG/diagnostic vào lượt E. Evidence/docs còn thiếu đi qua branch TV5 mới sau khi44 đóng.
+
+M01 follow-up sau owner merge45 tại5a3788b: **F16-14** trỏ [canonical packet §§8–11](../docs/TV5_M01_HUMAN_DECISION_PACKET.md),10MD ledger/version/choice/signer/evidence/dependency,
+6tradeoff sections và partial Product price slice; tất cả MD businessPENDING, chưa unlock module mới. **F16-11/12** giữ original1PASS/2FAIL ởde1f5c6,
+source unchanged tới5a3788b; [derived current audit](../reports/evidence/m01-owner-ledger-20261018.json) kiểm61hashes/byte identity, không là runtime rerun hay contract approval.

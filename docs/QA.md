@@ -101,3 +101,10 @@ Settlement atomic/unique, Store Finance API, COD authority và live E2E tiếp t
 ### Sau khi owner merge PR44 initial
 
 PR44 đã merge vào28 tại ccfb38d (head1311f8a);4Finance tests và proposal không còn chờ tiếp nhận. Hai commit evidence push sau merge được chuyển sang branch codex/tv5-finance-evidence-handoff từ28ca639bb, không tiếp tục push PR đóng. Cart.claim key guard mới của owner được QA riêng; xem báo cáo cùng ngày để tách lượt chạy tiếp theo và phần evidence chờ review.
+
+### M01 owner ledger r2 — docs-only,18/10/2026
+
+PR45 đã được owner merge vào28 tại5a3788b. [Canonical packet §§8–11](TV5_M01_HUMAN_DECISION_PACKET.md) ghi đủ10MD/6tradeoffs/partial price-slice gates,
+giữ TV2/TV3 own-scope confirmations và TV1 OD07/09. M01/MD01–MD10 vẫnPENDING; business signer chờTV1/chủdựánxácnhận, chưa mở ProductJPA/Checkout money/Finance runtime.
+[Checkpoint/commands/resume](../reports/TV5_FINANCE_ACCEPTANCE_2026-10-18.md) và [derived audit](../reports/evidence/m01-owner-ledger-20261018.json) xác minh61existing raw hashes,
+source equivalence và original diagnostic1PASS/2FAIL; **runtime NOT_RUN trong lượt docs này**, không cộng lại các test đã chạy hoặc yêu cầu duyệt lại DTO/price compatibility giống cũ.
