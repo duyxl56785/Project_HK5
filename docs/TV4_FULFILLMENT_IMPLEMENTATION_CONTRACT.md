@@ -14,7 +14,11 @@ Inventory currently addresses stock by SKU and supports `INCREASE`, `DECREASE`, 
 
 ## SellerOrder state naming — unresolved cross-owner decision (C06)
 
-**No state vocabulary is selected or approved by this document.** The earlier TV4 proposal used `PENDING_CONFIRMATION → CONFIRMED → PACKING → SHIPPED → DELIVERED`; TV3's current proposal uses `PLACED → ACCEPTED → PREPARING → READY_FOR_HANDOFF → DISPATCHED → DELIVERED`. These are not silently interchangeable. TV3 + TV4 must propose one canonical DB/wire/event vocabulary and obtain the required TV1/TV2/TV5 approvals for actor authority, ownership, event publisher, cancellation/rejection cutoff, and COD separation before implementation. Any migration must be V2+ and must not rewrite V1. The following table records only the earlier TV4 candidate for discussion; it is not an implementation contract:
+**No state vocabulary is selected or approved by this document.**
+
+**TV4 proposal for C06 owner decision (not silently mapped):** adopt TV3's candidate `PLACED → ACCEPTED → PREPARING → READY_FOR_HANDOFF → DISPATCHED → DELIVERED` as the candidate DB/wire vocabulary, with `seller-order.status-changed.v1` event semantics. Treat `READY_FOR_HANDOFF → DISPATCHED` as the only candidate dispatch/handoff boundary for `CONSUME`, after Order status + outbox commit durably succeeds. This is a proposal for TV3 to confirm/revise; TV1/TV2/TV5 must still approve actor/Store authority, event publisher/payload, cancel/reject cutoff, and COD separation before implementation. The older `PACKING → SHIPPED` vocabulary remains a distinct proposal, not an alias.
+
+ The earlier TV4 proposal used `PENDING_CONFIRMATION → CONFIRMED → PACKING → SHIPPED → DELIVERED`; TV3's current proposal uses `PLACED → ACCEPTED → PREPARING → READY_FOR_HANDOFF → DISPATCHED → DELIVERED`. These are not silently interchangeable. TV3 + TV4 must propose one canonical DB/wire/event vocabulary and obtain the required TV1/TV2/TV5 approvals for actor authority, ownership, event publisher, cancellation/rejection cutoff, and COD separation before implementation. Any migration must be V2+ and must not rewrite V1. The following table records only the earlier TV4 candidate for discussion; it is not an implementation contract:
 
 | Current state | Action | Next state | Required guard |
 |---|---|---|---|
@@ -34,6 +38,8 @@ Rules:
 
 ## Inventory lifecycle proposal — NOT APPROVED YET
 
+**Quantity/identity constraints:** every quantity is a positive signed 64-bit integer (`long`), with one canonical SKU per operation. Reject zero, negative, decimal, or out-of-range quantities; do not coerce them. Inventory's key is SKU-only; provider currently trims leading/trailing SKU whitespace and remains case-sensitive. Consumers should send canonical, unpadded SKU. `productId` is never a substitute for SKU. Product owns the target immutable globally unique SKU, but Product DB/API enforcement and authoritative Product→SKU lookup remain pending. Store isolation requires TV1 verified identity plus TV2's authoritative current Store→Seller facts; never infer ownership from JWT `sub`/role, body, headers, or event payload.
+
 Each inventory action must have its own deterministic, persisted operation ID. A retry of the same logical action reuses the same ID and same canonical payload; reusing the ID with a different payload must fail as a conflict.
 
 | Business point | Candidate operation | Preconditions / notes |
@@ -41,11 +47,15 @@ Each inventory action must have its own deterministic, persisted operation ID. A
 | Checkout has passed catalog, price, and finance checks, before order confirmation | `RESERVE` | Requires authoritative productId-to-SKU mapping and a durable reservation line set; TV2/TV3 must confirm identity scope |
 | Confirmed dispatch / carrier handoff | `CONSUME` | Proposed at handoff, not at `DELIVERED`; TV3 and TV5 must approve lifecycle semantics |
 | Proven cancellation/rejection before dispatch | `RELEASE` | Only release quantities known to have been reserved and not consumed; exactly-once behavior comes from stable operation IDs |
-| Verified physical return after dispatch/delivery | Separate `INCREASE` | Do not reuse pre-dispatch `RELEASE`; return/refund policy and proof of receipt need TV5/TV3 approval |
+| Verified physical return after dispatch/delivery | Separate `INCREASE` | Only after physical receipt and inspection; do not reuse pre-dispatch `RELEASE`. Return/refund eligibility, quantity and finance handling need TV3/TV5 approval |
 
 Do not release stock on an ambiguous timeout by blindly issuing a new operation ID. Persist the intended operation and retry with the same ID. If the outcome remains unknown, reconcile using the inventory operation ledger / agreed query mechanism before choosing a compensating action. The current Inventory API has no orderId reservation lookup, so a recovery adapter needs an agreed durable reservation journal or a new reviewed API.
 
 ## COD and Finance boundary — TV5 confirmation required
+
+- Only a verified ADMIN can confirm COD, and only after `DELIVERED`; preserve actor/time audit and keep COD payment status separate from delivery status. Duplicate action must be idempotent.
+- TV5's scoped Finance boundary is settlement only when both `DELIVERED` and COD `PAID`, based on trusted immutable money/House snapshots, unique per SellerOrder, atomic/race-safe, and Store-scoped for reads. Inventory dispatch, `CONSUME`, replay, or balances are not delivery/payment/settlement evidence.
+- Currency, numeric bounds, scale/rounding stage, fees, shipping/discount/refund and settlement snapshots remain M01/business-owner decisions; do not infer currency or round money based on Inventory.
 
 - Only a verified ADMIN may record COD payment.
 - COD payment is allowed only after the child order is `DELIVERED`.
@@ -66,7 +76,35 @@ Minimum candidate fields (not a final shared schema): eventId, eventType/version
 - Agree the source of truth for recipient identity, event field names, retry/backoff, poison-message/DLT behavior, and retention with TV1/TV3 before wiring a consumer.
 - Do not claim Kafka/outbox delivery is implemented or tested from this proposal.
 
-## Acceptance test matrix
+## Legacy baseline traceability — unchanged IDs and meanings
+
+`WEEK1_TEST_BASELINE.md` on branch `tv4/week1-analysis` is the authoritative original baseline. This PR does not edit that file, relabel its rows, or transfer evidence from a legacy case to a supplemental scenario. Every legacy case remains `NOT_RUN` until independently evidenced.
+
+| Legacy baseline ID | Original scenario | Original expected result | Baseline status |
+|---|---|---|---|
+| TV4-INV-01 | Consume lượng hàng còn đủ | Tồn giảm đúng số lượng một lần | NOT_RUN |
+| TV4-INV-02 | Consume lượng lớn hơn tồn | Không trừ kho; trả lỗi thiếu hàng | NOT_RUN |
+| TV4-INV-03 | Consume nhiều item, một item thiếu | Toàn operation rollback, không trừ một phần | NOT_RUN |
+| TV4-INV-04 | Consume lại cùng operation/order | Không trừ kho lần hai | NOT_RUN |
+| TV4-INV-05 | Release lặp cùng operation | Không cộng kho lần hai | NOT_RUN |
+| TV4-INV-06 | Hai request đồng thời tranh cùng tồn | Không oversell; tồn không âm | NOT_RUN |
+| TV4-FUL-01 | Seller xem đơn của store mình | Chỉ trả đơn thuộc store đó | NOT_RUN |
+| TV4-FUL-02 | Seller thao tác đơn của store khác | Bị từ chối, không đổi trạng thái | NOT_RUN |
+| TV4-FUL-03 | Chuyển trạng thái theo thứ tự hợp lệ | Chỉ chuyển trạng thái được phép | NOT_RUN |
+| TV4-FUL-04 | Từ chối đơn không có lý do | Validation từ chối request | NOT_RUN |
+| TV4-FUL-05 | Hủy đơn không còn trạng thái được phép hủy | Từ chối; không hoàn kho | NOT_RUN |
+| TV4-FUL-06 | Hủy/từ chối và retry | Hoàn kho đúng một lần | NOT_RUN |
+| TV4-COD-01 | Admin xác nhận COD trước `DELIVERED` | Từ chối; không đánh dấu `PAID` | NOT_RUN |
+| TV4-COD-02 | Admin xác nhận COD sau `DELIVERED` | Ghi nhận người và thời điểm xác nhận | NOT_RUN |
+| TV4-COD-03 | Lặp lại xác nhận COD | Idempotent; không ghi nhận lần hai | NOT_RUN |
+| TV4-COD-04 | Seller hoặc non-ADMIN gọi API xác nhận COD | Bị từ chối; không đổi trạng thái thanh toán | NOT_RUN |
+| TV4-NOT-01 | Nhận event status hợp lệ | Tạo thông báo cho recipient đúng | NOT_RUN |
+| TV4-NOT-02 | Consumer nhận event trùng | Không tạo thông báo trùng | NOT_RUN |
+| TV4-NOT-03 | Người dùng đọc notification của người khác | Bị từ chối | NOT_RUN |
+| TV4-NOT-04 | Kafka tạm dừng rồi hoạt động lại | Retry/recovery không mất hoặc nhân đôi xử lý | NOT_RUN |
+| TV4-NOT-05 | Event không hợp lệ hoặc lỗi vĩnh viễn | Được ghi nhận và chuyển xử lý lỗi theo contract | NOT_RUN |
+
+## Supplemental acceptance test matrix
 
 Every case remains **NOT_RUN** until there is an executable test and its log tied to a commit SHA.
 
@@ -99,9 +137,10 @@ Every case remains **NOT_RUN** until there is an executable test and its log tie
 - **TV3:** SellerOrder persistence, authoritative state names, transition ownership, parent/customer relationship, cancel/reject policy, dispatch boundary, reservation journal, and operation IDs.
 - **TV2 + TV3 + TV4:** TV2's target invariant is **globally unique SKU owned by Product**; `productId` is not `inventorySku`. Inventory remains SKU-keyed. Product DB/API enforcement and authoritative Product→SKU/current Store↔Seller facts remain PENDING; do not seed fixtures or enable live integration until the provider is authoritative.
 - **TV2 + TV1 + TV4:** current Seller status (`SUSPENDED`), current Store status (including closed), and recipient account resolution Store→Seller→account must come from approved provider data. Do not infer Store/Seller ownership or notification recipients from JWT `sub`/role, request body/header, or event payload. TV2 must decide whether a suspended Seller or closed Store may continue processing orders placed before the status change; the new W1-FUL-11/12 cases remain NOT_RUN until that policy is signed off.
-- **TV1:** verified identity/roles, seller-to-Store authorization source, service-to-service authentication, and event/notification permissions.
+- **TV1:** verified identity/roles, seller-to-Store authorization source, service-to-service authentication, and event/notification permissions. Inventory's shared `X-Inventory-Internal-Token` covers initialization and INCREASE/DECREASE as well as RESERVE/CONSUME/RELEASE; do not provide that broad token to Checkout. TV1 must approve caller-specific credentials and endpoint+operation allowlists before consumer wiring.
 - **TV5:** COD action/idempotency contract, finance policy approval, money representation/rounding/snapshot, and settlement condition.
 - **TV3 + TV4 + TV5:** event publisher ownership, final event schema, outbox/retry/deduplication behavior.
+- **TV3 + TV4 — retry/recovery proposal awaiting agreement:** persist the exact immutable canonical line set and a distinct stable `operationId` for each RESERVE/CONSUME/RELEASE before HTTP; persist each outcome. TV4 proposes at most 3 retries after the initial attempt, delays 250 ms, 1 s, then 4 s with jitter (target overall budget ≤10 s), only for timeout/connection uncertainty, 5xx, or `IDEMPOTENCY_CLAIM_CONFLICT`, and only with the exact same saved operationId/type/payload. This is NOT agreed until TV3 confirms/revises. On exhausted budget or unknown commit, mark UNKNOWN, alert and hold for reconciliation/manual ops; never blind RELEASE. Do not retry `IDEMPOTENCY_KEY_REUSED` with changed payload. `CONSUME` only after committed dispatch; `RELEASE` only for verified pre-dispatch cancellation/rejection while reservation is held; post-dispatch returns require received/inspected goods then separate `INCREASE`.
 - **TV3 + TV4 + TV1 + TV2 + TV5:** canonical state enum/wire/event names, dispatch actor/Store authority, cancel/reject cutoff, and Order-transition/outbox commit before any Inventory CONSUME. The two state vocabularies above are unresolved alternatives, not aliases.
 
 ## Completion rule
