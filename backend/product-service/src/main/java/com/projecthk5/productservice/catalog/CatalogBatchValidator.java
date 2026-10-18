@@ -1,6 +1,9 @@
 package com.projecthk5.productservice.catalog;
 
 import com.projecthk5.productservice.catalog.CatalogSnapshotSource.ResolvedProduct;
+import com.projecthk5.productservice.catalog.CatalogSnapshotSource.LookupResult;
+import com.projecthk5.productservice.catalog.CatalogSnapshotSource.LookupStatus;
+import com.projecthk5.productservice.product.ProductAccessPolicy.StoreAccess;
 import com.projecthk5.productservice.product.ProductStatus;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -30,7 +33,13 @@ public class CatalogBatchValidator {
                            boolean sellerApproved, boolean storeOpen, boolean houseStore) { }
     public record ItemResult(UUID productId, ItemCode code, Snapshot snapshot) { }
     public record Result(List<ItemResult> items) {
-        public Result { items = List.copyOf(items); }
+        public Result {
+            items = List.copyOf(items);
+            // A rejected batch must not supply a usable READY subset.
+            if (items.stream().anyMatch(item -> item.code() != ItemCode.READY)) {
+                items = items.stream().map(item -> new ItemResult(item.productId(), item.code(), null)).toList();
+            }
+        }
         public boolean valid() { return items.stream().allMatch(item -> item.code() == ItemCode.READY); }
     }
 
@@ -38,11 +47,12 @@ public class CatalogBatchValidator {
         List<ExpectedItem> items = checkedItems(expected);
         Set<UUID> ids = new LinkedHashSet<>();
         items.forEach(item -> ids.add(item.productId()));
-        Map<UUID, ResolvedProduct> products = load(ids);
+        Map<UUID, LookupResult> products = load(ids);
         List<ItemResult> results = new ArrayList<>();
         for (ExpectedItem item : items) {
-            ResolvedProduct facts = products.get(item.productId());
-            ItemCode code = outcome(item, facts);
+            LookupResult lookup = products.get(item.productId());
+            ResolvedProduct facts = lookup.facts();
+            ItemCode code = lookup.status() == LookupStatus.ABSENT ? ItemCode.PRODUCT_NOT_FOUND : outcome(item, facts);
             Snapshot snapshot = null;
             if (code == ItemCode.READY) {
                 snapshot = new Snapshot(facts.product().id(), facts.product().sku(), facts.store().storeId(),
@@ -68,28 +78,38 @@ public class CatalogBatchValidator {
         return result;
     }
 
-    private Map<UUID, ResolvedProduct> load(Set<UUID> ids) {
-        List<ResolvedProduct> loaded;
+    private Map<UUID, LookupResult> load(Set<UUID> ids) {
+        List<LookupResult> loaded;
         try {
             loaded = source.load(Set.copyOf(ids));
         } catch (RuntimeException unavailable) {
             throw unavailable();
         }
         if (loaded == null) throw unavailable();
-        Map<UUID, ResolvedProduct> products = new HashMap<>();
+        Map<UUID, LookupResult> products = new HashMap<>();
+        Map<UUID, StoreAccess> stores = new HashMap<>();
         Set<String> skus = new HashSet<>();
-        for (ResolvedProduct facts : loaded) {
+        for (LookupResult lookup : loaded) {
+            if (lookup == null || lookup.status() == null || lookup.status() == LookupStatus.UNAVAILABLE
+                    || !ids.contains(lookup.productId())
+                    || products.putIfAbsent(lookup.productId(), lookup) != null) throw unavailable();
+            ResolvedProduct facts = lookup.facts();
+            if (lookup.status() == LookupStatus.ABSENT) {
+                if (facts != null) throw unavailable();
+                continue;
+            }
             if (facts == null || facts.product() == null || facts.store() == null || facts.currency() == null
-                    || facts.currency().isBlank() || !ids.contains(facts.product().id())
+                    || facts.currency().isBlank() || !lookup.productId().equals(facts.product().id())
                     || !facts.product().storeId().equals(facts.store().storeId())
-                    || products.putIfAbsent(facts.product().id(), facts) != null
                     || !skus.add(facts.product().sku())) throw unavailable();
+            StoreAccess previous = stores.putIfAbsent(facts.store().storeId(), facts.store());
+            if (previous != null && !previous.equals(facts.store())) throw unavailable();
         }
+        if (!products.keySet().equals(ids)) throw unavailable();
         return products;
     }
 
     private ItemCode outcome(ExpectedItem item, ResolvedProduct facts) {
-        if (facts == null) return ItemCode.PRODUCT_NOT_FOUND;
         if (facts.product().status() != ProductStatus.ACTIVE || !facts.store().sellerApproved()
                 || !facts.store().storeOpen() || !facts.categoryExists()) return ItemCode.PRODUCT_NOT_SELLABLE;
         if (!facts.store().storeId().equals(item.expectedStoreId())
