@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class InventoryInternalTokenFilterTest {
     @Test
     void missingTokenConfigurationFailsClosedForEncodedAndMatrixPaths() throws Exception {
-        InventoryInternalTokenFilter filter = new InventoryInternalTokenFilter(" ", " ");
+        InventoryInternalTokenFilter filter = new InventoryInternalTokenFilter(" ", " ", false);
 
         for (String path : new String[]{"/api/inventory;review=1/items", "/api/%69nventory/items"}) {
             MockHttpServletRequest request = new MockHttpServletRequest("POST", path);
