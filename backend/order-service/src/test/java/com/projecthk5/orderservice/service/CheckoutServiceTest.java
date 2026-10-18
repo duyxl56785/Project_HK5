@@ -213,4 +213,21 @@ class CheckoutServiceTest {
         verify(cart,never()).release(anyString(),anyString());
         verifyNoInteractions(catalog,inventory,write,repo);
     }
+
+    @Test void outboxSerializationFailureCannotReserveStockOrWriteOrder() throws Exception {
+        CheckoutAttempt attempt=fresh();
+        catalogAndCart();
+        ObjectMapper brokenJson=mock(ObjectMapper.class);
+        when(brokenJson.writeValueAsString(any())).thenThrow(
+            new com.fasterxml.jackson.core.JsonProcessingException("Synthetic serialization failure") {});
+        CheckoutService subject=new CheckoutService(cart,catalog,inventory,keys,write,repo,brokenJson,money);
+
+        IllegalStateException error=assertThrows(IllegalStateException.class,
+            () -> subject.checkout(customer,bearer,key,request));
+        assertEquals("Unable to write outbox event",error.getMessage());
+        verify(cart).release(bearer,key);
+        verify(keys).fail(attempt.getId(),false);
+        verify(cart,never()).finalizeCart(anyString(),anyString());
+        verifyNoInteractions(inventory,write,repo);
+    }
 }
