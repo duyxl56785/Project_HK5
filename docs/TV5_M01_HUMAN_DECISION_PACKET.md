@@ -144,6 +144,9 @@ Một người ký phải nêu MD, choice, scope và commit; approval cho giá k
   PR38 **7a8d18eb54c3d134964a282ddd7612283dcea66c**, PR39 **ec2ae5af5162aa93482b9439d1b39dbb7abb3bec**.
   PR43/44/45 đã được owner merge; nhận QA patch không ký M01. Source Finance/Checkout/diagnostic không đổi so với các run đã lưu.
 
+**P6 (bổ sung sau merge46):** [TV3 disposition MD05/MD06/MD08 tại8cc5ce4](https://github.com/duyxl56785/Project_HK5/pull/28#issuecomment-6249713586)
+chỉ là engineering proposal, nói rõ không phải human signature/business APPROVED. §12 ghi delta và evidence mới; không yêu cầu lại cùng phản hồi.
+
 ### MD ledger — version chung phía trên áp dụng cho từng dòng
 
 | Decision | Proposed / accepted value | Accountable owner / người xác nhận | Evidence xác nhận thực tế | Status / effective scope | Missing dependencies / module được phép sau khi ký |
@@ -152,10 +155,10 @@ Một người ký phải nêu MD, choice, scope và commit; approval cho giá k
 | **MD02** | Proposed positive integral1..99,999,999,999,999,999; BigDecimal; canonical JSON string; calculation scale0, storage19,2 exact .00 nếu được duyệt | Business approver +TV5 money; TV2 schema/API, TV3 consumer | P2/P3; Product prototype high precision không phải yêu cầu giá phân số | **PENDING** business cap/scale; wire design có own-scope acceptance | Explicit price-slice signature +reviewed V2+/S01 applicable gates; Product validation/persistence rồi re-test production schema |
 | **MD03** | Proposed cap17digits cho unit/line/Store/parent/commission/net; exact sums, qty1–1000 hiện có; fee/net0..subtotal | TV3 preflight +TV5/business caps; TV2 price, TV4 qty | P3 đã xác nhận technical necessity; current DTO/service/schema1–1000; utility chưa wire | **PENDING** business caps; technical quantity fact không phải intmax | All storage+business bounds trước RESERVE; Cart/Order V2+/preflight sau applicable approvals. Check fee/net/rate không bỏ qua parent |
 | **MD04** | Existing5%/House0/net requirement; proposed HALF_UP0 một lần mỗi SellerOrder merchandise subtotal, rate0.0500/0.0000 snapshot | Business approver +human TV5; TV2 House, TV1 assignment permission, TV3 snapshot, TV4 COD | FinanceRules/CONTRIBUTING giữ rule; P2 trusted House source target; chưa chữ ký rounding/base/House definition | **PENDING** full policy; agent không ký human TV5 | House authoritative persistent classification/audit, policy/config binding; không infer từ slug/JWT/body hoặc unknown→regular |
-| **MD05** | Proposed A restricted no-unapproved-adjustment flow; B explicit Store/line allocation theo lựa chọn §9 | Business approver +TV5; TV3 totals, TV4 COD/refund, TV2 semantics | Packet/proposal; P3 giữ decision cho đúng owner, chưa sign-off allocation | **PENDING**, A/B chưa chọn | Chỉ totals/fee/COD cần adjustment mới phụ thuộc lựa chọn này; không tự đặt mọi khoản0 |
-| **MD06** | Existing DELIVERED AND COD PAID; proposed full-COD-only/reversal alternatives §9 | TV4 lifecycle +TV3 local transaction/outbox +TV5 Finance; TV1 ADMIN; business approver | P1 OD-07 nguyên tắc DECIDED; P4 proposal phù hợp, chưa ký producer/transaction/refund model | **PENDING** runtime/refund/source; giữ OD-07, helper guard không là atomic settlement | Separate payment facts/idempotency/unique settlement/current Store scope; production implementation chờ chữ ký và phase scope |
+| **MD05** | Proposed A restricted no-unapproved-adjustment flow; B explicit Store/line allocation theo lựa chọn §9 | Business approver +TV5; TV3 totals, TV4 COD/refund, TV2 semantics | P6: TV3 conditional A/B implementation constraints đã trả lời; chưa human sign-off allocation | **PENDING**, A/B chưa chọn | Chỉ totals/fee/COD cần adjustment mới phụ thuộc lựa chọn này; không tự đặt mọi khoản0 |
+| **MD06** | Existing DELIVERED AND COD PAID; proposed full-COD-only/reversal alternatives §9 | TV4 lifecycle +TV3 local transaction/outbox +TV5 Finance; TV1 ADMIN; business approver | P1 OD-07 DECIDED; P4/P6 local Order transaction+outbox proposal, chưa ký producer/action/event/refund model | **PENDING** runtime/refund/source; giữ OD-07, helper guard không là atomic settlement | Separate payment facts/idempotency/unique settlement/current Store scope; production implementation chờ chữ ký và phase scope |
 | **MD07** | Proposed A conditional last-verified snapshot; B real cross-source quote/lease | Business approver +TV1 risk/security +human TV5; TV2 facts, TV3/TV4 journal | P2/P3 khuyến nghị A có điều kiện; chưa risk acceptance | **PENDING**, không có quote/lease guarantee | PhaseA full current verified batch trước reserve; PhaseB sau durable journal/proven-reserve/recovery; UNKNOWN hold |
-| **MD08** | Proposed immutable unit/qty/line/IDs/SKU/currency/Store/Seller/House/subtotal/rate/fee/net/policy +provider fact refs | TV3 shared persistence +TV5 Finance; TV2 facts, TV4 lifecycle, TV1 exposure | P3 đồng ý nhu cầu V2+ snapshots, không ký field/version/source hoàn chỉnh | **PENDING** final snapshot contract | Reviewed V2+, no V1 edits, replay/settlement dùng committed snapshots; không recompute bằng policy/catalog hiện tại |
+| **MD08** | Proposed immutable unit/qty/line/IDs/SKU/currency/Store/Seller/House/subtotal/rate/fee/net/policy +provider fact refs | TV3 shared persistence +TV5 Finance; TV2 facts, TV4 lifecycle, TV1 exposure | P3/P6: TV3 đề xuất đầy đủ ba tầng snapshots và placement/outbox transaction; chưa ký fields/version/source | **PENDING** final snapshot contract | Reviewed V2+, no V1 edits, replay/settlement dùng committed snapshots; không recompute bằng policy/catalog hiện tại |
 | **MD09** | Proposed named business signer và TV1-designated config operator; đủ gates mới enable | TV1/chủ dự án authority; human TV5 +business và TV2–TV4 own-scope | P1 gate yêu cầu approval; P5 TV5 chưa có final authority. Không có designation được tìm thấy | **PENDING**, source flag vẫn false | TV1 chỉ định tài khoản/vai trò/phạm vi; operational security/implementation/evidence và signed config; không tự enable |
 | **MD10** | Proposed reporting choices §9: basis/timezone/cutoff; bốn nhóm cần owner điền tên/formula/source | Business approver +TV5 reporting; TV3/TV4 facts, TV1 shared time/privacy nếu ảnh hưởng | Packet xác nhận thiếu định nghĩa; không tìm thấy đủ4nhóm để tự gán tên | **PENDING / reporting BLOCKED** | Reporting-specific gate; không tự biến thiếu dashboard definition thành blocker cho Product price slice đã được ký riêng |
 
@@ -260,3 +263,24 @@ no Inventory/writer/outbox cho known-invalid, safe Cart cleanup theo outcome, gi
 Tiếp tục sau khi hết quota: kiểm `git status`/`git branch -vv`, fetch latest28/37/38/39 và đọc replies theo marker `M01-OWNER-LEDGER-20261018-r2`;
 so sánh delta trước khi sửa; chỉ cập nhật accepted value/signer/link cho scope được ký. Test runtime chỉ rerun khi source/requirements đổi hoặc gate yêu cầu,
 không lặp suite/đẻ thêm proposal để tránh chờ. Commit/push feature branch TV5 đúng PR cònOPEN; reviewer removals phải được giữ.
+
+## 12. Re-audit sau merge46 — M01-REAUDIT-20261018-r3
+
+Checkpoint §§8–11 tại5a3788b giữ nguyên provenance; **không dùng source-equivalence cũ để chứng minh HEAD mới đã PASS**.
+PR42/46 đều merged và là ancestors của PR28 **8cc5ce4af1beacfe0d8467ec037d55e59a065691**.
+8cc5ce4 đổi Checkout request guard, không wire money bounds. TV5 đã chạy thật trênSHA này:
+**83Order unit PASS;16Order PostgreSQL PASS; diagnostic1PASS/2FAIL**, Gradle exit1/73s.
+[Re-audit, source map, QA và raw evidence](../reports/TV5_M01_REAUDIT_2026-10-18.md) tách rõ lượt mới với lịch sử.
+
+P6 đã trả lời engineering disposition, không còn mô tả TV3 như chưa cung cấp phương án MD05/06/08:
+
+- **MD05:** conditional A chỉ khi có explicit approved no-adjustment flow; absent/unknown không thành0. B cần payer/beneficiary, fee base, allocation và deterministic remainder được ký trước triển khai.
+- **MD06:** validated action/state+outbox trong **một local Order DB transaction**, stable actionId/fingerprint/durable dedup; settlement posting unique/atomic thuộcTV5 trong schema chung được duyệt. Không cross-service atomicity, chưa chọn action endpoint/event; TV4/TV1/business còn thiếu.
+- **MD08:** V2+ immutable item/Store/parent money/identity/policy/fact snapshots; exact storage+signed bounds trướcreserveRequested. Replay dùng committed snapshots, không đoán legacy. Exact fields/version/source vẫn cần owners ký.
+- Recovery: durable T1 canonical SKU/qty/type/operationId trướcHTTP, T2 verified result, exact retry, UNKNOWN hold. Timing/state/event C06 chưa approved.
+
+**Cả10MD business PENDING; implementation BLOCKED theo applicable gates, không có slice mới unlocked.**
+P6 tự giới hạn là proposal, không là TV3 human signature. HumanTV5/business còn phải chọn MD; TV1/chủ dự án chỉ định approver/operator.
+Giữ TV2 compatibility/P3 C01/E01 own-scope và OD07/09 baseline, không mở lại những xác nhận đó.
+Lời đề nghị còn hiệu lực trênPR37/28 r2; không đăng thêm lời nhắc lặp. Bước tiếp theo là owner decisions +TV3 authorized money fix;
+chỉ khi có fix mới chạy nguyên diagnostic để chứng minh2RED→GREEN và positive control vẫnPASS.

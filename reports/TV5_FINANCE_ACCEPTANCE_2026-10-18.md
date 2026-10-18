@@ -207,3 +207,12 @@ backend/gradlew.bat -p backend --init-script $initTV5 :order-service:fin06Regres
 Lưu source/time/command/exit/log/XML/hash từng run, giữ positive control và original RED, không tự sửa assertion/enable policy.
 Lượt checkpoint này unit/PG/liveE2E **NOT_RUN**; production Finance/COD/Store queries và toàn Issue5/12 vẫn **PARTIAL/BLOCKED**.
 Khi chỉ còn chữ ký/review, dừng ở **OWNER_CONFIRMATION/WAITING_REVIEW**, không tạo test/proposal trùng hoặc hứa chạy nền.
+
+## 8. Superseding source checkpoint — M01-REAUDIT-20261018-r3
+
+PR42/45/46 đều đã được owner tiếp nhận, không còn chờ integration; các checkbox ghép thêm main QA conflict/whole acceptance phía trên vẫn chưa đủ điều kiện tick.
+PR28head **8cc5ce4af1beacfe0d8467ec037d55e59a065691** có Checkoutrequestguard mới; không kéo dài source-equivalence5a3788b sangHEAD này.
+[New audit/run](TV5_M01_REAUDIT_2026-10-18.md):83Order unitPASS,16Order PGPASS, originaldiagnostic1PASS/2FAIL,exit1/73s,0error/skip.
+PositivecontrolPASS; FIN01/06 vẫnRED. [22rawassets+derivedmanifest](evidence/m01-reaudit-20261018/manifest.json),61oldhashes/Gitblobs được kiểm lại; không cộng các snapshot lịch sử.
+TV3 MD05/06/08 mới là engineeringproposal, không human signature; canonicalledger cập nhật đúngscope. M01/all10MDPENDING,
+businessapprover/operator chờTV1/chủdựánxácnhận, no newproductionunlock; Issue5/12OPEN/PARTIAL.

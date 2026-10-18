@@ -1,0 +1,9 @@
+{
+  "exitCode": 1,
+  "javaToolOptions": "-Duser.timezone=UTC -Dapi.version=1.44",
+  "source": "8cc5ce4af1beacfe0d8467ec037d55e59a065691",
+  "finishedUtc": "2026-10-18T13:52:18.6028412Z",
+  "startedUtc": "2026-10-18T13:51:05.1655298Z",
+  "command": "backend/gradlew.bat -p backend --init-script <repo>/tests/finance/fin06-regression.init.gradle :order-service:test :order-service:postgresIntegrationTest :order-service:fin06Regression --rerun-tasks --no-daemon --continue --console=plain",
+  "javaHome": "C:\\Program Files\\Java\\jdk-21"
+}

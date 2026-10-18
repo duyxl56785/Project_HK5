@@ -71,3 +71,17 @@ Post-merge checkpoint E: owner đã nhận44 tại ccfb38d; Cart.claim fix của
 M01 follow-up sau owner merge45 tại5a3788b: **F16-14** trỏ [canonical packet §§8–11](../docs/TV5_M01_HUMAN_DECISION_PACKET.md),10MD ledger/version/choice/signer/evidence/dependency,
 6tradeoff sections và partial Product price slice; tất cả MD businessPENDING, chưa unlock module mới. **F16-11/12** giữ original1PASS/2FAIL ởde1f5c6,
 source unchanged tới5a3788b; [derived current audit](../reports/evidence/m01-owner-ledger-20261018.json) kiểm61hashes/byte identity, không là runtime rerun hay contract approval.
+
+### Re-audit r3 — source8cc5ce4 thay đổi request guard
+
+| Requirement | Test / owner / current evidence | Result và giới hạn |
+|---|---|---|
+| F16-11 precision/replay | Original unsupportedStoragePrecisionMustBeRejectedRatherThanChangingMoneyOnReplay →TV3fix; [currentXML](../reports/evidence/m01-reaudit-20261018/fin06Regression/TEST-com.projecthk5.orderservice.finance.CheckoutMoneyPreflightRegressionTest.xml) | **FAIL mới**:3.002→3.00, mockreserve/write xảyra; không dùng kếtquả cũ thayrun này |
+| F16-12 parentoverflow | Original parentOverflowMustBeRejectedBeforeReserveOrOrderWrite →TV3preflight | **FAIL mới**, DBrollbackPASS riêng; chưa no-sideeffects trướcRESERVE |
+| F16 replay positivecontrol | Original positiveControlPersistsExactAmountsAndReplayDoesNotReserveOrWriteAgain →TV5QA | **PASS mới**,300.00/fee5.00/oneorder+outbox; mockremoteports, không settlement/E2E |
+| QA-05 ownerrequestguard | CheckoutRulesTest/CheckoutServiceTest officialJUnit tại8cc5ce4 →TV3 | Included **83Order unitPASS**,16PGPASS riêng; không đếm17harnessassertions như17JUnitcases |
+| F16-14 sign-off | Packet§12, TV3engineering MD05/06/08 reply +[audit](../reports/TV5_M01_REAUDIT_2026-10-18.md) →business/TV1–TV5 | All10MDPENDING, no productionunlock; Productpricepartialgate không bị buộcchờMD10 |
+| F16-15 productiongate | CurrenttrustedCOD, atomicuniquesettlement, currentStoreFinance, livetwoStore →owners | NOT_RUN/BLOCKED; pureguards/PGfixtures không đủ |
+
+Same-run taskcounts/rawSHA256/commands và22originalassets: [manifest](../reports/evidence/m01-reaudit-20261018/manifest.json).
+83unit/16PG/diagnostic1P2F chỉ thuộc8cc5ce4, không là release total cộng lịch sử. PR42/46 integrated, newesthead chưa sửaFIN01/06.
