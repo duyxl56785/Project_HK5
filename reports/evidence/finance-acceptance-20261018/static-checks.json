@@ -25,5 +25,13 @@
   "code_document_diff_check_exit": 0,
   "generated_raw_default_diff_check_exit": 2,
   "generated_raw_diff_check_reason": "Raw CRLF/trailing whitespace preserved byte-for-byte; excluded from source/docs whitespace gate, never rewritten",
-  "Windows_stage_option": "git -c core.longpaths=true add -f -- <56 manifest-reviewed assets>; no global config or force push"
+  "Windows_stage_option": "git -c core.longpaths=true add -f -- <56 manifest-reviewed assets>; no global config or force push",
+  "committed_original_Git_blob_hashes_verified": 56,
+  "decoded_secret_marker_scan": {
+    "encodings": {
+      "utf-8-sig": 56
+    },
+    "high_confidence_hits": [],
+    "status": "PASS; not exhaustive"
+  }
 }
