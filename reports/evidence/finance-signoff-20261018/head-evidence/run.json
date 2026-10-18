@@ -1,0 +1,39 @@
+{
+  "sourceSha": "bd5ff09e89a50fea198fac38967d1565215fe2fe",
+  "command": "gradle -p backend :cart-service:build :order-service:build :cart-service:postgresIntegrationTest :order-service:postgresIntegrationTest --rerun-tasks --no-daemon --continue --console=plain",
+  "date": "2026-10-18",
+  "executor": "TV5",
+  "java": "21.0.7",
+  "gradle": "8.14.3",
+  "docker": "29.8.1",
+  "postgres": "16-alpine",
+  "processJvmOptions": "-Duser.timezone=UTC -Dapi.version=1.44",
+  "exit": 0,
+  "suites": {
+    "cart-service-postgresIntegrationTest": {
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "cart-service-test": {
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "order-service-postgresIntegrationTest": {
+      "tests": 10,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "order-service-test": {
+      "tests": 55,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  },
+  "limits": "Mocked remote ports; no live two-Store E2E or settlement implementation"
+}

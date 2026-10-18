@@ -1,0 +1,43 @@
+Picked up JAVA_TOOL_OPTIONS: -Duser.timezone=UTC -Dapi.version=1.44
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Task :order-service:compileJava
+Note: D:\CMC Uni\5 Ky Dong\WEB\BCK WEB\Project_HK5\.verification\fixes\pr28\backend\order-service\src\main\java\com\projecthk5\orderservice\security\ResourceSecurityConfig.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+
+> Task :order-service:processResources
+> Task :order-service:classes
+> Task :order-service:compileTestJava
+> Task :order-service:processTestResources NO-SOURCE
+> Task :order-service:testClasses
+
+> Task :order-service:test
+
+JwtEnvironmentConfigurationTest > documentedEnvironmentBindsThroughRealYamlAndVerifiesHs256() FAILED
+    org.opentest4j.AssertionFailedError at JwtEnvironmentConfigurationTest.java:50
+Picked up JAVA_TOOL_OPTIONS: -Duser.timezone=UTC -Dapi.version=1.44
+
+2 tests completed, 1 failed
+
+> Task :order-service:test FAILED
+
+
+[Incubating] Problems report is available at: file:///D:/CMC%20Uni/5%20Ky%20Dong/WEB/BCK%20WEB/Project_HK5/.verification/fixes/pr28/backend/build/reports/problems/problems-report.html
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':order-service:test'.
+> There were failing tests. See the report at: file:///D:/CMC%20Uni/5%20Ky%20Dong/WEB/BCK%20WEB/Project_HK5/.verification/fixes/pr28/backend/order-service/build/reports/tests/test/index.html
+
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+* Try:
+> Run with --scan to get full insights.
+
+BUILD FAILED in 12s
+For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+4 actionable tasks: 4 executed

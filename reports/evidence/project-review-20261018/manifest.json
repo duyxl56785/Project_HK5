@@ -1,0 +1,309 @@
+{
+  "type": "DERIVED_PUBLICATION_MANIFEST",
+  "source": "be1d5b6c1a6eafa385f2bd6bd62f8b5efbeb5757",
+  "countsByTask": {
+    "test": {
+      "tests": 88,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "postgresIntegrationTest": {
+      "tests": 16,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "fin06Regression": {
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  },
+  "additionalRuns": [
+    {
+      "label": "c181675",
+      "metadata": {
+        "javaHome": "C:\\Program Files\\Java\\jdk-21",
+        "exitCode": 0,
+        "javaToolOptions": "-Duser.timezone=UTC -Dapi.version=1.44",
+        "command": "backend/gradlew.bat -p backend --init-script <repo>/tests/finance/fin06-regression.init.gradle :order-service:test --tests *CheckoutServiceTest :order-service:fin06Regression --rerun-tasks --no-daemon --continue --console=plain",
+        "finishedUtc": "2026-10-18T14:55:43.9927364Z",
+        "source": "c1816752ae4436453c8fc557f2394a67f445b8f2",
+        "startedUtc": "2026-10-18T14:55:03.2343053Z"
+      },
+      "countsByTask": {
+        "test": {
+          "tests": 16,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "fin06Regression": {
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        }
+      }
+    },
+    {
+      "label": "pr49-red",
+      "metadata": {
+        "exitCode": 1,
+        "javaHome": "C:\\Program Files\\Java\\jdk-21",
+        "startedUtc": "2026-10-18T14:55:15.5041732Z",
+        "finishedUtc": "2026-10-18T14:55:31.4732165Z",
+        "source": "5cf4d753b3723f46b76786061c62de7a8806cf79",
+        "command": "backend/gradlew.bat -p backend :inventory-service:test --tests *InventoryOrderPairGateTest --tests *InventoryInternalTokenFilterTest --rerun-tasks --no-daemon --console=plain"
+      },
+      "countsByTask": {
+        "test": {
+          "tests": 5,
+          "failures": 1,
+          "errors": 0,
+          "skipped": 0
+        }
+      }
+    },
+    {
+      "label": "pr49-green",
+      "metadata": {
+        "finishedUtc": "2026-10-18T14:57:42.7922285Z",
+        "command": "backend/gradlew.bat -p backend :inventory-service:test --tests *InventoryOrderPairGateTest --tests *InventoryInternalTokenFilterTest --rerun-tasks --no-daemon --console=plain",
+        "javaHome": "C:\\Program Files\\Java\\jdk-21",
+        "exitCode": 0,
+        "startedUtc": "2026-10-18T14:57:29.3032759Z",
+        "source": "cf6028168563578e9ab38556d24a9e536b818a49"
+      },
+      "countsByTask": {
+        "test": {
+          "tests": 5,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        }
+      }
+    }
+  ],
+  "diagnosticSourceGitBlobs": {
+    "8cc5ce4": "bbbaf2861fbe35d56b32a565ea5a3bb0200a4df4",
+    "be1d5b6": "bbbaf2861fbe35d56b32a565ea5a3bb0200a4df4"
+  },
+  "missingInitialDockerVolumes": [],
+  "secretMarkerHits": [],
+  "limitations": "Runs remain separate by SHA. Real PostgreSQL, mocked remote ports/synthetic policy. No live E2E or business sign-off. Original historical RED remains intact. Marker scan is not exhaustive. API snapshot and CSV files are explicitly derived.",
+  "artifacts": [
+    {
+      "path": "test/TEST-com.projecthk5.orderservice.domain.CheckoutRulesTest.xml",
+      "bytes": 1253,
+      "sha256": "75e52af34ec80d8329ed61cd5f1dddd1431a206c481f728777cc0bf1d1733ab6",
+      "publication": "RAW_EXACT_BYTES"
+    },
+    {
+      "path": "test/TEST-com.projecthk5.orderservice.domain.InventoryOperationIntentTest.xml",
+      "bytes": 1130,
+      "sha256": "c3fcf02c1b0682e676a2684fac17bf5db3178103f2eeec7572eb96e3abe7c124",
+      "publication": "RAW_EXACT_BYTES"
+    },
+    {
+      "path": "test/TEST-com.projecthk5.orderservice.domain.OrderAmountStorageBoundsTest.xml",
+      "bytes": 1237,
+      "sha256": "aa52083f7561eea56b7119d8ddefd91443b3db5be1e647423f776ccab498c128",
+      "publication": "RAW_EXACT_BYTES"
+    },
+    {
+      "path": "test/TEST-com.projecthk5.orderservice.finance.FinanceCheckoutPreflightTest.xml",
+      "bytes": 1553,
+      "sha256": "6b6d46f16ae1411ef8b3ac23cf82012301114c80a0c005e8b543319fa733d656",
+      "publication": "RAW_EXACT_BYTES"
+    },
+    {
+      "path": "test/TEST-com.projecthk5.orderservice.finance.FinanceConsumerParityTest.xml",
+      "bytes": 1461,
+      "sha256": "29047361594dd816943db35158baba5d36919a102df4a13cff1fd895c3487ab1",
+      "publication": "RAW_EXACT_BYTES"
+    },
+    {
+      "path": "test/TEST-com.projecthk5.orderservice.finance.FinancePolicyConfigurationTest.xml",
+      "bytes": 2599,
+      "sha256": "319498b43d94f26d7ffd3afde2ab9f2dd012b2678d355b5b5a634bf6d62661f0",
+      "publication": "RAW_EXACT_BYTES"
+    },
+    {
+      "path": "test/TEST-com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest.xml",
+      "bytes": 2865,
+      "sha256": "c1f51e61e5178489df9375c98398fb423a41bdf0e9fbcfb3defe62082a0c95ea",
+      "publication": "RAW_EXACT_BYTES"
+    },
+    {
+      "path": "test/TEST-com.projecthk5.orderservice.finance.FinanceRulesTest.xml",
+      "bytes": 2500,
+      "sha256": "25c7f87d4dac25070addbd1d63b82c50e3c774e9f3a42f2e80c615cabdb5b972",
+      "publication": "RAW_EXACT_BYTES"
+    },
+    {
+      "path": "test/TEST-com.projecthk5.orderservice.security.ContractJwtDecoderTest.xml",
+      "bytes": 791,
+      "sha256": "69704d4b5deeac2180f78d01e5e8c6ad318b76cb87e968fcf3a1e494fb590c30",
+      "publication": "RAW_EXACT_BYTES"
+    },
+    {
+      "path": "test/TEST-com.projecthk5.orderservice.security.JwtEnvironmentConfigurationTest.xml",
+      "bytes": 1617,
+      "sha256": "516537726b7724a8f9a55a3404140ca8ce2f57d04065aab88ed293321e677687",
+      "publication": "RAW_EXACT_BYTES"
+    },
+    {
+      "path": "test/TEST-com.projecthk5.orderservice.service.CheckoutServiceTest.xml",
+      "bytes": 2750,
+      "sha256": "81ba2f0a562bad614022c8ed63c1daf5105769d4017e97aa747857e5c21834d8",
+      "publication": "RAW_EXACT_BYTES"
+    },
+    {
+      "path": "test/TEST-com.projecthk5.orderservice.service.IdempotencyCoordinatorTest.xml",
+      "bytes": 644,
+      "sha256": "8841e4276fe819363af2c68dfc86524f9131aa96472c7a519ff0f48467934128",
+      "publication": "RAW_EXACT_BYTES"
+    },
+    {
+      "path": "postgresIntegrationTest/TEST-com.projecthk5.orderservice.finance.FinanceSnapshotPostgresIT.xml",
+      "bytes": 10058,
+      "sha256": "cfc34713223fd5e153779cf454c50930f0fc5aa7c263612378f79435ade9ca4d",
+      "publication": "RAW_EXACT_BYTES"
+    },
+    {
+      "path": "postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.CheckoutReplayPostgresIT.xml",
+      "bytes": 6814,
+      "sha256": "b34c8429a9a0d9a227e838531333f8d0b60b5fd778118c8a11305382e9346993",
+      "publication": "RAW_EXACT_BYTES"
+    },
+    {
+      "path": "postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.CheckoutScannerPostgresIT.xml",
+      "bytes": 6686,
+      "sha256": "c4c59b9f2ede216a53ee6387a203f18b29395a07870c9b202d15102be260cbbd",
+      "publication": "RAW_EXACT_BYTES"
+    },
+    {
+      "path": "postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.OrderPostgres16IT.xml",
+      "bytes": 7281,
+      "sha256": "c51070872870dcb18e3013bc102ca92f8bcffadbf64a8617135f3db7e8d67460",
+      "publication": "RAW_EXACT_BYTES"
+    },
+    {
+      "path": "fin06Regression/TEST-com.projecthk5.orderservice.finance.CheckoutMoneyPreflightRegressionTest.xml",
+      "bytes": 9240,
+      "sha256": "6671454521a18ea369dfd1f6809e95baa8c0c7b1eb0c59c134ded79aaef2b356",
+      "publication": "RAW_EXACT_BYTES"
+    },
+    {
+      "path": "runtime.log",
+      "bytes": 5096,
+      "sha256": "58f4283b27358a89da19e875539e3cdc2225a743d10691f898597f31b4b7542a",
+      "publication": "RAW_EXACT_BYTES"
+    },
+    {
+      "path": "runtime-meta.json",
+      "bytes": 548,
+      "sha256": "b4d567b98d572ad792ddb924d260142b6853562f0cfd9cb59eaf6789487e57e9",
+      "publication": "RAW_EXACT_BYTES"
+    },
+    {
+      "path": "docker-version.json",
+      "bytes": 1146,
+      "sha256": "6adac5bc26866b2a228a67e16d597313dcca9b49555dea9b55be443bc3a4775e",
+      "publication": "RAW_EXACT_BYTES"
+    },
+    {
+      "path": "volumes-before.txt",
+      "bytes": 70,
+      "sha256": "57f2b6e41bef8662862503d13f701777e37ed39e9110f9164595f570e2f83678",
+      "publication": "RAW_EXACT_BYTES"
+    },
+    {
+      "path": "volumes-after.txt",
+      "bytes": 70,
+      "sha256": "57f2b6e41bef8662862503d13f701777e37ed39e9110f9164595f570e2f83678",
+      "publication": "RAW_EXACT_BYTES"
+    },
+    {
+      "path": "c181675/test/TEST-com.projecthk5.orderservice.service.CheckoutServiceTest.xml",
+      "bytes": 3439,
+      "sha256": "e70ab3f681bd3f09fa1fac2a406704f8d9a36dfcf9a4696f10736e2e96293441",
+      "publication": "RAW_EXACT_BYTES"
+    },
+    {
+      "path": "c181675/fin06Regression/TEST-com.projecthk5.orderservice.finance.CheckoutMoneyPreflightRegressionTest.xml",
+      "bytes": 9249,
+      "sha256": "a36078271c34643bfb6faa31c5a56594b29b1281ff9fb79967ea80d16d31764f",
+      "publication": "RAW_EXACT_BYTES"
+    },
+    {
+      "path": "c181675/runtime.log",
+      "bytes": 2873,
+      "sha256": "8e1d8e94f968cdb461c6ed60c73ffbc94d5e95c867eff85008376303d1b3e863",
+      "publication": "RAW_EXACT_BYTES"
+    },
+    {
+      "path": "c181675/runtime-meta.json",
+      "bytes": 538,
+      "sha256": "d271b4fafc9be9d051bb80fb587553b8270f5ee24edd92b07075c0762ceadbf6",
+      "publication": "RAW_EXACT_BYTES"
+    },
+    {
+      "path": "pr49-red/test/TEST-com.projecthk5.inventoryservice.security.InventoryInternalTokenFilterTest.xml",
+      "bytes": 543,
+      "sha256": "03908d2c99232df10e11bd594b9f368f1abd07de866c2343aa9331416147027c",
+      "publication": "RAW_EXACT_BYTES"
+    },
+    {
+      "path": "pr49-red/test/TEST-com.projecthk5.inventoryservice.security.InventoryOrderPairGateTest.xml",
+      "bytes": 11391,
+      "sha256": "c8360c1a6b07d7cdf5c67c2cdd7f6c257ecb575fc783059962e2c4733280d735",
+      "publication": "RAW_EXACT_BYTES"
+    },
+    {
+      "path": "pr49-red/runtime.log",
+      "bytes": 2079,
+      "sha256": "5b23459accdbef2654cb2905161e08302125813e26f0777aec8e98d44bd96531",
+      "publication": "RAW_EXACT_BYTES"
+    },
+    {
+      "path": "pr49-red/runtime-meta.json",
+      "bytes": 421,
+      "sha256": "67bc9cc0ef2938149dec34750aa61f63cf688f7ffc4454a767fabdea8d5644ab",
+      "publication": "RAW_EXACT_BYTES"
+    },
+    {
+      "path": "pr49-green/test/TEST-com.projecthk5.inventoryservice.security.InventoryInternalTokenFilterTest.xml",
+      "bytes": 543,
+      "sha256": "45e526f20d04d314ad16469fa23160daae8b41a1fb13818675f048b2b03d5443",
+      "publication": "RAW_EXACT_BYTES"
+    },
+    {
+      "path": "pr49-green/test/TEST-com.projecthk5.inventoryservice.security.InventoryOrderPairGateTest.xml",
+      "bytes": 1043,
+      "sha256": "6b43ee017b890e685b41a59e68f47708943b8b8b9bfd6933126748ef45efebd5",
+      "publication": "RAW_EXACT_BYTES"
+    },
+    {
+      "path": "pr49-green/runtime.log",
+      "bytes": 1471,
+      "sha256": "7837858c84a3f4edeb77f4396f9693ab2e0b0bf6494c7c525b7b7c9afca914bb",
+      "publication": "RAW_EXACT_BYTES"
+    },
+    {
+      "path": "pr49-green/runtime-meta.json",
+      "bytes": 421,
+      "sha256": "c2e59863df16ce19dd3eea39630e1e071c7d7ed380a4f6e2de2d19175d2fd473",
+      "publication": "RAW_EXACT_BYTES"
+    },
+    {
+      "path": "volumes-final.txt",
+      "bytes": 70,
+      "sha256": "57f2b6e41bef8662862503d13f701777e37ed39e9110f9164595f570e2f83678",
+      "publication": "RAW_EXACT_BYTES"
+    }
+  ]
+}

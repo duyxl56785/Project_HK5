@@ -1,0 +1,10 @@
+{
+  "started_at_utc": "2026-10-18T10:40:11.2387271Z",
+  "source_sha": "de1f5c6dfee301ffec12ffd0f5c774836d62e3a3",
+  "owner_PR28_sha": "c97a656f195daeb2849ccb50855f0209f716814d",
+  "java_home": "C:\\Program Files\\Java\\jdk-21",
+  "java_tool_options": "-Duser.timezone=UTC -Dapi.version=1.44",
+  "command": "gradlew.bat -p backend --init-script <absolute tests/finance/fin06-regression.init.gradle> :order-service:test :order-service:postgresIntegrationTest :order-service:fin06Regression --rerun-tasks --no-daemon --continue --console=plain",
+  "finished_at_utc": "2026-10-18T10:41:10.8231150Z",
+  "exit_code": 1
+}

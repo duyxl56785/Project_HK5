@@ -1,0 +1,11 @@
+{
+  "started_at_utc": "2026-10-18T10:44:25.6707610Z",
+  "source_sha": "1311f8a9f14639c4e42c7b8fbf2446a934abfbf2",
+  "owner_PR28_sha": "5ce06305c558263607adf11411bcce1ef1464fd6",
+  "command": "gradlew.bat -p backend :cart-service:test :order-service:test :cart-service:postgresIntegrationTest --rerun-tasks --no-daemon --continue --console=plain",
+  "java_home": "C:\\Program Files\\Java\\jdk-21",
+  "java_tool_options": "-Duser.timezone=UTC -Dapi.version=1.44",
+  "order_pg_diagnostic": "Not rerun here; Order production and original diagnostic unchanged from verified de1f5c6",
+  "finished_at_utc": "2026-10-18T10:44:53.0589504Z",
+  "exit_code": 0
+}

@@ -1,0 +1,23 @@
+{
+  "checkedUtc": "2026-10-18T07:57:40.373665+00:00",
+  "kind": "derived static checks, not executed business test cases",
+  "checkoutHead": "ee15851047c6f191f0fdbbd828f87f598db4ff44",
+  "pr41Ancestor": true,
+  "pr42Ancestor": true,
+  "qaUnionExact": true,
+  "qaUnionSha256": "f7845c0a4a1cfbbba7b15260cd66f137c4c41c94aba3e0c7b7fa50db0fb5390e",
+  "catalogSourceUnchangedSinceTested63668b8": true,
+  "inventorySourceUnchangedSinceTested9b8ae35": true,
+  "inventoryDocCorrectionsPresent": true,
+  "fulfillmentHead": "ec2ae5af5162aa93482b9439d1b39dbb7abb3bec",
+  "legacyCases": 21,
+  "supplementalCases": 21,
+  "supplementalGroups": {
+    "FUL": 12,
+    "COD": 4,
+    "NOT": 5
+  },
+  "legacyIdsAndMeaningsPreserved": true,
+  "all42ScenarioStatuses": "NOT_RUN",
+  "stateLifecycle": "TV4 proposes TV3 vocabulary; shared C06/event/actor approval still PENDING/REVISE"
+}

@@ -1,0 +1,117 @@
+{
+  "artifact_type": "DERIVED_M01_DOCUMENT_AND_EXISTING_EVIDENCE_AUDIT",
+  "checked_at_utc": "2026-10-18T11:13:45.224274+00:00",
+  "source_PR28": "5a3788b34ec4a2a91611d88020442a27b9dc7948",
+  "source_PR37": "ef62086048e2c7a00ecee16db0cc3cde2413deb6",
+  "source_PR38": "7a8d18eb54c3d134964a282ddd7612283dcea66c",
+  "source_PR39": "ec2ae5af5162aa93482b9439d1b39dbb7abb3bec",
+  "checks": {
+    "original_artifact_Git_blob_hashes_verified": 61,
+    "MD_ledger_rows": 10,
+    "MD05_MD10_tradeoff_sections": 6,
+    "relative_links_first_two_documents": 10,
+    "original_diagnostic_assertion_bytes_unchanged": true,
+    "Order_source_delta_from_last_diagnostic": [],
+    "new_document_secret_marker_scan": "PASS; limited markers, not exhaustive",
+    "all_changed_Markdown_relative_links": 64,
+    "no_production_source_or_policy_change": true,
+    "code_document_diff_check": "PASS exit0, git -c core.longpaths=true diff --check"
+  },
+  "stored_diagnostic": {
+    "execution_source": "de1f5c6dfee301ffec12ffd0f5c774836d62e3a3",
+    "PASS": 1,
+    "FAIL": 2,
+    "testcases": [
+      {
+        "name": "unsupportedStoragePrecisionMustBeRejectedRatherThanChangingMoneyOnReplay()",
+        "status": "FAIL"
+      },
+      {
+        "name": "parentOverflowMustBeRejectedBeforeReserveOrOrderWrite()",
+        "status": "FAIL"
+      },
+      {
+        "name": "positiveControlPersistsExactAmountsAndReplayDoesNotReserveOrWriteAgain()",
+        "status": "PASS"
+      }
+    ],
+    "not_new_runtime_execution": true
+  },
+  "candidate_arithmetic_checked_not_policy_approval": [
+    {
+      "subtotal": "9",
+      "fee": "0",
+      "net": "9"
+    },
+    {
+      "subtotal": "10",
+      "fee": "1",
+      "net": "9"
+    },
+    {
+      "subtotal": "11",
+      "fee": "1",
+      "net": "10"
+    },
+    {
+      "subtotal": "20",
+      "fee": "1",
+      "net": "19"
+    },
+    {
+      "subtotal": "99999999999999999",
+      "fee": "5000000000000000",
+      "net": "94999999999999999"
+    }
+  ],
+  "runtime_this_update": {
+    "unit": "NOT_RUN/docs-only, no source delta",
+    "PostgreSQL": "NOT_RUN/docs-only,61 previous artifact hashes audited",
+    "live_E2E": "NOT_RUN/BLOCKED by signed contracts and authoritative providers"
+  },
+  "M01": "PENDING",
+  "new_business_APPROVED_MD": [],
+  "business_approver": "chờ TV1/chủ dự án xác nhận",
+  "module_unlocks_this_update": [],
+  "delivery_branch": "codex/tv5-m01-owner-signoff",
+  "canonical_docs_commit": "942129f95fde9890dc151b6d89e8214d1b9e0df0",
+  "delivery_PR": "https://github.com/duyxl56785/Project_HK5/pull/46",
+  "technical_records": [
+    {
+      "owner": "duyxl56785",
+      "scope": "Product representation compatibility, not business approval",
+      "state": "CONFIRMED_COMPATIBILITY",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/37#issuecomment-6246199255"
+    },
+    {
+      "owner": "tranvanchinhbg2006-alt",
+      "scope": "C01 consumer design / E01 mapper proposal only; overall REVISE",
+      "state": "APPROVED_WITHIN_OWNER_SCOPE_ONLY",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/37#issuecomment-6248646211"
+    },
+    {
+      "owner": "lexuanbao258-collab",
+      "scope": "OD07/OD09 baseline; not concrete Finance pairs or business authority designation",
+      "state": "DECIDED_BASELINE",
+      "url": "https://github.com/duyxl56785/Project_HK5/blob/ac7ca4fd8a8fe60a8d70fb15f98af9a0bf47bc59/docs/TV1_AUTH_IDENTITY_GATEWAY_CONTRACT.md"
+    }
+  ],
+  "MD_status": {
+    "MD01": "PENDING",
+    "MD02": "PENDING",
+    "MD03": "PENDING",
+    "MD04": "PENDING",
+    "MD05": "PENDING",
+    "MD06": "PENDING",
+    "MD07": "PENDING",
+    "MD08": "PENDING",
+    "MD09": "PENDING",
+    "MD10": "PENDING"
+  },
+  "no_repeated_confirmation_for": [
+    "Unchanged TV2 price technical compatibility",
+    "TV3 accepted C01/E01 DTO/mapper design",
+    "TV1 decided OD07/OD09 principles"
+  ],
+  "document_source_commit": "942129f95fde9890dc151b6d89e8214d1b9e0df0"
+}

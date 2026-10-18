@@ -1,0 +1,10 @@
+{
+  "sourceSha": "c4d517e0dbb2d25cd7f9e1ee8e762d9fdb75c5da",
+  "ownerParent": "ee15851047c6f191f0fdbbd828f87f598db4ff44",
+  "diagnosticOriginalSource": "5fa10ce",
+  "diagnosticJavaUnchanged": true,
+  "initScriptUnchanged": true,
+  "ownerUtilityStillNotWired": true,
+  "originalArtifactHashChecks": 11,
+  "kind": "derived source/evidence verification, not new runtime test counts"
+}

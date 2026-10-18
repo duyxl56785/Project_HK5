@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.projecthk5.orderservice.security.JwtEnvironmentConfigurationTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-10-18T05:07:00.094Z" hostname="MDUY-LECO" time="0.766">
+  <properties/>
+  <testcase name="documentedEnvironmentBindsThroughRealYamlAndVerifiesHs256()" classname="com.projecthk5.orderservice.security.JwtEnvironmentConfigurationTest" time="0.712"/>
+  <testcase name="missingKeyStillFailsClosed()" classname="com.projecthk5.orderservice.security.JwtEnvironmentConfigurationTest" time="0.053"/>
+  <system-out><![CDATA[05:07:00.629 [Test worker] INFO org.hibernate.validator.internal.util.Version -- HV000001: Hibernate Validator 8.0.1.Final
+05:07:00.860 [Test worker] WARN org.springframework.boot.web.servlet.context.AnnotationConfigServletWebApplicationContext -- Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'apiSecurity' defined in com.projecthk5.orderservice.security.ResourceSecurityConfig: Failed to instantiate [org.springframework.security.web.SecurityFilterChain]: Factory method 'apiSecurity' threw exception with message: Error creating bean with name 'jwtDecoder' defined in com.projecthk5.orderservice.security.ResourceSecurityConfig: Failed to instantiate [org.springframework.security.oauth2.jwt.JwtDecoder]: Factory method 'jwtDecoder' threw exception with message: HS256 verifier not configured; service is not ready
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

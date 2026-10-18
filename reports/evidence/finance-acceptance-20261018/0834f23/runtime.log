@@ -1,0 +1,34 @@
+Picked up JAVA_TOOL_OPTIONS: -Duser.timezone=UTC -Dapi.version=1.44
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.10/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Task :cart-service:compileJava
+Note: D:\CMC Uni\5 Ky Dong\WEB\BCK WEB\Project_HK5\.verification\tv5-current-session\work\backend\cart-service\src\main\java\com\projecthk5\cartservice\security\ResourceSecurityConfig.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+
+> Task :cart-service:processResources
+> Task :cart-service:classes
+> Task :cart-service:compileTestJava
+> Task :cart-service:processTestResources NO-SOURCE
+> Task :cart-service:testClasses
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+
+> Task :cart-service:test
+Picked up JAVA_TOOL_OPTIONS: -Duser.timezone=UTC -Dapi.version=1.44
+
+Picked up JAVA_TOOL_OPTIONS: -Duser.timezone=UTC -Dapi.version=1.44
+> Task :cart-service:postgresIntegrationTest
+
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+2026-10-18T10:57:07.052Z  INFO 18032 --- [cart-service] [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-10-18T10:57:07.054Z  INFO 18032 --- [cart-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-10-18T10:57:07.060Z  INFO 18032 --- [cart-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.10/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 33s
+5 actionable tasks: 5 executed

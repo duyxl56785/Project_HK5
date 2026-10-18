@@ -1,0 +1,15 @@
+{
+  "type": "DERIVED_STATIC_VERIFICATION",
+  "linksChecked": 88,
+  "brokenLinks": [],
+  "MDLedgerRows": 10,
+  "backendDelta": "none",
+  "originalArtifactsVerified": 22,
+  "historicalArtifactsVerified": 61,
+  "secretAssignmentMarkerHits": 0,
+  "limitation": "Marker scan is not exhaustive. Initial checker encoding failed before completion; this corrected UTF-8 run completed. Not runtime or policy sign-off.",
+  "docsDiffCheckExitCode": 0,
+  "generatedRawDiffCheckExitCode": 2,
+  "generatedDiffExplanation": "Original generated CRLF/trailing whitespace preserved under -text; code/docs verified separately. Raw bytes not rewritten.",
+  "stagedRawGitBlobsVerified": 22
+}

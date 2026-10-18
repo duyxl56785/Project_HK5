@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.projecthk5.orderservice.finance.FinancePolicyConfigurationTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-10-18T10:40:24" hostname="MDUY-LECO" time="0.46">
+  <properties/>
+  <testcase name="fixtureApprovalWithoutCompleteInputsFailsStartup()" classname="com.projecthk5.orderservice.finance.FinancePolicyConfigurationTest" time="0.341"/>
+  <testcase name="realYamlDefaultsClosedEvenWithAllPricingInputs()" classname="com.projecthk5.orderservice.finance.FinancePolicyConfigurationTest" time="0.04"/>
+  <testcase name="malformedFixturePolicyCannotCreateReadyMoneyRules()" classname="com.projecthk5.orderservice.finance.FinancePolicyConfigurationTest" time="0.059"/>
+  <testcase name="explicitFixtureEnvironmentBindsRateScaleAndHouseExemptionThroughYaml()" classname="com.projecthk5.orderservice.finance.FinancePolicyConfigurationTest" time="0.02"/>
+  <system-out><![CDATA[10:40:25.302 [Test worker] WARN org.springframework.context.annotation.AnnotationConfigApplicationContext -- Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'moneyRules': Failed to instantiate [com.projecthk5.orderservice.domain.MoneyRules]: Constructor threw exception
+10:40:25.373 [Test worker] WARN org.springframework.context.annotation.AnnotationConfigApplicationContext -- Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'moneyRules': Failed to instantiate [com.projecthk5.orderservice.domain.MoneyRules]: Constructor threw exception
+10:40:25.391 [Test worker] WARN org.springframework.context.annotation.AnnotationConfigApplicationContext -- Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'moneyRules': Failed to instantiate [com.projecthk5.orderservice.domain.MoneyRules]: Constructor threw exception
+10:40:25.412 [Test worker] WARN org.springframework.context.annotation.AnnotationConfigApplicationContext -- Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'moneyRules': Failed to instantiate [com.projecthk5.orderservice.domain.MoneyRules]: Constructor threw exception
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

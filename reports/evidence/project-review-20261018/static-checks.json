@@ -1,0 +1,27 @@
+{
+  "type": "DERIVED_STATIC_VERIFICATION",
+  "relativeLinksChecked": 82,
+  "brokenLinks": [],
+  "PR39legacyRowsExact": 21,
+  "PR39supplementalRowsNotRun": 21,
+  "mainQANonblankLinesMissing": 0,
+  "integratedAncestorPRs": [
+    41,
+    42,
+    46,
+    47
+  ],
+  "backendSourceConfigTestDelta": "none",
+  "rawArtifactsVerified": 35,
+  "diagnosticAssertionsChanged": false,
+  "unit": 88,
+  "PG": 16,
+  "diagnostic": 3,
+  "runtimeFailuresErrorsSkips": 0,
+  "limitation": "Static checks do not sign business contracts or prove live service integrations.",
+  "scannedPRs": 33,
+  "openPRs": 4,
+  "docsDiffCheckExitCode": 0,
+  "rawGeneratedDiffCheckExitCode": 2,
+  "rawGeneratedExplanation": "Original generated CRLF/trailing whitespace retained with -text; no raw sanitization."
+}

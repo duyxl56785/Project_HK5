@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.projecthk5.cartservice.integration.CartPostgres16IT" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-10-18T05:31:10.773Z" hostname="MDUY-LECO" time="0.52">
+  <properties/>
+  <testcase name="migrationHibernateValidateCascadeTwoStoresAndUniqueProduct()" classname="com.projecthk5.cartservice.integration.CartPostgres16IT" time="0.52"/>
+  <system-out><![CDATA[05:30:55.769 [Test worker] INFO org.testcontainers.images.PullPolicy -- Image pull policy will be performed by: DefaultPullPolicy()
+05:30:55.773 [Test worker] INFO org.testcontainers.utility.ImageNameSubstitutor -- Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+05:30:55.918 [Test worker] INFO org.testcontainers.dockerclient.DockerClientProviderStrategy -- Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+05:30:56.126 [Test worker] INFO org.testcontainers.dockerclient.DockerClientProviderStrategy -- Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
+05:30:56.128 [Test worker] INFO org.testcontainers.DockerClientFactory -- Docker host IP address is localhost
+05:30:56.138 [Test worker] INFO org.testcontainers.DockerClientFactory -- Connected to docker: 
+  Server Version: 29.8.1
+  API Version: 1.56
+  Operating System: Docker Desktop (containerized)
+  Total Memory: 7571 MB
+05:30:56.155 [Test worker] INFO tc.testcontainers/ryuk:0.7.0 -- Creating container for image: testcontainers/ryuk:0.7.0
+05:31:01.337 [Test worker] INFO tc.testcontainers/ryuk:0.7.0 -- Container testcontainers/ryuk:0.7.0 is starting: 7a8342b123388f774631f2665298d2db0482e45dcc685f817e90bd7d7fe5808d
+05:31:01.738 [Test worker] INFO tc.testcontainers/ryuk:0.7.0 -- Container testcontainers/ryuk:0.7.0 started in PT5.5827625S
+05:31:01.743 [Test worker] INFO org.testcontainers.utility.RyukResourceReaper -- Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+05:31:01.743 [Test worker] INFO org.testcontainers.DockerClientFactory -- Checking the system...
+05:31:01.743 [Test worker] INFO org.testcontainers.DockerClientFactory -- ✔︎ Docker server version should be at least 1.6.0
+05:31:01.744 [Test worker] INFO tc.postgres:16-alpine -- Creating container for image: postgres:16-alpine
+05:31:01.942 [Test worker] INFO tc.postgres:16-alpine -- Container postgres:16-alpine is starting: ca452262a73c88098921ca815b8955e030aa282838164e9b6147a608ddb6d7ee
+05:31:05.068 [Test worker] INFO tc.postgres:16-alpine -- Container postgres:16-alpine started in PT3.3240808S
+05:31:05.068 [Test worker] INFO tc.postgres:16-alpine -- Container is started (JDBC URL: jdbc:postgresql://localhost:63989/test?loggerLevel=OFF)
+05:31:05.124 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.projecthk5.cartservice.integration.CartPostgres16IT]: CartPostgres16IT does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+05:31:05.185 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.projecthk5.cartservice.CartServiceApplication for test class com.projecthk5.cartservice.integration.CartPostgres16IT
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.5)
+
+2026-10-18T05:31:05.448Z  INFO 19440 --- [cart-service] [    Test worker] c.p.c.integration.CartPostgres16IT       : Starting CartPostgres16IT using Java 21.0.7 with PID 19440 (started by Minh Duy in D:\CMC Uni\5 Ky Dong\WEB\BCK WEB\Project_HK5\.verification\finance-followup\work\backend\cart-service)
+2026-10-18T05:31:05.449Z  INFO 19440 --- [cart-service] [    Test worker] c.p.c.integration.CartPostgres16IT       : No active profile set, falling back to 1 default profile: "default"
+2026-10-18T05:31:06.160Z  INFO 19440 --- [cart-service] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-10-18T05:31:06.213Z  INFO 19440 --- [cart-service] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 46 ms. Found 1 JPA repository interface.
+2026-10-18T05:31:07.013Z  INFO 19440 --- [cart-service] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-10-18T05:31:07.149Z  INFO 19440 --- [cart-service] [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@40d370fa
+2026-10-18T05:31:07.151Z  INFO 19440 --- [cart-service] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-10-18T05:31:07.180Z  INFO 19440 --- [cart-service] [    Test worker] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://localhost:63989/test (PostgreSQL 16.15)
+2026-10-18T05:31:07.216Z  INFO 19440 --- [cart-service] [    Test worker] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table "public"."flyway_schema_history" does not exist yet
+2026-10-18T05:31:07.219Z  INFO 19440 --- [cart-service] [    Test worker] o.f.core.internal.command.DbValidate     : Successfully validated 1 migration (execution time 00:00.015s)
+2026-10-18T05:31:07.235Z  INFO 19440 --- [cart-service] [    Test worker] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table "public"."flyway_schema_history" ...
+2026-10-18T05:31:07.282Z  INFO 19440 --- [cart-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Current version of schema "public": << Empty Schema >>
+2026-10-18T05:31:07.291Z  INFO 19440 --- [cart-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "1 - cart baseline"
+2026-10-18T05:31:07.338Z  INFO 19440 --- [cart-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Successfully applied 1 migration to schema "public", now at version v1 (execution time 00:00.015s)
+2026-10-18T05:31:07.447Z  INFO 19440 --- [cart-service] [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-10-18T05:31:07.508Z  INFO 19440 --- [cart-service] [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2026-10-18T05:31:07.539Z  INFO 19440 --- [cart-service] [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-10-18T05:31:07.772Z  INFO 19440 --- [cart-service] [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-10-18T05:31:08.391Z  INFO 19440 --- [cart-service] [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-10-18T05:31:08.419Z  INFO 19440 --- [cart-service] [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-10-18T05:31:08.835Z  INFO 19440 --- [cart-service] [    Test worker] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-10-18T05:31:09.795Z  INFO 19440 --- [cart-service] [    Test worker] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-10-18T05:31:10.697Z  INFO 19440 --- [cart-service] [    Test worker] c.p.c.integration.CartPostgres16IT       : Started CartPostgres16IT in 5.425 seconds (process running for 15.651)
+]]></system-out>
+  <system-err><![CDATA[WARNING: A Java agent has been loaded dynamically (C:\Users\Admin\.gradle\caches\modules-2\files-2.1\net.bytebuddy\byte-buddy-agent\1.14.19\154da3a65b4f4a909d3e5bdec55d1b2b4cbb6ce1\byte-buddy-agent-1.14.19.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+]]></system-err>
+</testsuite>

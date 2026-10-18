@@ -3,8 +3,30 @@ server:
 spring:
   application:
     name: order-service
-management:
-  endpoints:
-    web:
-      exposure:
-        include: health,info
+  datasource:
+    url: ${HK5_ORDER_JDBC_URL:jdbc:postgresql://localhost:5432/hk5_order}
+    username: ${HK5_ORDER_DB_USER:hk5}
+    password: ${HK5_ORDER_DB_PASSWORD:}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    enabled: true
+app:
+  finance:
+    # Set only after written TV5 policy approval; otherwise Checkout fails closed.
+    policy-approved: ${HK5_FINANCE_POLICY_APPROVED:false}
+    platform-rate: ${HK5_FINANCE_PLATFORM_RATE:}
+    currency-scale: ${HK5_FINANCE_CURRENCY_SCALE:}
+    house-exempt: ${HK5_FINANCE_HOUSE_EXEMPT:}
+  checkout:
+    stale-seconds: ${HK5_CHECKOUT_STALE_SECONDS:600}
+    reconcile-scan-ms: ${HK5_CHECKOUT_RECONCILE_SCAN_MS:60000}
+  security:
+    issuer: ${JWT_ISSUER_URI:}
+    audience: ${JWT_AUDIENCE:}
+    current-kid: ${JWT_HS256_CURRENT_KID:}
+    current-key-b64: ${JWT_HS256_CURRENT_KEY_B64:}
+    previous-kid: ${JWT_HS256_PREVIOUS_KID:}
+    previous-key-b64: ${JWT_HS256_PREVIOUS_KEY_B64:}
