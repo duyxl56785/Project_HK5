@@ -49,3 +49,19 @@ và raw XML tại sourcec4d517e (parent owneree15851) phân biệt như sau:
 Full ordinary unit/tagged PG, Catalog and Inventory suites were not rerun in this checkpoint when their
 source was unchanged; historical results retain original SHA/executor. Normal CI does not run the explicit
 diagnostic or automatically run tagged PostgreSQL tasks. Do not mark F15/F16/Issue5/12 DONE from these rows.
+
+## Finance preflight latest checkpoint — PR44,18/10/2026
+
+[Báo cáo nguồn/lượt chạy mới](../reports/TV5_FINANCE_ACCEPTANCE_2026-10-18.md) supersedes current-status wording ở các snapshot cũ, không thay evidence lịch sử.
+
+| ID | Requirement / scope | Test → owner | Evidence và trạng thái |
+|---|---|---|---|
+| F16-16 | Finance gate đóng trước reserve/write | FinanceCheckoutPreflightTest.closedFinanceGateCannotReserveStockOrWriteOrder →TV5 QA | PASS unit tại1311f8a; claim cleanup known, no external side effects; không deployment approval. |
+| F16-17 | Consistent House của một Store | conflictingHouseFactsWithinOneStoreCannotSelectAnExemption →TV5 QA; TV2 source/TV3 consumer | PASS unit/mock; trusted House persistence/assignment vẫn PENDING. |
+| F16-18 | Một Store không chứa hai Seller facts | matchingPerItemFactsWithTwoSellersCannotShareOneStoreOrder →TV5 QA | PASS orchestration/mock; không chứng minh Store Finance query/current identity. |
+| F16-19 | Commission stage trong Checkout thật | currentServiceRoundsOnceForTheStoreRatherThanEachLine →TV5 QA | PASS unit,synthetic config20gross/1fee/19derivednet; MD04 business ký vẫn PENDING, không immutable net column. |
+| F16-11/12 | Pre-reserve overflow và exact replay | Original CheckoutMoneyPreflightRegressionTest →TV3 runtime fix/TV5 acceptance | Chạy mới de1f5c6:2FAIL; positive control1PASS; XML/log gốc trong report. Order source/diagnostic unchanged đến1311f8a, không gọi run mới hoặc fixGREEN. |
+| QA-05 | Latest owner delta và source provenance | c97a656/5ce0630 ordinary merges →TV5 QA | Latest1311f8a Cart8unit+Order81unit+Cart1PG PASS; Order16PG PASS ởde1f5c6 riêng. Không cộng các run thành release total. |
+| F16-14/15 | Policy và production acceptance | MD01–MD10 +same-version signer/current source/settlement →TV1–TV5 | PENDING/BLOCKED; TV5 chỉ đề xuất, business signer chờ TV1/chủ dự án xác nhận; COD/settlement/Finance Store queries/liveE2E NOT_RUN. |
+
+Raw evidence, timestamps, commands, hashes và publication limits: [manifest](../reports/evidence/finance-acceptance-20261018/manifest.json).

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest" tests="18" skipped="0" failures="0" errors="0" timestamp="2026-10-18T10:38:30" hostname="MDUY-LECO" time="0.065">
+  <properties/>
+  <testcase name="computingNewStoreConfigurationDoesNotMutateEarlierSnapshot()" classname="com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest" time="0.0"/>
+  <testcase name="[1] input=0.09, fee=0.00, net=0.09" classname="com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest" time="0.002"/>
+  <testcase name="[2] input=0.10, fee=0.01, net=0.09" classname="com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest" time="0.0"/>
+  <testcase name="[3] input=0.11, fee=0.01, net=0.10" classname="com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest" time="0.001"/>
+  <testcase name="[4] input=123.45, fee=6.17, net=117.28" classname="com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest" time="0.0"/>
+  <testcase name="[1] identity=null" classname="com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest" time="0.002"/>
+  <testcase name="[2] identity=" classname="com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest" time="0.001"/>
+  <testcase name="[3] identity= " classname="com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest" time="0.001"/>
+  <testcase name="[4] identity=&#9;&#10;" classname="com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest" time="0.001"/>
+  <testcase name="[5] identity= " classname="com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest" time="0.001"/>
+  <testcase name="rejectsMissingAmountInvalidScaleAndHousePrecisionLossToo()" classname="com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest" time="0.001"/>
+  <testcase name="[1] other=Store-a" classname="com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest" time="0.002"/>
+  <testcase name="[2] other= store-a" classname="com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest" time="0.0"/>
+  <testcase name="[3] other=store-a " classname="com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest" time="0.0"/>
+  <testcase name="[4] other=store-b" classname="com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest" time="0.001"/>
+  <testcase name="twoStoreArithmeticAndGuardsRemainIndependent()" classname="com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest" time="0.002"/>
+  <testcase name="conservesMoneyForDeterministicRangeOfAmountsAndBothStoreTypes()" classname="com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest" time="0.008"/>
+  <testcase name="acceptsExactTrailingZeroRescalingWithoutLosingMoney()" classname="com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
