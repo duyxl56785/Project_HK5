@@ -35,8 +35,12 @@ public class CheckoutService {
     public CheckoutResult checkout(String customerId, String bearer, String key, CheckoutRequest req) {
         if (key == null || key.isBlank() || key.length()>128 || !key.equals(key.trim()))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Idempotency-Key required (1-128 characters)");
-        CheckoutRules.requireSameItems(req.expectedItems(), req.expectedItems().stream()
-            .map(i -> new CartPort.Item(i.productId(),"","",i.quantity(),null)).toList());
+        if (req == null)
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Checkout request required");
+        try { CheckoutRules.requireValidExpectedItems(req.expectedItems()); }
+        catch (IllegalStateException invalid) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Invalid expectedItems",invalid);
+        }
         String fingerprint=RequestFingerprint.compute(req);
         IdempotencyCoordinator.BeginResult started;
         try { started=keys.begin(customerId,key,fingerprint); }

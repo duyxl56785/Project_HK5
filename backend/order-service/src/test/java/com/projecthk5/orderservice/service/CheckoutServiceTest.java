@@ -130,4 +130,20 @@ class CheckoutServiceTest {
         assertThrows(ResponseStatusException.class,()->svc.checkout(customer,bearer,key,request));
         verifyNoInteractions(cart,catalog,inventory,write);
     }
+    @Test void malformedRequestCannotCreateAttemptOrCallRemotePorts() {
+        List<CheckoutRequest> invalid = java.util.Arrays.asList(
+            null,
+            new CheckoutRequest(null, null),
+            new CheckoutRequest(List.of(), null),
+            new CheckoutRequest(java.util.Arrays.asList((ExpectedItem) null), null),
+            new CheckoutRequest(List.of(new ExpectedItem("p1", 0)), null),
+            new CheckoutRequest(List.of(new ExpectedItem("p1", 1001)), null),
+            new CheckoutRequest(List.of(new ExpectedItem("p1", 1), new ExpectedItem("p1", 2)), null));
+        for (CheckoutRequest bad : invalid) {
+            ResponseStatusException error = assertThrows(ResponseStatusException.class,
+                () -> svc.checkout(customer, bearer, key, bad));
+            assertEquals(400, error.getStatusCode().value());
+        }
+        verifyNoInteractions(keys, cart, catalog, inventory, write, repo);
+    }
 }

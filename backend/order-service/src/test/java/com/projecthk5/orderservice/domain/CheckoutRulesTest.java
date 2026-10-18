@@ -68,4 +68,16 @@ class CheckoutRulesTest {
             List.of(new ExpectedItem("p1", 1000)),
             List.of(new CartPort.Item("p1", "store1", "seller1", 1000, BigDecimal.ONE))));
     }
+    @Test void malformedExpectedItemsRejectedBeforeFingerprinting() {
+        assertThrows(IllegalStateException.class, () -> CheckoutRules.requireValidExpectedItems(null));
+        assertThrows(IllegalStateException.class, () -> CheckoutRules.requireValidExpectedItems(List.of()));
+        assertThrows(IllegalStateException.class, () -> CheckoutRules.requireValidExpectedItems(
+            java.util.Arrays.asList((ExpectedItem) null)));
+        assertThrows(IllegalStateException.class, () -> CheckoutRules.requireValidExpectedItems(
+            List.of(new ExpectedItem("p1", 0))));
+        assertThrows(IllegalStateException.class, () -> CheckoutRules.requireValidExpectedItems(
+            List.of(new ExpectedItem("p1", 1), new ExpectedItem("p1", 2))));
+        assertDoesNotThrow(() -> CheckoutRules.requireValidExpectedItems(
+            List.of(new ExpectedItem("p1", 1), new ExpectedItem("p2", 1000))));
+    }
 }
