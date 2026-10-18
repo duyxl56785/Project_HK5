@@ -1,0 +1,5 @@
+"Module","Suite","Tests","Pass","Fail","Errors","Skipped"
+"product-service","test","215","215","0","0","0"
+"product-service","integrationTest","25","25","0","0","0"
+"seller-service","test","103","103","0","0","0"
+"seller-service","integrationTest","24","24","0","0","0"

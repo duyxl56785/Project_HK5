@@ -60,7 +60,7 @@ For Catalog-owned 400/503 errors propose `{ "code": "INVALID_REQUEST", "message"
 
 Provider rule: an authoritative Product lookup must explicitly establish a result for each requested ID: found, confirmed absent, or unavailable. Only confirmed absent permits PRODUCT_NOT_FOUND. Timeouts, missing result entries, stale/unverified facts, downstream partial responses and malformed data are DEPENDENCY_UNAVAILABLE for the **whole batch**, with no successful snapshot response. An unavailable Store/Seller dependency must never become Product absence or ordinary not-sellable.
 
-Known gap in the current internal prototype: `CatalogSnapshotSource.load(Set<UUID>)` returns a list of found facts, so omission currently becomes PRODUCT_NOT_FOUND without a distinct absence proof. **This prototype must not be wired as an authoritative adapter unchanged.** Before wiring, revise the internal source result to distinguish confirmed absence from unavailable/incomplete facts and add regression cases for omitted response, explicit absent result, timeout, stale status and mixed batches. That internal correction is independent of the final HTTP envelope; no production readiness is claimed here.
+Historical gap at source `c375951`: `CatalogSnapshotSource.load(Set<UUID>)` returned only found facts, so omission became PRODUCT_NOT_FOUND without distinct absence confirmation. **Fixed internally at `63668b8`**: explicit FOUND/ABSENT/UNAVAILABLE lookup results, complete ID coverage and whole-batch snapshot withholding; [implementation/regression evidence](TV2_CATALOG_SOURCE_FIX.md). This does not implement the future authoritative adapter, source freshness verification or the pending HTTP envelope. No production readiness is claimed.
 
 ## Price freshness, House and M01 boundary
 
