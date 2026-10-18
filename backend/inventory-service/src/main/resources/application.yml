@@ -21,3 +21,4 @@ management:
 
 inventory:
   internal-token: ${INVENTORY_INTERNAL_TOKEN:}
+  order-pair-token: ${INVENTORY_ORDER_PAIR_TOKEN:}
