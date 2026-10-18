@@ -37,5 +37,19 @@
       "finished_at_utc": "2026-10-18T10:44:53.0589504Z",
       "exit_code": 0
     }
+  },
+  {
+    "run": "0834f23",
+    "metadata": {
+      "started_at_utc": "2026-10-18T10:56:33.6524138Z",
+      "source_sha": "0834f23e274861adc09a0a42bb265680c1538863",
+      "owner_PR28_sha": "ca639bbc5e810d6206ec0ed221ebfb308ced227e",
+      "command": "gradlew.bat -p backend :cart-service:test :cart-service:postgresIntegrationTest --rerun-tasks --no-daemon --continue --console=plain",
+      "reason": "Owner Cart.claim key validation changed after initial PR44 merge; Order production/tests unchanged",
+      "java_home": "C:\\Program Files\\Java\\jdk-21",
+      "java_tool_options": "-Duser.timezone=UTC -Dapi.version=1.44",
+      "finished_at_utc": "2026-10-18T10:57:07.8454117Z",
+      "exit_code": 0
+    }
   }
 ]

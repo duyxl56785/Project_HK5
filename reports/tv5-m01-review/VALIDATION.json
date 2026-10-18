@@ -1,7 +1,7 @@
 {
   "artifact_type": "DERIVED_PUBLIC_DOCUMENT_VALIDATION",
   "checked_at_utc": "2026-10-18T10:49:07.531491+00:00",
-  "source_PR28": "5ce06305c558263607adf11411bcce1ef1464fd6",
+  "source_PR28": "ca639bbc5e810d6206ec0ed221ebfb308ced227e",
   "source_PR37": "ef62086048e2c7a00ecee16db0cc3cde2413deb6",
   "checks": {
     "local_Markdown_links": "PASS",
@@ -13,30 +13,31 @@
   "files": [
     {
       "path": "M01_PROPOSAL.md",
-      "git_blob_sha256": "e8681942c191e67f444f3bcaa726dfe1b4b79eae7c6891b3df88ad86fdd4a86f",
-      "working_copy_sha256": "f1d25effc8d116ccd54bdc963979494fdf1b853dae59d4c00b764ed41f82d742"
+      "git_blob_sha256": "3633cfd54ad36fd2986a90ea09a3427a97f4919ffff4e50c2a4f97af06ee3982",
+      "working_copy_sha256": "2b3279b7d6bcafcdd5ce845a249d8bbd162f0216fcce1ed0e171d16d639f97cb"
     },
     {
       "path": "MD01_MD10_MATRIX.md",
-      "git_blob_sha256": "60083c28150d8daaecb2caba28a6be48d698fac836c380a86caddb574d6f712a",
-      "working_copy_sha256": "6b4aac2a5a142eca7be5b56bbc8e9c18ef8c078f5dc701ca15a3d086631732e1"
+      "git_blob_sha256": "d14604781c018da443a5fd43c231efa9e14612488752455fde3946df797d0cd3",
+      "working_copy_sha256": "a0a660fffe3a27199dfbc5f39cddc6f8ff52bb199c99fea429a7aeb0b17658a4"
     },
     {
       "path": "REPLY_DRAFT.md",
-      "git_blob_sha256": "63f2b4430e785cac12601751f5f342eea6648c2e0aac0bcd0b138cad9081d43f",
-      "working_copy_sha256": "f360d4f3d5edec3c093d3be79d0cd662c889ebdae76e16ba08290da413e46620"
+      "git_blob_sha256": "51ce75268f398972500a61cf0ad5f506ee327bbee4eda15a7b82d5cd8a88e0c3",
+      "working_copy_sha256": "f0b07de4de9bacd84695b168acbc039eae6c03cd6e3449b7ff3e58d074639875"
     },
     {
       "path": "SOURCES.md",
-      "git_blob_sha256": "65f2bda637ace9f7e943f09dc249dad9a6c0fced03793ad08302685feb5f934e",
-      "working_copy_sha256": "b1d780caabc13d08c6ed8adefb5c892b88a4fa7c1cb3a7d240fcc5deb9d5e6d7"
+      "git_blob_sha256": "482aec444c060ccb415f4f47e9806ce3975887d8a58a924fe5dca46a6963b6d8",
+      "working_copy_sha256": "886815c4b33119124e49f4ab588651ddc6539c52a250b4549a85901b949b2681"
     }
   ],
   "business_approver": "chờ TV1/chủ dự án xác nhận",
   "M01": "PENDING",
   "runtime": "See ../TV5_FINANCE_ACCEPTANCE_2026-10-18.md for separate exact-SHA executions; static validation itself is not runtime acceptance",
-  "external_mutations_at_check": "PR44 created; docs/tests pushed to1311f8a, four reviewers requested",
+  "external_mutations_at_check": "PR44 initial merged by owner at ccfb38d; remaining QA evidence handed off on separate branch codex/tv5-finance-evidence-handoff",
   "limits": "No signature, production acceptance, raw XML audit or runtime result implied by static PASS",
   "tested_QA_source": "1311f8a9f14639c4e42c7b8fbf2446a934abfbf2",
-  "hash_scope": "Working-copy hashes may differ due to CRLF; git_blob_sha256 is the published Markdown byte identity at e280ad9. Source documents unchanged by this metadata correction."
+  "hash_scope": "git_blob_sha256 uses staged canonical Markdown bytes for this handoff; working_copy_sha256 may differ due to CRLF",
+  "latest_Cart_test_source": "0834f23e274861adc09a0a42bb265680c1538863"
 }

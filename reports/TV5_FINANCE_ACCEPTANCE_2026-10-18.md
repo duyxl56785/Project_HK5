@@ -6,11 +6,13 @@
 
 - Đọc AGENTS/CONTRIBUTING/OWNERSHIP, Issue5/12 và toàn bộ paginated commits/files/reviews/comments/timeline của28/37/41/42/43; GraphQL threads28.
 - PR41/42/43 đều MERGED; ancestor checks của cả ba với21f6d53 exit0. Không push hoặc request review trên PR đã đóng.
-- PR28 đã tiến từ21f6d53 tới c97a656 rồi **5ce06305c558263607adf11411bcce1ef1464fd6** trong lúc QA. Đã đọc đủ hai delta và giữ bằng ordinary merges vào branch TV5, không push TV3/main.
+- PR28 đã tiến từ21f6d53 tới c97a656/5ce0630 rồi **ca639bbc5e810d6206ec0ed221ebfb308ced227e** trong lúc QA. Đã đọc đủ hai delta và giữ bằng ordinary merges vào branch TV5, không push TV3/main.
 - c97a656 sửa malformed Cart/expected items và cap1–1000;5ce0630 sửa Cart add/input/trusted identity +test. Đây là bản sửa **của TV3**, không nhận công của TV5; không sửa FIN-01/FIN-06.
 - PR37 **ef62086048e2c7a00ecee16db0cc3cde2413deb6**, candidate v0.2 từ42cc4e7 vẫn giữ nguyên. Test SQL candidate mới không phải Store/Product production persistence hoặc quote/lease.
 - JWT thread28 [discussion4291061468](https://github.com/duyxl56785/Project_HK5/pull/28#discussion_r4291061468) đã resolved; các thread replay/scanner cũng resolved. Không tự resolve thêm thread; source không đổi JWT trong các delta mới.
-- Root checkout còn .vs/ và gói local trước đó; được giữ nguyên. Làm việc trong worktree riêng, branch `codex/tv5-money-qa-acceptance`, [PR44](https://github.com/duyxl56785/Project_HK5/pull/44) **base=feat/tv3-cart-checkout-week1**, không kéo PR28 chưa duyệt vào main.
+- Root checkout còn .vs/ và gói local trước đó; được giữ nguyên. Làm việc trong worktree riêng, branch ban đầu `codex/tv5-money-qa-acceptance`, [PR44](https://github.com/duyxl56785/Project_HK5/pull/44) **base=feat/tv3-cart-checkout-week1**.
+  Owner đã merge PR44 lúc10:48:42UTC tại ccfb38debf8907912aeaa9134fb4fd01d66c3b14 (head1311f8a). Hai commit evidencee280ad9/53dfc1c push sau merge chưa được nhận vào28; phát hiện khi PRhead không tiến.
+  Đã tách chúng bằng cherry-pick sang branch **codex/tv5-finance-evidence-handoff** từ đúng ca639bb. Không push PR44 thêm hoặc tạo duplicate QA feature; đây là phần evidence còn thiếu, không kéo source PR28 vào main.
 
 ## 2. Thay đổi TV5: tài liệu và bốn regression thật
 
@@ -103,6 +105,18 @@ Order PG/diagnostic **NOT_RUN trong D**: git diff de1f5c6→1311f8a xác nhận 
 B là execution provenance gần nhất của chúng, không ghi đã chạy lại ở1311f8a. Money findings vẫn RED với source equivalence đã kiểm.
 Normal CI không chạy tagged PG/explicit diagnostic; readiness success không thay hai acceptance FAIL.
 
+### E — sau owner merge PR44 và Cart.claim fix,source0834f23
+
+PR28ca639bb đã nhận4test/proposal từ44 và có thêm Cart.claim key validation doTV3 sửa. Chạy riêng Cart ở
+**0834f23e274861adc09a0a42bb265680c1538863** (hai commit cherry-pick chỉ evidence/docs):
+
+```powershell
+backend/gradlew.bat -p backend :cart-service:test :cart-service:postgresIntegrationTest --rerun-tasks --no-daemon --continue --console=plain
+```
+
+**Cart9unit +1PG PASS,0FAIL/ERROR/SKIP,exit0/33s**; [log](evidence/finance-acceptance-20261018/0834f23/runtime.log), [metadata](evidence/finance-acceptance-20261018/0834f23/runtime-meta.json).
+Order source/test/diagnostic không đổi so với1311f8a nên không rerun Order trong E:81unit thuộc D,16PG/diagnostic1PASS2FAIL thuộc B; không cộng snapshots hoặc nói là run mới trênca639bb. Owner merge44 không phê duyệt M01 hay sửa FIN-01/06.
+
 ## 4. Contract ledger tại checkpoint
 
 | Contract / trạng thái overall | Quyết định đề xuất | Owner / bên cần xác nhận | Evidence và module được phép sau sign-off |
@@ -121,12 +135,12 @@ Không cộng406 với kết quả TV5 hoặc coi SQL candidate là source autho
 
 ## 5. Integrity, publication và QA union
 
-- [Manifest](evidence/finance-acceptance-20261018/manifest.json) giữ source/run/path/SHA256 của56 original log/XML/metadata assets công bố,
+- [Manifest](evidence/finance-acceptance-20261018/manifest.json) giữ source/run/path/SHA256 của61 original log/XML/metadata assets công bố,
   exact bytes,0withheld trong đợt này. Marker scan generated password/token/private key/Bearer/Basic/URL credentials/sensitive assignments không có hit;
   không khẳng định đã phát hiện mọi loại secret. Không sửa hoặc công bố lại credentials/evidence lịch sử bị withheld từ PR40.
 - `.gitattributes` trong evidence folder dùng `-text` để Git giữ raw bytes. Code/docs diff-check tách khỏi generated raw logs/XML nếu chúng có trailing whitespace;
   không sửa raw bytes để làm đẹp diff. Code/docs diff-check exit0; generated raw mặc định exit2 do CRLF/trailing whitespace nguyên bản.
- 56 raw hashes khớp cả local và staged Git blobs; cần per-command core.longpaths=true khi stage trong Windows worktree sâu, không đổi global config.
+ 61 raw hashes khớp cả local và staged Git blobs; cần per-command core.longpaths=true khi stage trong Windows worktree sâu, không đổi global config.
 - Docker volumes: inventory before/after và missing set được ghi trong [static verification](evidence/finance-acceptance-20261018/static-checks.json).
   Không chạy delete/prune/reset; Testcontainers dùng database/container tạm và tự cleanup runtime của nó.
 - [TV3 QA union request](https://github.com/duyxl56785/Project_HK5/pull/28#issuecomment-6248595524): TV5 xác nhận **phương án union theo thời gian, giữ toàn bộ lịch sử main +hai checkpoint Finance18/10 và provenance**.
@@ -138,12 +152,12 @@ Không cộng406 với kết quả TV5 hoặc coi SQL candidate là source autho
 - [x] Công bố M01 proposal/MD matrix/source map; ghi đúng thẩm quyền TV5 và sửa mô tả quantity; không tự ký.
 - [x] Thêm4 Finance orchestration regression và chạy unit thật, latest81Order unit PASS; tách các lượt và SHA.
 - [x] Chạy tagged PG/diagnostic, giữ original2FAIL +positive control, raw bytes/hash/publication boundaries.
-- [x] Push branch TV5 và mở PR44 đúng base; reviewers TV1/TV2/TV3/TV4 đã requested, không request trùng.
+- [x] Push branch TV5 và mở PR44 đúng base; reviewers TV1/TV2/TV3/TV4 đã requested một lần; owner đã merge initial patch. Evidence follow-up bàn giao bằng branch riêng, không re-request PR44 đóng.
 - [ ] TV1/chủ dự án chỉ định business signer/operator; owners ký cùng revision MD01–MD10/S01/Security/C01/E01/Inventory/C06.
 - [ ] TV3 được phép/wire pre-reserve bounds và V2+ currency/rate/House/net/policy snapshots; original FIN-01/06 phải GREEN trên fix SHA, positive control giữ PASS.
 - [ ] TV2 authoritative Store/Product/House/SKU/currency provider +TV1 actual authorization; TV3/TV4 journal/recovery/COD source.
 - [ ] Production settlement atomic/unique/concurrent, current Store-scoped Finance queries, live two-Store/COD E2E: **NOT_RUN/BLOCKED**; không tạo implementation giả.
-- [ ] Owner review/tiếp nhận PR44 và xử lý QA conflict; Issue5/12 đủ nghiệm thu.
+- [ ] Owner review/tiếp nhận PR evidence follow-up và xử lý QA conflict; Issue5/12 đủ nghiệm thu. PR44 initial QA đã merge, không còn chờ tích hợp bốn test/proposal ban đầu.
 
 Các phần độc lập còn thiếu đã xử lý bằng test/docs/evidence, không mở rộng thêm framework/prototype hoặc tuần2–3 production.
 Tiếp theo **WAITING_REVIEW / OWNER_CONFIRMATION**, chỉ re-run theo delta thực tế/đúng scope khi owner sửa. Không hứa chạy nền.

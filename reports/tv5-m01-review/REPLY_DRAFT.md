@@ -56,3 +56,5 @@ vẫn không phải Product/Store production persistence. Full406PASS tại3ecf9
 Bản nháp không thực hiện merge hoặc giải quyết conflict; xác nhận QA union trong comment chỉ áp phạm vi tài liệu, không ký nghiệp vụ.
 
 Checkpoint QA mới: source1311f8a có Cart8unit/Order81unit/Cart1PG PASS, gồm4Finance preflight tests mới; source de1f5c6 có Order16PG PASS và original diagnostic1PASS/2FAIL. Order production/PG/diagnostic không đổi giữa hai source, không cộng run hoặc gọi test mới ởsource chưa chạy. TV5 xác nhận phương án QA union giữ mọi lịch sử main/checkpoint/provenance, chưa thực hiện merge thay owner.
+
+**Post-merge handoff:** owner đã merge PR44 initial tại ccfb38d/head1311f8a. Hai commit evidence sau merge được bàn giao riêng trên codex/tv5-finance-evidence-handoff từ PR28ca639bb, không push PR44 thêm; source facts/contract signatures vẫn giữ đúng provenance nêu trên.

@@ -16,12 +16,12 @@
   },
   "PR41_42_43_ancestry_to_21f6d53": "PASS; exit0 for each",
   "runtime_scope": "Unit/mock plus actual PostgreSQL Order/Cart; live E2E NOT_RUN/BLOCKED",
-  "raw_assets_sha256_verified": 56,
+  "raw_assets_sha256_verified": 61,
   "relative_Markdown_links_verified": 134,
   "original_diagnostic_test_bytes_unchanged": "PASS",
   "new_public_artifact_high_confidence_secret_markers": "PASS; not exhaustive",
   "source_ownership": "TV5 changed only new Finance QA unit test/docs/evidence; owner production deltas retained by merges",
-  "staged_original_Git_blob_hashes_verified": 56,
+  "staged_original_Git_blob_hashes_verified": 61,
   "code_document_diff_check_exit": 0,
   "generated_raw_default_diff_check_exit": 2,
   "generated_raw_diff_check_reason": "Raw CRLF/trailing whitespace preserved byte-for-byte; excluded from source/docs whitespace gate, never rewritten",
@@ -33,5 +33,12 @@
     },
     "high_confidence_hits": [],
     "status": "PASS; not exhaustive"
+  },
+  "post_PR44_handoff": "Initial PR44 merged at1311f8a; original evidence commits e280ad9/53dfc1c cherry-picked to new branch fromca639bb; no further push on closed PR44",
+  "latest_Cart_run": "0834f23:9unit+1PG PASS; Order not rerun because unchanged",
+  "final_existing_Docker_volume_check": {
+    "before_count": 2,
+    "after_count": 2,
+    "missing": []
   }
 }

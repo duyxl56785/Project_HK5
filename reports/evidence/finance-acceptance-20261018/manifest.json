@@ -807,6 +807,69 @@
       "source_metadata": "1311f8a/runtime-meta.json",
       "publication": "RAW_EXACT_BYTES",
       "published_path": "1311f8a/runtime.log"
+    },
+    {
+      "run": "0834f23",
+      "original_path": "runtime-meta.json",
+      "original_sha256": "85c5d44563b1692afb000f0df464c760ab32b87403f9be9880e8451a94092b32",
+      "bytes": 639,
+      "source_metadata": "0834f23/runtime-meta.json",
+      "publication": "RAW_EXACT_BYTES",
+      "published_path": "0834f23/runtime-meta.json"
+    },
+    {
+      "run": "0834f23",
+      "original_path": "runtime.log",
+      "original_sha256": "ccc45b935baf99a8865882c415d6c90d66f1db2fd77be8ad6e6a4cbac114b381",
+      "bytes": 2303,
+      "source_metadata": "0834f23/runtime-meta.json",
+      "publication": "RAW_EXACT_BYTES",
+      "published_path": "0834f23/runtime.log"
+    },
+    {
+      "run": "0834f23",
+      "original_path": "cart-service/build/test-results/postgresIntegrationTest/TEST-com.projecthk5.cartservice.integration.CartPostgres16IT.xml",
+      "original_sha256": "cf1d6e6e95f8ec721e44b6d232db5f03eea2825132baf557fb6f2ceed84724d9",
+      "bytes": 8700,
+      "source_metadata": "0834f23/runtime-meta.json",
+      "publication": "RAW_EXACT_BYTES",
+      "published_path": "0834f23/cart-service/build/test-results/postgresIntegrationTest/TEST-com.projecthk5.cartservice.integration.CartPostgres16IT.xml",
+      "counts": {
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "run": "0834f23",
+      "original_path": "cart-service/build/test-results/test/TEST-com.projecthk5.cartservice.security.ContractJwtDecoderTest.xml",
+      "original_sha256": "cd0aaad12ff44828498c7f80c5de1a25d1f0f03d4d8a9af292a6b409d73d09f7",
+      "bytes": 785,
+      "source_metadata": "0834f23/runtime-meta.json",
+      "publication": "RAW_EXACT_BYTES",
+      "published_path": "0834f23/cart-service/build/test-results/test/TEST-com.projecthk5.cartservice.security.ContractJwtDecoderTest.xml",
+      "counts": {
+        "tests": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "run": "0834f23",
+      "original_path": "cart-service/build/test-results/test/TEST-com.projecthk5.cartservice.service.CartServiceTest.xml",
+      "original_sha256": "d6b0d5017b17224f521dc6c2b18cd211d578eb82ea324d2b25a59b1a87cae06d",
+      "bytes": 1729,
+      "source_metadata": "0834f23/runtime-meta.json",
+      "publication": "RAW_EXACT_BYTES",
+      "published_path": "0834f23/cart-service/build/test-results/test/TEST-com.projecthk5.cartservice.service.CartServiceTest.xml",
+      "counts": {
+        "tests": 6,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
     }
   ]
 }

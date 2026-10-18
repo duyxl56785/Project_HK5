@@ -97,3 +97,7 @@ Order production/PG/diagnostic không đổi de1f5c6→1311f8a nên không chạ
 F16-16..19 bổ sung gate không reserve/write, inconsistent House/Seller trong cùng Store và actual per-Store rounding bằng mocked ports.
 QA union mới với main: TV5 xác nhận giữ toàn bộ lịch sử main +hai checkpoint Finance18/10/provenance; chưa merge/resolve thay owner.
 Settlement atomic/unique, Store Finance API, COD authority và live E2E tiếp tục NOT_RUN/BLOCKED. Issue5/12 OPEN/PARTIAL.
+
+### Sau khi owner merge PR44 initial
+
+PR44 đã merge vào28 tại ccfb38d (head1311f8a);4Finance tests và proposal không còn chờ tiếp nhận. Hai commit evidence push sau merge được chuyển sang branch codex/tv5-finance-evidence-handoff từ28ca639bb, không tiếp tục push PR đóng. Cart.claim key guard mới của owner được QA riêng; xem báo cáo cùng ngày để tách lượt chạy tiếp theo và phần evidence chờ review.

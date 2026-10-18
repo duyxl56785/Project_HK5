@@ -65,3 +65,5 @@ diagnostic or automatically run tagged PostgreSQL tasks. Do not mark F15/F16/Iss
 | F16-14/15 | Policy và production acceptance | MD01–MD10 +same-version signer/current source/settlement →TV1–TV5 | PENDING/BLOCKED; TV5 chỉ đề xuất, business signer chờ TV1/chủ dự án xác nhận; COD/settlement/Finance Store queries/liveE2E NOT_RUN. |
 
 Raw evidence, timestamps, commands, hashes và publication limits: [manifest](../reports/evidence/finance-acceptance-20261018/manifest.json).
+
+Post-merge checkpoint E: owner đã nhận44 tại ccfb38d; Cart.claim fix củaTV3 ởca639bb được chạy riêng trên0834f23:Cart9unit+1PG PASS/exit0/33s. Order source unchanged, không rerun hoặc cộng81unit/16PG/diagnostic vào lượt E. Evidence/docs còn thiếu đi qua branch TV5 mới sau khi44 đóng.

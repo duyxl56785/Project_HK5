@@ -61,3 +61,5 @@ Các quyền triển khai trên là điều kiện **tương lai**, không phả
 5. Người được chỉ định +TV5 định nghĩa MD10 bốn nhóm/cutoff/timezone. Owners TV2–TV4 xác nhận representation/source/lifecycle cùng revision.
 
 Không cần dừng hoàn thiện tài liệu vì người ký còn thiếu. Runtime/integration/production acceptance tiếp tục PENDING/BLOCKED; Issue #5 chưa đủ điều kiện DONE.
+
+**Post-merge handoff:** owner đã merge PR44 initial tại ccfb38d/head1311f8a. Hai commit evidence sau merge được bàn giao riêng trên codex/tv5-finance-evidence-handoff từ PR28ca639bb, không push PR44 thêm; source facts/contract signatures vẫn giữ đúng provenance nêu trên.

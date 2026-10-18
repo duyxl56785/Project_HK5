@@ -221,3 +221,5 @@ Kết quả6utilityPASS và diagnostic1PASS/2FAIL tạic4d517e là evidence lị
 - [x] Đối chiếu source/candidate/own-scope replies và ghi thiếu/mâu thuẫn; sửa đề xuất quantity cho đúng nguồn.
 - [x] Hoàn thiện proposal, matrix và reply draft để người dùng tự xem/gửi.
 - [ ] Human business approval, contract implementation và production integration acceptance: chưa hoàn tất.
+
+**Post-merge handoff:** owner đã merge PR44 initial tại ccfb38d/head1311f8a. Hai commit evidence sau merge được bàn giao riêng trên codex/tv5-finance-evidence-handoff từ PR28ca639bb, không push PR44 thêm; source facts/contract signatures vẫn giữ đúng provenance nêu trên.
