@@ -2,7 +2,9 @@
 
 **Status:** DRAFT / integration blocked pending TV3 + TV5 + TV1 confirmation.  
 **Owner:** TV4.  
-**Purpose:** Make the implementation and acceptance criteria explicit without inventing a second SellerOrder schema or claiming unimplemented behavior is working.
+**Purpose:** Make implementation and acceptance criteria explicit without inventing a second SellerOrder schema or claiming unimplemented behavior is working.
+
+**QA revision (18/10/2026):** the matrix below contains 21 uniquely namespaced `TV4-W1-*` cases (12 FUL, 4 COD, 5 NOT). These are TV4 W1 scenario IDs, not the legacy IDs in `WEEK1_TEST_BASELINE.md`; legacy baseline meanings remain unchanged. All scenarios remain `NOT_RUN`. The prior PR39 draft IDs are superseded by the namespaced IDs below to avoid reusing a baseline ID for a different scenario.
 
 ## Current repository boundary
 
@@ -10,9 +12,9 @@ At the current baseline, `backend/order-service/README.md` describes order-servi
 
 Inventory currently addresses stock by SKU and supports `INCREASE`, `DECREASE`, `RESERVE`, `CONSUME`, and `RELEASE` with a stable `operationId` and payload-conflict protection. It does not itself establish Product/Store identity, look up reservations by order ID, or prove checkout-to-inventory integration.
 
-## Proposed SellerOrder transition rules (TV3 must confirm shared state names)
+## SellerOrder state naming — unresolved cross-owner decision (C06)
 
-The following names are a proposed mapping to the acceptance language, not a claim that these states already exist in code:
+**No state vocabulary is selected or approved by this document.** The earlier TV4 proposal used `PENDING_CONFIRMATION → CONFIRMED → PACKING → SHIPPED → DELIVERED`; TV3's current proposal uses `PLACED → ACCEPTED → PREPARING → READY_FOR_HANDOFF → DISPATCHED → DELIVERED`. These are not silently interchangeable. TV3 + TV4 must propose one canonical DB/wire/event vocabulary and obtain the required TV1/TV2/TV5 approvals for actor authority, ownership, event publisher, cancellation/rejection cutoff, and COD separation before implementation. Any migration must be V2+ and must not rewrite V1. The following table records only the earlier TV4 candidate for discussion; it is not an implementation contract:
 
 | Current state | Action | Next state | Required guard |
 |---|---|---|---|
@@ -70,33 +72,37 @@ Every case remains **NOT_RUN** until there is an executable test and its log tie
 
 | ID | Scenario | Expected result | Status / blocker |
 |---|---|---|---|
-| TV4-FUL-01 | Own Store seller confirms a pending child order | One valid transition; durable state change | NOT_RUN — SellerOrder API/schema absent |
-| TV4-FUL-02 | Seller from another Store reads/updates child order | Denied; no state mutation or data leak | NOT_RUN — verified identity + Store mapping absent |
-| TV4-FUL-03 | Valid confirm → pack → ship → deliver sequence | Each transition accepted exactly once | NOT_RUN — shared state machine absent |
-| TV4-FUL-04 | Invalid or repeated transition | Conflict/validation error; no extra side effect | NOT_RUN — endpoint/error contract absent |
-| TV4-FUL-05 | Customer cancels outside allowed state | Denied; stock unchanged | NOT_RUN — cancellation policy/state model pending TV3 |
-| TV4-FUL-06 | Customer cancels pending child order | Ownership checked; release once for reserved lines | NOT_RUN — parent ownership + reservation journal pending |
-| TV4-FUL-07 | Seller rejects pending child order without reason | Validation error; no state/stock change | NOT_RUN — rejection contract absent |
-| TV4-FUL-08 | Seller rejects pending child order with reason | State transition and release once | NOT_RUN — TV3/Inventory lifecycle agreement pending |
-| TV4-FUL-09 | Retry same release operation ID and payload | No second stock restoration | NOT_RUN — no integrated order adapter |
-| TV4-FUL-10 | Reuse operation ID with different payload | Conflict; no stock mutation | Inventory module behavior tested separately; order E2E NOT_RUN |
-| TV4-COD-01 | Non-ADMIN attempts to mark COD paid | Denied; no payment/settlement write | NOT_RUN — verified runtime auth pending |
-| TV4-COD-02 | ADMIN marks COD paid before DELIVERED | Denied; no payment/settlement write | NOT_RUN — SellerOrder/COD endpoint absent |
-| TV4-COD-03 | ADMIN marks COD paid after DELIVERED | One payment action; settlement only under approved Finance policy | NOT_RUN — shared COD/Finance contract pending |
-| TV4-COD-04 | Duplicate COD confirmation | Idempotent response; no duplicate settlement | NOT_RUN — durable COD idempotency absent |
-| TV4-NOT-01 | Status changes successfully | One durable outbox event with agreed schema | NOT_RUN — publisher/schema absent |
-| TV4-NOT-02 | Outbox event delivered more than once | Consumer effect deduplicated | NOT_RUN — consumer absent |
-| TV4-NOT-03 | Event recipient belongs to another Store/customer | No unauthorized notification | NOT_RUN — recipient/permission contract pending |
-| TV4-NOT-04 | Temporary consumer failure then retry | Retry/recovery follows approved policy | NOT_RUN — consumer/retry policy absent |
-| TV4-NOT-05 | Permanent malformed event | Isolated and observable; no infinite retry | NOT_RUN — DLT/alerting policy absent |
+| TV4-W1-FUL-01 | Own Store seller confirms a pending child order | One valid transition; durable state change | NOT_RUN — SellerOrder API/schema absent |
+| TV4-W1-FUL-02 | Seller from another Store reads/updates child order | Denied; no state mutation or data leak | NOT_RUN — verified identity + Store mapping absent |
+| TV4-W1-FUL-03 | Valid fulfillment sequence under the finally approved state machine | Each transition accepted exactly once | NOT_RUN — shared state machine absent; C06 unresolved |
+| TV4-W1-FUL-04 | Invalid or repeated transition | Conflict/validation error; no extra side effect | NOT_RUN — endpoint/error contract absent |
+| TV4-W1-FUL-05 | Customer cancels outside allowed state | Denied; stock unchanged | NOT_RUN — cancellation policy/state model pending TV3 |
+| TV4-W1-FUL-06 | Customer cancels pending child order | Ownership checked; release once for reserved lines | NOT_RUN — parent ownership + reservation journal pending |
+| TV4-W1-FUL-07 | Seller rejects pending child order without reason | Validation error; no state/stock change | NOT_RUN — rejection contract absent |
+| TV4-W1-FUL-08 | Seller rejects pending child order with reason | State transition and release once | NOT_RUN — TV3/Inventory lifecycle agreement pending |
+| TV4-W1-FUL-09 | Retry same release operation ID and payload | No second stock restoration | NOT_RUN — no integrated order adapter |
+| TV4-W1-FUL-10 | Reuse operation ID with different payload | Conflict; no stock mutation | Inventory module regression has evidence; order E2E NOT_RUN |
+| TV4-W1-FUL-11 | Seller is `SUSPENDED` after an order was placed | Apply only the explicit owner-approved policy; never infer permission from a role claim | NOT_RUN — TV2 policy and current Seller status provider pending |
+| TV4-W1-FUL-12 | Store is closed after an order was placed | Apply only the explicit owner-approved policy to existing orders | NOT_RUN — TV2 Store status provider and policy pending |
+| TV4-W1-COD-01 | Non-ADMIN attempts to mark COD paid | Denied; no payment/settlement write | NOT_RUN — verified runtime auth pending |
+| TV4-W1-COD-02 | ADMIN marks COD paid before DELIVERED | Denied; no payment/settlement write | NOT_RUN — SellerOrder/COD endpoint absent |
+| TV4-W1-COD-03 | ADMIN marks COD paid after DELIVERED | One payment action; settlement only under approved Finance policy | NOT_RUN — shared COD/Finance contract pending |
+| TV4-W1-COD-04 | Duplicate COD confirmation | Idempotent response; no duplicate settlement | NOT_RUN — durable COD idempotency absent |
+| TV4-W1-NOT-01 | Status changes successfully | One durable outbox event with agreed schema | NOT_RUN — publisher/schema absent |
+| TV4-W1-NOT-02 | Outbox event delivered more than once | Consumer effect deduplicated | NOT_RUN — consumer absent |
+| TV4-W1-NOT-03 | Event recipient belongs to another Store/customer | No unauthorized notification | NOT_RUN — recipient/permission contract pending |
+| TV4-W1-NOT-04 | Temporary consumer failure then retry | Retry/recovery follows approved policy | NOT_RUN — consumer/retry policy absent |
+| TV4-W1-NOT-05 | Permanent malformed event | Isolated and observable; no infinite retry | NOT_RUN — DLT/alerting policy absent |
 
 ## Required owner decisions before implementation/integration
 
 - **TV3:** SellerOrder persistence, authoritative state names, transition ownership, parent/customer relationship, cancel/reject policy, dispatch boundary, reservation journal, and operation IDs.
-- **TV2 + TV3 + TV4:** authoritative Product/Store identity, global versus Store-scoped SKU uniqueness, and productId-to-SKU mapping.
+- **TV2 + TV3 + TV4:** TV2's target invariant is **globally unique SKU owned by Product**; `productId` is not `inventorySku`. Inventory remains SKU-keyed. Product DB/API enforcement and authoritative Product→SKU/current Store↔Seller facts remain PENDING; do not seed fixtures or enable live integration until the provider is authoritative.
+- **TV2 + TV1 + TV4:** current Seller status (`SUSPENDED`), current Store status (including closed), and recipient account resolution Store→Seller→account must come from approved provider data. Do not infer Store/Seller ownership or notification recipients from JWT `sub`/role, request body/header, or event payload. TV2 must decide whether a suspended Seller or closed Store may continue processing orders placed before the status change; the new W1-FUL-11/12 cases remain NOT_RUN until that policy is signed off.
 - **TV1:** verified identity/roles, seller-to-Store authorization source, service-to-service authentication, and event/notification permissions.
 - **TV5:** COD action/idempotency contract, finance policy approval, money representation/rounding/snapshot, and settlement condition.
 - **TV3 + TV4 + TV5:** event publisher ownership, final event schema, outbox/retry/deduplication behavior.
+- **TV3 + TV4 + TV1 + TV2 + TV5:** canonical state enum/wire/event names, dispatch actor/Store authority, cancel/reject cutoff, and Order-transition/outbox commit before any Inventory CONSUME. The two state vocabularies above are unresolved alternatives, not aliases.
 
 ## Completion rule
 
