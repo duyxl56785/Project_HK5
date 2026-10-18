@@ -201,3 +201,77 @@ Ignored evidence directory: `backend/seller-service/build/tv2-independent-202610
 PR37 remains the existing OPEN/non-draft delivery; reviewers already requested are preserved, no self-review or duplicate request. Progress comments: [Store26](https://github.com/duyxl56785/Project_HK5/pull/37#issuecomment-6248726487), [Product24](https://github.com/duyxl56785/Project_HK5/pull/37#issuecomment-6248733814). Tick only separate candidate-schema/API-spec preparation items on Issue2 after push; retain historical content and unchecked production composites, keep Issue OPEN/PARTIAL. No Approve/Merge, direct main push, force/reset, common contract or other-owner module edit.
 
 **Independent preparation in this request is complete; production continuation is BLOCKED by the above decisions.** No useful remaining independent domain defect was demonstrated; do not add more prototype frameworks or repeated checklists just to generate commits. Resume by checking `git status`, `git branch -vv`, latest PR37/28 and Issue2 decisions, fetch without rewriting history, and compare remote head. First implement reviewed Store runtime persistence when S01 is explicitly approved; re-run the corresponding PostgreSQL/authorization tests on runtime code rather than treating this prototype as its acceptance.
+
+## Store production persistence checkpoint — 2026-10-19
+
+**Store DB/local source DONE at module scope; WAITING_REVIEW.** [PR #52](https://github.com/duyxl56785/Project_HK5/pull/52), branch `feat/tv2-store-persistence`, base `a0e99b981a752026f8f7d29e3c6b7c43b6e5ac45`, tested code `727402a9083d60efcbdacc79ef2af90c09db012e`. This supersedes earlier Store-persistence BLOCKED notes: latest user authorization and merged [PR #48](https://github.com/duyxl56785/Project_HK5/pull/48), version **TV1-S01-OD09-20261018-v1**, permit Store production JPA/Flyway/local read immediately. PR #29/#37/#28/#48 merged were verified before implementation. Shared HTTP/security/business gates are not implicitly approved by those merges.
+
+### Implemented files and behavior
+
+| File, relative to seller-service | Result |
+|---|---|
+| `src/main/resources/db/migration/V2__create_stores.sql` | Production Store table, local restrictive Seller FK, unique Seller/canonical slug, OPEN/CLOSED, version and finite timestamptz constraints |
+| `store/StoreEntity.java`, `StoreStatus.java` under src/main/java/com/projecthk5/sellerservice | Separate JPA model, no owner copy/Seller cascade, @Version, timestamps and mapping to existing immutable domain |
+| `store/StoreRepository.java` | ID/Seller/slug queries and single-statement scalar Store→Seller current-facts projections |
+| `store/StoreCurrentSource.java` | Internal DB-backed IDs/statuses/versions/eligibility; no House, ownerReference or recipient/contact fields; no HTTP |
+| `store/StorePersistenceService.java`, `StorePersistenceException.java` | REQUIRED create/revise/open/close/guarded own-read, locked current eligibility, expectedVersion/optimistic protection and named conflict errors |
+| `src/test/java/.../store/StoreEntityTest.java` | Four new entity/domain mapping/ownership tests |
+| `src/test/java/.../store/StorePersistenceIntegrationTest.java` | 63 integration invocations (57 DB/business,6absent HTTP-route negatives) against production V2/JPA in real PostgreSQL context |
+| Existing `StoreSchemaProposalPostgresTest.java` | Exact expected runtime history now V1,V2; candidate still not a runtime migration. No old test removed |
+| Seller README and this checkpoint | Actual commands, results, scope, recovery and remaining gates |
+
+Commits pushed: `8f602827da9d342caf507097f45e85caba3b723c` foundation/schema/local facts; `727402a9083d60efcbdacc79ef2af90c09db012e` lifecycle/ownership/concurrency tests. Documentation-only checkpoint follows these two code commits; determine its exact HEAD with git log. No existing Seller production class, Store domain/lifecycle/policy, V1, Product/Category source or shared build was changed.
+
+### Transactions / current-state finding
+
+Store writer requires explicit bean/proxy registration with a verified StoreAccessPolicy; no writer/controller/default authorization bean is component-scanned. After policy verification it resolves server-owned Seller by exact opaque account reference, then **refresh(PESSIMISTIC_READ)** before reading eligibility. Shared Seller lock is held to Store commit, blocking concurrent suspension; Store @Version remains the concurrent-write guard. Store entity is refreshed before comparing expectedVersion. Everything joins REQUIRED, including outer rollback; no REQUIRES_NEW or Category advisory lock.
+
+First Store-focused run: **62PASS/1FAIL**, exit1, on the initial uncommitted orchestration. A locking owner query attempted Hibernate's old-version check on an already-managed Seller before refresh; the stale-cache regression expected current SUSPENDED denial and caught OptimisticLockException instead. Changed identity lookup to an ordinary query, then acquired lock and reloaded current facts together through refresh **before** authorization. Assertions unchanged; rerun **63PASS/0FAIL/0SKIP**, followed by full regression below. RED logs/XML retained with original bytes; no fake RED, disabled case or assertion weakening.
+
+Local source uses one SQL projection over Store/Seller to avoid first-level entity-cache staleness and two-query torn facts. Eligibility is OPEN && APPROVED, not FK existence. Retained REPEATABLE_READ/SERIALIZABLE caller snapshots fail closed; the source is a READ_COMMITTED observation, not a commit-time guarantee or agreed Catalog freshness lease.
+
+### New verification on 727402a
+
+Windows Java21.0.12/Gradle8.10, Docker29.8.2 Linux/PostgreSQL16.6 Testcontainers, UTC. Process JAVA_HOME=`C:/Program Files/Eclipse Adoptium/jdk-21.0.12.101-hotspot`, JAVA_TOOL_OPTIONS=`-Duser.timezone=UTC`. Registered PG task is **integrationTest**; build/check already includes it, so no shared/module build configuration changed.
+
+```powershell
+# from backend
+./gradlew.bat :seller-service:build :product-service:build --rerun-tasks --no-daemon --continue --console=plain
+```
+
+**BUILD SUCCESSFUL,exit0,48s,18tasks.** JUnit XML counters for this full run only:
+
+| Suite | PASS | FAIL/errors | SKIPPED |
+|---|---:|---:|---:|
+| Seller/Store unit |107|0|0|
+| Seller tagged integration: Seller24 + Store63 + SQL prototype26 |113|0|0|
+| Product unit/security/fixture |215|0|0|
+| Product tagged integration: Category14 + SQL prototype24 |38|0|0|
+| **Total** |**473**|**0**|**0**|
+
+322unit +151tagged integration =473. Integration scope separates **95production DB/business cases** (Seller24,Store57,Category14), **6closed-route MockMvc negatives** in the Store PG context, and **50test-only SQL prototypes** (Store26/Product24). Fixture-policy ownership tests use actual DB/JPA/transactions but are not JWT proof. Do not add foundation/focused reruns, historical406 or Cart/Order117/118 to this total. Other backend modules were not rebuilt in this delivery.
+
+Production Store tests cover fresh migration/JPA validation, V1→V2 upgrade with existing Seller owner/status/reason/version/checksum preserved, durable commit/read/update/open/close/timestamps, REQUIRED rollback, SQL invalid values/FK/restrict/uniqueness, exact owner and cross-Seller denial, stale policy/current status and stale managed entities, current projections and missing facts. Six actual concurrent scenarios ran: same-Seller registration, same-slug across Sellers, competing service expectedVersion updates, direct JPA optimistic update race, suspension-before-Store lock and Store-before-suspension lock. Unique/suspension races observe PostgreSQL lock wait; barriers coordinate competing JPA reads. No repository mocks substitute for DB race proof.
+
+Ignored raw evidence directory `backend/seller-service/build/store-persistence-20261019/`; per-class counters/hash metadata in junit-summary.json. Generated fixture credentials in raw output are not published. V1 checksum/source unchanged; source/secret-pattern/diff checks PASS, existing Seller24PG/Category14PG regression PASS.
+
+| Evidence | SHA256 |
+|---|---|
+| foundation-unit.log | `AA9559343240B32F2C6E952E8B3FBDF69B590488F44DC2E9AF985579E77F3305` |
+| foundation-pg.log | `1B00795560EBA9E25BE9860AE9F2F2AE4C3317470D77ACEAB50DBE580F2CE38D` |
+| store-pg-initial.log (RED) | `C0269C29C3ACA8FCBA67F03AA37D52B29D8D397E949E4ADB987EBF2E0578D951` |
+| store-pg-initial.xml (RED) | `D297BF6BCAB2429622AA1605A1DCDDEE24EDA7C2CA374F3C7CFF6F2493926CD0` |
+| store-pg-green.log | `A4DC90E8E5CD0C50AC1D93B7CD8C14CA2B11EF4432D9F9C4D71083682FEFFBA4` |
+| full-regression.log | `CB12A0448A8F067B402D982B3736B5502F0E2892C32E1863C09DD2D1278F4F77` |
+
+### Readiness / next action
+
+- Store domain **DONE**, production V2/JPA/repository/lifecycle persistence **DONE at module scope**, local Store/Seller DB facts **DONE**; [PR52](https://github.com/duyxl56785/Project_HK5/pull/52) **WAITING_REVIEW**, TV1 `lexuanbao258-collab` requested.
+- Protected Store HTTP/positive JWT/current ADMIN and actual verified StoreAccessPolicy, Seller→Auth role sync: **BLOCKED/NOT_RUN**, TV1/TV2 integration. No Store endpoint is callable yet;404 tests prove absence only, not positive authorization.
+- Product runtime persistence/money/House: **PENDING applicable M01/schema approvals**, TV5/named human +TV2. No Product table/FK/seed was added by Store V2.
+- Catalog production C01/E01 DTO/errors/pair/actor/privacy/freshness +live Inventory/Checkout: **PENDING/NOT_RUN**, TV1/TV2/TV3/TV4/TV5. Current local Store facts do not authorize a remote caller. Finance/adapters unchanged.
+- Two-Store fixture remains TEST_ONLY_NOT_PERSISTED; durable seed, actual Inventory balances and live two-Store E2E **NOT_RUN**.
+
+Migration is additive but its restrictive FK deliberately changes Seller-delete eligibility. App rollback can leave V2 applied; removing Store data/table needs a separately reviewed migration plan. No V1 edits, destructive rollback/clean/prune, direct-main/force push, self-approval/merge or Issue close performed. Issue2 stays OPEN/PARTIAL: add only granular DB/local-source completion evidence, leave composite Store API/ownership/E2E acceptance unchecked.
+
+Resume: preserve git status; fetch origin; read PR52 review at exact head and respond to TV1 findings. Highest priority is **TV1 review/acceptance of Store persistence**, then implement the specific verified-policy/HTTP or Catalog integration slice once its own contract is ready. Do not rewrite Seller/Category or infer House/current ADMIN/JWT/service-pair authority from fixture tests.
