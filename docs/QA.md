@@ -74,3 +74,11 @@ QA union từ main giữ nguyên byte và15relative linksPASS. Chạy task diagn
 Không sửa assertion/production hoặc ghi thành E2E. Unit Catalog thay đổi tại63668b8 **50PASS** riêng.
 Normal build không chạy diagnostic này; CI xanh không khép finding. Fix chờ TV3+applicable sign-off;
 M01 và các contract chưa đủ chữ ký giữ PENDING/REVISE. [Cách chạy RED task](../tests/finance/README.md).
+
+## TV5 — M01 human decision / owner utility checkpoint
+
+[Gói quyết định MD01–MD10](TV5_M01_HUMAN_DECISION_PACKET.md) ghi lựa chọn, ví dụ số, schema/consumer
+và signer cho TV5-FIN-v0.1; vẫn PENDING, không tự ký VND/scale0/bounds/freshness. [Lượt mới](../reports/TV5_MONEY_DECISION_CHECKPOINT_2026-10-18.md)
+tại sourcec4d517e có6utility unitPASS bằng JUnit thật và diagnostic1PASS/2FAIL nguyênassertions,overallexit1.
+Utility owneree15851 chưa được wire vàoCheckout. Docs38/39 đã sửa traceability/error semantics,21baseline+
+21supplemental đềuNOT_RUN. RTM phân biệt staticchecks, PG/mock và liveE2E, không cộng kết quả các snapshot.

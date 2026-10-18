@@ -1,0 +1,12 @@
+{
+  "exit": 1,
+  "jvmOptions": "-Duser.timezone=UTC -Dapi.version=1.44",
+  "finishedUtc": "2026-10-18T07:57:08.7156098Z",
+  "gradle": "8.14.3",
+  "command": "gradle -p backend --init-script ../tests/finance/fin06-regression.init.gradle :order-service:test --tests com.projecthk5.orderservice.domain.OrderAmountStorageBoundsTest :order-service:fin06Regression --rerun-tasks --no-daemon --continue --console=plain",
+  "java": "21.0.7",
+  "startedUtc": "2026-10-18T07:56:26.2439838Z",
+  "sourceSha": "c4d517e0dbb2d25cd7f9e1ee8e762d9fdb75c5da",
+  "ownerParent": "ee15851047c6f191f0fdbbd828f87f598db4ff44",
+  "executor": "TV5"
+}

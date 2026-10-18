@@ -163,3 +163,13 @@ TV2 subsequently corrected the stale prototype paragraph and handoff at9e1794a (
 only); the Catalog Java source remains63668b8. TV5 verified that delta and treats the documentation finding
 as corrected, with no new runtime execution/contract approval inferred. Provider-reported367PASS is
 separate from TV5's targeted50unit run and the Checkout1PASS/2FAIL diagnostic.
+
+## Human choice packet / latest owner proposals
+
+[TV5-M01-DECISION-v1](TV5_M01_HUMAN_DECISION_PACKET.md) makes MD01–MD10 explicit: currency alternatives,
+unit/line/Store/parent bounds, fee rounding examples, snapshots/adjustments/refund/COD, freshness risk,
+enable authority and reporting groups. It is a companion toTV5-FIN-v0.1, **not a new approval**.
+TV2 provider42cc4e7 recommends last-verified snapshot only after human/TV1/TV5 race acceptance; no quote/lease.
+TV3ee15851 adds an unwired storage utility,6official JUnit tests verified byTV5; original diagnostic remains
+1PASS/2FAIL at merged TV5 sourcec4d517e. TV4 docs7a8d18e/ec2ae5a repaired source semantics/21+21ID history,
+but retry budget/state/event/current authorization still need same-version sign-off. [Current QA/RTM evidence](../reports/TV5_MONEY_DECISION_CHECKPOINT_2026-10-18.md).
