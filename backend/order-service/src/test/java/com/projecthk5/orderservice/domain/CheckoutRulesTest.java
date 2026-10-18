@@ -31,4 +31,41 @@ class CheckoutRulesTest {
         assertEquals(RequestFingerprint.compute(a),RequestFingerprint.compute(b));
         assertNotEquals(RequestFingerprint.compute(a),RequestFingerprint.compute(c));
     }
+
+    @Test void malformedCartSnapshotMustNeverMatchExpectedItems() {
+        var expected = List.of(new ExpectedItem("p1", 1));
+        assertThrows(IllegalStateException.class, () -> CheckoutRules.requireSameItems(expected, null));
+        assertThrows(IllegalStateException.class, () -> CheckoutRules.requireSameItems(expected, List.of()));
+        assertThrows(IllegalStateException.class, () -> CheckoutRules.requireSameItems(expected,
+            java.util.Arrays.asList((CartPort.Item) null)));
+        for (String badId : java.util.Arrays.asList(null, "", "  ")) {
+            assertThrows(IllegalStateException.class, () -> CheckoutRules.requireSameItems(expected,
+                List.of(new CartPort.Item(badId, "store1", "seller1", 1, BigDecimal.ONE))));
+        }
+        for (int badQuantity : new int[]{-1, 0, 1001}) {
+            assertThrows(IllegalStateException.class, () -> CheckoutRules.requireSameItems(expected,
+                List.of(new CartPort.Item("p1", "store1", "seller1", badQuantity, BigDecimal.ONE))));
+        }
+        var one = new CartPort.Item("p1", "store1", "seller1", 1, BigDecimal.ONE);
+        assertThrows(IllegalStateException.class, () -> CheckoutRules.requireSameItems(expected, List.of(one, one)));
+    }
+
+    @Test void malformedExpectedItemsFailClosedEvenWithoutControllerValidation() {
+        var cart = List.of(new CartPort.Item("p1", "store1", "seller1", 1, BigDecimal.ONE));
+        assertThrows(IllegalStateException.class, () -> CheckoutRules.requireSameItems(null, cart));
+        assertThrows(IllegalStateException.class, () -> CheckoutRules.requireSameItems(List.of(), cart));
+        assertThrows(IllegalStateException.class, () -> CheckoutRules.requireSameItems(
+            java.util.Arrays.asList((ExpectedItem) null), cart));
+        for (String badId : java.util.Arrays.asList(null, "", "  ")) {
+            assertThrows(IllegalStateException.class, () -> CheckoutRules.requireSameItems(
+                List.of(new ExpectedItem(badId, 1)), cart));
+        }
+        for (int badQuantity : new int[]{-1, 0, 1001}) {
+            assertThrows(IllegalStateException.class, () -> CheckoutRules.requireSameItems(
+                List.of(new ExpectedItem("p1", badQuantity)), cart));
+        }
+        assertDoesNotThrow(() -> CheckoutRules.requireSameItems(
+            List.of(new ExpectedItem("p1", 1000)),
+            List.of(new CartPort.Item("p1", "store1", "seller1", 1000, BigDecimal.ONE))));
+    }
 }
