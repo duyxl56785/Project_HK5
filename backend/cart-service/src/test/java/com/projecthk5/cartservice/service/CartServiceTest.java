@@ -62,6 +62,20 @@ class CartServiceTest {
         verifyNoInteractions(repo);
     }
 
+    @Test void nullOrMalformedClaimKeyCannotSilentlySucceedOnUnclaimedCart() {
+        Cart cart = new Cart("customer-a");
+        assertThrows(IllegalArgumentException.class, () -> cart.claim(null, null));
+        assertThrows(IllegalArgumentException.class, () -> cart.claim("", null));
+        assertThrows(IllegalArgumentException.class, () -> cart.claim("  ", null));
+        assertThrows(IllegalArgumentException.class, () -> cart.claim(" key", null));
+        assertThrows(IllegalArgumentException.class, () -> cart.claim("key ", null));
+        assertThrows(IllegalArgumentException.class, () -> cart.claim("k".repeat(129), null));
+        assertNull(cart.getCheckoutClaim());
+        // After validating a key, the existing nonempty-Cart rule must still apply.
+        assertThrows(IllegalStateException.class, () -> cart.claim("valid-key", null));
+        assertNull(cart.getCheckoutClaim());
+    }
+
     @Test void finalizationClearsOnlyMatchingClaim() {
         Cart cart=new Cart("customer-a");
         when(repo.findByCustomerId("customer-a")).thenReturn(Optional.of(cart));

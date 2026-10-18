@@ -27,6 +27,9 @@ public class Cart {
     public void touch() { updatedAt = Instant.now(); }
     public void ensureEditable() { if (checkoutClaim != null) throw new IllegalStateException("Cart is reserved for checkout"); }
     public void claim(String key, Long expectedRevision) {
+        // Check before the idempotent branch: null must never equal an unclaimed cart.
+        if (key == null || key.isBlank() || key.length() > 128 || !key.equals(key.trim()))
+            throw new IllegalArgumentException("Checkout claim key must be canonical and 1-128 characters");
         if (Objects.equals(checkoutClaim, key)) return; // idempotent claim retry
         if (expectedRevision != null && expectedRevision != revision) throw new IllegalStateException("Cart revision changed");
         if (checkoutClaim != null && !checkoutClaim.equals(key)) throw new IllegalStateException("Cart reserved by another checkout");
