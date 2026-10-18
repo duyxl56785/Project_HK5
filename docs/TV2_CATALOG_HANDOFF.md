@@ -75,3 +75,5 @@ Commits: `9d3b47e` internal batch proposal/security regression; `1f2ebf5` isolat
 3. Persist idempotent two-Store seed through the agreed flow, coordinate Inventory through its approved boundary, implement consumer contract tests with TV3 and test live calls. Keep Finance/Checkout gates closed until their own prerequisites are met.
 
 Issue #2 stays OPEN/PARTIAL: no additional composite business acceptance checkbox is complete. PR #37 was observed OPEN and non-draft during this checkpoint (previous delivery called it Draft); this task preserves that externally changed state, does not approve/merge and does not claim integration readiness.
+
+Follow-up after TV3/TV5 feedback: [TV2 Catalog contract candidate v0.2](TV2_CATALOG_CONTRACT_RESPONSE.md) gives the technical response, still pending joint/human approvals. [PR review and new Cart/Order verification](TV2_PR_FOLLOWUP_2026-10-18.md) records the published PR40/PR28 reviews and 85 new tests at PR28 source55bf5ff. These do not change this handoff's historical Product/Seller test scope or create a production Catalog API.
