@@ -1,0 +1,8 @@
+{
+  "finishedUtc": "2026-10-18T14:57:42.7922285Z",
+  "command": "backend/gradlew.bat -p backend :inventory-service:test --tests *InventoryOrderPairGateTest --tests *InventoryInternalTokenFilterTest --rerun-tasks --no-daemon --console=plain",
+  "javaHome": "C:\\Program Files\\Java\\jdk-21",
+  "exitCode": 0,
+  "startedUtc": "2026-10-18T14:57:29.3032759Z",
+  "source": "cf6028168563578e9ab38556d24a9e536b818a49"
+}

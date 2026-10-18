@@ -1,6 +1,6 @@
 # Explicit Checkout money preflight diagnostics
 
-Refs #5/#12/#28/#37/#42. **Known RED / owner implementation and contract sign-off required.**
+Refs #5/#12/#28/#37/#42. **Historical RED; existing-storage diagnostics verified GREEN at be1d5b6. Business sign-off remains pending.**
 
 From repository root, Java21 + Gradle8 + Docker/PostgreSQL16 Testcontainers available:
 
@@ -37,3 +37,9 @@ and do not silently select VND/scale0, business caps, HTTP errors or rate approv
 Re-executed at exact `8cc5ce4af1beacfe0d8467ec037d55e59a065691`: **1 PASS /2 FAIL /0 errors /0 skips**,
 positive control PASS; not fixed by the new malformed-request guard. [Current raw evidence and commands](../../reports/TV5_M01_REAUDIT_2026-10-18.md).
 The older parent28dd0cf result above remains historical. Normal tests do not run this explicit task.
+
+**Current verified owner fix:** TV3 `5f2ada8` wires storage exactness before RESERVE; latest execution at
+`be1d5b6c1a6eafa385f2bd6bd62f8b5efbeb5757` gives **3 PASS /0 FAIL /0 errors /0 skips**, positive control retained.
+Original diagnostic source blob is identical to the RED source8cc5ce4; historical logs/XML stay unchanged.
+[GREEN source/commands/raw evidence](../../reports/TV5_PROJECT_REVIEW_AUDIT_2026-10-18.md). This fixes existing-storage preflight,
+not pending business M01 or live service integration. The expected-RED task description is historical context, not current outcome.
