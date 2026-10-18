@@ -161,3 +161,49 @@ Không cộng406 với kết quả TV5 hoặc coi SQL candidate là source autho
 
 Các phần độc lập còn thiếu đã xử lý bằng test/docs/evidence, không mở rộng thêm framework/prototype hoặc tuần2–3 production.
 Tiếp theo **WAITING_REVIEW / OWNER_CONFIRMATION**, chỉ re-run theo delta thực tế/đúng scope khi owner sửa. Không hứa chạy nền.
+
+## 7. M01 owner decision checkpoint — M01-OWNER-LEDGER-20261018-r2
+
+**M01/MD01–MD10 PENDING**, business approver/operator **chờ TV1/chủ dự án xác nhận**. TV5 là người tổng hợp/đề xuất, agent không ký thay humanTV5.
+Source audit mới:28 **5a3788b34ec4a2a91611d88020442a27b9dc7948** (đã nhận45),37 **ef62086**,38 **7a8d18e**,39 **ec2ae5a**, main **ac7ca4f**.
+Các PR43/44/45 đã merge, không push/request trên branch đóng. Branch bàn giao mới **codex/tv5-m01-owner-signoff**,
+canonical docs commit [942129f](https://github.com/duyxl56785/Project_HK5/commit/942129f95fde9890dc151b6d89e8214d1b9e0df0), [PR46](https://github.com/duyxl56785/Project_HK5/pull/46) base=branch28.
+
+- [x] Cập nhật **tài liệu đang có**, không tạo bản policy khác: [Finance contract](../docs/TV5_FINANCE_CONTRACT_SIGNOFF.md), [packet §§8–11](../docs/TV5_M01_HUMAN_DECISION_PACKET.md).
+- [x] Ledger10MD có version/value/owner/confirmer/evidence/effective scope/status/dependencies;6mục MD05–MD10 có choices/benefits/risks/consumer impacts.
+- [x] Ghi nhận TV2 price compatibility và TV3 consumer-design acceptance, TV1 OD07/09 DECIDED; không xin lại cùng nội dung hoặc biến chúng thành M01 business signature.
+- [x] Làm rõ partial Product price slice: approval riêng MD01/02/unit-cap MD03 +applicable S01/schema/security mới mở TV2 price/currency implementation;
+  MD10 reporting không tự là prerequisite cho riêng price column. **Chưa có slice mới thực sự unlocked**, vì human price choices và applicable gates chưa được ký.
+- [x] [Derived audit](evidence/m01-owner-ledger-20261018.json):61existing raw hashes/Git blobs đúng,3original diagnostic cases giữ1PASS/2FAIL,
+  Order production/diagnostic source tương đươngde1f5c6; doc links/MD completeness/numeric examples được kiểm. **Không có runtime run mới** trong phiên docs này.
+- [ ] TV1/chủ dự án chỉ định named business approver và operator; humanTV5/business/owner ký từng MD và choice đúng scope bằng URL thật.
+- [ ] TV3 thực hiện FIN-01/06 pre-reserve fix/V2+ snapshots sau applicable decisions, chạy nguyên assertions GREEN trênfixSHA; TV2 provider/House/source vàTV4 COD/journal/recovery có authority.
+
+**Các xác nhận đã có:** TV2 confirmed technical representation; TV3 C01/E01 own-scope APPROVED (overallREVISE), MD02/03/08 necessity acknowledged;
+TV1 baseline security DECIDED. **Không có MD business APPROVED mới**. Không cần TV2 lặp chứng minh VND/positive17digits/exact strings hoặc TV3 duyệt lại DTOshape.
+MD05–MD10 còn cần người quyết định chọn flow/adjustment/refund/race/snapshots/authority/report basis+four-group definitions; metadata/source enum/SQLCAS không chốt chúng.
+
+### Tiếp tục sau khi hết quota
+
+Tại worktree của branch TV5, đọc PR46 và replies marker `M01-OWNER-LEDGER-20261018-r2` trước, giữ root .vs/ và gói local chưa commit.
+
+```powershell
+git -c core.longpaths=true status --short
+git branch -vv
+git fetch origin
+git diff 5a3788b34ec4a2a91611d88020442a27b9dc7948 origin/feat/tv3-cart-checkout-week1 -- backend/order-service/src/main backend/order-service/src/fin06Regression
+```
+
+Ghi đúng signer/account/URL/version/choice/scope cho reply mới; không đổi PENDING nếu chỉ có compatibility hoặc module merge. Kiểm actual head/base/OPEN trước commit/push.
+Chỉ khi có actual authorized TV3fix và delta liên quan, checkout đúng fixSHA trong branch/worktree an toàn rồi chạy các task độc lập theo [diagnostic runbook](../tests/finance/README.md):
+
+```powershell
+$initTV5 = (Resolve-Path 'tests/finance/fin06-regression.init.gradle').Path
+$env:JAVA_TOOL_OPTIONS = '-Duser.timezone=UTC -Dapi.version=1.44'
+backend/gradlew.bat -p backend :order-service:test :order-service:postgresIntegrationTest --rerun-tasks --no-daemon --continue --console=plain
+backend/gradlew.bat -p backend --init-script $initTV5 :order-service:fin06Regression --rerun-tasks --no-daemon --console=plain
+```
+
+Lưu source/time/command/exit/log/XML/hash từng run, giữ positive control và original RED, không tự sửa assertion/enable policy.
+Lượt checkpoint này unit/PG/liveE2E **NOT_RUN**; production Finance/COD/Store queries và toàn Issue5/12 vẫn **PARTIAL/BLOCKED**.
+Khi chỉ còn chữ ký/review, dừng ở **OWNER_CONFIRMATION/WAITING_REVIEW**, không tạo test/proposal trùng hoặc hứa chạy nền.

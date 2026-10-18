@@ -173,3 +173,26 @@ TV2 provider42cc4e7 recommends last-verified snapshot only after human/TV1/TV5 r
 TV3ee15851 adds an unwired storage utility,6official JUnit tests verified byTV5; original diagnostic remains
 1PASS/2FAIL at merged TV5 sourcec4d517e. TV4 docs7a8d18e/ec2ae5a repaired source semantics/21+21ID history,
 but retry budget/state/event/current authorization still need same-version sign-off. [Current QA/RTM evidence](../reports/TV5_MONEY_DECISION_CHECKPOINT_2026-10-18.md).
+
+## Current M01 owner ledger / partial implementation gates — 18/10/2026
+
+**M01 overall PENDING; no new business signature.** Canonical choices/approval ledger now live in
+[the existing decision packet, §§8–11](TV5_M01_HUMAN_DECISION_PACKET.md), checkpoint `M01-OWNER-LEDGER-20261018-r2`.
+Keep `TV5-FIN-v0.1 + TV5-M01-DECISION-v1@commit` in replies; Catalog v0.2 is unchanged. Existing reports are source-specific history,
+not competing contract versions. The packet records MD05–MD10 choices, benefits/risks/consumer impacts and scoped required signers.
+
+- TV2 [Product technical compatibility](https://github.com/duyxl56785/Project_HK5/pull/37#issuecomment-6246199255) for VND/integral positive17digits/exact strings/BigDecimal is recorded; no repeat confirmation requested for the same values.
+- TV3 [C01/E01 consumer design/mapping APPROVED own-scope](https://github.com/duyxl56785/Project_HK5/pull/37#issuecomment-6248646211) and [technical preflight/snapshot needs](https://github.com/duyxl56785/Project_HK5/pull/28#issuecomment-6248595524) are recorded. Overall C01/E01 REVISE, M01 PENDING; no redundant DTO-shape request.
+- TV4 COD/delivery/Inventory boundary is a provider/lifecycle proposal, not same-version business approval. TV1 Auth baseline remains settled; concrete pair, M01 final business signer and enable-operator designation are missing.
+- Human userTV5 confirms proposal/synthesis only; **business approver: chờ TV1/chủ dự án xác nhận**. Agent cannot sign for TV5/business or turn technical compatibility into APPROVED MD01/02.
+
+**Product price slice:** if human approvers explicitly sign MD01/MD02/unit-cap MD03 and applicable TV2/TV1 schema/S01/auth gates,
+TV2 may implement that reviewed price/currency slice without waiting for unrelated reporting-group MD10. No such slice is approved now.
+This does not authorize Catalog exposure/House assignment, enable Finance, or remove Checkout/COD prerequisites. TV3 similarly implements
+only the money preflight/snapshot scope for which decisions, trust sources and ownership authorization are complete. See packet§10.
+
+PR43/44/45 are integrated into PR28 **5a3788b34ec4a2a91611d88020442a27b9dc7948**. Latest QA report/raw61assets are
+[already merged evidence](../reports/TV5_FINANCE_ACCEPTANCE_2026-10-18.md); Order production/diagnostic unchanged from the stored
+de1f5c6 run (16PG PASS; explicit diagnostic1PASS/2FAIL). This update is docs-only: runtime NOT_RUN, no newly claimed PASS, Finance flagfalse.
+FIN-01/06 remain TV3 fixes: exact unit/line/Store/fee/net/parent validation beforeRESERVE, immutable reviewed V2+ snapshots,
+unchanged original tests GREEN +positive controlPASS at actual fixSHA. Production settlement/Store queries/currentCOD/liveE2E remain BLOCKED.
