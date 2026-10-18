@@ -1,6 +1,7 @@
 package com.projecthk5.inventoryservice.security;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequestWrapper;
 import jakarta.servlet.http.HttpServletResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -21,13 +22,11 @@ class InventoryOrderPairGateTest {
             request.addHeader("X-User-Id", "forged-user");
             request.addHeader("X-Store-Id", "forged-store");
             MockHttpServletResponse response = new MockHttpServletResponse();
-
             filter.doFilter(request, response, (req, res) -> {
                 assertEquals(request.getRequestURI(), ((HttpServletRequest) req).getRequestURI());
-                assertTrue(new String(req.getInputStream().readAllBytes(),
-                        java.nio.charset.StandardCharsets.UTF_8).contains("\"type\":\"" + type + "\""));
+                assertTrue(new String(req.getInputStream().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8)
+                        .contains("\"type\":\"" + type + "\""));
             });
-
             assertEquals(HttpServletResponse.SC_OK, response.getStatus());
         }
     }
@@ -35,13 +34,10 @@ class InventoryOrderPairGateTest {
     @Test
     void pairTokenAloneCannotEnableMutationWhenFeatureFlagIsOff() throws Exception {
         InventoryInternalTokenFilter filter = new InventoryInternalTokenFilter("legacy-secret", TOKEN, false);
-        MockHttpServletRequest request = request("POST", "/api/inventory/operations",
-                "{\"operationId\":\"op-1\",\"type\":\"RESERVE\"}");
+        MockHttpServletRequest request = request("POST", "/api/inventory/operations", "{\"operationId\":\"op-1\",\"type\":\"RESERVE\"}");
         request.addHeader("X-Internal-Token", TOKEN);
         MockHttpServletResponse response = new MockHttpServletResponse();
-
         filter.doFilter(request, response, (req, res) -> fail("default-off pair gate must not pass"));
-
         assertEquals(HttpServletResponse.SC_SERVICE_UNAVAILABLE, response.getStatus());
         assertTrue(response.getContentAsString().contains("INVENTORY_ORDER_PAIR_DISABLED"));
     }
@@ -49,14 +45,11 @@ class InventoryOrderPairGateTest {
     @Test
     void missingOrWrongPairCredentialIsUnauthorized() throws Exception {
         InventoryInternalTokenFilter filter = new InventoryInternalTokenFilter("legacy-secret", TOKEN, true);
-        MockHttpServletRequest missing = request("POST", "/api/inventory/operations",
-                "{\"type\":\"RESERVE\"}");
+        MockHttpServletRequest missing = request("POST", "/api/inventory/operations", "{\"type\":\"RESERVE\"}");
         MockHttpServletResponse missingResponse = new MockHttpServletResponse();
         filter.doFilter(missing, missingResponse, (req, res) -> fail("must not pass"));
         assertEquals(HttpServletResponse.SC_UNAUTHORIZED, missingResponse.getStatus());
-
-        MockHttpServletRequest wrong = request("POST", "/api/inventory/operations",
-                "{\"type\":\"RESERVE\"}");
+        MockHttpServletRequest wrong = request("POST", "/api/inventory/operations", "{\"type\":\"RESERVE\"}");
         wrong.addHeader("X-Internal-Token", "wrong");
         MockHttpServletResponse wrongResponse = new MockHttpServletResponse();
         filter.doFilter(wrong, wrongResponse, (req, res) -> fail("must not pass"));
@@ -66,13 +59,10 @@ class InventoryOrderPairGateTest {
     @Test
     void unconfiguredPairVerifierFailsClosed() throws Exception {
         InventoryInternalTokenFilter filter = new InventoryInternalTokenFilter("legacy-secret", " ", true);
-        MockHttpServletRequest request = request("POST", "/api/inventory/operations",
-                "{\"type\":\"RESERVE\"}");
+        MockHttpServletRequest request = request("POST", "/api/inventory/operations", "{\"type\":\"RESERVE\"}");
         request.addHeader("X-Internal-Token", TOKEN);
         MockHttpServletResponse response = new MockHttpServletResponse();
-
         filter.doFilter(request, response, (req, res) -> fail("must not pass"));
-
         assertEquals(HttpServletResponse.SC_SERVICE_UNAVAILABLE, response.getStatus());
         assertTrue(response.getContentAsString().contains("INVENTORY_ORDER_PAIR_AUTH_NOT_CONFIGURED"));
     }
@@ -93,16 +83,11 @@ class InventoryOrderPairGateTest {
         InventoryInternalTokenFilter filter = new InventoryInternalTokenFilter("legacy-secret", TOKEN, true);
         String prefix = "{\"type\":\"RESERVE\"}";
         String body = prefix + " ".repeat(InventoryInternalTokenFilter.MAX_ORDER_OPERATION_BODY_BYTES - prefix.length());
-        assertEquals(InventoryInternalTokenFilter.MAX_ORDER_OPERATION_BODY_BYTES,
-                body.getBytes(java.nio.charset.StandardCharsets.UTF_8).length);
+        assertEquals(InventoryInternalTokenFilter.MAX_ORDER_OPERATION_BODY_BYTES, body.getBytes(java.nio.charset.StandardCharsets.UTF_8).length);
         MockHttpServletRequest request = request("POST", "/api/inventory/operations", body);
         request.addHeader("X-Internal-Token", TOKEN);
         MockHttpServletResponse response = new MockHttpServletResponse();
-
-        filter.doFilter(request, response, (req, res) -> assertEquals(
-                InventoryInternalTokenFilter.MAX_ORDER_OPERATION_BODY_BYTES,
-                req.getInputStream().readAllBytes().length));
-
+        filter.doFilter(request, response, (req, res) -> assertEquals(InventoryInternalTokenFilter.MAX_ORDER_OPERATION_BODY_BYTES, req.getInputStream().readAllBytes().length));
         assertEquals(HttpServletResponse.SC_OK, response.getStatus());
     }
 
@@ -111,20 +96,33 @@ class InventoryOrderPairGateTest {
         InventoryInternalTokenFilter filter = new InventoryInternalTokenFilter("legacy-secret", TOKEN, true);
         String prefix = "{\"type\":\"RESERVE\"}";
         String body = prefix + " ".repeat(InventoryInternalTokenFilter.MAX_ORDER_OPERATION_BODY_BYTES + 1 - prefix.length());
-        assertEquals(InventoryInternalTokenFilter.MAX_ORDER_OPERATION_BODY_BYTES + 1,
-                body.getBytes(java.nio.charset.StandardCharsets.UTF_8).length);
+        assertEquals(InventoryInternalTokenFilter.MAX_ORDER_OPERATION_BODY_BYTES + 1, body.getBytes(java.nio.charset.StandardCharsets.UTF_8).length);
         MockHttpServletRequest request = request("POST", "/api/inventory/operations", body);
         request.addHeader("X-Internal-Token", TOKEN);
         MockHttpServletResponse response = new MockHttpServletResponse();
-
         filter.doFilter(request, response, (req, res) -> fail("oversized body must not reach controller"));
-
         assertEquals(HttpServletResponse.SC_REQUEST_ENTITY_TOO_LARGE, response.getStatus());
         assertTrue(response.getContentAsString().contains("INVENTORY_OPERATION_BODY_TOO_LARGE"));
     }
 
-    private static void assertForbidden(InventoryInternalTokenFilter filter,
-                                        MockHttpServletRequest request) throws Exception {
+    @Test
+    void bodyLimitAlsoAppliesWhenContentLengthIsUnknown() throws Exception {
+        InventoryInternalTokenFilter filter = new InventoryInternalTokenFilter("legacy-secret", TOKEN, true);
+        String prefix = "{\"type\":\"RESERVE\"}";
+        String body = prefix + " ".repeat(InventoryInternalTokenFilter.MAX_ORDER_OPERATION_BODY_BYTES + 1 - prefix.length());
+        MockHttpServletRequest base = request("POST", "/api/inventory/operations", body);
+        base.addHeader("X-Internal-Token", TOKEN);
+        HttpServletRequest unknownLength = new HttpServletRequestWrapper(base) {
+            @Override public int getContentLength() { return -1; }
+            @Override public long getContentLengthLong() { return -1L; }
+        };
+        MockHttpServletResponse response = new MockHttpServletResponse();
+        filter.doFilter(unknownLength, response, (req, res) -> fail("unknown-length oversized body must not pass"));
+        assertEquals(HttpServletResponse.SC_REQUEST_ENTITY_TOO_LARGE, response.getStatus());
+        assertTrue(response.getContentAsString().contains("INVENTORY_OPERATION_BODY_TOO_LARGE"));
+    }
+
+    private static void assertForbidden(InventoryInternalTokenFilter filter, MockHttpServletRequest request) throws Exception {
         request.addHeader("X-Internal-Token", TOKEN);
         MockHttpServletResponse response = new MockHttpServletResponse();
         filter.doFilter(request, response, (req, res) -> fail("out-of-scope request must not pass"));
