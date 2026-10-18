@@ -1,0 +1,15 @@
+{
+  "parentHead": "55bf5ff086633eddd37c245abc809f5e0ce57be8",
+  "supplementarySourceCommit": "cd2c0beaba814a947690fb5e7000d73b1748246c",
+  "note": "Raw run.json sourceSha is HEAD at launch. Supplementary ran with only the two listed test files modified; these were committed unchanged after PASS. This binding is derived metadata, not an altered raw execution record.",
+  "files": {
+    "backend/order-service/src/test/java/com/projecthk5/orderservice/finance/FinanceConsumerParityTest.java": {
+      "workingTreeSha256": "9c95efebece74bf36fcce14f056d460348629fd0da8b9c23bd49628ed8025750",
+      "gitBlobSha256": "9c95efebece74bf36fcce14f056d460348629fd0da8b9c23bd49628ed8025750"
+    },
+    "backend/order-service/src/test/java/com/projecthk5/orderservice/finance/FinanceSnapshotPostgresIT.java": {
+      "workingTreeSha256": "49a3b1a55f9ea2a603fb2e4c920d682aff2cc3364ede136e180b1c4267aab0fb",
+      "gitBlobSha256": "49a3b1a55f9ea2a603fb2e4c920d682aff2cc3364ede136e180b1c4267aab0fb"
+    }
+  }
+}

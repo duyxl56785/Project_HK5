@@ -1,0 +1,39 @@
+{
+  "sourceSha": "55bf5ff086633eddd37c245abc809f5e0ce57be8",
+  "suites": {
+    "order-service/postgresIntegrationTest": {
+      "failures": 0,
+      "tests": 12,
+      "errors": 0,
+      "skipped": 0
+    },
+    "cart-service/postgresIntegrationTest": {
+      "failures": 0,
+      "tests": 1,
+      "errors": 0,
+      "skipped": 0
+    },
+    "cart-service/test": {
+      "failures": 0,
+      "tests": 6,
+      "errors": 0,
+      "skipped": 0
+    },
+    "order-service/test": {
+      "failures": 0,
+      "tests": 66,
+      "errors": 0,
+      "skipped": 0
+    }
+  },
+  "gradle": "8.14.3",
+  "exit": 0,
+  "java": "21.0.7",
+  "jvmOptions": "-Duser.timezone=UTC -Dapi.version=1.44",
+  "docker": "29.8.1",
+  "command": "gradle -p D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\finance-followup\\work/backend :cart-service:build :order-service:build :cart-service:postgresIntegrationTest :order-service:postgresIntegrationTest --rerun-tasks --no-daemon --continue --console=plain",
+  "executor": "TV5",
+  "stage": "parent-head",
+  "finishedUtc": "2026-10-18T05:31:25.4286077Z",
+  "startedUtc": "2026-10-18T05:30:33.6318766Z"
+}
