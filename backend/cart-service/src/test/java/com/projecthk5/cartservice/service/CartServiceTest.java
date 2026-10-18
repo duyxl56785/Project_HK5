@@ -40,6 +40,28 @@ class CartServiceTest {
         service.release("customer-a","request-1");
         assertEquals(2,service.update("customer-a","p",2).items().get(0).quantity());
     }
+    @Test void invalidProductIdsFromDirectCallDoNotInvokeCatalogOrSave() {
+        assertThrows(org.springframework.web.server.ResponseStatusException.class,
+            () -> service.add("customer-a", new AddItem(" ", 1)));
+        assertThrows(org.springframework.web.server.ResponseStatusException.class,
+            () -> service.add("customer-a", new AddItem(null, 1)));
+        assertThrows(org.springframework.web.server.ResponseStatusException.class,
+            () -> service.add("customer-a", null));
+        verifyNoInteractions(catalog, repo);
+    }
+
+    @Test void untrustedBlankStoreOrSellerNeverPersistsCart() {
+        when(catalog.resolve("p")).thenReturn(
+            new CartCatalogPort.ProductSnapshot("p", "  ", "seller", true, java.math.BigDecimal.ONE));
+        assertThrows(IllegalStateException.class,
+            () -> service.add("customer-a", new AddItem("p", 1)));
+        when(catalog.resolve("p")).thenReturn(
+            new CartCatalogPort.ProductSnapshot("p", "store", "", true, java.math.BigDecimal.ONE));
+        assertThrows(IllegalStateException.class,
+            () -> service.add("customer-a", new AddItem("p", 1)));
+        verifyNoInteractions(repo);
+    }
+
     @Test void finalizationClearsOnlyMatchingClaim() {
         Cart cart=new Cart("customer-a");
         when(repo.findByCustomerId("customer-a")).thenReturn(Optional.of(cart));
