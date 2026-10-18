@@ -13,19 +13,23 @@
   "files": [
     {
       "path": "M01_PROPOSAL.md",
-      "sha256": "f1d25effc8d116ccd54bdc963979494fdf1b853dae59d4c00b764ed41f82d742"
+      "git_blob_sha256": "e8681942c191e67f444f3bcaa726dfe1b4b79eae7c6891b3df88ad86fdd4a86f",
+      "working_copy_sha256": "f1d25effc8d116ccd54bdc963979494fdf1b853dae59d4c00b764ed41f82d742"
     },
     {
       "path": "MD01_MD10_MATRIX.md",
-      "sha256": "6b4aac2a5a142eca7be5b56bbc8e9c18ef8c078f5dc701ca15a3d086631732e1"
+      "git_blob_sha256": "60083c28150d8daaecb2caba28a6be48d698fac836c380a86caddb574d6f712a",
+      "working_copy_sha256": "6b4aac2a5a142eca7be5b56bbc8e9c18ef8c078f5dc701ca15a3d086631732e1"
     },
     {
       "path": "REPLY_DRAFT.md",
-      "sha256": "f360d4f3d5edec3c093d3be79d0cd662c889ebdae76e16ba08290da413e46620"
+      "git_blob_sha256": "63f2b4430e785cac12601751f5f342eea6648c2e0aac0bcd0b138cad9081d43f",
+      "working_copy_sha256": "f360d4f3d5edec3c093d3be79d0cd662c889ebdae76e16ba08290da413e46620"
     },
     {
       "path": "SOURCES.md",
-      "sha256": "b1d780caabc13d08c6ed8adefb5c892b88a4fa7c1cb3a7d240fcc5deb9d5e6d7"
+      "git_blob_sha256": "65f2bda637ace9f7e943f09dc249dad9a6c0fced03793ad08302685feb5f934e",
+      "working_copy_sha256": "b1d780caabc13d08c6ed8adefb5c892b88a4fa7c1cb3a7d240fcc5deb9d5e6d7"
     }
   ],
   "business_approver": "chờ TV1/chủ dự án xác nhận",
@@ -33,5 +37,6 @@
   "runtime": "See ../TV5_FINANCE_ACCEPTANCE_2026-10-18.md for separate exact-SHA executions; static validation itself is not runtime acceptance",
   "external_mutations_at_check": "PR44 created; docs/tests pushed to1311f8a, four reviewers requested",
   "limits": "No signature, production acceptance, raw XML audit or runtime result implied by static PASS",
-  "tested_QA_source": "1311f8a9f14639c4e42c7b8fbf2446a934abfbf2"
+  "tested_QA_source": "1311f8a9f14639c4e42c7b8fbf2446a934abfbf2",
+  "hash_scope": "Working-copy hashes may differ due to CRLF; git_blob_sha256 is the published Markdown byte identity at e280ad9. Source documents unchanged by this metadata correction."
 }
