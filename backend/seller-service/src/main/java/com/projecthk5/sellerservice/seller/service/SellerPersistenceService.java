@@ -30,6 +30,25 @@ public class SellerPersistenceService {
     // Internal result, not a shared HTTP DTO or an exposed JPA entity.
     public record PersistedSeller(UUID id, long version, SellerApplication application) { }
 
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    public PersistedSeller findOwn(SellerIdentity actor) {
+        requireActor(actor, false);
+        return result(repository.findByOwnerReference(actor.reference()).orElseThrow(() ->
+                new SellerPersistenceException(SellerPersistenceException.Code.SELLER_NOT_FOUND,
+                        "Seller profile does not exist")));
+    }
+
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    public PersistedSeller findForModeration(UUID id, SellerIdentity actor) {
+        requireActor(actor, true);
+        if (id == null) {
+            throw new SellerRuleException(SellerRuleException.Code.INVALID_INPUT, "Seller ID is required");
+        }
+        return result(repository.findById(id).orElseThrow(() ->
+                new SellerPersistenceException(SellerPersistenceException.Code.SELLER_NOT_FOUND,
+                        "Seller profile does not exist")));
+    }
+
     public PersistedSeller register(SellerIdentity applicant) {
         SellerProfile profile = SellerProfile.registration(lifecycle.register(applicant));
         try {

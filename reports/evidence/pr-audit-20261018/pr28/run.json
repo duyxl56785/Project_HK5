@@ -1,0 +1,9 @@
+{
+  "jvmOptions": "-Duser.timezone=UTC -Dapi.version=1.44",
+  "exit": 0,
+  "java": "21.0.7",
+  "gradle": "8.14.3",
+  "date": "2026-10-18",
+  "sourceSha": "bd5ff09e89a50fea198fac38967d1565215fe2fe",
+  "command": "gradle -p .verification\\audit-20261018\\pr28/backend :cart-service:test :order-service:test --rerun-tasks --no-daemon --continue --console=plain"
+}

@@ -48,6 +48,12 @@ PASS: đã chạy đạt; FAIL: đã chạy lỗi; NOT_RUN: chưa thực thi; BL
 
 Phản hồi mới trong lúc audit: TV1 đã APPROVED #34 đúng `369b4f8`. TV2 xác nhận fixes #26/#27/#28, đồng thời báo **3 PostgreSQL probes FAIL ở #31** (schema CHAR/VARCHAR, duplicate initialize, concurrent operationId ledger). Đây là kết quả do TV2 cung cấp; TV5 chưa chạy lại và #35 không xử lý các DB defects đó. Xem audit §6 để biết owner/evidence; giữ #31 Draft và Issue #5 PARTIAL.
 
+## Checkpoint 18/10/2026 — audit PR sau tích hợp
+
+Các đoạn trên là snapshot lịch sử. #31/#36 và các PR QA/infrastructure trước đã merge; không còn báo ba DB findings cũ như source chưa sửa. [Audit hiện tại](../reports/PR_REVIEWERS_AUDIT_2026-10-18.md) kiểm5 PR mở #19/#28/#37/#38/#39: TV5 chạy mới #28 **61unit PASS**, #37 **291unit+49PG PASS** (11PG candidate SQL), #38 **17unit+15PG PASS**. Các lượt/source khác nhau, không cộng vào release total; runtime #19/#39 NOT_RUN/docs-only.
+
+#39 cần sửa số19/21 và ID baseline bị đổi nghĩa; #38 cần rõ retryable errors/current replay balances. M01 money/Cart currency, S01 Store authority, C01/E01 Catalog và fulfillment state/auth/event còn owner-gated. [Raw evidence và publication limits](../reports/evidence/pr-audit-20261018/README.md) tách49 public hashes với3 credential-bearing XML giữ local/derived summary. Issue #5 vẫn PARTIAL; không suy unit/PG thành F15/F16 production hoặc live2Store E2E PASS.
+
 ## TV5 — Finance contract / current-head checkpoint 18/10/2026
 
 - [Sáu contract, owner/signature/module matrix và M01 candidate TV5-FIN-v0.1](TV5_FINANCE_CONTRACT_SIGNOFF.md):

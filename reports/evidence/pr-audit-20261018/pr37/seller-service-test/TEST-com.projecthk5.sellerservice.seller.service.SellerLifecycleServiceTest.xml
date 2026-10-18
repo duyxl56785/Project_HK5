@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest" tests="50" skipped="0" failures="0" errors="0" timestamp="2026-10-18T04:40:19.799Z" hostname="MDUY-LECO" time="1.483">
+  <properties/>
+  <testcase name="registrationStartsPendingReviewAfterAuthentication()" classname="com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest" time="1.283"/>
+  <testcase name="completesRejectResubmitApproveSuspendReinstateLifecycle()" classname="com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest" time="0.004"/>
+  <testcase name="[1] operation=APPROVE" classname="com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest" time="0.007"/>
+  <testcase name="[2] operation=REJECT" classname="com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest" time="0.003"/>
+  <testcase name="[3] operation=SUSPEND" classname="com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest" time="0.002"/>
+  <testcase name="[4] operation=REINSTATE" classname="com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest" time="0.004"/>
+  <testcase name="deniedRegistrationCannotCreateApplication()" classname="com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest" time="0.008"/>
+  <testcase name="onlyTheOwnerCanResubmitEvenIfOtherActorIsAModerator()" classname="com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest" time="0.004"/>
+  <testcase name="[1] operation=RESUBMIT, current=PENDING_REVIEW, allowed=REJECTED, target=PENDING_REVIEW" classname="com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest" time="0.007"/>
+  <testcase name="[2] operation=RESUBMIT, current=APPROVED, allowed=REJECTED, target=PENDING_REVIEW" classname="com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest" time="0.003"/>
+  <testcase name="[3] operation=RESUBMIT, current=REJECTED, allowed=REJECTED, target=PENDING_REVIEW" classname="com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest" time="0.002"/>
+  <testcase name="[4] operation=RESUBMIT, current=SUSPENDED, allowed=REJECTED, target=PENDING_REVIEW" classname="com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest" time="0.001"/>
+  <testcase name="[5] operation=APPROVE, current=PENDING_REVIEW, allowed=PENDING_REVIEW, target=APPROVED" classname="com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest" time="0.002"/>
+  <testcase name="[6] operation=APPROVE, current=APPROVED, allowed=PENDING_REVIEW, target=APPROVED" classname="com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest" time="0.001"/>
+  <testcase name="[7] operation=APPROVE, current=REJECTED, allowed=PENDING_REVIEW, target=APPROVED" classname="com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest" time="0.001"/>
+  <testcase name="[8] operation=APPROVE, current=SUSPENDED, allowed=PENDING_REVIEW, target=APPROVED" classname="com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest" time="0.001"/>
+  <testcase name="[9] operation=REJECT, current=PENDING_REVIEW, allowed=PENDING_REVIEW, target=REJECTED" classname="com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest" time="0.002"/>
+  <testcase name="[10] operation=REJECT, current=APPROVED, allowed=PENDING_REVIEW, target=REJECTED" classname="com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest" time="0.001"/>
+  <testcase name="[11] operation=REJECT, current=REJECTED, allowed=PENDING_REVIEW, target=REJECTED" classname="com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest" time="0.002"/>
+  <testcase name="[12] operation=REJECT, current=SUSPENDED, allowed=PENDING_REVIEW, target=REJECTED" classname="com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest" time="0.002"/>
+  <testcase name="[13] operation=SUSPEND, current=PENDING_REVIEW, allowed=APPROVED, target=SUSPENDED" classname="com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest" time="0.001"/>
+  <testcase name="[14] operation=SUSPEND, current=APPROVED, allowed=APPROVED, target=SUSPENDED" classname="com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest" time="0.004"/>
+  <testcase name="[15] operation=SUSPEND, current=REJECTED, allowed=APPROVED, target=SUSPENDED" classname="com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest" time="0.003"/>
+  <testcase name="[16] operation=SUSPEND, current=SUSPENDED, allowed=APPROVED, target=SUSPENDED" classname="com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest" time="0.002"/>
+  <testcase name="[17] operation=REINSTATE, current=PENDING_REVIEW, allowed=SUSPENDED, target=APPROVED" classname="com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest" time="0.001"/>
+  <testcase name="[18] operation=REINSTATE, current=APPROVED, allowed=SUSPENDED, target=APPROVED" classname="com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest" time="0.001"/>
+  <testcase name="[19] operation=REINSTATE, current=REJECTED, allowed=SUSPENDED, target=APPROVED" classname="com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest" time="0.001"/>
+  <testcase name="[20] operation=REINSTATE, current=SUSPENDED, allowed=SUSPENDED, target=APPROVED" classname="com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest" time="0.002"/>
+  <testcase name="[1] operation=RESUBMIT" classname="com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest" time="0.002"/>
+  <testcase name="[2] operation=APPROVE" classname="com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest" time="0.003"/>
+  <testcase name="[3] operation=REJECT" classname="com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest" time="0.003"/>
+  <testcase name="[4] operation=SUSPEND" classname="com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest" time="0.003"/>
+  <testcase name="[5] operation=REINSTATE" classname="com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest" time="0.002"/>
+  <testcase name="[1] operation=RESUBMIT" classname="com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest" time="0.002"/>
+  <testcase name="[2] operation=APPROVE" classname="com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest" time="0.002"/>
+  <testcase name="[3] operation=REJECT" classname="com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest" time="0.002"/>
+  <testcase name="[4] operation=SUSPEND" classname="com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest" time="0.002"/>
+  <testcase name="[5] operation=REINSTATE" classname="com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest" time="0.001"/>
+  <testcase name="[1] operation=REJECT" classname="com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest" time="0.003"/>
+  <testcase name="[2] operation=SUSPEND" classname="com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest" time="0.001"/>
+  <testcase name="requiresAccessPolicyAndApplicant()" classname="com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest" time="0.002"/>
+  <testcase name="[1] operation=APPROVE" classname="com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest" time="0.003"/>
+  <testcase name="[2] operation=REJECT" classname="com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest" time="0.003"/>
+  <testcase name="[3] operation=SUSPEND" classname="com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest" time="0.003"/>
+  <testcase name="[4] operation=REINSTATE" classname="com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest" time="0.002"/>
+  <testcase name="[1] operation=RESUBMIT" classname="com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest" time="0.001"/>
+  <testcase name="[2] operation=APPROVE" classname="com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest" time="0.001"/>
+  <testcase name="[3] operation=REJECT" classname="com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest" time="0.001"/>
+  <testcase name="[4] operation=SUSPEND" classname="com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest" time="0.001"/>
+  <testcase name="[5] operation=REINSTATE" classname="com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[WARNING: A Java agent has been loaded dynamically (C:\Users\Admin\.gradle\caches\modules-2\files-2.1\net.bytebuddy\byte-buddy-agent\1.14.19\154da3a65b4f4a909d3e5bdec55d1b2b4cbb6ce1\byte-buddy-agent-1.14.19.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+]]></system-err>
+</testsuite>

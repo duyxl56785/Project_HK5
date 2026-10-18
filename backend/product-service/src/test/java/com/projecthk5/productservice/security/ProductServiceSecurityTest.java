@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.request;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -88,13 +89,30 @@ class ProductServiceSecurityTest {
         assertEquals(0, probe.invocations.get());
     }
 
+    @ParameterizedTest
+    @ValueSource(strings = {"missing", "bearer", "headers", "mock-admin", "internal-token"})
+    void proposedBatchRouteRemainsDeniedBeforeAnyHandler(String credential) throws Exception {
+        var request = post("/internal/catalog/checkout/validate").contentType("application/json").content("{\"items\":[]}");
+        switch (credential) {
+            case "bearer" -> request.header("Authorization", "Bearer unverified-fixture");
+            case "headers" -> request.header("X-User-Id", "admin").header("X-Roles", "ADMIN");
+            case "mock-admin" -> request.with(user("admin").roles("ADMIN"));
+            case "internal-token" -> request.header("X-Internal-Token", "unverified-fixture");
+            default -> { }
+        }
+        mvc.perform(request).andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.code").value("PRODUCT_ROUTE_AUTH_NOT_CONFIGURED"));
+        assertEquals(0, probe.invocations.get());
+        verifyNoInteractions(categoryService);
+    }
+
     // Test-only handlers prove denial occurs before a newly registered controller executes.
     @RestController
     static class ProbeController {
         private final AtomicInteger invocations = new AtomicInteger();
 
         @RequestMapping({"/api/products/probe", "/api/reviews/probe", "/internal/products/probe",
-                "/api/categories-unprotected", "/actuator/health"})
+                "/api/categories-unprotected", "/actuator/health", "/internal/catalog/checkout/validate"})
         String probe() {
             invocations.incrementAndGet();
             return "probe";

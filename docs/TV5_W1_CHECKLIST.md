@@ -54,3 +54,15 @@ Các file trên giữ bằng chứng và trạng thái của từng lần bàn g
 - [ ] TV4 tiếp nhận #35; reviewer quyết định lại #19/#27/#28 và nghiệm thu QA/evidence #30/#34. Parent #31 vẫn Draft; các contract/gate owner chưa đủ thì không tick DONE.
 - [x] Đọc phản hồi mới trong lúc audit: ghi nhận TV1 APPROVED #34, TV2 xác nhận fixes và tách 3 DB probes FAIL #31 do TV2 cung cấp khỏi unit evidence TV5. Không coi #35 đã sửa DB hoặc review COMMENT là approval.
 - [ ] TV4 xử lý ba DB findings #31 và cung cấp regressions; TV1/TV3 review phần schema/auth/contract thuộc ownership. TV5 chưa chạy lại các probes đó.
+
+## Checkpoint 18/10/2026 — sau khi owner tích hợp
+
+Các checklist trước giữ snapshot lịch sử; không tick các mục ghép khi contract/review vẫn thiếu.
+
+- [x] Xác minh #35/#36/#31 đã tích hợp; ba DB defects cũ đã có source fixes/regressions. Không request review trên PR đã đóng.
+- [x] Audit đủ5 PR đang mở #19/#28/#37/#38/#39 và kiểm reviewer events/current-head reviews trước khi request.
+- [x] Chạy mới exact-head suites: #28 61unit; #37 291unit+49PG; #38 17unit+15PG, tất cả0fail/error/skip; giữ source/prototype/live scope riêng.
+- [x] QA/RTM kiểm #39 có19case và ID baseline thay nghĩa; xác nhận nguyên tắc COD/Finance có sẵn, giữ M01/currency/state/auth/schema PENDING.
+- [x] Đăng5 review đúng inspected heads và reconcile reviewer: COMMENT #19/#28/#37/#38, CHANGES_REQUESTED #39; request TV1/#39, không request trùng hoặc self-request tác giả. [Links](../reports/PR_REVIEWERS_AUDIT_2026-10-18.md#5-review-đã-đăng-và-reviewer-đã-đối-chiếu).
+- [ ] Owner xác nhận các quyết định/tài liệu tương ứng; không tự Approve/Merge/Close/resolve threads hoặc chốt toàn contract.
+- [ ] Toàn bộ điều kiện Issue #5 đủ DONE. Giữ OPEN/PARTIAL.

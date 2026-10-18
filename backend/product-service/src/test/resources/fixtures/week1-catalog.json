@@ -1,0 +1,54 @@
+{
+  "fixtureVersion": 1,
+  "readiness": "TEST_ONLY_NOT_PERSISTED",
+  "adminAccountId": "10000000-0000-4000-8000-000000000099",
+  "categories": [
+    {"id": "20000000-0000-4000-8000-000000000001", "name": "Demo Category"}
+  ],
+  "stores": [
+    {
+      "ownerReference": "10000000-0000-4000-8000-000000000001",
+      "sellerId": "30000000-0000-4000-8000-000000000001",
+      "storeId": "40000000-0000-4000-8000-000000000001",
+      "name": "Demo Shop A", "slug": "demo-shop-a",
+      "sellerApproved": true, "storeOpen": true, "houseStore": false
+    },
+    {
+      "ownerReference": "10000000-0000-4000-8000-000000000002",
+      "sellerId": "30000000-0000-4000-8000-000000000002",
+      "storeId": "40000000-0000-4000-8000-000000000002",
+      "name": "Demo Shop B", "slug": "demo-shop-b",
+      "sellerApproved": true, "storeOpen": true, "houseStore": false
+    }
+  ],
+  "products": [
+    {
+      "productId": "50000000-0000-4000-8000-000000000001",
+      "storeId": "40000000-0000-4000-8000-000000000001",
+      "categoryId": "20000000-0000-4000-8000-000000000001",
+      "sku": "TV2-DEMO-A-001", "name": "Demo Product A1",
+      "unitPrice": "10000", "status": "ACTIVE", "suggestedAvailableQuantity": 20
+    },
+    {
+      "productId": "50000000-0000-4000-8000-000000000002",
+      "storeId": "40000000-0000-4000-8000-000000000002",
+      "categoryId": "20000000-0000-4000-8000-000000000001",
+      "sku": "TV2-DEMO-B-001", "name": "Demo Product B1",
+      "unitPrice": "15000", "status": "ACTIVE", "suggestedAvailableQuantity": 20
+    },
+    {
+      "productId": "50000000-0000-4000-8000-000000000003",
+      "storeId": "40000000-0000-4000-8000-000000000001",
+      "categoryId": "20000000-0000-4000-8000-000000000001",
+      "sku": "TV2-DEMO-A-002", "name": "Demo Product A2",
+      "unitPrice": "25000", "status": "ACTIVE", "suggestedAvailableQuantity": 10
+    },
+    {
+      "productId": "50000000-0000-4000-8000-000000000004",
+      "storeId": "40000000-0000-4000-8000-000000000002",
+      "categoryId": "20000000-0000-4000-8000-000000000001",
+      "sku": "TV2-DEMO-B-PRIVATE", "name": "Private Draft",
+      "unitPrice": "5000", "status": "DRAFT", "suggestedAvailableQuantity": 0
+    }
+  ]
+}

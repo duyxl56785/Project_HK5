@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.projecthk5.sellerservice.seller.entity.SellerProfileTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2026-10-18T04:40:19.750Z" hostname="MDUY-LECO" time="0.03">
+  <properties/>
+  <testcase name="rejectsOwnershipChangesWithoutMutatingTheEntity()" classname="com.projecthk5.sellerservice.seller.entity.SellerProfileTest" time="0.002"/>
+  <testcase name="createsSeparateSellerIdAndPreservesOpaqueOwner()" classname="com.projecthk5.sellerservice.seller.entity.SellerProfileTest" time="0.001"/>
+  <testcase name="[1] status=PENDING_REVIEW" classname="com.projecthk5.sellerservice.seller.entity.SellerProfileTest" time="0.008"/>
+  <testcase name="[2] status=APPROVED" classname="com.projecthk5.sellerservice.seller.entity.SellerProfileTest" time="0.001"/>
+  <testcase name="[1] status=APPROVED" classname="com.projecthk5.sellerservice.seller.entity.SellerProfileTest" time="0.002"/>
+  <testcase name="[2] status=REJECTED" classname="com.projecthk5.sellerservice.seller.entity.SellerProfileTest" time="0.0"/>
+  <testcase name="[3] status=SUSPENDED" classname="com.projecthk5.sellerservice.seller.entity.SellerProfileTest" time="0.0"/>
+  <testcase name="reasonLengthMatchesPostgresqlCharactersForSupplementaryUnicode()" classname="com.projecthk5.sellerservice.seller.entity.SellerProfileTest" time="0.003"/>
+  <testcase name="enforcesReasonLimitBeforeMutatingTheEntity()" classname="com.projecthk5.sellerservice.seller.entity.SellerProfileTest" time="0.001"/>
+  <testcase name="enforcesOwnerLengthWithoutTruncating()" classname="com.projecthk5.sellerservice.seller.entity.SellerProfileTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.projecthk5.sellerservice.seller.domain.SellerApplicationTest" tests="13" skipped="0" failures="0" errors="0" timestamp="2026-10-18T04:40:19.633Z" hostname="MDUY-LECO" time="0.114">
+  <properties/>
+  <testcase name="rejectsMissingOwnerAndStatus()" classname="com.projecthk5.sellerservice.seller.domain.SellerApplicationTest" time="0.015"/>
+  <testcase name="[1] status=REJECTED" classname="com.projecthk5.sellerservice.seller.domain.SellerApplicationTest" time="0.02"/>
+  <testcase name="[2] status=SUSPENDED" classname="com.projecthk5.sellerservice.seller.domain.SellerApplicationTest" time="0.003"/>
+  <testcase name="[1] reference=null" classname="com.projecthk5.sellerservice.seller.domain.SellerApplicationTest" time="0.002"/>
+  <testcase name="[2] reference=" classname="com.projecthk5.sellerservice.seller.domain.SellerApplicationTest" time="0.001"/>
+  <testcase name="[3] reference= " classname="com.projecthk5.sellerservice.seller.domain.SellerApplicationTest" time="0.001"/>
+  <testcase name="[4] reference=&#9;&#10;" classname="com.projecthk5.sellerservice.seller.domain.SellerApplicationTest" time="0.002"/>
+  <testcase name="[5] reference= " classname="com.projecthk5.sellerservice.seller.domain.SellerApplicationTest" time="0.001"/>
+  <testcase name="[1] status=PENDING_REVIEW" classname="com.projecthk5.sellerservice.seller.domain.SellerApplicationTest" time="0.013"/>
+  <testcase name="[2] status=APPROVED" classname="com.projecthk5.sellerservice.seller.domain.SellerApplicationTest" time="0.001"/>
+  <testcase name="[3] status=REJECTED" classname="com.projecthk5.sellerservice.seller.domain.SellerApplicationTest" time="0.001"/>
+  <testcase name="[4] status=SUSPENDED" classname="com.projecthk5.sellerservice.seller.domain.SellerApplicationTest" time="0.0"/>
+  <testcase name="treatsIdentityAsExactOpaqueReference()" classname="com.projecthk5.sellerservice.seller.domain.SellerApplicationTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
