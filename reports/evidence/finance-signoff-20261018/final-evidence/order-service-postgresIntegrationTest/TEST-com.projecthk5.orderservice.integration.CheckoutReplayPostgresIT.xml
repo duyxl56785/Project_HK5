@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.projecthk5.orderservice.integration.CheckoutReplayPostgresIT" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-10-18T05:07:18.686Z" hostname="MDUY-LECO" time="0.526">
+  <properties/>
+  <testcase name="committedOutcomeReadAfterLostCommitResponseReturnsCompleteResultWithoutCompensation()" classname="com.projecthk5.orderservice.integration.CheckoutReplayPostgresIT" time="0.35"/>
+  <testcase name="committedOrderReplaysTwiceOutsideTransactionWithoutAnotherOrderOrReservation()" classname="com.projecthk5.orderservice.integration.CheckoutReplayPostgresIT" time="0.06"/>
+  <testcase name="inconsistentAttemptCannotReadOrFinalizeAnotherCustomersOrder()" classname="com.projecthk5.orderservice.integration.CheckoutReplayPostgresIT" time="0.054"/>
+  <testcase name="changedPayloadStillRejectsSuccessfulKeyWithoutCallingOtherServices()" classname="com.projecthk5.orderservice.integration.CheckoutReplayPostgresIT" time="0.051"/>
+  <system-out><![CDATA[2026-10-18T05:07:14.820Z  INFO 31492 --- [order-service] [    Test worker] tc.postgres:16-alpine                    : Creating container for image: postgres:16-alpine
+2026-10-18T05:07:14.947Z  INFO 31492 --- [order-service] [    Test worker] tc.postgres:16-alpine                    : Container postgres:16-alpine is starting: 245118e4349971b60d688d53b159b3df58ec9b801cc0981b01c0f0d13543dcc8
+2026-10-18T05:07:16.825Z  INFO 31492 --- [order-service] [    Test worker] tc.postgres:16-alpine                    : Container postgres:16-alpine started in PT2.0048629S
+2026-10-18T05:07:16.825Z  INFO 31492 --- [order-service] [    Test worker] tc.postgres:16-alpine                    : Container is started (JDBC URL: jdbc:postgresql://localhost:50364/test?loggerLevel=OFF)
+2026-10-18T05:07:16.826Z  INFO 31492 --- [order-service] [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.projecthk5.orderservice.integration.CheckoutReplayPostgresIT]: CheckoutReplayPostgresIT does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-18T05:07:16.839Z  INFO 31492 --- [order-service] [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.projecthk5.orderservice.OrderServiceApplication for test class com.projecthk5.orderservice.integration.CheckoutReplayPostgresIT
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.5)
+
+2026-10-18T05:07:16.861Z  INFO 31492 --- [order-service] [    Test worker] c.p.o.i.CheckoutReplayPostgresIT         : Starting CheckoutReplayPostgresIT using Java 21.0.7 with PID 31492 (started by Minh Duy in D:\CMC Uni\5 Ky Dong\WEB\BCK WEB\Project_HK5\.verification\finance-signoff\work\backend\order-service)
+2026-10-18T05:07:16.861Z  INFO 31492 --- [order-service] [    Test worker] c.p.o.i.CheckoutReplayPostgresIT         : No active profile set, falling back to 1 default profile: "default"
+2026-10-18T05:07:17.072Z  INFO 31492 --- [order-service] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-10-18T05:07:17.090Z  INFO 31492 --- [order-service] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 16 ms. Found 3 JPA repository interfaces.
+2026-10-18T05:07:17.581Z  INFO 31492 --- [order-service] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2026-10-18T05:07:17.675Z  INFO 31492 --- [order-service] [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection org.postgresql.jdbc.PgConnection@4624ad36
+2026-10-18T05:07:17.676Z  INFO 31492 --- [order-service] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2026-10-18T05:07:17.677Z  INFO 31492 --- [order-service] [    Test worker] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://localhost:50364/test (PostgreSQL 16.15)
+2026-10-18T05:07:17.691Z  INFO 31492 --- [order-service] [    Test worker] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table "public"."flyway_schema_history" does not exist yet
+2026-10-18T05:07:17.692Z  INFO 31492 --- [order-service] [    Test worker] o.f.core.internal.command.DbValidate     : Successfully validated 1 migration (execution time 00:00.006s)
+2026-10-18T05:07:17.703Z  INFO 31492 --- [order-service] [    Test worker] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table "public"."flyway_schema_history" ...
+2026-10-18T05:07:17.741Z  INFO 31492 --- [order-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Current version of schema "public": << Empty Schema >>
+2026-10-18T05:07:17.749Z  INFO 31492 --- [order-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "1 - checkout baseline"
+2026-10-18T05:07:17.783Z  INFO 31492 --- [order-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Successfully applied 1 migration to schema "public", now at version v1 (execution time 00:00.024s)
+2026-10-18T05:07:17.844Z  INFO 31492 --- [order-service] [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-10-18T05:07:17.848Z  INFO 31492 --- [order-service] [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-10-18T05:07:17.861Z  INFO 31492 --- [order-service] [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-10-18T05:07:17.992Z  INFO 31492 --- [order-service] [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-10-18T05:07:18.005Z  INFO 31492 --- [order-service] [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-10-18T05:07:18.393Z  INFO 31492 --- [order-service] [    Test worker] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-10-18T05:07:18.675Z  INFO 31492 --- [order-service] [    Test worker] c.p.o.i.CheckoutReplayPostgresIT         : Started CheckoutReplayPostgresIT in 1.831 seconds (process running for 15.717)
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
