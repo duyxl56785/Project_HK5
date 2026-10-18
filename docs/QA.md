@@ -108,3 +108,13 @@ PR45 đã được owner merge vào28 tại5a3788b. [Canonical packet §§8–11
 giữ TV2/TV3 own-scope confirmations và TV1 OD07/09. M01/MD01–MD10 vẫnPENDING; business signer chờTV1/chủdựánxácnhận, chưa mở ProductJPA/Checkout money/Finance runtime.
 [Checkpoint/commands/resume](../reports/TV5_FINANCE_ACCEPTANCE_2026-10-18.md) và [derived audit](../reports/evidence/m01-owner-ledger-20261018.json) xác minh61existing raw hashes,
 source equivalence và original diagnostic1PASS/2FAIL; **runtime NOT_RUN trong lượt docs này**, không cộng lại các test đã chạy hoặc yêu cầu duyệt lại DTO/price compatibility giống cũ.
+
+### M01 re-audit r3 — actual run tại8cc5ce4,18/10/2026
+
+PR42/46 đã merge vào28; không push/request trên PRđóng. [Re-audit](../reports/TV5_M01_REAUDIT_2026-10-18.md)
+và [raw manifest](../reports/evidence/m01-reaudit-20261018/manifest.json): **83Order unitPASS,16Order PGPASS, diagnostic1PASS/2FAIL**,
+0error/skip, combined commandexit1/73s tại **8cc5ce4af1beacfe0d8467ec037d55e59a065691**. Đây là lượtTV5 mới, không phải17assertion harness củaTV3 hoặc cộng các snapshots cũ.
+New malformed-request guard verified; FIN01precision/replay vàFIN06pre-reserve vẫnFAIL, positivecontrolPASS; assertions/source giữ nguyên.
+TV3 MD05/06/08 engineering reply đã ghi nhận trong canonicalpacket; không businesssignature. M01/all10MDPENDING,
+S01/Security/Inventory PENDING, C01/E01/C06REVISE; chưa production slice mới. LiveE2E/settlement/Storequeries/currentCOD NOT_RUN/BLOCKED.
+Lưu22rawassets exactbytes,61historicalhashes+Gitblobs reverified;0missinginitialDockerVolumes. Giữ toàn bộ QA history, không giải quyết conflict thayowner.

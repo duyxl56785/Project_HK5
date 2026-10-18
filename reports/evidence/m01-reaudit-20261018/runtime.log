@@ -1,0 +1,81 @@
+Picked up JAVA_TOOL_OPTIONS: -Duser.timezone=UTC -Dapi.version=1.44
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.10/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Task :order-service:compileJava
+Note: D:\CMC Uni\5 Ky Dong\WEB\BCK WEB\Project_HK5\.verification\tv5-current-session\work\backend\order-service\src\main\java\com\projecthk5\orderservice\security\ResourceSecurityConfig.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+
+> Task :order-service:processResources
+> Task :order-service:classes
+> Task :order-service:compileTestJava
+> Task :order-service:processTestResources NO-SOURCE
+> Task :order-service:testClasses
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+
+> Task :order-service:test
+Picked up JAVA_TOOL_OPTIONS: -Duser.timezone=UTC -Dapi.version=1.44
+
+> Task :order-service:postgresIntegrationTest
+Picked up JAVA_TOOL_OPTIONS: -Duser.timezone=UTC -Dapi.version=1.44
+
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+2026-10-18T13:52:03.152Z  INFO 9240 --- [order-service] [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-10-18T13:52:03.155Z  INFO 9240 --- [order-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-10-18T13:52:03.159Z  INFO 9240 --- [order-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-10-18T13:52:03.161Z  INFO 9240 --- [order-service] [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-10-18T13:52:03.162Z  INFO 9240 --- [order-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown initiated...
+2026-10-18T13:52:03.168Z  INFO 9240 --- [order-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown completed.
+2026-10-18T13:52:03.170Z  INFO 9240 --- [order-service] [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-10-18T13:52:03.171Z  INFO 9240 --- [order-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown initiated...
+2026-10-18T13:52:03.174Z  INFO 9240 --- [order-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown completed.
+2026-10-18T13:52:03.176Z  INFO 9240 --- [order-service] [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-10-18T13:52:03.177Z  INFO 9240 --- [order-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Shutdown initiated...
+2026-10-18T13:52:03.180Z  INFO 9240 --- [order-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Shutdown completed.
+
+> Task :order-service:compileFin06RegressionJava
+> Task :order-service:processFin06RegressionResources NO-SOURCE
+> Task :order-service:fin06RegressionClasses
+
+> Task :order-service:fin06Regression
+Picked up JAVA_TOOL_OPTIONS: -Duser.timezone=UTC -Dapi.version=1.44
+
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+
+> Task :order-service:fin06Regression
+
+CheckoutMoneyPreflightRegressionTest > unsupportedStoragePrecisionMustBeRejectedRatherThanChangingMoneyOnReplay() FAILED
+    org.gradle.internal.exceptions.DefaultMultiCauseException at CheckoutMoneyPreflightRegressionTest.java:124
+        Caused by: org.opentest4j.AssertionFailedError at CheckoutMoneyPreflightRegressionTest.java:125
+
+CheckoutMoneyPreflightRegressionTest > parentOverflowMustBeRejectedBeforeReserveOrOrderWrite() FAILED
+    org.gradle.internal.exceptions.DefaultMultiCauseException at CheckoutMoneyPreflightRegressionTest.java:100
+        Caused by: org.mockito.exceptions.verification.NeverWantedButInvoked at CheckoutMoneyPreflightRegressionTest.java:101
+
+CheckoutMoneyPreflightRegressionTest > positiveControlPersistsExactAmountsAndReplayDoesNotReserveOrWriteAgain() PASSED
+
+2026-10-18T13:52:17.776Z  INFO 9848 --- [order-service] [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-10-18T13:52:17.778Z  INFO 9848 --- [order-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-10-18T13:52:17.783Z  INFO 9848 --- [order-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+
+> Task :order-service:fin06Regression FAILED
+
+3 tests completed, 2 failed
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':order-service:fin06Regression'.
+> There were failing tests. See the report at: file:///D:/CMC%20Uni/5%20Ky%20Dong/WEB/BCK%20WEB/Project_HK5/.verification/tv5-current-session/work/backend/order-service/build/reports/tests/fin06Regression/index.html
+
+* Try:
+> Run with --scan to get full insights.
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.10/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD FAILED in 1m 13s
+7 actionable tasks: 7 executed

@@ -6,7 +6,8 @@ From repository root, Java21 + Gradle8 + Docker/PostgreSQL16 Testcontainers avai
 
 ```powershell
 $env:JAVA_TOOL_OPTIONS='-Duser.timezone=UTC -Dapi.version=1.44'
-gradle -p backend --init-script ../tests/finance/fin06-regression.init.gradle :order-service:fin06Regression --rerun-tasks --no-daemon --console=plain
+$initTV5=(Resolve-Path 'tests/finance/fin06-regression.init.gradle').Path
+backend/gradlew.bat -p backend --init-script $initTV5 :order-service:fin06Regression --rerun-tasks --no-daemon --console=plain
 ```
 
 The init script adds a separate diagnostic source set/task for this invocation only. It does not edit
@@ -32,3 +33,7 @@ At parent28dd0cf the actual result is **1 PASS /2 FAIL /0 errors /0 skips**, Gra
 Do not change assertions just to make this green. TV3 owns the pre-reserve validator after applicable
 contract agreement/authorization; TV5 owns this QA handoff. Use current DB schema facts for capacity,
 and do not silently select VND/scale0, business caps, HTTP errors or rate approval from these fixtures.
+
+Re-executed at exact `8cc5ce4af1beacfe0d8467ec037d55e59a065691`: **1 PASS /2 FAIL /0 errors /0 skips**,
+positive control PASS; not fixed by the new malformed-request guard. [Current raw evidence and commands](../../reports/TV5_M01_REAUDIT_2026-10-18.md).
+The older parent28dd0cf result above remains historical. Normal tests do not run this explicit task.

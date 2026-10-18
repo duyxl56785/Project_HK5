@@ -1,0 +1,250 @@
+{
+  "artifactType": "DERIVED_AUDIT_AND_RAW_PUBLICATION_MANIFEST",
+  "source": "8cc5ce4af1beacfe0d8467ec037d55e59a065691",
+  "countsByTaskSameExecution": {
+    "test": {
+      "tests": 83,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "postgresIntegrationTest": {
+      "tests": 16,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "fin06Regression": {
+      "tests": 3,
+      "failures": 2,
+      "errors": 0,
+      "skipped": 0
+    }
+  },
+  "exitCode": 1,
+  "githubReadSnapshot": {
+    "28": {
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/28",
+      "head": "8cc5ce4af1beacfe0d8467ec037d55e59a065691",
+      "base": "main",
+      "state": "open",
+      "merged": false,
+      "mergeCommit": null,
+      "mergeability": "dirty",
+      "filesRead": 322,
+      "commitsRead": 46,
+      "commentsRead": 46,
+      "reviewsRead": 22,
+      "unresolvedThreads": 0,
+      "requestedReviewers": [
+        "lexuanbao258-collab"
+      ],
+      "checkRuns": [],
+      "commitStatusContexts": 0
+    },
+    "37": {
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/37",
+      "head": "ef62086048e2c7a00ecee16db0cc3cde2413deb6",
+      "base": "main",
+      "state": "open",
+      "merged": false,
+      "mergeCommit": "1880f5f24e9f0c9e35a656b6222b6b3a92cd979d",
+      "mergeability": "blocked",
+      "filesRead": 35,
+      "commitsRead": 15,
+      "commentsRead": 23,
+      "reviewsRead": 2,
+      "unresolvedThreads": 0,
+      "requestedReviewers": [
+        "lexuanbao258-collab",
+        "phamthecuong2022006-alt"
+      ],
+      "checkRuns": [
+        {
+          "name": "readiness",
+          "conclusion": "success"
+        }
+      ],
+      "commitStatusContexts": 0
+    },
+    "42": {
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/42",
+      "head": "35297ac757261d85e9f3c50ebe4bf171c1fbf7fa",
+      "base": "feat/tv3-cart-checkout-week1",
+      "state": "closed",
+      "merged": true,
+      "mergeCommit": "9d54c170ba452751f67ad8dc5e01849d3fd387da",
+      "mergeability": "unknown",
+      "filesRead": 51,
+      "commitsRead": 2,
+      "commentsRead": 2,
+      "reviewsRead": 0,
+      "unresolvedThreads": 0,
+      "requestedReviewers": [
+        "duyxl56785"
+      ],
+      "checkRuns": [],
+      "commitStatusContexts": 0
+    },
+    "46": {
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/46",
+      "head": "e597dafe7ac1fe178f2105608570f978da97120f",
+      "base": "feat/tv3-cart-checkout-week1",
+      "state": "closed",
+      "merged": true,
+      "mergeCommit": "3c249947c0b91e26b5f6539b04edc627951383b1",
+      "mergeability": "unknown",
+      "filesRead": 6,
+      "commitsRead": 2,
+      "commentsRead": 0,
+      "reviewsRead": 0,
+      "unresolvedThreads": 0,
+      "requestedReviewers": [
+        "lexuanbao258-collab",
+        "tranvanchinhbg2006-alt",
+        "duyxl56785",
+        "phamthecuong2022006-alt"
+      ],
+      "checkRuns": [],
+      "commitStatusContexts": 0
+    }
+  },
+  "historicalArtifactsVerifiedAgainstHashesAndGitBlobs": 61,
+  "missingInitialDockerVolumes": [],
+  "publicationMarkerHits": [],
+  "publicationLimit": "Original bytes retained. Marker scan is not exhaustive. No historical tests added to current counts. PostgreSQL is real, remote ports and policy synthetic, no live E2E or settlement approval.",
+  "artifacts": [
+    {
+      "path": "test/TEST-com.projecthk5.orderservice.domain.CheckoutRulesTest.xml",
+      "bytes": 1254,
+      "sha256": "1ad63669c80ca92fd85eb7ef3aea033635588eec9cc0b08dba82e1352a422880",
+      "publication": "RAW_EXACT_BYTES"
+    },
+    {
+      "path": "test/TEST-com.projecthk5.orderservice.domain.InventoryOperationIntentTest.xml",
+      "bytes": 1129,
+      "sha256": "a4d8cea51ba627d5d263cee9d178582ed8bde1bc202b714bf8d3b623bbf3b782",
+      "publication": "RAW_EXACT_BYTES"
+    },
+    {
+      "path": "test/TEST-com.projecthk5.orderservice.domain.OrderAmountStorageBoundsTest.xml",
+      "bytes": 1241,
+      "sha256": "643dedc9169dde546e98bd3eac53b3fb51d5ac3b3c7816b1915f45b735937cff",
+      "publication": "RAW_EXACT_BYTES"
+    },
+    {
+      "path": "test/TEST-com.projecthk5.orderservice.finance.FinanceCheckoutPreflightTest.xml",
+      "bytes": 1553,
+      "sha256": "6f04d6c00632acb8bebc41fa57fdd8934b8715b4cf3e56178da4a49e2fa43b9b",
+      "publication": "RAW_EXACT_BYTES"
+    },
+    {
+      "path": "test/TEST-com.projecthk5.orderservice.finance.FinanceConsumerParityTest.xml",
+      "bytes": 1460,
+      "sha256": "db2288db2c833c1ab073825e9d2f75aacbb7e4ccc33c365ba3c198fbc3f37565",
+      "publication": "RAW_EXACT_BYTES"
+    },
+    {
+      "path": "test/TEST-com.projecthk5.orderservice.finance.FinancePolicyConfigurationTest.xml",
+      "bytes": 2599,
+      "sha256": "1b74ad0956f4f68b18193bf2d7675b57f24f7da265ad742a9ec30cb4801b22bd",
+      "publication": "RAW_EXACT_BYTES"
+    },
+    {
+      "path": "test/TEST-com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest.xml",
+      "bytes": 2871,
+      "sha256": "97cdfe3e04cf6fd04bbd77e5472bac92199bc466f7f40d525506538df50c0c4e",
+      "publication": "RAW_EXACT_BYTES"
+    },
+    {
+      "path": "test/TEST-com.projecthk5.orderservice.finance.FinanceRulesTest.xml",
+      "bytes": 2506,
+      "sha256": "300a1f0f2d479b29141696f1714b8a0e8ea37727748102fd8d9c2486ce55530e",
+      "publication": "RAW_EXACT_BYTES"
+    },
+    {
+      "path": "test/TEST-com.projecthk5.orderservice.security.ContractJwtDecoderTest.xml",
+      "bytes": 791,
+      "sha256": "b1e4afd8f067bb22f6b55e39ce684a748640653243e599405399ab9ae71f3eaa",
+      "publication": "RAW_EXACT_BYTES"
+    },
+    {
+      "path": "test/TEST-com.projecthk5.orderservice.security.JwtEnvironmentConfigurationTest.xml",
+      "bytes": 1618,
+      "sha256": "4077ac59446277eabbffd51d3b847d3694c6c831428f1cce42328026dd95b999",
+      "publication": "RAW_EXACT_BYTES"
+    },
+    {
+      "path": "test/TEST-com.projecthk5.orderservice.service.CheckoutServiceTest.xml",
+      "bytes": 1930,
+      "sha256": "6d263dee3e6540bccb1d0a2640af6d086cbd44552e33e01100df54630310cabb",
+      "publication": "RAW_EXACT_BYTES"
+    },
+    {
+      "path": "test/TEST-com.projecthk5.orderservice.service.IdempotencyCoordinatorTest.xml",
+      "bytes": 644,
+      "sha256": "515a59d3ce2a3abefa53338011bbdfd0e46a25244118c3bd1b117b2b3b90c5b9",
+      "publication": "RAW_EXACT_BYTES"
+    },
+    {
+      "path": "postgresIntegrationTest/TEST-com.projecthk5.orderservice.finance.FinanceSnapshotPostgresIT.xml",
+      "bytes": 10032,
+      "sha256": "38322eaec95813a371ddda736aa1afea44ea2a1dbd4f0d1ed06a158deb22fe29",
+      "publication": "RAW_EXACT_BYTES"
+    },
+    {
+      "path": "postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.CheckoutReplayPostgresIT.xml",
+      "bytes": 6789,
+      "sha256": "ebf0c07fd11cdeda44342f200c8d3dbe0bbf0ad97fbe04aac750d5655cab09d3",
+      "publication": "RAW_EXACT_BYTES"
+    },
+    {
+      "path": "postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.CheckoutScannerPostgresIT.xml",
+      "bytes": 6657,
+      "sha256": "2d6bbaa6ae5bcef515f0d0ef01bf7662ab3f3d21d1f47396ce99022da59ab3dc",
+      "publication": "RAW_EXACT_BYTES"
+    },
+    {
+      "path": "postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.OrderPostgres16IT.xml",
+      "bytes": 7249,
+      "sha256": "8f9b93f3d63685f9b396bc80250d3a6b98bd7a855dbeec20546f25f31e52f74d",
+      "publication": "RAW_EXACT_BYTES"
+    },
+    {
+      "path": "fin06Regression/TEST-com.projecthk5.orderservice.finance.CheckoutMoneyPreflightRegressionTest.xml",
+      "bytes": 152622,
+      "sha256": "ba4fac153bd6ddb0dce55ab88d4360862a4a5cbb2f80c9f7c7e55abf8221719b",
+      "publication": "RAW_EXACT_BYTES"
+    },
+    {
+      "path": "runtime.log",
+      "bytes": 6011,
+      "sha256": "5729b0151a6bd08021e52d18a610cfab2b9890f06d0f3e8c997bdf4d18bd7937",
+      "publication": "RAW_EXACT_BYTES"
+    },
+    {
+      "path": "runtime-meta.json",
+      "bytes": 548,
+      "sha256": "84f689e3b7b37323e68cd15047cd06a62345938e2f9281b389b0b4c278b38e86",
+      "publication": "RAW_EXACT_BYTES"
+    },
+    {
+      "path": "docker-version.json",
+      "bytes": 1146,
+      "sha256": "6adac5bc26866b2a228a67e16d597313dcca9b49555dea9b55be443bc3a4775e",
+      "publication": "RAW_EXACT_BYTES"
+    },
+    {
+      "path": "volumes-before.txt",
+      "bytes": 70,
+      "sha256": "57f2b6e41bef8662862503d13f701777e37ed39e9110f9164595f570e2f83678",
+      "publication": "RAW_EXACT_BYTES"
+    },
+    {
+      "path": "volumes-after.txt",
+      "bytes": 70,
+      "sha256": "57f2b6e41bef8662862503d13f701777e37ed39e9110f9164595f570e2f83678",
+      "publication": "RAW_EXACT_BYTES"
+    }
+  ]
+}

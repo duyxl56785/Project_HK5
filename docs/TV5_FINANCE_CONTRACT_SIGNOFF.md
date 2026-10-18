@@ -196,3 +196,17 @@ PR43/44/45 are integrated into PR28 **5a3788b34ec4a2a91611d88020442a27b9dc7948**
 de1f5c6 run (16PG PASS; explicit diagnostic1PASS/2FAIL). This update is docs-only: runtime NOT_RUN, no newly claimed PASS, Finance flagfalse.
 FIN-01/06 remain TV3 fixes: exact unit/line/Store/fee/net/parent validation beforeRESERVE, immutable reviewed V2+ snapshots,
 unchanged original tests GREEN +positive controlPASS at actual fixSHA. Production settlement/Store queries/currentCOD/liveE2E remain BLOCKED.
+
+## Re-audit after PR46 merge — M01-REAUDIT-20261018-r3
+
+The preceding5a3788b checkpoint is historical. PR42/46 are integrated; current PR28 source is
+**8cc5ce4af1beacfe0d8467ec037d55e59a065691**, with a new malformed-request guard. Whole Checkout source is no longer identical
+to de1f5c6. A fresh TV5 run gives **83Order unit PASS,16Order PostgreSQL PASS, explicit diagnostic1PASS/2FAIL**, command exit1.
+[Full audit, exact source map and original log/XML](../reports/TV5_M01_REAUDIT_2026-10-18.md). Positive control remains PASS; FIN01/06 not fixed.
+
+[TV3's new MD05/06/08 disposition](https://github.com/duyxl56785/Project_HK5/pull/28#issuecomment-6249713586) conditionally supports
+explicit no-adjustment flow, local Order action/state+outbox transaction and three-level immutable V2+ snapshots. It explicitly disclaims
+human/business signature; record this engineering response rather than asking TV3 for the same proposal again. Exact fields/version/source,
+business choices and TV1/TV4 authority remain PENDING. All10MD business PENDING; no newly unlocked production slice or enabled Finance flag.
+TV2 unchanged representation and TV3 consumer-shape acceptance/TV1 OD07/09 baseline remain recorded. Current packet §12 supersedes stale
+source/status labels for this audit while preserving historical evidence and open owner decisions.
