@@ -8,7 +8,9 @@ This service provides a PostgreSQL-backed inventory ledger and HTTP API. It uses
 
 ### Endpoints
 
-All `/api/inventory/**` endpoints require `X-Inventory-Internal-Token`. Set `INVENTORY_INTERNAL_TOKEN` to a non-empty secret in the runtime environment. If the secret is absent, the API fails closed with HTTP 503. Never commit the token.
+Existing internal Inventory workflows may use `X-Inventory-Internal-Token`, configured by `INVENTORY_INTERNAL_TOKEN`. This is a broad compatibility credential for `/api/inventory/**`; it is **not** approved for Checkout/Order and must never be shared with that caller. If the legacy secret is absent, legacy requests fail closed with HTTP 503.
+
+A separate Order-pair gate is being introduced for `POST /api/inventory/operations` using `X-Internal-Token` and `INVENTORY_ORDER_PAIR_TOKEN`. It allows only `RESERVE`, `CONSUME`, and `RELEASE`; initialize, balance reads, wrong method/path, `INCREASE`, and `DECREASE` are denied. Missing pair-token configuration returns 503, an invalid pair token returns 401, and an authenticated out-of-scope request returns 403. This gate is not a production integration approval and does not replace TV3's durable operation journal, approved actor/system provenance, or TV1's final credential provisioning/rotation review. See [Order → Inventory pair gate](ORDER_INVENTORY_PAIR_GATE.md).
 
 - `POST /api/inventory/items` — initialize an SKU and available quantity (duplicate SKU returns conflict).
 - `GET /api/inventory/{sku}` — read available and reserved quantities.
@@ -28,15 +30,17 @@ Each operation requires a stable `operationId`. The database ledger rejects reus
 - `INVENTORY_DB_URL` (default `jdbc:postgresql://localhost:5432/inventory_db`)
 - `INVENTORY_DB_USERNAME` (default `inventory`)
 - `INVENTORY_DB_PASSWORD` (default empty; set it outside source control)
-- `INVENTORY_INTERNAL_TOKEN` (required to access API)
+- `INVENTORY_INTERNAL_TOKEN` (legacy broad token for existing internal workflows only; never provide to Checkout/Order)
+- `INVENTORY_ORDER_PAIR_TOKEN` (dedicated Order pair token; keep unset until owner review and secret provisioning)
 
 Flyway owns schema creation; Hibernate is configured with `ddl-auto: validate`.
 
 ### Integration blockers
 
 - TV3 must confirm `sku` vs `productId`, operation-ID derivation from checkout/order, and when reserve/consume/release is called. Until that is confirmed, do not wire this endpoint into checkout.
-- The shared JWT/service-auth contract is not yet wired into this service. The internal token is a fail-closed temporary boundary, not a replacement for the team's approved service authentication.
-- Unit tests cover stock invariants, multi-SKU operations, insufficient stock, and idempotent replay. PostgreSQL migration, concurrent idempotency, runtime security, and checkout E2E tests remain NOT_RUN until executed in a suitable environment.
+- This scoped pair gate is not full JWT/delegated-user authorization or current Store/Seller authority. The shared service-auth contract, pair rotation, exact deployment configuration, and Gateway boundary must be reviewed before enabling positive traffic.
+- A request with uncertain outcome must retry only the exact persisted operation ID/type/payload; UNKNOWN outcomes require reconciliation, never blind RELEASE.
+- Unit tests for the new pair gate are added on a separate branch but are NOT_RUN until CI/test execution is confirmed. PostgreSQL/runtime auth, positive service-pair integration, and checkout E2E remain NOT_RUN.
 
 ### TV5 verification checkpoint — 17/10/2026
 
