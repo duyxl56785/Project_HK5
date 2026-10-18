@@ -1,5 +1,8 @@
 # Đề xuất M01 của TV5 — để con người xem xét
 
+> Công bố qua PR44: checkpoint nguồn ban đầu21f6d53/ef62086 được giữ provenance; đã đồng bộ owner5ce0630 và kiểm QA tại1311f8a. Xem [kết quả mới và giới hạn](../TV5_FINANCE_ACCEPTANCE_2026-10-18.md). Mô tả quantity MD03 đã sửa trong packet; business policy vẫn PENDING.
+
+
 **Phiên bản:** `TV5-M01-PROPOSAL-v0.2` · **Trạng thái: PENDING**.
 **Người tổng hợp/đề xuất:** Nguyễn Minh Duy — TV5.
 **Người phê duyệt nghiệp vụ cuối cùng:** **chờ TV1/chủ dự án xác nhận**, theo trả lời trực tiếp của TV5 trong phiên này.

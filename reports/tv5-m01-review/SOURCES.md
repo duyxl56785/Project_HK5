@@ -1,5 +1,8 @@
 # Nguồn đối chiếu M01 local
 
+> Công bố qua PR44: checkpoint nguồn ban đầu21f6d53/ef62086 được giữ provenance; đã đồng bộ owner5ce0630 và kiểm QA tại1311f8a. Xem [kết quả mới và giới hạn](../TV5_FINANCE_ACCEPTANCE_2026-10-18.md). Mô tả quantity MD03 đã sửa trong packet; business policy vẫn PENDING.
+
+
 Snapshot metadata kiểm lại lúc10:28:45 UTC ngày18/10/2026; repository duyxl56785/Project_HK5. Các blob link khóa full SHA. Comments là owner position tại thời điểm đọc, không suy từ quyền commit thành business authority.
 
 ## Heads và phạm vi

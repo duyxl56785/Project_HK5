@@ -1,0 +1,812 @@
+{
+  "artifact_type": "DERIVED_PUBLICATION_MANIFEST",
+  "created_at_utc": "2026-10-18T10:46:34.131152+00:00",
+  "publication_limit": "Originals retained locally; marker scan is not an exhaustive secret detector. Derived summaries explicitly named. No test runs combined into release totals.",
+  "withheld_count": 0,
+  "artifacts": [
+    {
+      "run": "21f6d53",
+      "original_path": "cart-service/build/test-results/postgresIntegrationTest/TEST-com.projecthk5.cartservice.integration.CartPostgres16IT.xml",
+      "original_sha256": "115874a37d7fe6ea2bc974141f931407fe64d4a9827ef71e74816148dc1e3a82",
+      "bytes": 8700,
+      "source_metadata": "21f6d53/runtime-meta.json",
+      "counts": {
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "publication": "RAW_EXACT_BYTES",
+      "published_path": "21f6d53/cart-service/build/test-results/postgresIntegrationTest/TEST-com.projecthk5.cartservice.integration.CartPostgres16IT.xml"
+    },
+    {
+      "run": "21f6d53",
+      "original_path": "cart-service/build/test-results/test/TEST-com.projecthk5.cartservice.security.ContractJwtDecoderTest.xml",
+      "original_sha256": "d528fea8ee16ff3a94a51a8435bdb706de6427b2ccf34fe27d9dcab5bde62d97",
+      "bytes": 787,
+      "source_metadata": "21f6d53/runtime-meta.json",
+      "counts": {
+        "tests": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "publication": "RAW_EXACT_BYTES",
+      "published_path": "21f6d53/cart-service/build/test-results/test/TEST-com.projecthk5.cartservice.security.ContractJwtDecoderTest.xml"
+    },
+    {
+      "run": "21f6d53",
+      "original_path": "cart-service/build/test-results/test/TEST-com.projecthk5.cartservice.service.CartServiceTest.xml",
+      "original_sha256": "10e6f8c827b47cb6dbe5b1ad458851f299930246754b50355652b5918ffb775e",
+      "bytes": 1268,
+      "source_metadata": "21f6d53/runtime-meta.json",
+      "counts": {
+        "tests": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "publication": "RAW_EXACT_BYTES",
+      "published_path": "21f6d53/cart-service/build/test-results/test/TEST-com.projecthk5.cartservice.service.CartServiceTest.xml"
+    },
+    {
+      "run": "21f6d53",
+      "original_path": "order-service/build/test-results/fin06Regression/TEST-com.projecthk5.orderservice.finance.CheckoutMoneyPreflightRegressionTest.xml",
+      "original_sha256": "e4c5bd7339ce99c2a8a2035b028f2ea01f12ba30717bff829e0f9f7db19a80bf",
+      "bytes": 152649,
+      "source_metadata": "21f6d53/runtime-meta.json",
+      "counts": {
+        "tests": 3,
+        "failures": 2,
+        "errors": 0,
+        "skipped": 0
+      },
+      "publication": "RAW_EXACT_BYTES",
+      "published_path": "21f6d53/order-service/build/test-results/fin06Regression/TEST-com.projecthk5.orderservice.finance.CheckoutMoneyPreflightRegressionTest.xml"
+    },
+    {
+      "run": "21f6d53",
+      "original_path": "order-service/build/test-results/postgresIntegrationTest/TEST-com.projecthk5.orderservice.finance.FinanceSnapshotPostgresIT.xml",
+      "original_sha256": "23d1958fe1e7fb18d05018f7de431039c62406d4b6534c8526bbab1bc8b6deac",
+      "bytes": 10057,
+      "source_metadata": "21f6d53/runtime-meta.json",
+      "counts": {
+        "tests": 6,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "publication": "RAW_EXACT_BYTES",
+      "published_path": "21f6d53/order-service/build/test-results/postgresIntegrationTest/TEST-com.projecthk5.orderservice.finance.FinanceSnapshotPostgresIT.xml"
+    },
+    {
+      "run": "21f6d53",
+      "original_path": "order-service/build/test-results/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.CheckoutReplayPostgresIT.xml",
+      "original_sha256": "2498213ed84852e3fdfcd50dc3b96e7166baa4d5f66c93e9c06a25cf5c346a88",
+      "bytes": 6817,
+      "source_metadata": "21f6d53/runtime-meta.json",
+      "counts": {
+        "tests": 4,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "publication": "RAW_EXACT_BYTES",
+      "published_path": "21f6d53/order-service/build/test-results/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.CheckoutReplayPostgresIT.xml"
+    },
+    {
+      "run": "21f6d53",
+      "original_path": "order-service/build/test-results/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.CheckoutScannerPostgresIT.xml",
+      "original_sha256": "63a43ad61b95be2fe18fe854fb6609c0540a2b8384385025b48a879f27bc49c1",
+      "bytes": 6685,
+      "source_metadata": "21f6d53/runtime-meta.json",
+      "counts": {
+        "tests": 4,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "publication": "RAW_EXACT_BYTES",
+      "published_path": "21f6d53/order-service/build/test-results/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.CheckoutScannerPostgresIT.xml"
+    },
+    {
+      "run": "21f6d53",
+      "original_path": "order-service/build/test-results/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.OrderPostgres16IT.xml",
+      "original_sha256": "b8a06d40fae1ab982caa286c014b7befa0f7e350792f65bfc586908df1400aaf",
+      "bytes": 7282,
+      "source_metadata": "21f6d53/runtime-meta.json",
+      "counts": {
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "publication": "RAW_EXACT_BYTES",
+      "published_path": "21f6d53/order-service/build/test-results/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.OrderPostgres16IT.xml"
+    },
+    {
+      "run": "21f6d53",
+      "original_path": "order-service/build/test-results/test/TEST-com.projecthk5.orderservice.domain.CheckoutRulesTest.xml",
+      "original_sha256": "13892d846392da6e7bf0845e984452f96da9f2707f5a7d37fa4fe16dbdf3bd50",
+      "bytes": 783,
+      "source_metadata": "21f6d53/runtime-meta.json",
+      "counts": {
+        "tests": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "publication": "RAW_EXACT_BYTES",
+      "published_path": "21f6d53/order-service/build/test-results/test/TEST-com.projecthk5.orderservice.domain.CheckoutRulesTest.xml"
+    },
+    {
+      "run": "21f6d53",
+      "original_path": "order-service/build/test-results/test/TEST-com.projecthk5.orderservice.domain.InventoryOperationIntentTest.xml",
+      "original_sha256": "240a9e07ab312d1c0263fd4e0220a40190eabf926df777c931c7774bee27a30c",
+      "bytes": 1130,
+      "source_metadata": "21f6d53/runtime-meta.json",
+      "counts": {
+        "tests": 5,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "publication": "RAW_EXACT_BYTES",
+      "published_path": "21f6d53/order-service/build/test-results/test/TEST-com.projecthk5.orderservice.domain.InventoryOperationIntentTest.xml"
+    },
+    {
+      "run": "21f6d53",
+      "original_path": "order-service/build/test-results/test/TEST-com.projecthk5.orderservice.domain.OrderAmountStorageBoundsTest.xml",
+      "original_sha256": "82abe6f8a7288929e1de372f650fbf94a978fe9ecf9dc991c7597b7c65be2589",
+      "bytes": 1237,
+      "source_metadata": "21f6d53/runtime-meta.json",
+      "counts": {
+        "tests": 6,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "publication": "RAW_EXACT_BYTES",
+      "published_path": "21f6d53/order-service/build/test-results/test/TEST-com.projecthk5.orderservice.domain.OrderAmountStorageBoundsTest.xml"
+    },
+    {
+      "run": "21f6d53",
+      "original_path": "order-service/build/test-results/test/TEST-com.projecthk5.orderservice.finance.FinanceConsumerParityTest.xml",
+      "original_sha256": "c1d37567ca41a5cb7cd733b17210177b1a272d836d90c0e2c16fb49f6b18d028",
+      "bytes": 1462,
+      "source_metadata": "21f6d53/runtime-meta.json",
+      "counts": {
+        "tests": 8,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "publication": "RAW_EXACT_BYTES",
+      "published_path": "21f6d53/order-service/build/test-results/test/TEST-com.projecthk5.orderservice.finance.FinanceConsumerParityTest.xml"
+    },
+    {
+      "run": "21f6d53",
+      "original_path": "order-service/build/test-results/test/TEST-com.projecthk5.orderservice.finance.FinancePolicyConfigurationTest.xml",
+      "original_sha256": "07f650752dfbd7a81b92f23cae481fd1bc060395c6aaf3e2f4488eef47023d27",
+      "bytes": 2598,
+      "source_metadata": "21f6d53/runtime-meta.json",
+      "counts": {
+        "tests": 4,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "publication": "RAW_EXACT_BYTES",
+      "published_path": "21f6d53/order-service/build/test-results/test/TEST-com.projecthk5.orderservice.finance.FinancePolicyConfigurationTest.xml"
+    },
+    {
+      "run": "21f6d53",
+      "original_path": "order-service/build/test-results/test/TEST-com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest.xml",
+      "original_sha256": "47249b35ca4e75bd09bd063c8c9b31f6f7d4714b599c43c13ead6b6b4824ee6e",
+      "bytes": 2871,
+      "source_metadata": "21f6d53/runtime-meta.json",
+      "counts": {
+        "tests": 18,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "publication": "RAW_EXACT_BYTES",
+      "published_path": "21f6d53/order-service/build/test-results/test/TEST-com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest.xml"
+    },
+    {
+      "run": "21f6d53",
+      "original_path": "order-service/build/test-results/test/TEST-com.projecthk5.orderservice.finance.FinanceRulesTest.xml",
+      "original_sha256": "f0fc91fa793e272169d1284ecdda9e9eae9d2a0da5934e1ba5d48ce577102d01",
+      "bytes": 2510,
+      "source_metadata": "21f6d53/runtime-meta.json",
+      "counts": {
+        "tests": 15,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "publication": "RAW_EXACT_BYTES",
+      "published_path": "21f6d53/order-service/build/test-results/test/TEST-com.projecthk5.orderservice.finance.FinanceRulesTest.xml"
+    },
+    {
+      "run": "21f6d53",
+      "original_path": "order-service/build/test-results/test/TEST-com.projecthk5.orderservice.security.ContractJwtDecoderTest.xml",
+      "original_sha256": "b256cf6da73c8da2aec2c2f9c8b492af158bc31f8cd609431f4d0341d79dd7bd",
+      "bytes": 791,
+      "source_metadata": "21f6d53/runtime-meta.json",
+      "counts": {
+        "tests": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "publication": "RAW_EXACT_BYTES",
+      "published_path": "21f6d53/order-service/build/test-results/test/TEST-com.projecthk5.orderservice.security.ContractJwtDecoderTest.xml"
+    },
+    {
+      "run": "21f6d53",
+      "original_path": "order-service/build/test-results/test/TEST-com.projecthk5.orderservice.security.JwtEnvironmentConfigurationTest.xml",
+      "original_sha256": "6ade4fb49cc85fb5008164c5da2c47e30aee23e9d2b637fda88d2c6445a57652",
+      "bytes": 1617,
+      "source_metadata": "21f6d53/runtime-meta.json",
+      "counts": {
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "publication": "RAW_EXACT_BYTES",
+      "published_path": "21f6d53/order-service/build/test-results/test/TEST-com.projecthk5.orderservice.security.JwtEnvironmentConfigurationTest.xml"
+    },
+    {
+      "run": "21f6d53",
+      "original_path": "order-service/build/test-results/test/TEST-com.projecthk5.orderservice.service.CheckoutServiceTest.xml",
+      "original_sha256": "f2db1daf0ad9ac03ac3df0431a689d39d2c6b60dda95543665bb6247543723ae",
+      "bytes": 1963,
+      "source_metadata": "21f6d53/runtime-meta.json",
+      "counts": {
+        "tests": 7,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "publication": "RAW_EXACT_BYTES",
+      "published_path": "21f6d53/order-service/build/test-results/test/TEST-com.projecthk5.orderservice.service.CheckoutServiceTest.xml"
+    },
+    {
+      "run": "21f6d53",
+      "original_path": "order-service/build/test-results/test/TEST-com.projecthk5.orderservice.service.IdempotencyCoordinatorTest.xml",
+      "original_sha256": "25445c0e365488d8a513e977fa8b93e72d46b9105fa1577c621e6b7c81254fc0",
+      "bytes": 644,
+      "source_metadata": "21f6d53/runtime-meta.json",
+      "counts": {
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "publication": "RAW_EXACT_BYTES",
+      "published_path": "21f6d53/order-service/build/test-results/test/TEST-com.projecthk5.orderservice.service.IdempotencyCoordinatorTest.xml"
+    },
+    {
+      "run": "21f6d53",
+      "original_path": "runtime-meta.json",
+      "original_sha256": "e50c6352041676bab1e74e36be96808d64ad7aaac2b524005fb167e1fa00dcec",
+      "bytes": 617,
+      "source_metadata": "21f6d53/runtime-meta.json",
+      "publication": "RAW_EXACT_BYTES",
+      "published_path": "21f6d53/runtime-meta.json"
+    },
+    {
+      "run": "21f6d53",
+      "original_path": "runtime.log",
+      "original_sha256": "fdd5ec2da80898750ac8eb64075157345de0441f621302ecf4452e1d00eaea55",
+      "bytes": 8005,
+      "source_metadata": "21f6d53/runtime-meta.json",
+      "publication": "RAW_EXACT_BYTES",
+      "published_path": "21f6d53/runtime.log"
+    },
+    {
+      "run": "de1f5c6",
+      "original_path": "order-service/build/test-results/fin06Regression/TEST-com.projecthk5.orderservice.finance.CheckoutMoneyPreflightRegressionTest.xml",
+      "original_sha256": "997f262e6c4aad960b409f5f00d9cdccbb95c809e3be8f841845bcb9c049aba9",
+      "bytes": 152648,
+      "source_metadata": "de1f5c6/runtime-meta.json",
+      "counts": {
+        "tests": 3,
+        "failures": 2,
+        "errors": 0,
+        "skipped": 0
+      },
+      "publication": "RAW_EXACT_BYTES",
+      "published_path": "de1f5c6/order-service/build/test-results/fin06Regression/TEST-com.projecthk5.orderservice.finance.CheckoutMoneyPreflightRegressionTest.xml"
+    },
+    {
+      "run": "de1f5c6",
+      "original_path": "order-service/build/test-results/postgresIntegrationTest/TEST-com.projecthk5.orderservice.finance.FinanceSnapshotPostgresIT.xml",
+      "original_sha256": "f61db27df667eef879944bc127237844826284ce6865c3f10d58f5ee6807a0b5",
+      "bytes": 10055,
+      "source_metadata": "de1f5c6/runtime-meta.json",
+      "counts": {
+        "tests": 6,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "publication": "RAW_EXACT_BYTES",
+      "published_path": "de1f5c6/order-service/build/test-results/postgresIntegrationTest/TEST-com.projecthk5.orderservice.finance.FinanceSnapshotPostgresIT.xml"
+    },
+    {
+      "run": "de1f5c6",
+      "original_path": "order-service/build/test-results/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.CheckoutReplayPostgresIT.xml",
+      "original_sha256": "150375874230e607c4735773f03532b36b50a23926e76126303a8199af734526",
+      "bytes": 6816,
+      "source_metadata": "de1f5c6/runtime-meta.json",
+      "counts": {
+        "tests": 4,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "publication": "RAW_EXACT_BYTES",
+      "published_path": "de1f5c6/order-service/build/test-results/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.CheckoutReplayPostgresIT.xml"
+    },
+    {
+      "run": "de1f5c6",
+      "original_path": "order-service/build/test-results/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.CheckoutScannerPostgresIT.xml",
+      "original_sha256": "d7f0b19e69e2012fc5fa2855053b99adcaa0e166fcc8bc6d4a3f58d9baf8341a",
+      "bytes": 6684,
+      "source_metadata": "de1f5c6/runtime-meta.json",
+      "counts": {
+        "tests": 4,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "publication": "RAW_EXACT_BYTES",
+      "published_path": "de1f5c6/order-service/build/test-results/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.CheckoutScannerPostgresIT.xml"
+    },
+    {
+      "run": "de1f5c6",
+      "original_path": "order-service/build/test-results/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.OrderPostgres16IT.xml",
+      "original_sha256": "be7cef4e297649fa728981e2a13328ae63ce59c2b0572cc634395517713870bd",
+      "bytes": 7281,
+      "source_metadata": "de1f5c6/runtime-meta.json",
+      "counts": {
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "publication": "RAW_EXACT_BYTES",
+      "published_path": "de1f5c6/order-service/build/test-results/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.OrderPostgres16IT.xml"
+    },
+    {
+      "run": "de1f5c6",
+      "original_path": "order-service/build/test-results/test/TEST-com.projecthk5.orderservice.domain.CheckoutRulesTest.xml",
+      "original_sha256": "35c5abf6fa3aea2627a1a03c9fba9a8e8ce301fe71a8d3951b40a1100f854daf",
+      "bytes": 1101,
+      "source_metadata": "de1f5c6/runtime-meta.json",
+      "counts": {
+        "tests": 5,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "publication": "RAW_EXACT_BYTES",
+      "published_path": "de1f5c6/order-service/build/test-results/test/TEST-com.projecthk5.orderservice.domain.CheckoutRulesTest.xml"
+    },
+    {
+      "run": "de1f5c6",
+      "original_path": "order-service/build/test-results/test/TEST-com.projecthk5.orderservice.domain.InventoryOperationIntentTest.xml",
+      "original_sha256": "a969a55a3b463375009ffc124551b1fe2dada0884dd0941f39e9558952fcca7b",
+      "bytes": 1128,
+      "source_metadata": "de1f5c6/runtime-meta.json",
+      "counts": {
+        "tests": 5,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "publication": "RAW_EXACT_BYTES",
+      "published_path": "de1f5c6/order-service/build/test-results/test/TEST-com.projecthk5.orderservice.domain.InventoryOperationIntentTest.xml"
+    },
+    {
+      "run": "de1f5c6",
+      "original_path": "order-service/build/test-results/test/TEST-com.projecthk5.orderservice.domain.OrderAmountStorageBoundsTest.xml",
+      "original_sha256": "75040d6c38e267a137f470be85bf1281d1a96a8a5d56bd44b494f53952705c43",
+      "bytes": 1237,
+      "source_metadata": "de1f5c6/runtime-meta.json",
+      "counts": {
+        "tests": 6,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "publication": "RAW_EXACT_BYTES",
+      "published_path": "de1f5c6/order-service/build/test-results/test/TEST-com.projecthk5.orderservice.domain.OrderAmountStorageBoundsTest.xml"
+    },
+    {
+      "run": "de1f5c6",
+      "original_path": "order-service/build/test-results/test/TEST-com.projecthk5.orderservice.finance.FinanceConsumerParityTest.xml",
+      "original_sha256": "909869c3bc781adbe71af4835f86e236adfed3d1ea6baed3ad2c0f32dc5ded6e",
+      "bytes": 1462,
+      "source_metadata": "de1f5c6/runtime-meta.json",
+      "counts": {
+        "tests": 8,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "publication": "RAW_EXACT_BYTES",
+      "published_path": "de1f5c6/order-service/build/test-results/test/TEST-com.projecthk5.orderservice.finance.FinanceConsumerParityTest.xml"
+    },
+    {
+      "run": "de1f5c6",
+      "original_path": "order-service/build/test-results/test/TEST-com.projecthk5.orderservice.finance.FinancePolicyConfigurationTest.xml",
+      "original_sha256": "a4cf18c7fde42e802e53d331657d585e1e60ec5fe96a6976db5e1fe5ca5fe1e1",
+      "bytes": 2596,
+      "source_metadata": "de1f5c6/runtime-meta.json",
+      "counts": {
+        "tests": 4,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "publication": "RAW_EXACT_BYTES",
+      "published_path": "de1f5c6/order-service/build/test-results/test/TEST-com.projecthk5.orderservice.finance.FinancePolicyConfigurationTest.xml"
+    },
+    {
+      "run": "de1f5c6",
+      "original_path": "order-service/build/test-results/test/TEST-com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest.xml",
+      "original_sha256": "92643ac9a10143f14104f4e536b7672dde7172a5c161607d8a57a2cef1fac959",
+      "bytes": 2869,
+      "source_metadata": "de1f5c6/runtime-meta.json",
+      "counts": {
+        "tests": 18,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "publication": "RAW_EXACT_BYTES",
+      "published_path": "de1f5c6/order-service/build/test-results/test/TEST-com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest.xml"
+    },
+    {
+      "run": "de1f5c6",
+      "original_path": "order-service/build/test-results/test/TEST-com.projecthk5.orderservice.finance.FinanceRulesTest.xml",
+      "original_sha256": "415d44a728550bda2ee406afbe794d460eaada5780de8ac8aca0a317191617bb",
+      "bytes": 2502,
+      "source_metadata": "de1f5c6/runtime-meta.json",
+      "counts": {
+        "tests": 15,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "publication": "RAW_EXACT_BYTES",
+      "published_path": "de1f5c6/order-service/build/test-results/test/TEST-com.projecthk5.orderservice.finance.FinanceRulesTest.xml"
+    },
+    {
+      "run": "de1f5c6",
+      "original_path": "order-service/build/test-results/test/TEST-com.projecthk5.orderservice.security.ContractJwtDecoderTest.xml",
+      "original_sha256": "c28d395880d3ddf9ac43cf12b230d446765d9b9ce5e2e1b26ac3f0d79bb87a35",
+      "bytes": 790,
+      "source_metadata": "de1f5c6/runtime-meta.json",
+      "counts": {
+        "tests": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "publication": "RAW_EXACT_BYTES",
+      "published_path": "de1f5c6/order-service/build/test-results/test/TEST-com.projecthk5.orderservice.security.ContractJwtDecoderTest.xml"
+    },
+    {
+      "run": "de1f5c6",
+      "original_path": "order-service/build/test-results/test/TEST-com.projecthk5.orderservice.security.JwtEnvironmentConfigurationTest.xml",
+      "original_sha256": "1045320a659c0c99c24ca82a6db56b02a00921ca2eab266bcf8a49883c430e19",
+      "bytes": 1617,
+      "source_metadata": "de1f5c6/runtime-meta.json",
+      "counts": {
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "publication": "RAW_EXACT_BYTES",
+      "published_path": "de1f5c6/order-service/build/test-results/test/TEST-com.projecthk5.orderservice.security.JwtEnvironmentConfigurationTest.xml"
+    },
+    {
+      "run": "de1f5c6",
+      "original_path": "order-service/build/test-results/test/TEST-com.projecthk5.orderservice.service.CheckoutServiceTest.xml",
+      "original_sha256": "80394f3f6d2e17e43e0b300331ce1b151c9805d5ba1b8722d0a50299243d4cc5",
+      "bytes": 1964,
+      "source_metadata": "de1f5c6/runtime-meta.json",
+      "counts": {
+        "tests": 7,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "publication": "RAW_EXACT_BYTES",
+      "published_path": "de1f5c6/order-service/build/test-results/test/TEST-com.projecthk5.orderservice.service.CheckoutServiceTest.xml"
+    },
+    {
+      "run": "de1f5c6",
+      "original_path": "order-service/build/test-results/test/TEST-com.projecthk5.orderservice.service.IdempotencyCoordinatorTest.xml",
+      "original_sha256": "309f488e84399fc816c528e62ac53131e48b236f7d4e316045743c9bd32c194e",
+      "bytes": 644,
+      "source_metadata": "de1f5c6/runtime-meta.json",
+      "counts": {
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "publication": "RAW_EXACT_BYTES",
+      "published_path": "de1f5c6/order-service/build/test-results/test/TEST-com.projecthk5.orderservice.service.IdempotencyCoordinatorTest.xml"
+    },
+    {
+      "run": "de1f5c6",
+      "original_path": "runtime-meta.json",
+      "original_sha256": "66293be7ad701ef8ac35518a60382a4be55db780e01fea1332e7cce778754076",
+      "bytes": 625,
+      "source_metadata": "de1f5c6/runtime-meta.json",
+      "publication": "RAW_EXACT_BYTES",
+      "published_path": "de1f5c6/runtime-meta.json"
+    },
+    {
+      "run": "de1f5c6",
+      "original_path": "runtime.log",
+      "original_sha256": "35cde6d1aae32fd802e121b46aee7ac6988ae8ebd99061b84cc759ce7c9f11f0",
+      "bytes": 6025,
+      "source_metadata": "de1f5c6/runtime-meta.json",
+      "publication": "RAW_EXACT_BYTES",
+      "published_path": "de1f5c6/runtime.log"
+    },
+    {
+      "run": "1311f8a",
+      "original_path": "cart-service/build/test-results/postgresIntegrationTest/TEST-com.projecthk5.cartservice.integration.CartPostgres16IT.xml",
+      "original_sha256": "77a0c13b988271d383fe2d90432297b2e4fec7ce44d446a6fb2762a627dc1f4e",
+      "bytes": 8697,
+      "source_metadata": "1311f8a/runtime-meta.json",
+      "counts": {
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "publication": "RAW_EXACT_BYTES",
+      "published_path": "1311f8a/cart-service/build/test-results/postgresIntegrationTest/TEST-com.projecthk5.cartservice.integration.CartPostgres16IT.xml"
+    },
+    {
+      "run": "1311f8a",
+      "original_path": "cart-service/build/test-results/test/TEST-com.projecthk5.cartservice.security.ContractJwtDecoderTest.xml",
+      "original_sha256": "d8f675ef6c74aaf7925e6f25c51105d4c539beb4c378d9048bf9a624cf137e33",
+      "bytes": 787,
+      "source_metadata": "1311f8a/runtime-meta.json",
+      "counts": {
+        "tests": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "publication": "RAW_EXACT_BYTES",
+      "published_path": "1311f8a/cart-service/build/test-results/test/TEST-com.projecthk5.cartservice.security.ContractJwtDecoderTest.xml"
+    },
+    {
+      "run": "1311f8a",
+      "original_path": "cart-service/build/test-results/test/TEST-com.projecthk5.cartservice.service.CartServiceTest.xml",
+      "original_sha256": "8b323f6863cd09cc4d80b6719502b236b6e2e1afa6c27fe43204c96772ac6779",
+      "bytes": 1570,
+      "source_metadata": "1311f8a/runtime-meta.json",
+      "counts": {
+        "tests": 5,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "publication": "RAW_EXACT_BYTES",
+      "published_path": "1311f8a/cart-service/build/test-results/test/TEST-com.projecthk5.cartservice.service.CartServiceTest.xml"
+    },
+    {
+      "run": "1311f8a",
+      "original_path": "order-service/build/test-results/test/TEST-com.projecthk5.orderservice.domain.CheckoutRulesTest.xml",
+      "original_sha256": "b725b5a70ee4670a3ae562f0cd856e314aa44581b34378867f5acd09d79f213f",
+      "bytes": 1101,
+      "source_metadata": "1311f8a/runtime-meta.json",
+      "counts": {
+        "tests": 5,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "publication": "RAW_EXACT_BYTES",
+      "published_path": "1311f8a/order-service/build/test-results/test/TEST-com.projecthk5.orderservice.domain.CheckoutRulesTest.xml"
+    },
+    {
+      "run": "1311f8a",
+      "original_path": "order-service/build/test-results/test/TEST-com.projecthk5.orderservice.domain.InventoryOperationIntentTest.xml",
+      "original_sha256": "4ea78288834a760570594d06760cdf3ef7eb115cd7da89c819921d1c564545c3",
+      "bytes": 1130,
+      "source_metadata": "1311f8a/runtime-meta.json",
+      "counts": {
+        "tests": 5,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "publication": "RAW_EXACT_BYTES",
+      "published_path": "1311f8a/order-service/build/test-results/test/TEST-com.projecthk5.orderservice.domain.InventoryOperationIntentTest.xml"
+    },
+    {
+      "run": "1311f8a",
+      "original_path": "order-service/build/test-results/test/TEST-com.projecthk5.orderservice.domain.OrderAmountStorageBoundsTest.xml",
+      "original_sha256": "273d095f5144e48afa838f222e741546cc7307d6d656b29689327fe0222a851b",
+      "bytes": 1237,
+      "source_metadata": "1311f8a/runtime-meta.json",
+      "counts": {
+        "tests": 6,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "publication": "RAW_EXACT_BYTES",
+      "published_path": "1311f8a/order-service/build/test-results/test/TEST-com.projecthk5.orderservice.domain.OrderAmountStorageBoundsTest.xml"
+    },
+    {
+      "run": "1311f8a",
+      "original_path": "order-service/build/test-results/test/TEST-com.projecthk5.orderservice.finance.FinanceCheckoutPreflightTest.xml",
+      "original_sha256": "6345643adfa00048d9b64effa610d2412a3dfb90e35854c96a5751f65016ae30",
+      "bytes": 1550,
+      "source_metadata": "1311f8a/runtime-meta.json",
+      "counts": {
+        "tests": 4,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "publication": "RAW_EXACT_BYTES",
+      "published_path": "1311f8a/order-service/build/test-results/test/TEST-com.projecthk5.orderservice.finance.FinanceCheckoutPreflightTest.xml"
+    },
+    {
+      "run": "1311f8a",
+      "original_path": "order-service/build/test-results/test/TEST-com.projecthk5.orderservice.finance.FinanceConsumerParityTest.xml",
+      "original_sha256": "08ecfd25a2d95fc61d7fbb7d4024bd3e8e67350e6fe29681d648c8993800dd78",
+      "bytes": 1460,
+      "source_metadata": "1311f8a/runtime-meta.json",
+      "counts": {
+        "tests": 8,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "publication": "RAW_EXACT_BYTES",
+      "published_path": "1311f8a/order-service/build/test-results/test/TEST-com.projecthk5.orderservice.finance.FinanceConsumerParityTest.xml"
+    },
+    {
+      "run": "1311f8a",
+      "original_path": "order-service/build/test-results/test/TEST-com.projecthk5.orderservice.finance.FinancePolicyConfigurationTest.xml",
+      "original_sha256": "f102ff5adc4573f9e525d9300ce19dbff959f75c05ca91d9c8fdeaa54964792a",
+      "bytes": 2599,
+      "source_metadata": "1311f8a/runtime-meta.json",
+      "counts": {
+        "tests": 4,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "publication": "RAW_EXACT_BYTES",
+      "published_path": "1311f8a/order-service/build/test-results/test/TEST-com.projecthk5.orderservice.finance.FinancePolicyConfigurationTest.xml"
+    },
+    {
+      "run": "1311f8a",
+      "original_path": "order-service/build/test-results/test/TEST-com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest.xml",
+      "original_sha256": "4cefe640f7762f3ddae03895ae35b37c3084a18e6a250e4396cb32d61ad3e04f",
+      "bytes": 2869,
+      "source_metadata": "1311f8a/runtime-meta.json",
+      "counts": {
+        "tests": 18,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "publication": "RAW_EXACT_BYTES",
+      "published_path": "1311f8a/order-service/build/test-results/test/TEST-com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest.xml"
+    },
+    {
+      "run": "1311f8a",
+      "original_path": "order-service/build/test-results/test/TEST-com.projecthk5.orderservice.finance.FinanceRulesTest.xml",
+      "original_sha256": "c91f09c6074e0260ea208238a92742fd45a72ecaa7c7d4cbb9ae846acdba17bc",
+      "bytes": 2498,
+      "source_metadata": "1311f8a/runtime-meta.json",
+      "counts": {
+        "tests": 15,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "publication": "RAW_EXACT_BYTES",
+      "published_path": "1311f8a/order-service/build/test-results/test/TEST-com.projecthk5.orderservice.finance.FinanceRulesTest.xml"
+    },
+    {
+      "run": "1311f8a",
+      "original_path": "order-service/build/test-results/test/TEST-com.projecthk5.orderservice.security.ContractJwtDecoderTest.xml",
+      "original_sha256": "0eb656a32f8825ce7a0d92e603153d07ce955620dcdc46fee29b395e2b28c93d",
+      "bytes": 791,
+      "source_metadata": "1311f8a/runtime-meta.json",
+      "counts": {
+        "tests": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "publication": "RAW_EXACT_BYTES",
+      "published_path": "1311f8a/order-service/build/test-results/test/TEST-com.projecthk5.orderservice.security.ContractJwtDecoderTest.xml"
+    },
+    {
+      "run": "1311f8a",
+      "original_path": "order-service/build/test-results/test/TEST-com.projecthk5.orderservice.security.JwtEnvironmentConfigurationTest.xml",
+      "original_sha256": "cf9fcb771cfda94f58f1266b013c026c36e0375a65cd0495cc88c53295e8df9a",
+      "bytes": 1618,
+      "source_metadata": "1311f8a/runtime-meta.json",
+      "counts": {
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "publication": "RAW_EXACT_BYTES",
+      "published_path": "1311f8a/order-service/build/test-results/test/TEST-com.projecthk5.orderservice.security.JwtEnvironmentConfigurationTest.xml"
+    },
+    {
+      "run": "1311f8a",
+      "original_path": "order-service/build/test-results/test/TEST-com.projecthk5.orderservice.service.CheckoutServiceTest.xml",
+      "original_sha256": "4bceec374038220025892aac9278c7e91c92d8c1ea101283395b38648b450f81",
+      "bytes": 1772,
+      "source_metadata": "1311f8a/runtime-meta.json",
+      "counts": {
+        "tests": 9,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "publication": "RAW_EXACT_BYTES",
+      "published_path": "1311f8a/order-service/build/test-results/test/TEST-com.projecthk5.orderservice.service.CheckoutServiceTest.xml"
+    },
+    {
+      "run": "1311f8a",
+      "original_path": "order-service/build/test-results/test/TEST-com.projecthk5.orderservice.service.IdempotencyCoordinatorTest.xml",
+      "original_sha256": "bb9d29c013628eee846530c3fbe3d0b31fc156ac048fb8f5b228d7bd8daf417a",
+      "bytes": 644,
+      "source_metadata": "1311f8a/runtime-meta.json",
+      "counts": {
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "publication": "RAW_EXACT_BYTES",
+      "published_path": "1311f8a/order-service/build/test-results/test/TEST-com.projecthk5.orderservice.service.IdempotencyCoordinatorTest.xml"
+    },
+    {
+      "run": "1311f8a",
+      "original_path": "runtime-meta.json",
+      "original_sha256": "3b179bdb9d326b5ea14d6abaa34ba6e584b7187e39cc34bc4b0788f6502171c1",
+      "bytes": 662,
+      "source_metadata": "1311f8a/runtime-meta.json",
+      "publication": "RAW_EXACT_BYTES",
+      "published_path": "1311f8a/runtime-meta.json"
+    },
+    {
+      "run": "1311f8a",
+      "original_path": "runtime.log",
+      "original_sha256": "a5340066526233c131562da29e8662a941b03793324360fe0fd310d5dcac1de1",
+      "bytes": 3059,
+      "source_metadata": "1311f8a/runtime-meta.json",
+      "publication": "RAW_EXACT_BYTES",
+      "published_path": "1311f8a/runtime.log"
+    }
+  ]
+}

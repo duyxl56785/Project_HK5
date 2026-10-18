@@ -1,5 +1,8 @@
 # Ma trận MD01–MD10 — đối chiếu và đề xuất TV5
 
+> Công bố qua PR44: checkpoint nguồn ban đầu21f6d53/ef62086 được giữ provenance; đã đồng bộ owner5ce0630 và kiểm QA tại1311f8a. Xem [kết quả mới và giới hạn](../TV5_FINANCE_ACCEPTANCE_2026-10-18.md). Mô tả quantity MD03 đã sửa trong packet; business policy vẫn PENDING.
+
+
 **Phiên bản đề xuất:** `TV5-M01-PROPOSAL-v0.2`, 18/10/2026. **M01 overall: PENDING.**
 Nguyễn Minh Duy/TV5 tổng hợp, chưa được xác nhận có quyền ký nghiệp vụ cuối cùng.
 **Người phê duyệt nghiệp vụ: chờ TV1/chủ dự án xác nhận.** Đây là trả lời trực tiếp của người dùng, không phải suy luận từ quyền owner Finance.

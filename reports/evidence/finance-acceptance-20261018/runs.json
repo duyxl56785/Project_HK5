@@ -1,0 +1,41 @@
+[
+  {
+    "run": "21f6d53",
+    "metadata": {
+      "started_at_utc": "2026-10-18T10:37:26.9065475Z",
+      "source_sha": "21f6d533726533cc49febcc1e977f25bb0270de0",
+      "java_home": "C:\\Program Files\\Java\\jdk-21",
+      "java_tool_options": "-Duser.timezone=UTC -Dapi.version=1.44",
+      "command": "gradlew.bat -p backend --init-script <absolute tests/finance/fin06-regression.init.gradle> :cart-service:test :order-service:test :cart-service:postgresIntegrationTest :order-service:postgresIntegrationTest :order-service:fin06Regression --rerun-tasks --no-daemon --continue --console=plain",
+      "finished_at_utc": "2026-10-18T10:39:21.5470192Z",
+      "exit_code": 1
+    }
+  },
+  {
+    "run": "de1f5c6",
+    "metadata": {
+      "started_at_utc": "2026-10-18T10:40:11.2387271Z",
+      "source_sha": "de1f5c6dfee301ffec12ffd0f5c774836d62e3a3",
+      "owner_PR28_sha": "c97a656f195daeb2849ccb50855f0209f716814d",
+      "java_home": "C:\\Program Files\\Java\\jdk-21",
+      "java_tool_options": "-Duser.timezone=UTC -Dapi.version=1.44",
+      "command": "gradlew.bat -p backend --init-script <absolute tests/finance/fin06-regression.init.gradle> :order-service:test :order-service:postgresIntegrationTest :order-service:fin06Regression --rerun-tasks --no-daemon --continue --console=plain",
+      "finished_at_utc": "2026-10-18T10:41:10.8231150Z",
+      "exit_code": 1
+    }
+  },
+  {
+    "run": "1311f8a",
+    "metadata": {
+      "started_at_utc": "2026-10-18T10:44:25.6707610Z",
+      "source_sha": "1311f8a9f14639c4e42c7b8fbf2446a934abfbf2",
+      "owner_PR28_sha": "5ce06305c558263607adf11411bcce1ef1464fd6",
+      "command": "gradlew.bat -p backend :cart-service:test :order-service:test :cart-service:postgresIntegrationTest --rerun-tasks --no-daemon --continue --console=plain",
+      "java_home": "C:\\Program Files\\Java\\jdk-21",
+      "java_tool_options": "-Duser.timezone=UTC -Dapi.version=1.44",
+      "order_pg_diagnostic": "Not rerun here; Order production and original diagnostic unchanged from verified de1f5c6",
+      "finished_at_utc": "2026-10-18T10:44:53.0589504Z",
+      "exit_code": 0
+    }
+  }
+]

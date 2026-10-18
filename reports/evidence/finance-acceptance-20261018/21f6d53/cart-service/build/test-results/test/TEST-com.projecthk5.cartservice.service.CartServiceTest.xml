@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.projecthk5.cartservice.service.CartServiceTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-10-18T10:38:30" hostname="MDUY-LECO" time="0.165">
+  <properties/>
+  <testcase name="claimedCartRejectsWriteAndReleaseWorks()" classname="com.projecthk5.cartservice.service.CartServiceTest" time="0.15"/>
+  <testcase name="finalizationClearsOnlyMatchingClaim()" classname="com.projecthk5.cartservice.service.CartServiceTest" time="0.006"/>
+  <testcase name="addUpdateRemoveAndTrustedStore()" classname="com.projecthk5.cartservice.service.CartServiceTest" time="0.003"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[WARNING: A Java agent has been loaded dynamically (C:\Users\Admin\.gradle\caches\modules-2\files-2.1\net.bytebuddy\byte-buddy-agent\1.14.19\154da3a65b4f4a909d3e5bdec55d1b2b4cbb6ce1\byte-buddy-agent-1.14.19.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+]]></system-err>
+</testsuite>
