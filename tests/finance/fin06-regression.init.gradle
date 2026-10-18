@@ -1,0 +1,19 @@
+import org.gradle.api.tasks.testing.Test
+
+// Explicit diagnostic task only. No production/shared build file or normal test task is modified.
+gradle.projectsEvaluated {
+    def order = gradle.rootProject.project(':order-service')
+    def diagnostic = order.sourceSets.create('fin06Regression')
+    diagnostic.compileClasspath += order.sourceSets.main.output
+    diagnostic.runtimeClasspath += order.sourceSets.main.output
+    order.configurations.fin06RegressionImplementation.extendsFrom(order.configurations.testImplementation)
+    order.configurations.fin06RegressionRuntimeOnly.extendsFrom(order.configurations.testRuntimeOnly)
+    order.tasks.register('fin06Regression', Test) {
+        group = 'verification'
+        description = 'Explicit FIN-06/precision diagnostic: expected RED until owner fixes pre-reserve validation'
+        testClassesDirs = diagnostic.output.classesDirs
+        classpath = diagnostic.runtimeClasspath
+        useJUnitPlatform()
+        testLogging { events 'passed', 'failed', 'skipped' }
+    }
+}
