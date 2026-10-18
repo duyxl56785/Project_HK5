@@ -98,6 +98,32 @@ class CheckoutServiceTest {
         verify(cart).release(bearer,key);
         verify(keys).fail(attempt.getId(),false);
     }
+    @Test void malformedClaimedCartNullLineReleasesClaimWithoutExternalSideEffects() {
+        CheckoutAttempt attempt=fresh();
+        List<CartPort.Item> malformed = new ArrayList<>();
+        malformed.add(new CartPort.Item("p1","store1","seller1",2,new BigDecimal("10000")));
+        malformed.add(null);
+        when(cart.claim(bearer,key,null)).thenReturn(
+            new CartPort.CartSnapshot(customer,1,true,malformed));
+
+        assertThrows(IllegalStateException.class, () -> svc.checkout(customer,bearer,key,request));
+        verify(cart).release(bearer,key);
+        verify(keys).fail(attempt.getId(),false);
+        verifyNoInteractions(catalog,inventory,write);
+    }
+
+    @Test void invalidClaimedCartQuantityCannotReachReservationOrWriter() {
+        CheckoutAttempt attempt=fresh();
+        when(cart.claim(bearer,key,null)).thenReturn(new CartPort.CartSnapshot(customer,1,true,List.of(
+            new CartPort.Item("p1","store1","seller1",0,new BigDecimal("10000")),
+            new CartPort.Item("p2","store2","seller2",1,new BigDecimal("15000")))));
+
+        assertThrows(IllegalStateException.class, () -> svc.checkout(customer,bearer,key,request));
+        verify(cart).release(bearer,key);
+        verify(keys).fail(attempt.getId(),false);
+        verifyNoInteractions(catalog,inventory,write);
+    }
+
     @Test void nonFinalProcessingReplayNeverCallsInventory() {
         CheckoutAttempt attempt=new CheckoutAttempt(customer,key,RequestFingerprint.compute(request));
         when(keys.begin(eq(customer),eq(key),anyString())).thenReturn(new IdempotencyCoordinator.BeginResult(attempt,false));

@@ -24,10 +24,16 @@ public class CartService {
     }
     @Transactional
     public CartView add(String customerId, AddItem request) {
+        // Reject invalid direct-service callers before consulting external Catalog.
+        if (request == null || request.productId() == null || request.productId().isBlank())
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Product ID required");
+        if (request.quantity() < 1 || request.quantity() > 1000)
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Quantity must be 1..1000");
         // Resolve authoritative store/seller; client cannot forge these fields.
-        if (request.quantity() < 1 || request.quantity() > 1000) throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Quantity must be 1..1000");
         var product = catalog.resolve(request.productId());
-        if (product == null || !request.productId().equals(product.productId()) || product.storeId() == null || product.sellerId() == null)
+        if (product == null || !request.productId().equals(product.productId())
+                || product.storeId() == null || product.storeId().isBlank()
+                || product.sellerId() == null || product.sellerId().isBlank())
             throw new IllegalStateException("Untrusted product catalog response");
         if (!product.available()) throw new IllegalStateException("Product unavailable");
         if (product.unitPrice() == null || product.unitPrice().signum()<0) throw new IllegalStateException("Invalid product price");
