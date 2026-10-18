@@ -133,3 +133,12 @@ are separate executions and are never added into a release total.
 Request replies in the form `contract + TV5-FIN-v0.1 (or replacement version) +
 APPROVED/REVISE/PENDING + responsible scope + exact PR/comment + missing condition`.
 Keep Issue #5 OPEN/PARTIAL and Issue #12 unclosed; no PR approval/merge in this task.
+
+## Follow-up after PR41 integration (no new signature)
+
+Owner merged41 into28 at55bf5ff. [New regression/checkpoint](../reports/TV5_FINANCE_FOLLOWUP_2026-10-18.md)
+reruns current source and records FIN-06: aggregate precision rejection occurs at DB write after the
+point where Checkout could request Inventory reserve. TV3+TV5 must agree pre-reserve monetary bounds
+and any reviewed V2+ schema changes; this test-only handoff changes no runtime or proposed M01 terms.
+All contract statuses above remain PENDING/REVISE. Merge41 is acceptance of a QA patch, not a signature
+on VND/scale0/rate/rounding, service pairs or production settlement.

@@ -49,4 +49,14 @@ class FinanceConsumerParityTest {
             FinanceRules.snapshot(new BigDecimal("0.20"), false, 2).commission());
         assertEquals(new BigDecimal("0.18"), storeA.sellerNet().add(storeB.sellerNet()));
     }
+
+    @Test void largeQuantityMultiplicationStaysExactBeforeAnyPersistenceBoundCheck() {
+        assertEquals(new BigDecimal("21474836.47"),
+            MoneyRules.lineTotal(new BigDecimal("0.01"), Integer.MAX_VALUE));
+        var aboveDbBound = MoneyRules.lineTotal(new BigDecimal("99999999999999999.99"), 2);
+        assertEquals(new BigDecimal("199999999999999999.98"), aboveDbBound);
+        assertEquals(new BigDecimal("10000000000000000.00"),
+            FinanceRules.snapshot(aboveDbBound, false, 2).commission());
+        // BigDecimal arithmetic does not overflow; actual DB-bound validation is a separate open gate.
+    }
 }

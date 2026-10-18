@@ -36,3 +36,12 @@ PASS: đã chạy đạt; FAIL: đã chạy lỗi; NOT_RUN: chưa thực thi; BL
   61unit+11PG PASS; branch bổ sung44f2838 72unit+13PG PASS,0fail/error/skip. Hai lượt riêng, không cộng.
 - FIN-01..05 ghi rõ giới hạn precision/snapshots/settlement/Store authority/rounding. Test cấu hình dùng
   fixture policy không bật cờ deploy. Live UAT2Store/COD/settlement/Store query NOT_RUN/BLOCKED.
+
+## TV5 — hậu tích hợp PR41, Finance persistence/replay regression
+
+[Checkpoint mới](../reports/TV5_FINANCE_FOLLOWUP_2026-10-18.md): PR41 đã được owner merge vào
+PR28 tại55bf5ff; chạy mới72unit+13PG PASS. Thêm1unit+4PG đạt73unit+17PG PASS tại sourcecd2c0be,
+0fail/error/skip, không cộng hai lượt. FIN-06: parent aggregate vượt NUMERIC(19,2) dù từng Store hợp lệ;
+PG rollback thật, nhưng validation trước RESERVE cần TV3/TV5 thống nhất. Replay giữ tiền/phí/event cũ.
+S01/M01/Inventory/Security/Finance vẫn PENDING; C01/E01/C06 REVISE. Live settlement/Store API/E2E
+NOT_RUN/BLOCKED; giữ policyfalse và các adapter fail-closed, không coi merge41 là contract approval.
