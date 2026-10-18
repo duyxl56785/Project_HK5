@@ -224,3 +224,19 @@ It allows reviewed StoreV2+/localcurrentfacts/negative tests in owner scope, not
 HumanTV5 agrees separate **MD01/MD02/unit-pricecapMD03** Productprice scope, **PENDING BUSINESS APPROVAL** at baselinee597daf;
 no implicit finalauthority. MD04–10 are independent, not automatic blockers for an otherwise explicitly approved price slice.
 Namedbusinessapprover/operator still awaitingprojectowner/TV1designation. All10MD businessPENDING, policyflagfalse, settlement/currentStoreFinance/liveE2Eblocked.
+
+## Product unit-price proposal — M01-PRICE-SCOPE-v1-DRAFT — 19/10/2026
+
+[Canonical packet §14](TV5_M01_HUMAN_DECISION_PACKET.md#14-m01-price-scope-v1-draft--đề-xuất-đơn-giá-product-19102026)
+records @duyxl56785's new **PROPOSED / NOT YET BUSINESS APPROVED** choices: explicit VND-only,
+positive integral exact Product unitPrice, inclusive **1..1000000000 VND**. This narrows only the proposed
+Product unit-price cap from the historical17-digit candidate; it does not revise an approved shared contract.
+Historical MD01–MD10/technical acceptances/storage facts stay intact. Line/Store/parent/commission/net/COD/refund/settlement
+bounds remain separately PENDING, never inferred as1billion. Catalog/Cart/Order wire and runtime are unchanged.
+
+Proposer/proposed approver: @duyxl56785; authority **PENDING_CONFIRMATION**, price choices **PROPOSED**,
+business approval **PENDING**, overall M01 **PENDING**. TV1/project authority must confirm named delegation;
+humanTV5 checks Finance compatibility and TV3 checks the changed unit-cap consumer scope. Same-version signatures
+and applicable schema/S01/auth gates are still required before Product price persistence. PR52 Store review is independent.
+No Product schema, MD04–MD10, House, Checkout, Inventory, Finance flag or production enablement changes.
+Runtime tests this docs-only proposal: **NOT_RUN**. Issues2/5/12 remain OPEN/PARTIAL.
