@@ -132,3 +132,72 @@ Audited clean TV2 head9e1794a against remote, main524e4f3 and TV3 head28dd0cf; n
 Updated only this checkpoint and the existing [contract response](TV2_CATALOG_CONTRACT_RESPONSE.md): TV2 confirms its own provider-design scope, clarifies whole-invalid-batch snapshot withholding, and recommends last-verified-snapshot acceptance for MVP **subject to TV1/TV5/human approval**, with explicit read→commit and cross-source observation races. No current quote/lease/version token guarantees those facts; a strict guarantee would require a separately agreed protocol. No TTL, new runtime model, migration, DTO/controller or policy flag was introduced. Runtime tests NOT_RUN/docs-only; verify existing evidence, links and diff instead. All composite business boxes remain unchecked; no new production acceptance is earned by this reply.
 
 Resume by checking the exact owner replies on PR37/Issue2. Store persistence may proceed once S01 is approved; Product schema additionally needs applicable M01/schema decisions; Catalog exposure requires C01/E01/security/freshness and actual trusted sources. If these remain pending, do not manufacture more prototypes, reread unchanged tests indefinitely or introduce a quote abstraction. Preserve the current implementation and report the specific decision owner.
+
+## Independent database verification — 2026-10-18
+
+Latest user request explicitly authorizes additional **test-only** Store/Product SQL constraint/concurrency preparation. This narrows the preceding stop guidance: implement actual missing DB evidence, without opening production contract gates or adding redundant abstractions. Audited clean branch `feat/tv2-week1-completion` at42cc4e7, CONTRIBUTING/OWNERSHIP/Auth, latest main `ac7ca4fd8a8fe60a8d70fb15f98af9a0bf47bc59`, PR37 and PR28. Fetch after the first push confirmed main unchanged; PR28 source was21f6d53. No new domain defect was demonstrated; Seller/Category production code, their migrations and the already-fixed Catalog validator remain unchanged.
+
+### Actual changes
+
+- **`8abc1ce2d55e62e20367c5db2050e08bd5d7ee51`**, pushed: new Seller-module `src/test/resources/proposals/store-candidate.sql` and `store/StoreSchemaProposalPostgresTest.java`. Candidate local restrictive Seller FK, derived exact owner, canonical unique slug, one Store/Seller, required metadata/open; real PostgreSQL durable reads, invalid values, rollback and concurrent duplicate Seller/slug tests. Fresh isolated database only; no production Store JPA/schema/API created.
+- **`3ecf9c3d5f7794cced7c01e75191f1d9c87f684c`**, pushed and full-build tested: extend existing Product candidate SQL and `CatalogSchemaProposalPostgresTest.java` with timestamps, version compare-and-set, stale/conflicting updates and atomic rollback. Keep all11 prior cases; add13. These are SQL commands, not production JPA @Version or SKU-immutability enforcement.
+- This checkpoint plus [existing Catalog handoff](TV2_CATALOG_HANDOFF.md#independent-schema-preparation-and-pending-api-acceptance--2026-10-18): current audit, migration handoff, a reusable 15-case API acceptance matrix and exact remaining owner gates. No additional fixture/report abstraction; historical reports/CSVs stay unchanged.
+
+### Current feature audit
+
+| Feature | Status and verified scope | Remaining work / owner |
+|---|---|---|
+| Category | **DONE at module scope**: hierarchy/cycles/REQUIRES_NEW/advisory locking;14 actual PG regressions and existing unit/API/deny-write tests PASS | Verified write authorization/Gateway and runtime Product reference integration: TV1/TV2/TV5 |
+| Seller | **PARTIAL overall**; domain, production persistence, guarded reads DONE;24 PG and existing unit tests PASS | REST/JWT/current-role policy/role sync/live authorization: TV1/TV2 |
+| Store | **PARTIAL**:19 domain cases +26 candidate PG cases PASS; current exact owner/APPROVED checked in domain | **BLOCKED** production boundary/JPA/unique constraints/CRUD/auth on S01: TV1/TV2 |
+| Product | **PARTIAL**:76 domain cases; candidate SQL has24 PG cases incl SKU/FK/version/time | **BLOCKED** production schema/JPA/API/current Store source and M01: TV1/TV2/TV5 |
+| Catalog | **PARTIAL**:50 internal unit cases, whole-invalid batch withholding, negative HTTP denial PASS | **BLOCKED** authoritative adapter, positive HTTP/wire/pair/privacy/freshness and consumer integration |
+| Moderation | **PARTIAL**: Seller runtime orchestration + Product pure lifecycle/self-moderation unit tests | Verified current ADMIN/owner at HTTP boundary and Product persistence: TV1/TV2 |
+| Images | **NOT_STARTED** | Storage/validation/serving/limits contract and implementation: TV1/TV2 |
+| Search/filter/pagination | **NOT_STARTED**; existing visibility projection is not a search query | Reviewed query/ordering/page/API contract and persistence: TV2 |
+| Fixtures/seed | **PARTIAL**: existing two-Store JSON/domain test PASS; mapping already documented | Durable idempotent seed/actual stock/live Checkout **BLOCKED/NOT_RUN**: TV1/TV2/TV3/TV4 |
+| Authorization | **PARTIAL**: fail-closed routes/negative-security tests PASS | Positive JWT/scoped pair/delegated actor/current grants **BLOCKED/NOT_RUN**: TV1 |
+| Database migrations | Category/Seller production V1 **DONE** and regression PASS; candidate SQL preparation **DONE in test scope** | Store/Product runtime migrations **BLOCKED**, no V1 change or cross-DB FK |
+| Unit/PostgreSQL tests | **DONE for implemented local scope**, new full two-module run below | Positive Store/Product/Catalog API/provider-consumer/live E2E **NOT_RUN**, not inferred from tests |
+
+### New actual verification (not historical367)
+
+Java21.0.12, Gradle wrapper8.10, process UTC, Docker Engine29.8.2 Linux, PostgreSQL16.6 Testcontainers. Both module `check` tasks depend on their tagged PostgreSQL `integrationTest` task. Commands executed from `backend`, with `JAVA_HOME=C:/Program Files/Eclipse Adoptium/jdk-21.0.12.101-hotspot` and `JAVA_TOOL_OPTIONS=-Duser.timezone=UTC`:
+
+```powershell
+.\gradlew.bat :seller-service:integrationTest --tests '*StoreSchemaProposalPostgresTest' --rerun-tasks --no-daemon --console=plain
+.\gradlew.bat :product-service:integrationTest --tests '*CatalogSchemaProposalPostgresTest' --rerun-tasks --no-daemon --console=plain
+.\gradlew.bat :product-service:build :seller-service:build --rerun-tasks --no-daemon --continue --console=plain
+```
+
+Focused runs: Store26PASS/exit0/29s, Product24PASS/exit0/20s. **Final full two-module BUILD SUCCESSFUL, exit0,45s,18 tasks executed**, source3ecf9c3. Counters read from final JUnit XML, with no test disabled/deleted and no failure in these three runs:
+
+| Final suite | PASS | FAIL/errors | SKIPPED |
+|---|---:|---:|---:|
+| Product unit/security/fixture | 215 | 0 | 0 |
+| Product PostgreSQL: Category production14 + Product SQL candidate24 | 38 | 0 | 0 |
+| Seller/Store unit | 103 | 0 | 0 |
+| Seller PostgreSQL: Seller production24 + Store SQL candidate26 | 50 | 0 | 0 |
+| **Total, this full run only** | **406** | **0** | **0** |
+
+**88 actual PostgreSQL invocations =38 production Category/Seller +50 SQL-candidate invocations**. Net39 added cases (26 Store +13 Product), not50 new cases. Reused two-Store fixture and Catalog50 PASS in this same run. Do not add focused reruns, historical367, other-owner runs or old full-backend totals. No new all-backend/Inventory/Auth run: **NOT_RUN**, out of this change's two-module scope. Positive JWT/Store/Product/Catalog HTTP, durable seed and live Checkout E2E: **NOT_RUN/BLOCKED**. No new production endpoint is callable; existing unmatched-route security remains deny-all. Testcontainers cleaned its own disposable test runtime; no manual container/volume deletion/prune/reset was issued or existing PostgreSQL data targeted. Post-run volume inventory was inspected; no before/after resource-count assertion is claimed for this run.
+
+Ignored evidence directory: `backend/seller-service/build/tv2-independent-20261018/`. Original raw bytes retained; do not publish generated test credentials from XML/logs.
+
+| Raw log | SHA256 |
+|---|---|
+| store-prototype.log | `83CD73BE8B7CDA044F3DCFFC9DE7AF758C29B7E6CCB38FAD1A0ACD4A6C91E865` |
+| product-prototype.log | `0A0C5AB66AE81230E35BA95D553DA68131CE10ECE126B74B6BB9067E2A0B5CBE` |
+| full-build.log | `9CAE2F08FC2200D0335F0B51C42A18AF2604818285DECF3A5143771E0316D45D` |
+
+### Current gates and next checkpoint
+
+- **S01 PENDING — TV1/TV2**: Store service/database and authoritative current ownership/status. This is the highest-priority unlock for actual Store persistence.
+- **C01/E01 REVISE overall — TV1/TV2/TV3**: TV3 comment6248646211 accepts consumer-design v0.2 only; TV2 provider-design acceptance is likewise scoped. Wire/UUID/decimal/error/privacy/provider tests are not approved runtime APIs.
+- **M01 PENDING — TV5 + named human business decision maker**: decision packet TV5-M01-DECISION-v1/MD01–MD10, currency/scale/rounding/bounds/House and explicit MD07 last-verified read→commit race acceptance. TV5 comment6247437614 is not a business signature; no default currency or Finance flag enabled.
+- **Security PENDING — TV1**: current-role source, scoped Order→Catalog service pair, delegated actor, privacy/masking and allowlist. No unverified public mutation/API opened.
+- **Inventory/Checkout integration — TV3/TV4**: approved immutable Product→SKU mapping, balances, reserve/retry/durable journal and exact-ID RELEASE/UNKNOWN recovery. Phase-B revalidation is conditional on those prerequisites, not implemented by these SQL tests.
+
+PR37 remains the existing OPEN/non-draft delivery; reviewers already requested are preserved, no self-review or duplicate request. Progress comments: [Store26](https://github.com/duyxl56785/Project_HK5/pull/37#issuecomment-6248726487), [Product24](https://github.com/duyxl56785/Project_HK5/pull/37#issuecomment-6248733814). Tick only separate candidate-schema/API-spec preparation items on Issue2 after push; retain historical content and unchecked production composites, keep Issue OPEN/PARTIAL. No Approve/Merge, direct main push, force/reset, common contract or other-owner module edit.
+
+**Independent preparation in this request is complete; production continuation is BLOCKED by the above decisions.** No useful remaining independent domain defect was demonstrated; do not add more prototype frameworks or repeated checklists just to generate commits. Resume by checking `git status`, `git branch -vv`, latest PR37/28 and Issue2 decisions, fetch without rewriting history, and compare remote head. First implement reviewed Store runtime persistence when S01 is explicitly approved; re-run the corresponding PostgreSQL/authorization tests on runtime code rather than treating this prototype as its acceptance.
