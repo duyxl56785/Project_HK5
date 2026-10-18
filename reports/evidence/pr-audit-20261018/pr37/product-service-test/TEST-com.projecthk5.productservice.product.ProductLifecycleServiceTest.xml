@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.projecthk5.productservice.product.ProductLifecycleServiceTest" tests="76" skipped="0" failures="0" errors="0" timestamp="2026-10-18T04:40:26.144Z" hostname="MDUY-LECO" time="0.169">
+  <properties/>
+  <testcase name="[1] sku=null" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.003"/>
+  <testcase name="[2] sku=" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.001"/>
+  <testcase name="[3] sku= " classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.001"/>
+  <testcase name="[4] sku= SKU" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.001"/>
+  <testcase name="[5] sku=SKU " classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.001"/>
+  <testcase name="[6] sku=&#9;" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.001"/>
+  <testcase name="invalidPriceAndMetadataAreRejectedWithoutRounding()" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.003"/>
+  <testcase name="[1] state=DRAFT, action=edit" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.002"/>
+  <testcase name="[2] state=DRAFT, action=submit" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.001"/>
+  <testcase name="[3] state=DRAFT, action=approve" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.002"/>
+  <testcase name="[4] state=DRAFT, action=reject" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.001"/>
+  <testcase name="[5] state=DRAFT, action=suspend" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.001"/>
+  <testcase name="[6] state=DRAFT, action=deactivate" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.001"/>
+  <testcase name="[7] state=PENDING_REVIEW, action=edit" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.001"/>
+  <testcase name="[8] state=PENDING_REVIEW, action=submit" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.001"/>
+  <testcase name="[9] state=PENDING_REVIEW, action=approve" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.001"/>
+  <testcase name="[10] state=PENDING_REVIEW, action=reject" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.001"/>
+  <testcase name="[11] state=PENDING_REVIEW, action=suspend" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.001"/>
+  <testcase name="[12] state=PENDING_REVIEW, action=deactivate" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.001"/>
+  <testcase name="[13] state=ACTIVE, action=edit" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.0"/>
+  <testcase name="[14] state=ACTIVE, action=submit" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.001"/>
+  <testcase name="[15] state=ACTIVE, action=approve" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.001"/>
+  <testcase name="[16] state=ACTIVE, action=reject" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.001"/>
+  <testcase name="[17] state=ACTIVE, action=suspend" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.001"/>
+  <testcase name="[18] state=ACTIVE, action=deactivate" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.001"/>
+  <testcase name="[19] state=REJECTED, action=edit" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.001"/>
+  <testcase name="[20] state=REJECTED, action=submit" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.001"/>
+  <testcase name="[21] state=REJECTED, action=approve" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.001"/>
+  <testcase name="[22] state=REJECTED, action=reject" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.001"/>
+  <testcase name="[23] state=REJECTED, action=suspend" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.001"/>
+  <testcase name="[24] state=REJECTED, action=deactivate" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.001"/>
+  <testcase name="[25] state=SUSPENDED, action=edit" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.001"/>
+  <testcase name="[26] state=SUSPENDED, action=submit" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.001"/>
+  <testcase name="[27] state=SUSPENDED, action=approve" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.002"/>
+  <testcase name="[28] state=SUSPENDED, action=reject" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.002"/>
+  <testcase name="[29] state=SUSPENDED, action=suspend" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.001"/>
+  <testcase name="[30] state=SUSPENDED, action=deactivate" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.001"/>
+  <testcase name="[31] state=INACTIVE, action=edit" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.001"/>
+  <testcase name="[32] state=INACTIVE, action=submit" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.0"/>
+  <testcase name="[33] state=INACTIVE, action=approve" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.001"/>
+  <testcase name="[34] state=INACTIVE, action=reject" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.0"/>
+  <testcase name="[35] state=INACTIVE, action=suspend" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.0"/>
+  <testcase name="[36] state=INACTIVE, action=deactivate" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.0"/>
+  <testcase name="[1] status=DRAFT, approved=false, open=false" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.004"/>
+  <testcase name="[2] status=DRAFT, approved=false, open=true" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.0"/>
+  <testcase name="[3] status=DRAFT, approved=true, open=false" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.0"/>
+  <testcase name="[4] status=DRAFT, approved=true, open=true" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.0"/>
+  <testcase name="[5] status=PENDING_REVIEW, approved=false, open=false" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.0"/>
+  <testcase name="[6] status=PENDING_REVIEW, approved=false, open=true" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.0"/>
+  <testcase name="[7] status=PENDING_REVIEW, approved=true, open=false" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.0"/>
+  <testcase name="[8] status=PENDING_REVIEW, approved=true, open=true" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.001"/>
+  <testcase name="[9] status=ACTIVE, approved=false, open=false" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.002"/>
+  <testcase name="[10] status=ACTIVE, approved=false, open=true" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.001"/>
+  <testcase name="[11] status=ACTIVE, approved=true, open=false" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.001"/>
+  <testcase name="[12] status=ACTIVE, approved=true, open=true" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.003"/>
+  <testcase name="[13] status=REJECTED, approved=false, open=false" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.001"/>
+  <testcase name="[14] status=REJECTED, approved=false, open=true" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.0"/>
+  <testcase name="[15] status=REJECTED, approved=true, open=false" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.001"/>
+  <testcase name="[16] status=REJECTED, approved=true, open=true" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.001"/>
+  <testcase name="[17] status=SUSPENDED, approved=false, open=false" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.0"/>
+  <testcase name="[18] status=SUSPENDED, approved=false, open=true" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.001"/>
+  <testcase name="[19] status=SUSPENDED, approved=true, open=false" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.001"/>
+  <testcase name="[20] status=SUSPENDED, approved=true, open=true" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.001"/>
+  <testcase name="[21] status=INACTIVE, approved=false, open=false" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.001"/>
+  <testcase name="[22] status=INACTIVE, approved=false, open=true" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.001"/>
+  <testcase name="[23] status=INACTIVE, approved=true, open=false" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.001"/>
+  <testcase name="[24] status=INACTIVE, approved=true, open=true" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.001"/>
+  <testcase name="foreignOwnerAndWrongRoleCannotManageOrModerate()" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.003"/>
+  <testcase name="identityMismatchOrMissingPolicyFactsFailClosed()" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.041"/>
+  <testcase name="missingCategoryCannotBeCreatedSubmittedApprovedOrPublic()" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.002"/>
+  <testcase name="createEditAndModerateRetainsIdentitySkuAndExactPrice()" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.001"/>
+  <testcase name="invalidActorIsRejectedBeforePolicyOrCategory()" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.001"/>
+  <testcase name="[1] action=approve" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.002"/>
+  <testcase name="[2] action=reject" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.001"/>
+  <testcase name="[3] action=suspend" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.001"/>
+  <testcase name="closedStoreOrSuspendedSellerCannotManageProduct()" classname="com.projecthk5.productservice.product.ProductLifecycleServiceTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

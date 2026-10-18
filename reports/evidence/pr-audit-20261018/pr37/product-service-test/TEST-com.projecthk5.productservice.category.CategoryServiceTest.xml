@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.projecthk5.productservice.category.CategoryServiceTest" tests="18" skipped="0" failures="0" errors="0" timestamp="2026-10-18T04:40:25.871Z" hostname="MDUY-LECO" time="0.271">
+  <properties/>
+  <testcase name="rejectsDeletingParent()" classname="com.projecthk5.productservice.category.CategoryServiceTest" time="0.203"/>
+  <testcase name="reportsMissingCategoryAndParent()" classname="com.projecthk5.productservice.category.CategoryServiceTest" time="0.005"/>
+  <testcase name="createsChildOnlyAfterLockingAndCheckingAncestors()" classname="com.projecthk5.productservice.category.CategoryServiceTest" time="0.009"/>
+  <testcase name="rejectsDeepCycle()" classname="com.projecthk5.productservice.category.CategoryServiceTest" time="0.003"/>
+  <testcase name="movesCategoryToAnotherValidParent()" classname="com.projecthk5.productservice.category.CategoryServiceTest" time="0.003"/>
+  <testcase name="rejectsAlreadyCorruptAncestorChainDuringCreate()" classname="com.projecthk5.productservice.category.CategoryServiceTest" time="0.003"/>
+  <testcase name="[1] name=null" classname="com.projecthk5.productservice.category.CategoryServiceTest" time="0.004"/>
+  <testcase name="[2] name=" classname="com.projecthk5.productservice.category.CategoryServiceTest" time="0.002"/>
+  <testcase name="[3] name= " classname="com.projecthk5.productservice.category.CategoryServiceTest" time="0.002"/>
+  <testcase name="[4] name=&#9;&#10;" classname="com.projecthk5.productservice.category.CategoryServiceTest" time="0.002"/>
+  <testcase name="[5] name= " classname="com.projecthk5.productservice.category.CategoryServiceTest" time="0.002"/>
+  <testcase name="rejectsTwoNodeCycle()" classname="com.projecthk5.productservice.category.CategoryServiceTest" time="0.003"/>
+  <testcase name="rejectsLongNameAndNullRequest()" classname="com.projecthk5.productservice.category.CategoryServiceTest" time="0.002"/>
+  <testcase name="deletesLeafAfterAcquiringLock()" classname="com.projecthk5.productservice.category.CategoryServiceTest" time="0.002"/>
+  <testcase name="listsFlatDtosAndGetsChild()" classname="com.projecthk5.productservice.category.CategoryServiceTest" time="0.005"/>
+  <testcase name="createsRootAndTrimsName()" classname="com.projecthk5.productservice.category.CategoryServiceTest" time="0.003"/>
+  <testcase name="rejectsSelfParentWithoutChangingEntity()" classname="com.projecthk5.productservice.category.CategoryServiceTest" time="0.002"/>
+  <testcase name="updatesNameAndMovesChildToRoot()" classname="com.projecthk5.productservice.category.CategoryServiceTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

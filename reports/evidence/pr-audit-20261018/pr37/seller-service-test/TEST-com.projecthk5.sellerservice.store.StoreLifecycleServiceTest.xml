@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.projecthk5.sellerservice.store.StoreLifecycleServiceTest" tests="19" skipped="0" failures="0" errors="0" timestamp="2026-10-18T04:40:21.482Z" hostname="MDUY-LECO" time="0.108">
+  <properties/>
+  <testcase name="missingOrDeniedPolicyNeverCreatesAStore()" classname="com.projecthk5.sellerservice.store.StoreLifecycleServiceTest" time="0.07"/>
+  <testcase name="[1] slug=" classname="com.projecthk5.sellerservice.store.StoreLifecycleServiceTest" time="0.002"/>
+  <testcase name="[2] slug= " classname="com.projecthk5.sellerservice.store.StoreLifecycleServiceTest" time="0.001"/>
+  <testcase name="[3] slug=Upper" classname="com.projecthk5.sellerservice.store.StoreLifecycleServiceTest" time="0.0"/>
+  <testcase name="[4] slug=two words" classname="com.projecthk5.sellerservice.store.StoreLifecycleServiceTest" time="0.0"/>
+  <testcase name="[5] slug=-start" classname="com.projecthk5.sellerservice.store.StoreLifecycleServiceTest" time="0.0"/>
+  <testcase name="[6] slug=end-" classname="com.projecthk5.sellerservice.store.StoreLifecycleServiceTest" time="0.001"/>
+  <testcase name="[7] slug=two--parts" classname="com.projecthk5.sellerservice.store.StoreLifecycleServiceTest" time="0.001"/>
+  <testcase name="[8] slug=a/b" classname="com.projecthk5.sellerservice.store.StoreLifecycleServiceTest" time="0.001"/>
+  <testcase name="[1] status=PENDING_REVIEW" classname="com.projecthk5.sellerservice.store.StoreLifecycleServiceTest" time="0.006"/>
+  <testcase name="[2] status=REJECTED" classname="com.projecthk5.sellerservice.store.StoreLifecycleServiceTest" time="0.001"/>
+  <testcase name="[3] status=SUSPENDED" classname="com.projecthk5.sellerservice.store.StoreLifecycleServiceTest" time="0.001"/>
+  <testcase name="metadataBoundsAreValidatedWithoutChangingIdentity()" classname="com.projecthk5.sellerservice.store.StoreLifecycleServiceTest" time="0.001"/>
+  <testcase name="malformedPolicyResultFailsClosed()" classname="com.projecthk5.sellerservice.store.StoreLifecycleServiceTest" time="0.001"/>
+  <testcase name="approvedOwnerCreatesAndRevisesAnImmutableStore()" classname="com.projecthk5.sellerservice.store.StoreLifecycleServiceTest" time="0.002"/>
+  <testcase name="otherSellerCannotEditOrCloseStore()" classname="com.projecthk5.sellerservice.store.StoreLifecycleServiceTest" time="0.002"/>
+  <testcase name="suspensionIsRecheckedOnEveryMutation()" classname="com.projecthk5.sellerservice.store.StoreLifecycleServiceTest" time="0.001"/>
+  <testcase name="actorAndPolicyIdentityMustMatchExactly()" classname="com.projecthk5.sellerservice.store.StoreLifecycleServiceTest" time="0.001"/>
+  <testcase name="missingActorIsRejectedBeforePolicy()" classname="com.projecthk5.sellerservice.store.StoreLifecycleServiceTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

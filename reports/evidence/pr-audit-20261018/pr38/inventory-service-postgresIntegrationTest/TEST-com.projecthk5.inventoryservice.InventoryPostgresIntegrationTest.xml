@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.projecthk5.inventoryservice.InventoryPostgresIntegrationTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-10-18T04:40:35.454Z" hostname="MDUY-LECO" time="0.733">
+  <properties/>
+  <testcase name="flywaySchemaMatchesJpaValidationAtApplicationStartup()" classname="com.projecthk5.inventoryservice.InventoryPostgresIntegrationTest" time="0.44"/>
+  <testcase name="duplicateInitializationReturnsConflictWithoutChangingBalance()" classname="com.projecthk5.inventoryservice.InventoryPostgresIntegrationTest" time="0.192"/>
+  <testcase name="concurrentDifferentPayloadsCannotBothClaimSameOperationId()" classname="com.projecthk5.inventoryservice.InventoryPostgresIntegrationTest" time="0.098"/>
+  <system-out><![CDATA[04:40:24.620 [Test worker] INFO org.testcontainers.images.PullPolicy -- Image pull policy will be performed by: DefaultPullPolicy()
+04:40:24.627 [Test worker] INFO org.testcontainers.utility.ImageNameSubstitutor -- Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+04:40:24.776 [Test worker] INFO org.testcontainers.dockerclient.DockerClientProviderStrategy -- Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+04:40:25.027 [Test worker] INFO org.testcontainers.dockerclient.DockerClientProviderStrategy -- Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
+04:40:25.029 [Test worker] INFO org.testcontainers.DockerClientFactory -- Docker host IP address is localhost
+04:40:25.058 [Test worker] INFO org.testcontainers.DockerClientFactory -- Connected to docker: 
+  Server Version: 29.8.1
+  API Version: 1.56
+  Operating System: Docker Desktop (containerized)
+  Total Memory: 7571 MB
+04:40:25.198 [Test worker] INFO tc.testcontainers/ryuk:0.7.0 -- Creating container for image: testcontainers/ryuk:0.7.0
+04:40:25.576 [Test worker] INFO tc.testcontainers/ryuk:0.7.0 -- Container testcontainers/ryuk:0.7.0 is starting: 766bff8370510ccdabfe7a7a849098a5b8cf353f093e048fa5b1ef6989d8e17e
+04:40:26.036 [Test worker] INFO tc.testcontainers/ryuk:0.7.0 -- Container testcontainers/ryuk:0.7.0 started in PT0.8368891S
+04:40:26.041 [Test worker] INFO org.testcontainers.utility.RyukResourceReaper -- Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+04:40:26.041 [Test worker] INFO org.testcontainers.DockerClientFactory -- Checking the system...
+04:40:26.041 [Test worker] INFO org.testcontainers.DockerClientFactory -- ✔︎ Docker server version should be at least 1.6.0
+04:40:26.042 [Test worker] INFO tc.postgres:16-alpine -- Creating container for image: postgres:16-alpine
+04:40:26.227 [Test worker] INFO tc.postgres:16-alpine -- Container postgres:16-alpine is starting: 9c38f30029599e74c04807b372b716f9e81fc516179361dc3ead69133dae4a70
+04:40:29.467 [Test worker] INFO tc.postgres:16-alpine -- Container postgres:16-alpine started in PT3.4249857S
+04:40:29.467 [Test worker] INFO tc.postgres:16-alpine -- Container is started (JDBC URL: jdbc:postgresql://localhost:54439/test?loggerLevel=OFF)
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.5)
+
+2026-10-18T04:40:29.987Z  INFO 22824 --- [inventory-service] [    Test worker] c.p.i.InventoryPostgresIntegrationTest   : Starting InventoryPostgresIntegrationTest using Java 21.0.7 with PID 22824 (started by Minh Duy in D:\CMC Uni\5 Ky Dong\WEB\BCK WEB\Project_HK5\.verification\audit-20261018\pr38\backend\inventory-service)
+2026-10-18T04:40:29.989Z  INFO 22824 --- [inventory-service] [    Test worker] c.p.i.InventoryPostgresIntegrationTest   : No active profile set, falling back to 1 default profile: "default"
+2026-10-18T04:40:30.993Z  INFO 22824 --- [inventory-service] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-10-18T04:40:31.063Z  INFO 22824 --- [inventory-service] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 60 ms. Found 2 JPA repository interfaces.
+2026-10-18T04:40:31.806Z  INFO 22824 --- [inventory-service] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-10-18T04:40:31.977Z  INFO 22824 --- [inventory-service] [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@5e2718b3
+2026-10-18T04:40:31.979Z  INFO 22824 --- [inventory-service] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-10-18T04:40:32.014Z  INFO 22824 --- [inventory-service] [    Test worker] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://localhost:54439/test (PostgreSQL 16.15)
+2026-10-18T04:40:32.063Z  INFO 22824 --- [inventory-service] [    Test worker] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table "public"."flyway_schema_history" does not exist yet
+2026-10-18T04:40:32.067Z  INFO 22824 --- [inventory-service] [    Test worker] o.f.core.internal.command.DbValidate     : Successfully validated 2 migrations (execution time 00:00.021s)
+2026-10-18T04:40:32.088Z  INFO 22824 --- [inventory-service] [    Test worker] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table "public"."flyway_schema_history" ...
+2026-10-18T04:40:32.141Z  INFO 22824 --- [inventory-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Current version of schema "public": << Empty Schema >>
+2026-10-18T04:40:32.151Z  INFO 22824 --- [inventory-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "1 - inventory"
+2026-10-18T04:40:32.186Z  INFO 22824 --- [inventory-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "2 - request hash varchar"
+2026-10-18T04:40:32.209Z  INFO 22824 --- [inventory-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Successfully applied 2 migrations to schema "public", now at version v2 (execution time 00:00.023s)
+2026-10-18T04:40:32.335Z  INFO 22824 --- [inventory-service] [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-10-18T04:40:32.405Z  INFO 22824 --- [inventory-service] [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2026-10-18T04:40:32.444Z  INFO 22824 --- [inventory-service] [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-10-18T04:40:32.737Z  INFO 22824 --- [inventory-service] [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-10-18T04:40:33.560Z  INFO 22824 --- [inventory-service] [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-10-18T04:40:33.594Z  INFO 22824 --- [inventory-service] [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-10-18T04:40:33.887Z  INFO 22824 --- [inventory-service] [    Test worker] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-10-18T04:40:35.306Z  INFO 22824 --- [inventory-service] [    Test worker] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoints beneath base path '/actuator'
+2026-10-18T04:40:35.374Z  INFO 22824 --- [inventory-service] [    Test worker] c.p.i.InventoryPostgresIntegrationTest   : Started InventoryPostgresIntegrationTest in 5.673 seconds (process running for 11.686)
+]]></system-out>
+  <system-err><![CDATA[WARNING: A Java agent has been loaded dynamically (C:\Users\Admin\.gradle\caches\modules-2\files-2.1\net.bytebuddy\byte-buddy-agent\1.14.19\154da3a65b4f4a909d3e5bdec55d1b2b4cbb6ce1\byte-buddy-agent-1.14.19.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+]]></system-err>
+</testsuite>

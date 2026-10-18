@@ -1,0 +1,9 @@
+{
+  "gradle": "8.14.3",
+  "sourceSha": "9b8ae3557d1b1b50ee27d1579c7cd740576e0648",
+  "jvmOptions": "-Duser.timezone=UTC -Dapi.version=1.44",
+  "date": "2026-10-18",
+  "exit": 0,
+  "java": "21.0.7",
+  "command": "gradle -p .verification\\audit-20261018\\pr38/backend :inventory-service:build :inventory-service:postgresIntegrationTest --rerun-tasks --no-daemon --continue --console=plain"
+}

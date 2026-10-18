@@ -1,0 +1,6 @@
+{
+  "actions": "Only newly created Testcontainers databases; no existing-volume deletes or prune",
+  "date": "2026-10-18",
+  "missingPriorVolumes": [],
+  "missingPriorContainers": []
+}

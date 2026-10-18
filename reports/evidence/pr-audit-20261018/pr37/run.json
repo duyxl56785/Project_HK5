@@ -1,0 +1,9 @@
+{
+  "java": "21.0.7",
+  "gradle": "8.14.3",
+  "command": "gradle -p .verification\\audit-20261018\\pr37/backend :product-service:build :seller-service:build --rerun-tasks --no-daemon --continue --console=plain",
+  "exit": 0,
+  "sourceSha": "9c283386f791cc3eb3284650da8b1f356d128835",
+  "jvmOptions": "-Duser.timezone=UTC -Dapi.version=1.44",
+  "date": "2026-10-18"
+}

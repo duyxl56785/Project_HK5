@@ -1,0 +1,32 @@
+[
+  {
+    "pr": 19,
+    "head": "804d6f1658a590c8fe51a1b8e6ec70555ab0d88a",
+    "exit": 0,
+    "diagnostic": ""
+  },
+  {
+    "pr": 28,
+    "head": "bd5ff09e89a50fea198fac38967d1565215fe2fe",
+    "exit": 0,
+    "diagnostic": ""
+  },
+  {
+    "pr": 37,
+    "head": "9c283386f791cc3eb3284650da8b1f356d128835",
+    "exit": 0,
+    "diagnostic": ""
+  },
+  {
+    "pr": 38,
+    "head": "9b8ae3557d1b1b50ee27d1579c7cd740576e0648",
+    "exit": 0,
+    "diagnostic": ""
+  },
+  {
+    "pr": 39,
+    "head": "bf137327cc9431020fa8eb3e280c9b2604a86493",
+    "exit": 2,
+    "diagnostic": "docs/TV4_FULFILLMENT_IMPLEMENTATION_CONTRACT.md:3: trailing whitespace.\n+**Status:** DRAFT / integration blocked pending TV3 + TV5 + TV1 confirmation.  \ndocs/TV4_FULFILLMENT_IMPLEMENTATION_CONTRACT.md:4: trailing whitespace.\n+**Owner:** TV4.  "
+  }
+]
