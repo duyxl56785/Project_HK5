@@ -4,7 +4,7 @@
 **Owner:** TV4.  
 **Purpose:** Make implementation and acceptance criteria explicit without inventing a second SellerOrder schema or claiming unimplemented behavior is working.
 
-**QA revision (18/10/2026):** the matrix below contains 21 uniquely namespaced `TV4-W1-*` cases (12 FUL, 4 COD, 5 NOT). These are TV4 W1 scenario IDs, not the legacy IDs in `WEEK1_TEST_BASELINE.md`; legacy baseline meanings remain unchanged. All scenarios remain `NOT_RUN`. The prior PR39 draft IDs are superseded by the namespaced IDs below to avoid reusing a baseline ID for a different scenario.
+**QA revision (18/10/2026):** the supplemental matrix below contains 21 uniquely namespaced `TV4-W1-*` cases (12 FUL, 4 COD, 5 NOT). The original `WEEK1_TEST_BASELINE.md` on `tv4/week1-analysis` remains a separate 21-case baseline (6 INV, 6 FUL, 4 COD, 5 NOT), with original IDs and meanings preserved in the traceability table below. This document therefore tracks 21 legacy baseline cases plus 21 supplemental cases; no evidence is transferred between similar scenarios. All 42 remain `NOT_RUN`.
 
 ## Current repository boundary
 
@@ -18,7 +18,7 @@ Inventory currently addresses stock by SKU and supports `INCREASE`, `DECREASE`, 
 
 **TV4 proposal for C06 owner decision (not silently mapped):** adopt TV3's candidate `PLACED → ACCEPTED → PREPARING → READY_FOR_HANDOFF → DISPATCHED → DELIVERED` as the candidate DB/wire vocabulary, with `seller-order.status-changed.v1` event semantics. Treat `READY_FOR_HANDOFF → DISPATCHED` as the only candidate dispatch/handoff boundary for `CONSUME`, after Order status + outbox commit durably succeeds. This is a proposal for TV3 to confirm/revise; TV1/TV2/TV5 must still approve actor/Store authority, event publisher/payload, cancel/reject cutoff, and COD separation before implementation. The older `PACKING → SHIPPED` vocabulary remains a distinct proposal, not an alias.
 
- The earlier TV4 proposal used `PENDING_CONFIRMATION → CONFIRMED → PACKING → SHIPPED → DELIVERED`; TV3's current proposal uses `PLACED → ACCEPTED → PREPARING → READY_FOR_HANDOFF → DISPATCHED → DELIVERED`. These are not silently interchangeable. TV3 + TV4 must propose one canonical DB/wire/event vocabulary and obtain the required TV1/TV2/TV5 approvals for actor authority, ownership, event publisher, cancellation/rejection cutoff, and COD separation before implementation. Any migration must be V2+ and must not rewrite V1. The following table records only the earlier TV4 candidate for discussion; it is not an implementation contract:
+The earlier TV4 proposal used `PENDING_CONFIRMATION → CONFIRMED → PACKING → SHIPPED → DELIVERED`; TV3's current proposal uses `PLACED → ACCEPTED → PREPARING → READY_FOR_HANDOFF → DISPATCHED → DELIVERED`. These are not silently interchangeable. TV3 + TV4 must propose one canonical DB/wire/event vocabulary and obtain the required TV1/TV2/TV5 approvals for actor authority, ownership, event publisher, cancellation/rejection cutoff, and COD separation before implementation. Any migration must be V2+ and must not rewrite V1. The following table records only the earlier TV4 candidate for discussion; it is not an implementation contract:
 
 | Current state | Action | Next state | Required guard |
 |---|---|---|---|
