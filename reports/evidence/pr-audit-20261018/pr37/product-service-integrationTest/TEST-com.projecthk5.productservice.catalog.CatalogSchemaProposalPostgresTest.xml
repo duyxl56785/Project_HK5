@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest" tests="11" skipped="0" failures="0" errors="0" timestamp="2026-10-18T04:40:32.409Z" hostname="MDUY-LECO" time="0.476">
+  <properties/>
+  <testcase name="proposalDoesNotBecomeAnAppliedProductFlywayMigration()" classname="com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest" time="0.041"/>
+  <testcase name="concurrentDifferentStoresCannotCommitTheSameSku()" classname="com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest" time="0.097"/>
+  <testcase name="exactSkuMappingAndDecimalPricePersistWithoutCaseFoldingOrRounding()" classname="com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest" time="0.042"/>
+  <testcase name="[1] price=0" classname="com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest" time="0.04"/>
+  <testcase name="[2] price=-1" classname="com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest" time="0.03"/>
+  <testcase name="[3] price=NaN" classname="com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest" time="0.031"/>
+  <testcase name="[4] price=Infinity" classname="com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest" time="0.029"/>
+  <testcase name="[5] price=-Infinity" classname="com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest" time="0.031"/>
+  <testcase name="categoryReferencePreventsDeletionAndUnknownCategoryInsert()" classname="com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest" time="0.032"/>
+  <testcase name="globalSkuIsUniqueAcrossDifferentStoreReferences()" classname="com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest" time="0.031"/>
+  <testcase name="rollbackDoesNotLeaveCandidateProductBehind()" classname="com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest" time="0.046"/>
+  <system-out><![CDATA[04:40:28.140 [Test worker] INFO org.testcontainers.images.PullPolicy -- Image pull policy will be performed by: DefaultPullPolicy()
+04:40:28.144 [Test worker] INFO org.testcontainers.utility.ImageNameSubstitutor -- Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+04:40:28.275 [Test worker] INFO org.testcontainers.dockerclient.DockerClientProviderStrategy -- Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+04:40:28.482 [Test worker] INFO org.testcontainers.dockerclient.DockerClientProviderStrategy -- Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
+04:40:28.482 [Test worker] INFO org.testcontainers.DockerClientFactory -- Docker host IP address is localhost
+04:40:28.500 [Test worker] INFO org.testcontainers.DockerClientFactory -- Connected to docker: 
+  Server Version: 29.8.1
+  API Version: 1.56
+  Operating System: Docker Desktop (containerized)
+  Total Memory: 7571 MB
+04:40:28.605 [Test worker] INFO tc.testcontainers/ryuk:0.7.0 -- Creating container for image: testcontainers/ryuk:0.7.0
+04:40:28.929 [Test worker] INFO tc.testcontainers/ryuk:0.7.0 -- Container testcontainers/ryuk:0.7.0 is starting: 5f14a525210b3ce370837c19514bf03ef4ff414caee55d51c0b540219b042470
+04:40:29.343 [Test worker] INFO tc.testcontainers/ryuk:0.7.0 -- Container testcontainers/ryuk:0.7.0 started in PT0.7380364S
+04:40:29.347 [Test worker] INFO org.testcontainers.utility.RyukResourceReaper -- Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+04:40:29.348 [Test worker] INFO org.testcontainers.DockerClientFactory -- Checking the system...
+04:40:29.348 [Test worker] INFO org.testcontainers.DockerClientFactory -- ✔︎ Docker server version should be at least 1.6.0
+04:40:29.348 [Test worker] INFO tc.postgres:16.6-alpine -- Creating container for image: postgres:16.6-alpine
+04:40:29.521 [Test worker] INFO tc.postgres:16.6-alpine -- Container postgres:16.6-alpine is starting: fcb19eb550be46a042c8720b88a51d175137389503b7f092356cbf27804d69a3
+04:40:31.697 [Test worker] INFO tc.postgres:16.6-alpine -- Container postgres:16.6-alpine started in PT2.3490672S
+04:40:31.698 [Test worker] INFO tc.postgres:16.6-alpine -- Container is started (JDBC URL: jdbc:postgresql://localhost:54444/test?loggerLevel=OFF)
+04:40:32.153 [Test worker] INFO org.flywaydb.core.FlywayExecutor -- Database: jdbc:postgresql://localhost:54444/test (PostgreSQL 16.6)
+04:40:32.201 [Test worker] INFO org.flywaydb.core.internal.schemahistory.JdbcTableSchemaHistory -- Schema history table "public"."flyway_schema_history" does not exist yet
+04:40:32.204 [Test worker] INFO org.flywaydb.core.internal.command.DbValidate -- Successfully validated 1 migration (execution time 00:00.021s)
+04:40:32.223 [Test worker] INFO org.flywaydb.core.internal.schemahistory.JdbcTableSchemaHistory -- Creating Schema History table "public"."flyway_schema_history" ...
+04:40:32.310 [Test worker] INFO org.flywaydb.core.internal.command.DbMigrate -- Current version of schema "public": << Empty Schema >>
+04:40:32.322 [Test worker] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema "public" to version "1 - create categories"
+04:40:32.359 [Test worker] INFO org.flywaydb.core.internal.command.DbMigrate -- Successfully applied 1 migration to schema "public", now at version v1 (execution time 00:00.015s)
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

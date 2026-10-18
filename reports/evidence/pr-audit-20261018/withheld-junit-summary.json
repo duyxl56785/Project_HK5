@@ -1,0 +1,240 @@
+[
+  {
+    "originalPath": "pr37/product-service-integrationTest/TEST-com.projecthk5.productservice.category.CategoryIntegrationTest.xml",
+    "sha256": "82f7f0a2a6eed37ec3426d5c6d2ce1893e70fb0d136e43e495c4ec4a04b5bbf6",
+    "tests": 14,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "reason": "Ephemeral generated test credential in captured console output; original retained locally without editing",
+    "testcases": [
+      {
+        "name": "rejectsCyclesAndRollsBackChanges()",
+        "seconds": "0.23",
+        "result": "PASS"
+      },
+      {
+        "name": "rejectsDeletingParentWithoutRemovingAnything()",
+        "seconds": "0.211",
+        "result": "PASS"
+      },
+      {
+        "name": "databaseRejectsBlankAndOversizedNames()",
+        "seconds": "0.045",
+        "result": "PASS"
+      },
+      {
+        "name": "rejectsMissingParentAndCorruptAncestorCycle()",
+        "seconds": "0.036",
+        "result": "PASS"
+      },
+      {
+        "name": "[1] operation=CREATE",
+        "seconds": "0.035",
+        "result": "PASS"
+      },
+      {
+        "name": "[2] operation=UPDATE",
+        "seconds": "0.033",
+        "result": "PASS"
+      },
+      {
+        "name": "[3] operation=DELETE",
+        "seconds": "0.044",
+        "result": "PASS"
+      },
+      {
+        "name": "simultaneousReparentingWaitsForLockAndCannotCreateTwoNodeCycle()",
+        "seconds": "0.059",
+        "result": "PASS"
+      },
+      {
+        "name": "flywayCreatesSchemaAndJpaPersistsHierarchy()",
+        "seconds": "0.044",
+        "result": "PASS"
+      },
+      {
+        "name": "realApplicationPermitsReadsAndBlocksPublicWrites()",
+        "seconds": "0.287",
+        "result": "PASS"
+      },
+      {
+        "name": "reparentsThenDeletesLeafAndRejectsMissingId()",
+        "seconds": "0.05",
+        "result": "PASS"
+      },
+      {
+        "name": "writeUsesFreshTransactionEvenWhenCallerHasAnOlderSnapshot()",
+        "seconds": "0.041",
+        "result": "PASS"
+      },
+      {
+        "name": "databaseRejectsOrphanAndSelfParentAndDeletingReferencedParent()",
+        "seconds": "0.022",
+        "result": "PASS"
+      },
+      {
+        "name": "lockCannotBeAcquiredOutsideTransaction()",
+        "seconds": "0.01",
+        "result": "PASS"
+      }
+    ]
+  },
+  {
+    "originalPath": "pr37/product-service-test/TEST-com.projecthk5.productservice.category.CategorySecurityTest.xml",
+    "sha256": "4c9bd1f725fe574bdd1dc3d506e4a579c0ae1b32dbbd7a9042974d3eb6e877b0",
+    "tests": 7,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "reason": "Ephemeral generated test credential in captured console output; original retained locally without editing",
+    "testcases": [
+      {
+        "name": "[1] method=POST",
+        "seconds": "0.043",
+        "result": "PASS"
+      },
+      {
+        "name": "[2] method=PUT",
+        "seconds": "0.007",
+        "result": "PASS"
+      },
+      {
+        "name": "[3] method=DELETE",
+        "seconds": "0.007",
+        "result": "PASS"
+      },
+      {
+        "name": "[4] method=PATCH",
+        "seconds": "0.014",
+        "result": "PASS"
+      },
+      {
+        "name": "permitsAnonymousReads()",
+        "seconds": "0.012",
+        "result": "PASS"
+      },
+      {
+        "name": "blocksEvenAnAuthenticatedAdminUntilContractIsConfirmed()",
+        "seconds": "0.019",
+        "result": "PASS"
+      },
+      {
+        "name": "doesNotTrustAnUnverifiedBearerToken()",
+        "seconds": "0.008",
+        "result": "PASS"
+      }
+    ]
+  },
+  {
+    "originalPath": "pr37/product-service-test/TEST-com.projecthk5.productservice.security.ProductServiceSecurityTest.xml",
+    "sha256": "18562a83423764433b24dd023a6fc63956b97155669f3043e96e31568cdc6bc1",
+    "tests": 20,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "reason": "Ephemeral generated test credential in captured console output; original retained locally without editing",
+    "testcases": [
+      {
+        "name": "rejectsUnverifiedBearerAndForgedIdentityHeaders()",
+        "seconds": "0.007",
+        "result": "PASS"
+      },
+      {
+        "name": "deniesHealthMutations()",
+        "seconds": "0.003",
+        "result": "PASS"
+      },
+      {
+        "name": "rejectsUnmatchedPathsToo()",
+        "seconds": "0.003",
+        "result": "PASS"
+      },
+      {
+        "name": "[1] method=GET",
+        "seconds": "0.006",
+        "result": "PASS"
+      },
+      {
+        "name": "[2] method=HEAD",
+        "seconds": "0.004",
+        "result": "PASS"
+      },
+      {
+        "name": "blocksEvenAMockedAdminWithoutAnExplicitRoutePolicy()",
+        "seconds": "0.005",
+        "result": "PASS"
+      },
+      {
+        "name": "[1] method=GET, path=/api/products/probe",
+        "seconds": "0.005",
+        "result": "PASS"
+      },
+      {
+        "name": "[2] method=POST, path=/api/products/probe",
+        "seconds": "0.004",
+        "result": "PASS"
+      },
+      {
+        "name": "[3] method=PUT, path=/api/products/probe",
+        "seconds": "0.003",
+        "result": "PASS"
+      },
+      {
+        "name": "[4] method=PATCH, path=/api/products/probe",
+        "seconds": "0.004",
+        "result": "PASS"
+      },
+      {
+        "name": "[5] method=DELETE, path=/api/products/probe",
+        "seconds": "0.003",
+        "result": "PASS"
+      },
+      {
+        "name": "[6] method=HEAD, path=/api/reviews/probe",
+        "seconds": "0.005",
+        "result": "PASS"
+      },
+      {
+        "name": "[7] method=GET, path=/api/reviews/probe",
+        "seconds": "0.004",
+        "result": "PASS"
+      },
+      {
+        "name": "[8] method=GET, path=/internal/products/probe",
+        "seconds": "0.004",
+        "result": "PASS"
+      },
+      {
+        "name": "[9] method=GET, path=/api/categories-unprotected",
+        "seconds": "0.003",
+        "result": "PASS"
+      },
+      {
+        "name": "[1] credential=missing",
+        "seconds": "0.004",
+        "result": "PASS"
+      },
+      {
+        "name": "[2] credential=bearer",
+        "seconds": "0.003",
+        "result": "PASS"
+      },
+      {
+        "name": "[3] credential=headers",
+        "seconds": "0.004",
+        "result": "PASS"
+      },
+      {
+        "name": "[4] credential=mock-admin",
+        "seconds": "0.004",
+        "result": "PASS"
+      },
+      {
+        "name": "[5] credential=internal-token",
+        "seconds": "0.003",
+        "result": "PASS"
+      }
+    ]
+  }
+]

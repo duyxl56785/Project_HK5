@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.projecthk5.inventoryservice.api.InventoryRequestValidationTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-10-18T04:40:21.833Z" hostname="MDUY-LECO" time="0.147">
+  <properties/>
+  <testcase name="initializeSkuAccepts128CharactersAndRejects129()" classname="com.projecthk5.inventoryservice.api.InventoryRequestValidationTest" time="0.112"/>
+  <testcase name="operationIdAndSkuAccept128CharactersAndReject129()" classname="com.projecthk5.inventoryservice.api.InventoryRequestValidationTest" time="0.022"/>
+  <testcase name="invalidArgumentAndOverflowUseBadRequestErrorCodes()" classname="com.projecthk5.inventoryservice.api.InventoryRequestValidationTest" time="0.01"/>
+  <system-out><![CDATA[04:40:21.683 [Test worker] INFO org.hibernate.validator.internal.util.Version -- HV000001: Hibernate Validator 8.0.1.Final
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.projecthk5.sellerservice.seller.service.SellerPersistenceServiceTest" tests="11" skipped="0" failures="0" errors="0" timestamp="2026-10-18T04:40:21.284Z" hostname="MDUY-LECO" time="0.169">
+  <properties/>
+  <testcase name="nonModeratorCannotReadAnotherProfile()" classname="com.projecthk5.sellerservice.seller.service.SellerPersistenceServiceTest" time="0.138"/>
+  <testcase name="deniedRegistrationCannotWriteToRepository()" classname="com.projecthk5.sellerservice.seller.service.SellerPersistenceServiceTest" time="0.003"/>
+  <testcase name="missingReadActorIsRejectedBeforePolicyOrLookup()" classname="com.projecthk5.sellerservice.seller.service.SellerPersistenceServiceTest" time="0.003"/>
+  <testcase name="deniedResubmissionCannotProbeStoredProfiles()" classname="com.projecthk5.sellerservice.seller.service.SellerPersistenceServiceTest" time="0.003"/>
+  <testcase name="missingActorCannotReachPolicyOrRepository()" classname="com.projecthk5.sellerservice.seller.service.SellerPersistenceServiceTest" time="0.003"/>
+  <testcase name="missingModerationIdDoesNotReachRepository()" classname="com.projecthk5.sellerservice.seller.service.SellerPersistenceServiceTest" time="0.001"/>
+  <testcase name="[1] operation=APPROVE" classname="com.projecthk5.sellerservice.seller.service.SellerPersistenceServiceTest" time="0.003"/>
+  <testcase name="[2] operation=REJECT" classname="com.projecthk5.sellerservice.seller.service.SellerPersistenceServiceTest" time="0.002"/>
+  <testcase name="[3] operation=SUSPEND" classname="com.projecthk5.sellerservice.seller.service.SellerPersistenceServiceTest" time="0.002"/>
+  <testcase name="[4] operation=REINSTATE" classname="com.projecthk5.sellerservice.seller.service.SellerPersistenceServiceTest" time="0.002"/>
+  <testcase name="deniedReadsCannotProbeProfiles()" classname="com.projecthk5.sellerservice.seller.service.SellerPersistenceServiceTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

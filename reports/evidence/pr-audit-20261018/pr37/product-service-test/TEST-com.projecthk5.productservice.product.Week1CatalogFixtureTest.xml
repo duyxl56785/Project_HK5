@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.projecthk5.productservice.product.Week1CatalogFixtureTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-10-18T04:40:26.313Z" hostname="MDUY-LECO" time="0.019">
+  <properties/>
+  <testcase name="twoStoreFixtureHasStableDistinctIdentitiesAndUsesActualDomainTransitions()" classname="com.projecthk5.productservice.product.Week1CatalogFixtureTest" time="0.019"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
