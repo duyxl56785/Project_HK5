@@ -1,7 +1,7 @@
 {
   "artifact_type": "DERIVED_PUBLIC_DOCUMENT_VALIDATION",
-  "checked_at_utc": "2026-10-18T10:38:49.877432+00:00",
-  "source_PR28": "21f6d533726533cc49febcc1e977f25bb0270de0",
+  "checked_at_utc": "2026-10-18T10:49:07.531491+00:00",
+  "source_PR28": "ca639bbc5e810d6206ec0ed221ebfb308ced227e",
   "source_PR37": "ef62086048e2c7a00ecee16db0cc3cde2413deb6",
   "checks": {
     "local_Markdown_links": "PASS",
@@ -13,24 +13,31 @@
   "files": [
     {
       "path": "M01_PROPOSAL.md",
-      "sha256": "72c270c501bd1a9c99f86bf8135c22902938bfb803c07abe947fdf2c75eb4a56"
+      "git_blob_sha256": "3633cfd54ad36fd2986a90ea09a3427a97f4919ffff4e50c2a4f97af06ee3982",
+      "working_copy_sha256": "2b3279b7d6bcafcdd5ce845a249d8bbd162f0216fcce1ed0e171d16d639f97cb"
     },
     {
       "path": "MD01_MD10_MATRIX.md",
-      "sha256": "e563bb6d0192322179f0e76e5a91c74f702ff8aa4b240314efd87d51de9230b1"
+      "git_blob_sha256": "d14604781c018da443a5fd43c231efa9e14612488752455fde3946df797d0cd3",
+      "working_copy_sha256": "a0a660fffe3a27199dfbc5f39cddc6f8ff52bb199c99fea429a7aeb0b17658a4"
     },
     {
       "path": "REPLY_DRAFT.md",
-      "sha256": "bf437d1c20205276a6178e473f098b7aebe1b8d00db7882282da28a8ad578fa4"
+      "git_blob_sha256": "51ce75268f398972500a61cf0ad5f506ee327bbee4eda15a7b82d5cd8a88e0c3",
+      "working_copy_sha256": "f0b07de4de9bacd84695b168acbc039eae6c03cd6e3449b7ff3e58d074639875"
     },
     {
       "path": "SOURCES.md",
-      "sha256": "52bf67c50f89d62c9f0d39b7c1d49719708ae48d7fc82a857e8147894a43f0bc"
+      "git_blob_sha256": "482aec444c060ccb415f4f47e9806ce3975887d8a58a924fe5dca46a6963b6d8",
+      "working_copy_sha256": "886815c4b33119124e49f4ab588651ddc6539c52a250b4549a85901b949b2681"
     }
   ],
   "business_approver": "chờ TV1/chủ dự án xác nhận",
   "M01": "PENDING",
-  "runtime": "NOT_RUN for document publication check; new independent regression recorded separately",
-  "external_mutations_at_check": "No push yet for this package",
-  "limits": "No signature, production acceptance, raw XML audit or runtime result implied by static PASS"
+  "runtime": "See ../TV5_FINANCE_ACCEPTANCE_2026-10-18.md for separate exact-SHA executions; static validation itself is not runtime acceptance",
+  "external_mutations_at_check": "PR44 initial merged by owner at ccfb38d; remaining QA evidence handed off on separate branch codex/tv5-finance-evidence-handoff",
+  "limits": "No signature, production acceptance, raw XML audit or runtime result implied by static PASS",
+  "tested_QA_source": "1311f8a9f14639c4e42c7b8fbf2446a934abfbf2",
+  "hash_scope": "git_blob_sha256 uses staged canonical Markdown bytes for this handoff; working_copy_sha256 may differ due to CRLF",
+  "latest_Cart_test_source": "0834f23e274861adc09a0a42bb265680c1538863"
 }

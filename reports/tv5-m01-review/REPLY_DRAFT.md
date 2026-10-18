@@ -1,6 +1,9 @@
 # Bản phản hồi để TV5 tự xem và gửi
 
-**Bản phản hồi mẫu, không phải chữ ký nghiệp vụ.** Bản nháp để người dùng/owners xem ngày18/10/2026, đối chiếu PR28 `21f6d53` và PR37 `ef62086`.
+> Công bố qua PR44: checkpoint nguồn ban đầu21f6d53/ef62086 được giữ provenance; đã đồng bộ owner5ce0630 và kiểm QA tại1311f8a. Xem [kết quả mới và giới hạn](../TV5_FINANCE_ACCEPTANCE_2026-10-18.md). Mô tả quantity MD03 đã sửa trong packet; business policy vẫn PENDING.
+
+
+**Bản phản hồi mẫu, không phải chữ ký nghiệp vụ.** Bản nháp để người dùng/owners xem ngày18/10/2026, đối chiếu PR28 `5ce0630` và PR37 `ef62086`.
 [M01 chi tiết](M01_PROPOSAL.md) · [Ma trận MD01–MD10](MD01_MD10_MATRIX.md) · [Nguồn](SOURCES.md).
 
 ## Nội dung có thể sao chép
@@ -31,7 +34,7 @@ Người phê duyệt: **chờ TV1/chủ dự án xác nhận**. Các trạng th
 | **MD09 enable authority** | **PENDING** | MD09 L34 +local v0.2 | TV1/chủ dự án chỉ định người ký business và operator; giữ policy-approved=false đến khi đủ approvals/dependency/evidence, config đúng policyVersion. | TV1/chủ dự án; TV5 tổng hợp; TV2/TV3/TV4 dependencies |
 | **MD10 reports/cutoff** | **PENDING** | MD10 L35 +local v0.2 | Chưa đủ định nghĩa bốn nhóm doanh thu/công thức/source/refund/cutoff/timezone; không tự đặt tên hoặc viết query. | Business approver +TV5; TV3/TV4 facts/time |
 | **Inventory lifecycle / Security** | **PENDING** | TV5-FIN-v0.1; OD-09 baseline giữ nguyên | Chốt exact Product→SKU, T1/T2 IDs, reconciliation/retry/C06/state-event; concrete pair/path/operation/delegated current actor. Baseline Auth không thay pair-specific approval. | TV4 +TV3, TV2 SKU; TV1 Security; TV5 COD boundary |
-| **FIN-01 / FIN-06 acceptance** | **PENDING** fix/verification | Checkout source21f6d53; historical diagnostic c4d517e | Utility storage chưa gọi trước reserve. TV3 sửa trong scope được thống nhất rồi chạy nguyên acceptance tests trên fix SHA, giữ positive control/original failing evidence. Runtime không thay đổi từc4d517e trong hai module Cart/Order; không suy mới PASS từ CIgreen. | TV3 Checkout owner; TV5 QA/policy phối hợp; TV2 representation |
+| **FIN-01 / FIN-06 acceptance** | **PENDING** fix/verification | Checkout source5ce0630; latest diagnostic execution de1f5c6 | Utility storage chưa gọi trước reserve. TV3 sửa trong scope được thống nhất rồi chạy nguyên acceptance tests trên fix SHA, giữ positive control/original failing evidence. Runtime không thay đổi từc4d517e trong hai module Cart/Order; không suy mới PASS từ CIgreen. | TV3 Checkout owner; TV5 QA/policy phối hợp; TV2 representation |
 
 **Các quyết định cụ thể cần phản hồi:**
 
@@ -51,3 +54,7 @@ vẫn không phải Product/Store production persistence. Full406PASS tại3ecf9
 [comment mới](https://github.com/duyxl56785/Project_HK5/pull/28#issuecomment-6248595524).
 Đây không phủ nhận bản conflict union trước đã giải quyết. TV3/TV5 cần xác nhận union giữ lịch sử main +hai checkpoint Finance18/10 khi xử lý merge trong nhiệm vụ được giao riêng.
 Bản nháp không thực hiện merge hoặc giải quyết conflict; xác nhận QA union trong comment chỉ áp phạm vi tài liệu, không ký nghiệp vụ.
+
+Checkpoint QA mới: source1311f8a có Cart8unit/Order81unit/Cart1PG PASS, gồm4Finance preflight tests mới; source de1f5c6 có Order16PG PASS và original diagnostic1PASS/2FAIL. Order production/PG/diagnostic không đổi giữa hai source, không cộng run hoặc gọi test mới ởsource chưa chạy. TV5 xác nhận phương án QA union giữ mọi lịch sử main/checkpoint/provenance, chưa thực hiện merge thay owner.
+
+**Post-merge handoff:** owner đã merge PR44 initial tại ccfb38d/head1311f8a. Hai commit evidence sau merge được bàn giao riêng trên codex/tv5-finance-evidence-handoff từ PR28ca639bb, không push PR44 thêm; source facts/contract signatures vẫn giữ đúng provenance nêu trên.

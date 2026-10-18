@@ -1,5 +1,8 @@
 # Ma trận MD01–MD10 — đối chiếu và đề xuất TV5
 
+> Công bố qua PR44: checkpoint nguồn ban đầu21f6d53/ef62086 được giữ provenance; đã đồng bộ owner5ce0630 và kiểm QA tại1311f8a. Xem [kết quả mới và giới hạn](../TV5_FINANCE_ACCEPTANCE_2026-10-18.md). Mô tả quantity MD03 đã sửa trong packet; business policy vẫn PENDING.
+
+
 **Phiên bản đề xuất:** `TV5-M01-PROPOSAL-v0.2`, 18/10/2026. **M01 overall: PENDING.**
 Nguyễn Minh Duy/TV5 tổng hợp, chưa được xác nhận có quyền ký nghiệp vụ cuối cùng.
 **Người phê duyệt nghiệp vụ: chờ TV1/chủ dự án xác nhận.** Đây là trả lời trực tiếp của người dùng, không phải suy luận từ quyền owner Finance.
@@ -58,3 +61,5 @@ Các quyền triển khai trên là điều kiện **tương lai**, không phả
 5. Người được chỉ định +TV5 định nghĩa MD10 bốn nhóm/cutoff/timezone. Owners TV2–TV4 xác nhận representation/source/lifecycle cùng revision.
 
 Không cần dừng hoàn thiện tài liệu vì người ký còn thiếu. Runtime/integration/production acceptance tiếp tục PENDING/BLOCKED; Issue #5 chưa đủ điều kiện DONE.
+
+**Post-merge handoff:** owner đã merge PR44 initial tại ccfb38d/head1311f8a. Hai commit evidence sau merge được bàn giao riêng trên codex/tv5-finance-evidence-handoff từ PR28ca639bb, không push PR44 thêm; source facts/contract signatures vẫn giữ đúng provenance nêu trên.

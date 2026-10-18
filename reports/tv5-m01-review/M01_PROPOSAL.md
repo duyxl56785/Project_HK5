@@ -1,5 +1,8 @@
 # Đề xuất M01 của TV5 — để con người xem xét
 
+> Công bố qua PR44: checkpoint nguồn ban đầu21f6d53/ef62086 được giữ provenance; đã đồng bộ owner5ce0630 và kiểm QA tại1311f8a. Xem [kết quả mới và giới hạn](../TV5_FINANCE_ACCEPTANCE_2026-10-18.md). Mô tả quantity MD03 đã sửa trong packet; business policy vẫn PENDING.
+
+
 **Phiên bản:** `TV5-M01-PROPOSAL-v0.2` · **Trạng thái: PENDING**.
 **Người tổng hợp/đề xuất:** Nguyễn Minh Duy — TV5.
 **Người phê duyệt nghiệp vụ cuối cùng:** **chờ TV1/chủ dự án xác nhận**, theo trả lời trực tiếp của TV5 trong phiên này.
@@ -218,3 +221,5 @@ Kết quả6utilityPASS và diagnostic1PASS/2FAIL tạic4d517e là evidence lị
 - [x] Đối chiếu source/candidate/own-scope replies và ghi thiếu/mâu thuẫn; sửa đề xuất quantity cho đúng nguồn.
 - [x] Hoàn thiện proposal, matrix và reply draft để người dùng tự xem/gửi.
 - [ ] Human business approval, contract implementation và production integration acceptance: chưa hoàn tất.
+
+**Post-merge handoff:** owner đã merge PR44 initial tại ccfb38d/head1311f8a. Hai commit evidence sau merge được bàn giao riêng trên codex/tv5-finance-evidence-handoff từ PR28ca639bb, không push PR44 thêm; source facts/contract signatures vẫn giữ đúng provenance nêu trên.

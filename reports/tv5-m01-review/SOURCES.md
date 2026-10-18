@@ -1,5 +1,8 @@
 # Nguồn đối chiếu M01 local
 
+> Công bố qua PR44: checkpoint nguồn ban đầu21f6d53/ef62086 được giữ provenance; đã đồng bộ owner5ce0630 và kiểm QA tại1311f8a. Xem [kết quả mới và giới hạn](../TV5_FINANCE_ACCEPTANCE_2026-10-18.md). Mô tả quantity MD03 đã sửa trong packet; business policy vẫn PENDING.
+
+
 Snapshot metadata kiểm lại lúc10:28:45 UTC ngày18/10/2026; repository duyxl56785/Project_HK5. Các blob link khóa full SHA. Comments là owner position tại thời điểm đọc, không suy từ quyền commit thành business authority.
 
 ## Heads và phạm vi
@@ -190,3 +193,5 @@ Owner proposal cho delivery/COD và retry, không phải đủ same-version grou
 - [Store test](https://github.com/duyxl56785/Project_HK5/blob/ef62086048e2c7a00ecee16db0cc3cde2413deb6/backend/seller-service/src/test/java/com/projecthk5/sellerservice/store/StoreSchemaProposalPostgresTest.java#L1), [Store SQL](https://github.com/duyxl56785/Project_HK5/blob/ef62086048e2c7a00ecee16db0cc3cde2413deb6/backend/seller-service/src/test/resources/proposals/store-candidate.sql#L1), [Product test](https://github.com/duyxl56785/Project_HK5/blob/ef62086048e2c7a00ecee16db0cc3cde2413deb6/backend/product-service/src/test/java/com/projecthk5/productservice/catalog/CatalogSchemaProposalPostgresTest.java#L1), [Product SQL](https://github.com/duyxl56785/Project_HK5/blob/ef62086048e2c7a00ecee16db0cc3cde2413deb6/backend/product-service/src/test/resources/proposals/catalog-product-candidate.sql#L1).
 - TV2 report: Store26 focused, Product24 focused; full406PASS tại3ecf9c3,88PG gồm38 Category/Seller production và50 candidate. Focused/historical counts không cộng vào full run. TV5 **chưa chạy lại hoặc kiểm raw logs/XML** của lượt này. Source inspection chỉ xác nhận test/candidate tồn tại, không độc lập xác nhận kết quả execution.
 - Latest tests là SQL constraint/concurrency/CAS, không phải runtime Store/Product JPA/House authority, source freshness, price lease hoặc positive Catalog API. Không thay overall PENDING/REVISE.
+
+**Post-merge handoff:** owner đã merge PR44 initial tại ccfb38d/head1311f8a. Hai commit evidence sau merge được bàn giao riêng trên codex/tv5-finance-evidence-handoff từ PR28ca639bb, không push PR44 thêm; source facts/contract signatures vẫn giữ đúng provenance nêu trên.

@@ -82,3 +82,22 @@ và signer cho TV5-FIN-v0.1; vẫn PENDING, không tự ký VND/scale0/bounds/fr
 tại sourcec4d517e có6utility unitPASS bằng JUnit thật và diagnostic1PASS/2FAIL nguyênassertions,overallexit1.
 Utility owneree15851 chưa được wire vàoCheckout. Docs38/39 đã sửa traceability/error semantics,21baseline+
 21supplemental đềuNOT_RUN. RTM phân biệt staticchecks, PG/mock và liveE2E, không cộng kết quả các snapshot.
+
+## TV5 — M01 authority và latest Finance preflight QA,18/10/2026
+
+[PR44 / báo cáo source-specific](../reports/TV5_FINANCE_ACCEPTANCE_2026-10-18.md) công bố proposal/MD01–MD10 và sửa mô tả quantity thực tế1–1000.
+TV5 chỉ tổng hợp/đề xuất; business approver **chờ TV1/chủ dự án xác nhận**. C01/E01 own-scope TV2/TV3 được ghi nhận, overall REVISE;
+M01/S01/Security/Inventory/Finance vẫn PENDING. Không bật policy hoặc sửa owner runtime.
+
+Source21f6d53: Cart6unit+1PG,Order73unit+16PG PASS; diagnostic1PASS/2FAIL,exit1.
+Sau owner c97a656,source de1f5c6: Order75unit+16PG PASS,diagnostic1PASS/2FAIL,exit1; positive control còn PASS.
+Sau owner5ce0630+4test TV5,source1311f8a: Cart8unit,Order81unit,Cart1PG PASS,exit0/27s. Không cộng các snapshots.
+Order production/PG/diagnostic không đổi de1f5c6→1311f8a nên không chạy lại chúng trong lượt cuối; runtime findings vẫn RED, không nhận là fixPASS.
+
+F16-16..19 bổ sung gate không reserve/write, inconsistent House/Seller trong cùng Store và actual per-Store rounding bằng mocked ports.
+QA union mới với main: TV5 xác nhận giữ toàn bộ lịch sử main +hai checkpoint Finance18/10/provenance; chưa merge/resolve thay owner.
+Settlement atomic/unique, Store Finance API, COD authority và live E2E tiếp tục NOT_RUN/BLOCKED. Issue5/12 OPEN/PARTIAL.
+
+### Sau khi owner merge PR44 initial
+
+PR44 đã merge vào28 tại ccfb38d (head1311f8a);4Finance tests và proposal không còn chờ tiếp nhận. Hai commit evidence push sau merge được chuyển sang branch codex/tv5-finance-evidence-handoff từ28ca639bb, không tiếp tục push PR đóng. Cart.claim key guard mới của owner được QA riêng; xem báo cáo cùng ngày để tách lượt chạy tiếp theo và phần evidence chờ review.
