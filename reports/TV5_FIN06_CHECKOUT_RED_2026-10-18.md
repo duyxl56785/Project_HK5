@@ -69,8 +69,12 @@ Read and verified new internal LookupResult FOUND/ABSENT/UNAVAILABLE: omission/n
 become PRODUCT_NOT_FOUND, incomplete IDs and conflicting same-Store facts fail the batch, and any rejected
 item withholds all usable snapshots.50 unit invocations PASS. This does not prove authenticated HTTP,
 published JSON `allReady`/decimal strings, source persistence, SKU uniqueness or a live Catalog adapter.
-TV2's response document still describes the pre-fix list-only prototype as a known gap: owner should
-update that paragraph to current63668b8 facts while preserving candidate/runtime distinctions.
+At the initial63668b8 checkpoint TV2's response document still described the pre-fix list-only prototype
+as current. **Owner corrected this documentation at9e1794af5301498d2cda0a27b84b13b242210d70** during
+delivery, explicitly distinguishing historical omission ambiguity, fixed internal source and still-pending
+HTTP/provider/freshness. The five-file delta is Markdown/CSV only, with no Java/build/schema change;
+no runtime rerun is claimed or needed for that delta. The50PASS execution remains at63668b8, not a new
+run at9e1794a. TV2's separate full367PASS report is provider evidence, not a TV5 execution or added total.
 
 ## Current DB facts and concrete fix handoff (proposal, not source edit)
 

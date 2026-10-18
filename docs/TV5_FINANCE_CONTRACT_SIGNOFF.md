@@ -158,3 +158,8 @@ TV5 targeted50unitPASS verifies that source only. New Checkout diagnostic atpare
 seven-row contract matrix and owner fix acceptance in [RED report](../reports/TV5_FIN06_CHECKOUT_RED_2026-10-18.md).
 TV3 explicitly confirms fixNOT_IMPLEMENTED and conditional owner proposal, not permission to edit Checkout.
 All overall PENDING/REVISE states above remain; no deploy flag/production behavior change authorized here.
+
+TV2 subsequently corrected the stale prototype paragraph and handoff at9e1794a (five Markdown/CSV files
+only); the Catalog Java source remains63668b8. TV5 verified that delta and treats the documentation finding
+as corrected, with no new runtime execution/contract approval inferred. Provider-reported367PASS is
+separate from TV5's targeted50unit run and the Checkout1PASS/2FAIL diagnostic.
