@@ -27,3 +27,12 @@ Rules Review/Finance có unit tests; chưa có API/persistence/JWT adapter produ
 - [Kết quả chạy follow-up và phân loại bằng chứng](../reports/TV5_W1_FOLLOWUP.md).
 
 PASS: đã chạy đạt; FAIL: đã chạy lỗi; NOT_RUN: chưa thực thi; BLOCKED: chưa thể chuẩn bị/chốt ca do phụ thuộc được ghi rõ. Không cộng test của các mốc khác nhau, unit với E2E hoặc claim báo cáo V2 vào cùng tổng hiện tại. Việc thiết kế UAT/contract trong W1 không đồng nghĩa đã triển khai/chạy luồng tuần 2–3.
+
+## TV5 — Finance contract / current-head checkpoint 18/10/2026
+
+- [Sáu contract, owner/signature/module matrix và M01 candidate TV5-FIN-v0.1](TV5_FINANCE_CONTRACT_SIGNOFF.md):
+  S01/M01/Inventory/Security PENDING, C01/E01 và C06 REVISE; không có cross-owner APPROVED.
+- [Lượt chạy mới TV5 và QA evidence](../reports/TV5_FINANCE_QA_2026-10-18.md): parent28 bd5ff09
+  61unit+11PG PASS; branch bổ sung44f2838 72unit+13PG PASS,0fail/error/skip. Hai lượt riêng, không cộng.
+- FIN-01..05 ghi rõ giới hạn precision/snapshots/settlement/Store authority/rounding. Test cấu hình dùng
+  fixture policy không bật cờ deploy. Live UAT2Store/COD/settlement/Store query NOT_RUN/BLOCKED.

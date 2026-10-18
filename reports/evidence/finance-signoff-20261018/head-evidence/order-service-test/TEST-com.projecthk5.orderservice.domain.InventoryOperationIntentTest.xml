@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.projecthk5.orderservice.domain.InventoryOperationIntentTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-10-18T05:05:08.532Z" hostname="MDUY-LECO" time="0.014">
+  <properties/>
+  <testcase name="journalRehydrateRequiresIdenticalFingerprint()" classname="com.projecthk5.orderservice.domain.InventoryOperationIntentTest" time="0.002"/>
+  <testcase name="invalidExternalInventoryIdentifiersFailClosed()" classname="com.projecthk5.orderservice.domain.InventoryOperationIntentTest" time="0.001"/>
+  <testcase name="requestHashIsCanonicalButOperationIdIsSeparate()" classname="com.projecthk5.orderservice.domain.InventoryOperationIntentTest" time="0.008"/>
+  <testcase name="lineSetCannotBeMutatedOrHaveDuplicates()" classname="com.projecthk5.orderservice.domain.InventoryOperationIntentTest" time="0.001"/>
+  <testcase name="changedTypeOrQuantityIsNotAValidReplay()" classname="com.projecthk5.orderservice.domain.InventoryOperationIntentTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

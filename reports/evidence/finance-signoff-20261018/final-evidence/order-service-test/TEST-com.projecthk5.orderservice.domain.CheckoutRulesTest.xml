@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.projecthk5.orderservice.domain.CheckoutRulesTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-10-18T05:06:59.118Z" hostname="MDUY-LECO" time="0.02">
+  <properties/>
+  <testcase name="financePolicyRequiresExplicitApprovalAndInputs()" classname="com.projecthk5.orderservice.domain.CheckoutRulesTest" time="0.012"/>
+  <testcase name="idempotencyFingerprintOrderIndependentButRevisionSensitive()" classname="com.projecthk5.orderservice.domain.CheckoutRulesTest" time="0.003"/>
+  <testcase name="expectedItemsMustExactlyMatchCart()" classname="com.projecthk5.orderservice.domain.CheckoutRulesTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
