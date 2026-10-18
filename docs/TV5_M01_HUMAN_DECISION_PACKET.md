@@ -25,7 +25,7 @@ xác định rõ bằng tài khoản/vai trò, không tự suy rằng người t
 |---|---|---|---|
 | MD01 currency | **Candidate A:** VND duy nhất, code VND hiện diện ở provider/Cart/Order/SellerOrder; không default/FX. **B:** nếu cần currency khác hoặc phần lẻ, ghi rõ code + allowed units/scale và sửa cùng phiên bản trước wire/schema. | TV5 human + business decision maker; TV2/TV3/TV4 representation/COD | Product currency source, Cart V2+ currency, Order/SellerOrder/payment/settlement currency; không dùng label fixture làm dữ liệu thật. |
 | MD02 unit price/wire | A: giá Product nguyên dương1..99,999,999,999,999,999 VND; UNNECESSARY để reject phần lẻ, không round. Plain decimal JSON string1–17digits, không dấu/exponent/leading zero; BigDecimal parse/compare chính xác. B: chỉ sau sửa MD01 và wire fractional canonical cụ thể. | TV5/business +TV2 provider +TV3 consumer; TV1 validation/privacy | Không JSON number17digits qua JS; review catalog.checkout.v1 candidate v0.2; Account/JWT.sub không bị đổi thành UUID. |
-| MD03 quantity/line/Store/parent bounds | A: mỗi unit, exact unit×quantity, sum dòng/Store và sum Store/parent không vượt99,999,999,999,999,999 VND. Đồng thời phải fit schema thực, không chỉ từng Store. Cart API/service/DB và Checkout DTO hiện giới hạn quantity1–1000; Java int max2,147,483,647 chỉ là capacity của kiểu, không phải quantity cap được API chấp nhận. Inventory positive long không cho phép consumer tự mở rộng wire. Đề xuất giữ cap hiện có; business cap khác vẫn cần owner chọn. | TV3 orchestration +TV5 policy, TV2 price, TV4 qty consumer | Validate toàn bộ trước reserveRequested/Inventory/write; V2+ constraint/DTO nếu cần. Utility NUMERIC19,2 chỉ kiểm kỹ thuật, chưa áp cap VND hay được wire. |
+| MD03 quantity/line/Store/parent bounds | A: mỗi unit, exact unit×quantity, sum dòng/Store và sum Store/parent không vượt99,999,999,999,999,999 VND. Đồng thời phải fit schema thực, không chỉ từng Store. Cart API/service/DB và Checkout DTO hiện giới hạn quantity1–1000; Java int max2,147,483,647 chỉ là capacity của kiểu, không phải quantity cap được API chấp nhận. Inventory positive long không cho phép consumer tự mở rộng wire. Đề xuất giữ cap hiện có; business cap khác vẫn cần owner chọn. | TV3 orchestration +TV5 policy, TV2 price, TV4 qty consumer | Validate toàn bộ trước reserveRequested/Inventory/write; V2+ constraint/DTO nếu cần. Storage utility đã wire tại5f2ada8/verifiedbe1; chưa áp approvedVND/businesscap. |
 | MD04 commission/House/rounding | Giữ yêu cầu5% ordinary Store/0% House; candidate rate snapshot0.0500/0.0000 DECIMAL(5,4). House từ trusted persisted classification/privileged assignment, không slug/name/JWT/body. Candidate HALF_UP(scale0) **một lần mỗi SellerOrder merchandise subtotal**, net=subtotal−commission, không pool parent hoặc cộng fee đã round từng dòng. | TV5 human/business, TV2 House source, TV3 snapshot/grouping, TV4 COD | One SellerOrder/authoritative Store; consistent Seller/House facts; rate/House/fee/net snapshots và policyVersion bất biến. |
 | MD05 shipping/tax/discount | Candidate initial slice chỉ hỗ trợ đơn không cần adjustment chưa được duyệt; commission base là merchandise subtotal. Nếu muốn hỗ trợ shipping/tax/discount, phải chỉ rõ bên hưởng/chịu từng khoản, allocation từng Store/line, rounding remainder và tác động commission/net/COD trước triển khai. Không mặc định mọi phí bằng0 hoặc trừ discount ở Store khác. | Business owner +TV5 +TV3 totals +TV4 COD/refund; TV2 price semantics | Không thể derive final payable từ gross/fee hiện tại khi adjustments chưa có model. Reject/hold flow cần adjustment chưa thống nhất thay vì settlement sai. |
 | MD06 COD/refund/reversal | ADMIN hiện tại xác nhận COD sau DELIVERED một lần, delivery/payment riêng. Candidate Order DB là source delivery/payment, TV4 rules/TV3 local transaction+outbox. Chỉ settleDELIVERED+CODPAID từ approved snapshots. Partial payment/refund/return sau settle cần reversal policy và actor/source riêng, không sửa original fee/net hoặc đoán paid từ Inventory. | TV5/business +TV4 +TV3; TV1 ADMIN/current auth; TV2 Store scope | Define actionId/payload binding, paid_by/paid_at/currency/amount, unique SellerOrder settlement+atomic eligibility/insert; không làm production trước ký. |
@@ -46,8 +46,8 @@ xác định rõ bằng tài khoản/vai trò, không tự suy rằng người t
 
 NUMERIC(19,2) cho phép tối đa99,999,999,999,999,999.99 về mặt lưu trữ. Candidate A nguyên VND
 chọn max99,999,999,999,999,999 (khác .99). `OrderAmountStorageBounds` chỉ reject mất precision,
-âm và vượt storage max; không chọn currency/scale0, không tự cung cấp source authority và chưa được gọi
-từ Checkout. Không sửa V1; bất cứ schema/DTO/currency check mới nào đi qua V2+ và owner review.
+âm và vượt storage max; không chọn currency/scale0 hoặc tự cung cấp source authority. TV3 đã wire vàoCheckout trướcRESERVE tại5f2ada8,
+TV5 verified3originaldiagnosticPASS tạibe1d5b6 (§13); signedbusiness caps vẫnchờ. Không sửa V1; schema/DTO/currency mới qua V2+ và ownerreview.
 
 ## 4. Ví dụ số cho người quyết định
 
@@ -59,9 +59,9 @@ Các ví dụ **candidate A**, không phải production acceptance hoặc test E
 | Hai dòng10 trong **một** Store | subtotal20, fee1, net19 | Không cộng hai line fees1+1 |
 | Hai ordinary Store mỗi Store10 | parent20, fees1+1=2, nets9+9=18 | Không pool parent để chỉ tính fee1 |
 | Ordinary100000 +House200000 | parent300000, fees5000+0, nets95000+200000 | House fact phải authoritative và snapshot lúc placement |
-| Hai Store mỗi Store60000000000000000 | Từng Store fit, parent120000000000000000 phải reject trước reserve | FIN-06 hiện còn RED; DB rollback sau reserve chưa đáp ứng |
+| Hai Store mỗi Store60000000000000000 | Từng Store fit, parent120000000000000000 phải reject trước reserve | FIN-06 storage acceptance GREEN tạibe1d5b6; signedVNDcap vẫncandidate |
 | unit0.01×qty2,147,483,647 | BigDecimal=21474836.47 nhưng **không hợp lệ theo VND nguyên candidate A** | Exact Java math không đồng nghĩa business/storage acceptance; quantity này cũng vượt API cap1000 hiện có |
-| unit1.001 +2.001, helper fixture scale3 | Initial3.002→DB/replay3.00 hiện tại | FIN-01 RED; không hợp thức hóa mất precision bằng changing assertion |
+| unit1.001 +2.001, helper fixture scale3 | Historical8cc:initial3.002→DB/replay3.00; be1d5b6 reject trướcreserve/write | FIN-01 originalacceptance GREEN; không đổiassertion hoặc kýbusinessscale |
 | Shipping15000/tax5000/discount10000 trên merchandise100000 | **Chưa tính final fee/net/payable** nếu allocation chưa được chọn | Không tự chọn ai chịu discount/thu shipping/tax; MD05 bắt buộc ký |
 
 ## 5. Immutable snapshots và consumer/schema impacts
@@ -73,7 +73,7 @@ Các ví dụ **candidate A**, không phải production acceptance hoặc test E
 | subtotal/commission rate/amount/net | gross/fee có DB; rate/net/policyVersion thiếu | TV3 shared schema phối hợp TV5; rate và result lúc placement, net không recompute từ policy hiện tại |
 | COD/delivery/payment audit | Chưa có runtime COD PAID/DELIVERED trong scaffold này | TV4 rules+TV3 authoritative transaction/event; TV1 current ADMIN verification |
 | settlement identity/replay | Chưa có atomic unique settlement/query production | TV5 thiết kế sau approval; unique sellerOrderId +atomic eligibility/create, stable replay result, Store-scoped queries |
-| successful Checkout replay | Order read từ committed DB, không repricing; nhưng currentscale loss vẫn có | TV3 giữ immutable outcome, fix exact storage trước reserve; không chạy lại Catalog/House/rate mới |
+| successful Checkout replay | Order read từ committed DB, không repricing; FIN01 exactstorage bug đãverifiedfixedbe1d5b6 | TV3 giữ immutable outcome và storagepreflight; reviewedcurrency/rate/House/net/policy snapshots vẫnchờ, không reprice |
 
 Nguồn sự thật của House/Store/current status không có thì phải fail-closed. `FOUND/ABSENT/UNAVAILABLE`
 là kiểu trả về của internal source, không tự verify current identity/freshness hoặc tạo persistence.
@@ -99,11 +99,11 @@ mọi bên bắt buộc. Bất đồng MD05/MD07/MD10 không được che bằng
 - [ ] Đủ applicable approvals và TV3 cho phép/triển khai preflight đúng ownership.
 - [ ] Wire storage +approved business checks trước reserveRequested; no Inventory/write/event cho input biết sai.
 - [ ] Preserve original PR43 assertions; không biến UNKNOWN thành blind RELEASE. Known-safe Cart cleanup theo contract.
-- [ ] Chạy nguyên diagnostic trên đúng fix SHA:2 failing cases phải GREEN và positive control vẫnPASS.
+- [x] Chạy nguyên diagnostic trên ownerfixSHAbe1d5b6:2failingcases đãGREEN, positivecontrolPASS; rawRED giữnguyên (§13).
 - [ ] Rerun affected replay/scanner/tagged PG/security regression; live E2E chỉ khi provider/journal/auth thật sẵn sàng.
 - [ ] Thống nhất việc đưa diagnostic vào gate chuẩn; normal CI hiện không chạy task này, không tự đóng finding từ CIgreen.
 
-**Hiện tại tất cả ô trên chưa hoàn thành.** Không sửa Checkout/Inventory/Auth, V1, policy flag hoặc
+**Technical storagefix đã verified; các ô approval/business/live còn chờ.** Không sửa Checkout/Inventory/Auth, V1, policy flag hoặc
 production settlement để tự vượt sign-off. Issue5/12 giữ OPEN/PARTIAL.
 
 ## TV5 follow-up: authority and source correction (18/10/2026)
@@ -153,7 +153,7 @@ chỉ là engineering proposal, nói rõ không phải human signature/business 
 |---|---|---|---|---|---|
 | **MD01** | Proposed VND duy nhất, explicit code, no default/FX | TV5 đề xuất +business approver; TV2 provider, TV3/TV4 consumer | P2 compatible; P3 explicit-currency design. Chưa business signer | **PENDING**; compatibility được ghi nhận, chưa accepted business currency | Business chọn A/B. Product price/currency slice ở §10; không cần yêu cầu TV2 lặp compatibility |
 | **MD02** | Proposed positive integral1..99,999,999,999,999,999; BigDecimal; canonical JSON string; calculation scale0, storage19,2 exact .00 nếu được duyệt | Business approver +TV5 money; TV2 schema/API, TV3 consumer | P2/P3; Product prototype high precision không phải yêu cầu giá phân số | **PENDING** business cap/scale; wire design có own-scope acceptance | Explicit price-slice signature +reviewed V2+/S01 applicable gates; Product validation/persistence rồi re-test production schema |
-| **MD03** | Proposed cap17digits cho unit/line/Store/parent/commission/net; exact sums, qty1–1000 hiện có; fee/net0..subtotal | TV3 preflight +TV5/business caps; TV2 price, TV4 qty | P3 đã xác nhận technical necessity; current DTO/service/schema1–1000; utility chưa wire | **PENDING** business caps; technical quantity fact không phải intmax | All storage+business bounds trước RESERVE; Cart/Order V2+/preflight sau applicable approvals. Check fee/net/rate không bỏ qua parent |
+| **MD03** | Proposed cap17digits cho unit/line/Store/parent/commission/net; exact sums, qty1–1000 hiện có; fee/net0..subtotal | TV3 preflight +TV5/business caps; TV2 price, TV4 qty | P3 đã xác nhận technical necessity; current DTO/service/schema1–1000; storageutility wired/verifiedbe1, signedbusinesscaps PENDING | **PENDING** business caps; technical quantity fact không phải intmax | All storage+business bounds trước RESERVE; Cart/Order V2+/preflight sau applicable approvals. Check fee/net/rate không bỏ qua parent |
 | **MD04** | Existing5%/House0/net requirement; proposed HALF_UP0 một lần mỗi SellerOrder merchandise subtotal, rate0.0500/0.0000 snapshot | Business approver +human TV5; TV2 House, TV1 assignment permission, TV3 snapshot, TV4 COD | FinanceRules/CONTRIBUTING giữ rule; P2 trusted House source target; chưa chữ ký rounding/base/House definition | **PENDING** full policy; agent không ký human TV5 | House authoritative persistent classification/audit, policy/config binding; không infer từ slug/JWT/body hoặc unknown→regular |
 | **MD05** | Proposed A restricted no-unapproved-adjustment flow; B explicit Store/line allocation theo lựa chọn §9 | Business approver +TV5; TV3 totals, TV4 COD/refund, TV2 semantics | P6: TV3 conditional A/B implementation constraints đã trả lời; chưa human sign-off allocation | **PENDING**, A/B chưa chọn | Chỉ totals/fee/COD cần adjustment mới phụ thuộc lựa chọn này; không tự đặt mọi khoản0 |
 | **MD06** | Existing DELIVERED AND COD PAID; proposed full-COD-only/reversal alternatives §9 | TV4 lifecycle +TV3 local transaction/outbox +TV5 Finance; TV1 ADMIN; business approver | P1 OD-07 DECIDED; P4/P6 local Order transaction+outbox proposal, chưa ký producer/action/event/refund model | **PENDING** runtime/refund/source; giữ OD-07, helper guard không là atomic settlement | Separate payment facts/idempotency/unique settlement/current Store scope; production implementation chờ chữ ký và phase scope |
@@ -233,7 +233,7 @@ Nếu chưa điền, reporting vẫnBLOCKED; A/B chỉ là candidate cho cách g
 | Slice | Chữ ký/điều kiện tối thiểu | Được triển khai sau khi đạt, trong ownership | Chưa được mở bởi slice đó |
 |---|---|---|---|
 | **Product price/currency** | Named business approver +humanTV5 ký MD01/MD02 và unit-cap củaMD03 cụ thể; ghi nhận compatibility P2/P3 đã có. TV2/TV1 phê duyệt applicable Product/Store schema/S01/auth boundaries | TV2 reviewed price/currency V2+ constraint/JPA/DTO +production PG/validation tests; exact JSON strings theo agreed wire | Không tự mở Catalog HTTP/provider hoặc House assignment/Checkout/Finance. MD05/06/10 reporting/refund không tự là prerequisite cho riêng price column nếu slice approval loại chúng rõ |
-| **Cart/Order money preflight** | TV3 own-scope accepted necessity; đủ approved representation/storage/business caps, fee decisions áp dụng, authoritative facts/security và explicit implementation scope | TV3 bounds unit×qty/line/Store/fee/net/parent trướcRESERVE, reviewed Cart/Order V2+; chạy nguyên FIN-01/06 diagnostics | Không tự bật policy/adapter, sửa assertion hoặc hứalive E2E. Utility pass chưa wire không đạt |
+| **Cart/Order money preflight** | TV3 own-scope accepted necessity; đủ approved representation/storage/business caps, fee decisions áp dụng, authoritative facts/security và explicit implementation scope | TV3 bounds unit×qty/line/Store/fee/net/parent trướcRESERVE, reviewed Cart/Order V2+; chạy nguyên FIN-01/06 diagnostics | Không tự bật policy/adapter, sửa assertion hoặc hứalive E2E. Storagepreflight đãverifiedbe1; utility/runtimePASS không kýbusinesspolicy |
 | **Snapshots/Checkout live** | MD04/05/07/08 áp dụng +S01/C01/E01/Security +trusted providers; Inventory mapping/journal/lifecycle/recovery ký và implemented | TV2 sources; TV3 consumer/journal/order snapshots; TV4 lifecycle theo scope đã ký | Không có commit-time guarantee nếu chỉ ký last-verified; không settlement permission |
 | **COD/settlement** | MD04/05/06/08/09 cùng source/current ADMIN/Store scope, unique atomic eligibility/create +per-SHA tests, được giao production phase | TV4 COD rules, TV3 persistence/outbox, TV5 Finance theo ownership | Không infer PAID/DELIVERED từInventory; không implement khi chỉ price slice APPROVED |
 | **Reporting** | MD10 bốn definitions +approved snapshot/settlement/refund facts, Store scope/timezone/cutoff tests | TV5 queries/reporting trong phase được giao | Reporting approval không đổi giá/fee của order quá khứ hoặc bật deployment flag |
@@ -284,3 +284,33 @@ P6 tự giới hạn là proposal, không là TV3 human signature. HumanTV5/busi
 Giữ TV2 compatibility/P3 C01/E01 own-scope và OD07/09 baseline, không mở lại những xác nhận đó.
 Lời đề nghị còn hiệu lực trênPR37/28 r2; không đăng thêm lời nhắc lặp. Bước tiếp theo là owner decisions +TV3 authorized money fix;
 chỉ khi có fix mới chạy nguyên diagnostic để chứng minh2RED→GREEN và positive control vẫnPASS.
+
+## 13. Current review/owner checkpoint — REVIEW-AUDIT-20261018-r4
+
+**PR28sourcebe1d5b6c1a6eafa385f2bd6bd62f8b5efbeb5757**, ownerfix5f2ada8 đã wire exact **existing NUMERIC(19,2)** storagechecks trướcRESERVE;
+be1 thêmCartclaimfailclosed. TV5 actual **88OrderunitPASS,16OrderPGPASS,originaldiagnostic3PASS**,0fail/error/skip,exit0/60s.
+Diagnostic sourceblob khôngđổi8cc→be1; original1P2F ở§12/rawlogs giữlịch sử. [FullallPRreviewaudit/evidence](../reports/TV5_PROJECT_REVIEW_AUDIT_2026-10-18.md).
+**FIN01/06 technicalfindings FIXED_VERIFIED**, không còn nói sourcechưawire hoặc đòiTV3làmlạifix; humanTV1reviewdecision vẫncầncậpnhật.
+Đây là technicalstorage protection, không signedVND/scale0/businesscap và không liveCheckout/Financeenablement.
+Head28sauđólên**c181675**(pre-serializeoutboxtrướcRESERVE):TV5targetedCheckoutService16unit+3originalPGdiagnosticPASS,exit0/40s;
+khônggánfull88unit/16PGbe1choheadmới. PR49isolatedInventorypaircf60281có5targetedsecurityunitPASSsauownerfixwrappertest,
+vẫnchưaHTTP/currentStore/delegation/provision/rotation/runtimepermission.
+
+[TV1 PR48 c0b485a](https://github.com/duyxl56785/Project_HK5/pull/48) có quyết địnhS01architecture/OD09pairdesign;
+[TV2ownscopeconfirmation](https://github.com/duyxl56785/Project_HK5/pull/48#pullrequestreview-5563376836) và
+[TV3consumerdesignconfirmation](https://github.com/duyxl56785/Project_HK5/pull/48#pullrequestreview-5563408894) đãcó.
+Không yêu cầu TV1/TV2/TV3 xácnhậnlại nguyêný này. SharedS01/pairruntime còn TV4, exactproviders/securityimplementation/evidence.
+TV1 cho phép TV2 bắt đầu reviewedStoreV2+/JPA/currentread; **không tự mở Productprice/currency policy**.
+
+HumanTV5 đồngý **tách riêng phạmvi Productprice persistence**, baseline e597daf: **MD01+MD02+riêngunit-pricecapMD03**.
+Đây là đồngý quytrình/scope, trạngthái **PENDING BUSINESS APPROVAL**; TV5 vẫnchưađượcủyquyền finalbusinesssigner.
+Quantity1–1000 chỉtechnicalfact. Chủdựán/TV1 cần chỉđịnhnamedbusinessapprover/operator; đủhumanchoices/schema/S01/security mớiAPPROVEDslice.
+MD04–MD10 theo dõi độc lập, không tựchặnprice sliceđãkýriêng; chưa cópricebusinesssliceđượcapprovedtrongaudit.
+
+- [x] ActualoriginalFIN01/06 GREEN+positivecontrol, ownerruntimefixsourceverified; giữhistoricalRED/QAunionmain.
+- [x] Ghi nhậnS01/OD09 mới đúngscope vàpartialpriceprocedure; không tựkýthayowner/business.
+- [ ] Namedbusinesssigner/operator +same-versionhumanchoices vàapplicablegates; all10MD businessPENDING.
+- [ ] Productioncurrencysnapshots/COD/atomicsettlement/Storequeries/liveE2E acceptance; [pairQAplan](../tests/TV5_SERVICE_PAIR_QA_MATRIX.md) làplan, khôngruntimePASS.
+
+PR19đãAPPROVED/MERGED, PR37/38/41/42/46/47đãmerge; khôngrequest/pushPRđóng. PR39docsfindingsfixednhưnghumanTV5CRdecisionchưađổi;
+PR28humanTV1CRchưađổi, PR48TV4consumerresponsecònchờ tạiaudit. **WAITING_REVIEW/OWNER_CONFIRMATION**, Issue5/12OPEN/PARTIAL, Financeflagfalse.

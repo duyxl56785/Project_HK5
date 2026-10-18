@@ -124,3 +124,19 @@ New malformed-request guard verified; FIN01precision/replay vàFIN06pre-reserve 
 TV3 MD05/06/08 engineering reply đã ghi nhận trong canonicalpacket; không businesssignature. M01/all10MDPENDING,
 S01/Security/Inventory PENDING, C01/E01/C06REVISE; chưa production slice mới. LiveE2E/settlement/Storequeries/currentCOD NOT_RUN/BLOCKED.
 Lưu22rawassets exactbytes,61historicalhashes+Gitblobs reverified;0missinginitialDockerVolumes. Giữ toàn bộ QA history, không giải quyết conflict thayowner.
+
+### All-PR review audit r4 — original FIN diagnostic GREEN,18/10/2026
+
+[Current report](../reports/TV5_PROJECT_REVIEW_AUDIT_2026-10-18.md): scan33PR/119reviewevents/16resolvedthreads/16Issues;
+4openPR28/39/48/49 tạirefresh, không bỏ sótPRmới. PR19alreadyapproved/merged; PR37/38/41/42/46/47integrated.
+OwnerTV3 mergedmain tại4a6c9a2; audit so từngnonblankline mainQA đều giữ trongbe1; khônglàmlạiconflict.
+**ActualTV5be1d5b6:88OrderunitPASS,16OrderPGPASS,originalFINdiagnostic3PASS,0fail/error/skip,exit0/60s.**
+FIN01/06 đãFIXED_VERIFIED sauownerfix5f2ada8; **8cc1P2F ởcheckpointtrước làhistoricalRED**, assertions/blob khôngđổi.
+LocalJWT/replay/scannertests cũngPASS; không mởlạiresolvedthreads. [Rawmanifest](../reports/evidence/project-review-20261018/manifest.json).
+TV2be1run117PASS làownerreportedseparate, không cộngvớiTV5. Mainrulesetstaledismissalfalse: oldapprovalkhôngtựbịhủy, nhưngkhôngchứngminhheadmớiđãreview.
+PR28TV1CR vàPR39TV5CR vẫnhiệulực chođếnhumanreviewdecisionmới; PR48S01/pairdesignđượcTV1+TV2+TV3confirmedownscope, chưaruntimeapproved.
+[PairsecurityQA](../tests/TV5_SERVICE_PAIR_QA_MATRIX.md) táchexistinglocalunitPASS vàSP01–14NOT_RUN/BLOCKED. M01all10MDbusinessPENDING,
+partialProductpriceMD01/02/unitcapMD03 vẫnchờbusiness+schema/S01/security; khôngbịMD04–10tựchặn. NoFinanceflag/COD/settlement/liveE2Eunlock; Issue5/12PARTIAL.
+Deltaownerhead**c181675**: targetedCheckoutService16unit+3originalPGdiagnosticPASS,exit0/40s; full88unit/16PGvẫnthuộcbe1run.
+PR49security5cf**4P1F**wrappercast, ownersửacf60281→**5P0F**same2classes,exit0/13s; partialfilterunitproofkhôngdeployedpair/liveE2E.
+35rawassetsperSHAgiữRED/GREEN/commands/hashes; khôngcộngsnapshotshoặcchủsởhữu117PASSvàoTV5total.

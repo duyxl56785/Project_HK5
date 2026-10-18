@@ -85,3 +85,19 @@ source unchanged tới5a3788b; [derived current audit](../reports/evidence/m01-o
 
 Same-run taskcounts/rawSHA256/commands và22originalassets: [manifest](../reports/evidence/m01-reaudit-20261018/manifest.json).
 83unit/16PG/diagnostic1P2F chỉ thuộc8cc5ce4, không là release total cộng lịch sử. PR42/46 integrated, newesthead chưa sửaFIN01/06.
+
+### Current REVIEW-AUDIT-20261018-r4 — be1d5b6
+
+| Requirement / review | Test / owner / evidence | Current disposition |
+|---|---|---|
+|F16-11 FIN01 /TV1CR5563289579|Originalprecision/replaycase; TV3fix5f2ada8 →actualTV5be1 PGdiagnostic|**FIXED_VERIFIED**, pre-reserve rejection, no changedassertion |
+|F16-12 FIN06 /sameCR|Originalparentoverflowcase +positivecontrol →[XML](../reports/evidence/project-review-20261018/fin06Regression/TEST-com.projecthk5.orderservice.finance.CheckoutMoneyPreflightRegressionTest.xml)|**3PASS/0FAIL**, raw8ccREDretained; noInventory/writer/order/outboxforknowninvalid |
+|QA JWT/replay/scanner resolvedthreads28|88unit +16PG actualbe1; [manifest](../reports/evidence/project-review-20261018/manifest.json)|**FIXED_VERIFIED**, no regressionreproduced; mockremoteports notliveintegration |
+|QA allreviewstates|33PR/119events/16threads/16Issues; [audit](../reports/TV5_PROJECT_REVIEW_AUDIT_2026-10-18.md)|0unresolved;28TV1CR/39TV5CRneedhumanupdateddecision;19alreadyapprovedmerged;PR49mớirefresh |
+|F16-14 partialprice M01|e597dafMD01/02/unitcapMD03 +humanTV5scopeagreement, TV2technicalcompatibility|PENDING BUSINESS APPROVAL; quantity1–1000technicalfact; noMD04–10automaticpricegate |
+|QA Security/S01|TV1PR48v1+TV2/TV3ownscope; [SP01–14QAplan](TV5_SERVICE_PAIR_QA_MATRIX.md)|Designconfirmationrecorded; runtimepairs/currentStore/COD/Financequeries NOT_RUN/BLOCKED |
+
+88/16/3belongonlybe1run; no additionofold8cccounts/TV2reported117. Publication22rawhashes/commands/time/exit inmanifest; productionFinance/fullM01notDONE.
+Delta**c181675**:16targetedCheckoutServiceunit+3originalPGdiagnosticPASS, khôngfullunit/taggedPG rerun.
+PR49**5cf4d75**4PASS/1FAILwrappertest →ownerfix**cf60281**5PASS/0FAILsame2securityclasses; **FIXED_VERIFIED testharness**,
+SP01–04chỉpartialunitcoverage, actualHTTP/currentactor/rotation/provenance/PG/E2E NOT_RUN. Manifestgiờ35rawassets, táchperSHAkhôngcộngtotals.

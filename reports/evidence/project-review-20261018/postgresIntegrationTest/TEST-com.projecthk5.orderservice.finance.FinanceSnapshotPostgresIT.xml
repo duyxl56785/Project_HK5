@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.projecthk5.orderservice.finance.FinanceSnapshotPostgresIT" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-10-18T14:42:56" hostname="MDUY-LECO" time="1.084">
+  <properties/>
+  <testcase name="currentV1ScaleBoundaryIsTwoAndPostgresCastWouldRoundHigherScale()" classname="com.projecthk5.orderservice.finance.FinanceSnapshotPostgresIT" time="0.355"/>
+  <testcase name="parentAggregateOverflowRollsBackOrderChildrenAndKeepsAttemptUncommitted()" classname="com.projecthk5.orderservice.finance.FinanceSnapshotPostgresIT" time="0.154"/>
+  <testcase name="[1] gross=0.00, fee=0.00, net=0.00" classname="com.projecthk5.orderservice.finance.FinanceSnapshotPostgresIT" time="0.036"/>
+  <testcase name="[2] gross=99999999999999999.99, fee=5000000000000000.00, net=94999999999999999.99" classname="com.projecthk5.orderservice.finance.FinanceSnapshotPostgresIT" time="0.013"/>
+  <testcase name="twoStoreGrossFeeAndLineAmountsSurviveCommitAndFreshRead()" classname="com.projecthk5.orderservice.finance.FinanceSnapshotPostgresIT" time="0.018"/>
+  <testcase name="successfulReplayCannotRepriceCommittedTwoStoreAmountsOrCreateAnotherPlacementEvent()" classname="com.projecthk5.orderservice.finance.FinanceSnapshotPostgresIT" time="0.467"/>
+  <system-out><![CDATA[14:42:42.446 [Test worker] INFO org.testcontainers.images.PullPolicy -- Image pull policy will be performed by: DefaultPullPolicy()
+14:42:42.451 [Test worker] INFO org.testcontainers.utility.ImageNameSubstitutor -- Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+14:42:42.566 [Test worker] INFO org.testcontainers.dockerclient.DockerClientProviderStrategy -- Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+14:42:42.746 [Test worker] INFO org.testcontainers.dockerclient.DockerClientProviderStrategy -- Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
+14:42:42.746 [Test worker] INFO org.testcontainers.DockerClientFactory -- Docker host IP address is localhost
+14:42:42.753 [Test worker] INFO org.testcontainers.DockerClientFactory -- Connected to docker: 
+  Server Version: 29.8.1
+  API Version: 1.56
+  Operating System: Docker Desktop (containerized)
+  Total Memory: 7571 MB
+14:42:42.766 [Test worker] INFO tc.testcontainers/ryuk:0.7.0 -- Creating container for image: testcontainers/ryuk:0.7.0
+14:42:46.912 [Test worker] INFO tc.testcontainers/ryuk:0.7.0 -- Container testcontainers/ryuk:0.7.0 is starting: 34520f730aa19f4b6a4d4e478a180f4333b32a3e567d6ae8708a47738727ad93
+14:42:47.303 [Test worker] INFO tc.testcontainers/ryuk:0.7.0 -- Container testcontainers/ryuk:0.7.0 started in PT4.5369923S
+14:42:47.307 [Test worker] INFO org.testcontainers.utility.RyukResourceReaper -- Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+14:42:47.307 [Test worker] INFO org.testcontainers.DockerClientFactory -- Checking the system...
+14:42:47.307 [Test worker] INFO org.testcontainers.DockerClientFactory -- ✔︎ Docker server version should be at least 1.6.0
+14:42:47.308 [Test worker] INFO tc.postgres:16-alpine -- Creating container for image: postgres:16-alpine
+14:42:47.440 [Test worker] INFO tc.postgres:16-alpine -- Container postgres:16-alpine is starting: b7a0d8fdc752c7866e6147e4df31fd5392b8bce146d048492400fda84dfa8146
+14:42:49.640 [Test worker] INFO tc.postgres:16-alpine -- Container postgres:16-alpine started in PT2.3320131S
+14:42:49.640 [Test worker] INFO tc.postgres:16-alpine -- Container is started (JDBC URL: jdbc:postgresql://localhost:52772/test?loggerLevel=OFF)
+14:42:49.713 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.projecthk5.orderservice.finance.FinanceSnapshotPostgresIT]: FinanceSnapshotPostgresIT does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+14:42:49.804 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.projecthk5.orderservice.OrderServiceApplication for test class com.projecthk5.orderservice.finance.FinanceSnapshotPostgresIT
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.5)
+
+2026-10-18T14:42:50.139Z  INFO 22420 --- [order-service] [    Test worker] c.p.o.finance.FinanceSnapshotPostgresIT  : Starting FinanceSnapshotPostgresIT using Java 21.0.7 with PID 22420 (started by Minh Duy in D:\CMC Uni\5 Ky Dong\WEB\BCK WEB\Project_HK5\.verification\tv5-current-session\work\backend\order-service)
+2026-10-18T14:42:50.140Z  INFO 22420 --- [order-service] [    Test worker] c.p.o.finance.FinanceSnapshotPostgresIT  : No active profile set, falling back to 1 default profile: "default"
+2026-10-18T14:42:51.000Z  INFO 22420 --- [order-service] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-10-18T14:42:51.063Z  INFO 22420 --- [order-service] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 57 ms. Found 3 JPA repository interfaces.
+2026-10-18T14:42:51.837Z  INFO 22420 --- [order-service] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-10-18T14:42:52.008Z  INFO 22420 --- [order-service] [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@4bf89d3d
+2026-10-18T14:42:52.010Z  INFO 22420 --- [order-service] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-10-18T14:42:52.037Z  INFO 22420 --- [order-service] [    Test worker] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://localhost:52772/test (PostgreSQL 16.15)
+2026-10-18T14:42:52.069Z  INFO 22420 --- [order-service] [    Test worker] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table "public"."flyway_schema_history" does not exist yet
+2026-10-18T14:42:52.074Z  INFO 22420 --- [order-service] [    Test worker] o.f.core.internal.command.DbValidate     : Successfully validated 1 migration (execution time 00:00.015s)
+2026-10-18T14:42:52.089Z  INFO 22420 --- [order-service] [    Test worker] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table "public"."flyway_schema_history" ...
+2026-10-18T14:42:52.154Z  INFO 22420 --- [order-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Current version of schema "public": << Empty Schema >>
+2026-10-18T14:42:52.166Z  INFO 22420 --- [order-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "1 - checkout baseline"
+2026-10-18T14:42:52.211Z  INFO 22420 --- [order-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Successfully applied 1 migration to schema "public", now at version v1 (execution time 00:00.027s)
+2026-10-18T14:42:52.351Z  INFO 22420 --- [order-service] [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-10-18T14:42:52.423Z  INFO 22420 --- [order-service] [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2026-10-18T14:42:52.456Z  INFO 22420 --- [order-service] [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-10-18T14:42:52.708Z  INFO 22420 --- [order-service] [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-10-18T14:42:53.626Z  INFO 22420 --- [order-service] [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-10-18T14:42:53.666Z  INFO 22420 --- [order-service] [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-10-18T14:42:54.308Z  INFO 22420 --- [order-service] [    Test worker] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-10-18T14:42:55.270Z  INFO 22420 --- [order-service] [    Test worker] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-10-18T14:42:56.045Z  INFO 22420 --- [order-service] [    Test worker] c.p.o.finance.FinanceSnapshotPostgresIT  : Started FinanceSnapshotPostgresIT in 6.132 seconds (process running for 14.301)
+2026-10-18T14:42:56.652Z  WARN 22420 --- [order-service] [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Error: 0, SQLState: 22003
+2026-10-18T14:42:56.653Z ERROR 22420 --- [order-service] [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : ERROR: numeric field overflow
+  Detail: A field with precision 19, scale 2 must round to an absolute value less than 10^17.
+]]></system-out>
+  <system-err><![CDATA[WARNING: A Java agent has been loaded dynamically (C:\Users\Admin\.gradle\caches\modules-2\files-2.1\net.bytebuddy\byte-buddy-agent\1.14.19\154da3a65b4f4a909d3e5bdec55d1b2b4cbb6ce1\byte-buddy-agent-1.14.19.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+]]></system-err>
+</testsuite>

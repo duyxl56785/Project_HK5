@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.projecthk5.inventoryservice.security.InventoryOrderPairGateTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-10-18T14:57:42" hostname="MDUY-LECO" time="0.176">
+  <properties/>
+  <testcase name="pairTokenOnlyAllowsPostOperationsForReserveConsumeReleaseAndPreservesBody()" classname="com.projecthk5.inventoryservice.security.InventoryOrderPairGateTest" time="0.164"/>
+  <testcase name="pairCredentialCannotInitializeOrUseIncreaseDecreaseOrWrongMethodPath()" classname="com.projecthk5.inventoryservice.security.InventoryOrderPairGateTest" time="0.007"/>
+  <testcase name="missingOrWrongPairCredentialIsUnauthorized()" classname="com.projecthk5.inventoryservice.security.InventoryOrderPairGateTest" time="0.001"/>
+  <testcase name="unconfiguredPairVerifierFailsClosed()" classname="com.projecthk5.inventoryservice.security.InventoryOrderPairGateTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

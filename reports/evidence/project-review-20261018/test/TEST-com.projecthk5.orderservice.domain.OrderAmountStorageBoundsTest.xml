@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.projecthk5.orderservice.domain.OrderAmountStorageBoundsTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-10-18T14:42:38" hostname="MDUY-LECO" time="0.005">
+  <properties/>
+  <testcase name="rejectsParentOverflowEvenWhenStoreAmountsFit()" classname="com.projecthk5.orderservice.domain.OrderAmountStorageBoundsTest" time="0.002"/>
+  <testcase name="rejectsSilentPrecisionLossBeforeAnyPersistence()" classname="com.projecthk5.orderservice.domain.OrderAmountStorageBoundsTest" time="0.001"/>
+  <testcase name="rejectsOversizeProductAndLineTotals()" classname="com.projecthk5.orderservice.domain.OrderAmountStorageBoundsTest" time="0.001"/>
+  <testcase name="acceptsExactZeroAndBoundary()" classname="com.projecthk5.orderservice.domain.OrderAmountStorageBoundsTest" time="0.0"/>
+  <testcase name="rejectsNegativeAndNull()" classname="com.projecthk5.orderservice.domain.OrderAmountStorageBoundsTest" time="0.0"/>
+  <testcase name="acceptsHigherInputScaleOnlyWhenExact()" classname="com.projecthk5.orderservice.domain.OrderAmountStorageBoundsTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

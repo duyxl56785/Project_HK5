@@ -210,3 +210,17 @@ human/business signature; record this engineering response rather than asking TV
 business choices and TV1/TV4 authority remain PENDING. All10MD business PENDING; no newly unlocked production slice or enabled Finance flag.
 TV2 unchanged representation and TV3 consumer-shape acceptance/TV1 OD07/09 baseline remain recorded. Current packet §12 supersedes stale
 source/status labels for this audit while preserving historical evidence and open owner decisions.
+
+## Current source and owner decisions — REVIEW-AUDIT-20261018-r4
+
+Prior8cc5ce4 RED is historical. TV3fix5f2ada8 wires exact existing-storage checks for unit/line/Store gross/fee/derivednet/parent **beforeRESERVE**;
+be1d5b6 additionally rejects unconfirmed/unclaimed Cart replies safely. TV5 ran exact **be1d5b6c1a6eafa385f2bd6bd62f8b5efbeb5757**:
+**88OrderunitPASS,16OrderPGPASS,originalFINdiagnostic3PASS**,0fail/error/skip,exit0/60s. Originaldiagnosticblob unchanged fromREDsource8cc,
+originalrawRED retained. FIN01/06 technicalfindings are **FIXED_VERIFIED**, not still-unwired; signedbusinessbounds/currency/fullsnapshots remainPENDING.
+[All-PR review audit and originalGREEN evidence](../reports/TV5_PROJECT_REVIEW_AUDIT_2026-10-18.md).
+
+PR48 records TV1 S01architecture/pairdesign confirmation and TV2+TV3 own-scope design replies; do not continue saying TV1 has not responded.
+It allows reviewed StoreV2+/localcurrentfacts/negative tests in owner scope, not approvedFinance or production service pairing.
+HumanTV5 agrees separate **MD01/MD02/unit-pricecapMD03** Productprice scope, **PENDING BUSINESS APPROVAL** at baselinee597daf;
+no implicit finalauthority. MD04–10 are independent, not automatic blockers for an otherwise explicitly approved price slice.
+Namedbusinessapprover/operator still awaitingprojectowner/TV1designation. All10MD businessPENDING, policyflagfalse, settlement/currentStoreFinance/liveE2Eblocked.

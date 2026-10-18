@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.projecthk5.orderservice.service.CheckoutServiceTest" tests="15" skipped="0" failures="0" errors="0" timestamp="2026-10-18T14:42:41" hostname="MDUY-LECO" time="0.049">
+  <properties/>
+  <testcase name="commitConfirmedByReadNeverCompensates()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.008"/>
+  <testcase name="invalidClaimedCartQuantityCannotReachReservationOrWriter()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.001"/>
+  <testcase name="unsupportedUnitPrecisionNeverReachesInventoryOrWriter()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.002"/>
+  <testcase name="unrepresentableFeeUnderSyntheticPolicyFailsBeforeReserve()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.002"/>
+  <testcase name="inventoryTimeoutPreservesCartAndReservationForReconciliation()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.01"/>
+  <testcase name="twoStoresGenerateOneOrderWithTwoSellerOrdersAndSnapshot()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.003"/>
+  <testcase name="malformedClaimedCartNullLineReleasesClaimWithoutExternalSideEffects()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.002"/>
+  <testcase name="parentOverflowAcrossTwoIndividuallyValidStoresFailsBeforeReserve()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.002"/>
+  <testcase name="nullCartClaimReplyIsUnknownAndNeverBlindlyReleasesOrReserves()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.002"/>
+  <testcase name="explicitlyUnclaimedCartCannotProceedOrReleaseAnotherClaim()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.001"/>
+  <testcase name="changedPriceRejectsCheckoutBeforeStockReservation()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.001"/>
+  <testcase name="sameKeyAndExistingSuccessfulOrderReplaysWithoutCreating()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.001"/>
+  <testcase name="commitUnknownDoesNotCompensateAndFlagsForReconciliation()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.003"/>
+  <testcase name="nonFinalProcessingReplayNeverCallsInventory()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.001"/>
+  <testcase name="malformedRequestCannotCreateAttemptOrCallRemotePorts()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
