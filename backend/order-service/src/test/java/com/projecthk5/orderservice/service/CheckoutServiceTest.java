@@ -146,4 +146,49 @@ class CheckoutServiceTest {
         }
         verifyNoInteractions(keys, cart, catalog, inventory, write, repo);
     }
+    @Test void unsupportedUnitPrecisionNeverReachesInventoryOrWriter() {
+        CheckoutAttempt attempt=fresh();
+        catalogAndCart();
+        when(cart.claim(bearer,key,null)).thenReturn(new CartPort.CartSnapshot(customer,1,true,List.of(
+            new CartPort.Item("p1","store1","seller1",2,new BigDecimal("1.001")),
+            new CartPort.Item("p2","store2","seller2",1,new BigDecimal("15000")))));
+        when(catalog.verify("p1")).thenReturn(new CatalogPort.ProductSnapshot(
+            "p1","seller1","store1",true,true,true,false,new BigDecimal("1.001")));
+        assertThrows(IllegalArgumentException.class, () -> svc.checkout(customer,bearer,key,request));
+        verify(cart).release(bearer,key);
+        verify(keys).fail(attempt.getId(),false);
+        verifyNoInteractions(inventory,write,repo);
+    }
+
+    @Test void parentOverflowAcrossTwoIndividuallyValidStoresFailsBeforeReserve() {
+        CheckoutAttempt attempt=fresh();
+        when(cart.claim(bearer,key,null)).thenReturn(new CartPort.CartSnapshot(customer,1,true,List.of(
+            new CartPort.Item("p1","store1","seller1",2,new BigDecimal("30000000000000000.00")),
+            new CartPort.Item("p2","store2","seller2",1,new BigDecimal("60000000000000000.00")))));
+        when(catalog.verify("p1")).thenReturn(new CatalogPort.ProductSnapshot(
+            "p1","seller1","store1",true,true,true,false,new BigDecimal("30000000000000000.00")));
+        when(catalog.verify("p2")).thenReturn(new CatalogPort.ProductSnapshot(
+            "p2","seller2","store2",true,true,true,true,new BigDecimal("60000000000000000.00")));
+        assertThrows(IllegalArgumentException.class, () -> svc.checkout(customer,bearer,key,request));
+        verify(cart).release(bearer,key);
+        verify(keys).fail(attempt.getId(),false);
+        verifyNoInteractions(inventory,write,repo);
+    }
+
+    @Test void unrepresentableFeeUnderSyntheticPolicyFailsBeforeReserve() {
+        CheckoutAttempt attempt=fresh();
+        when(cart.claim(bearer,key,null)).thenReturn(new CartPort.CartSnapshot(customer,1,true,List.of(
+            new CartPort.Item("p1","store1","seller1",2,new BigDecimal("0.01")),
+            new CartPort.Item("p2","store2","seller2",1,new BigDecimal("15000")))));
+        when(catalog.verify("p1")).thenReturn(new CatalogPort.ProductSnapshot(
+            "p1","seller1","store1",true,true,true,false,new BigDecimal("0.01")));
+        when(catalog.verify("p2")).thenReturn(new CatalogPort.ProductSnapshot(
+            "p2","seller2","store2",true,true,true,true,new BigDecimal("15000")));
+        CheckoutService synthetic=new CheckoutService(cart,catalog,inventory,keys,write,repo,
+            new ObjectMapper(),new MoneyRules(true,"0.05","3","true"));
+        assertThrows(IllegalArgumentException.class, () -> synthetic.checkout(customer,bearer,key,request));
+        verify(cart).release(bearer,key);
+        verify(keys).fail(attempt.getId(),false);
+        verifyNoInteractions(inventory,write,repo);
+    }
 }

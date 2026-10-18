@@ -8,8 +8,8 @@ import java.util.Objects;
  * Exact representation check for the existing PostgreSQL NUMERIC(19,2) amount columns.
  *
  * <p>This is a storage constraint, NOT an approved business currency, fee, or rounding
- * policy. Callers must separately apply the signed M01 requirements. Not wired into
- * live Checkout while the cross-owner contract and pre-reserve recovery are pending.
+ * policy. CheckoutService checks existing storage exactness before Inventory
+ * RESERVE; approved M01 policy limits, currency/snapshots and recovery are separate gates.
  */
 public final class OrderAmountStorageBounds {
     public static final BigDecimal MAX_NONNEGATIVE = new BigDecimal("99999999999999999.99");

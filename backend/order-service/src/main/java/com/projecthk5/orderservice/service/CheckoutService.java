@@ -129,7 +129,11 @@ public class CheckoutService {
                 throw new IllegalStateException("Catalog changed since cart creation");
             if (item.unitPriceSnapshot()==null || product.unitPrice().compareTo(item.unitPriceSnapshot())!=0)
                 throw new IllegalStateException("Product price changed since adding to cart");
+            // Storage exactness is independent of M01 currency, rates or business caps.
+            // Reject known-invalid unit and line amounts before any Inventory call.
+            OrderAmountStorageBounds.requireExactNonnegative(product.unitPrice());
             BigDecimal amount=MoneyRules.lineTotal(product.unitPrice(),item.quantity());
+            OrderAmountStorageBounds.requireExactNonnegative(amount);
             grouped.computeIfAbsent(product.storeId(),ignore -> new ArrayList<>())
                 .add(new Prepared(product,item.quantity(),amount));
         }
@@ -140,12 +144,20 @@ public class CheckoutService {
                 || i.product.houseStore()!=first.product.houseStore()))
                 throw new IllegalStateException("Inconsistent store ownership");
             BigDecimal gross=lines.stream().map(Prepared::total).reduce(BigDecimal.ZERO,BigDecimal::add);
-            SellerOrder so=new SellerOrder(order,first.product.sellerId(),entry.getKey(),
-                gross,money.fee(gross,first.product.houseStore()));
+            OrderAmountStorageBounds.requireExactNonnegative(gross);
+            BigDecimal fee=money.fee(gross,first.product.houseStore());
+            OrderAmountStorageBounds.requireExactNonnegative(fee);
+            if (fee.compareTo(gross)>0) throw new IllegalArgumentException("Platform fee exceeds Store subtotal");
+            // Net is currently derived, not persisted; guard it for future V2+ snapshots.
+            OrderAmountStorageBounds.requireExactNonnegative(gross.subtract(fee));
+            SellerOrder so=new SellerOrder(order,first.product.sellerId(),entry.getKey(),gross,fee);
             lines.forEach(line -> so.getItems().add(new OrderItem(so,line.product.productId(),
                 line.quantity,line.product.unitPrice(),line.total)));
             order.addSellerOrder(so);
         }
+        // Two Store subtotals may fit NUMERIC(19,2) individually while the parent
+        // aggregate does not. The caller has not set reserveRequested yet.
+        OrderAmountStorageBounds.requireExactNonnegative(order.getTotal());
         return order;
     }
     private record Prepared(CatalogPort.ProductSnapshot product,int quantity,BigDecimal total){}
