@@ -160,6 +160,116 @@ class CatalogSchemaProposalPostgresTest {
         }
     }
 
+    @Test void versionAndTimestampsAreDurableAndUpdatesRetainSku() throws Exception {
+        try (Connection connection = connect()) {
+            insert(connection, "store-a", "SKU", "10");
+        }
+        java.time.OffsetDateTime created;
+        try (Connection fresh = connect(); var statement = fresh.createStatement();
+             var rows = statement.executeQuery("SELECT version,created_at,updated_at FROM catalog_product_candidate")) {
+            assertTrue(rows.next());
+            assertEquals(0, rows.getLong(1));
+            created = rows.getObject(2, java.time.OffsetDateTime.class);
+            assertNotNull(created);
+            assertEquals(created, rows.getObject(3, java.time.OffsetDateTime.class));
+        }
+        try (Connection connection = connect()) {
+            assertEquals(1, updatePrice(connection, 0, "20.1234567890123456789"));
+            assertEquals(0, updatePrice(connection, 0, "999"));
+        }
+        try (Connection fresh = connect(); var statement = fresh.createStatement();
+             var rows = statement.executeQuery("SELECT inventory_sku,unit_price,version,created_at,updated_at FROM catalog_product_candidate")) {
+            assertTrue(rows.next());
+            assertEquals("SKU", rows.getString(1));
+            assertEquals(0, new BigDecimal("20.1234567890123456789").compareTo(rows.getBigDecimal(2)));
+            assertEquals(1, rows.getLong(3));
+            assertEquals(created, rows.getObject(4, java.time.OffsetDateTime.class));
+            assertFalse(rows.getObject(5, java.time.OffsetDateTime.class).isBefore(created));
+        }
+    }
+
+    @Test void rollbackRestoresPriceVersionAndUpdateTimestampTogether() throws Exception {
+        try (Connection connection = connect()) {
+            insert(connection, "store-a", "SKU", "10");
+            connection.setAutoCommit(false);
+            assertEquals(1, updatePrice(connection, 0, "20"));
+            connection.rollback();
+        }
+        try (Connection fresh = connect(); var statement = fresh.createStatement();
+             var rows = statement.executeQuery("SELECT unit_price,version,created_at=updated_at FROM catalog_product_candidate")) {
+            assertTrue(rows.next());
+            assertEquals(0, BigDecimal.TEN.compareTo(rows.getBigDecimal(1)));
+            assertEquals(0, rows.getLong(2));
+            assertTrue(rows.getBoolean(3));
+        }
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"version=-1", "version=NULL", "status='UNKNOWN'", "inventory_sku=''",
+            "inventory_sku=' padded '", "currency=' '", "store_reference=' '", "created_at=NULL",
+            "updated_at=NULL", "updated_at=created_at-interval '1 second'"})
+    void candidateMetadataConstraintsRejectInvalidWrites(String assignment) throws Exception {
+        try (Connection connection = connect()) {
+            insert(connection, "store-a", "SKU", "10");
+            try (var statement = connection.createStatement()) {
+                String state = assertThrows(SQLException.class, () -> statement.executeUpdate(
+                        "UPDATE catalog_product_candidate SET " + assignment)).getSQLState();
+                assertTrue(state.equals("23514") || state.equals("23502"), state);
+            }
+        }
+    }
+
+    @Test void concurrentCompareAndSetCannotOverwriteTheSameVersionTwice() throws Exception {
+        try (Connection connection = connect()) {
+            insert(connection, "store-a", "SKU", "10");
+        }
+        var workers = Executors.newSingleThreadExecutor();
+        try (Connection competitor = connect(); Connection winner = connect()) {
+            winner.setAutoCommit(false);
+            assertEquals(1, updatePrice(winner, 0, "20"));
+            int pid;
+            try (var statement = competitor.createStatement(); var rows = statement.executeQuery("SELECT pg_backend_pid()")) {
+                assertTrue(rows.next());
+                pid = rows.getInt(1);
+            }
+            var pending = workers.submit(() -> updatePrice(competitor, 0, "999"));
+            assertTimeoutPreemptively(Duration.ofSeconds(10), () -> {
+                try (Connection observer = connect(); var query = observer.prepareStatement(
+                        "SELECT wait_event_type='Lock' FROM pg_stat_activity WHERE pid=?")) {
+                    query.setInt(1, pid);
+                    while (true) {
+                        try (var rows = query.executeQuery()) {
+                            if (rows.next() && rows.getBoolean(1)) break;
+                        }
+                        Thread.sleep(25);
+                    }
+                }
+            });
+            winner.commit();
+            assertEquals(0, pending.get(10, TimeUnit.SECONDS));
+        } finally {
+            workers.shutdownNow();
+            assertTrue(workers.awaitTermination(10, TimeUnit.SECONDS));
+        }
+        try (Connection fresh = connect(); var statement = fresh.createStatement();
+             var rows = statement.executeQuery("SELECT unit_price,version FROM catalog_product_candidate")) {
+            assertTrue(rows.next());
+            assertEquals(0, new BigDecimal("20").compareTo(rows.getBigDecimal(1)));
+            assertEquals(1, rows.getLong(2));
+        }
+    }
+
+    // Candidate SQL CAS only: not a JPA @Version integration or an external Catalog freshness lease.
+    private static int updatePrice(Connection connection, long expectedVersion, String price) throws SQLException {
+        try (var statement = connection.prepareStatement("UPDATE catalog_product_candidate"
+                + " SET unit_price=?::numeric,version=version+1,updated_at=CURRENT_TIMESTAMP"
+                + " WHERE inventory_sku='SKU' AND version=?")) {
+            statement.setString(1, price);
+            statement.setLong(2, expectedVersion);
+            return statement.executeUpdate();
+        }
+    }
+
     private static Connection connect() throws SQLException {
         return DriverManager.getConnection(PG.getJdbcUrl(), PG.getUsername(), PG.getPassword());
     }
