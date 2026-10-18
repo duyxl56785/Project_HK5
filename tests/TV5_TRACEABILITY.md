@@ -28,3 +28,24 @@ Nguồn yêu cầu: Issue #5, yêu cầu người dùng và báo cáo V2 đã ph
 | DOC-01 | F02 thiếu UC, ảnh TODO, NFR | TV5_V2_RECONCILIATION.md V2-12..15 | TV1–TV4 | Đã đọc nguồn; sửa báo cáo/thu ảnh/load test chưa thực thi |
 
 Không có consumer-driven contract suite mới: chưa có provider/consumer/payload được duyệt để xác minh. Các test bổ sung chỉ kiểm boundary của rules local hiện hữu, không tự chốt HTTP/Kafka/schema. Xem D01–D10 để biết việc cần chủ sở hữu xác nhận.
+
+## Current-source Finance / diagnostic update — 18/10/2026
+
+Bảng gốc phía trên là snapshot rules của lượt W1 ban đầu, không phải kết quả runtime mới hoặc phủ nhận
+các bằng chứng PG bổ sung. [Checkpoint hiện tại](../reports/TV5_MONEY_DECISION_CHECKPOINT_2026-10-18.md)
+và raw XML tại sourcec4d517e (parent owneree15851) phân biệt như sau:
+
+| ID | Requirement / scope | Test hoặc quyết định → owner | Evidence và trạng thái |
+|---|---|---|---|
+| F16-10 | Existing NUMERIC19,2 exact storage bound | OrderAmountStorageBoundsTest,6methods; TV3 utility | [Raw unit XML](../reports/evidence/money-decision-20261018/current-run/test/TEST-com.projecthk5.orderservice.domain.OrderAmountStorageBoundsTest.xml):6PASS. Utility chưa wire, không duyệt VND/scale0/fee. |
+| F16-11 | Reject parent overflow before Inventory/write | CheckoutMoneyPreflightRegressionTest.parentOverflowMustBeRejectedBeforeReserveOrOrderWrite; TV3 orchestration/TV5 policy | [Raw diagnostic XML](../reports/evidence/money-decision-20261018/current-run/fin06Regression/TEST-com.projecthk5.orderservice.finance.CheckoutMoneyPreflightRegressionTest.xml):FAIL. Reserve/write occur, DBrollback, NEEDS_RECONCILIATION. Provisional safe-preflight acceptance, fixBLOCKED. |
+| F16-12 | No precision loss or response/replay money drift | unsupportedStoragePrecisionMustBeRejectedRatherThanChangingMoneyOnReplay; TV3/TV5 | Same diagnostic XML:FAIL,3.002→3.00. No assertion change; current storage fact, not currency choice. |
+| F16-13 | Compatible committed placement/replay control | positiveControlPersistsExactAmountsAndReplayDoesNotReserveOrWriteAgain | Same XML:1PASS, mocked remote ports; no duplicate placement event, not settlement/revenue/liveE2E. |
+| F16-14 | Explicit currency/bounds/rate/rounding/snapshots/adjustments/COD/freshness | [MD01–MD10 decision packet](../docs/TV5_M01_HUMAN_DECISION_PACKET.md); human TV5/business +TV1–TV4 own-scope | PENDING signature links; test fixtures, Source enum and module approval do not sign business. |
+| F16-15 | Settlement unique/atomic/current Store authorization | Production implementation absent; TV5/TV4/TV3/TV2/TV1 | NOT_RUN/BLOCKED. Existing helper truth-table is not DB uniqueness, concurrency or scoped Finance query. |
+| QA-03 | Preserve original failures and publication boundaries | Source/evidence byte comparisons; TV5 | [Derived scope metadata](../reports/evidence/money-decision-20261018/source-scope.json):original11hashes unchanged; new8artifacts separate, no hidden credentials/combined release total. |
+| QA-04 | Correct TV4 IDs and lifecycle semantics | Static21legacy+21supplemental comparison, TV4 docs owner | [Derived static checks](../reports/evidence/money-decision-20261018/static-checks.json):ID/meaning/count checksPASS; all42 business casesNOT_RUN; C06/auth/event/risk unapproved. |
+
+Full ordinary unit/tagged PG, Catalog and Inventory suites were not rerun in this checkpoint when their
+source was unchanged; historical results retain original SHA/executor. Normal CI does not run the explicit
+diagnostic or automatically run tagged PostgreSQL tasks. Do not mark F15/F16/Issue5/12 DONE from these rows.

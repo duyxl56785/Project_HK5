@@ -1,0 +1,58 @@
+Picked up JAVA_TOOL_OPTIONS: -Duser.timezone=UTC -Dapi.version=1.44
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Task :order-service:compileJava
+Note: D:\CMC Uni\5 Ky Dong\WEB\BCK WEB\Project_HK5\.verification\fin06\work\backend\order-service\src\main\java\com\projecthk5\orderservice\security\ResourceSecurityConfig.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+
+> Task :order-service:processResources
+> Task :order-service:classes
+> Task :order-service:compileFin06RegressionJava
+> Task :order-service:processFin06RegressionResources NO-SOURCE
+> Task :order-service:fin06RegressionClasses
+
+> Task :order-service:fin06Regression
+Picked up JAVA_TOOL_OPTIONS: -Duser.timezone=UTC -Dapi.version=1.44
+
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+
+> Task :order-service:fin06Regression
+
+CheckoutMoneyPreflightRegressionTest > unsupportedStoragePrecisionMustBeRejectedRatherThanChangingMoneyOnReplay() FAILED
+    org.gradle.internal.exceptions.DefaultMultiCauseException at CheckoutMoneyPreflightRegressionTest.java:124
+        Caused by: org.opentest4j.AssertionFailedError at CheckoutMoneyPreflightRegressionTest.java:125
+
+CheckoutMoneyPreflightRegressionTest > parentOverflowMustBeRejectedBeforeReserveOrOrderWrite() FAILED
+    org.gradle.internal.exceptions.DefaultMultiCauseException at CheckoutMoneyPreflightRegressionTest.java:100
+        Caused by: org.mockito.exceptions.verification.NeverWantedButInvoked at CheckoutMoneyPreflightRegressionTest.java:101
+
+CheckoutMoneyPreflightRegressionTest > positiveControlPersistsExactAmountsAndReplayDoesNotReserveOrWriteAgain() PASSED
+
+2026-10-18T06:17:02.517Z  INFO 15736 --- [order-service] [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-10-18T06:17:02.521Z  INFO 15736 --- [order-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-10-18T06:17:02.526Z  INFO 15736 --- [order-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+
+> Task :order-service:fin06Regression FAILED
+
+
+3 tests completed, 2 failed
+
+[Incubating] Problems report is available at: file:///D:/CMC%20Uni/5%20Ky%20Dong/WEB/BCK%20WEB/Project_HK5/.verification/fin06/work/backend/build/reports/problems/problems-report.html
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':order-service:fin06Regression'.
+> There were failing tests. See the report at: file:///D:/CMC%20Uni/5%20Ky%20Dong/WEB/BCK%20WEB/Project_HK5/.verification/fin06/work/backend/order-service/build/reports/tests/fin06Regression/index.html
+
+* Try:
+> Run with --scan to get full insights.
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD FAILED in 28s
+4 actionable tasks: 4 executed

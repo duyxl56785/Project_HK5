@@ -142,3 +142,34 @@ point where Checkout could request Inventory reserve. TV3+TV5 must agree pre-res
 and any reviewed V2+ schema changes; this test-only handoff changes no runtime or proposed M01 terms.
 All contract statuses above remain PENDING/REVISE. Merge41 is acceptance of a QA patch, not a signature
 on VND/scale0/rate/rounding, service pairs or production settlement.
+
+## Latest provider/consumer response and Checkout RED evidence
+
+[TV2 candidate v0.2](https://github.com/duyxl56785/Project_HK5/pull/37#issuecomment-6246199255) is now
+technically compatible with TV5-FIN-v0.1 integral VND/17-digit representation; this is not a business
+signature. [TV3 response](https://github.com/duyxl56785/Project_HK5/pull/37#issuecomment-6246255122)
+accepts canonical UUID Product/Store/Seller strings (separate from JWT.sub), plain decimal money strings,
+ordered complete batch/allReady and candidate200/400/401/403/503/top-level error envelope **for further
+sign-off**, still C01/E01REVISE until TV1/current authority/remaining signatures. No HTTP adapter adopted.
+
+PR37 source63668b8 repairs internal FOUND/ABSENT/UNAVAILABLE and rejected-batch snapshot behavior;
+TV5 targeted50unitPASS verifies that source only. New Checkout diagnostic atparent28dd0cf gives
+1PASS/2FAIL (FIN-06 pre-reserve bounds, FIN-01 first-response/replay precision). Full details, updated
+seven-row contract matrix and owner fix acceptance in [RED report](../reports/TV5_FIN06_CHECKOUT_RED_2026-10-18.md).
+TV3 explicitly confirms fixNOT_IMPLEMENTED and conditional owner proposal, not permission to edit Checkout.
+All overall PENDING/REVISE states above remain; no deploy flag/production behavior change authorized here.
+
+TV2 subsequently corrected the stale prototype paragraph and handoff at9e1794a (five Markdown/CSV files
+only); the Catalog Java source remains63668b8. TV5 verified that delta and treats the documentation finding
+as corrected, with no new runtime execution/contract approval inferred. Provider-reported367PASS is
+separate from TV5's targeted50unit run and the Checkout1PASS/2FAIL diagnostic.
+
+## Human choice packet / latest owner proposals
+
+[TV5-M01-DECISION-v1](TV5_M01_HUMAN_DECISION_PACKET.md) makes MD01–MD10 explicit: currency alternatives,
+unit/line/Store/parent bounds, fee rounding examples, snapshots/adjustments/refund/COD, freshness risk,
+enable authority and reporting groups. It is a companion toTV5-FIN-v0.1, **not a new approval**.
+TV2 provider42cc4e7 recommends last-verified snapshot only after human/TV1/TV5 race acceptance; no quote/lease.
+TV3ee15851 adds an unwired storage utility,6official JUnit tests verified byTV5; original diagnostic remains
+1PASS/2FAIL at merged TV5 sourcec4d517e. TV4 docs7a8d18e/ec2ae5a repaired source semantics/21+21ID history,
+but retry budget/state/event/current authorization still need same-version sign-off. [Current QA/RTM evidence](../reports/TV5_MONEY_DECISION_CHECKPOINT_2026-10-18.md).

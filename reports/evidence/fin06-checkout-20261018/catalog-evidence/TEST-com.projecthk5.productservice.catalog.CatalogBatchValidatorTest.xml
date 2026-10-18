@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.projecthk5.productservice.catalog.CatalogBatchValidatorTest" tests="50" skipped="0" failures="0" errors="0" timestamp="2026-10-18T06:17:12.924Z" hostname="MDUY-LECO" time="1.046">
+  <properties/>
+  <testcase name="oneChangedPriceWithholdsEverySnapshot()" classname="com.projecthk5.productservice.catalog.CatalogBatchValidatorTest" time="0.016"/>
+  <testcase name="missingProductIsExplicitAndPartialResultIsNotAllValid()" classname="com.projecthk5.productservice.catalog.CatalogBatchValidatorTest" time="0.002"/>
+  <testcase name="[1] invalid=seller" classname="com.projecthk5.productservice.catalog.CatalogBatchValidatorTest" time="0.011"/>
+  <testcase name="[2] invalid=store" classname="com.projecthk5.productservice.catalog.CatalogBatchValidatorTest" time="0.001"/>
+  <testcase name="[3] invalid=category" classname="com.projecthk5.productservice.catalog.CatalogBatchValidatorTest" time="0.001"/>
+  <testcase name="[1] rejection=ownership" classname="com.projecthk5.productservice.catalog.CatalogBatchValidatorTest" time="0.128"/>
+  <testcase name="[2] rejection=currency" classname="com.projecthk5.productservice.catalog.CatalogBatchValidatorTest" time="0.003"/>
+  <testcase name="[3] rejection=private" classname="com.projecthk5.productservice.catalog.CatalogBatchValidatorTest" time="0.003"/>
+  <testcase name="[4] rejection=absent" classname="com.projecthk5.productservice.catalog.CatalogBatchValidatorTest" time="0.003"/>
+  <testcase name="invalidBatchesAreRejectedBeforeLoadingData()" classname="com.projecthk5.productservice.catalog.CatalogBatchValidatorTest" time="0.686"/>
+  <testcase name="numericComparisonDoesNotRoundOrTreatDifferentScaleAsDifferentPrice()" classname="com.projecthk5.productservice.catalog.CatalogBatchValidatorTest" time="0.002"/>
+  <testcase name="sourceTimeoutOrMissingResponseFailsWholeBatchClosed()" classname="com.projecthk5.productservice.catalog.CatalogBatchValidatorTest" time="0.003"/>
+  <testcase name="[1] conflict=seller" classname="com.projecthk5.productservice.catalog.CatalogBatchValidatorTest" time="0.027"/>
+  <testcase name="[2] conflict=owner" classname="com.projecthk5.productservice.catalog.CatalogBatchValidatorTest" time="0.001"/>
+  <testcase name="[3] conflict=approved" classname="com.projecthk5.productservice.catalog.CatalogBatchValidatorTest" time="0.001"/>
+  <testcase name="[4] conflict=open" classname="com.projecthk5.productservice.catalog.CatalogBatchValidatorTest" time="0.001"/>
+  <testcase name="[5] conflict=house" classname="com.projecthk5.productservice.catalog.CatalogBatchValidatorTest" time="0.001"/>
+  <testcase name="[1] fault=found-without-facts" classname="com.projecthk5.productservice.catalog.CatalogBatchValidatorTest" time="0.003"/>
+  <testcase name="[2] fault=absent-with-facts" classname="com.projecthk5.productservice.catalog.CatalogBatchValidatorTest" time="0.001"/>
+  <testcase name="[3] fault=wrong-product-id" classname="com.projecthk5.productservice.catalog.CatalogBatchValidatorTest" time="0.001"/>
+  <testcase name="[4] fault=null-status" classname="com.projecthk5.productservice.catalog.CatalogBatchValidatorTest" time="0.001"/>
+  <testcase name="[5] fault=null-id" classname="com.projecthk5.productservice.catalog.CatalogBatchValidatorTest" time="0.001"/>
+  <testcase name="[6] fault=unrequested-absence" classname="com.projecthk5.productservice.catalog.CatalogBatchValidatorTest" time="0.001"/>
+  <testcase name="[7] fault=duplicate-absence" classname="com.projecthk5.productservice.catalog.CatalogBatchValidatorTest" time="0.001"/>
+  <testcase name="[8] fault=omitted-after-absence" classname="com.projecthk5.productservice.catalog.CatalogBatchValidatorTest" time="0.001"/>
+  <testcase name="[9] fault=null-product" classname="com.projecthk5.productservice.catalog.CatalogBatchValidatorTest" time="0.0"/>
+  <testcase name="[10] fault=null-store" classname="com.projecthk5.productservice.catalog.CatalogBatchValidatorTest" time="0.001"/>
+  <testcase name="[11] fault=blank-currency" classname="com.projecthk5.productservice.catalog.CatalogBatchValidatorTest" time="0.001"/>
+  <testcase name="[1] hasStaleFacts=false" classname="com.projecthk5.productservice.catalog.CatalogBatchValidatorTest" time="0.006"/>
+  <testcase name="[2] hasStaleFacts=true" classname="com.projecthk5.productservice.catalog.CatalogBatchValidatorTest" time="0.0"/>
+  <testcase name="[1] fault=extra" classname="com.projecthk5.productservice.catalog.CatalogBatchValidatorTest" time="0.002"/>
+  <testcase name="[2] fault=duplicate-product" classname="com.projecthk5.productservice.catalog.CatalogBatchValidatorTest" time="0.001"/>
+  <testcase name="[3] fault=duplicate-sku" classname="com.projecthk5.productservice.catalog.CatalogBatchValidatorTest" time="0.001"/>
+  <testcase name="[4] fault=store" classname="com.projecthk5.productservice.catalog.CatalogBatchValidatorTest" time="0.0"/>
+  <testcase name="[5] fault=currency" classname="com.projecthk5.productservice.catalog.CatalogBatchValidatorTest" time="0.001"/>
+  <testcase name="[6] fault=null" classname="com.projecthk5.productservice.catalog.CatalogBatchValidatorTest" time="0.0"/>
+  <testcase name="sourceTimeoutCannotFallbackToCallerExpectations()" classname="com.projecthk5.productservice.catalog.CatalogBatchValidatorTest" time="0.002"/>
+  <testcase name="[1] mismatch=store" classname="com.projecthk5.productservice.catalog.CatalogBatchValidatorTest" time="0.001"/>
+  <testcase name="[2] mismatch=seller" classname="com.projecthk5.productservice.catalog.CatalogBatchValidatorTest" time="0.001"/>
+  <testcase name="[3] mismatch=price" classname="com.projecthk5.productservice.catalog.CatalogBatchValidatorTest" time="0.001"/>
+  <testcase name="[4] mismatch=currency" classname="com.projecthk5.productservice.catalog.CatalogBatchValidatorTest" time="0.0"/>
+  <testcase name="resolvesTwoStoresOnceAndPreservesRequestOrderAndAuthoritativeSku()" classname="com.projecthk5.productservice.catalog.CatalogBatchValidatorTest" time="0.046"/>
+  <testcase name="verifiedAbsenceAloneReturnsNotFoundWithoutUsingExpectedFacts()" classname="com.projecthk5.productservice.catalog.CatalogBatchValidatorTest" time="0.001"/>
+  <testcase name="[1] status=DRAFT" classname="com.projecthk5.productservice.catalog.CatalogBatchValidatorTest" time="0.001"/>
+  <testcase name="[2] status=PENDING_REVIEW" classname="com.projecthk5.productservice.catalog.CatalogBatchValidatorTest" time="0.001"/>
+  <testcase name="[3] status=REJECTED" classname="com.projecthk5.productservice.catalog.CatalogBatchValidatorTest" time="0.0"/>
+  <testcase name="[4] status=SUSPENDED" classname="com.projecthk5.productservice.catalog.CatalogBatchValidatorTest" time="0.001"/>
+  <testcase name="[5] status=INACTIVE" classname="com.projecthk5.productservice.catalog.CatalogBatchValidatorTest" time="0.001"/>
+  <testcase name="[1] response=empty" classname="com.projecthk5.productservice.catalog.CatalogBatchValidatorTest" time="0.003"/>
+  <testcase name="[2] response=partial" classname="com.projecthk5.productservice.catalog.CatalogBatchValidatorTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[WARNING: A Java agent has been loaded dynamically (C:\Users\Admin\.gradle\caches\modules-2\files-2.1\net.bytebuddy\byte-buddy-agent\1.14.19\154da3a65b4f4a909d3e5bdec55d1b2b4cbb6ce1\byte-buddy-agent-1.14.19.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+]]></system-err>
+</testsuite>
