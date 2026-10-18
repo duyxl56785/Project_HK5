@@ -18,7 +18,9 @@ import org.springframework.web.util.pattern.PathPatternParser;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -27,6 +29,7 @@ import java.util.Set;
 
 @Component
 public class InventoryInternalTokenFilter extends OncePerRequestFilter {
+    static final int MAX_ORDER_OPERATION_BODY_BYTES = 64 * 1024;
     private static final PathPattern INVENTORY_API =
             PathPatternParser.defaultInstance.parse("/api/inventory/**");
     private static final String PAIR_HEADER = "X-Internal-Token";
@@ -37,12 +40,15 @@ public class InventoryInternalTokenFilter extends OncePerRequestFilter {
 
     private final String configuredToken;
     private final String orderPairToken;
+    private final boolean orderPairEnabled;
 
     public InventoryInternalTokenFilter(
             @Value("${inventory.internal-token:}") String configuredToken,
-            @Value("${inventory.order-pair-token:}") String orderPairToken) {
+            @Value("${inventory.order-pair-token:}") String orderPairToken,
+            @Value("${inventory.order-pair-enabled:false}") boolean orderPairEnabled) {
         this.configuredToken = configuredToken;
         this.orderPairToken = orderPairToken;
+        this.orderPairEnabled = orderPairEnabled;
     }
 
     @Override
@@ -60,7 +66,7 @@ public class InventoryInternalTokenFilter extends OncePerRequestFilter {
             return;
         }
 
-        // Legacy credential remains for existing inventory-owned/admin workflows only.
+        // Legacy credential remains for existing internal Inventory workflows only.
         // It must never be handed to Checkout/Order.
         if (configuredToken == null || configuredToken.isBlank()) {
             writeError(response, HttpServletResponse.SC_SERVICE_UNAVAILABLE,
@@ -80,6 +86,12 @@ public class InventoryInternalTokenFilter extends OncePerRequestFilter {
     private void doOrderPairRequest(HttpServletRequest request, HttpServletResponse response,
                                     FilterChain filterChain, String suppliedToken)
             throws IOException, ServletException {
+        // Independent default-OFF switch: configuring a secret alone must never enable stock mutation.
+        if (!orderPairEnabled) {
+            writeError(response, HttpServletResponse.SC_SERVICE_UNAVAILABLE,
+                    "INVENTORY_ORDER_PAIR_DISABLED");
+            return;
+        }
         if (orderPairToken == null || orderPairToken.isBlank()) {
             writeError(response, HttpServletResponse.SC_SERVICE_UNAVAILABLE,
                     "INVENTORY_ORDER_PAIR_AUTH_NOT_CONFIGURED");
@@ -95,7 +107,13 @@ public class InventoryInternalTokenFilter extends OncePerRequestFilter {
             return;
         }
 
-        byte[] body = request.getInputStream().readAllBytes();
+        byte[] body = readAtMost(request.getInputStream(), MAX_ORDER_OPERATION_BODY_BYTES + 1);
+        if (body.length > MAX_ORDER_OPERATION_BODY_BYTES) {
+            writeError(response, HttpServletResponse.SC_REQUEST_ENTITY_TOO_LARGE,
+                    "INVENTORY_OPERATION_BODY_TOO_LARGE");
+            return;
+        }
+
         String operationType;
         try {
             JsonNode root = JSON.readTree(body);
@@ -111,6 +129,30 @@ public class InventoryInternalTokenFilter extends OncePerRequestFilter {
         }
 
         filterChain.doFilter(new ReplayableBodyRequest(request, body), response);
+    }
+
+    private static byte[] readAtMost(InputStream input, int maximumBytes) throws IOException {
+        ByteArrayOutputStream output = new ByteArrayOutputStream(Math.min(maximumBytes, 8192));
+        byte[] buffer = new byte[8192];
+        int remaining = maximumBytes;
+        while (remaining > 0) {
+            int read = input.read(buffer, 0, Math.min(buffer.length, remaining));
+            if (read == -1) {
+                break;
+            }
+            if (read == 0) {
+                int single = input.read();
+                if (single == -1) {
+                    break;
+                }
+                output.write(single);
+                remaining--;
+                continue;
+            }
+            output.write(buffer, 0, read);
+            remaining -= read;
+        }
+        return output.toByteArray();
     }
 
     private static boolean constantTimeEquals(String expected, String supplied) {
