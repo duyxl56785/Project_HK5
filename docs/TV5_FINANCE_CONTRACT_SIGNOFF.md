@@ -142,3 +142,19 @@ point where Checkout could request Inventory reserve. TV3+TV5 must agree pre-res
 and any reviewed V2+ schema changes; this test-only handoff changes no runtime or proposed M01 terms.
 All contract statuses above remain PENDING/REVISE. Merge41 is acceptance of a QA patch, not a signature
 on VND/scale0/rate/rounding, service pairs or production settlement.
+
+## Latest provider/consumer response and Checkout RED evidence
+
+[TV2 candidate v0.2](https://github.com/duyxl56785/Project_HK5/pull/37#issuecomment-6246199255) is now
+technically compatible with TV5-FIN-v0.1 integral VND/17-digit representation; this is not a business
+signature. [TV3 response](https://github.com/duyxl56785/Project_HK5/pull/37#issuecomment-6246255122)
+accepts canonical UUID Product/Store/Seller strings (separate from JWT.sub), plain decimal money strings,
+ordered complete batch/allReady and candidate200/400/401/403/503/top-level error envelope **for further
+sign-off**, still C01/E01REVISE until TV1/current authority/remaining signatures. No HTTP adapter adopted.
+
+PR37 source63668b8 repairs internal FOUND/ABSENT/UNAVAILABLE and rejected-batch snapshot behavior;
+TV5 targeted50unitPASS verifies that source only. New Checkout diagnostic atparent28dd0cf gives
+1PASS/2FAIL (FIN-06 pre-reserve bounds, FIN-01 first-response/replay precision). Full details, updated
+seven-row contract matrix and owner fix acceptance in [RED report](../reports/TV5_FIN06_CHECKOUT_RED_2026-10-18.md).
+TV3 explicitly confirms fixNOT_IMPLEMENTED and conditional owner proposal, not permission to edit Checkout.
+All overall PENDING/REVISE states above remain; no deploy flag/production behavior change authorized here.

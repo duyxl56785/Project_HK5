@@ -1,0 +1,15 @@
+{
+  "parentHead": "28dd0cfeab988386723896af74b8c6b9364228a2",
+  "diagnosticSourceCommit": "5fa10cefc196c3358f1da624a7c049003195c440",
+  "note": "Original run.json records HEAD before untracked diagnostic files were committed unchanged after execution. This binding is derived metadata; no original log/XML/run record changed.",
+  "files": {
+    "backend/order-service/src/fin06Regression/java/com/projecthk5/orderservice/finance/CheckoutMoneyPreflightRegressionTest.java": {
+      "workingTreeSha256": "8098d554aae6fa9d66c7dc087995807dbd54d0f2af0344a192eec67d7e3ad4eb",
+      "gitBlobSha256": "8098d554aae6fa9d66c7dc087995807dbd54d0f2af0344a192eec67d7e3ad4eb"
+    },
+    "tests/finance/fin06-regression.init.gradle": {
+      "workingTreeSha256": "f0217919ec6a30d856d36934d600fdec878a0b7625145404089e306c3cadc499",
+      "gitBlobSha256": "f0217919ec6a30d856d36934d600fdec878a0b7625145404089e306c3cadc499"
+    }
+  }
+}

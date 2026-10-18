@@ -65,3 +65,12 @@ PR28 tại55bf5ff; chạy mới72unit+13PG PASS. Thêm1unit+4PG đạt73unit+17P
 PG rollback thật, nhưng validation trước RESERVE cần TV3/TV5 thống nhất. Replay giữ tiền/phí/event cũ.
 S01/M01/Inventory/Security/Finance vẫn PENDING; C01/E01/C06 REVISE. Live settlement/Store API/E2E
 NOT_RUN/BLOCKED; giữ policyfalse và các adapter fail-closed, không coi merge41 là contract approval.
+
+## TV5 — FIN-06 Checkout diagnostic RED tại head28dd0cf
+
+[Báo cáo và raw evidence mới](../reports/TV5_FIN06_CHECKOUT_RED_2026-10-18.md): PR42 đã tích hợp;
+QA union từ main giữ nguyên byte và15relative linksPASS. Chạy task diagnostic riêng trên Checkout thật/PG:
+**1PASS/2FAIL**,0error/skip,exit1. FIN-06 gọi reserve/write trước DB reject; FIN-01 first total3.002→replay3.00.
+Không sửa assertion/production hoặc ghi thành E2E. Unit Catalog thay đổi tại63668b8 **50PASS** riêng.
+Normal build không chạy diagnostic này; CI xanh không khép finding. Fix chờ TV3+applicable sign-off;
+M01 và các contract chưa đủ chữ ký giữ PENDING/REVISE. [Cách chạy RED task](../tests/finance/README.md).

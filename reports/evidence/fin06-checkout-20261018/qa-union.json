@@ -1,0 +1,26 @@
+{
+  "status": "PASS",
+  "main": "524e4f3",
+  "tv3BeforeMerge": "9d54c17",
+  "merged": "28dd0cf",
+  "mergedBlobSha256": "f7845c0a4a1cfbbba7b15260cd66f137c4c41c94aba3e0c7b7fa50db0fb5390e",
+  "exactUnion": true,
+  "relativeFileLinks": [
+    "../reports/TV5_W1_AUDIT_2026-10-15.md",
+    "../tests/TV5_UAT.md",
+    "TV5_CONTRACT_PROPOSAL.md",
+    "../reports/TV5_V2_RECONCILIATION.md",
+    "../tests/TV5_TRACEABILITY.md",
+    "../reports/TV5_W1_DEFECTS.md",
+    "TV5_W1_DECISIONS.md",
+    "../reports/TV5_W1_FOLLOWUP.md",
+    "../reports/TV5_W1_ACCEPTANCE_2026-10-17.md",
+    "../reports/evidence/w1-gates-20261017/README.md",
+    "../reports/TV5_W1_ACCEPTANCE_2026-10-17.md",
+    "../reports/PR_REVIEWERS_AUDIT_2026-10-17.md",
+    "TV5_FINANCE_CONTRACT_SIGNOFF.md",
+    "../reports/TV5_FINANCE_QA_2026-10-18.md",
+    "../reports/TV5_FINANCE_FOLLOWUP_2026-10-18.md"
+  ],
+  "checkedUtc": "2026-10-18T06:19:19.424667+00:00"
+}

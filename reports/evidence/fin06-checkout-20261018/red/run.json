@@ -1,0 +1,11 @@
+{
+  "sourceHeadAtLaunch": "28dd0cfeab988386723896af74b8c6b9364228a2",
+  "gradle": "8.14.3",
+  "executor": "TV5",
+  "jvmOptions": "-Duser.timezone=UTC -Dapi.version=1.44",
+  "exit": 1,
+  "java": "21.0.7",
+  "startedUtc": "2026-10-18T06:16:34.2254478Z",
+  "command": "gradle -p backend --init-script ../tests/finance/fin06-regression.init.gradle :order-service:fin06Regression --rerun-tasks --no-daemon --console=plain",
+  "finishedUtc": "2026-10-18T06:17:03.4778150Z"
+}
