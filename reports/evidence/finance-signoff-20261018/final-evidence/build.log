@@ -1,0 +1,80 @@
+Picked up JAVA_TOOL_OPTIONS: -Duser.timezone=UTC -Dapi.version=1.44
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Task :cart-service:compileJava
+Note: D:\CMC Uni\5 Ky Dong\WEB\BCK WEB\Project_HK5\.verification\finance-signoff\work\backend\cart-service\src\main\java\com\projecthk5\cartservice\security\ResourceSecurityConfig.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+
+> Task :order-service:compileJava
+Note: D:\CMC Uni\5 Ky Dong\WEB\BCK WEB\Project_HK5\.verification\finance-signoff\work\backend\order-service\src\main\java\com\projecthk5\orderservice\security\ResourceSecurityConfig.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+
+> Task :order-service:processResources
+> Task :cart-service:processResources
+> Task :order-service:classes
+> Task :cart-service:classes
+> Task :cart-service:resolveMainClassName
+> Task :order-service:resolveMainClassName
+> Task :cart-service:bootJar
+> Task :order-service:bootJar
+> Task :order-service:jar
+> Task :order-service:assemble
+> Task :cart-service:jar
+> Task :cart-service:assemble
+> Task :cart-service:compileTestJava
+> Task :cart-service:processTestResources NO-SOURCE
+> Task :cart-service:testClasses
+> Task :order-service:compileTestJava
+> Task :order-service:processTestResources NO-SOURCE
+> Task :order-service:testClasses
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+
+> Task :cart-service:test
+Picked up JAVA_TOOL_OPTIONS: -Duser.timezone=UTC -Dapi.version=1.44
+
+> Task :cart-service:check
+> Task :cart-service:build
+
+> Task :order-service:test
+Picked up JAVA_TOOL_OPTIONS: -Duser.timezone=UTC -Dapi.version=1.44
+
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+
+> Task :cart-service:postgresIntegrationTest
+Picked up JAVA_TOOL_OPTIONS: -Duser.timezone=UTC -Dapi.version=1.44
+
+> Task :order-service:check
+> Task :order-service:build
+
+> Task :order-service:postgresIntegrationTest
+Picked up JAVA_TOOL_OPTIONS: -Duser.timezone=UTC -Dapi.version=1.44
+
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+2026-10-18T05:07:12.747Z  INFO 31972 --- [cart-service] [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-10-18T05:07:12.750Z  INFO 31972 --- [cart-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-10-18T05:07:12.755Z  INFO 31972 --- [cart-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+2026-10-18T05:07:27.161Z  INFO 31492 --- [order-service] [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-10-18T05:07:27.163Z  INFO 31492 --- [order-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-10-18T05:07:27.167Z  INFO 31492 --- [order-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-10-18T05:07:27.169Z  INFO 31492 --- [order-service] [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-10-18T05:07:27.170Z  INFO 31492 --- [order-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown initiated...
+2026-10-18T05:07:27.171Z  INFO 31492 --- [order-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown completed.
+2026-10-18T05:07:27.173Z  INFO 31492 --- [order-service] [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-10-18T05:07:27.174Z  INFO 31492 --- [order-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown initiated...
+2026-10-18T05:07:27.175Z  INFO 31492 --- [order-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown completed.
+2026-10-18T05:07:27.178Z  INFO 31492 --- [order-service] [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-10-18T05:07:27.178Z  INFO 31492 --- [order-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Shutdown initiated...
+2026-10-18T05:07:27.180Z  INFO 31492 --- [order-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Shutdown completed.
+
+[Incubating] Problems report is available at: file:///D:/CMC%20Uni/5%20Ky%20Dong/WEB/BCK%20WEB/Project_HK5/.verification/finance-signoff/work/backend/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 40s
+16 actionable tasks: 16 executed
