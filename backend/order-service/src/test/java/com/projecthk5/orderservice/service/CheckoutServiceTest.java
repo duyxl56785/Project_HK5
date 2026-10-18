@@ -191,4 +191,26 @@ class CheckoutServiceTest {
         verify(keys).fail(attempt.getId(),false);
         verifyNoInteractions(inventory,write,repo);
     }
+    @Test void nullCartClaimReplyIsUnknownAndNeverBlindlyReleasesOrReserves() {
+        CheckoutAttempt attempt=fresh();
+        when(cart.claim(bearer,key,null)).thenReturn(null);
+        ResponseStatusException error=assertThrows(ResponseStatusException.class,
+            () -> svc.checkout(customer,bearer,key,request));
+        assertEquals(503,error.getStatusCode().value());
+        verify(keys).fail(attempt.getId(),true);
+        verify(cart,never()).release(anyString(),anyString());
+        verifyNoInteractions(catalog,inventory,write,repo);
+    }
+
+    @Test void explicitlyUnclaimedCartCannotProceedOrReleaseAnotherClaim() {
+        CheckoutAttempt attempt=fresh();
+        when(cart.claim(bearer,key,null)).thenReturn(
+            new CartPort.CartSnapshot(customer,1,false,List.of(
+                new CartPort.Item("p1","store1","seller1",2,new BigDecimal("10000")),
+                new CartPort.Item("p2","store2","seller2",1,new BigDecimal("15000")))));
+        assertThrows(IllegalStateException.class, () -> svc.checkout(customer,bearer,key,request));
+        verify(keys).fail(attempt.getId(),false);
+        verify(cart,never()).release(anyString(),anyString());
+        verifyNoInteractions(catalog,inventory,write,repo);
+    }
 }

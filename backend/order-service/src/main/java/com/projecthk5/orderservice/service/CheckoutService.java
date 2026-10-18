@@ -65,11 +65,17 @@ public class CheckoutService {
         // Durable attempt UUID is also the order/reservation correlation ID: repeated
         // calls or worker reconciliation can never manufacture a different order ID.
         UUID orderId=attempt.getId();
-        boolean claimRequested=false, claimConfirmed=false, reserveRequested=false, writeRequested=false;
+        boolean claimRequested=false, claimConfirmed=false, claimOwned=false;
+        boolean reserveRequested=false, writeRequested=false;
         try {
             claimRequested=true;
             CartPort.CartSnapshot cart=carts.claim(bearer,key,req.expectedRevision());
+            // A null reply cannot prove whether the remote Cart claim committed.
+            // Keep the attempt for reconciliation instead of blindly releasing it.
+            if (cart == null) throw new IllegalStateException("Cart claim outcome not confirmed");
             claimConfirmed=true;
+            claimOwned=cart.claimed();
+            if (!claimOwned) throw new IllegalStateException("Cart claim was not acquired");
             if (!customerId.equals(cart.customerId())) throw new IllegalStateException("Cart customer mismatch");
             CheckoutRules.requireSameItems(req.expectedItems(),cart.items());
             Order order=prepareOrder(orderId,customerId,cart.items());
@@ -99,7 +105,7 @@ public class CheckoutService {
                 }
             }
             boolean uncertain=reserveRequested || writeRequested || (claimRequested && !claimConfirmed);
-            if (!uncertain && claimConfirmed) {
+            if (!uncertain && claimConfirmed && claimOwned) {
                 try { carts.release(bearer,key); }
                 catch (Exception releaseFailure) {
                     uncertain=true;
