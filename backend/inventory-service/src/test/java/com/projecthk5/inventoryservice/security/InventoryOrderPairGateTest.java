@@ -1,5 +1,6 @@
 package com.projecthk5.inventoryservice.security;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -22,7 +23,7 @@ class InventoryOrderPairGateTest {
             MockHttpServletResponse response = new MockHttpServletResponse();
 
             filter.doFilter(request, response, (req, res) -> {
-                assertEquals(request.getRequestURI(), ((MockHttpServletRequest) req).getRequestURI());
+                assertEquals(request.getRequestURI(), ((HttpServletRequest) req).getRequestURI());
                 assertTrue(new String(req.getInputStream().readAllBytes(),
                         java.nio.charset.StandardCharsets.UTF_8).contains("\"type\":\"" + type + "\""));
             });
