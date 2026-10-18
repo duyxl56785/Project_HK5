@@ -81,12 +81,16 @@ public class CheckoutService {
             Order order=prepareOrder(orderId,customerId,cart.items());
             List<InventoryPort.Reservation> reservation=cart.items().stream()
                  .map(i -> new InventoryPort.Reservation(i.productId(),i.quantity())).toList();
+            // Serialize the deterministic Order facts before external Inventory side
+            // effects. A local serialization failure is known-safe and can release
+            // the confirmed Cart claim without inventing an UNKNOWN reservation.
+            String outboxPayload=eventPayload(order);
             // Any error/timeout after this point has UNKNOWN outcome. Never
             // automatically compensate after reserve or uncertain DB commit.
             reserveRequested=true;
             inventory.reserve(orderId,reservation);
             writeRequested=true;
-            writer.savePlaced(order,attempt.getId(),eventPayload(order));
+            writer.savePlaced(order,attempt.getId(),outboxPayload);
             try { carts.finalizeCart(bearer,key); } catch (Exception ignored) {
                 // Order is committed; finalize may be retried on same-key replay.
             }
