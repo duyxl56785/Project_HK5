@@ -85,6 +85,10 @@ class InventoryOrderPairGateTest {
         assertForbidden(filter, request("POST", "/api/inventory/operations/extra", "{\"type\":\"RESERVE\"}"));
         assertForbidden(filter, request("POST", "/api/inventory/OPERATIONS", "{\"type\":\"RESERVE\"}"));
         assertForbidden(filter, request("POST", "/api/inventory/operations;v=1", "{\"type\":\"RESERVE\"}"));
+        assertForbidden(filter, request("POST", "/api/inventory/operations%2Fextra", "{\\"type\\":\\"RESERVE\\"}"));
+        assertForbidden(filter, request("POST", "/api/inventory/%6Fperations", "{\\"type\\":\\"RESERVE\\"}"));
+        assertForbidden(filter, request("POST", "/api/inventory/operations%3Bv=1", "{\\"type\\":\\"RESERVE\\"}"));
+        assertForbidden(filter, request("POST", "/api/inventory//operations", "{\\"type\\":\\"RESERVE\\"}"));
     }
 
     @Test
