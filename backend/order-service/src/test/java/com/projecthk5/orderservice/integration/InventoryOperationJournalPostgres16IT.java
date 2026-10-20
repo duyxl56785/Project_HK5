@@ -63,16 +63,16 @@ class InventoryOperationJournalPostgres16IT {
         journal.prepare(intent); // Exact step replay retains state and one DB row.
         assertEquals(1,db.queryForObject(
                 "select count(*) from inventory_operation_journal where operation_id=?",Integer.class,intent.operationId()));
-        assertTrue(journal.claimForSend(intent.operationId()));
-        journal.unknown(intent.operationId(),"TRANSPORT_OUTCOME_UNKNOWN");
+        assertEquals(1, journal.claimForSend(intent.operationId()));
+        journal.unknown(intent.operationId(),1,"TRANSPORT_OUTCOME_UNKNOWN");
         assertEquals(InventoryOperationJournal.State.UNKNOWN,journal.load(intent.operationId()).state());
-        assertTrue(journal.claimForSend(intent.operationId())); // same ID, no second INSERT
-        journal.confirm(intent.operationId());
+        assertEquals(2, journal.claimForSend(intent.operationId())); // same ID, new send generation
+        journal.confirm(intent.operationId(),2);
         var t2=journal.load(intent.operationId());
         assertEquals(InventoryOperationJournal.State.CONFIRMED,t2.state());
         assertEquals(2,t2.sends());
-        assertFalse(journal.claimForSend(intent.operationId()));
-        assertThrows(IllegalStateException.class,()->journal.unknown(intent.operationId(),"STALE"));
+        assertNull(journal.claimForSend(intent.operationId()));
+        assertThrows(IllegalStateException.class,()->journal.unknown(intent.operationId(),1,"STALE"));
     }
 
     @Test void t1JournalCommitSurvivesRollbackOfAlreadyCommittedAttemptCaller() {
@@ -91,9 +91,9 @@ class InventoryOperationJournalPostgres16IT {
     @Test void t2ConfirmedOutcomeSurvivesCallerTransactionRollback() {
         var intent = freshIntent();
         journal.prepare(intent);
-        assertTrue(journal.claimForSend(intent.operationId()));
+        assertEquals(1, journal.claimForSend(intent.operationId()));
         new TransactionTemplate(txManager).execute(status -> {
-            journal.confirm(intent.operationId()); // Independent T2 commit, even if outer transaction rolls back.
+            journal.confirm(intent.operationId(),1); // Independent T2 commit, even if outer transaction rolls back.
             status.setRollbackOnly();
             return null;
         });
@@ -104,13 +104,53 @@ class InventoryOperationJournalPostgres16IT {
     @Test void lateT2AfterCrashScannerMustNotOverwriteUnknown() {
         var intent = freshIntent();
         journal.prepare(intent);
-        assertTrue(journal.claimForSend(intent.operationId()));
+        assertEquals(1, journal.claimForSend(intent.operationId()));
         db.update("update inventory_operation_journal set updated_at=now()-interval '20 minutes' where operation_id=?",
                 intent.operationId());
         assertEquals(1, journal.flagStaleInFlight(Duration.ofMinutes(10)));
-        assertThrows(IllegalStateException.class, () -> journal.confirm(intent.operationId()));
+        assertThrows(IllegalStateException.class, () -> journal.confirm(intent.operationId(),1));
         assertEquals(InventoryOperationJournal.State.UNKNOWN, journal.load(intent.operationId()).state());
         assertEquals(1, journal.load(intent.operationId()).sends());
+    }
+
+
+    @Test void staleResponseFromFirstSendCannotMutateReclaimedSecondSend() {
+        var intent = freshIntent();
+        journal.prepare(intent);
+        int first = journal.claimForSend(intent.operationId());
+        assertEquals(1, first);
+        // Simulate sender A losing contact and reconciliation marking its claim stale.
+        db.update("update inventory_operation_journal set updated_at=now()-interval '20 minutes' where operation_id=?",
+                intent.operationId());
+        assertEquals(1, journal.flagStaleInFlight(Duration.ofMinutes(10)));
+        int second = journal.claimForSend(intent.operationId());
+        assertEquals(2, second);
+        // Sender A returns late while sender B is working the same persisted operationId.
+        assertThrows(IllegalStateException.class, () -> journal.confirm(intent.operationId(), first));
+        assertThrows(IllegalStateException.class, () -> journal.reject(intent.operationId(), first, "OLD_REJECTION"));
+        assertThrows(IllegalStateException.class, () -> journal.unknown(intent.operationId(), first, "OLD_TIMEOUT"));
+        assertThrows(IllegalStateException.class, () -> journal.notSent(intent.operationId(), first, "OLD_NOT_SENT"));
+        var stillOwnedByB = journal.load(intent.operationId());
+        assertEquals(InventoryOperationJournal.State.IN_FLIGHT, stillOwnedByB.state());
+        assertEquals(second, stillOwnedByB.sends());
+        assertNull(stillOwnedByB.errorCode());
+        journal.confirm(intent.operationId(), second);
+        assertEquals(InventoryOperationJournal.State.CONFIRMED, journal.load(intent.operationId()).state());
+        assertThrows(IllegalStateException.class, () -> journal.confirm(intent.operationId(), first));
+        assertNull(journal.claimForSend(intent.operationId()));
+    }
+
+    @Test void completedOrUnknownAttemptCannotReuseOldGeneration() {
+        var intent = freshIntent();
+        journal.prepare(intent);
+        int first = journal.claimForSend(intent.operationId());
+        journal.unknown(intent.operationId(), first, "TIMEOUT");
+        assertThrows(IllegalStateException.class, () -> journal.confirm(intent.operationId(), first));
+        int second = journal.claimForSend(intent.operationId());
+        assertEquals(first + 1, second);
+        journal.reject(intent.operationId(), second, "DEFINITE_NONCOMMIT");
+        assertThrows(IllegalStateException.class, () -> journal.confirm(intent.operationId(), second));
+        assertEquals(InventoryOperationJournal.State.REJECTED, journal.load(intent.operationId()).state());
     }
 
     @Test void differentPayloadOnSameOperationIdIsRejectedWithoutMutation() {
@@ -128,10 +168,13 @@ class InventoryOperationJournalPostgres16IT {
         ExecutorService pool=Executors.newFixedThreadPool(2);
         CountDownLatch go=new CountDownLatch(1);
         try {
-            Callable<Boolean> send=()->{go.await();return journal.claimForSend(intent.operationId());};
-            Future<Boolean> first=pool.submit(send),second=pool.submit(send);
+            Callable<Integer> send=()->{go.await();return journal.claimForSend(intent.operationId());};
+            Future<Integer> first=pool.submit(send),second=pool.submit(send);
             go.countDown();
-            assertNotEquals(first.get(30,TimeUnit.SECONDS),second.get(30,TimeUnit.SECONDS));
+            Integer firstAttempt=first.get(30,TimeUnit.SECONDS);
+            Integer secondAttempt=second.get(30,TimeUnit.SECONDS);
+            assertTrue((Integer.valueOf(1).equals(firstAttempt) && secondAttempt==null)
+                    || (Integer.valueOf(1).equals(secondAttempt) && firstAttempt==null));
             assertEquals(1,journal.load(intent.operationId()).sends());
             assertEquals(InventoryOperationJournal.State.IN_FLIGHT,journal.load(intent.operationId()).state());
         } finally {pool.shutdownNow();}
@@ -140,7 +183,7 @@ class InventoryOperationJournalPostgres16IT {
     @Test void crashedInFlightIsUnknownAndNeverAutomaticallyCompensated() {
         var intent=freshIntent();
         journal.prepare(intent);
-        assertTrue(journal.claimForSend(intent.operationId()));
+        assertEquals(1, journal.claimForSend(intent.operationId()));
         db.update("update inventory_operation_journal set updated_at=now()-interval '20 minutes' where operation_id=?",
                 intent.operationId());
         assertEquals(1,journal.flagStaleInFlight(Duration.ofMinutes(10)));

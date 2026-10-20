@@ -24,7 +24,7 @@ class InventoryOperationCallerTest {
 
     @Test void successConfirmsOnlyExactMatchingResponseAndPersistedRequest() {
         when(journal.load(intent.operationId())).thenReturn(state(InventoryOperationJournal.State.PENDING));
-        when(journal.claimForSend(intent.operationId())).thenReturn(true);
+        when(journal.claimForSend(intent.operationId())).thenReturn(1);
         when(transport.send(any())).thenReturn(
             new InventoryOperationTransport.Reply(intent.operationId(), "RESERVE", false, List.of("sku-a", "sku-b")));
         assertEquals(InventoryOperationCaller.Outcome.CONFIRMED, caller.dispatchOnce(intent.operationId()));
@@ -34,14 +34,14 @@ class InventoryOperationCallerTest {
         assertEquals("RESERVE", cap.getValue().type());
         assertEquals(List.of(new InventoryOperationWire.Item("sku-a",2),
             new InventoryOperationWire.Item("sku-b",1)), cap.getValue().items());
-        verify(journal).confirm(intent.operationId());
-        verify(journal, never()).unknown(anyString(),anyString());
+        verify(journal).confirm(intent.operationId(),1);
+        verify(journal, never()).unknown(anyString(),anyInt(),anyString());
     }
 
     @Test void retryAfterUnknownUsesSamePersistedIdTypeAndCanonicalLines() {
         when(journal.load(intent.operationId())).thenReturn(
             state(InventoryOperationJournal.State.PENDING),state(InventoryOperationJournal.State.UNKNOWN));
-        when(journal.claimForSend(intent.operationId())).thenReturn(true,true);
+        when(journal.claimForSend(intent.operationId())).thenReturn(1,2);
         when(transport.send(any())).thenThrow(new InventoryOperationTransport.UnknownOutcome("timeout"))
             .thenReturn(new InventoryOperationTransport.Reply(intent.operationId(),"RESERVE",true,List.of("sku-b","sku-a")));
         assertEquals(InventoryOperationCaller.Outcome.UNKNOWN,caller.dispatchOnce(intent.operationId()));
@@ -49,36 +49,36 @@ class InventoryOperationCallerTest {
         ArgumentCaptor<InventoryOperationWire.Request> cap=ArgumentCaptor.forClass(InventoryOperationWire.Request.class);
         verify(transport,times(2)).send(cap.capture());
         assertEquals(cap.getAllValues().get(0),cap.getAllValues().get(1));
-        verify(journal).unknown(intent.operationId(),"TRANSPORT_OUTCOME_UNKNOWN");
-        verify(journal).confirm(intent.operationId());
+        verify(journal).unknown(intent.operationId(),1,"TRANSPORT_OUTCOME_UNKNOWN");
+        verify(journal).confirm(intent.operationId(),2);
     }
 
     @Test void disabledTransportIsProvablyNotSentAndRemainsPending() {
         when(journal.load(intent.operationId())).thenReturn(state(InventoryOperationJournal.State.PENDING));
-        when(journal.claimForSend(intent.operationId())).thenReturn(true);
+        when(journal.claimForSend(intent.operationId())).thenReturn(1);
         when(transport.send(any())).thenThrow(new InventoryOperationTransport.NotSent("disabled"));
         assertEquals(InventoryOperationCaller.Outcome.BLOCKED, caller.dispatchOnce(intent.operationId()));
-        verify(journal).notSent(intent.operationId(),"CALLER_DISABLED");
-        verify(journal,never()).confirm(anyString());
+        verify(journal).notSent(intent.operationId(),1,"CALLER_DISABLED");
+        verify(journal,never()).confirm(anyString(),anyInt());
     }
 
     @Test void mismatchedOrDuplicateProviderResponseIsUnknownNotSuccess() {
         when(journal.load(intent.operationId())).thenReturn(state(InventoryOperationJournal.State.PENDING));
-        when(journal.claimForSend(intent.operationId())).thenReturn(true);
+        when(journal.claimForSend(intent.operationId())).thenReturn(1);
         when(transport.send(any())).thenReturn(
             new InventoryOperationTransport.Reply(intent.operationId(),"RESERVE",false,List.of("sku-a","sku-a")));
         assertEquals(InventoryOperationCaller.Outcome.UNKNOWN,caller.dispatchOnce(intent.operationId()));
-        verify(journal).unknown(intent.operationId(),"RESPONSE_MISMATCH");
-        verify(journal,never()).confirm(anyString());
+        verify(journal).unknown(intent.operationId(),1,"RESPONSE_MISMATCH");
+        verify(journal,never()).confirm(anyString(),anyInt());
     }
 
     @Test void knownDefinitiveAtomicRejectionMustNotBeRetried() {
         when(journal.load(intent.operationId())).thenReturn(state(InventoryOperationJournal.State.PENDING));
-        when(journal.claimForSend(intent.operationId())).thenReturn(true);
+        when(journal.claimForSend(intent.operationId())).thenReturn(1);
         when(transport.send(any())).thenThrow(new InventoryOperationTransport.DefinitiveFailure("INSUFFICIENT_STOCK"));
         assertEquals(InventoryOperationCaller.Outcome.REJECTED,caller.dispatchOnce(intent.operationId()));
-        verify(journal).reject(intent.operationId(),"INSUFFICIENT_STOCK");
-        verify(journal,never()).confirm(anyString());
+        verify(journal).reject(intent.operationId(),1,"INSUFFICIENT_STOCK");
+        verify(journal,never()).confirm(anyString(),anyInt());
     }
 
     @Test void concurrentInFlightIsNotSentAgainAndConfirmedReplayDoesNotResend() {
@@ -87,6 +87,29 @@ class InventoryOperationCallerTest {
         assertThrows(IllegalStateException.class,()->caller.dispatchOnce(intent.operationId()));
         assertEquals(InventoryOperationCaller.Outcome.CONFIRMED,caller.dispatchOnce(intent.operationId()));
         verifyNoInteractions(transport);
+    }
+
+
+    @Test void staleReplyCannotReportConfirmedAfterRetryWasReclaimed() {
+        when(journal.load(intent.operationId())).thenReturn(state(InventoryOperationJournal.State.UNKNOWN));
+        when(journal.claimForSend(intent.operationId())).thenReturn(1);
+        when(transport.send(any())).thenReturn(new InventoryOperationTransport.Reply(
+                intent.operationId(),"RESERVE",false,List.of("sku-a","sku-b")));
+        doThrow(new IllegalStateException("Stale or conflicting Inventory journal transition"))
+                .when(journal).confirm(intent.operationId(),1);
+        assertThrows(IllegalStateException.class, () -> caller.dispatchOnce(intent.operationId()));
+        verify(journal).confirm(intent.operationId(),1);
+        verify(journal,never()).reject(anyString(),anyInt(),anyString());
+    }
+
+    @Test void staleTimeoutCannotOverwriteNewerAttemptState() {
+        when(journal.load(intent.operationId())).thenReturn(state(InventoryOperationJournal.State.UNKNOWN));
+        when(journal.claimForSend(intent.operationId())).thenReturn(2);
+        when(transport.send(any())).thenThrow(new InventoryOperationTransport.UnknownOutcome("old timeout"));
+        doThrow(new IllegalStateException("Stale or conflicting Inventory journal transition"))
+                .when(journal).unknown(intent.operationId(),2,"TRANSPORT_OUTCOME_UNKNOWN");
+        assertThrows(IllegalStateException.class, () -> caller.dispatchOnce(intent.operationId()));
+        verify(journal,never()).confirm(anyString(),anyInt());
     }
 
     @Test void wireAdapterHasNoBroadCredentialOrExtraOperationType() {
