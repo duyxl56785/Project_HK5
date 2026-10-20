@@ -111,3 +111,47 @@ Run the actual module tasks from backend with Java21/UTC:
 `seller-service:integrationTest` is the registered PostgreSQL task and is included by check/build; no new `postgresIntegrationTest` task or shared build edit was needed. Testcontainers uses PostgreSQL16.6; no H2 replacement. The SQL prototype remains test-only and distinct from production V2.
 
 V2 is additive. Reverting application code can leave V2/table present, but the FK continues restricting Seller deletion; removing schema/data needs a separate reviewed migration plan. Do not edit V1, run Flyway clean, reset Docker or delete existing data to roll back. Positive JWT/Store HTTP, Seller→Auth role sync, durable two-Store seed and live Checkout E2E remain **NOT_RUN/BLOCKED**, not inferred from the local persistence tests.
+
+## Seller/Store HTTP handoff candidate — 2026-10-20
+
+**PROPOSED, NOT APPROVED OR IMPLEMENTED: `TV2-SELLER-STORE-HTTP-v0.1`.**
+PR29/52 persistence is merged. Auth PR51 supplies database persistence, not a token issuer/current-role provider;
+Gateway still has no routes. [Auth v1.0 §8](../../docs/TV1_AUTH_IDENTITY_GATEWAY_CONTRACT.md#8-gateway-routing-cors-và-internal-boundary)
+explicitly leaves business paths/DTOs to owner agreement. The table is a concrete TV2 proposal for TV1 review,
+not new callable routes, Java DTOs, a shared-contract change or permission to wire fixture policies.
+
+| Proposed method/path | Request fields | Existing internal operation |
+|---|---|---|
+| POST `/api/sellers/me` | Empty object; reject client identity/role/status fields | `SellerPersistenceService.register` |
+| GET `/api/sellers/me` | None | `findOwn` |
+| POST `/api/sellers/me/resubmit` | `expectedVersion` | Resolve own ID server-side, then `resubmit` |
+| POST `/api/admin/sellers/{id}/approve` | `expectedVersion` | `approve` |
+| POST `/api/admin/sellers/{id}/reject` | `expectedVersion`, `reason` | `reject` |
+| POST `/api/admin/sellers/{id}/suspend` | `expectedVersion`, `reason` | `suspend` |
+| POST `/api/admin/sellers/{id}/reinstate` | `expectedVersion` | `reinstate` |
+| POST `/api/stores/me` | `name`, `slug` | `StorePersistenceService.create` |
+| GET `/api/stores/me` | None | `findOwn` |
+| PUT `/api/stores/me` | `name`, `slug`, `expectedVersion` | Resolve own ID server-side, then `revise` |
+| PUT `/api/stores/me/open` | `open`, `expectedVersion` | Resolve own ID server-side, then `setOpen` |
+
+Candidate request rules: reject unknown/null fields; version nonnegative; rejection/suspension reason nonblank
+and at most500 Unicode code points; Store name nonblank and stripped length at most255 UTF-16 units (current
+domain rule), slug at most128 matching `[a-z0-9]+(?:-[a-z0-9]+)*`. Do not silently change these existing rules
+or choose version wire encoding before review. Candidate Seller response is `id,version,status,reviewReason`;
+Store response is `id,sellerId,name,slug,open,version,createdAt,updatedAt`, with no `ownerReference`, Entity
+serialization or secrets. Property names, JSON types, success statuses and privacy still need explicit approval.
+
+Candidate error mapping for review: invalid fields400; missing/invalid credentials401 per TV1;
+verified denial/self-moderation403; approved-scope missing resource404; unique/version/invalid-state conflict409;
+unavailable current authority503. Preserve existing typed domain/persistence codes as mapping inputs; TV1/TV2
+must approve final wire codes/envelope and concealment before implementing an exception handler. No current
+HTTP status/code is changed here, including Category/Product fallback403.
+
+**Release gates:** TV1 supplies real issuer/verifier and current-account/ADMIN authority; TV1+TV2 approve this
+wire/privacy/Gateway scope and a versioned, durable Seller→Auth grant/revoke protocol. Only then explicitly wire
+transaction-proxied services with verified policies, bind actor to exact verified `sub`, resolve ownership from DB,
+deny self-moderation and stale/unavailable authority, and run signed-JWT/HTTP/DB/cross-Seller tests. Registration
+must not require SELLER first; Store management requires current APPROVED/ownership plus the agreed Auth policy.
+Approval of this proposal must not enable Product/Catalog/M01 or auto-grant roles. Existing active decision requests
+are retained; [the current checkpoint](../../docs/TV2_WEEK1_PROGRESS.md#current-w1-boundaries--2026-10-20)
+records what is actually available and the next owner action.

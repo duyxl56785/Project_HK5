@@ -4,6 +4,40 @@ Refs #2, [PR #37](https://github.com/duyxl56785/Project_HK5/pull/37), [Checkout 
 
 ## What can actually be called
 
+### Current provider inventory — 2026-10-20
+
+Audited main `03fb1b2e8a1c1261568446c1f9ed68d264784e4e`. This section supersedes the historical
+Store/S01/pending-merge wording below; previous test counts remain separate historical executions.
+Category/Seller/domain/Store DB/Image Validation PR7/29/37/52/55 are merged; PR53 merged a **proposal only**.
+
+| Source/interface | Production availability | Consumer boundary |
+|---|---|---|
+| `StoreCurrentSource.findById/findBySellerId/findBySlug` | Real local Seller DB projection: Store/Seller IDs, OPEN/CLOSED and Seller status, both versions; eligible = OPEN AND APPROVED | Same module only, READ_COMMITTED observation; no HTTP, Account/recipient, House or commit-time lease |
+| Seller/Store persistence services | Real REQUIRED transactions, uniqueness and optimistic locking; explicit verified-policy wiring still absent | Internal records are not agreed HTTP DTOs or production JWT proof |
+| `CatalogSnapshotSource.load(Set<UUID>)` | Internal interface only: exactly one FOUND/ABSENT/UNAVAILABLE result per ID; no authoritative Product adapter | Enum FOUND is not verification; missing/stale/unverified dependency fails the entire batch |
+| `CatalogBatchValidator.validate(List<ExpectedItem>)` | Existing internal proposal,50 unit cases; no production bean/provider | No usable READY subset on rejected batch; no consumer HTTP contract test claimed |
+| Product→inventorySku and current price/currency/House | Product production table/JPA/API absent; SQL candidates and JSON fixture remain test-only | No runtime global UNIQUE SKU proof, durable Product seed or live two-Store Checkout |
+
+S01 **Store DB boundary is decided and implemented**, not waiting for another architecture vote:
+[TV1 scope decision](https://github.com/duyxl56785/Project_HK5/pull/48#issuecomment-6251503735),
+[merged Store PR52](https://github.com/duyxl56785/Project_HK5/pull/52). Product keeps logical Store ID only.
+TV3 [accepted C01/E01 v0.2 consumer design](https://github.com/duyxl56785/Project_HK5/pull/37#issuecomment-6248646211);
+TV4 [confirmed SKU-only/exact immutable global target and Inventory requirements](https://github.com/duyxl56785/Project_HK5/pull/37#issuecomment-6282124816).
+Neither requires a repeat technical confirmation; shared wire/security/freshness approval is still missing.
+`CatalogPort.verify(String)` on current Order still lacks SKU/currency/batch; its adapter remains TV3-owned.
+
+M01 latest Product price candidate is **M01-PRICE-SCOPE-v1-DRAFT** (explicit VND, integral, unit cap1,000,000,000),
+not the earlier17-digit unit-cap proposal and **not business approved**. See the existing
+[decision packet §14](TV5_M01_HUMAN_DECISION_PACKET.md#14-m01-price-scope-v1-draft--đề-xuất-đơn-giá-product-19102026).
+No unit cap may be applied to Order aggregates by implication. Price persistence remains blocked on accountable
+authority and applicable same-version price/schema approvals; House/current authority and freshness are separate gates.
+
+The candidate endpoint remains closed. Missing/duplicate/unrequested/partial/stale/unverifiable results abort the
+whole batch; only confirmed authoritative ABSENT permits PRODUCT_NOT_FOUND. Inventory consumes trusted SKU and
+positive long quantities, never Product ID. Stable ID/type/canonical line sets and UNKNOWN recovery remain mandatory;
+Order journal/fencing PR54/58 now exists, but disabled transport does not prove live Inventory or delegated authorization.
+No fixture may substitute for production facts or stock. [Current W1 matrix and blockers](TV2_WEEK1_PROGRESS.md#current-w1-boundaries--2026-10-20).
+
 **No production Catalog provider endpoint exists yet.** `/internal/catalog/checkout/validate` is a proposed POST path, not a controller or agreed HTTP contract. The existing product-service fallback denies it with 403 `PRODUCT_ROUTE_AUTH_NOT_CONFIGURED`; missing/bogus credentials, forged identity headers, test ADMIN and arbitrary internal tokens cannot open it. Existing public Category reads remain unchanged. No Store/Product write endpoint is opened.
 
 `CatalogBatchValidator` and `CatalogSnapshotSource` are internal Java proposals with no Spring registration, production source adapter or persistence wiring. A test policy or JSON fixture cannot supply authoritative production facts. Positive Catalog HTTP/JWT integration, persisted Store/Product reads and live Checkout are **NOT_RUN / BLOCKED**, not demonstrated by the tests below.
