@@ -8,6 +8,14 @@ import org.junit.jupiter.api.Test;
 class SellerOrderLifecycleTest {
 
     @Test
+    void rejectsNullStatusOrAction() {
+        assertThrows(NullPointerException.class, () ->
+                SellerOrderLifecycle.transition(null, SellerOrderLifecycle.Action.ACCEPT, null));
+        assertThrows(NullPointerException.class, () ->
+                SellerOrderLifecycle.transition(SellerOrderLifecycle.Status.PLACED, null, null));
+    }
+
+    @Test
     void allowsCandidateHappyPath() {
         SellerOrderLifecycle.Status state = SellerOrderLifecycle.Status.PLACED;
         state = SellerOrderLifecycle.transition(state, SellerOrderLifecycle.Action.ACCEPT, null);
