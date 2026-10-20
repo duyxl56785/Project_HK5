@@ -101,3 +101,19 @@ Same-run taskcounts/rawSHA256/commands và22originalassets: [manifest](../report
 Delta**c181675**:16targetedCheckoutServiceunit+3originalPGdiagnosticPASS, khôngfullunit/taggedPG rerun.
 PR49**5cf4d75**4PASS/1FAILwrappertest →ownerfix**cf60281**5PASS/0FAILsame2securityclasses; **FIXED_VERIFIED testharness**,
 SP01–04chỉpartialunitcoverage, actualHTTP/currentactor/rotation/provenance/PG/E2E NOT_RUN. Manifestgiờ35rawassets, táchperSHAkhôngcộngtotals.
+
+
+## Current acceptance checkpoint — 20/10/2026, PR39/54/56
+
+Các dòng sau cập nhật hiện trạng, không thay ID/nghĩa hoặc evidence lịch sử. [Report](../reports/TV5_ACCEPTANCE_PR39_54_56_2026-10-20.md).
+
+| ID | Requirement → owner | Executed evidence | Disposition / limit |
+|---|---|---|---|
+|QA39-TRACE|Finding39-F1/F2/F3: count, ID meaning, SKU/current authority/state proposals →TV4docs/TV5QA|[Static ec2ae5a](../reports/evidence/acceptance-20261020/pr39-static.json):21legacy exact+21supplemental unique;42NOT_RUN|FIXED_VERIFIED / REVIEW_READY docs; humanTV5 formal review pending; khôngCOD/M01approval|
+|QA54-JOURNAL|Durable T1/T2, immutable tuple, concurrent claim, UNKNOWN scanner →TV3|[Fresh5955b1f cases](../reports/evidence/acceptance-20261020/pr54-summary.json):96unit+23PGPASS;7journalPG included|PASS scoped journal; late reply after retry fencing/positive HTTP/current actor/live stock NOT_RUN|
+|QA56-DOMAIN|Candidate state table/null/reason/terminal guards →TV4, TV3domainowner|[Fresh8c88fff cases](../reports/evidence/acceptance-20261020/pr56-summary.json):7domainPASS; TV3 exact-head scoped review5580002869|Candidate/helper CONFIRMED; shared C06 runtime PENDING; no persisted state/Store auth/COD side effects|
+|QA54-56-INTEGRATION|Owner source accepted on main →TV3/TV4, TV5verify|[Changed-path blob comparison](../reports/evidence/acceptance-20261020/integration-source.json) vs864c941|Identical source on main, not a new runtime execution at merge SHA or integrated workflow acceptance|
+|QA-COD-SETTLEMENT|DELIVERED AND CODPAID, unique/atomic settlement and current Store scope →TV5+TV4+TV3+TV1/TV2|Pure guards included in5955b1f unit; runtime settlement/Store queries absent|Production NOT_RUN/BLOCKED; journalPK is not settlement uniqueness|
+|QA-C06-M01-SIGNOFF|Shared lifecycle/provenance/COD and applicable MD choices →responsible humans/business|TV3 candidate own-scope recorded; project business approver/operator not designated|PENDING; proposal publication or technical review does not sign business policy|
+
+Do not add119and7to a release total, relabel previous-source counts, or tick cross-service/E2E/Finance DONE.

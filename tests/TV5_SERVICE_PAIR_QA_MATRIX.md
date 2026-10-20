@@ -57,3 +57,15 @@ Legacybroadtoken vẫnriêngkhôngcấpOrder; tokenmớigiữunset. Positiveunit
 - [ ] ChạySP01–14 ởđúngSHA/môitrường, giữlệnh/log/XML/hash vàred/green thực; positivecase cầnAuthissuedtoken/providerthật.
 - [ ] Businessapprover/operator đượcchủdựán chỉđịnh; Productprice MD01/02/unitcapMD03 kýriêng +schema/S01/security; không kýthayTV5/business.
 - [ ] RuntimeFinance/COD/settlement/Storequeries/E2E acceptance khiđúngphase/scope đượcgiao.
+
+
+## D. Current source after owner merges — 20/10/2026
+
+This section supersedes historical source/pending-merge wording above, preserving the original18/10 snapshot.
+[Current report and acceptance gates](../reports/TV5_ACCEPTANCE_PR39_54_56_2026-10-20.md).
+
+- PR49/57 filter scaffold is now merged, with dedicated pair token/exact path/type/body cap and independent **default-OFF** flag. Historical broad-token-only statement is not current source. Broad legacy token still must never be given to Order.
+- PR54 now provides Order-owned journal/scanner/caller scaffold; [fresh5955b1f](../reports/evidence/acceptance-20261020/pr54-summary.json) has96unit+23PGPASS, including7JournalPG cases. SP14 therefore has **verified local DB foundation**, while its complete approved trusted-input/HTTP/result/recovery requirement remains **NOT_RUN/BLOCKED live**. Do not mark the whole SP14 accepted.
+- PR56 pure candidate helper8c88fff has [7fresh domainPASS](../reports/evidence/acceptance-20261020/pr56-summary.json); TV3 scoped candidate approval is recorded. This is not SP07system provenance, SP08Store/current actor, SP09COD or a shared C06 runtime approval.
+- SP01–SP14 production/positive HTTP statuses in tableB remain NOT_RUN/BLOCKED. Local/mock/DB proof is separate; caller transport remains NotSent, no live current-user/system authorization or scoped Finance query was executed.
+- Named business approver/operator, same-version M01/COD/refund decisions, trusted Product→SKU/current Store providers, attempt fencing and live two-Store E2E remain required. No policy/pair flag enablement from this checkpoint.

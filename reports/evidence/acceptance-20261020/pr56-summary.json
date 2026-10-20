@@ -1,0 +1,93 @@
+{
+  "kind": "DERIVED SUMMARY: cases/metadata/hashes only; raw log/XML remain private local originals, not published",
+  "metadata": {
+    "pr": 56,
+    "source": "8c88fffbc83dd5c562f0189ad400d76bd1aaf5ea",
+    "command": [
+      "backend/gradlew.bat",
+      "-p",
+      "backend",
+      ":order-service:test",
+      "--tests",
+      "*SellerOrderLifecycleTest",
+      "--rerun-tasks",
+      "--no-daemon",
+      "--console=plain"
+    ],
+    "startedUtc": "2026-10-20T02:24:05.919298+00:00",
+    "environment": {
+      "java": "21.0.7",
+      "gradle": "8.10",
+      "JAVA_TOOL_OPTIONS": "-Duser.timezone=UTC -Dapi.version=1.44"
+    },
+    "executor": "TV5 independent execution in this session",
+    "exitCode": 0,
+    "completedUtc": "2026-10-20T02:24:34.886059+00:00"
+  },
+  "cases": [
+    {
+      "task": "test",
+      "classname": "com.projecthk5.orderservice.fulfillment.SellerOrderLifecycleTest",
+      "name": "transitionTableRejectsEveryUnlistedStateActionPair()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "classname": "com.projecthk5.orderservice.fulfillment.SellerOrderLifecycleTest",
+      "name": "allowsCandidateHappyPath()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "classname": "com.projecthk5.orderservice.fulfillment.SellerOrderLifecycleTest",
+      "name": "requiresReasonForSellerRejection()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "classname": "com.projecthk5.orderservice.fulfillment.SellerOrderLifecycleTest",
+      "name": "rejectsSkippingOrRepeatingStates()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "classname": "com.projecthk5.orderservice.fulfillment.SellerOrderLifecycleTest",
+      "name": "rejectsAnyActionFromTerminalStates()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "classname": "com.projecthk5.orderservice.fulfillment.SellerOrderLifecycleTest",
+      "name": "rejectsNullStatusOrAction()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "classname": "com.projecthk5.orderservice.fulfillment.SellerOrderLifecycleTest",
+      "name": "allowsCustomerCancelOnlyBeforeAcceptance()",
+      "result": "PASS"
+    }
+  ],
+  "counts": {
+    "test": {
+      "PASS": 7,
+      "FAIL": 0,
+      "NOT_RUN": 0
+    }
+  },
+  "staleXmlExcluded": [],
+  "rawArtifacts": [
+    {
+      "localPath": ".verification/tv5-acceptance-20261020/runs/pr56-r2/runtime.log",
+      "bytes": 1420,
+      "sha256": "418e1503688fc713dff27ac80c07185d642e95d8360f4243ecf0463f915ac38e"
+    },
+    {
+      "localPath": ".verification/tv5-acceptance-20261020/runs/pr56-r2/test/TEST-com.projecthk5.orderservice.fulfillment.SellerOrderLifecycleTest.xml",
+      "bytes": 1390,
+      "sha256": "08fd4c2080ab0abad58bf8d9b241223de6b97eb62a04d8d5725089aa2694ba8e"
+    }
+  ],
+  "commandNormalization": "DERIVED portable command: original absolute Windows launcher path is represented as backend/gradlew.bat; arguments unchanged; execute from dedicated checkout root of source SHA. Original invocation metadata remains local.",
+  "harnessHistory": "Initial invocation exited1 before Gradle because relative slash path was interpreted by cmd.exe; NOT_RUN, no PR test result. Old XML excluded from that invocation. Original logs retained separately; these counts are only fresh r2 execution."
+}

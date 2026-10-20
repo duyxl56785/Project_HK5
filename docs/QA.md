@@ -140,3 +140,22 @@ partialProductpriceMD01/02/unitcapMD03 vẫnchờbusiness+schema/S01/security; k
 Deltaownerhead**c181675**: targetedCheckoutService16unit+3originalPGdiagnosticPASS,exit0/40s; full88unit/16PGvẫnthuộcbe1run.
 PR49security5cf**4P1F**wrappercast, ownersửacf60281→**5P0F**same2classes,exit0/13s; partialfilterunitproofkhôngdeployedpair/liveE2E.
 35rawassetsperSHAgiữRED/GREEN/commands/hashes; khôngcộngsnapshotshoặcchủsởhữu117PASSvàoTV5total.
+
+
+### TV5 acceptance checkpoint — 20/10/2026 (PR39/54/56)
+
+[Report/owners/source lines](../reports/TV5_ACCEPTANCE_PR39_54_56_2026-10-20.md) và [derived evidence](../reports/evidence/acceptance-20261020/pr54-summary.json).
+Checkpoint này supersede các nhãn hiện trạng cũ về39/54/56; toàn bộ lịch sử/raw evidence phía trên giữ nguyên.
+PR54 đã merge tại864c941, TV1 approve dormant journal only; PR56 merge b09236d, TV3 confirm candidate/helper only.
+PR39ec2ae5a: ba finding tài liệu **FIXED_VERIFIED / REVIEW_READY**;21legacy+21supplemental đúng,42business casesNOT_RUN.
+HumanTV5 vẫn cần submit formal review để thay CHANGES_REQUESTED; agent không Approve/dismiss và chưa báo TV4 merge-ready.
+
+Lượt TV5 mới, source54**5955b1f**:96OrderunitPASS+23OrderPGPASS,exit0,20/10 02:24:06–02:25:34UTC; source56**8c88fff**:7domainPASS,exit0,02:24:05–02:24:34UTC.
+Không cộng các snapshot/TV2/CI thành release total. Hai harness invocation ban đầu không khởi chạy Gradle, **NOT_RUN**, không là PRFAIL; XML cũ không được dùng làm kết quả mới.
+[PR39 static](../reports/evidence/acceptance-20261020/pr39-static.json), [PR56 cases](../reports/evidence/acceptance-20261020/pr56-summary.json),
+[merged source identity](../reports/evidence/acceptance-20261020/integration-source.json). Public files là derived metadata/case outcomes/hashes; raw log/XML private local, không publish credentials.
+
+C06 candidate đã được TV3 confirm theo own-scope; **shared DB/wire/event/actor/cancel/Inventory/COD runtime vẫn PENDING**.
+Order journal/scanner đã có source + realPG proof; **live operation provenance/fencing/HTTP/reconciliation chưa được nghiệm thu**.
+M01/business signer/operator, approved snapshots/current ADMIN COD, atomic unique settlement/current Store Finance queries/live two-Store E2E còn BLOCKED/NOT_RUN.
+Issue5/12OPEN/PARTIAL, Finance/pairflags không được bật từ merge hoặc tests.
