@@ -76,6 +76,10 @@ class InventoryOrderPairGateTest {
         assertForbidden(filter, request("POST", "/api/inventory/operations", "{\"type\":\"DECREASE\"}"));
         assertForbidden(filter, request("POST", "/api/inventory/operations", "{\"type\":\"UNKNOWN\"}"));
         assertForbidden(filter, request("POST", "/api/inventory/operations", "{not-json"));
+        assertForbidden(filter, request("POST", "/api/inventory/operations", "{}"));
+        assertForbidden(filter, request("POST", "/api/inventory/operations", "{\\"type\\":null}"));
+        assertForbidden(filter, request("POST", "/api/inventory/operations", "{\\"type\\":123}"));
+        assertForbidden(filter, request("POST", "/api/inventory/operations", "{\\"type\\":\\" RESERVE \\"}"));
     }
 
     @Test
