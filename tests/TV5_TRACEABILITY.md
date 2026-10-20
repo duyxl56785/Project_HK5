@@ -1,5 +1,11 @@
 # TV5 — yêu cầu đến kiểm thử và bằng chứng tuần 1
 
+> **Current handoff:** [post-snapshot delta](../reports/TV5_OWNER_UNBLOCK_HANDOFF_2026-10-20.md#12-post-snapshot-status-delta--current-actions)
+> (query 2026-10-20T14:55:26.142195+00:00): #39/#61 MERGED; #60/#62 CLOSED WITHOUT MERGE.
+> Những next action yêu cầu review các PR đó phía dưới là lịch sử. Không assume #60/#62 đã tích hợp.
+> Delta soạn trước công bố; người dùng đã cho phép cập nhật PR #63/Issue #5/#12. Xem receipt tại PR/Issue; M01 vẫn PENDING, Finance production BLOCKED.
+
+
 Nguồn yêu cầu: Issue #5, yêu cầu người dùng và báo cáo V2 đã phân trang 55 trang. Kết quả hiện tại: **63 unit tests local**, xem `reports/evidence/w1-followup/test-cases.csv` để tra từng invocation, class, thời gian và trạng thái. Tên class viết ngắn dưới đây nằm trong package `productservice.review` hoặc `orderservice.finance`.
 
 | ID | Yêu cầu / nguồn V2 | Test hiện có (method) | UAT / phụ thuộc | Bằng chứng và giới hạn |
@@ -132,3 +138,28 @@ Do not add119and7to a release total, relabel previous-source counts, or tick cro
 |QA-MD-COD-HANDOFF|21tasks/MD01–10/10CODquestions →responsiblehumans|Report§§2/4/5; newTV3Issue12handoff received, TV4key+retry+candidate confirmations recorded|PENDING same-versionbusiness/source/security/payment/refund/runtime gates; no newlyunlockedproduction slice|
 |QA62-CANDIDATE|Latefullbatch/noREADYsubset/ID-Store-Seller-price-currency/SKU/storage checks →TV3,TV2wire/TV5Finance|6a79016 [10pureunitPASS](../reports/evidence/tv5-unblock-20261020/pr62.json),diffcheck0|Candidate/unwired only; responseorder/source/freshness/business/positiveHTTP gates remain, noTV5PGrerun|
 |QA39-CURRENT-4e4e623|Finalchangedhead count/ID/TV3candidate acknowledgment vsruntime →TV4docs/TV5QA|[Freshstatic4e4e623](../reports/evidence/tv5-unblock-20261020/pr39-current-static.json):21+21,42NOT_RUN,3paths/0conflictmarkers|All3oldfindingsFIXED_VERIFIED atnewhead; humanCRstillneedsformalreview; no runtime/COD/Financeapproval|
+
+
+## Local checkpoint trước công bố — PR #63
+
+Các dòng sau thay thế nhãn trạng thái hiện tại trong checkpoint cũ, giữ nguyên evidence lịch sử.
+[Báo cáo cục bộ](../reports/TV5_PR63_W1_W2_CHECKPOINT_2026-10-20.md) ghi thời điểm snapshot, SHA, owner và điểm tiếp tục.
+
+| ID | Evidence / owner | Trạng thái và giới hạn |
+|---|---|---|
+| QA39-REVIEW-DISPOSITION | [Scoped review 5580637495](https://github.com/duyxl56785/Project_HK5/pull/39#pullrequestreview-5580637495), head 4e4e623; [TV4 notification](https://github.com/duyxl56785/Project_HK5/pull/39#issuecomment-6283126501) | APPROVED phần docs theo ủy quyền trước; clean tại lần kiểm sau review, không M01/COD/runtime approval; không yêu cầu làm lại review cũ |
+| QA64-MALFORMED-TYPE | 06ebfc4; [27 unit PASS](../reports/evidence/tv5-unblock-20261020/pr64-unit-followup.json); TV4 source / TV5 QA | PASS trong unit scope; 5 payload thuộc một method. #64 đã MERGED; không chứng minh deployed HTTP |
+| QA65-RELEASE-CONCURRENCY | 5bfbc15; [initial failure](../reports/evidence/tv5-unblock-20261020/pr65-pg-initial-followup.json), [10 PG PASS retry](../reports/evidence/tv5-unblock-20261020/pr65-pg-retry-followup.json); TV4 source / TV5 QA | Initial10 initialization FAIL/Engine offline, business assertions BLOCKED; retry PASS cùng SHA, không reservation ownership/live E2E |
+| QA63-LOCAL-PUBLICATION | Nhánh codex/tv5-unblock-handoff-20261020; head công bố a1bce60 | Snapshot trước công bố: GitHub14:54UTC, delta14:55UTC, remote a1bce60. Công bố sau ủy quyền mới phải có receipt trên PR/Issue |
+
+Không cộng các lượt chạy/SHA khác nhau thành release total. Issue #5/#12 và M01 giữ PARTIAL/PENDING theo gate còn thiếu.
+
+
+### PR63 review follow-up — checkpoint trước công bố
+
+[Current finding/test checkpoint](../reports/TV5_PR63_W1_W2_CHECKPOINT_2026-10-20.md):
+TV1 P2 stale handoff được sửa cục bộ; remote a1bce60 vẫn CHANGES_REQUESTED cho đến khi công bố và reviewer kiểm lại.
+Các dòng NOT_RUN/BLOCKED_TOOL_APPROVAL phía trên giữ lịch sử lượt trước, được thay thế bởi lượt mới đã qua phê duyệt:
+#64 exact06ebfc4 **27 unit PASS**; #65 exact5bfbc15 initial10initializationFAIL vì Engine tắt,
+sau Docker startup retry **10 PG PASS**. Raw FAIL/GREEN giữ riêng, không cộng counts/CI/owner thành release total.
+M01 PENDING, flagsOFF. Phần trên ghi trước công bố; chỉ tick publication trên GitHub sau khi push và kiểm receipt.

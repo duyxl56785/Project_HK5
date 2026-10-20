@@ -1,5 +1,11 @@
 # Checklist bàn giao độc lập tuần 1 của TV5
 
+> **Current handoff:** [post-snapshot delta](../reports/TV5_OWNER_UNBLOCK_HANDOFF_2026-10-20.md#12-post-snapshot-status-delta--current-actions)
+> (query 2026-10-20T14:55:26.142195+00:00): #39/#61 MERGED; #60/#62 CLOSED WITHOUT MERGE.
+> Những next action yêu cầu review các PR đó phía dưới là lịch sử. Không assume #60/#62 đã tích hợp.
+> Delta soạn trước công bố; người dùng đã cho phép cập nhật PR #63/Issue #5/#12. Xem receipt tại PR/Issue; M01 vẫn PENDING, Finance production BLOCKED.
+
+
 Refs #5, PR #20. Checklist này chia nhỏ công việc tuần 1; không thay tiêu chí nghiệm thu F15/F16 hoặc gate owner/consumer. Tick nghĩa là phần việc nêu trong dòng đã có bằng chứng, không có nghĩa cả Issue DONE.
 
 ## Phần độc lập có evidence
@@ -80,5 +86,17 @@ Các checkbox trước là snapshot lịch sử, không yêu cầu owner sửa l
 - [x] Commit/push and GitHubpublication verified; review60/61COMMENT, Issue5/12checkpoint, reviewereligibility/removalchecks. Commitb923736/PR63, TV1/TV2requested; [receipt](../reports/evidence/tv5-unblock-20261020/publication-receipt.json).
 - [x] Late PR62/6a79016 fullcandidate diff/Financeboundary reviewed,10focusedpureunitPASS/diffcheck0; [evidence](../reports/evidence/tv5-unblock-20261020/pr62.json). NoHTTP/PG/M01approval implied.
 - [x] FinalPR39headchanged4e4e623: readnewdelta/C06ack, rerun21legacy+21supplementalstatic,all3findingsstillFIXED_VERIFIED; [newheadproof](../reports/evidence/tv5-unblock-20261020/pr39-current-static.json). Humanformalreviewstillpending,newheadmustbereviewed.
-- [ ] HumanTV5submitreview39, theneffectiveCR/check/rules/mergegateverified; noagentApprove/Merge.
+- [x] Formal review #39 và kiểm disposition đã hoàn tất; PR39 MERGED04:06:41Z tại4e4e623. Xem current delta; không yêu cầu review PR đã đóng, không phê duyệt Finance/COD.
+- [x] Superseding verified39disposition: [scopedAPPROVED5580637495](https://github.com/duyxl56785/Project_HK5/pull/39#pullrequestreview-5580637495) at4e4e623 under explicitpriorTV5authorization; effectiveAPPROVED/clean/0threads atcheck, [TV4notified](https://github.com/duyxl56785/Project_HK5/pull/39#issuecomment-6283126501). Oldpendingrow remains historical; noFinance/runtimeapproval oragentMerge.
+- [ ] Công bố checkpoint #39/W1–W2 lên PR #63 và Issue #5/#12: chờ thực thi và xác minh sau ủy quyền mới. Không tick publication từ bản nháp chưa có receipt.
 - [ ] Namedbusinessauthority/applicablesignedcontracts/productionReview-Finance-COD-Storequery-E2Eacceptance;Issue5/12remainOPEN/PARTIAL.
+
+
+### PR63 review follow-up — checkpoint trước công bố
+
+[Current finding/test checkpoint](../reports/TV5_PR63_W1_W2_CHECKPOINT_2026-10-20.md):
+TV1 P2 stale handoff được sửa cục bộ; remote a1bce60 vẫn CHANGES_REQUESTED cho đến khi công bố và reviewer kiểm lại.
+Các dòng NOT_RUN/BLOCKED_TOOL_APPROVAL phía trên giữ lịch sử lượt trước, được thay thế bởi lượt mới đã qua phê duyệt:
+#64 exact06ebfc4 **27 unit PASS**; #65 exact5bfbc15 initial10initializationFAIL vì Engine tắt,
+sau Docker startup retry **10 PG PASS**. Raw FAIL/GREEN giữ riêng, không cộng counts/CI/owner thành release total.
+M01 PENDING, flagsOFF. Phần trên ghi trước công bố; chỉ tick publication trên GitHub sau khi push và kiểm receipt.

@@ -1,5 +1,11 @@
 # Kiểm thử và bằng chứng
 
+> **Current handoff:** [post-snapshot delta](../reports/TV5_OWNER_UNBLOCK_HANDOFF_2026-10-20.md#12-post-snapshot-status-delta--current-actions)
+> (query 2026-10-20T14:55:26.142195+00:00): #39/#61 MERGED; #60/#62 CLOSED WITHOUT MERGE.
+> Những next action yêu cầu review các PR đó phía dưới là lịch sử. Không assume #60/#62 đã tích hợp.
+> Delta soạn trước công bố; người dùng đã cho phép cập nhật PR #63/Issue #5/#12. Xem receipt tại PR/Issue; M01 vẫn PENDING, Finance production BLOCKED.
+
+
 Main đã nhận rules/unit tests Review/Finance qua PR #20 và Category/Seller domain qua PR #7. API/persistence/JWT production của F15/F16 chưa được chứng minh hoàn tất. Mỗi thành viên tự chạy test liên quan và báo cáo:
 
 | Hạng mục | Test command | PASS | FAIL | NOT_RUN | Bằng chứng |
@@ -181,3 +187,28 @@ Publication confirmed b923736/[PR63](https://github.com/duyxl56785/Project_HK5/p
 COMMENT60/61 and Issue5/12checkpoint URLs in [receipt](../reports/evidence/tv5-unblock-20261020/publication-receipt.json).
 LatePR62 **6a79016** adds pureunwiredCatalogpreflight: TV5 [10targetedunitPASS](../reports/evidence/tv5-unblock-20261020/pr62.json),
 diffcheck0. No fullOrder/PG rerun attributed to62, no provider verification/M01policy/wireapproval from its candidate tests.
+
+### Lượt cục bộ trước 14:54 UTC — historical, not published
+
+[Báo cáo cục bộ](../reports/TV5_PR63_W1_W2_CHECKPOINT_2026-10-20.md) ghi nhận scoped review #39
+[5580637495](https://github.com/duyxl56785/Project_HK5/pull/39#pullrequestreview-5580637495) tại `4e4e623`
+và [thông báo TV4](https://github.com/duyxl56785/Project_HK5/pull/39#issuecomment-6283126501), đã kiểm trên GitHub
+trong phần việc trước theo ủy quyền cụ thể. Các nhãn “human review #39 còn chờ” phía trên là lịch sử;
+không yêu cầu thực hiện lại review này. Scoped docs approval không phê duyệt Finance/COD/M01.
+Không thực hiện Approve/Merge mới trong lượt cục bộ.
+
+- #64 unit và #65 PG: **NOT_RUN / BLOCKED_TOOL_APPROVAL**. Bộ duyệt quyền báo hết hạn mức trước thực thi;
+  không có runtime log/XML mới, không quy thành lỗi PR hoặc thay bằng kết quả CI/owner.
+- Theo chỉ dẫn mới nhất, giữ thay đổi cục bộ **chưa commit/push**, không cập nhật GitHub.
+  Head công bố gần nhất vẫn `a1bce60`; snapshot PR #63 lúc 11:04:48 Asia/Bangkok chưa được đọc lại.
+- Issue #5/#12 vẫn thiếu gate production/business để DONE. Chi tiết owner, SHA và lệnh chờ chạy ở báo cáo.
+
+
+### PR63 review follow-up — checkpoint trước công bố
+
+[Current finding/test checkpoint](../reports/TV5_PR63_W1_W2_CHECKPOINT_2026-10-20.md):
+TV1 P2 stale handoff được sửa cục bộ; remote a1bce60 vẫn CHANGES_REQUESTED cho đến khi công bố và reviewer kiểm lại.
+Các dòng NOT_RUN/BLOCKED_TOOL_APPROVAL phía trên giữ lịch sử lượt trước, được thay thế bởi lượt mới đã qua phê duyệt:
+#64 exact06ebfc4 **27 unit PASS**; #65 exact5bfbc15 initial10initializationFAIL vì Engine tắt,
+sau Docker startup retry **10 PG PASS**. Raw FAIL/GREEN giữ riêng, không cộng counts/CI/owner thành release total.
+M01 PENDING, flagsOFF. Phần trên ghi trước công bố; chỉ tick publication trên GitHub sau khi push và kiểm receipt.

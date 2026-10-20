@@ -4,6 +4,10 @@ Refs #5/#12. **TV5-UNBLOCK-20261020-v1. PARTIAL / WAITING_HUMAN_REVIEW / WAITING
 Nguồn chạy mới: main **03fb1b2e8a1c1261568446c1f9ed68d264784e4e**; PR60 **e0a28de663b3488178a616770eb82de9fd46e580**.
 Đây là agent QA/technical handoff, không chữ ký human TV5/business, không quyền bật Finance/pair hoặc triển khai owner khác.
 
+> **Current-status delta:** [mục 12](#12-post-snapshot-status-delta--current-actions) thay thế các next action cũ.
+> Đã đọc lại GitHub lúc 2026-10-20T14:55:26.142195+00:00: #39/#61 MERGED; #60/#62 CLOSED WITHOUT MERGE.
+> Inventory 45 PR/16 Issue và kết quả theo SHA bên dưới là lịch sử, không được đổi thành evidence của main mới.
+
 ## 1. Phạm vi quét và điều đã hoàn thành từ trước
 
 Đã đọc AGENTS/CONTRIBUTING/OWNERSHIP, README/architecture, packet M01/MD01–MD10, ledger và source liên quan.
@@ -31,9 +35,9 @@ Initial scan có21 mục; late PR62 thêmU22, README factual handoff thêmU23: *
 
 | ID | Việc / PR–Issue | Owner | Ai đang bị chặn | Ưu tiên | Trạng thái | Cách giải quyết nhỏ nhất / evidence |
 |---|---|---|---|---|---|---|
-|U01|Formal review39/docs|Human TV5|TV4 merge39|P0|WAITING_HUMAN_REVIEW|3 findings FIXED_VERIFIED tại ec2ae5a; human Review changes→Approve→Submit review; agent không Approve|
-|U02|Technical review60|TV5 QA; TV3 source|TV3 chờ QA|P0|TECHNICAL_REVIEW_COMPLETE|11caller unit +11journal PG PASS đúng e0a28de; COMMENT handoff, human approval riêng|
-|U03|Technical review61/docs|TV5 QA; TV2 docs|TV2 chờ Finance/traceability input|P2|TECHNICAL_REVIEW_COMPLETE|Full135added lines/3docs,21relative links/10anchors; không tìm thấy blocker mới thuộc Finance|
+|U01|Review39/docs disposition|TV5 QA; TV4 docs|Không còn chặn merge39|P0|COMPLETE / PR39 MERGED|Head4e4e623; merged04:06:41Z. 42scenarios NOT_RUN; follow-up chỉ C06/COD/current actor/runtime, không review lại PR đóng; §12|
+|U02|Closed PR60 test/audit follow-up|TV3 source; TV5 QA evidence|Owner quyết định có cần đưa lại coverage|P2|CLOSED_UNMERGED / NEEDS_OWNER|11callerunit+11journalPG tại e0a28de chỉ historical. Không assume main có patch; đánh giá phần còn cần, chưa có replacement PR được xác nhận; §12|
+|U03|PR61 docs integration|TV2 docs; TV5 QA|Không còn chờ review61|P2|COMPLETE / PR61 MERGED|0af4754 merged03:47:48Z; lịch sử21links/10anchors giữ nguyên. Không request PR đóng; runtime gates riêng; §12|
 |U04|Named business approver|Project authority; TV1 điều phối|TV2/3/4/5|P1|BLOCKED|Chỉ định account/role/delegating authority/version/scope; request cũ còn hiệu lực, không spam|
 |U05|MD01/02/unit-capMD03 price slice|Authorized human+TV5, TV2/3|TV2 price persistence|P1|PENDING BUSINESS APPROVAL|Ký/revise M01-PRICE-SCOPE-v1-DRAFT; các technical compatibility đã có, không hỏi lại|
 |U06|MD04 House/rate/rounding|Business+humanTV5; TV2 facts/TV3 grouping|Checkout/Finance|P1|PENDING|Trusted House definition+privileged assignment,5%/0%, commission base/stage/version; không áp từ fixture|
@@ -52,7 +56,7 @@ Initial scan có21 mục; late PR62 thêmU22, README factual handoff thêmU23: *
 |U19|Two-Store UAT/refund/security plans|TV5; owners implement prerequisites|Future acceptance|P2|EXISTING_VERIFIED|[UAT](../tests/TV5_UAT.md), [SP01–14](../tests/TV5_SERVICE_PAIR_QA_MATRIX.md); execution NOT_RUN/BLOCKED|
 |U20|Previous QA package59 integration|TV5 verify; TV2 review/merge|Không còn chờ59|P2|EXISTING_VERIFIED|Merged main03fb1b2 chứa2a10938; không tạo lại nội dung/test cũ|
 |U21|Publish valid checkpoint/reviews/checklists|TV5|Owners cần link truy được|P2|COMPLETE_VERIFIED|Commitb923736/PR63, COMMENT60/61, Issue5/12checkpoint verified; [receipt](evidence/tv5-unblock-20261020/publication-receipt.json)|
-|U22|Late PR62 Catalogcandidate review|TV5 QA;TV3 source|TV3 chờ money/currency technical input|P2|TECHNICAL_REVIEW_COMPLETE|6a79016:10pureunitPASS; no new actionable finding; no M01/wire/business approval, COMMENT handoff separate|
+|U22|Closed PR62 candidate follow-up|TV3 candidate; TV2 Catalog wire; TV5 QA|Owner quyết định phạm vi cần tiếp tục|P2|CLOSED_UNMERGED / NEEDS_OWNER|10pureunitPASS ở6a79016 chỉ historical, không integrated main. Đánh giá candidate còn cần sau contract; chưa có replacement PR được xác nhận; §12|
 |U23|README current-facts correction proposal|TV5 evidence; TV1 shared onboarding review|Không chặn MVP; có thể gây hiểu sai baseline|P3|TV5_HANDOFF_COMPLETE / OWNER_EDIT_PENDING|MainREADME lines12/60 còn nói chưaschema/entity/migration/API; source đã có. Exact proposed replacement ở§10; chưa sửa shared README|
 
 Không phát hiện lỗi production mới thuộc TV5 cần sửa ngay trong phần đã kiểm. Không viết test mới chỉ để lặp
@@ -60,9 +64,11 @@ implementation: existing settlement truth table đủ8 tổ hợp, Review eligib
 fee/House/precision/conservation và replay/preflight/rollback đã có test. Gate DB uniqueness/Store API không thể
 được thỏa bằng thêm một boolean guard test hay tạo production Finance trên policy chưa duyệt.
 
-## 3. PR39, PR60 và PR61
+## 3. PR39, PR60 và PR61 — historical review snapshot
 
-### PR39 — human review vẫn là thao tác còn thiếu
+Phần này giữ source/result/next action tại thời điểm trước delta. **Không thực hiện các yêu cầu review PR đã đóng ở đây**; current action ở §12.
+
+### PR39 — human review còn thiếu tại snapshot lịch sử
 
 Head **ec2ae5af5162aa93482b9439d1b39dbb7abb3bec**, base API main/edb6886; no conflict, effective CHANGES_REQUESTED.
 Count/ID/SKU-authority-state findings FIXED_VERIFIED;21legacy+21supplemental,42NOT_RUN.
@@ -190,9 +196,9 @@ không gọi chúng là publicCIartifacts. Giữ nguyên byte/SHA256 và initial
 | Thành viên | Thực sự chờ TV5 gì | TV5 bàn giao | Evidence / còn blocker | Bước tiếp theo |
 |---|---|---|---|---|
 |TV1|Finance decision packet/security test expectations; không chờ TV5 sửaAuth|MD01–10+partialscope, SP01–14, COD401/403/503/currentactor table|PR46/53; authorityrequest vẫnopen; OD07/09/S01 design giữ nguyên|Coordinate namedauthority, provide concrete current-role/delegated-system procedure; không mở lại baseline|
-|TV2|Price-slice human/business signoff; QA61|Delta1b đãtechnicalcompatible; currentMDtable và61staticcheck|Human/businesssignatures/schema/security gates thiếu; StoreDB/image đãmerge không làm lại|Finalize approved HTTP/currentauthority slice vớiTV1; pricepersistence chỉ sau đủown-scope approvals|
-|TV3|QA60 và precise Finance/COD input|Focused11unit/11PG; freshmainFIN01/06GREEN; COD/PENDING source/event questions|No new Finance correctness bug; no proofpositiveHTTP/paymentfacts; currentauthority/MDchoices thiếu|Human review60; state/command/schema/producer proposal đúngversion, không sửa lại oldFINbug|
-|TV4|Formal review39 và applicable COD policy|39proof/manualtext đãcó; 58compatibility+56candidate ghi nhận; 10CODquestions/source responsibilities vàUATnegativeplan|TV5human39 vẫnchặn docs; sharedCOD/business/currentactor/heldstock/DBwire thiếu|HumanTV5submit; TV4reviewremaining fields/producer/failure/return semantics theo đúngscope; no blindRELEASE|
+|TV2|Price-slice human/business signoff; QA61 đã hoàn tất/merged|Delta1b đãtechnicalcompatible; currentMDtable và61staticcheck|Human/businesssignatures/schema/security gates thiếu; StoreDB/image đãmerge không làm lại|Finalize approved HTTP/currentauthority slice vớiTV1; pricepersistence chỉ sau đủown-scope approvals|
+|TV3|Finance/COD input; đánh giá coverage PR60/62 đóng chưa merge|Historical11unit/11PG ởe0a28de,10unit ở6a79016; main03fb1b2 FIN01/06GREEN; câu hỏi COD đã có|Không assume patch60/62 trên main; chưa có replacement PR được xác nhận; current authority/MD còn thiếu|Đánh giá cần giữ test/candidate nào, đề xuất owner-approved follow-up nếu cần; chốt shared state/payment/event, không reopen PR cũ|
+|TV4|Applicable C06/COD policy và provider/runtime evidence|39 đã APPROVED rồi MERGED, không còn chờ TV5 review; 58compatibility/56candidate và COD questions giữ nguyên|Shared C06/COD/business/current actor/held stock/DB wire chưa đủ; 42cases NOT_RUN|Xác nhận authoritative state/payment/event và release/failure/refund cùng TV3/TV1/TV5; không request/reopen39, no blind RELEASE|
 
 Một số việc owner có thể tiếp tục **đã được phép từ trước**: isolated tests/docs, scoped StoreDB/current-facts work,
 default-OFF filter và journal/purehelper. Phiên này **không mới mở khóa** Product price/positive Catalog/COD/settlement.
@@ -204,7 +210,7 @@ Khi chỉ còn owner/human gates, không tạo scaffold/production API/DB/FE/E2E
 - [x] Current FIN01/06 và F15/F16 unit/PG evidence, giữ Docker initialization failures và original diagnostics.
 - [x] Hoàn thiện matrix23tasks sau late62/READMEhandoff, MD01–10, COD/source/security/owner handoff và acceptance limits.
 - [x] Publication checkpoint: commit/push, verifyPR/reviewers, publish nonduplicate COMMENT60/61 and Issue5/12 links.
-- [ ] HumanTV5 formal review39 +post-review mergegate check; không Approve/Merge bởi agent.
+- [x] Xác minh review39 và merge disposition: PR39 MERGED tại4e4e623,04:06:41Z; §12. Không còn formal review39 task; 42businesscases NOT_RUN, không business approval.
 - [ ] Namedauthority+same-versionbusiness/owner signatures và approved runtime implementations/evidence.
 - [ ] ProductionF15/F16/currentStore/COD/uniqueatomicsettlement/liveE2E và fullIssue5/12DONE.
 
@@ -260,7 +266,7 @@ TV5 handoff hoàn tất khi report/PR này được publish; không ghi shared R
 Final local verification after late delta: **95relative file links,37rawartifactSHA256,14publicfiles**, JSON parse và targetedsecretmarkersnohit,
 diffcheck0. Rawfiles không đổi; phần này không phải runtime rerun hoặc securityaudit exhaustive.
 
-## 11. PR39 head moved during final read — 4e4e623
+## 11. PR39 head moved during final read — 4e4e623 (historical pre-merge snapshot)
 
 Final source changed to **4e4e6232bd9a515e11e1ab9ba433a6b2181c8efc** during publication; earlier ec2ae5a checks remain
 historical and are not attributed to this head. Read entire ec2→4e delta and new full PR diff/source: docs-only update
@@ -275,3 +281,31 @@ Fresh static03:43:43UTC: **21legacy exact+21supplemental distinct**, all42busine
 not a newly introduced functional blocker. RuntimeNOT_RUN/docs-only, no source/assertion/testchanges.
 GitHub effectiveCHANGES_REQUESTED still owned byhumanTV5,0threads; requestedhumanTV5 preserved. No agentApprove/merge-readyclaim.
 Humanreview must reference **4e4e623**, not use ec2 proof alone. Code/evidence implementation gates remain separate.
+
+
+## 12. Post-snapshot status delta — current actions
+
+Đọc lại GitHub **2026-10-20T14:55:26.142195+00:00**. Main tại lần đọc: `4f12b05d0d6408deb42cb329676e643351106fcd`.
+Nguồn: [status receipt](evidence/tv5-unblock-20261020/post-snapshot-status.json),
+[TV1 review #63](https://github.com/duyxl56785/Project_HK5/pull/63#pullrequestreview-5580742783).
+Đây là delta mới; không thay `repository-inventory.json`, số lượng scan cũ, raw log/XML hoặc initial FAIL/GREEN evidence.
+
+| ID | Latest disposition / exact head | Next action và owner |
+|---|---|---|
+| U01 | [#39](https://github.com/duyxl56785/Project_HK5/pull/39) MERGED,4e4e623,04:06:41Z | Review/merge docs hoàn tất. TV3/TV4 chốt C06/state/event/COD facts; TV1 current actor, TV2 SKU/Product provider; TV5 đối chiếu Finance. 42businesscases NOT_RUN. |
+| U02 | [#60](https://github.com/duyxl56785/Project_HK5/pull/60) CLOSED WITHOUT MERGE,e0a28de,04:11:57Z | TV3 đánh giá còn cần caller/journal test/audit nào; TV5 đã có historical QA. Không suy lý do đóng, không yêu cầu review PR đóng. |
+| U03 | [#61](https://github.com/duyxl56785/Project_HK5/pull/61) MERGED,0af4754,03:47:48Z | Không còn chờ review61. TV2/TV1 tiếp tục current-authority/HTTP/schema gate đã được giao; không có Product price business unlock. |
+| U22 | [#62](https://github.com/duyxl56785/Project_HK5/pull/62) CLOSED WITHOUT MERGE,6a79016,04:12:00Z | TV3/TV2 đánh giá candidate preflight còn cần sau contract; TV5 không tự port source hoặc tạo replacement PR. |
+
+Đối chiếu sáu path #60/#62 với main nói trên: hai Order test file #60 tồn tại nhưng blob khác head #60;
+audit #60 và ba path #62 trả404. Đây chỉ là identity/absence check; không chứng minh không có implementation tương đương ở nơi khác.
+Không có replacement PR được owner xác nhận trong dữ liệu đã đọc. [#65](https://github.com/duyxl56785/Project_HK5/pull/65)
+là provider-side Inventory regression của TV4, **không thay** caller-side coverage #60 hoặc Catalog candidate #62.
+
+**Business/runtime gates không đổi:** M01 PENDING; `HK5_FINANCE_POLICY_APPROVED=false`, Inventory pair OFF.
+Không dùng merge39/61 để ký policy, bật flags, hợp thức hóa RELEASE hoặc báo live E2E PASS.
+
+TV1 chỉ yêu cầu sửa status/traceability, không tranh chấp historical test evidence và không yêu cầu rerun PG cũ vì thay tài liệu.
+Delta soạn trước công bố, nay đã được người dùng cho phép commit/push/cập nhật GitHub.
+TV1 cần xem lại new head sau push; receipt công bố được xác minh tại PR #63 và Issue #5/#12.
+Không tự resolve review/thread, Approve hoặc Merge.

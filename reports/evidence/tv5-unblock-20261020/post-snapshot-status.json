@@ -1,0 +1,129 @@
+{
+  "kind": "DERIVED READ-ONLY GITHUB STATUS DELTA; not runtime or business approval",
+  "queriedAtUtc": "2026-10-20T14:55:26.142195+00:00",
+  "mainHead": "4f12b05d0d6408deb42cb329676e643351106fcd",
+  "review63": {
+    "head": "a1bce60d4a4223936dd96ef7e758faaa7334e4d8",
+    "reviewer": "lexuanbao258-collab",
+    "decision": "CHANGES_REQUESTED",
+    "reviewUrl": "https://github.com/duyxl56785/Project_HK5/pull/63#pullrequestreview-5580742783",
+    "unresolvedThreads": 0,
+    "checkRuns": 0
+  },
+  "prs": [
+    {
+      "pr": 39,
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/39",
+      "head": "4e4e6232bd9a515e11e1ab9ba433a6b2181c8efc",
+      "state": "closed",
+      "merged": true,
+      "mergedAt": "2026-10-20T04:06:41Z",
+      "closedAt": "2026-10-20T04:06:41Z"
+    },
+    {
+      "pr": 60,
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/60",
+      "head": "e0a28de663b3488178a616770eb82de9fd46e580",
+      "state": "closed",
+      "merged": false,
+      "mergedAt": null,
+      "closedAt": "2026-10-20T04:11:57Z"
+    },
+    {
+      "pr": 61,
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/61",
+      "head": "0af4754b2d2b0925cd3b6c27f698f5d2667f66d1",
+      "state": "closed",
+      "merged": true,
+      "mergedAt": "2026-10-20T03:47:48Z",
+      "closedAt": "2026-10-20T03:47:48Z"
+    },
+    {
+      "pr": 62,
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/62",
+      "head": "6a79016eae71a93c8d55207482bc4785bd5f3281",
+      "state": "closed",
+      "merged": false,
+      "mergedAt": null,
+      "closedAt": "2026-10-20T04:12:00Z"
+    },
+    {
+      "pr": 64,
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/64",
+      "head": "06ebfc423ede1bb07a2fa9b6804b21fe388991d7",
+      "state": "closed",
+      "merged": true,
+      "mergedAt": "2026-10-20T08:55:11Z",
+      "closedAt": "2026-10-20T08:55:11Z"
+    },
+    {
+      "pr": 65,
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/65",
+      "head": "5bfbc15c328179f119f5e07552c67dc1cd6e9ebc",
+      "state": "open",
+      "merged": false,
+      "mergedAt": null,
+      "closedAt": null
+    }
+  ],
+  "mainPathComparison": {
+    "queriedAtUtc": "2026-10-20T14:57:04.697959+00:00",
+    "main": "4f12b05d0d6408deb42cb329676e643351106fcd",
+    "paths": [
+      {
+        "pr": 60,
+        "path": "backend/order-service/TV3_INVENTORY_RELEASE_RETRY_AUDIT.md",
+        "prBlob": "5a24faf6d314c1f8d63c8ecd1c3e80817fe5df97",
+        "mainBlob": null,
+        "mainReadError": 404,
+        "identicalBlob": false
+      },
+      {
+        "pr": 60,
+        "path": "backend/order-service/src/test/java/com/projecthk5/orderservice/integration/InventoryOperationJournalPostgres16IT.java",
+        "prBlob": "bb5f0483c6db8a7e5422395eb2815a45f60a6fca",
+        "mainBlob": "51dfaac2fa947a4e53f9048af35c95cd7a046135",
+        "mainReadError": null,
+        "identicalBlob": false
+      },
+      {
+        "pr": 60,
+        "path": "backend/order-service/src/test/java/com/projecthk5/orderservice/service/InventoryOperationCallerTest.java",
+        "prBlob": "42f3f775add00f508d3efb45ff356a9b9f92abb3",
+        "mainBlob": "cbbefdddce501bbfbe95e0d390855bedc759dde9",
+        "mainReadError": null,
+        "identicalBlob": false
+      },
+      {
+        "pr": 62,
+        "path": "backend/order-service/TV3_CATALOG_CHECKOUT_HANDOFF.md",
+        "prBlob": "df6ae0ccdd25fc35db33cac7fce12f17bda0d74f",
+        "mainBlob": null,
+        "mainReadError": 404,
+        "identicalBlob": false
+      },
+      {
+        "pr": 62,
+        "path": "backend/order-service/src/main/java/com/projecthk5/orderservice/catalog/CatalogCheckoutBatchPreflight.java",
+        "prBlob": "b9ef288aec43e67ee19c62527b9fc9aa2970fecf",
+        "mainBlob": null,
+        "mainReadError": 404,
+        "identicalBlob": false
+      },
+      {
+        "pr": 62,
+        "path": "backend/order-service/src/test/java/com/projecthk5/orderservice/catalog/CatalogCheckoutBatchPreflightTest.java",
+        "prBlob": "94411a95657a36ef078b5c1a03e9d3b0738b6127",
+        "mainBlob": null,
+        "mainReadError": 404,
+        "identicalBlob": false
+      }
+    ],
+    "limitation": "File identity/absence only; not proof equivalent changes were never implemented elsewhere."
+  },
+  "limitations": [
+    "Status is as-of the stated queries, not a future guarantee.",
+    "Closed-unmerged does not establish why closed or what replacement will be accepted.",
+    "Historical repository-inventory and runtime summaries are unchanged."
+  ]
+}
