@@ -72,6 +72,39 @@ class SellerOrderLifecycleTest {
     }
 
     @Test
+    void transitionTableRejectsEveryUnlistedStateActionPair() {
+        var allowed = java.util.Map.of(
+                SellerOrderLifecycle.Status.PLACED, java.util.Map.of(
+                        SellerOrderLifecycle.Action.ACCEPT, SellerOrderLifecycle.Status.ACCEPTED,
+                        SellerOrderLifecycle.Action.CANCEL, SellerOrderLifecycle.Status.CANCELLED,
+                        SellerOrderLifecycle.Action.REJECT, SellerOrderLifecycle.Status.REJECTED),
+                SellerOrderLifecycle.Status.ACCEPTED, java.util.Map.of(
+                        SellerOrderLifecycle.Action.START_PREPARING, SellerOrderLifecycle.Status.PREPARING),
+                SellerOrderLifecycle.Status.PREPARING, java.util.Map.of(
+                        SellerOrderLifecycle.Action.READY_FOR_HANDOFF, SellerOrderLifecycle.Status.READY_FOR_HANDOFF),
+                SellerOrderLifecycle.Status.READY_FOR_HANDOFF, java.util.Map.of(
+                        SellerOrderLifecycle.Action.DISPATCH, SellerOrderLifecycle.Status.DISPATCHED),
+                SellerOrderLifecycle.Status.DISPATCHED, java.util.Map.of(
+                        SellerOrderLifecycle.Action.DELIVER, SellerOrderLifecycle.Status.DELIVERED));
+
+        for (SellerOrderLifecycle.Status current : SellerOrderLifecycle.Status.values()) {
+            for (SellerOrderLifecycle.Action action : SellerOrderLifecycle.Action.values()) {
+                SellerOrderLifecycle.Status expected = allowed
+                        .getOrDefault(current, java.util.Map.of())
+                        .get(action);
+                if (expected == null) {
+                    assertThrows(IllegalStateException.class, () ->
+                            SellerOrderLifecycle.transition(current, action, "reason"),
+                            current + " must reject " + action);
+                } else {
+                    assertEquals(expected, SellerOrderLifecycle.transition(current, action, "reason"),
+                            current + " + " + action);
+                }
+            }
+        }
+    }
+
+    @Test
     void rejectsAnyActionFromTerminalStates() {
         for (SellerOrderLifecycle.Action action : SellerOrderLifecycle.Action.values()) {
             assertThrows(IllegalStateException.class, () ->
