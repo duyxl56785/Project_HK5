@@ -1,0 +1,58 @@
+package com.projecthk5.authservice.persistence;
+
+import jakarta.persistence.*;
+import java.time.Instant;
+import java.util.*;
+
+@Entity
+@Table(name = "accounts")
+public class Account {
+    public enum Role { CUSTOMER, SELLER, ADMIN }
+
+    @Id
+    private UUID id;
+    @Column(nullable = false, length = 254, updatable = false)
+    private String email;
+    @Column(name = "password_hash", nullable = false, columnDefinition = "text")
+    private String passwordHash;
+    @Column(nullable = false, length = 32)
+    private String status;
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private Instant createdAt;
+    @ElementCollection
+    @CollectionTable(name = "account_role_grants", joinColumns = @JoinColumn(name = "account_id"))
+    @Column(name = "role", nullable = false, length = 16)
+    @Enumerated(EnumType.STRING)
+    private Set<Role> roles = new HashSet<>();
+
+    protected Account() {}
+
+    public Account(UUID id, String email, String passwordHash, String status, Set<Role> roles, Instant createdAt) {
+        this.id = Objects.requireNonNull(id);
+        this.email = normalizeEmail(email);
+        if (this.email.isBlank() || this.email.length() > 254) {
+            throw new IllegalArgumentException("Invalid email length");
+        }
+        if (passwordHash == null || passwordHash.isBlank() || status == null || status.isBlank()) {
+            throw new IllegalArgumentException("Password hash and explicit account status are required");
+        }
+        this.passwordHash = passwordHash;
+        this.status = status;
+        this.roles = new HashSet<>(roles);
+        if (this.roles.isEmpty() || this.roles.contains(null)) {
+            throw new IllegalArgumentException("At least one valid role is required");
+        }
+        this.createdAt = Objects.requireNonNull(createdAt);
+    }
+
+    public static String normalizeEmail(String email) {
+        return Objects.requireNonNull(email).strip().toLowerCase(Locale.ROOT);
+    }
+
+    public UUID getId() { return id; }
+    public String getEmail() { return email; }
+    public String getPasswordHash() { return passwordHash; }
+    public String getStatus() { return status; }
+    public Set<Role> getRoles() { return Set.copyOf(roles); }
+    public Instant getCreatedAt() { return createdAt; }
+}
