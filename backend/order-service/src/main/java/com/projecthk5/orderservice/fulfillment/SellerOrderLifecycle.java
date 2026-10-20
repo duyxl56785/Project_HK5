@@ -43,7 +43,8 @@ public final class SellerOrderLifecycle {
      * @param action requested transition
      * @param rejectionReason required for REJECT; ignored for other actions
      * @throws IllegalStateException if the action is not valid from current
-     * @throws IllegalArgumentException if a required argument is absent
+     * @throws NullPointerException if current status or action is absent
+     * @throws IllegalArgumentException if a required rejection reason is absent
      */
     public static Status transition(Status current, Action action, String rejectionReason) {
         Objects.requireNonNull(current, "current status is required");
