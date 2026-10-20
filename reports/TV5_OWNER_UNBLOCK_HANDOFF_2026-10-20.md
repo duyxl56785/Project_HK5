@@ -26,8 +26,8 @@ Draft review chưa publish của người khác không thấy qua API. Raw API/l
 ## 2. Danh sách ưu tiên đầy đủ
 
 P0/P1 bên dưới là **ưu tiên công việc**, không tự gán severity bug P0 cho một draft chưa tích hợp.
-21 mục: 6 đầu ra kỹ thuật/bàn giao mới; 2 đầu ra cũ được kiểm lại; 1 human review; 12 gate owner/business.
-Mục21 chỉ hoàn tất sau khi GitHub xác nhận commit/PR/comment thực tế, không từ việc tạo file local.
+Initial scan có21 mục; late PR62 thêmU22, README factual handoff thêmU23: **23 mục =8 đầu ra kỹ thuật/bàn giao mới,
+2 đầu ra cũ kiểm lại,1 human review,12 gate owner/business**. Mục21 đã có publication receipt xác nhận GitHub, không chỉ file local.
 
 | ID | Việc / PR–Issue | Owner | Ai đang bị chặn | Ưu tiên | Trạng thái | Cách giải quyết nhỏ nhất / evidence |
 |---|---|---|---|---|---|---|
@@ -48,10 +48,12 @@ Mục21 chỉ hoàn tất sau khi GitHub xác nhận commit/PR/comment thực t�
 |U15|Concrete current-role/pair auth|TV1+provider/consumer|TV2/3/4/5|P1|BLOCKED_RUNTIME|Baseline OD07/09/S01 architecture đã bàn giao; cần verifier/current ADMIN/delegated-system provider/routes/evidence|
 |U16|Product/SKU/C01/E01 source/wire|TV2+TV3; TV1/TV4/TV5|Checkout/Inventory|P1|BLOCKED_RUNTIME|SKU-only/global immutable target accepted; Product production UNIQUE/mapping/HTTP/currency/House chưa có|
 |U17|C06 committed lifecycle/eligible RELEASE|TV3+TV4; TV1/TV2/TV5 boundaries|Fulfillment/Inventory/COD|P1|BLOCKED_RUNTIME|Pure helper/journal đã merge; còn persisted state/event/proven held reservation/remaining qty/authorized system|
-|U18|Current QA/RTM and exact owner handoff|TV5|TV1–4 cần input cụ thể|P2|PREPARED_TECHNICAL_DELIVERABLE|Report này, checkpoint ledger/QA/RTM và response Issue12; không hỏi lại decisions đã có|
+|U18|Current QA/RTM and exact owner handoff|TV5|TV1–4 cần input cụ thể|P2|COMPLETE_CURRENT_HANDOFF|Report này, checkpoint ledger/QA/RTM và response Issue12; không hỏi lại decisions đã có|
 |U19|Two-Store UAT/refund/security plans|TV5; owners implement prerequisites|Future acceptance|P2|EXISTING_VERIFIED|[UAT](../tests/TV5_UAT.md), [SP01–14](../tests/TV5_SERVICE_PAIR_QA_MATRIX.md); execution NOT_RUN/BLOCKED|
 |U20|Previous QA package59 integration|TV5 verify; TV2 review/merge|Không còn chờ59|P2|EXISTING_VERIFIED|Merged main03fb1b2 chứa2a10938; không tạo lại nội dung/test cũ|
-|U21|Publish valid checkpoint/reviews/checklists|TV5|Owners cần link truy được|P2|PUBLICATION_GATE|Commit/push branch mới, đúng base main, COMMENT60/61, Issue5/12 checkpoint, verify remote/reviewers|
+|U21|Publish valid checkpoint/reviews/checklists|TV5|Owners cần link truy được|P2|COMPLETE_VERIFIED|Commitb923736/PR63, COMMENT60/61, Issue5/12checkpoint verified; [receipt](evidence/tv5-unblock-20261020/publication-receipt.json)|
+|U22|Late PR62 Catalogcandidate review|TV5 QA;TV3 source|TV3 chờ money/currency technical input|P2|TECHNICAL_REVIEW_COMPLETE|6a79016:10pureunitPASS; no new actionable finding; no M01/wire/business approval, COMMENT handoff separate|
+|U23|README current-facts correction proposal|TV5 evidence; TV1 shared onboarding review|Không chặn MVP; có thể gây hiểu sai baseline|P3|TV5_HANDOFF_COMPLETE / OWNER_EDIT_PENDING|MainREADME lines12/60 còn nói chưaschema/entity/migration/API; source đã có. Exact proposed replacement ở§10; chưa sửa shared README|
 
 Không phát hiện lỗi production mới thuộc TV5 cần sửa ngay trong phần đã kiểm. Không viết test mới chỉ để lặp
 implementation: existing settlement truth table đủ8 tổ hợp, Review eligibility/duplicate/moderation/hidden-average,
@@ -200,11 +202,60 @@ Khi chỉ còn owner/human gates, không tạo scaffold/production API/DB/FE/E2E
 
 - [x] Quét45PR/16Issue, cả comments mới TV3/TV4/PR61, current sources/rules/removal events.
 - [x] Current FIN01/06 và F15/F16 unit/PG evidence, giữ Docker initialization failures và original diagnostics.
-- [x] Hoàn thiện matrix21tasks, MD01–10, COD/source/security/owner handoff và acceptance limits.
-- [ ] Publication checkpoint: commit/push, verifyPR/reviewers, publish nonduplicate COMMENT60/61 and Issue5/12 links.
+- [x] Hoàn thiện matrix23tasks sau late62/READMEhandoff, MD01–10, COD/source/security/owner handoff và acceptance limits.
+- [x] Publication checkpoint: commit/push, verifyPR/reviewers, publish nonduplicate COMMENT60/61 and Issue5/12 links.
 - [ ] HumanTV5 formal review39 +post-review mergegate check; không Approve/Merge bởi agent.
 - [ ] Namedauthority+same-versionbusiness/owner signatures và approved runtime implementations/evidence.
 - [ ] ProductionF15/F16/currentStore/COD/uniqueatomicsettlement/liveE2E và fullIssue5/12DONE.
 
 Nếu không có source/reply mới sau publication, phần độc lập hoàn tất trong scope đãaudit;
 **WAITING_HUMAN_REVIEW / WAITING_OWNER_CONFIRMATION**, không tạo việc hoặc commit rỗng để lấp thời gian.
+
+## 9. Publication receipt và PR62 late delta
+
+GitHub confirmed **b923736ac35811f93b78f2fd2f420b7b65a1638b**, branch **codex/tv5-unblock-handoff-20261020**,
+[QA PR63](https://github.com/duyxl56785/Project_HK5/pull/63), reviewer **duyxl56785 +lexuanbao258-collab** requested once.
+[Review60 COMMENT](https://github.com/duyxl56785/Project_HK5/pull/60#pullrequestreview-5580455810),
+[Review61 COMMENT](https://github.com/duyxl56785/Project_HK5/pull/61#pullrequestreview-5580456309),
+[Issue5 checkpoint](https://github.com/duyxl56785/Project_HK5/issues/5#issuecomment-6282711041),
+[Issue12 COD response](https://github.com/duyxl56785/Project_HK5/issues/12#issuecomment-6282712138) all re-read after posting.
+No duplicate39comment/authorityreminder, no agentApprove/Merge/Close or contractsignature.
+
+During publication **PR62** appeared, **6a79016eae71a93c8d55207482bc4785bd5f3281**, base03fb1b2.
+Read all3file diff:111line pureunwired `CatalogCheckoutBatchPreflight`,149line10testmethods,85line handoff.
+No new actionable finding established: fullbatch1..100/no subset, ID/Store/Seller/numeric price/explicitcurrency,
+canonicaluniqueSKU and existingstorageprecision guards; response order explicitly candidate pending TV2.
+Zero/fractional-VND/unitcap/House/currentauthority business semantics are not selected by this storage validator.
+`VerifiedProduct` is a Java record, not trusted source verification/lease; code is not a Spring bean or wired Checkout.
+No runtime sideeffects, originalCart/Orderports and allflags unchanged. TV2 still reviews candidatewire/ordering/source;
+do not turn candidate technical QA into fullC01/E01/M01signatures.
+
+Fresh TV5 **10unitPASS/0FAIL/error/skip**, exit0, **03:35:53–03:36:26UTC**:
+`backend/gradlew.bat -p backend :order-service:test --tests '*CatalogCheckoutBatchPreflightTest' --rerun-tasks --no-daemon --console=plain`.
+Diffcheck0; [derived cases/command/raw hashes](evidence/tv5-unblock-20261020/pr62.json).
+PG/HTTP/liveE2E **NOT_RUN** for this pure/unwired delta; exactheadCI PG25 is separate author/CI evidence, notTV5rerun.
+Initial missinggitobject blocked checkout **before** teststart; fetched exactbranch then ran tests, no ownerfiles changed.
+The45PRindex predates62/63; final observed set is47PR including newown63, not an assertion that all47 were in initialscan.
+PR62technicalhandoff COMMENT may link this delta; verify actualpostedreview in finalGitHubreceipt, not infer posting from draft.
+PR39 finalrecheck duringpublication still sameec2head/effectiveCHANGES_REQUESTED; userintenttosubmit notyetserverreview.
+
+## 10. P3 — shared README current facts cần TV1 cập nhật
+
+Tại main03fb1b2, README dòng12 còn “Chưa có nghiệp vụ thực hoặc schema/migration”, dòng60 còn
+“backend chưa API/security/nghiệp vụ; Auth/User chưa entity/migration”. Các claim hiện trạng này không còn đúng:
+PR51 đã có Auth/User persistence; PR28 Cart/Order API+Flyway+JWT-config; PR31 Inventory API/ledger;
+PR29/52 Seller/Store DB, Product Category API và internal Image/Review rules đã hiện diện.
+Đây là gap onboarding lịch sử, **không finding do PR60/61/62 gây ra** và không production acceptance blocker.
+TV5 không sửa source/shared runbook ownerTV1; bàn giao exact replacement factual, không mở lại architecture:
+
+> “Repository có các module triển khai một phần và bằng chứng riêng: Auth/User persistence; Seller/Store persistence;
+> Category; Cart/Order; Inventory ledger; internal image, review, Finance rules. Xem README/report từng module và
+> checkpoint QA hiện hành để biết source SHA và giới hạn. Chưa nghiệm thu Auth issuer/current-role/Gateway,
+> authoritative Product/Catalog, Checkout–Inventory live, Fulfillment/COD/Finance settlement và UI/E2E toàn hệ thống.”
+
+Đề nghị TV1 cập nhật riêng2claim ở README, giữ links/runbook/startup safety và không gọi modulePASS là productionDONE.
+Evidence chính là source/main và report§§3–7; không yêu cầu chạy lại runtime chỉ để sửa wording. Owner edit vẫnPENDING,
+TV5 handoff hoàn tất khi report/PR này được publish; không ghi shared README đã sửa.
+
+Final local verification after late delta: **95relative file links,37rawartifactSHA256,14publicfiles**, JSON parse và targetedsecretmarkersnohit,
+diffcheck0. Rawfiles không đổi; phần này không phải runtime rerun hoặc securityaudit exhaustive.

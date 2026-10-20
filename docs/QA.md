@@ -176,3 +176,8 @@ PR61 static21filelinks/10anchors/diffcheck0; runtimeNOT_RUN,529reportedbyTV2 is 
 FIN01/06 existing-storage preflight remains FIXED_VERIFIED; no new Checkout fix requested. Shared C06/current-actor/Store/SKU/
 CODpayment/uniqueatomicsettlement/refund/liveE2E and M01business decisions stay PENDING/BLOCKED. Existing source confirmation
 for SKU-only design, candidatehelper and fencedjournal is recorded; do not ask owners to repeat those decisions.
+
+Publication confirmed b923736/[PR63](https://github.com/duyxl56785/Project_HK5/pull/63), reviewerTV1/TV2;
+COMMENT60/61 and Issue5/12checkpoint URLs in [receipt](../reports/evidence/tv5-unblock-20261020/publication-receipt.json).
+LatePR62 **6a79016** adds pureunwiredCatalogpreflight: TV5 [10targetedunitPASS](../reports/evidence/tv5-unblock-20261020/pr62.json),
+diffcheck0. No fullOrder/PG rerun attributed to62, no provider verification/M01policy/wireapproval from its candidate tests.
