@@ -1,0 +1,49 @@
+{
+  "kind": "EXECUTED STATIC VERIFICATION, NOT BUSINESS/RUNTIME ACCEPTANCE",
+  "executedUtc": "2026-10-20T02:28:36.326294+00:00",
+  "head": "ec2ae5af5162aa93482b9439d1b39dbb7abb3bec",
+  "path": "docs/TV4_FULFILLMENT_IMPLEMENTATION_CONTRACT.md",
+  "documentSha256": "76da7b99f8118fd48a3d7a15368c0a6c772a16fb3edef2f5f670870e4454ef83",
+  "findings": [
+    {
+      "id": "39-F1",
+      "finding": "Original 19 rows versus claimed 21",
+      "originalLine": 71,
+      "fixedLine": 7,
+      "status": "FIXED_VERIFIED",
+      "evidence": "21 legacy and 21 distinct supplemental rows; no count transfer"
+    },
+    {
+      "id": "39-F2",
+      "finding": "Legacy IDs reused with different meanings",
+      "originalLine": 73,
+      "fixedLine": 91,
+      "status": "FIXED_VERIFIED",
+      "evidence": "Exact ID/scenario/expected/status equality against original c4288d5 baseline"
+    },
+    {
+      "id": "39-F3",
+      "finding": "SKU/current authority and state proposals not accurately separated",
+      "originalLine": 96,
+      "fixedLine": 41,
+      "status": "FIXED_VERIFIED",
+      "evidence": "Global immutable SKU target not implementation; no productId alias; trusted Store source; unresolved state vocabularies explicit"
+    }
+  ],
+  "legacy": 21,
+  "supplemental": 21,
+  "businessScenarioStatus": "42 NOT_RUN",
+  "markdownUrlLinks": 0,
+  "literalPathsChecked": 3,
+  "conflictMarkers": 0,
+  "diffCheck": {
+    "exitCode": 2,
+    "intentionalMarkdownHardBreakLines": [
+      3,
+      4
+    ]
+  },
+  "reviewDecision": "CHANGES_REQUESTED",
+  "unresolvedThreads": 0,
+  "conclusion": "REVIEW_READY for docs/traceability; human TV5 must submit new formal review; M01/COD business remains pending"
+}

@@ -1,0 +1,31 @@
+{
+  "54": {
+    "head": "5955b1f3bc039c8239a4b99ce76c1a48b7b9fc23",
+    "main": "864c941bd88aa31e2ebba77d903bbb512ce0f732",
+    "changedPaths": [
+      "backend/order-service/TV3_INVENTORY_JOURNAL_W2.md",
+      "backend/order-service/build.gradle",
+      "backend/order-service/src/main/java/com/projecthk5/orderservice/ports/InventoryOperationTransport.java",
+      "backend/order-service/src/main/java/com/projecthk5/orderservice/ports/InventoryOperationWire.java",
+      "backend/order-service/src/main/java/com/projecthk5/orderservice/ports/UnconfiguredInventoryOperationTransport.java",
+      "backend/order-service/src/main/java/com/projecthk5/orderservice/service/InventoryJournalReconciliationScanner.java",
+      "backend/order-service/src/main/java/com/projecthk5/orderservice/service/InventoryOperationCaller.java",
+      "backend/order-service/src/main/java/com/projecthk5/orderservice/service/InventoryOperationJournal.java",
+      "backend/order-service/src/main/resources/db/migration/V2__inventory_operation_journal.sql",
+      "backend/order-service/src/test/java/com/projecthk5/orderservice/integration/InventoryOperationJournalPostgres16IT.java",
+      "backend/order-service/src/test/java/com/projecthk5/orderservice/service/InventoryOperationCallerTest.java"
+    ],
+    "blobIdentity": true,
+    "runtimeAtMergeSha": "NOT_RUN; exact PR-head executions are separate"
+  },
+  "56": {
+    "head": "8c88fffbc83dd5c562f0189ad400d76bd1aaf5ea",
+    "main": "864c941bd88aa31e2ebba77d903bbb512ce0f732",
+    "changedPaths": [
+      "backend/order-service/src/main/java/com/projecthk5/orderservice/fulfillment/SellerOrderLifecycle.java",
+      "backend/order-service/src/test/java/com/projecthk5/orderservice/fulfillment/SellerOrderLifecycleTest.java"
+    ],
+    "blobIdentity": true,
+    "runtimeAtMergeSha": "NOT_RUN; exact PR-head executions are separate"
+  }
+}
