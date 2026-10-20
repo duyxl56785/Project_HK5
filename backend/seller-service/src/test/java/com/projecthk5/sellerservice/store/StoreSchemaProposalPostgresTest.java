@@ -58,9 +58,15 @@ class StoreSchemaProposalPostgresTest {
 
     @Test void candidateDoesNotBecomeARuntimeFlywayMigration() throws Exception {
         try (Connection connection = connect(); var statement = connection.createStatement();
-             var rows = statement.executeQuery("SELECT count(*) FROM flyway_schema_history WHERE success AND version IS NOT NULL")) {
+             var rows = statement.executeQuery("SELECT version,script FROM flyway_schema_history"
+                     + " WHERE success AND version IS NOT NULL ORDER BY installed_rank")) {
             assertTrue(rows.next());
-            assertEquals(1, rows.getInt(1));
+            assertEquals("1", rows.getString(1));
+            assertEquals("V1__create_seller_profiles.sql", rows.getString(2));
+            assertTrue(rows.next());
+            assertEquals("2", rows.getString(1));
+            assertEquals("V2__create_stores.sql", rows.getString(2));
+            assertFalse(rows.next());
         }
     }
 
