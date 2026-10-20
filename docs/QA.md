@@ -159,3 +159,20 @@ C06 candidate đã được TV3 confirm theo own-scope; **shared DB/wire/event/a
 Order journal/scanner đã có source + realPG proof; **live operation provenance/fencing/HTTP/reconciliation chưa được nghiệm thu**.
 M01/business signer/operator, approved snapshots/current ADMIN COD, atomic unique settlement/current Store Finance queries/live two-Store E2E còn BLOCKED/NOT_RUN.
 Issue5/12OPEN/PARTIAL, Finance/pairflags không được bật từ merge hoặc tests.
+
+### TV5 owner unblock checkpoint — 20/10/2026, TV5-UNBLOCK-20261020-v1
+
+[21-task handoff/current decisions](../reports/TV5_OWNER_UNBLOCK_HANDOFF_2026-10-20.md) supersedes current-status labels above;
+history/raw evidence stays unchanged. PR46/53/58/59 merged; PR39 docs findings repaired, human formal review still needed at scan.
+OpenPR60/e0a28de and61/0af4754 now have scoped TV5 technical QA; default/current reviewers retained, not business approval.
+
+Fresh main03fb1b2: **105Order unit +50filteredProduct unit PASS** (30Review/20deny-default security included),
+then **25OrderPG+3originalFINdiagnostic PASS** in a separate DB invocation after Docker startup. First combined invocation
+exit1 with5PG initializationError records because Engine offline; diagnosticNOT_RUN/staleXML excluded. Retain that FAIL raw evidence.
+PR60/e0a28de:11callerunitPASS; firstPGinitializationError, then11journalPGPASS afterDocker startup. No source/assertion changes.
+[Per-invocation counts/commands/private raw hashes](../reports/evidence/tv5-unblock-20261020/main-db.json).
+PR61 static21filelinks/10anchors/diffcheck0; runtimeNOT_RUN,529reportedbyTV2 is not TV5 execution.
+
+FIN01/06 existing-storage preflight remains FIXED_VERIFIED; no new Checkout fix requested. Shared C06/current-actor/Store/SKU/
+CODpayment/uniqueatomicsettlement/refund/liveE2E and M01business decisions stay PENDING/BLOCKED. Existing source confirmation
+for SKU-only design, candidatehelper and fencedjournal is recorded; do not ask owners to repeat those decisions.

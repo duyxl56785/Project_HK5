@@ -66,3 +66,17 @@ Các checklist trước giữ snapshot lịch sử; không tick các mục ghép
 - [x] Đăng5 review đúng inspected heads và reconcile reviewer: COMMENT #19/#28/#37/#38, CHANGES_REQUESTED #39; request TV1/#39, không request trùng hoặc self-request tác giả. [Links](../reports/PR_REVIEWERS_AUDIT_2026-10-18.md#5-review-đã-đăng-và-reviewer-đã-đối-chiếu).
 - [ ] Owner xác nhận các quyết định/tài liệu tương ứng; không tự Approve/Merge/Close/resolve threads hoặc chốt toàn contract.
 - [ ] Toàn bộ điều kiện Issue #5 đủ DONE. Giữ OPEN/PARTIAL.
+
+## Current owner handoff — 20/10/2026
+
+Các checkbox trước là snapshot lịch sử, không yêu cầu owner sửa lại bug hoặc review lại PR đã merge.
+[Current21task matrix, MD/COD answers and evidence](../reports/TV5_OWNER_UNBLOCK_HANDOFF_2026-10-20.md).
+
+- [x] Verify45PR/16Issue;46/58/59merged;39onlyformalTV5review cònchặn docs; new60/61 read/code-doc cross-check.
+- [x] Current main03fb1b2 rules/securityunit andPG/originalFIN01/06 diagnostic thực thi; noassertionchanges, retainDockerinitializationFAIL.
+- [x] PR60 e0a28de focused11callerunit+11journalPGPASS;PR61 static21links/10anchors; nofalseHTTP/E2Eclaim.
+- [x] Existing1billionProductunit candidate/partialscope andTV3/TV4engineering replies recorded; sharedauthority/MDsignatures stillPENDING.
+- [x] Preparepreciseownerhandoff and mapcurrentevidence toRTM/QA; existingUAT/SP01–14plans retained, noformalsignoffbyagent.
+- [ ] Commit/push and GitHubpublication verified; review60/61COMMENT, Issue5/12checkpoint, reviewereligibility/removalchecks.
+- [ ] HumanTV5submitreview39, theneffectiveCR/check/rules/mergegateverified; noagentApprove/Merge.
+- [ ] Namedbusinessauthority/applicablesignedcontracts/productionReview-Finance-COD-Storequery-E2Eacceptance;Issue5/12remainOPEN/PARTIAL.

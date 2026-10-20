@@ -117,3 +117,16 @@ Các dòng sau cập nhật hiện trạng, không thay ID/nghĩa hoặc evidenc
 |QA-C06-M01-SIGNOFF|Shared lifecycle/provenance/COD and applicable MD choices →responsible humans/business|TV3 candidate own-scope recorded; project business approver/operator not designated|PENDING; proposal publication or technical review does not sign business policy|
 
 Do not add119and7to a release total, relabel previous-source counts, or tick cross-service/E2E/Finance DONE.
+
+## Owner-unblock checkpoint — TV5-UNBLOCK-20261020-v1
+
+[Full task/MD/COD/owner matrix](../reports/TV5_OWNER_UNBLOCK_HANDOFF_2026-10-20.md); previous rows retain historical source/results.
+
+| ID | Requirement / owner | Current evidence | Disposition / limitation |
+|---|---|---|---|
+|QA-FIN-PREFLIGHT-CURRENT|FIN01/06 pre-reserve exact storage +positivecontrol →TV3source/TV5QA|main03fb1b2: [25PG+3diagnosticPASS](../reports/evidence/tv5-unblock-20261020/main-db.json)|FIXED_VERIFIED technical bounds/replay; no M01business approval or live reservation|
+|QA-F15-F16-RULES-CURRENT|Buyer/delivery/product/stars/duplicate/moderation/average; fee/net/House/eligibility/Store guard →TV5|[main initial](../reports/evidence/tv5-unblock-20261020/main.json):105Orderunit and50ProductfilteredunitPASS; subsets explicitly indexed|Purelocalrules/MockMvcdeny/config; no currentStoreAPI/DBreviewuniqueness/settlementatomicity|
+|QA60-MULTISKU|Exact3SKU long tuple/RELEASEcandidate/UNKNOWN/replay/SKU-set mismatch →TV3|e0a28de: [11unit](../reports/evidence/tv5-unblock-20261020/pr60.json), [11PG](../reports/evidence/tv5-unblock-20261020/pr60-db.json)|PASS scoped; candidateRELEASE not authorization/held-stock proof; no liveHTTP|
+|QA-DOCKER-INIT-20261020|Distinguish environment failure from domain regression →TV5|Initial main5/pr60one initializationError FAIL records preserved in derived/private originals; Engine started, DB rerunsGREEN|InitialbusinessDBcasesBLOCKED, not hidden or falsely labelledPASS; diagnosticinitialNOT_RUN|
+|QA61-DOCS|CurrentStoreDB vsprovider/HTTP/M01candidate →TV2docs/TV5QA|[0af4754 static21links/10anchors](../reports/evidence/tv5-unblock-20261020/pr61-docchecks.json)|No new Finance/traceability blocker; runtimeNOT_RUN, TV2reported529 separate|
+|QA-MD-COD-HANDOFF|21tasks/MD01–10/10CODquestions →responsiblehumans|Report§§2/4/5; newTV3Issue12handoff received, TV4key+retry+candidate confirmations recorded|PENDING same-versionbusiness/source/security/payment/refund/runtime gates; no newlyunlockedproduction slice|
