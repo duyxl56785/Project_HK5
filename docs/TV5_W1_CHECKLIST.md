@@ -79,5 +79,6 @@ Các checkbox trước là snapshot lịch sử, không yêu cầu owner sửa l
 - [x] Preparepreciseownerhandoff and mapcurrentevidence toRTM/QA; existingUAT/SP01–14plans retained, noformalsignoffbyagent.
 - [x] Commit/push and GitHubpublication verified; review60/61COMMENT, Issue5/12checkpoint, reviewereligibility/removalchecks. Commitb923736/PR63, TV1/TV2requested; [receipt](../reports/evidence/tv5-unblock-20261020/publication-receipt.json).
 - [x] Late PR62/6a79016 fullcandidate diff/Financeboundary reviewed,10focusedpureunitPASS/diffcheck0; [evidence](../reports/evidence/tv5-unblock-20261020/pr62.json). NoHTTP/PG/M01approval implied.
+- [x] FinalPR39headchanged4e4e623: readnewdelta/C06ack, rerun21legacy+21supplementalstatic,all3findingsstillFIXED_VERIFIED; [newheadproof](../reports/evidence/tv5-unblock-20261020/pr39-current-static.json). Humanformalreviewstillpending,newheadmustbereviewed.
 - [ ] HumanTV5submitreview39, theneffectiveCR/check/rules/mergegateverified; noagentApprove/Merge.
 - [ ] Namedbusinessauthority/applicablesignedcontracts/productionReview-Finance-COD-Storequery-E2Eacceptance;Issue5/12remainOPEN/PARTIAL.

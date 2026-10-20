@@ -259,3 +259,19 @@ TV5 handoff hoàn tất khi report/PR này được publish; không ghi shared R
 
 Final local verification after late delta: **95relative file links,37rawartifactSHA256,14publicfiles**, JSON parse và targetedsecretmarkersnohit,
 diffcheck0. Rawfiles không đổi; phần này không phải runtime rerun hoặc securityaudit exhaustive.
+
+## 11. PR39 head moved during final read — 4e4e623
+
+Final source changed to **4e4e6232bd9a515e11e1ab9ba433a6b2181c8efc** during publication; earlier ec2ae5a checks remain
+historical and are not attributed to this head. Read entire ec2→4e delta and new full PR diff/source: docs-only update
+records TV3's actual candidate/helper confirmation at8c88fff, keeps old names non-aliases, requires committed Order
+state/outbox before approved/fencedCONSUME, and explicitly leaves DB/wire/event/actor/Store/stock/COD/Finance pending.
+No new demonstrated regression or new money/business approval. COD/Finance section and legacy meaning retained.
+
+Fresh static03:43:43UTC: **21legacy exact+21supplemental distinct**, all42businesscasesNOT_RUN,3literalrepo paths exist,
+0MarkdownURLlinks,0conflictmarkers; all3oldfindingsFIXED_VERIFIED at **new**head.
+[Current static result](evidence/tv5-unblock-20261020/pr39-current-static.json).
+`git diff --check edb6886...4e4e623` exit2 only the existing intentional Markdown hard-break spaces atline4;
+not a newly introduced functional blocker. RuntimeNOT_RUN/docs-only, no source/assertion/testchanges.
+GitHub effectiveCHANGES_REQUESTED still owned byhumanTV5,0threads; requestedhumanTV5 preserved. No agentApprove/merge-readyclaim.
+Humanreview must reference **4e4e623**, not use ec2 proof alone. Code/evidence implementation gates remain separate.
