@@ -9,6 +9,7 @@ dependencies {
 }
 
 tasks.named('test') {
+    systemProperty 'user.timezone', 'UTC'
     inputs.property 'databaseReadiness', System.getenv('TV1_DATABASE_TESTS') ?: 'false'
     outputs.upToDateWhen { false }
     outputs.doNotCacheIf('PostgreSQL state must be checked') { true }
