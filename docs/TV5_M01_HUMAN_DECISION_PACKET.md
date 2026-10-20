@@ -314,3 +314,82 @@ MD04–MD10 theo dõi độc lập, không tựchặnprice sliceđãkýriêng; c
 
 PR19đãAPPROVED/MERGED, PR37/38/41/42/46/47đãmerge; khôngrequest/pushPRđóng. PR39docsfindingsfixednhưnghumanTV5CRdecisionchưađổi;
 PR28humanTV1CRchưađổi, PR48TV4consumerresponsecònchờ tạiaudit. **WAITING_REVIEW/OWNER_CONFIRMATION**, Issue5/12OPEN/PARTIAL, Financeflagfalse.
+
+## 14. M01-PRICE-SCOPE-v1-DRAFT — đề xuất đơn giá Product, 19/10/2026
+
+**PROPOSED / NOT YET BUSINESS APPROVED.** Đây là bản ghi lựa chọn người dùng cung cấp cho TV2,
+không phải chữ ký nghiệp vụ, quyết định ủy quyền hay thay đổi contract/runtime đã có hiệu lực.
+
+- Repository: [duyxl56785/Project_HK5](https://github.com/duyxl56785/Project_HK5).
+- Người đề xuất và proposed business approver: **@duyxl56785 — Nguyễn Văn Duy (TV2)**.
+- Thời điểm audit/ghi nhận: **2026-10-19T02:48:19+07:00**; base main **a0e99b981a752026f8f7d29e3c6b7c43b6e5ac45**.
+- Tham chiếu: **TV5-M01-DECISION-v1 + TV5-FIN-v0.1** tại base trên và
+  [TV1-S01-OD09-20261018-v1](TV1_S01_OD09_INTEGRATION_HANDOFF_2026-10-18.md).
+- Authority status: **PENDING_CONFIRMATION**; MD01/MD02/riêng unit-price cap MD03: **PROPOSED**;
+  business approval: **PENDING**; overall M01: **PENDING**.
+- Audit Issue [#2](https://github.com/duyxl56785/Project_HK5/issues/2),
+  [#5](https://github.com/duyxl56785/Project_HK5/issues/5), [#12](https://github.com/duyxl56785/Project_HK5/issues/12)
+  và phản hồi TV1/TV5 mới nhất không tìm thấy business approver đã được chỉ định hay MD01–MD03 business APPROVED.
+  [TV1 xác nhận vẫn cần named authorized business approver](https://github.com/duyxl56785/Project_HK5/pull/48#issuecomment-6251503735);
+  [TV5 cho phép đề nghị ký riêng price slice, chưa phê duyệt](https://github.com/duyxl56785/Project_HK5/pull/37#issuecomment-6249273813).
+  Sở hữu repository hoặc technical compatibility không tự tạo business authority.
+
+### Lựa chọn đề xuất và biên
+
+| Phần quyết định | Giá trị đề xuất | Phạm vi / trạng thái |
+|---|---|---|
+| MD01 | `VND_ONLY`: currency `VND` hiện diện, lưu rõ ràng và được xác minh; không default khi thiếu, không FX, từ chối currency khác. | Product price/currency; **PROPOSED** |
+| MD02 | `POSITIVE_INTEGRAL_VND_EXACT`: unitPrice nguyên dương, exact BigDecimal hoặc số nguyên chính xác; không float/double, không phần lẻ, không làm tròn ngầm. | Đơn giá Product; **PROPOSED** |
+| MD03 — chỉ unit-price cap | **1 <= unitPrice <= 1000000000 VND**, inclusive. | Không phải toàn bộ MD03; **PROPOSED** |
+
+| Giá trị | Kết quả theo đề xuất nếu sau này được phê duyệt |
+|---|---|
+| `1` VND | Hợp lệ — minimum |
+| `1000000000` VND | Hợp lệ — maximum |
+| `1000000001` VND | Không hợp lệ — vượt unit cap |
+| `0`, `-1`, `1.5` VND | Không hợp lệ — không nguyên dương |
+| Thiếu giá/currency, currency chưa xác minh hoặc currency khác VND | Từ chối/fail-closed; không điền VND hoặc làm tròn để chấp nhận |
+
+**Delta với candidate cũ:** người dùng chọn tối đa **1 tỷ VND thay cho candidate 17 chữ số**
+`99,999,999,999,999,999` ở riêng đơn giá Product. Đây là đề xuất thay thế unit-cap cho phiên bản
+`M01-PRICE-SCOPE-v1-DRAFT`, chưa supersede một contract đã approved. Giữ nguyên lịch sử MD01–MD10,
+technical compatibility trước đây, NUMERIC(19,2) storage facts và mọi candidate aggregate cap cũ.
+Không ghi technical acceptance 17 chữ số thành approval cho lựa chọn mới.
+
+### Tác động consumer và phần chưa quyết định
+
+- **TV2 Product:** sau khi đủ chữ ký mới áp dụng price/currency validation và PostgreSQL constraints production;
+  hiện **BLOCKED_BY_BUSINESS_APPROVAL**. Không đổi Product schema hoặc SQL prototype trong đề xuất này.
+- **Catalog/TV3 Cart–Order:** tiếp tục đề xuất plain decimal string canonical, không dấu/exponent/leading zero,
+  exact BigDecimal và currency rõ ràng; ví dụ max wire `"1000000000"`. Không suy cap bằng số chữ số.
+  C01/E01 exact wire và security vẫn cần owners xác nhận; không đổi DTO/adapter hoặc Checkout runtime ở đây.
+- Cap 1 tỷ **không áp dụng** cho quantity, line total, Store subtotal, parent Order total, commission,
+  seller net, COD payment, refund hoặc settlement. Những giới hạn đó tiếp tục **PENDING** theo phạm vi riêng.
+  Ví dụ unitPrice 1 tỷ × quantity 2 = 2 tỷ: không kết luận chấp nhận/từ chối Order chỉ từ unit cap;
+  vẫn phải kiểm exact arithmetic, storage thực và business aggregate bounds được ký riêng.
+- MD04–MD10, House assignment, fee/rounding, adjustments/refund, freshness race, snapshots, Finance enablement
+  và reporting không được quyết định bởi proposal này. Quantity 1–1000 vẫn chỉ là technical fact hiện có.
+- [Store Persistence PR #52](https://github.com/duyxl56785/Project_HK5/pull/52) tiếp tục review độc lập;
+  không yêu cầu mở lại S01 architecture đã xác nhận. Không mở positive HTTP/JWT/pair, Inventory hoặc live E2E.
+
+### Xác nhận còn thiếu và checkpoint tiếp tục
+
+1. **TV1 @lexuanbao258-collab / chủ dự án hoặc nhóm có thẩm quyền:** xác nhận công khai trên GitHub
+   có chỉ định @duyxl56785 làm business approver hay không, ai giao quyền, role và phạm vi đúng
+   MD01/MD02/unit-price cap MD03 của phiên bản này; Finance operator là quyết định khác. Chưa có bằng chứng thì giữ PENDING_CONFIRMATION.
+2. **Human TV5 @nguyenminhduy090-alt:** kiểm Finance compatibility của delta 17 chữ số → 1 tỷ và ký phần trách nhiệm;
+   không coi review docs hoặc đề xuất của agent là business signature.
+3. **TV3 @tranvanchinhbg2006-alt:** xác nhận Cart/Order consumer compatibility cho giới hạn đơn giá mới;
+   không biến 1 tỷ thành cap tổng tiền, không yêu cầu ký lại DTO shape không đổi. TV4 cần review riêng nếu scope COD/Inventory bị thay đổi về sau.
+4. **Người được ủy quyền + các owner liên quan:** ghi cùng version, giá trị, scope, APPROVED/REVISE/PENDING và evidence URL.
+   Authority confirmation đơn lẻ chưa phê duyệt policy; approval của một owner chưa thay các chữ ký bắt buộc khác.
+
+Reply form: `M01-PRICE-SCOPE-v1-DRAFT + TV5-M01-DECISION-v1 + TV5-FIN-v0.1 | authority=<account/role/delegation evidence>
+| MD01=VND_ONLY | MD02=POSITIVE_INTEGRAL_VND_EXACT | MD03.scope=PRODUCT_UNIT_PRICE_CAP | unitPrice=1..1000000000 inclusive
+| APPROVED/REVISE/PENDING | responsible scope=<...> | evidence=<GitHub URL>`.
+
+Checkpoint branch: `codex/tv2-m01-price-proposal`; commit/PR/publication evidence được liên kết tại Issue #5,
+đối chiếu cùng Issue #2/#12 trước khi tiếp tục. Chỉ khi publication được GitHub xác nhận mới báo **PROPOSAL PUBLISHED**,
+không báo M01 DONE. Sau khi được chỉ định đúng authority và ký đủ price scope, TV2 kiểm applicable schema/S01/auth gates
+để triển khai riêng Product price/currency; không tự mở MD04–MD10 hoặc Finance. `HK5_FINANCE_POLICY_APPROVED=false` giữ nguyên.
+Runtime unit/PostgreSQL/E2E trong lượt tài liệu này: **NOT_RUN — docs-only**, không dùng lại số PASS lịch sử làm lượt chạy mới.
