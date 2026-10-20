@@ -22,3 +22,21 @@ tasks.register('postgresIntegrationTest', Test) {
     useJUnitPlatform { includeTags 'postgres-integration' }
     shouldRunAfter tasks.named('test')
 }
+
+
+// W2 journal acceptance: GitHub Backend readiness has Docker/PG16 available.
+// Include tagged real-PostgreSQL tests on GitHub Actions instead of calling
+// unit-only build SUCCESS "database verified". Local build remains Docker-free;
+// developers may run postgresIntegrationTest explicitly with Docker installed.
+if (System.getenv('GITHUB_ACTIONS') == 'true') {
+    tasks.named('check') { dependsOn tasks.named('postgresIntegrationTest') }
+}
+
+tasks.named('postgresIntegrationTest', Test) {
+    testLogging { events 'failed', 'skipped' }
+    afterSuite { desc, result ->
+        if (desc.parent == null) {
+            logger.lifecycle("ORDER_PG16_TEST_SUMMARY tests=${result.testCount} passed=${result.successfulTestCount} failed=${result.failedTestCount} skipped=${result.skippedTestCount}")
+        }
+    }
+}

@@ -14,6 +14,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.PostgreSQLContainer;
@@ -41,6 +43,7 @@ class InventoryOperationJournalPostgres16IT {
     @Autowired CheckoutAttemptRepository attempts;
     @Autowired InventoryOperationJournal journal;
     @Autowired JdbcTemplate db;
+    @Autowired PlatformTransactionManager txManager;
 
     private InventoryOperationIntent freshIntent() {
         CheckoutAttempt attempt=attempts.saveAndFlush(new CheckoutAttempt(
@@ -70,6 +73,44 @@ class InventoryOperationJournalPostgres16IT {
         assertEquals(2,t2.sends());
         assertFalse(journal.claimForSend(intent.operationId()));
         assertThrows(IllegalStateException.class,()->journal.unknown(intent.operationId(),"STALE"));
+    }
+
+    @Test void t1JournalCommitSurvivesRollbackOfAlreadyCommittedAttemptCaller() {
+        var intent = freshIntent(); // CheckoutAttempt must be committed before journal FK insert.
+        new TransactionTemplate(txManager).execute(status -> {
+            journal.prepare(intent); // REQUIRES_NEW commits while caller transaction is suspended.
+            assertEquals(InventoryOperationJournal.State.PENDING, journal.load(intent.operationId()).state());
+            status.setRollbackOnly();
+            return null;
+        });
+        assertEquals(InventoryOperationJournal.State.PENDING, journal.load(intent.operationId()).state());
+        assertEquals(1, db.queryForObject("select count(*) from inventory_operation_journal where operation_id=?",
+                Integer.class, intent.operationId()));
+    }
+
+    @Test void t2ConfirmedOutcomeSurvivesCallerTransactionRollback() {
+        var intent = freshIntent();
+        journal.prepare(intent);
+        assertTrue(journal.claimForSend(intent.operationId()));
+        new TransactionTemplate(txManager).execute(status -> {
+            journal.confirm(intent.operationId()); // Independent T2 commit, even if outer transaction rolls back.
+            status.setRollbackOnly();
+            return null;
+        });
+        assertEquals(InventoryOperationJournal.State.CONFIRMED, journal.load(intent.operationId()).state());
+        assertEquals(1, journal.load(intent.operationId()).sends());
+    }
+
+    @Test void lateT2AfterCrashScannerMustNotOverwriteUnknown() {
+        var intent = freshIntent();
+        journal.prepare(intent);
+        assertTrue(journal.claimForSend(intent.operationId()));
+        db.update("update inventory_operation_journal set updated_at=now()-interval '20 minutes' where operation_id=?",
+                intent.operationId());
+        assertEquals(1, journal.flagStaleInFlight(Duration.ofMinutes(10)));
+        assertThrows(IllegalStateException.class, () -> journal.confirm(intent.operationId()));
+        assertEquals(InventoryOperationJournal.State.UNKNOWN, journal.load(intent.operationId()).state());
+        assertEquals(1, journal.load(intent.operationId()).sends());
     }
 
     @Test void differentPayloadOnSameOperationIdIsRejectedWithoutMutation() {

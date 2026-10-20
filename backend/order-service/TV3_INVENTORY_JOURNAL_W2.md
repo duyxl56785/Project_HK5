@@ -87,3 +87,23 @@ from ordinary Backend readiness `build`. Record PASS/FAIL/NOT_RUN with exact SHA
 
 **This PR is a safety-focused W2 increment.** No `main` push, merge,
 cross-owner file edits, secret provisioning, live enablement or Issue closure.
+
+## 20/10/2026 — explicit CI PG16 verification wiring (test-only build behavior)
+
+To address TV1/TV4 feedback, Order module's `build.gradle` now includes tagged
+`:order-service:postgresIntegrationTest` in the `check` dependency graph **only when
+`GITHUB_ACTIONS=true`**. Existing backend-readiness workflow already provisions Docker
+and PG via `docker compose`; the tagged suite itself uses disposable
+`postgres:16-alpine` Testcontainers (not a team/business database). Local `build`
+remains Docker-free and targeted manual `postgresIntegrationTest` stays available.
+
+The PG test class adds verification of:
+- committed CheckoutAttempt FK; T1 REQUIRES_NEW commit remains after caller rollback;
+- T2 CONFIRMED REQUIRES_NEW remains after caller rollback;
+- stale IN_FLIGHT→UNKNOWN; a late T2 must never overwrite UNKNOWN blindly.
+
+The Gradle task emits `ORDER_PG16_TEST_SUMMARY tests/pass/fail/skipped` in CI log.
+**Record the actual HEAD and CI run before claiming success**; existing readiness
+at `b9c03a6` was unit-only and cannot prove these new PG checks. A green build still
+does not prove live HTTP service-pair authorization, real Inventory stock mutation,
+Order Checkout attachment or Finance/COD E2E; all remain BLOCKED/NOT_RUN.
