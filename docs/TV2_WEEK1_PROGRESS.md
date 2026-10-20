@@ -1,5 +1,62 @@
 # TV2 — Week 1 implementation and handoff
 
+## Current W1 boundaries — 2026-10-20
+
+**W1 BLOCKED** on shared wire/current-authority/business decisions, not on another Store DB architecture vote.
+Audit/test source: main `03fb1b2e8a1c1261568446c1f9ed68d264784e4e`; delivery branch
+`feat/tv2-w1-seller-store-catalog-handoff`. The dated checkpoints below remain historical.
+Issue [#2](https://github.com/duyxl56785/Project_HK5/issues/2) is W1; [#9](https://github.com/duyxl56785/Project_HK5/issues/9)
+is D8–D14 full Seller/Store/Product/UI acceptance. A module DB PASS does not complete either issue.
+
+| Task | Existing code / tests / merge | Can proceed now / blocker / owner |
+|---|---|---|
+| Category | Production CRUD/hierarchy/advisory lock;14PG regression PASS; PR7 merged | Preserve; slug/status contract, JWT writes and production Product FK still pending TV1/TV2 |
+| Seller DB | JPA/Flyway V1/REQUIRED/@Version/unique owner;24PG PASS; PR29 merged | Preserve; real policy/REST/role sync require TV1+TV2 |
+| Store DB | Production V2/local Seller FK/unique Seller+slug/current facts;63integration PASS; PR52 merged | S01 DB boundary implemented; HTTP/current actor/House remain separate gates |
+| Image Validation |56unit PASS; PR55 merged | Preserve; upload/storage/JWT/DB association are W2 integration, not completed by validator |
+| Seller/Store REST/DTO/errors | No controller, agreed wire DTO, verified policy or production writer bean | Concrete proposal below; code waits specific TV1/TV2 wire/privacy/current-role agreement |
+| Product/SKU/Catalog | Domain and50Catalog unit tests; no Product production JPA/UNIQUE SKU/provider | TV2 implementation after applicable M01/schema/security; no fixture-as-authority |
+| Auth/User/Gateway | Auth V2 persistence PR51 merged; no production issuer/current-role adapter or Gateway routes | TV1 delivery; persisted Auth accounts alone cannot authenticate TV2 HTTP |
+| Seed/UI/live E2E | JSON fixture only, not durable data; UI boundary placeholder | W1 handshake/stub contract still missing; complete Product/UI/two-Store workflow belongs to W2 |
+
+### New deliverable and exact remaining decisions
+
+- [x] Audit main, Issue2/9, merged PR7/29/37/48/51/52/53/55, open PR39/60 and latest owner replies; no completed domain/DB/validator reimplementation.
+- [x] [Seller/Store HTTP candidate](../backend/seller-service/README.md#sellerstore-http-handoff-candidate--2026-10-20): explicit proposed paths/request/response/validation/error mapping tied to existing services; **not approved or implemented DTO/controller**. This gives TV1 a concrete decision without opening unverified writes.
+- [x] [Current Catalog source inventory](TV2_CATALOG_HANDOFF.md#current-provider-inventory--2026-10-20): production local Store facts separated from Product candidate SQL, unimplemented HTTP and consumer design acceptance. SKU consumer confirmation is already recorded, not requested again.
+- [ ] **TV1+TV2 — HTTP/current authority:** approve/revise `TV2-SELLER-STORE-HTTP-v0.1`, actual issuer/verifier/current ADMIN/account provider, Gateway exposure/privacy, and versioned durable Seller→Auth grant/revoke wire. [Auth §8](TV1_AUTH_IDENTITY_GATEWAY_CONTRACT.md#8-gateway-routing-cors-và-internal-boundary) leaves business paths open; [S01/OD09](https://github.com/duyxl56785/Project_HK5/pull/48#issuecomment-6251503735) allows isolated implementation, not positive traffic. No fixture/static ADMIN adapter is acceptable.
+- [ ] **TV1/project authority+TV5 — Product price:** identify the authorized business signer/operator and sign/revise same-version `M01-PRICE-SCOPE-v1-DRAFT` MD01/02/unit-capMD03 plus applicable schema. [Existing decision request](https://github.com/duyxl56785/Project_HK5/issues/5#issuecomment-6254401376) remains active; PR53 merge was documents-only. No new approval or repeated generic request.
+- [ ] **TV1+TV2+TV3 — Catalog wire/security/freshness:** C01/E01 v0.2 provider/consumer technical acceptance exists; approved HTTP/privacy/current facts/House and read→commit policy still missing. TV3 owns adapting CatalogPort; missing/stale source aborts the whole batch before reserve.
+- [ ] **TV3+TV4 — Inventory/live handoff:** exact SKU-only mapping accepted; journal/fencing exists after PR54/58, but positive transport, approved provenance/lifecycle/RELEASE linkage and real two-Store seed/E2E remain absent. No blind RELEASE, inferred stock or flag enablement.
+
+### Fresh verification on the audited production source
+
+Windows/JDK21.0.12/Gradle8.10/Docker29.8.2/PostgreSQL16 Testcontainers, JVM UTC/API1.44.
+`backend/gradlew.bat -p backend :seller-service:build :product-service:build --rerun-tasks --no-daemon --continue --console=plain`
+**BUILD SUCCESSFUL, exit0/1m2s/18tasks;529PASS/0FAIL/errors/0SKIPPED**:
+
+| Task | PASS | FAIL/errors | SKIPPED |
+|---|---:|---:|---:|
+| Seller unit |107|0|0|
+| Seller integration |113|0|0|
+| Product unit/API/security |271|0|0|
+| Product integration |38|0|0|
+
+The151 integration invocations comprise95production DB/business (Seller24+Store57+Category14),6closed-route
+negatives in Store PG context and50test-only SQL candidates (Store26+Product24). Catalog50/Image56 are included
+in271, not added again. Mock/route-absence checks are not production authentication. No positive Seller/Store/Catalog
+HTTP or Gateway server was started; those, signed-JWT/current ADMIN/role-sync/consumer contract/live E2E/full-backend
+are **NOT_RUN/BLOCKED**, not inferred from this two-module regression. Existing Category GETs have module API coverage;
+Category writes remain403; proposed Catalog route403 and absent Seller/Store routes404 retain their existing behavior.
+
+Original log/XML/derived counters are ignored at `backend/seller-service/build/w1-handoff-20261020/`;
+build log SHA256 `2717085806EAE1C4840FB331CEFC944DE4A71115E25D7D483960A589EDE629C2`.
+This delivery changes three existing TV2 documentation files only; no runtime/schema/config/dependency/contract approval.
+Highest-value next task: **TV1+TV2 finalize Seller/Store HTTP and current-authority adapter handoff**, then implement
+that independently approved slice. Do not create another prototype or repeat completed tests to substitute for this gate.
+
+---
+
 Refs #2. Status: **PARTIAL / integration BLOCKED**. Updated 2026-10-18 (Asia/Saigon).
 
 Delivery: [Draft PR #37](https://github.com/duyxl56785/Project_HK5/pull/37), `feat/tv2-week1-completion` → `main`. Verified code commit: `20f684d699a288ee5f558c38aec40e934bc91939`; subsequent report/README changes are documentation only. Review decisions belong to TV1/TV3/TV4/TV5; this task does not approve or merge the PR. [Issue #2](https://github.com/duyxl56785/Project_HK5/issues/2) remains the acceptance source of truth.
