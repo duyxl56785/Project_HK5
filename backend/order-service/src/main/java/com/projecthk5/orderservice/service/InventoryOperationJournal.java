@@ -69,36 +69,45 @@ public class InventoryOperationJournal {
                 .orElseThrow(() -> new NoSuchElementException("Unknown Inventory operationId"));
     }
 
-    /** Atomic claim: concurrent senders cannot start a second request for the same step. */
+    /**
+     * Atomic claim and durable send-generation fencing token. The operation ID,
+     * type and canonical payload stay unchanged across retries, but each attempt
+     * receives a new integer generation. Null means another worker claimed it
+     * or it has already completed. Prevent overflow rather than reusing a token.
+     */
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public boolean claimForSend(String operationId) {
-        return db.update("update inventory_operation_journal set state='IN_FLIGHT',"
-                + "send_attempts=send_attempts+1,updated_at=now() "
-                + "where operation_id=? and state in ('PENDING','UNKNOWN')", operationId) == 1;
+    public Integer claimForSend(String operationId) {
+        List<Integer> claimed = db.query(
+                "update inventory_operation_journal set state='IN_FLIGHT',"
+                        + "send_attempts=send_attempts+1,last_error_code=null,updated_at=now() "
+                        + "where operation_id=? and state in ('PENDING','UNKNOWN') "
+                        + "and send_attempts < 2147483647 returning send_attempts",
+                (rs, row) -> rs.getInt(1), operationId);
+        return claimed.isEmpty() ? null : claimed.get(0);
     }
 
-    /** T2: after validating provider ID, operation type and exact SKU-set. */
+    /** T2: only the current send generation can confirm a verified reply. */
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void confirm(String operationId) {
-        transitionFromInFlight(operationId, State.CONFIRMED, null);
+    public void confirm(String operationId, int attempt) {
+        transitionFromInFlight(operationId, attempt, State.CONFIRMED, null);
     }
 
     /** Only a positive proof of an atomic rejected/no-commit response is definitive. */
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void reject(String operationId, String code) {
-        transitionFromInFlight(operationId, State.REJECTED, code);
+    public void reject(String operationId, int attempt, String code) {
+        transitionFromInFlight(operationId, attempt, State.REJECTED, code);
     }
 
     /** Timeout/ambiguous response, including invalid success echo: no blind RELEASE. */
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void unknown(String operationId, String code) {
-        transitionFromInFlight(operationId, State.UNKNOWN, code);
+    public void unknown(String operationId, int attempt, String code) {
+        transitionFromInFlight(operationId, attempt, State.UNKNOWN, code);
     }
 
     /** Disabled adapter guarantees that NO request was sent; keep T1 for later. */
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void notSent(String operationId, String code) {
-        transitionFromInFlight(operationId, State.PENDING, code);
+    public void notSent(String operationId, int attempt, String code) {
+        transitionFromInFlight(operationId, attempt, State.PENDING, code);
     }
 
     /** Crash after T1 or during T2: flag stale IN_FLIGHT for human reconciliation. */
@@ -112,12 +121,14 @@ public class InventoryOperationJournal {
                 age.getSeconds());
     }
 
-    private void transitionFromInFlight(String id, State next, String code) {
+    private void transitionFromInFlight(String id, int attempt, State next, String code) {
+        if (attempt <= 0) throw new IllegalArgumentException("Invalid Inventory send generation");
         if (code != null && (code.isBlank() || code.length() > 96))
             throw new IllegalArgumentException("Invalid bounded Inventory error code");
         int changed = db.update("update inventory_operation_journal "
                 + "set state=?,last_error_code=?,updated_at=now() "
-                + "where operation_id=? and state='IN_FLIGHT'", next.name(), code, id);
+                + "where operation_id=? and state='IN_FLIGHT' and send_attempts=?",
+                next.name(), code, id, attempt);
         if (changed != 1) throw new IllegalStateException("Stale or conflicting Inventory journal transition");
     }
 

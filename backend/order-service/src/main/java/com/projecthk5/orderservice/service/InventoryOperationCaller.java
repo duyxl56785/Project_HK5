@@ -30,7 +30,8 @@ public class InventoryOperationCaller {
             return Outcome.REJECTED;
         if (snapshot.state() == InventoryOperationJournal.State.IN_FLIGHT)
             throw new IllegalStateException("Inventory step already in flight; reconcile before retry");
-        if (!journal.claimForSend(operationId))
+        Integer attempt = journal.claimForSend(operationId);
+        if (attempt == null)
             throw new IllegalStateException("Concurrent Inventory sender claimed step");
 
         // Only the persisted, fingerprint-checked canonical tuple is sent on every retry.
@@ -39,25 +40,26 @@ public class InventoryOperationCaller {
         try {
             reply = transport.send(request);
         } catch (InventoryOperationTransport.NotSent disabled) {
-            journal.notSent(operationId, "CALLER_DISABLED");
+            journal.notSent(operationId, attempt, "CALLER_DISABLED");
             return Outcome.BLOCKED;
         } catch (InventoryOperationTransport.DefinitiveFailure rejected) {
-            journal.reject(operationId, rejected.code());
+            journal.reject(operationId, attempt, rejected.code());
             return Outcome.REJECTED;
         } catch (RuntimeException uncertain) {
             // Includes timeouts, 5xx, lost response or unclassified adapter errors.
-            journal.unknown(operationId, "TRANSPORT_OUTCOME_UNKNOWN");
+            journal.unknown(operationId, attempt, "TRANSPORT_OUTCOME_UNKNOWN");
             return Outcome.UNKNOWN;
         }
 
         if (!matchingReply(request, reply)) {
-            journal.unknown(operationId, "RESPONSE_MISMATCH");
+            journal.unknown(operationId, attempt, "RESPONSE_MISMATCH");
             return Outcome.UNKNOWN;
         }
 
-        // Separate T2 commit. If this DB update itself fails, the row remains
-        // IN_FLIGHT and a stale scanner must flag UNKNOWN; do not mint another ID.
-        journal.confirm(operationId);
+        // Separate T2 commit, fenced by this specific send generation. If a
+        // stale scanner and a new retry won the race, an old reply cannot
+        // confirm/reject/clear that retry. Never mint another operation ID.
+        journal.confirm(operationId, attempt);
         return Outcome.CONFIRMED;
     }
 

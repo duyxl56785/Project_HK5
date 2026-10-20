@@ -107,3 +107,34 @@ The Gradle task emits `ORDER_PG16_TEST_SUMMARY tests/pass/fail/skipped` in CI lo
 at `b9c03a6` was unit-only and cannot prove these new PG checks. A green build still
 does not prove live HTTP service-pair authorization, real Inventory stock mutation,
 Order Checkout attachment or Finance/COD E2E; all remain BLOCKED/NOT_RUN.
+
+## W2 follow-up — attempt-generation fencing on the same durable operation (TV3)
+
+The initial W2 journal tracked `send_attempts` but its T2 update only checked
+`state=IN_FLIGHT`. A *late* result from sender A could incorrectly update sender
+B's later `IN_FLIGHT` retry after the stale scanner had marked A UNKNOWN.
+This follow-up closes that order-local concurrency gap **without touching Flyway V2
+or changing the Inventory provider request/wire**.
+
+- Atomic PostgreSQL claim uses `UPDATE ... RETURNING send_attempts` to return a
+  strictly increasing attempt generation or `null` if already claimed/terminal.
+  Integer overflow refuses another claim (no wrapped/reused generation).
+- Caller captures the generation and supplies it on **every** T2 transition:
+  `confirm`, `reject`, `unknown`, and `notSent`.
+- T2 condition is now `operation_id + state=IN_FLIGHT + send_attempts=generation`.
+  Old HTTP results/errors after a scanner→UNKNOWN→retry lose the race and throw
+  `IllegalStateException` rather than falsely returning CONFIRMED/REJECTED.
+- The **provider operationId/type/SKU/quantity/fingerprint remain exactly the same**
+  for a retry: generation is Order-internal fencing only, **not** sent to Inventory
+  and never changes provider idempotency semantics.
+- New unit and real PostgreSQL16 tests cover late CONFIRMED/UNKNOWN/REJECTED/
+  NotSent callbacks and reclaims, including a second attempt successfully
+  completing after the first attempt's response is refused.
+- **Remaining future gates:** no positive HTTP transport, original customer/system
+  actor provenance, Product→SKU authority, final C06/Finance policies or approved
+  timed auto-retry; no operation status lookup or end-to-end live evidence.
+  Keep Inventory pair flag OFF and do not close Issue #3.
+
+Verification must reference **the final commit**: GitHub Backend readiness runs
+the tagged PostgreSQL suite via `GITHUB_ACTIONS=true`. It is not PASS until an
+actual exact-head log shows task execution and 0 failures.
