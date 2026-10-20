@@ -92,6 +92,16 @@ class InventoryOrderPairGateTest {
     }
 
     @Test
+    void pairCredentialRejectsMissingNullNonTextualAndPaddedOperationTypes() throws Exception {
+        InventoryInternalTokenFilter filter = new InventoryInternalTokenFilter("legacy-secret", TOKEN, true);
+        assertForbidden(filter, request("POST", "/api/inventory/operations", "{\"operationId\":\"op-1\"}"));
+        assertForbidden(filter, request("POST", "/api/inventory/operations", "{\"type\":null}"));
+        assertForbidden(filter, request("POST", "/api/inventory/operations", "{\"type\":1}"));
+        assertForbidden(filter, request("POST", "/api/inventory/operations", "{\"type\":[]}"));
+        assertForbidden(filter, request("POST", "/api/inventory/operations", "{\"type\":\" RESERVE \"}"));
+    }
+
+    @Test
     void exactMaximumBodySizeIsAcceptedAndReplayed() throws Exception {
         InventoryInternalTokenFilter filter = new InventoryInternalTokenFilter("legacy-secret", TOKEN, true);
         String prefix = "{\"type\":\"RESERVE\"}";
