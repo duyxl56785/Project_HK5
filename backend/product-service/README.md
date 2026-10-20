@@ -2,6 +2,8 @@
 
 **Owner:** TV2 (Catalog) + TV5 (Review).
 
+Product image validation is now available as an independent internal module: see [rules, usage and integration limits](IMAGE_VALIDATION.md). It does not expose an upload API or storage runtime; the original Category-only history below is retained.
+
 Category Management is implemented in this module. Seller, Product, moderation, images and Review business features remain outside this change. Read ../../docs/OWNERSHIP.md before edits. This work references Issue #2; Category alone does not complete that issue.
 
 ## Deployment status and Auth integration
