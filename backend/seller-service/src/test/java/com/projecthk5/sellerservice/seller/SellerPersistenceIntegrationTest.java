@@ -7,6 +7,7 @@ import com.projecthk5.sellerservice.seller.domain.SellerRuleException;
 import com.projecthk5.sellerservice.seller.domain.SellerStatus;
 import com.projecthk5.sellerservice.seller.repository.SellerProfileRepository;
 import com.projecthk5.sellerservice.seller.service.SellerAccessPolicy;
+import com.projecthk5.sellerservice.seller.service.SellerInputs;
 import com.projecthk5.sellerservice.seller.service.SellerPersistenceException;
 import com.projecthk5.sellerservice.seller.service.SellerPersistenceService;
 import com.projecthk5.sellerservice.seller.service.SellerPersistenceService.PersistedSeller;
@@ -77,6 +78,33 @@ class SellerPersistenceIntegrationTest {
         jdbc.update("DELETE FROM seller_profiles");
         policy.known.clear();
         policy.known.addAll(Set.of(OWNER.reference(), ADMIN.reference(), OTHER.reference()));
+    }
+
+    @Test
+    void typedCommandsPreserveServerIdentityVersionPolicyAndRequiredRollback() {
+        PersistedSeller created = service.register(OWNER);
+        var rejected = service.reject(created.id(), new SellerInputs.Moderation(created.version(), "  Revise  "), ADMIN);
+        assertEquals("Revise", rejected.application().reviewReason());
+        var resubmitted = service.resubmit(created.id(), new SellerInputs.Version(rejected.version()), OWNER);
+        assertEquals(created.id(), resubmitted.id());
+        assertEquals(OWNER, resubmitted.application().owner());
+        assertNull(resubmitted.application().reviewReason());
+        assertCode(SellerPersistenceException.Code.SELLER_VERSION_CONFLICT,
+                assertThrows(SellerPersistenceException.class,
+                        () -> service.approve(created.id(), new SellerInputs.Version(created.version()), ADMIN)));
+        var approved = service.approve(created.id(), new SellerInputs.Version(resubmitted.version()), ADMIN);
+        assertThrows(SellerRuleException.class,
+                () -> service.suspend(created.id(), new SellerInputs.Moderation(approved.version(), "No"), OTHER));
+        new TransactionTemplate(transactions).executeWithoutResult(tx -> {
+            service.suspend(created.id(), new SellerInputs.Moderation(approved.version(), "Hold"), ADMIN);
+            tx.setRollbackOnly();
+        });
+        assertEquals(approved, service.findOwn(OWNER));
+        var suspended = service.suspend(created.id(), new SellerInputs.Moderation(approved.version(), "Hold"), ADMIN);
+        var reinstated = service.reinstate(created.id(), new SellerInputs.Version(suspended.version()), ADMIN);
+        assertEquals(created.id(), reinstated.id());
+        assertEquals(SellerStatus.APPROVED, reinstated.application().status());
+        assertNull(reinstated.application().reviewReason());
     }
 
     @Test

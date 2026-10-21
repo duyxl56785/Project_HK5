@@ -33,6 +33,21 @@ public class StorePersistenceService {
 
     public record PersistedStore(StoreProfile profile, long version, Instant createdAt, Instant updatedAt) { }
 
+    public PersistedStore create(SellerIdentity actor, StoreInputs.Create input) {
+        requireInput(input);
+        return create(actor, input.name(), input.slug());
+    }
+
+    public PersistedStore revise(UUID id, SellerIdentity actor, StoreInputs.Update input) {
+        requireInput(input);
+        return revise(id, input.expectedVersion(), actor, input.name(), input.slug());
+    }
+
+    public PersistedStore setOpen(UUID id, SellerIdentity actor, StoreInputs.SetOpen input) {
+        requireInput(input);
+        return setOpen(id, input.expectedVersion(), actor, input.open());
+    }
+
     public PersistedStore create(SellerIdentity actor, String name, String slug) {
         SellerProfile seller = currentSeller(actor);
         StoreProfile created = lifecycle(seller).create(actor, name, slug);
@@ -143,6 +158,10 @@ public class StorePersistenceService {
     private static StorePersistenceException versionConflict(Throwable cause) {
         return new StorePersistenceException(StorePersistenceException.Code.STORE_VERSION_CONFLICT,
                 "Store was changed by another request", cause);
+    }
+
+    private static void requireInput(Object input) {
+        if (input == null) throw invalid("Store input is required");
     }
 
     private static StoreRuleException invalid(String message) {

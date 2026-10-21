@@ -100,6 +100,33 @@ class StorePersistenceIntegrationTest {
     }
 
     @Test
+    void typedCommandsKeepServerOwnershipVersionAndTransactionGuards() {
+        PersistedStore created = service.create(OWNER, new StoreInputs.Create("  Store  ", "typed-store"));
+        UUID id = created.profile().id();
+        var revised = service.revise(id, OWNER, new StoreInputs.Update("Renamed", "renamed", created.version()));
+        assertEquals(id, revised.profile().id());
+        assertEquals(SELLER_A, revised.profile().sellerId());
+        assertEquals(OWNER.reference(), revised.profile().ownerReference());
+        assertTrue(revised.profile().open());
+        assertEquals(StorePersistenceException.Code.STORE_VERSION_CONFLICT,
+                assertThrows(StorePersistenceException.class,
+                        () -> service.setOpen(id, OWNER, new StoreInputs.SetOpen(false, created.version()))).getCode());
+        assertEquals(StoreRuleException.Code.ACCESS_DENIED,
+                assertThrows(StoreRuleException.class,
+                        () -> service.revise(id, OTHER, new StoreInputs.Update("Stolen", "stolen", revised.version()))).getCode());
+        new TransactionTemplate(transactions).executeWithoutResult(tx -> {
+            service.setOpen(id, OWNER, new StoreInputs.SetOpen(false, revised.version()));
+            tx.setRollbackOnly();
+        });
+        assertEquals(revised, service.findOwn(OWNER));
+        var closed = service.setOpen(id, OWNER, new StoreInputs.SetOpen(false, revised.version()));
+        assertFalse(closed.profile().open());
+        var reopened = service.setOpen(id, OWNER, new StoreInputs.SetOpen(true, closed.version()));
+        assertTrue(reopened.profile().open());
+        assertEquals(id, reopened.profile().id());
+    }
+
+    @Test
     void freshFlywaySchemaAndJpaPersistDurableStoreWithServerOwnership() {
         PersistedStore created = service.create(OWNER, "  First Store  ", "first-store");
         assertEquals(SELLER_A, created.profile().sellerId());
