@@ -48,4 +48,13 @@ Flyway owns schema creation; Hibernate is configured with `ddl-auto: validate`.
 
 The preceding NOT_RUN line describes the original draft handoff. On owner fixes `adc705e` plus the TV5 regression/matcher changes (source `6c6cf8c`), module build + unit + PostgreSQL tasks executed: **16 unit and 13 PostgreSQL PASS**, 0 failures/errors/skips, exit0/31s. See [commands, RED/GREEN logs, source scope and limits](TEST_RESULTS_TV5_DB_FIXES.md) and the [QA matrix](../../reports/TV5_PR31_DB_REGRESSION_2026-10-17.md).
 
-Run `gradle -p backend :inventory-service:build :inventory-service:postgresIntegrationTest --rerun-tasks --no-daemon --continue --console=plain` from the repository root (or use the equivalent Gradle Wrapper). The explicit PostgreSQL task requires Docker and a server-supported JVM timezone; unit test excludes the postgres-integration tag. Test databases are newly created by Testcontainers. V1 stays unchanged; owner V2 migrates the hash to VARCHAR(64). Do not infer shared service-auth/role/Store authorization or live checkout E2E PASS from these regressions: those remain NOT_RUN/owner-gated.
+From the repository root in Windows PowerShell, run:
+```powershell
+.\backend\gradlew.bat -p backend :inventory-service:test :inventory-service:postgresIntegrationTest --rerun-tasks --continue --no-daemon --console=plain
+```
+
+`:inventory-service:test` is unit-only. `:inventory-service:postgresIntegrationTest` runs tagged PostgreSQL integration tests against a fresh PostgreSQL 16 Testcontainers database and requires Docker. The PostgreSQL integration task uses Docker API version `1.44` by default; override it with `-PdockerApiVersion=...` only when the local Docker engine requires another supported API version.
+
+For local service runtime, configure the `INVENTORY_DB_*` variables above. Supply non-default passwords and internal tokens through local environment settings or a secret manager; do not commit real credential values in source files. Keep `INVENTORY_ORDER_PAIR_ENABLED=false` until explicit owner approval and the authorization implementation are complete.
+
+V1 stays unchanged; owner V2 migrates the hash to VARCHAR(64). Do not infer shared service-auth/role/Store authorization or live checkout E2E PASS from these regressions: those remain NOT_RUN/owner-gated.

@@ -16,5 +16,7 @@ tasks.register('postgresIntegrationTest', Test) {
     testClassesDirs = sourceSets.test.output.classesDirs
     classpath = sourceSets.test.runtimeClasspath
     useJUnitPlatform { includeTags 'postgres-integration' }
+    // Keep Testcontainers compatible with Docker engines that require API 1.40 or newer.
+    systemProperty 'api.version', providers.gradleProperty('dockerApiVersion').getOrElse('1.44')
     shouldRunAfter tasks.named('test')
 }
