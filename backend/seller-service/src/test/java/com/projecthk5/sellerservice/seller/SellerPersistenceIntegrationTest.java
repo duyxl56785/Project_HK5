@@ -7,6 +7,7 @@ import com.projecthk5.sellerservice.seller.domain.SellerRuleException;
 import com.projecthk5.sellerservice.seller.domain.SellerStatus;
 import com.projecthk5.sellerservice.seller.repository.SellerProfileRepository;
 import com.projecthk5.sellerservice.seller.service.SellerAccessPolicy;
+import com.projecthk5.sellerservice.http.SellerStoreResponses;
 import com.projecthk5.sellerservice.seller.service.SellerInputs;
 import com.projecthk5.sellerservice.seller.service.SellerPersistenceException;
 import com.projecthk5.sellerservice.seller.service.SellerPersistenceService;
@@ -78,6 +79,22 @@ class SellerPersistenceIntegrationTest {
         jdbc.update("DELETE FROM seller_profiles");
         policy.known.clear();
         policy.known.addAll(Set.of(OWNER.reference(), ADMIN.reference(), OTHER.reference()));
+    }
+
+    @Test
+    void privateResponseMappingFollowsGuardedOwnReadAndDoesNotGrantModeration() {
+        PersistedSeller first = service.register(OWNER);
+        PersistedSeller second = service.register(OTHER);
+        var own = SellerStoreResponses.sellerPrivate(service.findOwn(OWNER));
+        var otherOwn = SellerStoreResponses.sellerPrivate(service.findOwn(OTHER));
+        assertEquals(first.id(), own.id());
+        assertEquals(second.id(), otherOwn.id());
+        assertNotEquals(own.id(), otherOwn.id());
+        assertThrows(SellerRuleException.class, () -> SellerStoreResponses.sellerPrivate(
+                service.findForModeration(second.id(), OWNER)));
+        policy.known.remove(OWNER.reference());
+        assertThrows(SellerRuleException.class, () -> SellerStoreResponses.sellerPrivate(service.findOwn(OWNER)));
+        // Fixture policy plus real DB verifies ordering/isolation, not production JWT or current ADMIN.
     }
 
     @Test
