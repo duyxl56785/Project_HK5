@@ -1,5 +1,62 @@
 # TV2 — Week 1 implementation and handoff
 
+## Strict JSON and private response preparation — 2026-10-22
+
+**PARTIAL — WAITING_TV1_RUNTIME.** Continues PR66 on `feat/tv2-seller-store-http-v02`, base deliveryce2e684;
+code/test commit `fcaca6d34f234a505a5ade46ce8e53128ff20bde`. PR66 is returned to Draft per the new task;
+no Approve/Merge or new PR. Existing input/domain/persistence are reused; no schema/build/other-module changes.
+
+TV1's response relayed by the user confirms11paths/201-create/200-other, required registration `{}`,
+canonical decimal-string version and strict JSON/private representations. No newer public TV1 review or
+comment was present on PR66 when checked; this is not a forged GitHub approval. Exact joint HTTP wire/error
+review and production JWT/current authority/Gateway/role-sync remain pending. Earlier checkpoints below
+retain their historical scope/test outcomes, including Docker failures and successful recovery.
+
+- [x] Immutable SellerPrivate/StoreOwner response DTOs and explicit mapping from trusted service results,
+  no ownerReference/role grants/JWT/JPA internals. reviewReason only exists on private Seller representation.
+  Mapper does not authorize callers; existing guarded own-read/moderation methods must precede mapping.
+- [x] Isolated SellerStoreJson parser for registration and existing5input shapes: exact fields/types,
+  duplicate detection including escaped names, missing/null/unknown/type/coercion/overflow rejection,
+  object-only root and no trailing JSON. No Spring ObjectMapper/HTTP handler change.
+- [x] CanonicalVersion parse/format, including0/Long.MAX_VALUE and JS-unsafe integers; typed response writers
+  emit version strings and UTC timestamp text without exposing Entity serialization.
+- [x] New90unit contract/version/response cases: RED77assertionFAIL/0error/skip then GREEN. Full Seller build
+  **353PASS/0FAIL/errors/0SKIPPED**, exit0/55s:236unit (90new included) +117tagged integration.
+  Integration: Seller26 +Store65 +SQL prototype26 =85production DB/business +6closed-route checks +26SQL prototype.
+  Two new PostgreSQL cases check private mapping after owner reads, cross-Seller moderation denial and
+  unavailable/missing fixture authority; not real JWT/current ADMIN or positive HTTP authorization.
+- [x] Independent read-only reviewer found no actionable code findings. Scope/diff/secret-marker checks;
+  no production REST/security bean/role-sync wiring, no schema or shared config changes.
+- [ ] Joint HTTP handler/error review and production issuer/verifier/current-account/current ADMIN/SELLER
+  adapters, Gateway/public/private method allowlist, role-sync command/ack/retry/reconciliation and live E2E.
+  No REST/JWT/role-sync/E2E aggregate checkbox or entire Issue2/9 DONE from these results; flags OFF.
+
+Java21.0.12 / Gradle8.10 / Docker29.9.1; JVM UTC; existing integration task Docker API1.44;
+real PostgreSQL16.6 Testcontainers with production Flyway/JPA validation. Current commands, separate runs:
+
+```powershell
+backend/gradlew.bat -p backend :seller-service:test --tests '*http.*Test' --rerun-tasks --no-daemon --console=plain
+backend/gradlew.bat -p backend :seller-service:build --rerun-tasks --no-daemon --console=plain
+backend/gradlew.bat -p backend :product-service:build --rerun-tasks --no-daemon --console=plain
+```
+
+First command is preserved RED90/77FAIL before implementation. Seller full55s/exit0 is the current353PASS.
+Separate Product55s/exit0:309PASS/0FAIL/errors/0SKIP (271unit/API/security +38integration =14Category +24SQL prototype).
+No combined662release count, no earlier261/CI/historical counts reused as a fresh run.
+Original raw log/XML and per-suite counts stay ignored under `backend/seller-service/build/http-json-20261022/`;
+Seller resource manifests0prior containers/volumes missing. Hashes below identify local originals, not public artifacts.
+
+| Raw log | SHA256 |
+|---|---|
+| contract-red.log | BF53E2E9FE748EDF847A40D536893C47E636C49B818F0D3CB48C9F9E6908F4F6 |
+| full-build.log | BC583DEC98C026B9120B5C99635DB13CDB4C00FB4048B45EC597B8366BC4994A |
+| product-regression.log | 91E1093E5F72D05D0568580D77CE6A493CEE5D553D16D3B51C6D3BB490E34794 |
+
+Positive JWT/current authority, HTTP status/body binding through controllers, Gateway and live cross-service
+E2E **NOT_RUN**; parser/fixture-policy tests do not substitute for them. Next: TV1 final review of this prep
+and delivery of actual security adapters, then a separately verified controller integration. Publication
+SHA/PR/checklist/CI receipts are recorded on GitHub after push, not inferred from this checkpoint.
+
 ## Seller/Store v0.2 preparation — 2026-10-21
 
 **PARTIAL — WAITING_HTTP_AGREEMENT.** Current work starts from main

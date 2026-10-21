@@ -2,6 +2,9 @@
 
 **Owner:** TV2.
 
+Current preparation: [private responses and isolated strict JSON — 22/10/2026](#private-responses-and-strict-json-preparation--2026-10-22).
+Earlier dated HTTP limitations below are historical where superseded by this checkpoint; no HTTP route is enabled.
+
 Seller/Store domain, production persistence and local current-facts reads are present. HTTP API, verified Auth integration and role synchronization remain separate integration work. Read ../../docs/OWNERSHIP.md before edits. Refs #2; this work does not complete the full Issue. The TV1 persistence confirmation supplied by the project owner is recorded in [SELLER_PERSISTENCE_CONTRACT.md](SELLER_PERSISTENCE_CONTRACT.md).
 
 ## Actual package structure
@@ -294,3 +297,53 @@ wire, source/provenance, replay horizon, retry/ack semantics and operations. Do 
 No Product/M01/Catalog/Inventory/Finance policy is newly approved. Next release work is a separate verified HTTP
 adapter only after the relevant wire and actual authority components are available. See the dated
 [TV2 progress checkpoint](../../docs/TV2_WEEK1_PROGRESS.md#sellerstore-v02-preparation--2026-10-21) for real test results.
+
+## Private responses and strict JSON preparation — 2026-10-22
+
+**SECURITY CONTRACT CONFIRMED — AUTH RUNTIME PENDING.** The user's 22/10/2026 TV1 handoff confirms the eleven
+proposed paths/201-versus200 statuses, mandatory registration `{}`, canonical decimal-string versions,
+strict JSON and owner/current-ADMIN privacy requirements. No public TV1 reply on PR66 was found at audit;
+this records the relayed decision's source, not an invented GitHub signature. Final joint HTTP wire/error
+review and production issuer/verifier/current authority/Gateway/role-sync remain pending.
+
+Code is under `com.projecthk5.sellerservice.http`, with no Spring component/configuration/controller:
+
+| Component | Actual behavior |
+|---|---|
+| `SellerStoreResponses.SellerPrivate` | Immutable `id,version,status,reviewReason`; no ownerReference/grants/entity internals. Cleared reason remains explicit JSON null. Intended only for already authorized owner/current ADMIN. |
+| `SellerStoreResponses.StoreOwner` | Immutable `id,sellerId,name,slug,open,version,createdAt,updatedAt`; no ownerReference or moderation reason. Own-management representation, not public Store/Catalog data. |
+| `sellerPrivate(PersistedSeller)` / `storeOwner(PersistedStore)` | Explicit pure mapping after upstream guarded service access. Server IDs/state/version/timestamps preserved; no authority granted by mapper or by DTO name. No JPA Entity serialization. |
+| `CanonicalVersion.parse/format` | String canonical ASCII decimal `0` or nonzero-leading digits, range0..Long.MAX_VALUE; no trim/plus/leading zeros/exponent/float/overflow. Response versions are validated String fields, hence serialized as JSON strings, including values above JS safe integer. |
+| `SellerStoreJson` | Private isolated ObjectMapper, duplicate detection including escaped field names, exact object schema, explicit scalar kind checks and no trailing JSON. No mutation of Spring/application Jackson configuration. |
+
+Codec request methods map into the **existing** input DTOs, retaining their domain validation:
+
+| Method | Required exact JSON fields |
+|---|---|
+| `registration(String)` | Empty object only; no new open-ended registration DTO |
+| `version(String)` | expectedVersion (string) for resubmit/approve/reinstate |
+| `moderation(String)` | expectedVersion (string), reason (string) for reject/suspend |
+| `createStore(String)` | name, slug (strings) |
+| `updateStore(String)` | name, slug (strings), expectedVersion (string) |
+| `setOpen(String)` | open (boolean), expectedVersion (string); false is distinct from missing/null |
+
+All reject missing/unknown/duplicate/null/wrong-type fields, non-object/empty/malformed bodies and multiple
+root values. Client identity/role/status/ID fields fail the exact field whitelist. `InvalidInput` is an
+internal generic parse/validation exception, without raw Jackson cause/rejected values; no new HTTP error
+envelope/status handler is installed. `writeSellerPrivate`/`writeStoreOwner` accept only the respective
+response record, use string versions and ISO-8601 UTC Instants, and reject a null response. There is no
+public generic Entity/object serializer or production controller binding these codecs.
+
+Future verified adapter order: authenticate/current-authority check, parse exact request schema, guarded
+server-owned service operation, map authorized result, then the matching typed writer. Existing Auth
+401/403/503 and resource-specific404/409 visibility must be integrated under the jointly reviewed handler;
+parser success alone does not authenticate the caller or authorize access. Do not turn this codec into
+an allow-all principal factory, accept headers as identity, or expose `reviewReason` through public Catalog.
+
+Actual code `fcaca6d34f234a505a5ade46ce8e53128ff20bde`: new90 unit contract/response/version cases, with
+original RED90cases/77assertionFAIL retained; subsequent **Seller full build353PASS** (236unit+117integration).
+Two new PG cases exercise mapping after real guarded owner reads, cross-Seller moderation denial and
+missing/unavailable fixture authority. This is actual PostgreSQL with fixture policies, not production JWT.
+Separate Product build309PASS includes Category14PG regression. No sum across these separate invocations.
+Exact commands/counts/raw hashes and remaining NOT_RUN work are in the
+[new progress checkpoint](../../docs/TV2_WEEK1_PROGRESS.md#strict-json-and-private-response-preparation--2026-10-22).
