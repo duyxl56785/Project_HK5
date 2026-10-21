@@ -1,5 +1,63 @@
 # TV2 — Week 1 implementation and handoff
 
+## Seller/Store v0.2 preparation — 2026-10-21
+
+**PARTIAL — WAITING_HTTP_AGREEMENT.** Current work starts from main
+`4f12b05d0d6408deb42cb329676e643351106fcd`, branch `feat/tv2-seller-store-http-v02`.
+The dated checkpoints below remain historical. PR61 is merged; no exact joint HTTP wire approval or
+Auth issuer/verifier/current-authority runtime was found in latest source, Issue1/2/9 or PR61 replies.
+The user's new TV1 handoff accepts v0.1 as a basis; HS256/verified account sub/current ADMIN/DB status/
+Gateway/after-commit durable role synchronization stay existing requirements, not new runtime claims.
+Code/test commit: `2e79c66f27fcda31e06369154212b55fb88908d7`; Java/test/resources are identical to the
+tested worktree. Documentation-only follow-up does not change that test source. Independent read-only
+whole-patch review found no actionable code findings; it recommends Draft PR while PostgreSQL is blocked.
+
+- [x] [v0.2 candidate](../backend/seller-service/README.md#sellerstore-http-v02-preparation--2026-10-21)
+  consolidates eleven endpoint/body/success/response/state/error/privacy/transaction proposals and four
+  exact TV1 decisions. Decimal-string versions, JSON strictness, private reason visibility and role-sync
+  intent/ack remain pending. No shared contract or signature is invented.
+- [x] Five internal typed input DTOs: Seller Version/Moderation, Store Create/Update/SetOpen, consumed by
+  additive persistence-service overloads. Registration keeps existing verified-applicant-only method.
+  StoreDetails shares unchanged name/slug validation with StoreProfile; no schema/business invariant change.
+  Null/version/reason/Unicode boundaries checked; identity/status/grants cannot be supplied through these inputs.
+- [x] Internal mapping delegates the existing policy/REQUIRED/ownership/version operations. No controller,
+  production writer/policy bean, response serializer, public handler, JWT adapter or new dependency.
+  Domain-compatible inputs are not an approved JSON wire or HTTP forbidden-field rejection.
+- [x] Fresh baseline107unit PASS; new input RED31cases/30assertion FAIL then GREEN full138unit PASS;
+  mapping/null regression RED19cases/2assertion FAIL then full146unit PASS. These are separate invocations,
+  not counts to sum. No assertions disabled or tests removed to obtain GREEN.
+- [ ] Local full Seller build: **FAIL/exit1** because integrationTest has three Testcontainers class-init
+  failures. Compile/assemble and146unit PASS in that invocation; PostgreSQL business cases **BLOCKED/NOT_RUN**,
+  not113/115PG PASS. Docker Linux Engine pipe unavailable; normal Desktop startup fails on Secrets Engine
+  engine.sock rename/access. No socket/config/volume/database deletion or test exclusions.
+- [ ] Two added PostgreSQL cases compile but await execution: typed Seller lifecycle/ID/version/permission/
+  REQUIRED rollback and typed Store metadata/open/ID/current-owner/stale-version/rollback. Existing migrations,
+  uniqueness, optimistic-lock/concurrency suites remain unchanged and require actual PostgreSQL regression.
+- [ ] HTTP request/response binding, strict unknown/duplicate-field handling, response privacy mapper and
+  error handler await exact joint wire approval. Real JWT/current ADMIN/current SELLER/Gateway/role-sync
+  positive integration and live E2E remain NOT_RUN. Product/M01/Finance/Inventory unchanged, flags OFF.
+
+Java21.0.12, Gradle8.10, JVM UTC; existing module task pins Docker client API1.44. Full attempt:
+
+```powershell
+backend/gradlew.bat -p backend :seller-service:build --rerun-tasks --no-daemon --continue --console=plain
+```
+
+Full attempt21s/exit1; unit146PASS/0FAIL/error/skip, integration3initializationFAIL/0skip. Raw log/XML and
+per-class counters preserved under ignored `backend/seller-service/build/http-v02-20261021/`.
+`full-build-initial.log` SHA256 `BA86421ADD8F59C741E27194EDB097EFCB200F379002FC8049D051135DC6ABDF`.
+Input RED `2160E2D899A538023F28A7F076F8F92EA08E1861A75AF1FA97F3989FD23BC632`;
+input GREEN `123FEF318D8A468E007A2295B320E081EC793B9204BC3AC4114F9D9957722B88`;
+mapping RED `4186DA9842A91B7D7E42A98A9653C2B6286EAD0411379E4B0A5095E42E3CB588`.
+Private raw logs/XML are not public CI artifacts. Future CI/owner/local DB retries must be recorded as
+separate evidence at their exact SHA; do not relabel this failed build as PASS.
+
+Product/Category regression and full-backend build **NOT_RUN** here: no Product/shared-build dependency
+or implementation changed. Commit/PR publication receipts and granular Issue2/9 updates belong on GitHub
+after push verification, not inferred from this pre-publication checkpoint. Issues remain OPEN/PARTIAL;
+REST/JWT/role-sync/E2E aggregate boxes remain unchecked. Next highest-value coding task is the TV1-approved
+verified HTTP adapter using these inputs after concrete verifier/current-authority and wire handoff.
+
 ## Current W1 boundaries — 2026-10-20
 
 **W1 BLOCKED** on shared wire/current-authority/business decisions, not on another Store DB architecture vote.
