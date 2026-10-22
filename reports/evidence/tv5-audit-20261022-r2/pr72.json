@@ -1,0 +1,524 @@
+{
+  "kind": "DERIVED SUMMARY; private raw logs/XML, not public CI artifacts",
+  "metadata": {
+    "pr": 72,
+    "source": "c0329a6278e0a3108f96b3b1485882a18177d929",
+    "command": [
+      "backend/gradlew.bat",
+      "-p",
+      "backend",
+      ":product-service:test",
+      "--tests",
+      "*ProductImageValidatorTest",
+      "--rerun-tasks",
+      "--no-daemon",
+      "--console=plain"
+    ],
+    "startedUtc": "2026-10-22T13:22:15.584782+00:00",
+    "environment": {
+      "Java": "21.0.7",
+      "Gradle": "8.10",
+      "Docker": "29.8.1",
+      "JAVA_TOOL_OPTIONS": "-Duser.timezone=UTC -Dapi.version=1.44"
+    },
+    "executor": "TV5 independent exact-head execution",
+    "exitCode": 0,
+    "completedUtc": "2026-10-22T13:22:31.249327+00:00"
+  },
+  "counts": {
+    "test": {
+      "PASS": 67
+    }
+  },
+  "cases": [
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[1] name=sample.jpg, format=JPEG",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[2] name=sample.png, format=PNG",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[3] name=sample.webp, format=WEBP",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[4] name=alpha.webp, format=WEBP",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[1] name=photo.svg",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[2] name=photo.gif",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[3] name=photo.png.exe",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[4] name=photo",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[5] name=",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[1] count=0",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[2] count=1",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[3] count=2",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[4] count=3",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[5] count=4",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[6] count=5",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "zeroBytesAreRejected()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "nullOrNulFilenameIsRejectedWithoutUsingItAsAPath()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "decodesActualLosslessWebpFixture()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[1] extraBytes=1",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[2] extraBytes=49",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "invalidBatchDoesNotReturnAUsableSubsetAndResultIsImmutable()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "webpWithValidRiffHeaderAndChunkSizesButGarbagePixelsIsRejected()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "jpegTruncatedInsideScanIsRejectedEvenWithRestoredEndMarker()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "sixthImageIsRejectedBeforeAnyStreamIsRead()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "endlessStreamReadsAtMostLimitPlusOneByte()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "compressedDataCannotExpandBeyondDeclaredPixelBudget()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[1] colorType=4, rawByteCount=18",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[2] colorType=6, rawByteCount=34",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "impossibleChunkLengthsCannotAllocateFromUntrustedMetadata()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "pngCrcMismatchAndMissingEndChunkAreRejected()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "animationIsRejectedRatherThanValidatingOnlyItsFirstFrame()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "oversizedDimensionsAndPixelBombAreRejectedBeforePixelDecode()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "realJpegDeclaredAsPngAndRealPngRenamedAsJpegAreRejected()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[1] name=sample.jpg, format=JPEG",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[2] name=sample.png, format=PNG",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[3] name=sample.webp, format=WEBP",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[4] name=alpha.webp, format=WEBP",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[1] value=hello world",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[2] value=<svg xmlns=\"http://www.w3.org/2000/svg\"></svg>",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[3] value=<script>alert(1)</script>",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[1] imageType=12, width=1, height=1, interlaced=true",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[2] imageType=12, width=9, height=3, interlaced=true",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[3] imageType=10, width=3, height=5, interlaced=false",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[4] imageType=11, width=2, height=2, interlaced=true",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[5] imageType=1, width=16, height=12, interlaced=false",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[6] imageType=2, width=9, height=9, interlaced=true",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[7] imageType=13, width=3, height=9, interlaced=false",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "webpRiffLengthMismatchAndTrailingDataAreRejected()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "pngBadZlibChecksumAndTrailingCompressedDataAreRejected()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "nullCollectionAndNullElementAreRejected()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "ioErrorsUseSafeInternalErrorAndCallerKeepsStreamOwnership()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "existingTrustedCountIsIncludedAndCannotOverflow()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "jpegAliasAndCaseInsensitiveDeclarationsAreAccepted()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[1] delta=-1",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[2] delta=0",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[3] delta=1",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "pngCorruptedCompressedPixelsAreRejectedEvenWithCorrectChunkCrc()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "pngMissingZlibChecksumIsRejectedEvenWhenOuterChunksAreWellFormed()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "resultOwnsItsBytesInsteadOfReopeningOrExposingTheInput()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[1] type=null",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[2] type=",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[3] type=image/gif",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[4] type=image/svg+xml",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[5] type=application/octet-stream",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[6] type=image/jpg",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[7] type=image/png; charset=utf-8",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "nullInputAndStreamAreRejected()",
+      "result": "PASS"
+    }
+  ],
+  "staleXmlExcluded": [],
+  "rawArtifacts": [
+    {
+      "localPath": ".verification/tv5-audit-20261022-r2/runs/pr72/product-service/test/TEST-com.projecthk5.productservice.image.ProductImageValidatorTest.xml",
+      "bytes": 10132,
+      "sha256": "4da5409a3bf478ad47091ff37c7c1d52b0f5620557ca47780fd4f1c159d81427"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261022-r2/runs/pr72/runtime.log",
+      "bytes": 1135,
+      "sha256": "60fb4769d52ada2dc6aa2f52cc214a78c3d522c21d9b19ade1f88eb96ea3f91d"
+    }
+  ],
+  "publication": {
+    "type": "DERIVED SUMMARY",
+    "raw": "Original bytes retained privately at listed localPath; not public CI/downloadable raw artifacts",
+    "redaction": "Only command checkout paths replaced with placeholders; raw log/XML not edited or published",
+    "verification": "Every listed original size and SHA256 rechecked before writing this summary",
+    "limits": "No aggregated release total across runs, heads or suites; no business approval or live E2E implied"
+  }
+}
