@@ -64,3 +64,12 @@ This is a separate target execution, not another release total or an original RE
 Only this runbook and the new derived receipt change; test/init sources and original raw RED/GREEN stay unchanged.
 After normal push/base retarget, recheck diff/CI and request the applicable review of the new base/head.
 TV3 ownership acceptance remains required. No M01/Finance/COD/HTTP/E2E gate is satisfied by this retarget.
+
+
+GitHub's three-dot compare initially included the three Cart fix paths because PR67 was squash-merged.
+The pre-retarget guard stopped before changing GitHub. Main was then merged normally into this QA branch,
+without reset/force or production edits; merge head **69297baecfa3d3ea10684308486c6016bb055d02** contains main aca5dff.
+The same explicit task ran on that exact merge head at **13:26:53–13:27:13UTC**, **10PASS/0FAIL,exit0**.
+[Merge-head derived evidence](../../reports/evidence/tv5-cart-storage-20261022/merged-head.json).
+This documentation/receipt follow-up leaves the tested production/QA source and both QA hashes unchanged.
+Final retarget must compare only seven QA/docs/evidence paths against main; prior base-scoped approval is not final retarget approval.
