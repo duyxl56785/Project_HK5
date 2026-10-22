@@ -1,5 +1,8 @@
 # TV5 — rà soát việc còn chặn owner và bàn giao, 20/10/2026
 
+> Current actions sau ngày20/10: xem [audit22/10 toàn bộ PR/reviewers](TV5_ALL_PR_REVIEWERS_AUDIT_2026-10-22.md). Các timestamp/evidence trong file này được giữ nguyên.
+
+
 Refs #5/#12. **TV5-UNBLOCK-20261020-v1. PARTIAL / WAITING_HUMAN_REVIEW / WAITING_OWNER_CONFIRMATION.**
 Nguồn chạy mới: main **03fb1b2e8a1c1261568446c1f9ed68d264784e4e**; PR60 **e0a28de663b3488178a616770eb82de9fd46e580**.
 Đây là agent QA/technical handoff, không chữ ký human TV5/business, không quyền bật Finance/pair hoặc triển khai owner khác.

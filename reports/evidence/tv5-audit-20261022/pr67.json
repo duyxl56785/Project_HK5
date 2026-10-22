@@ -1,0 +1,145 @@
+{
+  "kind": "DERIVED SUMMARY; private raw logs/XML, not public CI artifacts",
+  "metadata": {
+    "pr": 67,
+    "source": "add83ec2c7f43e5f942c42682d6a4574c152318d",
+    "command": [
+      "<isolated-source-checkout>/backend/gradlew.bat",
+      "-p",
+      "backend",
+      ":cart-service:test",
+      ":cart-service:postgresIntegrationTest",
+      "--rerun-tasks",
+      "--no-daemon",
+      "--console=plain"
+    ],
+    "startedUtc": "2026-10-22T05:26:56.666334+00:00",
+    "environment": {
+      "Java": "21.0.7",
+      "Gradle": "8.10",
+      "Docker": "29.8.1",
+      "JAVA_TOOL_OPTIONS": "-Duser.timezone=UTC -Dapi.version=1.44"
+    },
+    "executor": "TV5 independent exact-head execution",
+    "exitCode": 0,
+    "completedUtc": "2026-10-22T05:27:44.689657+00:00"
+  },
+  "counts": {
+    "test": {
+      "PASS": 11
+    },
+    "postgresIntegrationTest": {
+      "PASS": 1
+    }
+  },
+  "cases": [
+    {
+      "module": "cart-service",
+      "task": "test",
+      "class": "com.projecthk5.cartservice.security.ContractJwtDecoderTest",
+      "name": "currentAndPreviousKidsAccepted()",
+      "result": "PASS"
+    },
+    {
+      "module": "cart-service",
+      "task": "test",
+      "class": "com.projecthk5.cartservice.security.ContractJwtDecoderTest",
+      "name": "missingShortAndMismatchedKeyringRejectStartup()",
+      "result": "PASS"
+    },
+    {
+      "module": "cart-service",
+      "task": "test",
+      "class": "com.projecthk5.cartservice.security.ContractJwtDecoderTest",
+      "name": "wrongKidSignatureIssuerRoleAndTtlRejected()",
+      "result": "PASS"
+    },
+    {
+      "module": "cart-service",
+      "task": "test",
+      "class": "com.projecthk5.cartservice.service.CartServiceTest",
+      "name": "nullOrMalformedClaimKeyCannotSilentlySucceedOnUnclaimedCart()",
+      "result": "PASS"
+    },
+    {
+      "module": "cart-service",
+      "task": "test",
+      "class": "com.projecthk5.cartservice.service.CartServiceTest",
+      "name": "untrustedBlankStoreOrSellerNeverPersistsCart()",
+      "result": "PASS"
+    },
+    {
+      "module": "cart-service",
+      "task": "test",
+      "class": "com.projecthk5.cartservice.service.CartServiceTest",
+      "name": "claimedCartRejectsWriteAndReleaseWorks()",
+      "result": "PASS"
+    },
+    {
+      "module": "cart-service",
+      "task": "test",
+      "class": "com.projecthk5.cartservice.service.CartServiceTest",
+      "name": "priceThatPostgresWouldRoundOrOverflowNeverTouchesCart()",
+      "result": "PASS"
+    },
+    {
+      "module": "cart-service",
+      "task": "test",
+      "class": "com.projecthk5.cartservice.service.CartServiceTest",
+      "name": "representablePriceCanRetainExactValueWithoutChoosingMoneyPolicy()",
+      "result": "PASS"
+    },
+    {
+      "module": "cart-service",
+      "task": "test",
+      "class": "com.projecthk5.cartservice.service.CartServiceTest",
+      "name": "finalizationClearsOnlyMatchingClaim()",
+      "result": "PASS"
+    },
+    {
+      "module": "cart-service",
+      "task": "test",
+      "class": "com.projecthk5.cartservice.service.CartServiceTest",
+      "name": "addUpdateRemoveAndTrustedStore()",
+      "result": "PASS"
+    },
+    {
+      "module": "cart-service",
+      "task": "test",
+      "class": "com.projecthk5.cartservice.service.CartServiceTest",
+      "name": "invalidProductIdsFromDirectCallDoNotInvokeCatalogOrSave()",
+      "result": "PASS"
+    },
+    {
+      "module": "cart-service",
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.cartservice.integration.CartPostgres16IT",
+      "name": "migrationHibernateValidateCascadeTwoStoresAndUniqueProduct()",
+      "result": "PASS"
+    }
+  ],
+  "staleXmlExcluded": [],
+  "rawArtifacts": [
+    {
+      "localPath": ".verification/tv5-audit-20261022/runs/pr67/cart-service/postgresIntegrationTest/TEST-com.projecthk5.cartservice.integration.CartPostgres16IT.xml",
+      "bytes": 8703,
+      "sha256": "f21ae2878a76bcc729e53d9b532f1961317b153e191154ef76aa2c212fd72279"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261022/runs/pr67/cart-service/test/TEST-com.projecthk5.cartservice.security.ContractJwtDecoderTest.xml",
+      "bytes": 786,
+      "sha256": "cabfffeec3c328d719944d3f04d572cc9292f121f59a0e1dae28ab67620373db"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261022/runs/pr67/cart-service/test/TEST-com.projecthk5.cartservice.service.CartServiceTest.xml",
+      "bytes": 2048,
+      "sha256": "eb1beac48d3bb35fdfe75f46388c82740dfe182ff0cff597d59c491fc98e2435"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261022/runs/pr67/runtime.log",
+      "bytes": 2299,
+      "sha256": "a3168759a72fbcc9c0ef3aaa09bd9e03c3ae5d5fad1433fd44d6a93cb174b286"
+    }
+  ],
+  "limitation": "Per-SHA/invocation TV5 execution only; remote ports/fixture policies/prototypes are not positive production auth or live E2E. No cross-run release total."
+}

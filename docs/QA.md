@@ -1,5 +1,9 @@
 # Kiểm thử và bằng chứng
 
+> **Latest audit 22/10/2026:** [52 PR / toàn bộ reviewers và current QA](../reports/TV5_ALL_PR_REVIEWERS_AUDIT_2026-10-22.md).
+> Các checkpoint20/10 bên dưới giữ lịch sử; #65 nay MERGED, #66/#67/#68 được theo dõi riêng. M01 PENDING, Finance production BLOCKED.
+
+
 > **Current handoff:** [post-snapshot delta](../reports/TV5_OWNER_UNBLOCK_HANDOFF_2026-10-20.md#12-post-snapshot-status-delta--current-actions)
 > (query 2026-10-20T14:55:26.142195+00:00): #39/#61 MERGED; #60/#62 CLOSED WITHOUT MERGE.
 > Những next action yêu cầu review các PR đó phía dưới là lịch sử. Không assume #60/#62 đã tích hợp.
@@ -212,3 +216,12 @@ Các dòng NOT_RUN/BLOCKED_TOOL_APPROVAL phía trên giữ lịch sử lượt t
 #64 exact06ebfc4 **27 unit PASS**; #65 exact5bfbc15 initial10initializationFAIL vì Engine tắt,
 sau Docker startup retry **10 PG PASS**. Raw FAIL/GREEN giữ riêng, không cộng counts/CI/owner thành release total.
 M01 PENDING, flagsOFF. Phần trên ghi trước công bố; chỉ tick publication trên GitHub sau khi push và kiểm receipt.
+
+
+### TV5 audit — 22/10/2026
+
+- [x] Quét đủ toàn bộ PR/reviewers/Issues tại snapshot; [full report/index](../reports/TV5_ALL_PR_REVIEWERS_AUDIT_2026-10-22.md), PR63 P2 FIXED_VERIFIED/TV1 decision pending.
+- [x] Exact66 e20263e:236unit+117integration PASS; exact67 add83ec:11Cartunit+1PG PASS. Fixture/prototype vs production/live scopes ghi riêng.
+- [x] Main c2cf55a:27Inventoryunit/19PG/3originalFINdiagnostic PASS; invocation riêng30Reviewunit/49Financeunit PASS. Không cộng thành release total.
+- [x] Thêm CartPG test-only supplement68: base RED4PASS/6FAIL →fix GREEN10PASS, sameQAhashes/assertions; e24731f pushed, TV3/TV2requested.
+- [ ] Formal reviewer decisions, approved M01/COD/shared facts/runtime/API/Storequeries/atomic settlement/liveE2E; Issue5/12PARTIAL.
