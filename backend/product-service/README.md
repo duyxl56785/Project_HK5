@@ -114,3 +114,25 @@ See CATEGORY_TEST_REPORT.md for actual verification results and remaining integr
 The two-Store JSON fixture is test-only and not persisted; prices have no newly approved currency/rounding policy, and candidate quantities are not actual stock. Product/Store schema, global SKU uniqueness, Product→Category restrictive FK, upload/storage and provider/consumer APIs still require their own reviewed integration. Earlier Category-only statements above describe the original baseline; Product persistence remains absent. See [TV2 week 1 progress](../../docs/TV2_WEEK1_PROGRESS.md) for details and actual test results.
 
 The Catalog follow-up adds an internal batch-validation proposal and isolated SQL-prototype PostgreSQL tests. There is no production source adapter, Catalog controller or Product migration; the proposed route remains denied by the existing fallback. Read the [Catalog handoff](../../docs/TV2_CATALOG_HANDOFF.md) for pending Store/API/money/security decisions and the verified 340-test two-module run. Prototype constraints and test fixtures do not establish production persistence or live Checkout readiness.
+
+## Exact SKU boundary regression — 2026-10-22
+
+`ProductListing` rejects leading/trailing Unicode whitespace without rewriting the SKU.
+`String.strip()` alone missed U+00A0, U+2007 and U+202F; validation now checks both
+`Character.isWhitespace` and `Character.isSpaceChar` at each boundary, matching the
+Inventory candidate's exact-key rule reviewed in [PR #69](https://github.com/duyxl56785/Project_HK5/pull/69).
+Case and Unicode composition remain exact through Product create/edit; Product ID is never substituted for SKU.
+No new character alphabet, money rule, migration, HTTP route or authoritative provider is introduced.
+
+Actual local verification (Java21.0.12, Gradle8.10, Docker29.9.1, UTC):
+- Focused `:product-service:test --tests '*ProductLifecycleServiceTest' --rerun-tasks --no-daemon --console=plain`:
+  RED90cases/7assertionFAIL before the fix, then GREEN90PASS;0errors/skipped.14new cases are included, not added again.
+- Full `:product-service:build --rerun-tasks --no-daemon --console=plain`:
+  **323PASS/0FAIL/errors/SKIPPED**, exit0/54s =285unit/API/security +38integration
+  (14Category production PostgreSQL +24Catalog SQL-prototype PostgreSQL). Catalog50 is included in285.
+- Raw RED/GREEN/full logs and XML stay private under ignored `build/sku-boundary-20261022/`.
+  Full log SHA256: `38B8ED3A6A6D4BE3C65EE6C86EFE2A228DD3036848D3E05D5B896FE8A992625A`.
+
+This fixes internal SKU validation only. Production global UNIQUE SKU, Product persistence,
+trusted Product→Store/Seller mapping, Inventory integration and JWT/HTTP/E2E remain unimplemented/gated.
+The existing SQL prototype's constraints are not production schema acceptance.

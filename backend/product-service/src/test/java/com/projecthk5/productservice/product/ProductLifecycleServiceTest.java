@@ -173,10 +173,20 @@ class ProductLifecycleServiceTest {
 
     @ParameterizedTest
     @NullAndEmptySource
-    @ValueSource(strings = {" ", " SKU", "SKU ", "\t"})
+    @ValueSource(strings = {" ", " SKU", "SKU ", "\t", "\u00a0SKU", "SKU\u00a0", "\u00a0",
+            "\u2007SKU", "SKU\u2007", "\u202fSKU", "SKU\u202f", "\u2003SKU", "SKU\u2003"})
     void invalidSkuIsRejected(String sku) {
         assertThrows(ProductRuleException.class, () -> new ProductListing(UUID.randomUUID(), storeId, categoryId,
                 sku, "Name", BigDecimal.ONE, ProductStatus.DRAFT, null));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"Sku-A", "sku-a", "SKU-A", "\u00e9-SKU", "e\u0301-SKU"})
+    void validSkuRemainsExactAcrossCreateAndEdit(String sku) {
+        ProductListing created = service.create("owner", storeId, categoryId, sku, "Name", BigDecimal.ONE);
+        ProductListing edited = service.edit("owner", created, categoryId, "Edited", BigDecimal.TEN);
+        assertEquals(sku, created.sku());
+        assertEquals(sku, edited.sku());
     }
 
     @Test void invalidPriceAndMetadataAreRejectedWithoutRounding() {

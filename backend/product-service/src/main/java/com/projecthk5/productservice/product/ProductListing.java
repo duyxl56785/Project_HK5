@@ -8,7 +8,7 @@ public record ProductListing(UUID id, UUID storeId, UUID categoryId, String sku,
                              BigDecimal unitPrice, ProductStatus status, String reviewReason) {
     public ProductListing {
         if (id == null || storeId == null || categoryId == null || status == null
-                || sku == null || sku.isBlank() || sku.length() > 128 || !sku.equals(sku.strip())
+                || sku == null || sku.isBlank() || sku.length() > 128 || hasBoundaryWhitespace(sku)
                 || name == null || name.isBlank() || name.strip().length() > 255
                 || unitPrice == null || unitPrice.signum() <= 0) {
             throw new ProductRuleException(ProductRuleException.Code.INVALID_INPUT, "Invalid product details");
@@ -21,6 +21,12 @@ public record ProductListing(UUID id, UUID storeId, UUID categoryId, String sku,
             throw new ProductRuleException(ProductRuleException.Code.INVALID_INPUT, "Invalid moderation reason");
         }
         reviewReason = reviewReason == null ? null : reviewReason.strip();
+    }
+
+    private static boolean hasBoundaryWhitespace(String sku) {
+        int first = sku.codePointAt(0), last = sku.codePointBefore(sku.length());
+        return Character.isWhitespace(first) || Character.isSpaceChar(first)
+                || Character.isWhitespace(last) || Character.isSpaceChar(last);
     }
 
     ProductListing withState(ProductStatus next, String reason) {
