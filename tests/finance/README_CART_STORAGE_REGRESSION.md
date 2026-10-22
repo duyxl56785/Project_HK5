@@ -2,7 +2,9 @@
 
 Refs #3, #5, #12, #67. Test-only supplement based on PR #67 head `add83ec`.
 No production Java, migration, normal Gradle task, shared dependency, policy or flag changes.
-The supplemental PR targets the **PR #67 branch**, not main, so it does not bypass review of the Cart fix.
+Originally this supplement targeted the PR #67 branch. PR #67 merged at09:17:11UTC on22/10.
+The supplement is now prepared to target **main**, preserving all QA source/assertions and original RED/GREEN.
+Previous approvals were scoped to the old base; reviewers must confirm the retarget, not infer approval.
 
 ## What the ten invocations prove
 
@@ -49,3 +51,16 @@ Do not add these invocations to Cart unit/PG/CI counts or another SHA's release 
 - [x] Keep positive controls and private original RED/GREEN byte hashes.
 - [ ] TV3/TV2 review and accept the supplemental tests; normal CI alone does not replace this explicit task.
 - [ ] Production Catalog/Auth/Store/M01/COD acceptance remains independently BLOCKED/NOT_RUN.
+
+
+## Post-parent-merge retarget verification
+
+PR63/66/67 are MERGED. Do not reopen/request those reviews or merge this QA into an abandoned parent branch.
+Target main **aca5dff247ef8eae3ce97c1a73b9474b87e94110** contains the Cart fix; its entire Cart source tree is identical to add83ec.
+The same explicit task/QA hashes were executed on this main source at **22/10 13:23:11–13:23:32UTC**:
+**10PASS/0FAIL,exit0**, Java21.0.7/Gradle8.10/Docker29.8.1/UTC/API1.44.
+[Derived main-target evidence](../../reports/evidence/tv5-cart-storage-20261022/main-retarget.json).
+This is a separate target execution, not another release total or an original RED rerun.
+Only this runbook and the new derived receipt change; test/init sources and original raw RED/GREEN stay unchanged.
+After normal push/base retarget, recheck diff/CI and request the applicable review of the new base/head.
+TV3 ownership acceptance remains required. No M01/Finance/COD/HTTP/E2E gate is satisfied by this retarget.
