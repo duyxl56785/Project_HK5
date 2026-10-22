@@ -8,6 +8,7 @@ import com.projecthk5.inventoryservice.api.InventoryOperationType;
 import com.projecthk5.inventoryservice.candidate.InventoryReservationLedgerCandidateService;
 import com.projecthk5.inventoryservice.candidate.ReservationCandidateException;
 import com.projecthk5.inventoryservice.candidate.ReservationOperationCandidateRequest;
+import com.projecthk5.inventoryservice.candidate.ReservationOperationCandidateResponse;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
@@ -203,6 +204,205 @@ class InventoryReservationLedgerCandidatePostgresIT extends InventoryPostgresSup
             workers.shutdownNow();
             assertTrue(workers.awaitTermination(15, TimeUnit.SECONDS));
         }
+    }
+
+    @Test void concurrentSameReserveOperationIdReplaysWinnerWithoutDuplicatingOwnerOrStock() throws Exception {
+        String sku = initialize("same-reserve-race", 10);
+        var reserve = request(id("same-reserve-key"), id("same-reservation"), id("same-store"), id("same-seller"),
+                id("same-order"), InventoryOperationType.RESERVE, line(sku, 6));
+        CountDownLatch firstApplied = new CountDownLatch(1);
+        CountDownLatch releaseFirst = new CountDownLatch(1);
+        ExecutorService workers = Executors.newFixedThreadPool(2);
+        try {
+            Future<ReservationOperationCandidateResponse> first = workers.submit(() ->
+                    new TransactionTemplate(transactions).execute(tx -> {
+                        var response = ledger.apply(reserve);
+                        firstApplied.countDown();
+                        await(releaseFirst);
+                        return response;
+                    }));
+            assertTrue(firstApplied.await(15, TimeUnit.SECONDS));
+            Future<Object> retry = workers.submit(() -> {
+                try {
+                    return ledger.apply(reserve);
+                } catch (RuntimeException failure) {
+                    return failure;
+                }
+            });
+            waitForDatabaseLock(sql, "inventory_reservation");
+            releaseFirst.countDown();
+
+            assertFalse(first.get(20, TimeUnit.SECONDS).replayed());
+            var replay = assertInstanceOf(ReservationOperationCandidateResponse.class, retry.get(20, TimeUnit.SECONDS));
+            assertTrue(replay.replayed());
+            assertEquals(1, sql.queryForObject(
+                    "SELECT count(*) FROM inventory_operation WHERE operation_id = ?",
+                    Integer.class, reserve.operationId()));
+            assertEquals(1, sql.queryForObject(
+                    "SELECT count(*) FROM inventory_reservation WHERE reservation_id = ?",
+                    Integer.class, reserve.reservationId()));
+            assertEquals(4, inventory.getBalance(sku).availableQuantity());
+            assertEquals(6, inventory.getBalance(sku).reservedQuantity());
+            assertEquals(6L, held(reserve.reservationId(), sku));
+        } finally {
+            releaseFirst.countDown();
+            workers.shutdownNow();
+            assertTrue(workers.awaitTermination(15, TimeUnit.SECONDS));
+        }
+    }
+
+    @Test void concurrentSameReleaseOperationIdReplaysWithoutReturningStockTwice() throws Exception {
+        String sku = initialize("same-release-race", 10);
+        var reserve = request(id("same-release-reserve"), id("same-release-reservation"), id("same-release-store"),
+                id("same-release-seller"), id("same-release-order"), InventoryOperationType.RESERVE, line(sku, 7));
+        ledger.apply(reserve);
+        var release = request(id("same-release-key"), reserve.reservationId(), reserve.storeId(), reserve.sellerId(),
+                reserve.sellerOrderId(), InventoryOperationType.RELEASE, line(sku, 4));
+        CountDownLatch firstApplied = new CountDownLatch(1);
+        CountDownLatch releaseFirst = new CountDownLatch(1);
+        ExecutorService workers = Executors.newFixedThreadPool(2);
+        try {
+            Future<ReservationOperationCandidateResponse> first = workers.submit(() ->
+                    new TransactionTemplate(transactions).execute(tx -> {
+                        var response = ledger.apply(release);
+                        firstApplied.countDown();
+                        await(releaseFirst);
+                        return response;
+                    }));
+            assertTrue(firstApplied.await(15, TimeUnit.SECONDS));
+            Future<Object> retry = workers.submit(() -> {
+                try {
+                    return ledger.apply(release);
+                } catch (RuntimeException failure) {
+                    return failure;
+                }
+            });
+            waitForDatabaseLock(sql, "inventory_reservation");
+            releaseFirst.countDown();
+
+            assertFalse(first.get(20, TimeUnit.SECONDS).replayed());
+            var replay = assertInstanceOf(ReservationOperationCandidateResponse.class, retry.get(20, TimeUnit.SECONDS));
+            assertTrue(replay.replayed());
+            assertEquals(1, sql.queryForObject(
+                    "SELECT count(*) FROM inventory_operation WHERE operation_id = ?",
+                    Integer.class, release.operationId()));
+            assertEquals(1, sql.queryForObject("""
+                    SELECT count(*) FROM inventory_reservation_operation_line
+                    WHERE operation_id = ? AND sku = ? AND quantity = 4
+                    """, Integer.class, release.operationId(), sku));
+            assertEquals(7, inventory.getBalance(sku).availableQuantity());
+            assertEquals(3, inventory.getBalance(sku).reservedQuantity());
+            assertEquals(3L, held(reserve.reservationId(), sku));
+        } finally {
+            releaseFirst.countDown();
+            workers.shutdownNow();
+            assertTrue(workers.awaitTermination(15, TimeUnit.SECONDS));
+        }
+    }
+
+    @Test void concurrentReleaseRetryWithChangedPayloadConflictsAfterWinnerCommits() throws Exception {
+        String sku = initialize("release-mismatch-race", 10);
+        var reserve = request(id("release-mismatch-reserve"), id("release-mismatch-reservation"),
+                id("release-mismatch-store"), id("release-mismatch-seller"), id("release-mismatch-order"),
+                InventoryOperationType.RESERVE, line(sku, 7));
+        ledger.apply(reserve);
+        String operationId = id("release-mismatch-key");
+        var original = request(operationId, reserve.reservationId(), reserve.storeId(), reserve.sellerId(),
+                reserve.sellerOrderId(), InventoryOperationType.RELEASE, line(sku, 4));
+        var changed = request(operationId, reserve.reservationId(), reserve.storeId(), reserve.sellerId(),
+                reserve.sellerOrderId(), InventoryOperationType.RELEASE, line(sku, 3));
+        CountDownLatch firstApplied = new CountDownLatch(1);
+        CountDownLatch releaseFirst = new CountDownLatch(1);
+        ExecutorService workers = Executors.newFixedThreadPool(2);
+        try {
+            Future<ReservationOperationCandidateResponse> first = workers.submit(() ->
+                    new TransactionTemplate(transactions).execute(tx -> {
+                        var response = ledger.apply(original);
+                        firstApplied.countDown();
+                        await(releaseFirst);
+                        return response;
+                    }));
+            assertTrue(firstApplied.await(15, TimeUnit.SECONDS));
+            Future<Object> retry = workers.submit(() -> {
+                try {
+                    return ledger.apply(changed);
+                } catch (RuntimeException failure) {
+                    return failure;
+                }
+            });
+            waitForDatabaseLock(sql, "inventory_reservation");
+            releaseFirst.countDown();
+
+            assertFalse(first.get(20, TimeUnit.SECONDS).replayed());
+            ReservationCandidateException conflict = assertInstanceOf(ReservationCandidateException.class,
+                    retry.get(20, TimeUnit.SECONDS));
+            assertEquals("IDEMPOTENCY_KEY_REUSED", conflict.getCode());
+            assertEquals(1, sql.queryForObject(
+                    "SELECT count(*) FROM inventory_operation WHERE operation_id = ?",
+                    Integer.class, operationId));
+            assertEquals(1, sql.queryForObject("""
+                    SELECT count(*) FROM inventory_reservation_operation_line
+                    WHERE operation_id = ? AND sku = ? AND quantity = 4
+                    """, Integer.class, operationId, sku));
+            assertEquals(7, inventory.getBalance(sku).availableQuantity());
+            assertEquals(3, inventory.getBalance(sku).reservedQuantity());
+            assertEquals(3L, held(reserve.reservationId(), sku));
+        } finally {
+            releaseFirst.countDown();
+            workers.shutdownNow();
+            assertTrue(workers.awaitTermination(15, TimeUnit.SECONDS));
+        }
+    }
+
+    @Test void reservationOwnerCannotChangeInitialSkuLinesWithANewOperationId() {
+        String a = initialize("immutable-owner-a", 10);
+        String z = initialize("immutable-owner-z", 10);
+        var reserve = request(id("immutable-owner-reserve"), id("immutable-owner-reservation"),
+                id("immutable-owner-store"), id("immutable-owner-seller"), id("immutable-owner-order"),
+                InventoryOperationType.RESERVE, line(a, 5), line(z, 2));
+        ledger.apply(reserve);
+        var beforeA = inventory.getBalance(a);
+        var beforeZ = inventory.getBalance(z);
+
+        var changedLines = request(id("immutable-owner-changed-lines"), reserve.reservationId(), reserve.storeId(),
+                reserve.sellerId(), reserve.sellerOrderId(), InventoryOperationType.RESERVE, line(a, 4), line(z, 2));
+        ReservationCandidateException conflict = assertThrows(ReservationCandidateException.class,
+                () -> ledger.apply(changedLines));
+
+        assertEquals("RESERVATION_FINGERPRINT_MISMATCH", conflict.getCode());
+        assertEquals(beforeA, inventory.getBalance(a));
+        assertEquals(beforeZ, inventory.getBalance(z));
+        assertEquals(5L, held(reserve.reservationId(), a));
+        assertEquals(2L, held(reserve.reservationId(), z));
+        assertFalse(sql.queryForObject("SELECT EXISTS(SELECT 1 FROM inventory_operation WHERE operation_id = ?)",
+                Boolean.class, changedLines.operationId()));
+        assertEquals(1, sql.queryForObject("""
+                SELECT count(*) FROM inventory_operation
+                WHERE reservation_id = ? AND operation_type = 'RESERVE'
+                """, Integer.class, reserve.reservationId()));
+    }
+
+    @Test void reservationCandidateRejectsStockAdjustmentTypesBeforeCreatingLedgerRows() {
+        for (InventoryOperationType unsupported : List.of(InventoryOperationType.INCREASE, InventoryOperationType.DECREASE)) {
+            String operationId = id("unsupported-operation");
+            String reservationId = id("unsupported-reservation");
+            ReservationCandidateException failure = assertThrows(ReservationCandidateException.class, () ->
+                    ledger.apply(request(operationId, reservationId, id("unsupported-store"), id("unsupported-seller"),
+                            id("unsupported-order"), unsupported, line(id("unsupported-sku"), 1))));
+            assertEquals("INVALID_RESERVATION_OPERATION", failure.getCode());
+            assertFalse(sql.queryForObject("SELECT EXISTS(SELECT 1 FROM inventory_operation WHERE operation_id = ?)",
+                    Boolean.class, operationId));
+            assertFalse(sql.queryForObject("SELECT EXISTS(SELECT 1 FROM inventory_reservation WHERE reservation_id = ?)",
+                    Boolean.class, reservationId));
+        }
+        String nullTypeOperation = id("null-operation-type");
+        ReservationCandidateException nullType = assertThrows(ReservationCandidateException.class, () ->
+                ledger.apply(request(nullTypeOperation, id("null-type-reservation"), id("null-type-store"),
+                        id("null-type-seller"), id("null-type-order"), null,
+                        line(id("null-type-sku"), 1))));
+        assertEquals("INVALID_RESERVATION_OPERATION", nullType.getCode());
+        assertFalse(sql.queryForObject("SELECT EXISTS(SELECT 1 FROM inventory_operation WHERE operation_id = ?)",
+                Boolean.class, nullTypeOperation));
     }
 
     private String initialize(String prefix, long quantity) {
