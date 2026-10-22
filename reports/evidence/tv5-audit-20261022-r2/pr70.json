@@ -1,0 +1,685 @@
+{
+  "kind": "DERIVED SUMMARY; private raw logs/XML, not public CI artifacts",
+  "metadata": {
+    "pr": 70,
+    "source": "84b3257109f0e2138eb28fbc4406b40d214cf3e1",
+    "command": [
+      "backend/gradlew.bat",
+      "-p",
+      "backend",
+      ":product-service:test",
+      "--tests",
+      "*ProductLifecycleServiceTest",
+      "--rerun-tasks",
+      "--no-daemon",
+      "--console=plain"
+    ],
+    "startedUtc": "2026-10-22T13:19:43.824805+00:00",
+    "environment": {
+      "Java": "21.0.7",
+      "Gradle": "8.10",
+      "Docker": "29.8.1",
+      "JAVA_TOOL_OPTIONS": "-Duser.timezone=UTC -Dapi.version=1.44"
+    },
+    "executor": "TV5 independent exact-head execution",
+    "exitCode": 0,
+    "completedUtc": "2026-10-22T13:20:03.930547+00:00"
+  },
+  "counts": {
+    "test": {
+      "PASS": 90
+    }
+  },
+  "cases": [
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[1] sku=null",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[2] sku=",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[3] sku= ",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[4] sku= SKU",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[5] sku=SKU ",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[6] sku=\t",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[7] sku= SKU",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[8] sku=SKU ",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[9] sku= ",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[10] sku= SKU",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[11] sku=SKU ",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[12] sku= SKU",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[13] sku=SKU ",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[14] sku= SKU",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[15] sku=SKU ",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[1] sku=Sku-A",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[2] sku=sku-a",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[3] sku=SKU-A",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[4] sku=é-SKU",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[5] sku=é-SKU",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "invalidPriceAndMetadataAreRejectedWithoutRounding()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[1] state=DRAFT, action=edit",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[2] state=DRAFT, action=submit",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[3] state=DRAFT, action=approve",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[4] state=DRAFT, action=reject",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[5] state=DRAFT, action=suspend",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[6] state=DRAFT, action=deactivate",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[7] state=PENDING_REVIEW, action=edit",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[8] state=PENDING_REVIEW, action=submit",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[9] state=PENDING_REVIEW, action=approve",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[10] state=PENDING_REVIEW, action=reject",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[11] state=PENDING_REVIEW, action=suspend",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[12] state=PENDING_REVIEW, action=deactivate",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[13] state=ACTIVE, action=edit",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[14] state=ACTIVE, action=submit",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[15] state=ACTIVE, action=approve",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[16] state=ACTIVE, action=reject",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[17] state=ACTIVE, action=suspend",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[18] state=ACTIVE, action=deactivate",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[19] state=REJECTED, action=edit",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[20] state=REJECTED, action=submit",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[21] state=REJECTED, action=approve",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[22] state=REJECTED, action=reject",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[23] state=REJECTED, action=suspend",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[24] state=REJECTED, action=deactivate",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[25] state=SUSPENDED, action=edit",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[26] state=SUSPENDED, action=submit",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[27] state=SUSPENDED, action=approve",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[28] state=SUSPENDED, action=reject",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[29] state=SUSPENDED, action=suspend",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[30] state=SUSPENDED, action=deactivate",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[31] state=INACTIVE, action=edit",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[32] state=INACTIVE, action=submit",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[33] state=INACTIVE, action=approve",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[34] state=INACTIVE, action=reject",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[35] state=INACTIVE, action=suspend",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[36] state=INACTIVE, action=deactivate",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[1] status=DRAFT, approved=false, open=false",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[2] status=DRAFT, approved=false, open=true",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[3] status=DRAFT, approved=true, open=false",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[4] status=DRAFT, approved=true, open=true",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[5] status=PENDING_REVIEW, approved=false, open=false",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[6] status=PENDING_REVIEW, approved=false, open=true",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[7] status=PENDING_REVIEW, approved=true, open=false",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[8] status=PENDING_REVIEW, approved=true, open=true",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[9] status=ACTIVE, approved=false, open=false",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[10] status=ACTIVE, approved=false, open=true",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[11] status=ACTIVE, approved=true, open=false",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[12] status=ACTIVE, approved=true, open=true",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[13] status=REJECTED, approved=false, open=false",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[14] status=REJECTED, approved=false, open=true",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[15] status=REJECTED, approved=true, open=false",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[16] status=REJECTED, approved=true, open=true",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[17] status=SUSPENDED, approved=false, open=false",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[18] status=SUSPENDED, approved=false, open=true",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[19] status=SUSPENDED, approved=true, open=false",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[20] status=SUSPENDED, approved=true, open=true",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[21] status=INACTIVE, approved=false, open=false",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[22] status=INACTIVE, approved=false, open=true",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[23] status=INACTIVE, approved=true, open=false",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[24] status=INACTIVE, approved=true, open=true",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "foreignOwnerAndWrongRoleCannotManageOrModerate()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "identityMismatchOrMissingPolicyFactsFailClosed()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "missingCategoryCannotBeCreatedSubmittedApprovedOrPublic()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "createEditAndModerateRetainsIdentitySkuAndExactPrice()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "invalidActorIsRejectedBeforePolicyOrCategory()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[1] action=approve",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[2] action=reject",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[3] action=suspend",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "closedStoreOrSuspendedSellerCannotManageProduct()",
+      "result": "PASS"
+    }
+  ],
+  "staleXmlExcluded": [],
+  "rawArtifacts": [
+    {
+      "localPath": ".verification/tv5-audit-20261022-r2/runs/pr70/product-service/test/TEST-com.projecthk5.productservice.product.ProductLifecycleServiceTest.xml",
+      "bytes": 14132,
+      "sha256": "91b837835471b1588b64a73780cba68088f7dd924c47be4068a4091f7cfccf26"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261022-r2/runs/pr70/runtime.log",
+      "bytes": 1274,
+      "sha256": "316ce65bed6772a141199af5d2ff16658db06e179bfc0a36260ea18f3d7958a3"
+    }
+  ],
+  "publication": {
+    "type": "DERIVED SUMMARY",
+    "raw": "Original bytes retained privately at listed localPath; not public CI/downloadable raw artifacts",
+    "redaction": "Only command checkout paths replaced with placeholders; raw log/XML not edited or published",
+    "verification": "Every listed original size and SHA256 rechecked before writing this summary",
+    "limits": "No aggregated release total across runs, heads or suites; no business approval or live E2E implied"
+  }
+}

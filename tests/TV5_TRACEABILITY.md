@@ -1,3 +1,5 @@
+> **Current R2 checkpoint 22/10/2026:** [fresh56PR audit, merged63/66/67, open68–72 and exact-head QA](../reports/TV5_PR_REVIEW_FOLLOWUP_2026-10-22_R2.md). Earlier checkpoints below remain historical. M01 PENDING; Finance production BLOCKED.
+
 # TV5 — yêu cầu đến kiểm thử và bằng chứng tuần 1
 
 > **Latest audit 22/10/2026:** [52 PR / toàn bộ reviewers và current QA](../reports/TV5_ALL_PR_REVIEWERS_AUDIT_2026-10-22.md).
@@ -176,3 +178,22 @@ M01 PENDING, flagsOFF. Phần trên ghi trước công bố; chỉ tick publicat
 - [x] Main c2cf55a:27Inventoryunit/19PG/3originalFINdiagnostic PASS; invocation riêng30Reviewunit/49Financeunit PASS. Không cộng thành release total.
 - [x] Thêm CartPG test-only supplement68: base RED4PASS/6FAIL →fix GREEN10PASS, sameQAhashes/assertions; e24731f pushed, TV3/TV2requested.
 - [ ] Formal reviewer decisions, approved M01/COD/shared facts/runtime/API/Storequeries/atomic settlement/liveE2E; Issue5/12PARTIAL.
+
+## Fresh R2 audit — 22/10/2026, after PR63/66/67 merge
+
+- [x] Refresh all56PR/16Issue/reviews/threads/request-removal/CI/rules;39/63 now MERGED, no stale human approval action on closed PRs.
+- [x] Verify69twoTV1findings on4eeeb384; actual27unit+34PG PASS, including1defaultV2/14candidate/19legacy PG invocations.
+- [x] Focused70/84b3257 90PASS;71/5958990 53PASS;72/c0329a6 67PASS; exact-source derived evidence and private raw hashes.
+- [x] Retarget68to main safely after normal merge;10PG on tested69297ba, finalae8ceaa is docs-only; reviewer requests checked, no production delta.
+- [x] [Finance/reservation QA handoff](../docs/TV5_RESERVATION_FINANCE_QA.md), owner decision matrix and fresh RTM; no partial-stock→partial-refund assumption.
+- [ ] Human review latest openheads; TV1 updates69oldCR; other requested reviewers respond within own scope.
+- [ ] Named business authority/same-version M01/C06/currentAuth/source/COD approvals; production settlement/Store queries/liveUAT/Issue5/12DONE remain blocked.
+
+Evidence: [R2 report and test commands](../reports/TV5_PR_REVIEW_FOLLOWUP_2026-10-22_R2.md). Current invocations are not summed with older runs or owner results.
+
+### Subsequent PR74 UI verification delta
+
+- [x] New74/165f5d9 source/DTO review,37tree/SSR/HappyDOM PASS and typecheck/app+feature builds exit0; no tracked source/dependency changes.
+- [ ] Real browser/mobile/screen-reader/native keyboard/router/Gateway/API/liveE2E remain NOT_RUN; TV1 runtime integration pending.
+
+[R2 sections7–8](../reports/TV5_PR_REVIEW_FOLLOWUP_2026-10-22_R2.md#7-new-pr74-discovered-during-final-scan--separate-verification-delta), [derived74evidence](../reports/evidence/tv5-audit-20261022-r2/pr74.json). Snapshot56PR and later58PR kept separate;37 is not added to earlier runs or owner counts.
