@@ -127,3 +127,10 @@ M01 PENDING, flagsOFF. Phần trên ghi trước công bố; chỉ tick publicat
 - [ ] Named business authority/same-version M01/C06/currentAuth/source/COD approvals; production settlement/Store queries/liveUAT/Issue5/12DONE remain blocked.
 
 Evidence: [R2 report and test commands](../reports/TV5_PR_REVIEW_FOLLOWUP_2026-10-22_R2.md). Current invocations are not summed with older runs or owner results.
+
+### Subsequent PR74 UI verification delta
+
+- [x] New74/165f5d9 source/DTO review,37tree/SSR/HappyDOM PASS and typecheck/app+feature builds exit0; no tracked source/dependency changes.
+- [ ] Real browser/mobile/screen-reader/native keyboard/router/Gateway/API/liveE2E remain NOT_RUN; TV1 runtime integration pending.
+
+[R2 sections7–8](../reports/TV5_PR_REVIEW_FOLLOWUP_2026-10-22_R2.md#7-new-pr74-discovered-during-final-scan--separate-verification-delta), [derived74evidence](../reports/evidence/tv5-audit-20261022-r2/pr74.json). Snapshot56PR and later58PR kept separate;37 is not added to earlier runs or owner counts.

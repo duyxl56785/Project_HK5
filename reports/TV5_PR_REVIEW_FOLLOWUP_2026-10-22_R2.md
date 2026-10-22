@@ -209,3 +209,61 @@ TV5 agrees only with technical QA invariants, not a business authorization. Fina
 Publication commit/PR, COMMENT review URLs and guarded Issue updates are recorded after success on GitHub; this pre-publication snapshot does not pretend they already occurred.
 End condition after handoff: **WAITING_REVIEW / WAITING_OWNER_CONFIRMATION / WAITING_BUSINESS_APPROVAL**.
 No independent TV5 production work is unlocked by these technical tests. Open owner contracts are not resolved by writing more proposals.
+
+## 7. New PR74 discovered during final scan — separate verification delta
+
+PR74 appeared after section1's56PR snapshot. Current total at13:45:56UTC is **58PR=7OPEN(1Draft)+49MERGED+2CLOSED_UNMERGED**,
+including TV5's new73 and TV2's new74. Original179reviews remain the pre-publication count; four TV5COMMENTs69–72 are subsequent events.
+
+PR74 **165f5d96e4045b91fd90993085e28acf9cb30463**, base mainaca5dff; authorTV2, requestedTV1/TV5 at discovery.
+Read all feature-local diff/source/tests/docs and backend `CategoryResponse(UUID id,String name,UUID parentId)`.
+It exports an unmounted Category Browser with supplied props, no API calls/current identity/price/Product provider or shared router changes.
+Tree rejects duplicate/orphan/cycle/malformed collections as a whole; search retains ancestor paths and source order; selection emits only exact DTO fields.
+Loading/error/retry/empty/invalid/search/expand/selection/focus paths have independent logic/SSR/DOM tests. No actionable finding identified in this scope.
+
+TV5 independent execution **13:48:47–13:48:52UTC**, source unchanged:
+
+- `node --test src/features/catalog/categoryTree.test.mjs src/features/catalog/CategoryBrowser.test.mjs src/features/catalog/CategoryBrowser.dom.mjs`: **37PASS/0FAIL/0SKIP/cancel/todo**, exit0 =21tree+10SSR+6HappyDOM. Earlier focused21PASS is a subset and not added again.
+- `node node_modules/typescript/bin/tsc --noEmit`: PASS/exit0.
+- `npm run build`: PASS/exit0; shared app is not importing feature, so this alone is insufficient.
+- `node node_modules/vite/bin/vite.js build --config src/features/catalog/vite.category.config.ts`: PASS/exit0 for the unmounted feature.
+- Environment **Node24.19.0/TS5.6.3/React+DOM19.3.1/Vite6.4.5/HappyDOM21.0.4**. These are TV5 actual versions, not copied owner versions.
+  Optional tooling installed only in ignored checkout `node_modules`, no manifest/lockfile/source changes; git tracked status clean.
+- [Derived exact-source receipt, commands/times/testcases/private raw hashes](evidence/tv5-audit-20261022-r2/pr74.json).
+
+**NOT_RUN**: actual Chromium/mobile visual/screen-reader/native keyboard, router/Gateway/API/Auth/live E2E; no independent browser execution claimed.
+Owner's earlier browser download failure is not reclassified as a new test failure in TV5's run. Backend/PG not rerun for frontend-only slice.
+TV1 must review/mount through approved Router and supply actual loader/retry/cancellation/current status; no direct internal-service port or fake provider.
+This UI slice does not require inventing a Finance/M01 approval; later money/Product flows retain their own gates.
+
+## 8. Publication receipt and current reviewer handoff
+
+This report was first pushed as **b165002228fece565ec5199e4dc24451bcdf2321**, [PR73](https://github.com/duyxl56785/Project_HK5/pull/73),
+branch `codex/tv5-reservation-review-handoff-20261022`, base main. All four owners requested once on73; default reviewerTV2 is present and is not author.
+Technical COMMENT reviews successfully published:
+[69](https://github.com/duyxl56785/Project_HK5/pull/69#pullrequestreview-5615186824),
+[70](https://github.com/duyxl56785/Project_HK5/pull/70#pullrequestreview-5615187460),
+[71](https://github.com/duyxl56785/Project_HK5/pull/71#pullrequestreview-5615188112),
+[72](https://github.com/duyxl56785/Project_HK5/pull/72#pullrequestreview-5615188753).
+Own [Issue5checkpoint](https://github.com/duyxl56785/Project_HK5/issues/5#issuecomment-6282711041) and
+[Issue12checkpoint](https://github.com/duyxl56785/Project_HK5/issues/12#issuecomment-6282712138) updated with optimistic body/timestamp checks,
+granular completed boxes and exact evidence; other authors' content and historical bodies retained. Issues5/12/18 remainOPEN/PARTIAL.
+[Publication/API receipt](evidence/tv5-audit-20261022-r2/publication.json) is dated, not a promise that later reviews cannot change.
+
+| Open PR at13:45:56UTC | Author / head | Requested at this checkpoint | Effective opinion / next action |
+|---|---|---|---|
+|68|TV5/ae8ceaa|TV1/TV3/TV2|GitHubAPPROVED from olde24731f, stale not auto-dismissed; newbase/head review still requested. CIreadinessSUCCESS, mergeabletrue/clean|
+|69Draft|TV4/4eeeb384|TV1/TV3|TV1CHANGES_REQUESTED@092e522; technical fixes verified, TV1 must update. TV2/TV5COMMENT, CIreadinessSUCCESS; true/blocked|
+|70|TV2/84b3257|TV4|TV5COMMENT completed, humanTV5 may choose formal scoped decision; TV4 pending; true/blocked, readinessSUCCESS|
+|71|TV2/5958990|TV3|TV5COMMENT completed, humanTV5 may choose formal scoped decision; TV3 pending; true/blocked, readinessSUCCESS|
+|72|TV2/c0329a6|TV1|TV5COMMENT completed, humanTV5 may choose formal scoped decision; TV1 pending; true/blocked, readinessSUCCESS|
+|73|TV5/b165002 at this checkpoint|TV1/TV3/TV2/TV4|REVIEW_REQUIRED; no checks at snapshot; true/blocked. This docs/evidence delta changes73head after snapshot|
+|74|TV2/165f5d9|TV1/TV5 at discovery|REVIEW_REQUIRED; no checks at snapshot; true/blocked. TV5 verification section7 follows this snapshot; no approval inferred|
+
+GitHub consumed TV5 requests on69–72 when COMMENT reviews were submitted; this is not APPROVED and the agent does not re-add itself.
+There are no unresolved review threads on these seven PRs, and no effective TV5CHANGES_REQUESTED on open PRs.
+Only69 has effective CR, owned byTV1. Do not remind humans to Approve already merged39/63/66/67.
+
+- [x] Discover74, read current source and independently run37logic/SSR/DOM tests plus actual typecheck/two builds; keep raw logs private unchanged.
+- [x] Publish73,69–72COMMENT handoffs and guarded Issue5/12checklist updates; reviewer requests verified after push.
+- [ ] Human/owner reviews and applicable contracts/business approval remain as sections5–6; no Finance production/liveE2E acceptance.
