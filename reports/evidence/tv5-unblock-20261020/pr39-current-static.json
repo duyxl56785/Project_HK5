@@ -1,0 +1,48 @@
+{
+  "kind": "EXECUTED STATIC VERIFICATION, NOT BUSINESS/RUNTIME ACCEPTANCE",
+  "executedUtc": "2026-10-20T03:43:43.512043+00:00",
+  "head": "4e4e6232bd9a515e11e1ab9ba433a6b2181c8efc",
+  "path": "docs/TV4_FULFILLMENT_IMPLEMENTATION_CONTRACT.md",
+  "documentSha256": "57b59de42bf09f0b107a5b1561f1ea3c1afdd9f78b3be096cc0d8c15028fff07",
+  "findings": [
+    {
+      "id": "39-F1",
+      "finding": "Original 19 rows versus claimed 21",
+      "originalLine": 71,
+      "fixedLine": 7,
+      "status": "FIXED_VERIFIED",
+      "evidence": "21 legacy and 21 distinct supplemental rows; no count transfer"
+    },
+    {
+      "id": "39-F2",
+      "finding": "Legacy IDs reused with different meanings",
+      "originalLine": 73,
+      "fixedLine": 93,
+      "status": "FIXED_VERIFIED",
+      "evidence": "Exact ID/scenario/expected/status equality against original c4288d5 baseline"
+    },
+    {
+      "id": "39-F3",
+      "finding": "SKU/current authority and state proposals not accurately separated",
+      "originalLine": 96,
+      "fixedLine": 43,
+      "status": "FIXED_VERIFIED",
+      "evidence": "Global immutable Product SKU target remains pending enforcement; TV3 candidate vocabulary/helper confirmed; shared persisted/wire/event/actor/stock/COD still pending; old names not aliases."
+    }
+  ],
+  "legacy": 21,
+  "supplemental": 21,
+  "businessScenarioStatus": "42 NOT_RUN",
+  "markdownUrlLinks": 0,
+  "literalPathsChecked": 3,
+  "conflictMarkers": 0,
+  "diffCheck": {
+    "exitCode": 2,
+    "intentionalMarkdownHardBreakLines": [
+      4
+    ]
+  },
+  "reviewDecision": "CHANGES_REQUESTED",
+  "unresolvedThreads": 0,
+  "conclusion": "REVIEW_READY for docs/traceability; human TV5 must submit new formal review; M01/COD business remains pending"
+}

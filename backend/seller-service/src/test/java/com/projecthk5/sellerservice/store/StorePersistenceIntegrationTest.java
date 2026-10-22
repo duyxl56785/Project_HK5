@@ -3,6 +3,7 @@ package com.projecthk5.sellerservice.store;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.projecthk5.sellerservice.seller.domain.SellerApplication;
+import com.projecthk5.sellerservice.http.SellerStoreResponses;
 import com.projecthk5.sellerservice.seller.domain.SellerIdentity;
 import com.projecthk5.sellerservice.seller.domain.SellerStatus;
 import com.projecthk5.sellerservice.seller.entity.SellerProfile;
@@ -97,6 +98,55 @@ class StorePersistenceIntegrationTest {
         policy.known.addAll(Set.of(OWNER.reference(), OTHER.reference()));
         policy.overrides.clear();
         policy.unavailable = false;
+    }
+
+    @Test
+    void ownerResponseMappingRequiresSuccessfulCurrentOwnerRead() {
+        PersistedStore first = service.create(OWNER, new StoreInputs.Create("First", "first-private"));
+        PersistedStore second = service.create(OTHER, new StoreInputs.Create("Second", "second-private"));
+        var own = SellerStoreResponses.storeOwner(service.findOwn(OWNER));
+        var otherOwn = SellerStoreResponses.storeOwner(service.findOwn(OTHER));
+        assertEquals(first.profile().id(), own.id());
+        assertEquals(SELLER_A, own.sellerId());
+        assertEquals(second.profile().id(), otherOwn.id());
+        assertEquals(SELLER_B, otherOwn.sellerId());
+        assertNotEquals(own.id(), otherOwn.id());
+        policy.unavailable = true;
+        assertEquals(StoreRuleException.Code.AUTHORIZATION_UNAVAILABLE,
+                assertThrows(StoreRuleException.class,
+                        () -> SellerStoreResponses.storeOwner(service.findOwn(OWNER))).getCode());
+        policy.unavailable = false;
+        policy.known.remove(OWNER.reference());
+        assertEquals(StoreRuleException.Code.ACCESS_DENIED,
+                assertThrows(StoreRuleException.class,
+                        () -> SellerStoreResponses.storeOwner(service.findOwn(OWNER))).getCode());
+    }
+
+    @Test
+    void typedCommandsKeepServerOwnershipVersionAndTransactionGuards() {
+        PersistedStore created = service.create(OWNER, new StoreInputs.Create("  Store  ", "typed-store"));
+        UUID id = created.profile().id();
+        var revised = service.revise(id, OWNER, new StoreInputs.Update("Renamed", "renamed", created.version()));
+        assertEquals(id, revised.profile().id());
+        assertEquals(SELLER_A, revised.profile().sellerId());
+        assertEquals(OWNER.reference(), revised.profile().ownerReference());
+        assertTrue(revised.profile().open());
+        assertEquals(StorePersistenceException.Code.STORE_VERSION_CONFLICT,
+                assertThrows(StorePersistenceException.class,
+                        () -> service.setOpen(id, OWNER, new StoreInputs.SetOpen(false, created.version()))).getCode());
+        assertEquals(StoreRuleException.Code.ACCESS_DENIED,
+                assertThrows(StoreRuleException.class,
+                        () -> service.revise(id, OTHER, new StoreInputs.Update("Stolen", "stolen", revised.version()))).getCode());
+        new TransactionTemplate(transactions).executeWithoutResult(tx -> {
+            service.setOpen(id, OWNER, new StoreInputs.SetOpen(false, revised.version()));
+            tx.setRollbackOnly();
+        });
+        assertEquals(revised, service.findOwn(OWNER));
+        var closed = service.setOpen(id, OWNER, new StoreInputs.SetOpen(false, revised.version()));
+        assertFalse(closed.profile().open());
+        var reopened = service.setOpen(id, OWNER, new StoreInputs.SetOpen(true, closed.version()));
+        assertTrue(reopened.profile().open());
+        assertEquals(id, reopened.profile().id());
     }
 
     @Test

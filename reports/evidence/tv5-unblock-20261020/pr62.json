@@ -1,0 +1,119 @@
+{
+  "kind": "DERIVED SUMMARY; raw logs/XML private local originals, not public CI artifacts",
+  "metadata": {
+    "label": "pr62",
+    "source": "6a79016eae71a93c8d55207482bc4785bd5f3281",
+    "command": [
+      "<isolated-pr62-checkout>\\backend\\gradlew.bat",
+      "-p",
+      "backend",
+      ":order-service:test",
+      "--tests",
+      "*CatalogCheckoutBatchPreflightTest",
+      "--rerun-tasks",
+      "--no-daemon",
+      "--console=plain"
+    ],
+    "startedUtc": "2026-10-20T03:35:53.720019+00:00",
+    "environment": {
+      "Java": "21.0.7",
+      "Gradle": "8.10",
+      "Docker": "29.8.1",
+      "JAVA_TOOL_OPTIONS": "-Duser.timezone=UTC -Dapi.version=1.44"
+    },
+    "executor": "TV5 independent execution; remote Catalog/Inventory mocked where specified by tests",
+    "exitCode": 0,
+    "completedUtc": "2026-10-20T03:36:26.229287+00:00"
+  },
+  "counts": {
+    "order-service:test": {
+      "PASS": 10
+    }
+  },
+  "cases": [
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest",
+      "name": "rejectsUnrepresentableOrderPriceBeforeAnyStockSideEffect()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest",
+      "name": "enforcesBatchCardinalityOneThroughOneHundredAndUniqueProductIds()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest",
+      "name": "rejectsPriceAndCurrencyMismatchButNoImplicitMoneyPolicyIsSelected()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest",
+      "name": "acceptsTwoStoresAndOnlyAuthoritativeSkuInOriginalOrder()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest",
+      "name": "rejectsPartialBatchMissingRowWrongVersionOrUnverifiedResponse()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest",
+      "name": "rejectsMissingOrDuplicatedTrustedSkuAcrossProducts()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest",
+      "name": "doesNotDeriveSkuFromProductId()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest",
+      "name": "rejectsIncorrectStoreSellerOrUnavailableSource()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest",
+      "name": "rejectsNonReadyItemEvenIfProviderIncorrectlyClaimsAllReady()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest",
+      "name": "rejectsReorderedExtraDuplicatedAndMismatchedProductRows()",
+      "result": "PASS"
+    }
+  ],
+  "staleXmlExcluded": [],
+  "rawArtifacts": [
+    {
+      "localPath": ".verification/tv5-unblock-20261020/runs/pr62/order-service/test/TEST-com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest.xml",
+      "bytes": 2091,
+      "sha256": "a806a182e955637443279b6701b7da60fefbc96f5f3a6b48b080a73ca2b573c1"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261020/runs/pr62/runtime.log",
+      "bytes": 1420,
+      "sha256": "51a982ce2f5c6c40b36ba3e73d9e816092843ba071f0957a80e4f5d273ac01d9"
+    }
+  ],
+  "assessment": "10 pure candidate-validator unit tests; no DB/HTTP/verified source or M01 policy approval. PostgreSQL NOT_RUN for this docs+pure-code delta; CI evidence separate."
+}
