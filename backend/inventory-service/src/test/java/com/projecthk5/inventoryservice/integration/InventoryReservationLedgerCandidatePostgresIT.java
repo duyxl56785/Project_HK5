@@ -17,6 +17,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -403,6 +405,30 @@ class InventoryReservationLedgerCandidatePostgresIT extends InventoryPostgresSup
         assertEquals("INVALID_RESERVATION_OPERATION", nullType.getCode());
         assertFalse(sql.queryForObject("SELECT EXISTS(SELECT 1 FROM inventory_operation WHERE operation_id = ?)",
                 Boolean.class, nullTypeOperation));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {" SKU-A ", "\u2003SKU-A", "SKU-A\u2003"})
+    void rejectsPaddedSkuWithoutRewritingItToAnExistingInventoryKey(String nonCanonicalSku) {
+        String sku = initialize("canonical-sku", 10);
+        String operationId = id("padded-sku-operation");
+        String reservationId = id("padded-sku-reservation");
+        var canonicalRequest = request(operationId, reservationId, id("padded-sku-store"),
+                id("padded-sku-seller"), id("padded-sku-order"), InventoryOperationType.RESERVE, line(sku, 2));
+        assertFalse(ledger.apply(canonicalRequest).replayed());
+        var afterCanonicalReserve = inventory.getBalance(sku);
+        assertTrue(ledger.apply(canonicalRequest).replayed());
+
+        ReservationCandidateException failure = assertThrows(ReservationCandidateException.class, () ->
+                ledger.apply(request(operationId, reservationId, canonicalRequest.storeId(), canonicalRequest.sellerId(),
+                        canonicalRequest.sellerOrderId(), InventoryOperationType.RESERVE, line(nonCanonicalSku, 2))));
+
+        assertEquals("INVALID_RESERVATION_LINES", failure.getCode());
+        assertEquals(afterCanonicalReserve, inventory.getBalance(sku));
+        assertEquals(1, sql.queryForObject("SELECT count(*) FROM inventory_operation WHERE operation_id = ?",
+                Integer.class, operationId));
+        assertEquals(1, sql.queryForObject("SELECT count(*) FROM inventory_reservation WHERE reservation_id = ?",
+                Integer.class, reservationId));
     }
 
     private String initialize(String prefix, long quantity) {

@@ -38,7 +38,7 @@ Flyway owns schema creation; Hibernate is configured with `ddl-auto: validate`.
 
 ### Integration blockers
 
-- TV2/TV3 must provide the authoritative Product→SKU and Store/Seller facts and agree how Order persists a `reservationId` before the first RESERVE. The Java V3 candidate is not on `main` and is not yet an approved wire or migration.
+- TV2/TV3 must provide the authoritative Product→SKU and Store/Seller facts and agree how Order persists a `reservationId` before the first RESERVE. Candidate V3 is stored under `db/candidate-migration`, outside Flyway's production default `db/migration` location; it is not an approved live migration or wire contract.
 - TV3/TV4 must finalize operation IDs, status/error responses, retry/reconciliation, and the SellerOrder dispatch/cancel boundary. The Java-only candidate lookup is not an HTTP endpoint and is not an authoritative cross-service contract until approved.
 - Pair authentication alone does not verify original customer Bearer/current Cart/Store authority or durable Order intent. CONSUME/RELEASE also require approved async-system provenance and state transitions. These checks are not implemented by this filter; the default-off flag must remain false until they are implemented and tested.
 - This scoped pair gate is not full JWT/delegated-user authorization or current Store/Seller authority. Pair rotation, exact deployment configuration, and Gateway boundary must be reviewed before enabling positive traffic.
@@ -62,6 +62,6 @@ V1 stays unchanged; owner V2 migrates the hash to VARCHAR(64). Do not infer shar
 
 ### Reservation ownership candidate — not an approved shared contract
 
-`candidate/InventoryReservationLedgerCandidateService` and Flyway V3 are an isolated provider-side candidate based on TV3's per-Store/future-SellerOrder ownership principle. It binds an opaque `reservationId` to Store, Seller, SellerOrder, canonical initial SKU lines, and distinct RESERVE/CONSUME/RELEASE operation IDs; partial operations are limited by that reservation's held quantities. The candidate also provides a Java-only status lookup whose missing result is `UNKNOWN`.
+`candidate/InventoryReservationLedgerCandidateService` and Flyway V3 are an isolated provider-side candidate based on TV3's per-Store/future-SellerOrder ownership principle. V3 is opt-in and is not discovered by default Flyway startup; PostgreSQL candidate tests explicitly add `classpath:db/candidate-migration`. The service binds an opaque `reservationId` to Store, Seller, SellerOrder, exact canonical SKU lines, and distinct RESERVE/CONSUME/RELEASE operation IDs; boundary whitespace in a SKU is rejected instead of trimmed. Partial operations are limited by that reservation's held quantities. The candidate also provides a Java-only status lookup whose missing result is `UNKNOWN`.
 
 No HTTP controller calls this candidate, no public/internal route was added, and it does not alter the existing operation request. Keep the pair gate OFF. V3 is not approved for deployment until TV1/TV2/TV3/TV5 sign the owner fields, Product/SKU and Store authority, status/error wire, route authorization, and cancellation/partial/COD rules. The PostgreSQL candidate tests are provider-module evidence only; they are not live Order→Inventory HTTP, JWT, or Checkout E2E evidence. See [reservation ledger candidate](RESERVATION_LEDGER_CANDIDATE.md).

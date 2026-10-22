@@ -70,8 +70,12 @@ public class InventoryReservationLedgerCandidateService {
         prior = operations.findById(request.operationId());
         if (prior.isPresent()) return replayOrReject(prior.get(), request, operation, fingerprint);
 
-        int claimed = operations.claimReservationOperation(request.operationId(), request.type().name(),
-                fingerprint, request.reservationId());
+        int claimed = jdbc.update("""
+                INSERT INTO inventory_operation
+                    (operation_id, operation_type, request_hash, reservation_id, created_at)
+                VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP)
+                ON CONFLICT (operation_id) DO NOTHING
+                """, request.operationId(), request.type().name(), fingerprint, request.reservationId());
         if (claimed == 0) {
             var concurrent = operations.findById(request.operationId());
             if (concurrent.isEmpty()) {
@@ -110,9 +114,11 @@ public class InventoryReservationLedgerCandidateService {
                 rs.getTimestamp("created_at").toInstant()), operationId, reservationId);
         if (found.isEmpty()) {
             var anyOwner = operations.findById(operationId);
-            if (anyOwner.isPresent() && anyOwner.get().getReservationId() != null
-                    && !reservationId.equals(anyOwner.get().getReservationId())) {
-                throw conflict("RESERVATION_OWNER_MISMATCH", "operationId belongs to another reservation");
+            if (anyOwner.isPresent()) {
+                String existingReservationId = loadOperationReservationId(operationId);
+                if (existingReservationId != null && !reservationId.equals(existingReservationId)) {
+                    throw conflict("RESERVATION_OWNER_MISMATCH", "operationId belongs to another reservation");
+                }
             }
             return new ReservationOperationLookupCandidate(operationId, reservationId, "UNKNOWN",
                     null, null, null, List.of());
@@ -184,6 +190,13 @@ public class InventoryReservationLedgerCandidateService {
         return Boolean.TRUE.equals(exists);
     }
 
+    private String loadOperationReservationId(String operationId) {
+        List<String> rows = jdbc.query("""
+                SELECT reservation_id FROM inventory_operation WHERE operation_id = ?
+                """, (rs, row) -> rs.getString("reservation_id"), operationId);
+        return rows.isEmpty() ? null : rows.get(0);
+    }
+
     private void applyReserve(ReservationOperationCandidateRequest request,
                               Map<String, Long> quantities, Map<String, InventoryItem> bySku) {
         quantities.forEach((sku, quantity) -> {
@@ -243,7 +256,7 @@ public class InventoryReservationLedgerCandidateService {
             ReservationOperationCandidateRequest request,
             CanonicalOperation operation,
             String fingerprint) {
-        if (!request.reservationId().equals(prior.getReservationId())
+        if (!request.reservationId().equals(loadOperationReservationId(request.operationId()))
                 || !request.type().name().equals(prior.getOperationType())
                 || !fingerprint.equals(prior.getRequestHash())) {
             throw conflict("IDEMPOTENCY_KEY_REUSED", "operationId was already used with a different owner or request");
@@ -288,9 +301,9 @@ public class InventoryReservationLedgerCandidateService {
             if (line == null || line.sku() == null) {
                 throw conflict("INVALID_RESERVATION_LINES", "SKU line is required");
             }
-            String sku = line.sku().trim();
-            if (sku.isEmpty() || sku.length() > 128 || line.quantity() <= 0) {
-                throw conflict("INVALID_RESERVATION_LINES", "SKU must be 1..128 characters and quantity must be positive");
+            String sku = line.sku();
+            if (sku.isEmpty() || sku.length() > 128 || hasBoundaryWhitespace(sku) || line.quantity() <= 0) {
+                throw conflict("INVALID_RESERVATION_LINES", "SKU must be 1..128 canonical characters and quantity must be positive");
             }
             if (sorted.putIfAbsent(sku, line.quantity()) != null) {
                 throw conflict("DUPLICATE_SKU", "Each SKU may appear only once per operation");
@@ -300,6 +313,16 @@ public class InventoryReservationLedgerCandidateService {
                 .map(entry -> new ReservationOperationCandidateRequest.Line(entry.getKey(), entry.getValue()))
                 .toList();
         return new CanonicalOperation(java.util.Collections.unmodifiableMap(new TreeMap<>(sorted)), lines);
+    }
+
+    private static boolean hasBoundaryWhitespace(String value) {
+        int first = value.codePointAt(0);
+        int last = value.codePointBefore(value.length());
+        return isWhitespace(first) || isWhitespace(last);
+    }
+
+    private static boolean isWhitespace(int codePoint) {
+        return Character.isWhitespace(codePoint) || Character.isSpaceChar(codePoint);
     }
 
     private static void requireIdentifier(String value, String field) {

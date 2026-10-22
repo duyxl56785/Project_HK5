@@ -15,15 +15,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 @Service
 public class InventoryOperationService {
     private final InventoryItemRepository items;
     private final InventoryOperationRepository operations;
+    private final JdbcTemplate jdbc;
 
-    public InventoryOperationService(InventoryItemRepository items, InventoryOperationRepository operations) {
+    public InventoryOperationService(InventoryItemRepository items, InventoryOperationRepository operations,
+                                     JdbcTemplate jdbc) {
         this.items = items;
         this.operations = operations;
+        this.jdbc = jdbc;
     }
 
     @Transactional
@@ -72,15 +76,33 @@ public class InventoryOperationService {
         return response(request.operationId(), request.type(), false, locked);
     }
 
-    private static InventoryOperationResponse replayOrReject(InventoryOperationRequest request,
-                                                               String hash,
-                                                               List<InventoryItem> locked,
-                                                               com.projecthk5.inventoryservice.model.InventoryOperation prior) {
-        if (prior.getReservationId() != null || !prior.getRequestHash().equals(hash)) {
+    private InventoryOperationResponse replayOrReject(InventoryOperationRequest request,
+                                                        String hash,
+                                                        List<InventoryItem> locked,
+                                                        com.projecthk5.inventoryservice.model.InventoryOperation prior) {
+        if (isReservationOwnedOperation(request.operationId()) || !prior.getRequestHash().equals(hash)) {
             throw new InventoryOperationServiceException("IDEMPOTENCY_KEY_REUSED",
                     "operationId was already used with a different request");
         }
         return response(request.operationId(), request.type(), true, locked);
+    }
+
+    private boolean isReservationOwnedOperation(String operationId) {
+        Boolean candidateColumnExists = jdbc.queryForObject("""
+                SELECT EXISTS (
+                    SELECT 1 FROM information_schema.columns
+                    WHERE table_schema = current_schema()
+                      AND table_name = 'inventory_operation'
+                      AND column_name = 'reservation_id'
+                )
+                """, Boolean.class);
+        if (!Boolean.TRUE.equals(candidateColumnExists)) return false;
+        return Boolean.TRUE.equals(jdbc.queryForObject("""
+                SELECT EXISTS (
+                    SELECT 1 FROM inventory_operation
+                    WHERE operation_id = ? AND reservation_id IS NOT NULL
+                )
+                """, Boolean.class, operationId));
     }
 
     private static Map<String, Long> canonicalItems(InventoryOperationRequest request) {

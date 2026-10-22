@@ -20,9 +20,6 @@ public class InventoryOperation {
     @Column(name = "request_hash", length = 64, nullable = false)
     private String requestHash;
 
-    @Column(name = "reservation_id", length = 128)
-    private String reservationId;
-
     @Column(name = "created_at", nullable = false)
     private OffsetDateTime createdAt;
 
@@ -38,5 +35,4 @@ public class InventoryOperation {
     public String getOperationId() { return operationId; }
     public String getOperationType() { return operationType; }
     public String getRequestHash() { return requestHash; }
-    public String getReservationId() { return reservationId; }
 }

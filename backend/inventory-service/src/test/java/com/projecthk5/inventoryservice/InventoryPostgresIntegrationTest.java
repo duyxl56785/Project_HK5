@@ -44,6 +44,8 @@ class InventoryPostgresIntegrationTest {
         registry.add("spring.datasource.url", postgres::getJdbcUrl);
         registry.add("spring.datasource.username", postgres::getUsername);
         registry.add("spring.datasource.password", postgres::getPassword);
+        // This class exercises candidate tables; production's default migration location stays V1/V2 only.
+        registry.add("spring.flyway.locations", () -> "classpath:db/migration,classpath:db/candidate-migration");
     }
 
     @BeforeEach

@@ -9,6 +9,8 @@ Status: **provider implementation candidate; not an approved shared wire or depl
 - Reservation lines track initial, consumed, released, and held quantities; the database requires `initial = consumed + released + held` for every SKU.
 - Partial CONSUME/RELEASE is limited to the reservation's current held quantity. A multi-SKU update, its operation claim, and stock balance changes commit or roll back together.
 - Operation status lookup is scoped by `(operationId, reservationId)`. A persisted row reports `COMMITTED` with type, fingerprint, commit time, and canonical lines. An absent row reports `UNKNOWN`; it never implies permission to issue a new operation ID or RELEASE.
+- Candidate V3 resides at `db/candidate-migration` and is excluded from default production Flyway discovery. PostgreSQL candidate tests opt in explicitly; do not add it to production migration locations until the shared contract and rollout are approved.
+- SKU identity is preserved exactly. Leading or trailing Unicode whitespace is rejected instead of being trimmed into another stock key.
 - Same-SKU reservations for two Stores remain separately accounted. The aggregate Inventory balance still reflects the total reserved quantity.
 
 ## Candidate Java API shape (no HTTP route)

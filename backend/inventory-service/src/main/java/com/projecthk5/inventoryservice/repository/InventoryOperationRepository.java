@@ -19,15 +19,4 @@ public interface InventoryOperationRepository extends JpaRepository<InventoryOpe
                          @Param("operationType") String operationType,
                          @Param("requestHash") String requestHash);
 
-    @Modifying
-    @Transactional
-    @Query(value = """
-            INSERT INTO inventory_operation (operation_id, operation_type, request_hash, reservation_id, created_at)
-            VALUES (:operationId, :operationType, :requestHash, :reservationId, CURRENT_TIMESTAMP)
-            ON CONFLICT (operation_id) DO NOTHING
-            """, nativeQuery = true)
-    int claimReservationOperation(@Param("operationId") String operationId,
-                                  @Param("operationType") String operationType,
-                                  @Param("requestHash") String requestHash,
-                                  @Param("reservationId") String reservationId);
 }
