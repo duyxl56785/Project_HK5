@@ -43,3 +43,14 @@ The older parent28dd0cf result above remains historical. Normal tests do not run
 Original diagnostic source blob is identical to the RED source8cc5ce4; historical logs/XML stay unchanged.
 [GREEN source/commands/raw evidence](../../reports/TV5_PROJECT_REVIEW_AUDIT_2026-10-18.md). This fixes existing-storage preflight,
 not pending business M01 or live service integration. The expected-RED task description is historical context, not current outcome.
+
+## Current execution — 20/10/2026
+
+At main **03fb1b2e8a1c1261568446c1f9ed68d264784e4e**, the unchanged explicit diagnostic was executed again:
+**3PASS/0FAIL/error/skip**, positivecontrol retained, alongside25taggedOrderPGPASS; DBinvocationexit0.
+[Current command/time/cases/raw hashes](../../reports/evidence/tv5-unblock-20261020/main-db.json).
+An earlier combined invocation failed at PG initialization because DockerEngine was offline; this explicit diagnostic
+was **NOT_RUN** in that invocation and staleXML was excluded. Its raw initializationFAIL logs/XML are preserved separately.
+The initial RED descriptions above and comments/task description in original diagnostic source remain historical context,
+not the current code outcome. FIN01/06 technical existing-storage findings are FIXED_VERIFIED; do not ask TV3 to redo them.
+No assertion/source/productionpolicy changed, no signedM01/price/COD/settlement or liveE2E approval from this execution.
