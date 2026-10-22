@@ -112,6 +112,87 @@ class InventoryOperationCallerTest {
         verify(journal,never()).confirm(anyString(),anyInt());
     }
 
+    @Test void multiSkuTimeoutAndRetryKeepExactlySameRequestAndNoImplicitRelease() {
+        var multiple = InventoryOperationIntent.prepare(UUID.randomUUID(), "reserve-three-skus",
+                InventoryOperationIntent.Type.RESERVE, List.of(
+                        new Line("SKU-Z", 3L),
+                        new Line("SKU-A", 2_147_483_648L),
+                        new Line("SKU-M", 17L)));
+        when(journal.load(multiple.operationId())).thenReturn(
+                new InventoryOperationJournal.Snapshot(multiple,
+                        InventoryOperationJournal.State.PENDING, 0, null),
+                new InventoryOperationJournal.Snapshot(multiple,
+                        InventoryOperationJournal.State.UNKNOWN, 1, "TRANSPORT_OUTCOME_UNKNOWN"));
+        when(journal.claimForSend(multiple.operationId())).thenReturn(1, 2);
+        when(transport.send(any())).thenThrow(new InventoryOperationTransport.UnknownOutcome("timeout"))
+                .thenReturn(new InventoryOperationTransport.Reply(multiple.operationId(),
+                        "RESERVE", true, List.of("SKU-M", "SKU-Z", "SKU-A")));
+        assertEquals(InventoryOperationCaller.Outcome.UNKNOWN,
+                caller.dispatchOnce(multiple.operationId()));
+        assertEquals(InventoryOperationCaller.Outcome.CONFIRMED,
+                caller.dispatchOnce(multiple.operationId()));
+        ArgumentCaptor<InventoryOperationWire.Request> payload =
+                ArgumentCaptor.forClass(InventoryOperationWire.Request.class);
+        verify(transport, times(2)).send(payload.capture());
+        assertEquals(payload.getAllValues().get(0), payload.getAllValues().get(1));
+        assertEquals("reserve-three-skus", payload.getValue().operationId());
+        assertEquals("RESERVE", payload.getValue().type());
+        assertEquals(List.of(
+                new InventoryOperationWire.Item("SKU-A", 2_147_483_648L),
+                new InventoryOperationWire.Item("SKU-M", 17L),
+                new InventoryOperationWire.Item("SKU-Z", 3L)), payload.getValue().items());
+        verify(journal).unknown(multiple.operationId(), 1, "TRANSPORT_OUTCOME_UNKNOWN");
+        verify(journal).confirm(multiple.operationId(), 2);
+        verify(journal, never()).prepare(any());
+        verify(journal, never()).notSent(anyString(), anyInt(), anyString());
+        verify(journal, never()).reject(anyString(), anyInt(), anyString());
+    }
+
+    @Test void multiSkuMismatchedProviderSkuSetRecordsUnknownRatherThanConfirming() {
+        var multiple = InventoryOperationIntent.prepare(UUID.randomUUID(), "reserve-mismatched-three",
+                InventoryOperationIntent.Type.RESERVE, List.of(
+                        new Line("SKU-A", 2), new Line("SKU-B", 7), new Line("SKU-C", 1)));
+        when(journal.load(multiple.operationId())).thenReturn(
+                new InventoryOperationJournal.Snapshot(multiple,
+                        InventoryOperationJournal.State.PENDING, 0, null));
+        when(journal.claimForSend(multiple.operationId())).thenReturn(1);
+        when(transport.send(any())).thenReturn(new InventoryOperationTransport.Reply(
+                multiple.operationId(), "RESERVE", false, List.of("SKU-A", "SKU-B", "SKU-D")));
+        assertEquals(InventoryOperationCaller.Outcome.UNKNOWN,
+                caller.dispatchOnce(multiple.operationId()));
+        verify(journal).unknown(multiple.operationId(), 1, "RESPONSE_MISMATCH");
+        verify(journal, never()).confirm(anyString(), anyInt());
+        verify(journal, never()).prepare(any());
+    }
+
+
+    @Test void multiSkuReleaseCandidateDisabledTransportDoesNotConfirmOrChangeIntent() {
+        // A syntactically valid RELEASE candidate is not authorization to dispatch.
+        var release = InventoryOperationIntent.prepare(UUID.randomUUID(), "release-gated-multi",
+                InventoryOperationIntent.Type.RELEASE,
+                List.of(new Line("SKU-Z", 4L), new Line("SKU-A", 2_147_483_648L),
+                        new Line("SKU-M", 17L)));
+        when(journal.load(release.operationId())).thenReturn(
+                new InventoryOperationJournal.Snapshot(release,
+                        InventoryOperationJournal.State.PENDING, 0, null));
+        when(journal.claimForSend(release.operationId())).thenReturn(1);
+        when(transport.send(any())).thenThrow(new InventoryOperationTransport.NotSent("pair disabled"));
+
+        assertEquals(InventoryOperationCaller.Outcome.BLOCKED, caller.dispatchOnce(release.operationId()));
+        ArgumentCaptor<InventoryOperationWire.Request> payload =
+                ArgumentCaptor.forClass(InventoryOperationWire.Request.class);
+        verify(transport).send(payload.capture());
+        assertEquals(release.operationId(), payload.getValue().operationId());
+        assertEquals("RELEASE", payload.getValue().type());
+        assertEquals(List.of(new InventoryOperationWire.Item("SKU-A", 2_147_483_648L),
+                new InventoryOperationWire.Item("SKU-M", 17L),
+                new InventoryOperationWire.Item("SKU-Z", 4L)), payload.getValue().items());
+        verify(journal).notSent(release.operationId(), 1, "CALLER_DISABLED");
+        verify(journal, never()).confirm(anyString(), anyInt());
+        verify(journal, never()).prepare(any());
+        verify(journal, never()).unknown(anyString(), anyInt(), anyString());
+    }
+
     @Test void wireAdapterHasNoBroadCredentialOrExtraOperationType() {
         var wire=InventoryOperationWire.from(intent);
         assertEquals("POST",InventoryOperationWire.METHOD);
