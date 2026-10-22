@@ -37,6 +37,10 @@ public class CartService {
             throw new IllegalStateException("Untrusted product catalog response");
         if (!product.available()) throw new IllegalStateException("Product unavailable");
         if (product.unitPrice() == null || product.unitPrice().signum()<0) throw new IllegalStateException("Invalid product price");
+        // The current cart_items.unit_price_snapshot column is NUMERIC(19,2).
+        // Reject a Catalog price that PostgreSQL would round or overflow BEFORE
+        // mutating the cart; this is storage safety, not an M01 business policy.
+        CartAmountStorageBounds.requireExactNonnegative(product.unitPrice());
         Cart cart = repository.findForUpdate(customerId).orElseGet(() -> new Cart(customerId));
         cart.ensureEditable();
         CartItem old = cart.getItems().stream().filter(it -> it.getProductId().equals(request.productId())).findFirst().orElse(null);
