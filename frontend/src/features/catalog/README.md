@@ -81,3 +81,25 @@ node --test src/features/catalog/categoryTree.test.mjs src/features/catalog/Cate
 - Backend/PostgreSQL regression **NOT_RUN**, not required for this frontend-only slice. Gateway/API/Auth, authenticated Seller/Store, public Product/Catalog provider, router mount and live E2E **NOT_RUN/PENDING**. No Catalog/Product/Seller forms were added because their runtime/public contracts remain unavailable. No CI workflow currently covers frontend-only changes.
 
 `UI_IMPLEMENTED / UI_TESTED` here means the exported component, logic/render/DOM suites and builds above. `API_CONNECTED` is **false**. Status remains `WAITING_TV1_ROUTER`, `API_INTEGRATION_PENDING`, `WAITING_AUTH_RUNTIME` (future protected flows), `WAITING_CATALOG_PROVIDER` (future Product Catalog) and `NOT_RUN_E2E`. Do not mark all Seller/Catalog/frontend or F08 complete from this delivery.
+
+## System Chrome verification — 22/10/2026, follow-up
+
+The earlier download blocker above is historical. An explicit installed-browser scan found Chrome and Edge; **system Chrome 155.0.8059.85 launched successfully** with Playwright **1.63.0** and a fresh temporary profile. No Chromium download, user profile or browser settings change was needed. No CategoryBrowser production behavior was changed after this verification.
+
+The reusable **preview/test-only** entry is `/src/features/catalog/preview/index.html` when running Vite. Its banner identifies sample data and no API/account connection. Query `?state=loading`, `error`, `empty` or `invalid` exercises presentation states; the retry callback only restores preview fixtures. The entry is not imported by the application or feature export. It imports existing global styles to check the component in its actual style context.
+
+From `frontend`, with Playwright installed separately in ignored test tooling:
+
+```powershell
+$env:TV2_BROWSER_MODULE = (Resolve-Path ../backend/product-service/build/frontend-category-evidence/browser-tools/node_modules/playwright/index.mjs).Path
+$env:TV2_BROWSER_EXECUTABLE = 'C:/Program Files/Google/Chrome/Application/chrome.exe'
+node --test src/features/catalog/CategoryBrowser.browser.mjs
+```
+
+`TV2_BROWSER_MODULE` is optional when Playwright is otherwise installed/resolvable. `TV2_BROWSER_EXECUTABLE` is optional for the installed Chrome channel. The script creates a loopback-only temporary Vite server, new browser contexts/profile, then closes them normally; it never uses a running personal browser or calls product-service. `TV2_BROWSER_EVIDENCE` optionally overrides the ignored evidence directory. Do not put outputs or tools in Git.
+
+- Browser cases cover multilevel expand/collapse/selection, Vietnamese search/ancestors/no-match/clear-focus, all four Arrow keys, Home/End, native Enter/Space, Tab/Shift+Tab and loading/error/retry/empty/invalid states. The ARIA snapshot from Playwright is separate from the Chrome CDP `Accessibility.getFullAXTree` assertions, which verify each parent treeitem owns a group containing its direct child. Raw snapshots stay ignored; no human screen-reader certification is implied.
+- Final browser invocation including native CDP assertions: **12 PASS/0FAIL/0SKIPPED, exit0**, Chrome155.0.8059.85. Playwright ARIA snapshot and Chrome-native AX JSON are kept as separate ignored artifacts.
+- Viewports **375×900,768×900,1280×900**: deep ten-level names, long Vietnamese text, no document horizontal overflow, button hit areas >=44×44 and visible focus outlines. Screenshots at all three widths remain ignored; mobile/desktop screenshots were visually inspected. This is Chromium desktop viewport testing, not a physical phone/touch or screen-reader certification.
+- Separate fresh original regression: **37PASS/0FAIL/0SKIPPED** at source165f5d9 (21tree+10SSR+6DOM). Do not combine separate invocations into a release test total.
+- `BROWSER_VERIFIED` applies to the isolated fixture preview and cases above. `API_CONNECTED=false / WAITING_TV1_ROUTER / NOT_RUN_E2E` remain. Real server authorization, Gateway/Router/API integration, live data and human assistive-technology testing are still pending.
