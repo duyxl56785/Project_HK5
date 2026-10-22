@@ -393,3 +393,18 @@ Checkpoint branch: `codex/tv2-m01-price-proposal`; commit/PR/publication evidenc
 không báo M01 DONE. Sau khi được chỉ định đúng authority và ký đủ price scope, TV2 kiểm applicable schema/S01/auth gates
 để triển khai riêng Product price/currency; không tự mở MD04–MD10 hoặc Finance. `HK5_FINANCE_POLICY_APPROVED=false` giữ nguyên.
 Runtime unit/PostgreSQL/E2E trong lượt tài liệu này: **NOT_RUN — docs-only**, không dùng lại số PASS lịch sử làm lượt chạy mới.
+
+## 15. TV5-UNBLOCK-20261020-v1 — evidence and owner-response checkpoint
+
+No business choice, authority, snapshot/wire/schema or enablement is approved by this checkpoint.
+[Current MD01–MD10 matrix and COD handoff](../reports/TV5_OWNER_UNBLOCK_HANDOFF_2026-10-20.md) records merged46/53/58/59,
+latest Productunit1..1billion candidate, existing TV5/TV3 technical compatibility for that delta and TV1's explicit non-delegation.
+The named-authority request already exists; no duplicate reminder or repeat unchanged C01/E01/SKU technical vote.
+New TV3 COD/current-ADMIN/source/atomic-payment request onIssue12 is answered as **COD POLICY PENDING**, not human/business approval.
+TV4's global immutable SKU/exact retry and TV3 candidate/helper confirmations are retained; exact runtime state/payment/event/refund semantics remain joint decisions.
+
+Fresh main03fb1b2 FIN01/06 original3diagnostics and25taggedPG passed after Docker startup; initial Engine-off failures retained.
+Technical storagefix remains verified; tests do not choose VND/businesscap, approve House or provide productionsettlement/currentStoreproof.
+HumanTV5 remains proposer/synthesizer with no assumed final business mandate. TV1/projectauthority must record named accountable
+approver/delegation/scope/operator; priceMD01/02/unitcapMD03 can be signed separately fromMD04–10 with applicable schema/S01/security gates.
+Keep Finance/pairflagsOFF andIssue5/12PARTIAL; do not push closed46 or treat merge53 as businessAPPROVED.

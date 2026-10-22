@@ -1,0 +1,144 @@
+{
+  "kind": "DERIVED SUMMARY; raw logs/XML private local originals, not public CI artifacts",
+  "metadata": {
+    "label": "pr60",
+    "source": "e0a28de663b3488178a616770eb82de9fd46e580",
+    "command": [
+      "<isolated-pr60-checkout>\\backend\\gradlew.bat",
+      "-p",
+      "backend",
+      ":order-service:test",
+      "--tests",
+      "*InventoryOperationCallerTest",
+      ":order-service:postgresIntegrationTest",
+      "--tests",
+      "*InventoryOperationJournalPostgres16IT",
+      "--rerun-tasks",
+      "--no-daemon",
+      "--console=plain"
+    ],
+    "startedUtc": "2026-10-20T03:19:47.233564+00:00",
+    "environment": {
+      "Java": "21.0.7",
+      "Gradle": "8.10",
+      "Docker": "Client29.8.1 installed; Engine unavailable during this invocation",
+      "JAVA_TOOL_OPTIONS": "-Duser.timezone=UTC -Dapi.version=1.44"
+    },
+    "executor": "TV5 independent execution; remote Catalog/Inventory mocked where specified by tests",
+    "exitCode": 1,
+    "completedUtc": "2026-10-20T03:20:27.025118+00:00"
+  },
+  "counts": {
+    "order-service:test": {
+      "PASS": 11
+    },
+    "order-service:postgresIntegrationTest": {
+      "FAIL": 1
+    }
+  },
+  "cases": [
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.InventoryOperationCallerTest",
+      "name": "multiSkuTimeoutAndRetryKeepExactlySameRequestAndNoImplicitRelease()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.InventoryOperationCallerTest",
+      "name": "wireAdapterHasNoBroadCredentialOrExtraOperationType()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.InventoryOperationCallerTest",
+      "name": "staleReplyCannotReportConfirmedAfterRetryWasReclaimed()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.InventoryOperationCallerTest",
+      "name": "staleTimeoutCannotOverwriteNewerAttemptState()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.InventoryOperationCallerTest",
+      "name": "concurrentInFlightIsNotSentAgainAndConfirmedReplayDoesNotResend()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.InventoryOperationCallerTest",
+      "name": "retryAfterUnknownUsesSamePersistedIdTypeAndCanonicalLines()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.InventoryOperationCallerTest",
+      "name": "successConfirmsOnlyExactMatchingResponseAndPersistedRequest()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.InventoryOperationCallerTest",
+      "name": "multiSkuMismatchedProviderSkuSetRecordsUnknownRatherThanConfirming()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.InventoryOperationCallerTest",
+      "name": "knownDefinitiveAtomicRejectionMustNotBeRetried()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.InventoryOperationCallerTest",
+      "name": "mismatchedOrDuplicateProviderResponseIsUnknownNotSuccess()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.InventoryOperationCallerTest",
+      "name": "disabledTransportIsProvablyNotSentAndRemainsPending()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.orderservice.integration.InventoryOperationJournalPostgres16IT",
+      "name": "initializationError",
+      "result": "FAIL"
+    }
+  ],
+  "staleXmlExcluded": [],
+  "rawArtifacts": [
+    {
+      "localPath": ".verification/tv5-unblock-20261020/runs/pr60/order-service/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.InventoryOperationJournalPostgres16IT.xml",
+      "bytes": 13902,
+      "sha256": "cbc5acf8297bc7d3c09f2eb8979d6cbb9a34fe598112857b9fd5e191908853ed"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261020/runs/pr60/order-service/test/TEST-com.projecthk5.orderservice.service.InventoryOperationCallerTest.xml",
+      "bytes": 2754,
+      "sha256": "4c1f85ed3067527e2b4d1dbac11670a1283af4a92ea1de4613eb927b48e6a3ed"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261020/runs/pr60/runtime.log",
+      "bytes": 2384,
+      "sha256": "d2d6699112a8d4efb8ec7842835e0dcfd21748ae7cb041737dc88c256d5a2e2a"
+    }
+  ],
+  "assessment": "Unit PASS; PostgreSQL task FAIL at initialization because Docker Engine was offline. Business DB scenarios BLOCKED, not reproduced product defects. main diagnostic NOT_RUN; stale XML excluded. Initial raw failures retained; later DB execution stored separately."
+}

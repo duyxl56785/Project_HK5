@@ -1,5 +1,15 @@
 # TV5 — yêu cầu đến kiểm thử và bằng chứng tuần 1
 
+> **Latest audit 22/10/2026:** [52 PR / toàn bộ reviewers và current QA](../reports/TV5_ALL_PR_REVIEWERS_AUDIT_2026-10-22.md).
+> Các checkpoint20/10 bên dưới giữ lịch sử; #65 nay MERGED, #66/#67/#68 được theo dõi riêng. M01 PENDING, Finance production BLOCKED.
+
+
+> **Current handoff:** [post-snapshot delta](../reports/TV5_OWNER_UNBLOCK_HANDOFF_2026-10-20.md#12-post-snapshot-status-delta--current-actions)
+> (query 2026-10-20T14:55:26.142195+00:00): #39/#61 MERGED; #60/#62 CLOSED WITHOUT MERGE.
+> Những next action yêu cầu review các PR đó phía dưới là lịch sử. Không assume #60/#62 đã tích hợp.
+> Delta soạn trước công bố; người dùng đã cho phép cập nhật PR #63/Issue #5/#12. Xem receipt tại PR/Issue; M01 vẫn PENDING, Finance production BLOCKED.
+
+
 Nguồn yêu cầu: Issue #5, yêu cầu người dùng và báo cáo V2 đã phân trang 55 trang. Kết quả hiện tại: **63 unit tests local**, xem `reports/evidence/w1-followup/test-cases.csv` để tra từng invocation, class, thời gian và trạng thái. Tên class viết ngắn dưới đây nằm trong package `productservice.review` hoặc `orderservice.finance`.
 
 | ID | Yêu cầu / nguồn V2 | Test hiện có (method) | UAT / phụ thuộc | Bằng chứng và giới hạn |
@@ -117,3 +127,52 @@ Các dòng sau cập nhật hiện trạng, không thay ID/nghĩa hoặc evidenc
 |QA-C06-M01-SIGNOFF|Shared lifecycle/provenance/COD and applicable MD choices →responsible humans/business|TV3 candidate own-scope recorded; project business approver/operator not designated|PENDING; proposal publication or technical review does not sign business policy|
 
 Do not add119and7to a release total, relabel previous-source counts, or tick cross-service/E2E/Finance DONE.
+
+## Owner-unblock checkpoint — TV5-UNBLOCK-20261020-v1
+
+[Full task/MD/COD/owner matrix](../reports/TV5_OWNER_UNBLOCK_HANDOFF_2026-10-20.md); previous rows retain historical source/results.
+
+| ID | Requirement / owner | Current evidence | Disposition / limitation |
+|---|---|---|---|
+|QA-FIN-PREFLIGHT-CURRENT|FIN01/06 pre-reserve exact storage +positivecontrol →TV3source/TV5QA|main03fb1b2: [25PG+3diagnosticPASS](../reports/evidence/tv5-unblock-20261020/main-db.json)|FIXED_VERIFIED technical bounds/replay; no M01business approval or live reservation|
+|QA-F15-F16-RULES-CURRENT|Buyer/delivery/product/stars/duplicate/moderation/average; fee/net/House/eligibility/Store guard →TV5|[main initial](../reports/evidence/tv5-unblock-20261020/main.json):105Orderunit and50ProductfilteredunitPASS; subsets explicitly indexed|Purelocalrules/MockMvcdeny/config; no currentStoreAPI/DBreviewuniqueness/settlementatomicity|
+|QA60-MULTISKU|Exact3SKU long tuple/RELEASEcandidate/UNKNOWN/replay/SKU-set mismatch →TV3|e0a28de: [11unit](../reports/evidence/tv5-unblock-20261020/pr60.json), [11PG](../reports/evidence/tv5-unblock-20261020/pr60-db.json)|PASS scoped; candidateRELEASE not authorization/held-stock proof; no liveHTTP|
+|QA-DOCKER-INIT-20261020|Distinguish environment failure from domain regression →TV5|Initial main5/pr60one initializationError FAIL records preserved in derived/private originals; Engine started, DB rerunsGREEN|InitialbusinessDBcasesBLOCKED, not hidden or falsely labelledPASS; diagnosticinitialNOT_RUN|
+|QA61-DOCS|CurrentStoreDB vsprovider/HTTP/M01candidate →TV2docs/TV5QA|[0af4754 static21links/10anchors](../reports/evidence/tv5-unblock-20261020/pr61-docchecks.json)|No new Finance/traceability blocker; runtimeNOT_RUN, TV2reported529 separate|
+|QA-MD-COD-HANDOFF|21tasks/MD01–10/10CODquestions →responsiblehumans|Report§§2/4/5; newTV3Issue12handoff received, TV4key+retry+candidate confirmations recorded|PENDING same-versionbusiness/source/security/payment/refund/runtime gates; no newlyunlockedproduction slice|
+|QA62-CANDIDATE|Latefullbatch/noREADYsubset/ID-Store-Seller-price-currency/SKU/storage checks →TV3,TV2wire/TV5Finance|6a79016 [10pureunitPASS](../reports/evidence/tv5-unblock-20261020/pr62.json),diffcheck0|Candidate/unwired only; responseorder/source/freshness/business/positiveHTTP gates remain, noTV5PGrerun|
+|QA39-CURRENT-4e4e623|Finalchangedhead count/ID/TV3candidate acknowledgment vsruntime →TV4docs/TV5QA|[Freshstatic4e4e623](../reports/evidence/tv5-unblock-20261020/pr39-current-static.json):21+21,42NOT_RUN,3paths/0conflictmarkers|All3oldfindingsFIXED_VERIFIED atnewhead; humanCRstillneedsformalreview; no runtime/COD/Financeapproval|
+
+
+## Local checkpoint trước công bố — PR #63
+
+Các dòng sau thay thế nhãn trạng thái hiện tại trong checkpoint cũ, giữ nguyên evidence lịch sử.
+[Báo cáo cục bộ](../reports/TV5_PR63_W1_W2_CHECKPOINT_2026-10-20.md) ghi thời điểm snapshot, SHA, owner và điểm tiếp tục.
+
+| ID | Evidence / owner | Trạng thái và giới hạn |
+|---|---|---|
+| QA39-REVIEW-DISPOSITION | [Scoped review 5580637495](https://github.com/duyxl56785/Project_HK5/pull/39#pullrequestreview-5580637495), head 4e4e623; [TV4 notification](https://github.com/duyxl56785/Project_HK5/pull/39#issuecomment-6283126501) | APPROVED phần docs theo ủy quyền trước; clean tại lần kiểm sau review, không M01/COD/runtime approval; không yêu cầu làm lại review cũ |
+| QA64-MALFORMED-TYPE | 06ebfc4; [27 unit PASS](../reports/evidence/tv5-unblock-20261020/pr64-unit-followup.json); TV4 source / TV5 QA | PASS trong unit scope; 5 payload thuộc một method. #64 đã MERGED; không chứng minh deployed HTTP |
+| QA65-RELEASE-CONCURRENCY | 5bfbc15; [initial failure](../reports/evidence/tv5-unblock-20261020/pr65-pg-initial-followup.json), [10 PG PASS retry](../reports/evidence/tv5-unblock-20261020/pr65-pg-retry-followup.json); TV4 source / TV5 QA | Initial10 initialization FAIL/Engine offline, business assertions BLOCKED; retry PASS cùng SHA, không reservation ownership/live E2E |
+| QA63-LOCAL-PUBLICATION | Nhánh codex/tv5-unblock-handoff-20261020; head công bố a1bce60 | Snapshot trước công bố: GitHub14:54UTC, delta14:55UTC, remote a1bce60. Công bố sau ủy quyền mới phải có receipt trên PR/Issue |
+
+Không cộng các lượt chạy/SHA khác nhau thành release total. Issue #5/#12 và M01 giữ PARTIAL/PENDING theo gate còn thiếu.
+
+
+### PR63 review follow-up — checkpoint trước công bố
+
+[Current finding/test checkpoint](../reports/TV5_PR63_W1_W2_CHECKPOINT_2026-10-20.md):
+TV1 P2 stale handoff được sửa cục bộ; remote a1bce60 vẫn CHANGES_REQUESTED cho đến khi công bố và reviewer kiểm lại.
+Các dòng NOT_RUN/BLOCKED_TOOL_APPROVAL phía trên giữ lịch sử lượt trước, được thay thế bởi lượt mới đã qua phê duyệt:
+#64 exact06ebfc4 **27 unit PASS**; #65 exact5bfbc15 initial10initializationFAIL vì Engine tắt,
+sau Docker startup retry **10 PG PASS**. Raw FAIL/GREEN giữ riêng, không cộng counts/CI/owner thành release total.
+M01 PENDING, flagsOFF. Phần trên ghi trước công bố; chỉ tick publication trên GitHub sau khi push và kiểm receipt.
+
+
+### TV5 audit — 22/10/2026
+
+- [x] Quét đủ toàn bộ PR/reviewers/Issues tại snapshot; [full report/index](../reports/TV5_ALL_PR_REVIEWERS_AUDIT_2026-10-22.md), PR63 P2 FIXED_VERIFIED/TV1 decision pending.
+- [x] Exact66 e20263e:236unit+117integration PASS; exact67 add83ec:11Cartunit+1PG PASS. Fixture/prototype vs production/live scopes ghi riêng.
+- [x] Main c2cf55a:27Inventoryunit/19PG/3originalFINdiagnostic PASS; invocation riêng30Reviewunit/49Financeunit PASS. Không cộng thành release total.
+- [x] Thêm CartPG test-only supplement68: base RED4PASS/6FAIL →fix GREEN10PASS, sameQAhashes/assertions; e24731f pushed, TV3/TV2requested.
+- [ ] Formal reviewer decisions, approved M01/COD/shared facts/runtime/API/Storequeries/atomic settlement/liveE2E; Issue5/12PARTIAL.

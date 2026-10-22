@@ -62,6 +62,33 @@ class CartServiceTest {
         verifyNoInteractions(repo);
     }
 
+    @Test void priceThatPostgresWouldRoundOrOverflowNeverTouchesCart() {
+        for (String price : new String[]{"1.001", "1.005", "999999999999999999.99"}) {
+            when(catalog.resolve("p")).thenReturn(new CartCatalogPort.ProductSnapshot(
+                    "p", "store", "seller", true, new java.math.BigDecimal(price)));
+            assertThrows(IllegalArgumentException.class,
+                    () -> service.add("customer-a", new AddItem("p", 1)), price);
+        }
+        verifyNoInteractions(repo);
+    }
+
+    @Test void representablePriceCanRetainExactValueWithoutChoosingMoneyPolicy() {
+        Cart cart = new Cart("customer-a");
+        when(repo.findForUpdate("customer-a")).thenReturn(Optional.of(cart));
+        when(repo.saveAndFlush(cart)).thenReturn(cart);
+        when(catalog.resolve("p")).thenReturn(new CartCatalogPort.ProductSnapshot(
+                "p", "store", "seller", true, new java.math.BigDecimal("1.2300")));
+        CartView result = service.add("customer-a", new AddItem("p", 1));
+        assertEquals(0, result.items().get(0).unitPriceSnapshot().compareTo(new java.math.BigDecimal("1.23")));
+        assertEquals(new java.math.BigDecimal("1.23"),
+                CartAmountStorageBounds.requireExactNonnegative(new java.math.BigDecimal("1.2300")));
+        // Zero is allowed by the CURRENT database bound; business min is still M01 PENDING.
+        assertEquals(new java.math.BigDecimal("0.00"),
+                CartAmountStorageBounds.requireExactNonnegative(java.math.BigDecimal.ZERO));
+        assertThrows(IllegalArgumentException.class,
+                () -> CartAmountStorageBounds.requireExactNonnegative(new java.math.BigDecimal("-0.01")));
+    }
+
     @Test void nullOrMalformedClaimKeyCannotSilentlySucceedOnUnclaimedCart() {
         Cart cart = new Cart("customer-a");
         assertThrows(IllegalArgumentException.class, () -> cart.claim(null, null));

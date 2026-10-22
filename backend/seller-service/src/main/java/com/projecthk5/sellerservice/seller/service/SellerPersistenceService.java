@@ -70,6 +70,31 @@ public class SellerPersistenceService {
         return change(id, expectedVersion, current -> lifecycle.resubmit(current, actor));
     }
 
+    public PersistedSeller resubmit(UUID id, SellerInputs.Version input, SellerIdentity actor) {
+        requireInput(input);
+        return resubmit(id, input.expectedVersion(), actor);
+    }
+
+    public PersistedSeller approve(UUID id, SellerInputs.Version input, SellerIdentity actor) {
+        requireInput(input);
+        return approve(id, input.expectedVersion(), actor);
+    }
+
+    public PersistedSeller reject(UUID id, SellerInputs.Moderation input, SellerIdentity actor) {
+        requireInput(input);
+        return reject(id, input.expectedVersion(), actor, input.reason());
+    }
+
+    public PersistedSeller suspend(UUID id, SellerInputs.Moderation input, SellerIdentity actor) {
+        requireInput(input);
+        return suspend(id, input.expectedVersion(), actor, input.reason());
+    }
+
+    public PersistedSeller reinstate(UUID id, SellerInputs.Version input, SellerIdentity actor) {
+        requireInput(input);
+        return reinstate(id, input.expectedVersion(), actor);
+    }
+
     public PersistedSeller approve(UUID id, long expectedVersion, SellerIdentity actor) {
         requireActor(actor, true);
         return change(id, expectedVersion, current -> lifecycle.approve(current, actor));
@@ -105,6 +130,12 @@ public class SellerPersistenceService {
             return result(repository.saveAndFlush(profile));
         } catch (OptimisticLockingFailureException exception) {
             throw versionConflict(exception);
+        }
+    }
+
+    private static void requireInput(Object input) {
+        if (input == null) {
+            throw new SellerRuleException(SellerRuleException.Code.INVALID_INPUT, "Seller input is required");
         }
     }
 

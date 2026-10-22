@@ -1,0 +1,148 @@
+{
+  "kind": "EXECUTED STATIC CHECK, not HTTP/business/runtime approval",
+  "head": "0af4754b2d2b0925cd3b6c27f698f5d2667f66d1",
+  "base": "03fb1b2e8a1c1261568446c1f9ed68d264784e4e",
+  "files": 3,
+  "deletions": 0,
+  "relativeFileLinks": 21,
+  "anchors": [
+    {
+      "from": "backend/seller-service/README.md",
+      "target": "docs/TV1_AUTH_IDENTITY_GATEWAY_CONTRACT.md",
+      "anchor": "8-gateway-routing-cors-và-internal-boundary"
+    },
+    {
+      "from": "backend/seller-service/README.md",
+      "target": "docs/TV2_WEEK1_PROGRESS.md",
+      "anchor": "current-w1-boundaries--2026-10-20"
+    },
+    {
+      "from": "docs/TV2_CATALOG_HANDOFF.md",
+      "target": "docs/TV5_M01_HUMAN_DECISION_PACKET.md",
+      "anchor": "14-m01-price-scope-v1-draft--đề-xuất-đơn-giá-product-19102026"
+    },
+    {
+      "from": "docs/TV2_CATALOG_HANDOFF.md",
+      "target": "docs/TV2_WEEK1_PROGRESS.md",
+      "anchor": "current-w1-boundaries--2026-10-20"
+    },
+    {
+      "from": "docs/TV2_CATALOG_HANDOFF.md",
+      "target": "docs/TV2_WEEK1_PROGRESS.md",
+      "anchor": "independent-database-verification--2026-10-18"
+    },
+    {
+      "from": "docs/TV2_CATALOG_HANDOFF.md",
+      "target": "docs/TV2_WEEK1_PROGRESS.md",
+      "anchor": "reusable-two-store-fixture"
+    },
+    {
+      "from": "docs/TV2_WEEK1_PROGRESS.md",
+      "target": "backend/seller-service/README.md",
+      "anchor": "sellerstore-http-handoff-candidate--2026-10-20"
+    },
+    {
+      "from": "docs/TV2_WEEK1_PROGRESS.md",
+      "target": "docs/TV2_CATALOG_HANDOFF.md",
+      "anchor": "current-provider-inventory--2026-10-20"
+    },
+    {
+      "from": "docs/TV2_WEEK1_PROGRESS.md",
+      "target": "docs/TV1_AUTH_IDENTITY_GATEWAY_CONTRACT.md",
+      "anchor": "8-gateway-routing-cors-và-internal-boundary"
+    },
+    {
+      "from": "docs/TV2_WEEK1_PROGRESS.md",
+      "target": "docs/TV2_CATALOG_HANDOFF.md",
+      "anchor": "independent-schema-preparation-and-pending-api-acceptance--2026-10-18"
+    }
+  ],
+  "diffCheckExitCode": 0,
+  "links": [
+    {
+      "from": "backend/seller-service/README.md",
+      "target": "backend/seller-service/SELLER_PERSISTENCE_CONTRACT.md"
+    },
+    {
+      "from": "backend/seller-service/README.md",
+      "target": "docs/TV2_WEEK1_PROGRESS.md"
+    },
+    {
+      "from": "backend/seller-service/README.md",
+      "target": "docs/TV1_AUTH_IDENTITY_GATEWAY_CONTRACT.md"
+    },
+    {
+      "from": "backend/seller-service/README.md",
+      "target": "docs/TV2_WEEK1_PROGRESS.md"
+    },
+    {
+      "from": "docs/TV2_CATALOG_HANDOFF.md",
+      "target": "docs/TV5_M01_HUMAN_DECISION_PACKET.md"
+    },
+    {
+      "from": "docs/TV2_CATALOG_HANDOFF.md",
+      "target": "docs/TV2_WEEK1_PROGRESS.md"
+    },
+    {
+      "from": "docs/TV2_CATALOG_HANDOFF.md",
+      "target": "docs/TV2_CATALOG_CONTRACT_RESPONSE.md"
+    },
+    {
+      "from": "docs/TV2_CATALOG_HANDOFF.md",
+      "target": "docs/TV2_PR_FOLLOWUP_2026-10-18.md"
+    },
+    {
+      "from": "docs/TV2_CATALOG_HANDOFF.md",
+      "target": "docs/TV2_CATALOG_SOURCE_FIX.md"
+    },
+    {
+      "from": "docs/TV2_CATALOG_HANDOFF.md",
+      "target": "docs/TV2_WEEK1_PROGRESS.md"
+    },
+    {
+      "from": "docs/TV2_CATALOG_HANDOFF.md",
+      "target": "docs/TV2_WEEK1_PROGRESS.md"
+    },
+    {
+      "from": "docs/TV2_WEEK1_PROGRESS.md",
+      "target": "backend/seller-service/README.md"
+    },
+    {
+      "from": "docs/TV2_WEEK1_PROGRESS.md",
+      "target": "docs/TV2_CATALOG_HANDOFF.md"
+    },
+    {
+      "from": "docs/TV2_WEEK1_PROGRESS.md",
+      "target": "docs/TV1_AUTH_IDENTITY_GATEWAY_CONTRACT.md"
+    },
+    {
+      "from": "docs/TV2_WEEK1_PROGRESS.md",
+      "target": "docs/TV2_CATALOG_HANDOFF.md"
+    },
+    {
+      "from": "docs/TV2_WEEK1_PROGRESS.md",
+      "target": "docs/TV2_CATALOG_TEST_SUMMARY.csv"
+    },
+    {
+      "from": "docs/TV2_WEEK1_PROGRESS.md",
+      "target": "docs/TV2_CATALOG_SOURCE_FIX_TEST_SUMMARY.csv"
+    },
+    {
+      "from": "docs/TV2_WEEK1_PROGRESS.md",
+      "target": "docs/TV2_CATALOG_SOURCE_FIX.md"
+    },
+    {
+      "from": "docs/TV2_WEEK1_PROGRESS.md",
+      "target": "docs/TV2_CATALOG_CONTRACT_RESPONSE.md"
+    },
+    {
+      "from": "docs/TV2_WEEK1_PROGRESS.md",
+      "target": "docs/TV2_CATALOG_HANDOFF.md"
+    },
+    {
+      "from": "docs/TV2_WEEK1_PROGRESS.md",
+      "target": "backend/product-service/IMAGE_VALIDATION.md"
+    }
+  ],
+  "runtime": "NOT_RUN docs-only; author529PASS remains separate unverified-by-TV5 execution"
+}
