@@ -69,3 +69,14 @@ test('closed Store and unapproved Seller are displayed facts, not a selling gran
   assert.equal(result.seller.status, 'SUSPENDED');
   assert.equal(result.store.open, false);
 });
+test('canonical versions reject trailing line terminators rather than matching before them', () => {
+  for (const ending of ['\n', '\r', '\r\n', '\u2028', '\u2029']) assert.equal(isCanonicalVersion(`1${ending}`), false);
+});
+test('UUID display keys reject trailing line terminators even when the relationship matches', () => {
+  for (const ending of ['\n', '\r', '\u2028', '\u2029']) {
+    assert.equal(readOverview({ ...seller, id: seller.id + ending }, { ...store, sellerId: seller.id + ending }), null);
+  }
+});
+test('Store slug rejects trailing line terminators', () => {
+  for (const ending of ['\n', '\r', '\u2028', '\u2029']) assert.equal(readOverview(seller, { ...store, slug: store.slug + ending }), null);
+});
