@@ -48,7 +48,8 @@ class InventoryPostgresIntegrationTest {
 
     @BeforeEach
     void clearTables() {
-        jdbc.execute("TRUNCATE TABLE inventory_operation, inventory_item");
+        jdbc.execute("TRUNCATE TABLE inventory_reservation_operation_line, inventory_reservation_line, "
+                + "inventory_operation, inventory_reservation, inventory_item");
     }
 
     @Test

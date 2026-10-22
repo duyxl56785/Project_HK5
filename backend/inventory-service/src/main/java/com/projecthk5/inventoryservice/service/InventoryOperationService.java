@@ -41,7 +41,7 @@ public class InventoryOperationService {
         String hash = requestHash(request.type(), quantities);
         var prior = operations.findById(request.operationId());
         if (prior.isPresent()) {
-            return replayOrReject(request, hash, locked, prior.get().getRequestHash());
+            return replayOrReject(request, hash, locked, prior.get());
         }
 
         int claimed = operations.claimOperationId(request.operationId(), request.type().name(), hash);
@@ -51,7 +51,7 @@ public class InventoryOperationService {
                 throw new InventoryOperationServiceException("IDEMPOTENCY_CLAIM_CONFLICT",
                         "operationId could not be claimed; retry the operation");
             }
-            return replayOrReject(request, hash, locked, concurrent.get().getRequestHash());
+            return replayOrReject(request, hash, locked, concurrent.get());
         }
 
         Map<String, InventoryItem> bySku = locked.stream()
@@ -75,8 +75,8 @@ public class InventoryOperationService {
     private static InventoryOperationResponse replayOrReject(InventoryOperationRequest request,
                                                                String hash,
                                                                List<InventoryItem> locked,
-                                                               String priorHash) {
-        if (!priorHash.equals(hash)) {
+                                                               com.projecthk5.inventoryservice.model.InventoryOperation prior) {
+        if (prior.getReservationId() != null || !prior.getRequestHash().equals(hash)) {
             throw new InventoryOperationServiceException("IDEMPOTENCY_KEY_REUSED",
                     "operationId was already used with a different request");
         }
