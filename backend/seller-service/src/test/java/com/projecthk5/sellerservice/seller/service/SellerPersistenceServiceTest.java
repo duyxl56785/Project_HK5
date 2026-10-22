@@ -96,4 +96,45 @@ class SellerPersistenceServiceTest {
         assertThrows(SellerRuleException.class, () -> service.findForModeration(null, actor));
         verifyNoInteractions(repository);
     }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"APPROVE", "REJECT", "SUSPEND", "REINSTATE"})
+    void typedModerationRetainsPermissionGateBeforeLookup(String operation) {
+        doThrow(denied()).when(policy).requireSellerModerationPermission(actor);
+        UUID id = UUID.randomUUID();
+        var version = new SellerInputs.Version(0L);
+        var reason = new SellerInputs.Moderation(0L, "reason");
+        assertThrows(SellerRuleException.class, () -> {
+            switch (operation) {
+                case "APPROVE" -> service.approve(id, version, actor);
+                case "REJECT" -> service.reject(id, reason, actor);
+                case "SUSPEND" -> service.suspend(id, reason, actor);
+                case "REINSTATE" -> service.reinstate(id, version, actor);
+                default -> fail("Unknown operation");
+            }
+        });
+        verify(policy).requireSellerModerationPermission(actor);
+        verifyNoInteractions(repository);
+    }
+
+    @Test
+    void typedResubmissionRetainsAuthenticatedOwnerGate() {
+        doThrow(denied()).when(policy).requireAuthenticated(actor);
+        assertThrows(SellerRuleException.class,
+                () -> service.resubmit(UUID.randomUUID(), new SellerInputs.Version(0L), actor));
+        verifyNoInteractions(repository);
+    }
+
+    @Test
+    void missingTypedInputsAreDomainValidationErrorsWithoutWriting() {
+        UUID id = UUID.randomUUID();
+        for (org.junit.jupiter.api.function.Executable operation : java.util.List.<org.junit.jupiter.api.function.Executable>of(
+                () -> service.resubmit(id, null, actor), () -> service.approve(id, null, actor),
+                () -> service.reject(id, null, actor), () -> service.suspend(id, null, actor),
+                () -> service.reinstate(id, null, actor))) {
+            assertEquals(SellerRuleException.Code.INVALID_INPUT,
+                    assertThrows(SellerRuleException.class, operation).getCode());
+        }
+        verifyNoInteractions(repository);
+    }
 }
