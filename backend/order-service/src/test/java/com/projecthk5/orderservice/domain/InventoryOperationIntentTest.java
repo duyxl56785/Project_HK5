@@ -51,6 +51,17 @@ class InventoryOperationIntentTest {
                 "reserve-2", InventoryOperationIntent.Type.RESERVE, List.of(A, A)));
     }
 
+    @Test void unicodeBoundaryPaddedSkuFailsClosedWithoutChangingExactIdentity() {
+        assertThrows(IllegalArgumentException.class, () -> new InventoryOperationIntent.Line("\u2003sku-A", 2));
+        assertThrows(IllegalArgumentException.class, () -> new InventoryOperationIntent.Line("sku-A\u2003", 2));
+        assertThrows(IllegalArgumentException.class, () -> new InventoryOperationIntent.Line("\u00a0sku-A", 2));
+        assertThrows(IllegalArgumentException.class, () -> new InventoryOperationIntent.Line("sku-A\u00a0", 2));
+        // Preserve the previous ASCII-control check; neither trim nor fingerprint normalizes IDs.
+        assertThrows(IllegalArgumentException.class, () -> new InventoryOperationIntent.Line("\u0000sku-A", 2));
+        assertEquals("sku\u2003A", new InventoryOperationIntent.Line("sku\u2003A", 2).sku());
+        assertEquals("sku-A", A.sku());
+    }
+
     @Test void invalidExternalInventoryIdentifiersFailClosed() {
         assertThrows(IllegalArgumentException.class, () -> new InventoryOperationIntent.Line(" sku-A", 2));
         assertThrows(IllegalArgumentException.class, () -> new InventoryOperationIntent.Line("sku-A ", 2));
