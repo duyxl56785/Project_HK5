@@ -10,7 +10,7 @@
 **Isolated local preview:** Sau khi cài package theo `frontend/package-lock.json`, chạy tại thư mục `frontend`:
 
 ```powershell
-npm ci
+npm install --no-package-lock
 npm run dev
 ```
 
@@ -18,7 +18,7 @@ Mở `http://localhost:5173/src/features/checkout/preview/index.html` trên trì
 
 **Chưa thực hiện:** Order History UI, router/shared API client (TV1), server-origin authentication/JWT, real Store/SKU/Inventory/COD; UI/API thật không được đánh dấu DONE.
 
-**Kiểm thử đề nghị (trong `frontend/`, Node 22+, sau `npm ci`):**
+**Kiểm thử đề nghị (trong `frontend/`, Node 22+, sau `npm install --no-package-lock`):**
 
 ```powershell
 node --experimental-strip-types --test src/features/checkout/checkoutModel.test.mjs
@@ -30,3 +30,5 @@ npm run build
 **Đã kiểm tra thực tế trên source blob GitHub tương ứng:** pure `checkoutModel.test.mjs` **5/5 PASS**, Node 22.16.0, source `checkoutModel.ts` blob SHA `4b4ed9dace331560f19c150cb31f168035060f1f`, test blob SHA `e5160841536655205f73430a1517a40a79a17508`. TS model/JSX isolated type/syntax check có React declaration tối giản PASS; **full npm typecheck/build/SSR/browser tests NOT_RUN** trong môi trường AI. 
 
 **UAT**: xem `TV3_TWO_STORE_UAT.md`. Mọi test giao diện bằng fixture ≠ live Checkout E2E.
+
+**Lý do lệnh cài package:** repository hiện chưa có `frontend/package-lock.json`; không dùng `npm ci` vì nó yêu cầu lockfile. `npm install --no-package-lock` chỉ chuẩn bị dependency trên worktree kiểm thử, không tạo lockfile mới trong shared frontend.
