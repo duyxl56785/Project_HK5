@@ -110,6 +110,26 @@ class CatalogSchemaProposalPostgresTest {
         assertCounts(1, skus.length);
     }
 
+    @Test void oversizedSkuCannotBeSilentlyTruncatedBeforeBoundaryValidation() throws Exception {
+        String maximum = "A".repeat(128);
+        try (Connection connection = connect()) {
+            assertEquals("23514", assertThrows(SQLException.class,
+                    () -> insert(connection, "store-a", maximum + " ", "10")).getSQLState());
+        }
+        assertCounts(1, 0);
+        try (Connection connection = connect()) {
+            assertEquals("23514", assertThrows(SQLException.class,
+                    () -> insert(connection, "store-a", maximum + "A", "10")).getSQLState());
+            insert(connection, "store-a", maximum, "10");
+        }
+        try (Connection fresh = connect(); var query = fresh.createStatement();
+             var rows = query.executeQuery("SELECT inventory_sku FROM catalog_product_candidate")) {
+            assertTrue(rows.next());
+            assertEquals(maximum, rows.getString(1));
+            assertFalse(rows.next());
+        }
+    }
+
     @Test void runtimeFlywayRevalidationLeavesCandidateOutsideMigrationHistory() throws Exception {
         Flyway runtime = Flyway.configure().dataSource(PG.getJdbcUrl(), PG.getUsername(), PG.getPassword())
                 .locations("classpath:db/migration").load();
