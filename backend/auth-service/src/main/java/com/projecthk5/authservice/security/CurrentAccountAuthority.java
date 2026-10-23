@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
  * Auth DB is the authority for account state and granted roles, not JWT role claims or headers.
  * Intentionally not autowired until Auth API and transaction-managed runtime are implemented.
  */
-public final class CurrentAccountAuthority {
+public class CurrentAccountAuthority {
     private final AccountRepository accounts;
     private final String activeStatus;
 
