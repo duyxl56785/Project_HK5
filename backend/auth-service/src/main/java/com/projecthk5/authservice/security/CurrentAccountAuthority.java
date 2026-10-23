@@ -2,6 +2,7 @@ package com.projecthk5.authservice.security;
 
 import com.projecthk5.authservice.persistence.Account;
 import com.projecthk5.authservice.persistence.AccountRepository;
+import jakarta.persistence.PersistenceException;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
@@ -65,8 +66,9 @@ public class CurrentAccountAuthority {
             Set<Account.Role> granted = account.getRoles();
             if (granted.isEmpty()) throw DecisionFailure.accessInvalid();
             return new CurrentAccount(account.getId(), Set.copyOf(granted));
-        } catch (DataAccessException unavailable) {
-            // Never turn a DB outage into an allow, unknown user, or false 403.
+        } catch (DataAccessException | PersistenceException unavailable) {
+            // Repository calls translate failures; lazy role loading may raise JPA failures directly.
+            // Never turn either read failure into an allow, unknown user, or false 403.
             throw DecisionFailure.unavailable();
         }
     }
