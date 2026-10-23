@@ -1,0 +1,166 @@
+{
+  "kind": "DERIVED SUMMARY; original logs/XML private, not public CI artifacts",
+  "metadata": {
+    "label": "pr77",
+    "source": "cbbdb8667f689eddb75690274636504efc664706",
+    "command": [
+      "backend/gradlew.bat",
+      "-p",
+      "backend",
+      ":order-service:test",
+      "--tests",
+      "*CatalogCheckoutBatchPreflightTest",
+      "--rerun-tasks",
+      "--no-daemon",
+      "--console=plain"
+    ],
+    "startedUtc": "2026-10-23T00:31:50.893821+00:00",
+    "environment": {
+      "Java": "java version \"21.0.7\" 2025-04-15 LTS",
+      "Gradle": "8.10",
+      "Docker": "29.8.1",
+      "JAVA_TOOL_OPTIONS": "-Duser.timezone=UTC -Dapi.version=1.44"
+    },
+    "executor": "TV5 independent exact-source execution",
+    "exitCode": 0,
+    "completedUtc": "2026-10-23T00:32:08.886905+00:00"
+  },
+  "counts": {
+    "order-service:test": {
+      "PASS": 16
+    }
+  },
+  "cases": [
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest",
+      "name": "rejectsUnrepresentableOrderPriceBeforeAnyStockSideEffect()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest",
+      "name": "enforcesBatchCardinalityOneThroughOneHundredAndUniqueProductIds()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest",
+      "name": "rejectsPriceAndCurrencyMismatchButNoImplicitMoneyPolicyIsSelected()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest",
+      "name": "allowsMultipleProductsForConsistentSameStoreSameSellerAndHouse()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest",
+      "name": "acceptsTwoStoresAndOnlyAuthoritativeSkuInOriginalOrder()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest",
+      "name": "rejectsSameStoreWithConflictingHouseClassification()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest",
+      "name": "rejectsPartialBatchMissingRowWrongVersionOrUnverifiedResponse()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest",
+      "name": "rejectsUnicodePaddedSkuAndNoncanonicalExpectedIdentifiers()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest",
+      "name": "rejectsMissingOrDuplicatedTrustedSkuAcrossProducts()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest",
+      "name": "rejectsSameStoreWithDifferentSellersRegardlessOfOrder()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest",
+      "name": "doesNotDeriveSkuFromProductId()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest",
+      "name": "rejectsOneSellerClaimedByTwoStoresRegardlessOfOrder()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest",
+      "name": "rejectsIncorrectStoreSellerOrUnavailableSource()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest",
+      "name": "rejectsNonReadyItemEvenIfProviderIncorrectlyClaimsAllReady()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest",
+      "name": "rejectsReorderedExtraDuplicatedAndMismatchedProductRows()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest",
+      "name": "preservesExactCanonicalSkuCaseCompositionAndInternalUnicode()",
+      "result": "PASS"
+    }
+  ],
+  "staleXmlExcluded": [],
+  "rawArtifacts": [
+    {
+      "localPath": ".verification/tv5-audit-20261023/runs/pr77/order-service/test/TEST-com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest.xml",
+      "bytes": 3131,
+      "sha256": "bac65daff2f3a2f07895294be153dc1a1b4d4ec87e6b5e4a9f56f2ac94201559"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261023/runs/pr77/runtime.log",
+      "bytes": 1420,
+      "sha256": "1310829834b15810cecd42f5dfb2568bfa8b81f11c61adc0f9ded6884597f224"
+    }
+  ],
+  "publication": {
+    "type": "DERIVED SUMMARY",
+    "raw": "Original byte-preserved logs/XML/screenshots/AX files remain private at localPath; not CI/downloadable raw artifacts",
+    "verification": "All listed raw artifact sizes and SHA256 independently rechecked before export",
+    "limits": "Separate invocations/snapshots/owner evidence; no release total, policy approval, physical mobile or live E2E inferred"
+  }
+}
