@@ -7,6 +7,15 @@
 - UI chỉ hiển thị orderId khi callback từ adapter được tin cậy trả `confirmed` + UUID hợp lệ. Callback hiện là proposal consumer interface, chưa phải V1/V2 HTTP contract được nhóm duyệt. Để bắt đầu attempt khác sau reconciliation, parent phải cấp state/instance đã xác minh mới; không reset UNKNOWN một cách tự động.
 - Không tự đặt currency/fee/ship/delivery, không khẳng định COD_PAID, không tự quyết định trạng thái SellerOrder/C06.
 
+**Isolated local preview:** Sau khi cài package theo `frontend/package-lock.json`, chạy tại thư mục `frontend`:
+
+```powershell
+npm ci
+npm run dev
+```
+
+Mở `http://localhost:5173/src/features/checkout/preview/index.html` trên trình duyệt Windows (hoặc port thực tế Vite thông báo). Preview hiển thị cả Cart và COD Checkout với fixture hai Store; chỉnh số lượng/xóa **chỉ đổi state bộ nhớ**; nút Checkout không có adapter và bị vô hiệu hóa. Preview không sử dụng router/Auth/API của TV1, không gửi request hay ghi database.
+
 **Chưa thực hiện:** Order History UI, router/shared API client (TV1), server-origin authentication/JWT, real Store/SKU/Inventory/COD; UI/API thật không được đánh dấu DONE.
 
 **Kiểm thử đề nghị (trong `frontend/`, Node 22+, sau `npm ci`):**
