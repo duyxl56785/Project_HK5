@@ -9,7 +9,7 @@ function object(value: unknown): value is Record<string, unknown> {
 function canonicalId(value: unknown): value is string {
   if (typeof value !== 'string' || value.length === 0 || value.length > 200 || value !== value.trim()) return false;
   const first = value.codePointAt(0);
-  const last = value.codePointBefore(value.length);
+  const last = Array.from(value).at(-1)?.codePointAt(0);
   return first !== undefined && last !== undefined
     && !/^\s$/u.test(String.fromCodePoint(first))
     && !/^\s$/u.test(String.fromCodePoint(last));
@@ -50,7 +50,8 @@ export function projectCart(source: unknown): CartProjection | null {
     if (!object(raw) || !canonicalId(raw.productId) || !canonicalId(raw.storeId)
       || !canonicalId(raw.sellerId) || ids.has(raw.productId)
       || typeof raw.title !== 'string' || !raw.title.trim() || raw.title.length > 255
-      || !Number.isInteger(raw.quantity) || (raw.quantity as number) < 1 || (raw.quantity as number) > 1000) return null;
+      || typeof raw.quantity !== 'number' || !Number.isInteger(raw.quantity)
+      || raw.quantity < 1 || raw.quantity > 1000) return null;
     const unit = minorUnits(raw.unitPriceSnapshot);
     if (unit === null) return null;
     const previousStore = sellerToStore.get(raw.sellerId);
@@ -59,7 +60,7 @@ export function projectCart(source: unknown): CartProjection | null {
       || (previousSeller !== undefined && previousSeller !== raw.sellerId)) return null;
     sellerToStore.set(raw.sellerId, raw.storeId);
     storeToSeller.set(raw.storeId, raw.sellerId);
-    const quantity = raw.quantity as number;
+    const quantity = raw.quantity;
     const lineAmount = unit * BigInt(quantity);
     if (lineAmount > MAX_MINOR || total + lineAmount > MAX_MINOR) return null;
     const existing = groups.get(raw.storeId) ?? { sellerId: raw.sellerId, lines: [], amount: 0n };
