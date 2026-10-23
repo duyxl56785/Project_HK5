@@ -374,3 +374,32 @@ upgrade, or explicit reconciliation before enabling any future delivery: old app
 instances/direct SQL writes do not execute the new service append. Retention, DB writer
 permissions and recovery/backup remain release decisions; do not delete snapshots just
 because there is currently no dispatcher. No live JWT, API or E2E readiness is implied.
+## Own-read handler preparation — HTTP not registered
+
+`HTTP_PREPARED / POSITIVE_JWT_INTEGRATION_BLOCKED`.
+`SellerStoreReadHandler` composes the existing guarded services and response mappers:
+
+| Future route | Handler | Required trusted context |
+|---|---|---|
+| GET `/api/sellers/me` | `sellerOwn()` | Verified active account, exact subject; own profile in any Seller state |
+| GET `/api/stores/me` | `storeOwn()` | Verified token and current SELLER grant; existing service also checks exact current owner and APPROVED Seller; CLOSED Store remains readable |
+
+The handler takes no client identity/resource arguments. `SellerStoreReadAuthority` is a trusted,
+request-context port with separate account and Seller checks, not a verifier or authorization implementation.
+There is no production implementation, Spring bean, controller, route, security filter or dependency change.
+Invalid/missing trusted identity fails before persistence; domain absence/denial/dependency exceptions are
+propagated, never converted to empty/null success. No final HTTP status/error mapping is introduced.
+Responses reuse `SellerPrivate`/`StoreOwner`, canonical string versions and the existing JSON writers;
+no Entity, ownerReference, token or role-grant fields are exposed.
+
+TV1 integration must first supply the real JWT/key configuration, role-neutral active-account check,
+current SELLER check and matching guarded-service policies. Wire the existing services through Spring
+transaction proxies, not manual construction. Authority lookup happens before Store DB locks. Final
+HTTP/privacy/error mapping, deny-default routing and Gateway protection need joint acceptance before
+adding endpoints. Do not use a CUSTOMER requirement as a substitute for role-neutral own-profile access.
+
+`SellerStoreReadHandlerTest` covers isolated authority orchestration and private JSON compatibility.
+`SellerStoreReadIntegrationTest` uses real PostgreSQL16.6, production Flyway/JPA and **test-only authority**
+to cover exact own reads, current status/role denial, rollback/fresh reads and absence. MockMvc confirms
+both future routes stay unregistered even with spoofed headers. These tests do not verify JWT, deployed
+Gateway or positive HTTP; `POSITIVE_JWT_HTTP_NOT_RUN / BLOCKED_TV1` remains.
