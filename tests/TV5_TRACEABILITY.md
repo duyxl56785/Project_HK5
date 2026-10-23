@@ -1,3 +1,5 @@
+> **LaterAuthdelta23/10:** [P2/PR80 and diagnostic82:4PASS/1FAIL](../reports/TV5_REVIEW_ACCEPTANCE_2026-10-23.md#8-later-auth-pr80--diagnostic82-delta--p2-remains-open-not-a-green-fix). TV1ownerfix pending; no broadgreen claim.
+
 > **Current23/10checkpoint:** [63PR/allreviewers/currentQA and ownerhuman decisions](../reports/TV5_REVIEW_ACCEPTANCE_2026-10-23.md). Prior22/10snapshots below retain history;69oldCRsuperseded,68/70/73/75MERGED. M01PENDING,FinanceproductionBLOCKED.
 
 > **Current R2 checkpoint 22/10/2026:** [fresh56PR audit, merged63/66/67, open68–72 and exact-head QA](../reports/TV5_PR_REVIEW_FOLLOWUP_2026-10-22_R2.md). Earlier checkpoints below remain historical. M01 PENDING; Finance production BLOCKED.
@@ -222,3 +224,10 @@ Evidence: [R2 report and test commands](../reports/TV5_PR_REVIEW_FOLLOWUP_2026-1
 |QA23-F15/F16: Review eligibility/hidden/duplicate precheck, Finance guards/precision/storage replay|main/e55f6b8 [rules+original FINdiagnostics](../reports/evidence/tv5-audit-20261023/main-finance.json)|TV5 fresh30Review+49Finance+6Intent unit;3FINPG|Review DBuniqueness, atomic unique settlement, Store queries and business approval|
 |QA23-UI01: category state/search/keyboard/ARIA/response to malformed tree|74/2215d61 [37logic/SSR/DOM and12Chrome](../reports/evidence/tv5-audit-20261023/pr74.json)|TV5 fresh separate invocationsPASS|Human assistive tech/physicalphone/Router/API/liveE2E|
 |QA23-UI02: private Seller projection, exact versions and no stale/nonready/crossSeller data|76/93f6a08 [32model/SSR and11Chrome](../reports/evidence/tv5-audit-20261023/pr76.json)|TV5 fresh separate invocationsPASS|Server ownership/Auth/currentrole/live loader/private caching/logout integration|
+
+### QA23-AUTH01 — later current-authority real PostgreSQL diagnostic
+
+- [x]80/f88baseline8newunit+28persistencePGPASS; actualSpringproxy/lazycurrentrole/faulttests added in own[DraftQA82](https://github.com/duyxl56785/Project_HK5/pull/82) from correctAuthhead.
+- [x]Reproduced4PASS/1FAIL/exit1 with unchanged5caseassertions; failedLAZYrolequery leaksSQLGrammarException instead of promised503, [inlineP2](https://github.com/duyxl56785/Project_HK5/pull/80#pullrequestreview-5622704537), [deriveddelta](../reports/evidence/tv5-audit-20261023/auth-foundation-delta.json).
+- [x]TV4responses recorded:79scopedAPPROVED,78COMMENT nofinding; do not repeat pendingreview claims from earlier datedsnapshot.
+- [ ]TV1rootfix+sameQA GREEN atnewSHA, then reviewerverifiedclosure; no sourceAuth edit byTV5, no Finance/M01/DONE flag.

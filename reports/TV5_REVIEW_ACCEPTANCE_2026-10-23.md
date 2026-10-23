@@ -244,3 +244,53 @@ ClosedPRopinions are historical, not active merge blockers. Detailed baseSHA/com
 |[#77](https://github.com/duyxl56785/Project_HK5/pull/77)|OPEN|tranvanchinhbg2006-alt|`cbbdb8667f689eddb75690274636504efc664706`|duyxl56785:APPROVED@HEAD|
 |[#78](https://github.com/duyxl56785/Project_HK5/pull/78)|OPEN|tranvanchinhbg2006-alt|`ac5da331e8cf6128b26ee850f87eef18d99a3317`|duyxl56785:APPROVED@HEAD|
 |[#79](https://github.com/duyxl56785/Project_HK5/pull/79)|OPEN|tranvanchinhbg2006-alt|`f8a242d5af2fb9095ed707ca551b8c92d8fd9102`|duyxl56785:APPROVED@HEAD|
+
+## 8. Later Auth PR80 / diagnostic82 delta — P2 remains OPEN, not a GREEN fix
+
+After the63PR snapshot, TV1 published **Draft80**, TV5 published report81 and **DraftQA82**. These are three separate publication/source events;
+repository count becomes66 if no other state changes (63+80+81+82). Refer to finalAPI receipt in PR/Issue for later status, not a retroactive change to203reviews/17threads.
+The inline finding creates a new OPEN thread on80, not a reopening of any historical resolved thread. Five COMMENTreviews74/76/77/78/79 were also published after the initial snapshot.
+
+### Newly verified source and actionable finding
+
+80head **f88da6d2f87acfa136c955e8d099b9465c72f807**, base main/e55f6b8; fiveAuthdependency/Java/test files read in full, plus AccountLAZYrole mapping.
+JWT/current-account classes are not registered runtime beans/routes. LocalHS2561–2key/kid, explicitissuer/audience/clock/claims and token+currentDBrole guards are preparation, not liveAuth/Store/CODauthorization.
+No default secret, HTTPendpoint, Gateway, refresh/logout/role-sync/currentStore or positivepair was enabled.
+
+**P2 OPEN / NEEDS_OWNER TV1 — lazy role query failure escapes the advertised503 contract.**
+[CurrentAccountAuthority.java lines65–68](https://github.com/duyxl56785/Project_HK5/blob/f88da6d2f87acfa136c955e8d099b9465c72f807/backend/auth-service/src/main/java/com/projecthk5/authservice/security/CurrentAccountAuthority.java#L65):
+`accounts.findById` succeeds, but `account.getRoles()` initializes a second, LAZY SQL query. A dependency failure there raises Hibernate `SQLGrammarException`
+outside the repository exception-translation boundary; catch only`DataAccessException` does not map it to`DecisionFailure(503,AUTHORIZATION_DEPENDENCY_UNAVAILABLE)`.
+Fault reproduced by revoking SELECT on`account_role_grants` only in a new disposablePGfixture, while realSpringproxy/currentread controls pass.
+No observed liveHTTP500 or privilege bypass is claimed; this is a reproduced foundation service-error contract defect.
+TV1 should read account+roles within an appropriate translated repository/fetch boundary or map the actual persistence read failure without masking401/403 or ever allowing on failure.
+
+- Independent baseline80/f88: **8JWT/current-roleunit +28AuthPersistencePG PASS**, exit0,00:47:02–00:47:38UTC.
+- New explicit5caseQA: **4PASS /1FAIL,exit1**,00:51:50–00:52:13UTC. Not part of baseline36 and not calledfixPASS.
+- Passing controls prove actual Springtransactionproxy/lazyrole load, committedADMINrevocation overriding signedtoken, no oldtokenprivilege elevation, freshissuepositive, inactive/missing401 and failedAccountquery503.
+- Failing`unavailableLazyRoleQueryIsAlso503RatherThanLeakingPersistenceFailure` expectsDecisionFailure503, getsSQLGrammarException. Assertion unchanged; no disabledtest or newproductioncatch byTV5.
+- [InlineCOMMENTreview](https://github.com/duyxl56785/Project_HK5/pull/80#pullrequestreview-5622704537) and [deriveddelta](evidence/tv5-audit-20261023/auth-foundation-delta.json).
+- [DraftQA82](https://github.com/duyxl56785/Project_HK5/pull/82), commit**548d9585902558f2e705a437e9b01d2949518aaa**, branch`codex/tv5-auth-current-authority-pg-20261023`, base`feat/tv1-auth-jwt-current-authority-foundation-20261023` from exactf88source.
+  OnlyTV5`tests/security`+derivedevidence, no push/edit toTV1branch, no Authproduction/schema/config change.
+- [Runbook](https://github.com/duyxl56785/Project_HK5/blob/548d9585902558f2e705a437e9b01d2949518aaa/tests/security/README_AUTH_CURRENT_AUTHORITY.md),
+  [originalREDreceipt](https://github.com/duyxl56785/Project_HK5/blob/548d9585902558f2e705a437e9b01d2949518aaa/reports/evidence/tv5-auth-authority-20261023/red.json).
+  ExactJava/init hashes preserved. TV1 and defaultTV2requested once on82; this Draft is intentionally diagnostic, not ready to merge while RED.
+
+Explicit command from QAcheckout: `backend/gradlew.bat -p backend --init-script tests/security/auth-current-authority.init.gradle -Ptv5AuthAuthoritySources=<QA checkout>/tests/security/auth-current-authority :auth-service:tv5CurrentAuthorityRegression --rerun-tasks --no-daemon --console=plain`.
+NormalCI does not invoke it. Existing80readinessSUCCESS/OrderPG25 is not proof of this new current-authority acceptance case.
+Only after TV1 supplies actualfixedSHA, run unchangedfivecases and preserve this originalRED before reportingGREEN or resolving ownverifiedthread.
+M01/COD/business/productionAuthHTTP/signedsystemprovenance/policyenablement remainPENDING; explicitQAstatus`QA_EXPLICIT_ACTIVE` is not a production active-status decision.
+
+### Owner review changes since the initial snapshot
+
+- TV4 [APPROVED79](https://github.com/duyxl56785/Project_HK5/pull/79#pullrequestreview-5622552940) atf8a242d for scopedS01guard, not fullC06/runtime. Do not continue saying TV4 has not responded.
+- TV4 [COMMENTED78](https://github.com/duyxl56785/Project_HK5/pull/78#pullrequestreview-5622551879) atac5da33, no actionable issue in test/audit-only scope; acknowledged durableownership/remainingheld/UNKNOWN/NotSent boundaries. COMMENT is notAPPROVED, but the requested provider review has responded; no duplicate request/reminder.
+- TV5COMMENT74/76/77/78/79 consumed own requested reviews; notAPPROVED and not deliberateowner removal requiring re-add. All scoped approvals remain scoped.
+- Human71formaldecision still requires a human; no newcode to manufacture. TV3owns77/78/79Draft readiness, TV4owns69, TV1owns80fix/Draft.
+
+- [x] Add meaningful independent current-role/transaction/failure-path PGtests, reproduce4PASS/1FAIL, preserveoriginals+controls and source/testhashes.
+- [x] Commit/pushDraftQA82 to correctparentbranch and publish inlineP2 ownerhandoff; no production edit/flag/businessapproval.
+- [ ] TV1fixP2, samefivecasesGREEN onnewsource; TV2securityreview and remaining runtime/active-status gates.
+- [ ] Human71decision and overall contract/security/Finance/UAT acceptance; Issues5/12/18remainOPEN/PARTIAL.
+
+Earlier§4zeroFAIL applies only to the listed initial executions before80diagnostic; this later Authrun has **one actual FAIL** and remains clearly RED.
