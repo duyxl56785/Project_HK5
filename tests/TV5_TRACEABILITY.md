@@ -1,3 +1,5 @@
+> **Current23/10checkpoint:** [63PR/allreviewers/currentQA and ownerhuman decisions](../reports/TV5_REVIEW_ACCEPTANCE_2026-10-23.md). Prior22/10snapshots below retain history;69oldCRsuperseded,68/70/73/75MERGED. M01PENDING,FinanceproductionBLOCKED.
+
 > **Current R2 checkpoint 22/10/2026:** [fresh56PR audit, merged63/66/67, open68–72 and exact-head QA](../reports/TV5_PR_REVIEW_FOLLOWUP_2026-10-22_R2.md). Earlier checkpoints below remain historical. M01 PENDING; Finance production BLOCKED.
 
 # TV5 — yêu cầu đến kiểm thử và bằng chứng tuần 1
@@ -197,3 +199,26 @@ Evidence: [R2 report and test commands](../reports/TV5_PR_REVIEW_FOLLOWUP_2026-1
 - [ ] Real browser/mobile/screen-reader/native keyboard/router/Gateway/API/liveE2E remain NOT_RUN; TV1 runtime integration pending.
 
 [R2 sections7–8](../reports/TV5_PR_REVIEW_FOLLOWUP_2026-10-22_R2.md#7-new-pr74-discovered-during-final-scan--separate-verification-delta), [derived74evidence](../reports/evidence/tv5-audit-20261022-r2/pr74.json). Snapshot56PR and later58PR kept separate;37 is not added to earlier runs or owner counts.
+
+## Independent verification — 23/10/2026
+
+- [x]63PR/allreviews/16Issue audit;69TV1APPROVED exact4ee supersedesoldCR; no openTV5CHANGES_REQUESTED.71needs humanformaldecision, no newcode/repeatedtechnicalreview required.
+- [x]77/cbbdb86 16unitPASS;78/ac5da33 108unit+29PGPASS (12caller/13journal subsets);79/f8a242d 19focusedPASS; source-specific evidence, no release total.
+- [x]Main/e55f6b8 30Reviewunit+49Financeunit+6Intentunit and3FINPGdiagnostics PASS; not productionreviewDB/settlementproof or approvedM01.
+- [x]74/2215d61 37logic/SSR/DOM+12realChromePASS;76/93f6a08 32model/SSR+11ChromePASS in separateinvocations; eachtypecheck/app+standalonefeaturebuild exit0.
+- [x]375/1280screenshots visually inspected;768viewportasserted; private rawlog/XML/AX/screenshots hashes and derivedsummaries retained. Preview fixtures are not realaccount/API/UAT.
+- [ ]Human71finalreview, TV4review78/79, authorDraftdispositions and normalmergegates; no agentApprove/Merge or duplicate owner requests.
+- [ ]M01/designatedauthority/C06/COD/refund/currentAuth/currentStore/ProductSKU/atomicsettlement/liveE2E; Issue5/12/18remainPARTIAL.
+
+[Report/commands/source/ownerledger](../reports/TV5_REVIEW_ACCEPTANCE_2026-10-23.md), [metadata/evidence](../reports/evidence/tv5-audit-20261023/repository-reviewers.json).
+
+### RTM delta — current executions, not production signoff
+
+| ID / requirement | Source / test evidence | Executor / result | Still not established |
+|---|---|---|---|
+|QA23-CAT01: complete batch, exact SKU/currency/money and consistent Seller/Store/House|77/cbbdb86 `CatalogCheckoutBatchPreflightTest`, [16invocations](../reports/evidence/tv5-audit-20261023/pr77.json)|TV5 fresh16PASS|Trusted source, approved wire/ordering/freshness/M01|
+|QA23-INV01: immutable multi-SKU/long intent and UNKNOWN generation fencing|78/ac5da33 `InventoryOperationCallerTest`/`InventoryOperationJournalPostgres16IT`, [unit/PGcases](../reports/evidence/tv5-audit-20261023/pr78.json)|TV5 fresh12caller+13journal within108unit/29PG|Provider commit/ownership/remainingheld/currentactor/authorizedRELEASE|
+|QA23-S01: same Seller cannot produce two Store Orders|79/f8a242d `CheckoutServiceTest`, [forward/reverse contradiction and positive sameStore](../reports/evidence/tv5-audit-20261023/pr79.json)|TV5 fresh19focusedPASS|Real Catalog authority, live Inventory and Order integration|
+|QA23-F15/F16: Review eligibility/hidden/duplicate precheck, Finance guards/precision/storage replay|main/e55f6b8 [rules+original FINdiagnostics](../reports/evidence/tv5-audit-20261023/main-finance.json)|TV5 fresh30Review+49Finance+6Intent unit;3FINPG|Review DBuniqueness, atomic unique settlement, Store queries and business approval|
+|QA23-UI01: category state/search/keyboard/ARIA/response to malformed tree|74/2215d61 [37logic/SSR/DOM and12Chrome](../reports/evidence/tv5-audit-20261023/pr74.json)|TV5 fresh separate invocationsPASS|Human assistive tech/physicalphone/Router/API/liveE2E|
+|QA23-UI02: private Seller projection, exact versions and no stale/nonready/crossSeller data|76/93f6a08 [32model/SSR and11Chrome](../reports/evidence/tv5-audit-20261023/pr76.json)|TV5 fresh separate invocationsPASS|Server ownership/Auth/currentrole/live loader/private caching/logout integration|
