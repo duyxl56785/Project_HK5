@@ -240,3 +240,35 @@ humanTV5 checks Finance compatibility and TV3 checks the changed unit-cap consum
 and applicable schema/S01/auth gates are still required before Product price persistence. PR52 Store review is independent.
 No Product schema, MD04–MD10, House, Checkout, Inventory, Finance flag or production enablement changes.
 Runtime tests this docs-only proposal: **NOT_RUN**. Issues2/5/12 remain OPEN/PARTIAL.
+
+
+## M01-MVP-v1.0-DRAFT — selected choices awaiting human signature, 23/10/2026
+
+**DRAFT FOR HUMAN SIGNATURE / NOT SIGNED / NOT EFFECTIVE.** Canonical decision detail nằm duy nhất ở
+[packet §16](TV5_M01_HUMAN_DECISION_PACKET.md#16-m01-mvp-v10-draft--lựa-chọn-chờ-ký-23102026).
+Ledger này chỉ ghi trạng thái/digest, không tạo policy copy hoặc thay lịch sử TV5-FIN-v0.1/§14.
+TV5 Finance owner cần review/tiếp nhận đề xuất canonical; publication không là business/technical approval.
+
+Nguồn U04: xác nhận trực tiếp của Nguyễn Văn Duy ngày 23/10/2026 trong phiên TV2; MD01=VND_ONLY đã SELECTED–NOT SIGNED.
+USER-DECLARED BUSINESS AUTHORITY không thay signed account/role/scope record hoặc operator grant.
+MD02/MD03 SELECTED–NOT SIGNED; scope business price slice chỉ MD01/MD02/Product unit-price portion MD03.
+MD04/MD06 SELECTED/details PENDING; MD07 SELECTED–CONDITIONAL; MD09 dual-role proposal AUTHORIZATION PENDING;
+MD10 SELECTED DIRECTION/details PENDING; MD05/MD08 PROPOSED. Không có MD business APPROVED mới.
+
+[M01-PRICE-SCHEMA-v1.0 — unsigned record](TV5_M01_HUMAN_DECISION_PACKET.md#165-m01-price-schema-v10--approval-record-chưa-ký)
+cần human business receipt +technical coverage target revision +TV2 implementation contract
++human TV5 money/QA/no-rounding +applicable TV1/TV3 delta trước private Product persistence.
+Reuse technical receipts #53/S01 đúng scope; không xin lại unit/shape/Store boundary không đổi.
+Không đòi MD04–MD10 không liên quan; cũng không mở Auth HTTP/Catalog/House/Finance/COD/flags.
+
+Unsigned packet SHA256 (toàn file docs/TV5_M01_HUMAN_DECISION_PACKET.md, UTF-8/LF/no-BOM):
+
+`a02370d995ea2950b39d737c6a41c47f09da448a600b335905c080a8798b008a`
+
+Hash nằm ngoài file được hash; người ký phải dẫn immutable commit permalink ở PR/receipt.
+Digest preview cũ trước U04 đã hết hiệu lực cho publication này; không dùng chữ ký/references của nội dung cũ cho packet mới.
+
+Audit source main33853a1 giữ nguyên; FIN01/06 technical fix có evidence lịch sử, không tính là runtime test mới.
+Business caps chưa được enforce production; no-rounding schema option còn PROPOSED, không có migration/DTO mới.
+PR83 vẫn Draft/candidate; PRODUCT_PERSISTENCE_PRODUCTION=BLOCKED, business signature PENDING, operator AUTHORIZATION PENDING.
+Chỉ xuất bản hai tài liệu để review; không Java/Flyway/API/runtime config/Finance hoặc Inventory flag changes, không merge/deploy.
