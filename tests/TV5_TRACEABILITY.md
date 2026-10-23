@@ -231,3 +231,13 @@ Evidence: [R2 report and test commands](../reports/TV5_PR_REVIEW_FOLLOWUP_2026-1
 - [x]Reproduced4PASS/1FAIL/exit1 with unchanged5caseassertions; failedLAZYrolequery leaksSQLGrammarException instead of promised503, [inlineP2](https://github.com/duyxl56785/Project_HK5/pull/80#pullrequestreview-5622704537), [deriveddelta](../reports/evidence/tv5-audit-20261023/auth-foundation-delta.json).
 - [x]TV4responses recorded:79scopedAPPROVED,78COMMENT nofinding; do not repeat pendingreview claims from earlier datedsnapshot.
 - [ ]TV1rootfix+sameQA GREEN atnewSHA, then reviewerverifiedclosure; no sourceAuth edit byTV5, no Finance/M01/DONE flag.
+
+### QA23-AUTH02 — authorized P2 supplement GREEN, parent still waiting
+
+- [x] Scoped P2 Auth explicitly authorized, minimal JPA read-failure→503 fix committed as ad25942998224451fb8c54677e028712e6921ae3 on TV5 PR82; no owner-branch push.
+- [x] At exact fix commit:8unit+28AuthPersistencePG PASS, separate unchanged5current-authorityPG PASS/0FAIL/0skip, exit0. QA Java/init and original RED remain unchanged. Evidence3338cfd pushed; TV1/TV2 requests retained, no duplicates.
+- [x]66PR/211review refresh and current owner replies reconciled; TV4 already COMMENT78/APPROVED79. Earlier checkpoints remain historical, not current pending claims.
+- [ ] Parent80 stillf88/P2OPEN; TV1 review/integration and rerun on actual parent SHA before thread closure. Supplement GREEN does not tick parent fix or production acceptance.
+- [ ] Human71formaldecision; designated M01business signer, C06/COD/currentAuth/Store/SKU/atomicsettlement/liveUAT. Issue5/12/18 remainOPEN/PARTIAL; Finance/pairOFF.
+
+[Current handoff section9](../reports/TV5_REVIEW_ACCEPTANCE_2026-10-23.md#9-r2--bản-sửa-p2-được-ủy-quyền-và-bàn-giao-hiện-tại-23102026), [derivedsource/run/ownerledger](../reports/evidence/tv5-audit-20261023/auth-p2-green-refresh.json).

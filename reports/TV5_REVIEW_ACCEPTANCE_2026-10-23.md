@@ -294,3 +294,55 @@ M01/COD/business/productionAuthHTTP/signedsystemprovenance/policyenablement rema
 - [ ] Human71decision and overall contract/security/Finance/UAT acceptance; Issues5/12/18remainOPEN/PARTIAL.
 
 Earlier§4zeroFAIL applies only to the listed initial executions before80diagnostic; this later Authrun has **one actual FAIL** and remains clearly RED.
+
+## 9. R2 — bản sửa P2 được ủy quyền và bàn giao hiện tại, 23/10/2026
+
+**PARTIAL / WAITING_REVIEW_INTEGRATION.** Phần1–8 là checkpoint lịch sử, gồm RED nguyên bản; các yêu cầu hiện tại được cập nhật tại phần9 này. Không suy từ GREEN nhánh phụ rằng parent đã sửa.
+
+### Đã thực hiện và kiểm chứng
+
+- [x] Rà lại đủ **66PR =11OPEN (6Draft)+53MERGED+2CLOSED_UNMERGED**,211 submitted reviews,18threads/1OPEN và16Issues tại `2026-10-23T02:06:56.495589+00:00`; đối chiếu commit/diff/comment/CI/removal/owner. Các head của owner không đổi, không chạy lại suite không có delta.
+- [x] Người dùng cho phép riêng P2 Auth trên PR82; sửa tối thiểu catch JPA `PersistenceException` ngoài Spring `DataAccessException` để query lazy role lỗi trả internal503. Không đổi401/403, quyền, schema, status vocabulary, API/runtime bean hoặc cờ. Commit [ad25942](https://github.com/duyxl56785/Project_HK5/commit/ad25942998224451fb8c54677e028712e6921ae3) trên branch TV5 `codex/tv5-auth-current-authority-pg-20261023`; không push nhánh TV1.
+- [x] Chạy trước commit rồi chạy lại tại chính fix SHA. Lượt exact-commit `2026-10-23T02:13:33.613682+00:00` đến `2026-10-23T02:14:10.566693+00:00`, Java21.0.7/Gradle8.10/Docker29.8.1/PG16/UTC, exit0: **8unit Auth PASS +28AuthPersistence PG PASS**, và **5current-authority PG regression PASS/0FAIL/0skip**. Hai task riêng, không cộng lượt trước thành release total.
+- [x] Giữ nguyên hash Java/init của5acceptance cases và RED gốc4PASS/1FAIL; không hạ assertion, disable test hay sửa rawlog/XML. Positive controls transaction proxy, role revocation, old-token privilege,401 và Account-query503 vẫn PASS. Chỉ fault trong DB Testcontainers mới; không xóa Docker volume/data sẵn có.
+- [x] Commit evidence [3338cfd](https://github.com/duyxl56785/Project_HK5/commit/3338cfd4d995fe286beb4be342681d5685eba5fb) và push thành công [PR82](https://github.com/duyxl56785/Project_HK5/pull/82) đúng base Auth feature branch. TV1+TV2 đã được request, không request trùng. [Trả lời trong thread cũ](https://github.com/duyxl56785/Project_HK5/pull/80#discussion_r4355462299) nêu WAITING_OWNER_INTEGRATION, không resolve.
+
+[Derived refresh/RTM evidence](evidence/tv5-audit-20261023/auth-p2-green-refresh.json), [GREEN gốc trên82](https://github.com/duyxl56785/Project_HK5/blob/3338cfd4d995fe286beb4be342681d5685eba5fb/reports/evidence/tv5-auth-authority-20261023/green.json), [RED được giữ nguyên](https://github.com/duyxl56785/Project_HK5/blob/3338cfd4d995fe286beb4be342681d5685eba5fb/reports/evidence/tv5-auth-authority-20261023/red.json).
+
+Lệnh exact-commit từ checkout82: `backend/gradlew.bat -p backend --init-script tests/security/auth-current-authority.init.gradle -Ptv5AuthAuthoritySources=<absolute QA directory> :auth-service:test --tests '*Hk5JwtCodecTest' --tests '*CurrentAccountAuthorityTest' --tests '*AuthPersistenceTest' :auth-service:tv5CurrentAuthorityRegression --rerun-tasks --no-daemon --console=plain`.
+Raw log/XML giữ riêng nguyên byte, hash/size từng artifact có trong receipt; summary là dẫn xuất, không công bố fixture credentials. Normal CI không tự chạy task explicit này.
+
+### Tất cả PR đang mở và việc cần người chịu trách nhiệm làm
+
+API snapshot sau push82: `2026-10-23T02:16:53.180354+00:00`. Bảng81 là head trước commit tài liệu R2 này; receipt PR/Issue sau push xác định head tài liệu mới. CI82 đang chạy ở snapshot, không ghi PASS trước kết thúc.
+
+| PR | Head đã đối chiếu | Review có hiệu lực | Requested reviewers | CI tại snapshot | Việc còn lại / người chịu trách nhiệm |
+|---|---|---|---|---|---|
+|[#69](https://github.com/duyxl56785/Project_HK5/pull/69) Draft|`4eeeb3843f2795168ca03cdd3cd2e8be9f825ec6`|lexuanbao258-collab:APPROVED|—|readiness:success|TV4 giữ Draft/opt-in; chờ co-sign C06/security/runtime, không tự bật provider.|
+|[#71](https://github.com/duyxl56785/Project_HK5/pull/71)|`59589902228a83eec72888bed6d4dca8084ab2c3`|—|—|readiness:success|Human TV5 hoặc TV3 ra quyết định review phạm vi guard; lời nhắc hiện có, không lặp.|
+|[#72](https://github.com/duyxl56785/Project_HK5/pull/72)|`c0329a6278e0a3108f96b3b1485882a18177d929`|lexuanbao258-collab:APPROVED|—|readiness:success|TV1 đã APPROVED; TV2 xử lý merge thủ công theo gate hiện hành.|
+|[#74](https://github.com/duyxl56785/Project_HK5/pull/74)|`2215d61685c8b28e3ecc31cb8c638ca6f13182a0`|lexuanbao258-collab:APPROVED|—|NO CHECKS|TV1 APPROVED; TV5 COMMENT đã phản hồi. Preview chưa tích hợp; owner xử lý merge.|
+|[#76](https://github.com/duyxl56785/Project_HK5/pull/76)|`93f6a084f94dbcd32726ed451cbb1c69d9da6058`|lexuanbao258-collab:APPROVED|—|NO CHECKS|TV1 APPROVED; TV5 COMMENT đã phản hồi. Current Auth/server loader chưa có; owner xử lý phạm vi UI riêng.|
+|[#77](https://github.com/duyxl56785/Project_HK5/pull/77) Draft|`cbbdb8667f689eddb75690274636504efc664706`|duyxl56785:APPROVED|—|readiness:success|TV3 quyết định Draft readiness phạm vi helper; TV2 approval không duyệt wire/M01.|
+|[#78](https://github.com/duyxl56785/Project_HK5/pull/78) Draft|`ac5da331e8cf6128b26ee850f87eef18d99a3317`|duyxl56785:APPROVED|—|readiness:success|TV4 đã COMMENT provider-boundary; TV2 APPROVED. TV3 quyết định Draft readiness, không chờ review TV4 lần nữa.|
+|[#79](https://github.com/duyxl56785/Project_HK5/pull/79) Draft|`f8a242d5af2fb9095ed707ca551b8c92d8fd9102`|phamthecuong2022006-alt:APPROVED; duyxl56785:APPROVED|—|readiness:success|TV4 và TV2 đã APPROVED; TV3 quyết định Draft readiness cho guard, không tự bật Inventory.|
+|[#80](https://github.com/duyxl56785/Project_HK5/pull/80) Draft|`f88da6d2f87acfa136c955e8d099b9465c72f807`|—|duyxl56785|readiness:success|TV1 tiếp nhận82, TV2 security review; còn1threadP2 tại head gốc. Sau tích hợp phải kiểm chứng head mới.|
+|[#81](https://github.com/duyxl56785/Project_HK5/pull/81)|`c607b550df9a68fe7e9738f666f496e9a5d35aa0`|—|lexuanbao258-collab, tranvanchinhbg2006-alt, duyxl56785, phamthecuong2022006-alt|NO CHECKS|TV1/TV2/TV3/TV4 được request; chờ review gói QA/bàn giao.|
+|[#82](https://github.com/duyxl56785/Project_HK5/pull/82) Draft|`3338cfd4d995fe286beb4be342681d5685eba5fb`|—|lexuanbao258-collab, duyxl56785|readiness:in_progress|Bản sửa được ủy quyền GREEN trên nhánh TV5; TV1/TV2 đang được request, chờ tiếp nhận vào80.|
+
+Tất cả11PR có `mergeable=true` (không text conflict). Không có effective CHANGES_REQUESTED. Main vẫn yêu cầu1approval và resolve thread; scope-owner theo CONTRIBUTING vẫn bắt buộc. Feature base82 có effective rules rỗng, không thay trách nhiệm review TV1.
+39/46/63/64/65/66/67/68/70/73/75 đã MERGED, không nhắc lại blocker đã sửa hoặc push PR đóng.60/62 CLOSED_UNMERGED, khôi phục riêng ở78/77. Merged46 chỉ là proposal, không duyệt M01.
+
+### Ưu tiên để không giữ công việc thành viên khác
+
+1. **TV1 review/tiếp nhận82 vào80**, TV2 review security; sau đó TV5 đối chiếu delta và chạy nguyên acceptance trên head mới của80 trước khi resolve thread chính mình. **Finding ở80: OPEN / WAITING_OWNER_INTEGRATION; supplement82: FIXED_VERIFIED** tại fix SHA, không đồng nhất hai trạng thái.
+2. **Human TV5 hoặc TV3 quyết định review71** tại5958990, scope guard đã có bằng chứng53focusedPASS22/10. Không thêm code hoặc nhắc lại để thay quyết định con người. Mẫu phần6 chỉ dùng sau khi human tự kiểm tra.
+3. **TV3 quyết định Draft77/78/79; TV4 quyết định Draft69** theo phạm vi đã review. TV4 đã trả lời78COMMENT và79APPROVED, không tiếp tục ghi họ chưa phản hồi.72/74/76 có TV1approval, không dựng gate toàn bộ M01 cho parser/preview độc lập.
+4. **TV1/chủ dự án chỉ định người duyệt nghiệp vụ M01**, rồi signer+consumer xác nhận phiên bản/scope. ProductMD01/MD02/unitMD03 có thể tách; không ép MD04–MD10 chặn slice được duyệt riêng. Chưa có chữ ký hợp lệ thì M01 PENDING BUSINESS APPROVAL; Finance production BLOCKED, Finance/pair OFF.
+5. **TV3/TV4+TV1 security** xác nhận C06/ownership/current actor, lookup/UNKNOWN/reconciliation, nguồn COD PAID/DELIVERED, refund và sự kiện. **TV1+TV2** cung cấp current Auth/Store/ProductSKU runtime đúng thẩm quyền; không biến record/enum/mock thành trusted authority. Các lời nhắc có hiệu lực được giữ, không spam thêm.
+
+- [ ] TV1/TV2 review82 và TV1 tích hợp; parent80 regression tại head mới và xác nhận thread.
+- [ ] Human review71 và owner Draft disposition; agent không Approve/Merge/Close.
+- [ ] M01 signer/same-version decision, C06/security/COD/Store/atomic unique settlement/liveUAT. Issue5/12/18 OPEN/PARTIAL.
+
+**NOT_RUN/BLOCKED:** live HTTP/JWT/Gateway/current Store/private queries, real network Checkout→Inventory, COD/refund/atomic settlement và UAT hai Store. Không tích hợp runtime ngoài ownership để tránh chờ; không gọi PG/test-only wiring là live E2E. Các suite77/78/79/74/76/main thuộc lượt trước23/10 được giữ riêng, không gắn nhãn chạy lạiR2.
