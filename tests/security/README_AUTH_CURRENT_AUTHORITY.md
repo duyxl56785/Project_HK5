@@ -1,5 +1,20 @@
 # TV5 current-account authority PostgreSQL diagnostic
 
+## Authorized P2 supplement — GREEN on TV5 branch, waiting for TV1 integration
+
+On23/10/2026 the user explicitly authorized **only P2 Auth** on PR82. Fix commit `ad25942998224451fb8c54677e028712e6921ae3` catches JPA `PersistenceException` as well as translated Spring `DataAccessException`, mapping a failed lazy-role read to the existing internal503 decision. It does not mask401/403, add runtime wiring or change schema, status vocabulary, API, Gateway or flags.
+
+The original five-case Java and Gradle init script are byte-identical to RED (hashes in receipts). At the exact committed fix SHA:
+- **8 JWT/current-role unit PASS** and **28 Auth persistence PostgreSQL PASS**, separate baseline classes.
+- **5 current-authority PostgreSQL regression PASS /0FAIL /0skip**, unchanged assertions and positive controls; command exit0.
+- Run 2026-10-23T02:13:33.613682+00:00 to 2026-10-23T02:14:10.566693+00:00; [derived GREEN receipt](../../reports/evidence/tv5-auth-authority-20261023/green.json) identifies actual source/test hashes, command, fresh XML and original private raw hashes. Precommit verification was a separate run, not relabelled as committed-source evidence.
+
+PR80 remains at f88da6d and still reproduces the original4PASS/1FAIL. This supplemental GREEN does **not** resolve its parent finding. TV1 must review/accept PR82, then the parent head must be verified before closing that thread. TV2 security review also remains required. Keep Draft/WAITING_REVIEW_INTEGRATION; no agent Approve/Merge/Close.
+
+Original RED and baseline receipts below are preserved byte-for-byte. Raw log/XML remain private, with generated fixture credentials excluded from public evidence. No existing Docker volume/data was deleted. M01 PENDING BUSINESS APPROVAL; Finance production BLOCKED; Finance/pair flags OFF. These tests are not live HTTP/Gateway or Finance E2E.
+
+## Original diagnostic checkpoint — historical, before the authorized fix
+
 Refs #5/#12/#80. **DIAGNOSTIC RED — not a production fix or security approval.**
 Auth source tested: `f88da6d2f87acfa136c955e8d099b9465c72f807`. This QA branch is based on that exact PR80 head and targets the original Auth feature branch, not main.
 Only `tests/security/` and derived evidence change; no Auth Java/schema/config/runtime bean or flags change.
