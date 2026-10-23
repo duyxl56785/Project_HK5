@@ -27,7 +27,7 @@ Tổng **giá trị mặt hàng** = **35000.00**; currency, shipping, fee, COD s
 
 | Nhóm | Kết quả hiện tại | Bằng chứng cần thu |
 |---|---|---|
-| Pure cart/checkout model test | NOT_RUN trên commit frontend mới cho đến khi chạy Node test | Node exit code + từng test |
+| Pure cart/checkout model test | **13/13 PASS** on exact Git blob contents (Node 22.16.0); 8 Cart + 5 Checkout | SHA + TAP Node output verified; no real API |
 | React SSR component tests | NOT_RUN | Node/Vite console |
 | TypeScript build | NOT_RUN | `npm run typecheck`, `npm run build` |
 | Browser component tests | NOT_RUN | Chrome/Playwright + ảnh/console |
