@@ -241,3 +241,12 @@ Evidence: [R2 report and test commands](../reports/TV5_PR_REVIEW_FOLLOWUP_2026-1
 - [ ] Human71formaldecision; designated M01business signer, C06/COD/currentAuth/Store/SKU/atomicsettlement/liveUAT. Issue5/12/18 remainOPEN/PARTIAL; Finance/pairOFF.
 
 [Current handoff section9](../reports/TV5_REVIEW_ACCEPTANCE_2026-10-23.md#9-r2--bản-sửa-p2-được-ủy-quyền-và-bàn-giao-hiện-tại-23102026), [derivedsource/run/ownerledger](../reports/evidence/tv5-audit-20261023/auth-p2-green-refresh.json).
+
+### QA79-REVIEW-20261023 — current S01 Checkout guard acceptance
+
+- [x] Re-audit79 exactf8a242d/2commits/2files; TV2+TV4APPROVED, TV5COMMENT,0activeCR/0threads/0pendingrequests. No new actionable finding; no duplicate reviewer request.
+- [x] Independent exact-head Orderbuild exit0;108unitPASS (19Checkout subset),25OrderPGPASS and separate3originalFINdiagnosticsPASS/0FAIL/0skip. Real PG is Order-local with mocked remote ports, not live Catalog/Inventory/COD/E2E.
+- [x] S01 both Cart orders reject before reserve/write and release only confirmed Cart claim; sameStore2Products→1SellerOrder/35000 remains valid. Source/tests unchanged, original historical evidence retained.
+- [ ] Human formal decision if needed and TV3Draft disposition; M01/business/currentAuth/Store/SKU/COD/atomicsettlement/liveUAT gates remain separate and pending. No Finance/pair enablement or IssueDONE.
+
+[Focused report, findings, reviewers and member handoff](../reports/TV5_PR79_REVIEW_2026-10-23.md), [derived test/source/CI receipt](../reports/evidence/tv5-audit-20261023/pr79-comprehensive.json). Initial TV5/owner/CI test counts are separate historical invocations, not a combined release total.
