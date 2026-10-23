@@ -5,6 +5,7 @@ import static org.mockito.Mockito.*;
 
 import com.projecthk5.authservice.persistence.Account;
 import com.projecthk5.authservice.persistence.AccountRepository;
+import jakarta.persistence.PersistenceException;
 import java.time.Clock;
 import java.time.Instant;
 import java.time.ZoneOffset;
@@ -90,4 +91,21 @@ class CurrentAccountAuthorityTest {
                 () -> guard.requireCurrentForRequest(null, Account.Role.ADMIN));
         assertEquals(401, failure.httpStatus());
     }
+    @Test
+    void lazyRolesReadExceptionMapsTo503WithoutMaskingInactiveAccounts() {
+        var repo = mock(AccountRepository.class);
+        var loadedAccount = mock(Account.class);
+        when(repo.findById(id)).thenReturn(Optional.of(loadedAccount));
+        when(loadedAccount.getStatus()).thenReturn("ACTIVE");
+        // JPA lazy collections can query after findById returns, outside exception translation.
+        when(loadedAccount.getRoles()).thenThrow(new PersistenceException("fixture role grant SELECT failure"));
+
+        var failure = assertThrows(CurrentAccountAuthority.DecisionFailure.class,
+                () -> new CurrentAccountAuthority(repo, "ACTIVE").requireCurrentForIssue(id));
+        assertEquals(503, failure.httpStatus());
+        assertEquals("AUTHORIZATION_DEPENDENCY_UNAVAILABLE", failure.code());
+        verify(loadedAccount).getRoles();
+    }
+
+
 }
