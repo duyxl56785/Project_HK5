@@ -4,8 +4,7 @@ import type { CheckoutSubmission } from './checkoutTypes.ts';
 
 export function canonicalCheckoutKey(value: unknown): value is string {
   return typeof value === 'string' && value.length > 0 && value.length <= 128
-    && value !== value.trim() ? false
-    : typeof value === 'string' && value.length > 0 && value.length <= 128 && !/^\s|\s$/u.test(value);
+    && value === value.trim() && !/^\s|\s$/u.test(value);
 }
 
 /** No new key is ever minted here. Invalid/untrusted snapshots cannot produce a request. */
