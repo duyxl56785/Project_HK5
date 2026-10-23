@@ -50,6 +50,7 @@ export function projectCart(source: unknown): CartProjection | null {
     if (!object(raw) || !canonicalId(raw.productId) || !canonicalId(raw.storeId)
       || !canonicalId(raw.sellerId) || ids.has(raw.productId)
       || typeof raw.title !== 'string' || !raw.title.trim() || raw.title.length > 255
+      || typeof raw.unitPriceSnapshot !== 'string'
       || typeof raw.quantity !== 'number' || !Number.isInteger(raw.quantity)
       || raw.quantity < 1 || raw.quantity > 1000) return null;
     const unit = minorUnits(raw.unitPriceSnapshot);
@@ -79,7 +80,7 @@ export function projectCart(source: unknown): CartProjection | null {
     storeId, sellerId: value.sellerId, lines: value.lines, storeSubtotal: renderMinorUnits(value.amount),
   }));
   return {
-    revision: source.revision, claimed: source.claimed, groups: projected,
+    revision: source.revision as string, claimed: source.claimed, groups: projected,
     total: renderMinorUnits(total), itemCount: ids.size,
   };
 }
