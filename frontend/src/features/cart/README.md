@@ -18,4 +18,4 @@ npm run typecheck
 npm run build
 ```
 
-SSR test là component-render fixture, **không phải browser/API/E2E**. Không công bố PASS cho đến khi có log chạy đúng HEAD.
+**Đã kiểm tra thực tế trên source blob GitHub tương ứng:** pure `cartModel.test.mjs` **8/8 PASS**, Node 22.16.0, source `cartModel.ts` blob SHA `a5bbd367d67b7427cfa117d789e5125761229cfe`, test blob SHA `5c41e70b4ffe25ff008c87078dd13f2f3c760970`. Kiểm tra TypeScript/JSX qua `tsc --strict --noEmit` với khai báo React **tối giản trong thư mục tạm** PASS (không phải full npm frontend typecheck). **SSR/Vite browser, npm run typecheck/build: NOT_RUN** trong môi trường AI thiếu dependencies. SSR test là component-render fixture, không phải browser/API/E2E.
