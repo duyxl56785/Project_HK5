@@ -9,7 +9,7 @@
 
 **Điều kiện còn thiếu:** adapter mapper từ backend Java CartView thực tế (bao gồm cách biểu diễn revision/amount), authenticated API client và route thuộc TV1; currency/fee/M01; Inventory/Catalog live gate. Không tự sửa `frontend/src/app` hay `frontend/src/shared`.
 
-**Kiểm thử đề nghị (trong `frontend/`, Node 22+, sau khi `npm ci`):**
+**Kiểm thử đề nghị (trong `frontend/`, Node 22+, sau khi `npm install --no-package-lock`):**
 
 ```powershell
 node --experimental-strip-types --test src/features/cart/cartModel.test.mjs
@@ -19,3 +19,5 @@ npm run build
 ```
 
 **Đã kiểm tra thực tế trên source blob GitHub tương ứng:** pure `cartModel.test.mjs` **8/8 PASS**, Node 22.16.0, source `cartModel.ts` blob SHA `a5bbd367d67b7427cfa117d789e5125761229cfe`, test blob SHA `5c41e70b4ffe25ff008c87078dd13f2f3c760970`. Kiểm tra TypeScript/JSX qua `tsc --strict --noEmit` với khai báo React **tối giản trong thư mục tạm** PASS (không phải full npm frontend typecheck). **SSR/Vite browser, npm run typecheck/build: NOT_RUN** trong môi trường AI thiếu dependencies. SSR test là component-render fixture, không phải browser/API/E2E.
+
+**Lý do lệnh cài package:** repository hiện chưa có `frontend/package-lock.json`; không dùng `npm ci` vì nó yêu cầu lockfile. `npm install --no-package-lock` chỉ chuẩn bị dependency trên worktree kiểm thử, không tạo lockfile mới trong shared frontend.
