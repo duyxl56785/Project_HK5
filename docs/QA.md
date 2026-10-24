@@ -300,3 +300,10 @@ Evidence: [R2 report and test commands](../reports/TV5_PR_REVIEW_FOLLOWUP_2026-1
 - [ ] RuntimecurrentAuth/Store/House/SKUprovider/C06/COD/refund/atomicsettlement/liveUAT. Issue5/12/18OPEN/PARTIAL,Finance/Inventoryflagsunchanged.
 
 [Current all-PR handoff](../reports/TV5_PR_REVIEW_UNBLOCK_2026-10-25.md), [API/source/compatibility metadata](../reports/evidence/tv5-audit-20261025/repository-reviewers.json). Previous checkpoints remain dated history.
+
+#### Later publication — explicitly authorized Level B88
+
+- [x] Human explicitly authorized onlyLevelB88; [TV5APPROVED](https://github.com/duyxl56785/Project_HK5/pull/88#pullrequestreview-5639341936) read back at199211b. EarlierwaitingLevelBcheckboxes are historical; authorDraft/merge andallruntime/Financegatesremain separate.
+- [x] COMMENTQA83/85/87/89/90/91published,83inlineintegrationcompilefinding handedtoTV2; no duplicateapproval/request or86threadtakeover.
+
+[Current report section7](../reports/TV5_PR_REVIEW_UNBLOCK_2026-10-25.md#7-later-authorized-level-b-decision-and-published-review-handoff), [reviewreceipt](../reports/evidence/tv5-audit-20261025/review-publication.json).
