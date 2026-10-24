@@ -261,8 +261,37 @@ public final class ProductImageValidator {
                 }
                 offset += length + 12;
             }
-            if (!inflater.finished()) { throw invalidContent(); }
+            // ImageIO may ignore extra decompressed bytes once the declared pixels are filled.
+            if (!inflater.finished() || inflater.getBytesWritten() != pngScanlineBytes(bytes, width, height)) {
+                throw invalidContent();
+            }
         } finally { inflater.end(); }
+    }
+
+    private static long pngScanlineBytes(byte[] bytes, int width, int height) {
+        int channels = switch (Byte.toUnsignedInt(bytes[25])) {
+            case 0, 3 -> 1;
+            case 2 -> 3;
+            case 4 -> 2;
+            case 6 -> 4;
+            default -> throw invalidContent();
+        };
+        int bitsPerPixel = channels * Byte.toUnsignedInt(bytes[24]);
+        // Each pass is x/y start followed by x/y stride; empty Adam7 passes have no filter bytes.
+        int[][] passes = switch (bytes[28]) {
+            case 0 -> new int[][] {{0, 0, 1, 1}};
+            case 1 -> new int[][] {{0, 0, 8, 8}, {4, 0, 8, 8}, {0, 4, 4, 8}, {2, 0, 4, 4},
+                    {0, 2, 2, 4}, {1, 0, 2, 2}, {0, 1, 1, 2}};
+            default -> throw invalidContent();
+        };
+        long total = 0;
+        for (int[] pass : passes) {
+            if (width <= pass[0] || height <= pass[1]) { continue; }
+            long columns = (width - pass[0] + pass[2] - 1) / pass[2];
+            long rows = (height - pass[1] + pass[3] - 1) / pass[3];
+            total += (1 + (columns * bitsPerPixel + 7) / 8) * rows;
+        }
+        return total;
     }
 
     private static long unsignedInt(byte[] bytes, int offset, ByteOrder order) {

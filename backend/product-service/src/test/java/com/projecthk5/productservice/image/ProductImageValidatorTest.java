@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import com.projecthk5.productservice.image.ImageValidationException.Code;
 import com.projecthk5.productservice.image.ProductImageValidator.Format;
 import com.projecthk5.productservice.image.ProductImageValidator.ImageInput;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -19,9 +20,15 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 import java.util.zip.CRC32;
 import java.util.zip.DeflaterOutputStream;
+import java.util.zip.InflaterInputStream;
+import javax.imageio.IIOImage;
+import javax.imageio.ImageIO;
+import javax.imageio.ImageWriteParam;
+import javax.imageio.stream.MemoryCacheImageOutputStream;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -176,6 +183,64 @@ class ProductImageValidatorTest {
         assertCode(IMAGE_RESOURCE_LIMIT, () -> validator.validate(input("photo.png", "image/png", png)));
     }
 
+    @ParameterizedTest
+    @ValueSource(ints = {1, 49})
+    void pngTrailingInflatedBytesAreRejectedEvenWithValidZlibAndChunkCrc(int extraBytes) throws IOException {
+        byte[] png = encodedPng(BufferedImage.TYPE_INT_RGB, 16, 12, false);
+        assertEquals(Format.PNG, validator.validate(input("photo.png", "image/png", png)).format());
+        int offset = chunkOffset(png, "IDAT");
+        int length = ByteBuffer.wrap(png, offset, 4).getInt();
+        byte[] pixels;
+        try (var inflater = new InflaterInputStream(new ByteArrayInputStream(png, offset + 8, length))) {
+            pixels = inflater.readAllBytes();
+        }
+        var compressed = new ByteArrayOutputStream();
+        try (var deflater = new DeflaterOutputStream(compressed)) {
+            deflater.write(pixels);
+            deflater.write(new byte[extraBytes]);
+        }
+        byte[] invalid = replacePngData(png, compressed.toByteArray());
+        assertCode(IMAGE_INVALID_CONTENT, () -> validator.validate(input("photo.png", "image/png", invalid)));
+    }
+
+    static Stream<Arguments> pngEncodings() {
+        return Stream.of(
+                Arguments.of(BufferedImage.TYPE_BYTE_BINARY, 1, 1, true),
+                Arguments.of(BufferedImage.TYPE_BYTE_BINARY, 9, 3, true),
+                Arguments.of(BufferedImage.TYPE_BYTE_GRAY, 3, 5, false),
+                Arguments.of(BufferedImage.TYPE_USHORT_GRAY, 2, 2, true),
+                Arguments.of(BufferedImage.TYPE_INT_RGB, 16, 12, false),
+                Arguments.of(BufferedImage.TYPE_INT_ARGB, 9, 9, true),
+                Arguments.of(BufferedImage.TYPE_BYTE_INDEXED, 3, 9, false));
+    }
+
+    @ParameterizedTest
+    @MethodSource("pngEncodings")
+    void acceptsStandardPackedSixteenBitAndAdam7ScanlineLayouts(
+            int imageType, int width, int height, boolean interlaced) throws IOException {
+        byte[] png = encodedPng(imageType, width, height, interlaced);
+        assertEquals(interlaced ? 1 : 0, png[28]);
+        var checked = validator.validate(input("photo.png", "image/png", png));
+        assertEquals(width, checked.width());
+        assertEquals(height, checked.height());
+        assertArrayEquals(png, checked.content());
+    }
+
+    @ParameterizedTest
+    @CsvSource({"4,18", "6,34"})
+    void acceptsSixteenBitAlphaScanlines(int colorType, int rawByteCount) throws IOException {
+        byte[] png = encodedPng(BufferedImage.TYPE_INT_RGB, 2, 2, false);
+        png[24] = 16;
+        png[25] = (byte) colorType;
+        rewriteCrc(png, 8);
+        var compressed = new ByteArrayOutputStream();
+        try (var deflater = new DeflaterOutputStream(compressed)) { deflater.write(new byte[rawByteCount]); }
+        byte[] valid = replacePngData(png, compressed.toByteArray());
+        var checked = validator.validate(input("photo.png", "image/png", valid));
+        assertEquals(2, checked.width());
+        assertEquals(2, checked.height());
+    }
+
     @Test
     void pngCrcMismatchAndMissingEndChunkAreRejected() throws IOException {
         byte[] bytes = fixture("sample.png");
@@ -327,6 +392,23 @@ class ProductImageValidatorTest {
 
     private static ImageInput input(String name, String type, byte[] bytes) {
         return new ImageInput(name, type, new ByteArrayInputStream(bytes));
+    }
+
+    private static byte[] encodedPng(int imageType, int width, int height, boolean interlaced) throws IOException {
+        var image = new BufferedImage(width, height, imageType);
+        var bytes = new ByteArrayOutputStream();
+        var writer = ImageIO.getImageWritersByFormatName("png").next();
+        try (var output = new MemoryCacheImageOutputStream(bytes)) {
+            writer.setOutput(output);
+            var parameters = writer.getDefaultWriteParam();
+            parameters.setProgressiveMode(interlaced ? ImageWriteParam.MODE_DEFAULT : ImageWriteParam.MODE_DISABLED);
+            writer.write(null, new IIOImage(image, null, null), parameters);
+            output.flush();
+            return bytes.toByteArray();
+        } finally {
+            writer.dispose();
+            image.flush();
+        }
     }
 
     private static byte[] fixture(String name) throws IOException {

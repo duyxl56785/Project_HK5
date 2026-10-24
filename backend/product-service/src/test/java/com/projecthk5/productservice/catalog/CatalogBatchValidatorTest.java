@@ -249,6 +249,36 @@ class CatalogBatchValidatorTest {
     }
 
     @ParameterizedTest
+    @ValueSource(booleans = {false, true})
+    void oneSellerResolvedToDifferentStoresFailsTheWholeBatch(boolean reverseSourceOrder) {
+        UUID sellerId = UUID.randomUUID();
+        var first = facts(UUID.randomUUID(), UUID.randomUUID(), sellerId, "SKU-A", "10");
+        var second = facts(UUID.randomUUID(), UUID.randomUUID(), sellerId, "SKU-B", "20");
+        List<LookupResult> rows = reverseSourceOrder
+                ? List.of(found(second), found(first)) : List.of(found(first), found(second));
+
+        CatalogBatchException failure = assertThrows(CatalogBatchException.class,
+                () -> new CatalogBatchValidator(ids -> rows).validate(List.of(expected(first), expected(second))));
+
+        assertEquals(CatalogBatchException.Code.DEPENDENCY_UNAVAILABLE, failure.getCode());
+    }
+
+    @Test void oneStoreMaySupplyMultipleProductsForItsSeller() {
+        UUID storeId = UUID.randomUUID(), sellerId = UUID.randomUUID();
+        var first = facts(UUID.randomUUID(), storeId, sellerId, "SKU-A", "10");
+        var second = facts(UUID.randomUUID(), storeId, sellerId, "SKU-B", "20");
+
+        Result result = new CatalogBatchValidator(ids -> List.of(found(second), found(first)))
+                .validate(List.of(expected(first), expected(second)));
+
+        assertTrue(result.valid());
+        assertEquals(List.of("SKU-A", "SKU-B"), result.items().stream()
+                .map(item -> item.snapshot().inventorySku()).toList());
+        assertTrue(result.items().stream().allMatch(item -> item.snapshot().storeId().equals(storeId)
+                && item.snapshot().sellerId().equals(sellerId)));
+    }
+
+    @ParameterizedTest
     @ValueSource(strings = {"ownership", "currency", "private", "absent"})
     void oneRejectedItemPreventsUsingAnyReadySubset(String rejection) throws Exception {
         var first = facts(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID(), "SKU-A", "10");
