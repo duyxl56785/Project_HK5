@@ -130,6 +130,9 @@ public class CheckoutService {
     private Order prepareOrder(UUID id,String customer,List<CartPort.Item> items) {
         Order order=new Order(id,customer);
         Map<String,List<Prepared>> grouped=new LinkedHashMap<>();
+        // S01: authoritative Catalog facts cannot assign the same Seller to two
+        // Stores within one checkout. Reject the whole batch before Inventory.
+        Map<String,String> storeForSeller=new HashMap<>();
         for (CartPort.Item item:items) {
             CatalogPort.ProductSnapshot product=catalog.verify(item.productId());
             if (!product.available() || !product.sellerApproved() || !product.storeOpen())
@@ -139,6 +142,9 @@ public class CheckoutService {
                 throw new IllegalStateException("Catalog changed since cart creation");
             if (item.unitPriceSnapshot()==null || product.unitPrice().compareTo(item.unitPriceSnapshot())!=0)
                 throw new IllegalStateException("Product price changed since adding to cart");
+            String previouslyVerifiedStore=storeForSeller.putIfAbsent(product.sellerId(),product.storeId());
+            if (previouslyVerifiedStore!=null && !previouslyVerifiedStore.equals(product.storeId()))
+                throw new IllegalStateException("Catalog assigned one Seller to multiple Stores");
             // Storage exactness is independent of M01 currency, rates or business caps.
             // Reject known-invalid unit and line amounts before any Inventory call.
             OrderAmountStorageBounds.requireExactNonnegative(product.unitPrice());
