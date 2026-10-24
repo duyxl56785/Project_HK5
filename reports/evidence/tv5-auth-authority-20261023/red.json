@@ -1,0 +1,91 @@
+{
+  "kind": "DERIVED SUMMARY; original logs/XML private, not public CI artifacts",
+  "metadata": {
+    "label": "auth-authority-probe",
+    "source": "f88da6d2f87acfa136c955e8d099b9465c72f807",
+    "command": [
+      "backend/gradlew.bat",
+      "-p",
+      "backend",
+      "--init-script",
+      "tests/security/auth-current-authority.init.gradle",
+      "-Ptv5AuthAuthoritySources=<QA checkout>/tests/security/auth-current-authority",
+      ":auth-service:tv5CurrentAuthorityRegression",
+      "--rerun-tasks",
+      "--no-daemon",
+      "--console=plain"
+    ],
+    "startedUtc": "2026-10-23T00:51:50.232537+00:00",
+    "environment": {
+      "Java": "java version \"21.0.7\" 2025-04-15 LTS",
+      "Gradle": "8.10",
+      "Docker": "29.8.1",
+      "JAVA_TOOL_OPTIONS": "-Duser.timezone=UTC -Dapi.version=1.44"
+    },
+    "executor": "TV5 independent exact-source execution",
+    "exitCode": 1,
+    "completedUtc": "2026-10-23T00:52:13.006948+00:00"
+  },
+  "counts": {
+    "auth-service:tv5CurrentAuthorityRegression": {
+      "PASS": 4,
+      "FAIL": 1
+    }
+  },
+  "cases": [
+    {
+      "module": "auth-service",
+      "task": "tv5CurrentAuthorityRegression",
+      "class": "com.projecthk5.tv5authqa.CurrentAccountAuthorityPostgresRegressionTest",
+      "name": "transactionalProxyLoadsLazyRolesAndCurrentRevocationOverridesSignedAdmin()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "tv5CurrentAuthorityRegression",
+      "class": "com.projecthk5.tv5authqa.CurrentAccountAuthorityPostgresRegressionTest",
+      "name": "currentGrantCannotElevateOldTokenButFreshlyIssuedTokenCanUseIt()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "tv5CurrentAuthorityRegression",
+      "class": "com.projecthk5.tv5authqa.CurrentAccountAuthorityPostgresRegressionTest",
+      "name": "unavailableLazyRoleQueryIsAlso503RatherThanLeakingPersistenceFailure()",
+      "result": "FAIL"
+    },
+    {
+      "module": "auth-service",
+      "task": "tv5CurrentAuthorityRegression",
+      "class": "com.projecthk5.tv5authqa.CurrentAccountAuthorityPostgresRegressionTest",
+      "name": "unavailableAccountQueryIs503RatherThanAnInvalidAccount()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "tv5CurrentAuthorityRegression",
+      "class": "com.projecthk5.tv5authqa.CurrentAccountAuthorityPostgresRegressionTest",
+      "name": "inactiveAndMissingCurrentAccountsReturn401()",
+      "result": "PASS"
+    }
+  ],
+  "staleXmlExcluded": [],
+  "rawArtifacts": [
+    {
+      "localPath": ".verification/tv5-audit-20261023/runs/auth-authority-probe/auth-service/tv5CurrentAuthorityRegression/TEST-com.projecthk5.tv5authqa.CurrentAccountAuthorityPostgresRegressionTest.xml",
+      "bytes": 52222,
+      "sha256": "7e4cdc5611f9c9bc389762d657e351df0fdf970f348193fc9452559e155190d0"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261023/runs/auth-authority-probe/runtime.log",
+      "bytes": 2677,
+      "sha256": "71979502ce0816004669ee173b28c431baa7f51921c18f39cc87a74b0726ba9d"
+    }
+  ],
+  "qaSourceHashes": {
+    "tests/security/auth-current-authority.init.gradle": "365bf1f12103b7ed47848e572d66dbd529cbc2c86f90fadbd04dad19e775f077",
+    "tests/security/auth-current-authority/CurrentAccountAuthorityPostgresRegressionTest.java": "e670f18ad523535db27a14e384226d1f99bcfd78fa04734cda242f9fc62fd51b"
+  },
+  "scope": "Explicit realPG/Springtransaction/currentrole faultinjection:4PASS/1FAIL; notfixPASS",
+  "publication": "DERIVED summary only; raw logs/XML private unchanged; raw byte hashes verified; no raw credential/system-out copied; sourceAuthf88 plus listedQAhashes, not liveHTTP/E2E"
+}
