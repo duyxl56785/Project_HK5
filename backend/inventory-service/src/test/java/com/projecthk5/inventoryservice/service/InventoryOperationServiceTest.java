@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.TreeMap;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -27,14 +28,16 @@ import static org.mockito.Mockito.*;
 class InventoryOperationServiceTest {
     private InventoryItemRepository items;
     private InventoryOperationRepository operations;
+    private JdbcTemplate jdbc;
     private InventoryOperationService service;
 
     @BeforeEach
     void setUp() {
         items = mock(InventoryItemRepository.class);
         operations = mock(InventoryOperationRepository.class);
+        jdbc = mock(JdbcTemplate.class);
         when(operations.claimOperationId(anyString(), anyString(), anyString())).thenReturn(1);
-        service = new InventoryOperationService(items, operations);
+        service = new InventoryOperationService(items, operations, jdbc);
     }
 
     @Test

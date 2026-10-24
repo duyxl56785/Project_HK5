@@ -19,8 +19,12 @@ class InventorySchemaPostgresIT extends InventoryPostgresSupport {
             "select data_type from information_schema.columns "
                 + "where table_schema='public' and table_name='inventory_operation' and column_name='request_hash'",
             String.class));
-        assertEquals(2, sql.queryForObject(
+        assertEquals(3, sql.queryForObject(
             "select count(*) from flyway_schema_history where success=true", Integer.class));
+        assertEquals("character varying", sql.queryForObject(
+            "select data_type from information_schema.columns "
+                + "where table_schema='public' and table_name='inventory_operation' and column_name='reservation_id'",
+            String.class));
         String operationId = id("schema");
         String hash = "a".repeat(64);
         operations.saveAndFlush(new InventoryOperation(operationId, "INCREASE", hash));
