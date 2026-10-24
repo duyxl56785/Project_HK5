@@ -100,7 +100,8 @@ public class CatalogBatchValidator {
                 continue;
             }
             if (facts == null || facts.product() == null || facts.store() == null || facts.currency() == null
-                    || facts.currency().isBlank() || !lookup.productId().equals(facts.product().id())
+                    || facts.currency().isBlank() || !facts.currency().equals(facts.product().currency())
+                    || !lookup.productId().equals(facts.product().id())
                     || !facts.product().storeId().equals(facts.store().storeId())
                     || !skus.add(facts.product().sku())) throw unavailable();
             StoreAccess previous = stores.putIfAbsent(facts.store().storeId(), facts.store());
