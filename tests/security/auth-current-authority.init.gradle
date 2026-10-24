@@ -1,0 +1,25 @@
+import org.gradle.api.tasks.testing.Test
+
+def sources = gradle.startParameter.projectProperties['tv5AuthAuthoritySources']
+if (!sources || !new File(sources).isDirectory()) {
+    throw new GradleException('Set -Ptv5AuthAuthoritySources to the absolute TV5 Auth QA directory')
+}
+
+gradle.projectsEvaluated {
+    def auth = gradle.rootProject.project(':auth-service')
+    def qa = auth.sourceSets.create('tv5CurrentAuthorityRegression')
+    qa.java.setSrcDirs([sources])
+    qa.compileClasspath += auth.sourceSets.main.output
+    qa.runtimeClasspath += auth.sourceSets.main.output
+    auth.configurations.tv5CurrentAuthorityRegressionImplementation.extendsFrom(auth.configurations.testImplementation)
+    auth.configurations.tv5CurrentAuthorityRegressionRuntimeOnly.extendsFrom(auth.configurations.testRuntimeOnly)
+    auth.tasks.register('tv5CurrentAuthorityRegression', Test) {
+        group = 'verification'
+        description = 'TV5 real PostgreSQL current-role and dependency-failure regression; no runtime bean'
+        testClassesDirs = qa.output.classesDirs
+        classpath = qa.runtimeClasspath
+        useJUnitPlatform { includeTags 'postgres-integration' }
+        systemProperty 'user.timezone', 'UTC'
+        testLogging { events 'passed', 'failed', 'skipped' }
+    }
+}

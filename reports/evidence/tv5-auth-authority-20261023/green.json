@@ -1,0 +1,326 @@
+{
+  "kind": "DERIVED SUMMARY; original logs/XML private, not public CI artifacts",
+  "metadata": {
+    "label": "committed-fix",
+    "sourceHead": "ad25942998224451fb8c54677e028712e6921ae3",
+    "uncommittedProductionDelta": null,
+    "authoritySourceSha256": "9b5a0fb0034e6b59a6d1bc1fecd5d4f7d051cecacd0a41d5b5b4bbbc1971b68b",
+    "qaContentSha256": {
+      "tests/security/auth-current-authority.init.gradle": "365bf1f12103b7ed47848e572d66dbd529cbc2c86f90fadbd04dad19e775f077",
+      "tests/security/auth-current-authority/CurrentAccountAuthorityPostgresRegressionTest.java": "e670f18ad523535db27a14e384226d1f99bcfd78fa04734cda242f9fc62fd51b"
+    },
+    "command": [
+      "D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\reviewer-check-20261019\\pr51\\backend\\gradlew.bat",
+      "-p",
+      "backend",
+      "--init-script",
+      "D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\reviewer-check-20261019\\pr51\\tests\\security\\auth-current-authority.init.gradle",
+      "-Ptv5AuthAuthoritySources=D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\reviewer-check-20261019\\pr51\\tests\\security\\auth-current-authority",
+      ":auth-service:test",
+      "--tests",
+      "*Hk5JwtCodecTest",
+      "--tests",
+      "*CurrentAccountAuthorityTest",
+      "--tests",
+      "*AuthPersistenceTest",
+      ":auth-service:tv5CurrentAuthorityRegression",
+      "--rerun-tasks",
+      "--no-daemon",
+      "--console=plain"
+    ],
+    "startedUtc": "2026-10-23T02:13:33.613682+00:00",
+    "environment": {
+      "Java": "21.0.7",
+      "Gradle": "8.10",
+      "Docker": "29.8.1",
+      "JAVA_TOOL_OPTIONS": "-Duser.timezone=UTC -Dapi.version=1.44"
+    },
+    "executor": "TV5 independent execution",
+    "exitCode": 0,
+    "completedUtc": "2026-10-23T02:14:10.566693+00:00"
+  },
+  "counts": {
+    "test": {
+      "PASS": 36
+    },
+    "tv5CurrentAuthorityRegression": {
+      "PASS": 5
+    }
+  },
+  "cases": [
+    {
+      "task": "test",
+      "class": "com.projecthk5.authservice.AuthPersistenceTest",
+      "name": "refreshConstraintsEnforceHashFamilyParentAndAbsoluteExpiry()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.authservice.AuthPersistenceTest",
+      "name": "allJavaStripCharactersAreRejectedAtSqlEmailBoundaries()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.authservice.AuthPersistenceTest",
+      "name": "tokenConsumptionAndChildInsertRollbackTogether()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.authservice.AuthPersistenceTest",
+      "name": "schemaRejectsInvalidRolesEmailsAndMissingAccount()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.authservice.AuthPersistenceTest",
+      "name": "accountPersistsNormalizedEmailRolesAndDurableTaskAtomically()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.authservice.AuthPersistenceTest",
+      "name": "[1] logout=false",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.authservice.AuthPersistenceTest",
+      "name": "[2] logout=true",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.authservice.AuthPersistenceTest",
+      "name": "canonicalUnicodeIsNotRestrictedToAsciiOrCaseFolded()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.authservice.AuthPersistenceTest",
+      "name": "familyLockBlocksOtherTransactionAndLogoutPreventsConsumption()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.authservice.AuthPersistenceTest",
+      "name": "rawUnicodeAliasCannotBypassDatabaseNormalization()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.authservice.AuthPersistenceTest",
+      "name": "accountRolesAndProvisioningRollbackTogether()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.authservice.AuthPersistenceTest",
+      "name": "consumeKeepsFamilyLockUntilCallerCommits()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.authservice.AuthPersistenceTest",
+      "name": "committedDataSurvivesApplicationRestartWithRuntimeFlywayDisabled()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.authservice.AuthPersistenceTest",
+      "name": "twoRotationsSerializeAndReuseCanRevokeCommittedChild()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.authservice.AuthPersistenceTest",
+      "name": "postgresConstraintRejectsExactlyJavaLowercaseChangingScalars()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.authservice.AuthPersistenceTest",
+      "name": "[1] prefix=ascii",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.authservice.AuthPersistenceTest",
+      "name": "[2] prefix=É",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.authservice.AuthPersistenceTest",
+      "name": "[3] prefix=İ",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.authservice.AuthPersistenceTest",
+      "name": "[4] prefix=ΟΣ",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.authservice.AuthPersistenceTest",
+      "name": "[5] prefix=𐐀",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.authservice.AuthPersistenceTest",
+      "name": "[1] duplicate=false",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.authservice.AuthPersistenceTest",
+      "name": "[2] duplicate=true",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.authservice.AuthPersistenceTest",
+      "name": "runtimeHasOnlyExplicitBusinessDmlAndCannotTouchSchemaHistory()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.authservice.AuthPersistenceTest",
+      "name": "migrationRerunsAndValidatesWithRuntimeDdlDisabled()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.authservice.AuthPersistenceTest",
+      "name": "migrationRejectsWrongActorBeforeCreatingBusinessTables()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.authservice.AuthPersistenceTest",
+      "name": "unicodeDuplicateLookupAndCanonicalSqlInsertUseSameUniqueKey()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.authservice.AuthPersistenceTest",
+      "name": "consumptionRequiresActiveUnexpiredTokenAndTransaction()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.authservice.AuthPersistenceTest",
+      "name": "committedDataSurvivesPostgresRestart()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.CurrentAccountAuthorityTest",
+      "name": "inactiveOrMissingAccountReturns401ButDependencyFailureReturns503()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.CurrentAccountAuthorityTest",
+      "name": "staleJwtAdminIsDeniedOnceCurrentGrantIsRemoved()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.CurrentAccountAuthorityTest",
+      "name": "currentGrantCannotElevateAnOldTokenMissingTheRole()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.CurrentAccountAuthorityTest",
+      "name": "activeStatusIsExplicitAndNoRawPrincipalCanBeCreatedFromClientData()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.Hk5JwtCodecTest",
+      "name": "acceptsLocalPreviousKeyUntilRotationRetirementAndRejectsExpired()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.Hk5JwtCodecTest",
+      "name": "rejectsTamperingUnknownKeyAndWrongIssuerAudience()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.Hk5JwtCodecTest",
+      "name": "issuesExactContractAndVerifiesCurrentRoleAfterDatabaseRead()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.Hk5JwtCodecTest",
+      "name": "missingWeakOrExcessKeysCannotInitializeAndAbsentConfigNeverDefaults()",
+      "result": "PASS"
+    },
+    {
+      "task": "tv5CurrentAuthorityRegression",
+      "class": "com.projecthk5.tv5authqa.CurrentAccountAuthorityPostgresRegressionTest",
+      "name": "transactionalProxyLoadsLazyRolesAndCurrentRevocationOverridesSignedAdmin()",
+      "result": "PASS"
+    },
+    {
+      "task": "tv5CurrentAuthorityRegression",
+      "class": "com.projecthk5.tv5authqa.CurrentAccountAuthorityPostgresRegressionTest",
+      "name": "currentGrantCannotElevateOldTokenButFreshlyIssuedTokenCanUseIt()",
+      "result": "PASS"
+    },
+    {
+      "task": "tv5CurrentAuthorityRegression",
+      "class": "com.projecthk5.tv5authqa.CurrentAccountAuthorityPostgresRegressionTest",
+      "name": "unavailableLazyRoleQueryIsAlso503RatherThanLeakingPersistenceFailure()",
+      "result": "PASS"
+    },
+    {
+      "task": "tv5CurrentAuthorityRegression",
+      "class": "com.projecthk5.tv5authqa.CurrentAccountAuthorityPostgresRegressionTest",
+      "name": "unavailableAccountQueryIs503RatherThanAnInvalidAccount()",
+      "result": "PASS"
+    },
+    {
+      "task": "tv5CurrentAuthorityRegression",
+      "class": "com.projecthk5.tv5authqa.CurrentAccountAuthorityPostgresRegressionTest",
+      "name": "inactiveAndMissingCurrentAccountsReturn401()",
+      "result": "PASS"
+    }
+  ],
+  "staleXmlExcluded": [],
+  "rawArtifacts": [
+    {
+      "localPath": ".verification/tv5-audit-20261023-r2/runs/committed-fix/auth-service/test/TEST-com.projecthk5.authservice.AuthPersistenceTest.xml",
+      "bytes": 37484,
+      "sha256": "52ce79ff1a99d1b49f7dbd01f33616a8ade0343b2196a4124011c7bdcbd4b2be"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261023-r2/runs/committed-fix/auth-service/test/TEST-com.projecthk5.authservice.security.CurrentAccountAuthorityTest.xml",
+      "bytes": 1556,
+      "sha256": "308c6c7dee834ebcb364f2db4544f9a0b97d80e66fa7a4a8ba98c83af0df6bdc"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261023-r2/runs/committed-fix/auth-service/test/TEST-com.projecthk5.authservice.security.Hk5JwtCodecTest.xml",
+      "bytes": 980,
+      "sha256": "c8df636839c7fd7ac782071d2d47624786e644b439b8d227f6b5b00463c805ec"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261023-r2/runs/committed-fix/auth-service/tv5CurrentAuthorityRegression/TEST-com.projecthk5.tv5authqa.CurrentAccountAuthorityPostgresRegressionTest.xml",
+      "bytes": 35226,
+      "sha256": "6d8f14e4650d2c6103f3e175524e4efdb6760eea8c679f98c226cb133dd2e6d6"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261023-r2/runs/committed-fix/runtime.log",
+      "bytes": 2484,
+      "sha256": "c3a175d64f5d6726f98974a33232fa9b998133144baf386c72fd8c2be9e3ea49"
+    }
+  ]
+}
