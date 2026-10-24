@@ -250,3 +250,15 @@ Evidence: [R2 report and test commands](../reports/TV5_PR_REVIEW_FOLLOWUP_2026-1
 - [ ] Human formal decision if needed and TV3Draft disposition; M01/business/currentAuth/Store/SKU/COD/atomicsettlement/liveUAT gates remain separate and pending. No Finance/pair enablement or IssueDONE.
 
 [Focused report, findings, reviewers and member handoff](../reports/TV5_PR79_REVIEW_2026-10-23.md), [derived test/source/CI receipt](../reports/evidence/tv5-audit-20261023/pr79-comprehensive.json). Initial TV5/owner/CI test counts are separate historical invocations, not a combined release total.
+
+### QA25 review and unblock delta — 25 October 2026
+
+- [x] All75initialPR/230submittedreview/16Issue metadata audited;61merged/2closed-unmerged/12open. NewpublicationPRs are later events, not retroactive totals.
+- [x] Actual80/c8parent14unit+28AuthPG+5unchangedauthorityPGPASS; ownP2resolved,92runbookcorrection pushed.82actuallyMERGEDintoAuthfeaturec8, notmain; oldclosed-unmergedownercheckpoint obsolete.
+- [x] Independent83(33candidatePG),85(16unit/14PG),87(121focused),88(437unit/61PG),89(3unit/59PG),90(10unit/46PG),91(11unit/35PG)PASS,0fail/skip perrun; no cross-head release total.
+- [x] Productprice84business+TV5LevelA+TV2mappingACK confirmed/MERGED; do not keep that slice pending. BroaderM01/Finance stillnotapproved.
+- [x] Synthetic83after88compileFAIL retained separately: newcandidate testmissingexplicitcurrency. Baseline83/88remainPASS; TV2mustadapt atintegration, no defaultVND or assertionweakening.
+- [ ] HumanLevelB88/formalreview andauthorDraftdisposition;86TV2SSRfindingOPEN/needsTV3fix; no agentapproval or other-reviewerresolve.
+- [ ] RuntimecurrentAuth/Store/House/SKUprovider/C06/COD/refund/atomicsettlement/liveUAT. Issue5/12/18OPEN/PARTIAL,Finance/Inventoryflagsunchanged.
+
+[Current all-PR handoff](../reports/TV5_PR_REVIEW_UNBLOCK_2026-10-25.md), [API/source/compatibility metadata](../reports/evidence/tv5-audit-20261025/repository-reviewers.json). Previous checkpoints remain dated history.
