@@ -31,10 +31,14 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
+import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 import org.postgresql.PGConnection;
+import org.postgresql.util.PSQLException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -89,6 +93,7 @@ class ProductPersistenceIntegrationTest {
     @Autowired private MockMvc http;
     @Autowired private ApplicationContext context;
     @Autowired private Environment environment;
+    @Autowired private Flyway flyway;
 
     @BeforeEach
     void resetDisposableDatabase() {
@@ -575,6 +580,101 @@ class ProductPersistenceIntegrationTest {
             assertNull(fresh(rawId).getReviewReason());
         }
         assertEquals(4, products.count());
+    }
+
+    @ParameterizedTest
+    @EnumSource(value = ProductStatus.class, names = {"REJECTED", "SUSPENDED"})
+    void lifecycleModerationCanonicalReasonRoundTripsThroughJpaAndRawSql(ProductStatus status) {
+        flyway.validate();
+        System.out.println("Moderation parity Flyway history: " + jdbc.queryForList(
+                "SELECT version,checksum,success FROM flyway_schema_history WHERE version IS NOT NULL ORDER BY installed_rank"));
+        assertModerationReasonPolicy(status, " Fix details ", "Fix details");
+        assertModerationReasonPolicy(status, "Fix details", "Fix details");
+    }
+
+    @ParameterizedTest
+    @EnumSource(value = ProductStatus.class, names = {"REJECTED", "SUSPENDED"})
+    void lifecycleModerationUnicodeReasonMatchesJavaStripAndDatabasePolicy(ProductStatus status) {
+        int[] javaWhitespace = {9, 10, 11, 12, 13, 28, 29, 30, 31, 32, 5760,
+                8192, 8193, 8194, 8195, 8196, 8197, 8198, 8200, 8201, 8202, 8232, 8233, 8287, 12288};
+        assertEquals(25, javaWhitespace.length);
+        for (int codepoint : javaWhitespace) {
+            assertTrue(Character.isWhitespace(codepoint));
+            String space = new String(Character.toChars(codepoint));
+            assertModerationReasonPolicy(status, space + "Fix details", "Fix details");
+            assertModerationReasonPolicy(status, "Fix details" + space, "Fix details");
+        }
+        for (int codepoint : new int[]{0x00a0, 0x2007, 0x202f}) {
+            assertFalse(Character.isWhitespace(codepoint));
+            assertTrue(Character.isSpaceChar(codepoint));
+            String space = new String(Character.toChars(codepoint));
+            String unchanged = space + "Fix details" + space;
+            assertModerationReasonPolicy(status, unchanged, unchanged);
+            assertModerationReasonPolicy(status, space, space); // Java isBlank/strip preserve non-breaking spaces.
+            assertModerationReasonPolicy(status, "\t" + space + " Fix details " + space + "\n",
+                    space + " Fix details " + space);
+        }
+        // Preserve internal whitespace, case and Unicode composition; only boundary Java whitespace is stripped.
+        for (String unchanged : List.of("Fix \t\u2003details", "R\u00e9viser d\u00e9tails", "Re\u0301viser de\u0301tails",
+                "\u200bFix details\u200b")) {
+            assertModerationReasonPolicy(status, " " + unchanged + " ", unchanged);
+        }
+    }
+
+    private void assertModerationReasonPolicy(ProductStatus status, String raw, String canonical) {
+        // A fixture supplies moderation authority only; persistence and SQL enforcement use the real database.
+        ProductAccessPolicy fixturePolicy = new ProductAccessPolicy() {
+            @Override public StoreAccess requireSellerManagement(String actor, UUID storeId) { return readStore(storeId); }
+            @Override public StoreAccess requireModeration(String actor, UUID storeId) { return readStore(storeId); }
+            @Override public StoreAccess readStore(UUID storeId) {
+                return new StoreAccess(storeId, STORE_B, "fixture-owner", true, true, false);
+            }
+        };
+        ProductLifecycleService lifecycle = new ProductLifecycleService(fixturePolicy, categories);
+        for (boolean update : new boolean[]{false, true}) {
+            var stored = transaction().execute(tx -> {
+                ProductListing current = new ProductListing(UUID.randomUUID(), STORE_A, CATEGORY,
+                        "reason-" + UUID.randomUUID(), "Moderated product", BigDecimal.ONE, "VND",
+                        status == ProductStatus.REJECTED ? ProductStatus.PENDING_REVIEW : ProductStatus.ACTIVE, null);
+                var existing = update ? adapter.create(current) : null;
+                ProductListing moderated = status == ProductStatus.REJECTED
+                        ? lifecycle.reject("fixture-admin", current, raw) : lifecycle.suspend("fixture-admin", current, raw);
+                assertEquals(status, moderated.status());
+                assertEquals(canonical, moderated.reviewReason(), "Canonical constructor must run before JPA mapping");
+                assertEquals(canonical, new ProductEntity(moderated).getReviewReason());
+                var persisted = update ? adapter.update(moderated, existing.version()) : adapter.create(moderated);
+                entityManager.flush();
+                return persisted;
+            });
+            assertNotNull(stored);
+            assertEquals(canonical, stored.listing().reviewReason());
+            assertStoredModerationReason(stored.listing().id(), status, canonical);
+        }
+        if (!raw.equals(canonical)) assertReasonCheckRejected(() -> rawModerationInsert(status, raw));
+        UUID rawId = rawModerationInsert(status, canonical);
+        assertStoredModerationReason(rawId, status, canonical);
+        if (!raw.equals(canonical)) {
+            assertReasonCheckRejected(() -> jdbc.update("UPDATE products SET review_reason=? WHERE id=?", raw, rawId));
+        } else {
+            assertEquals(1, jdbc.update("UPDATE products SET review_reason=? WHERE id=?", raw, rawId));
+        }
+        assertStoredModerationReason(rawId, status, canonical);
+    }
+
+    private void assertStoredModerationReason(UUID id, ProductStatus status, String expected) {
+        ProductEntity reloaded = fresh(id);
+        assertEquals(status, reloaded.getStatus());
+        // Inspect both the entity field and raw SQL so toDomain's canonical constructor cannot hide stored padding.
+        assertEquals(expected, reloaded.getReviewReason());
+        assertEquals(expected, jdbc.queryForObject("SELECT review_reason FROM products WHERE id=?", String.class, id));
+    }
+
+    private void assertReasonCheckRejected(Runnable write) {
+        var failure = assertThrows(DataIntegrityViolationException.class, write::run);
+        var postgres = assertInstanceOf(PSQLException.class, failure.getMostSpecificCause());
+        assertEquals("23514", postgres.getSQLState());
+        assertNotNull(postgres.getServerErrorMessage());
+        assertEquals("products_reason_valid", postgres.getServerErrorMessage().getConstraint());
     }
 
     private void categoryInsertWinsDeleteRace() throws Exception {
