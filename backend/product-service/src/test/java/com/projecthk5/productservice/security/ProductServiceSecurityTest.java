@@ -43,7 +43,9 @@ class ProductServiceSecurityTest {
     @CsvSource({
         "GET,/api/products/probe", "POST,/api/products/probe", "PUT,/api/products/probe",
         "PATCH,/api/products/probe", "DELETE,/api/products/probe", "HEAD,/api/reviews/probe",
-        "GET,/api/reviews/probe", "GET,/internal/products/probe", "GET,/api/categories-unprotected"
+        "GET,/api/reviews/probe", "GET,/internal/products/probe", "GET,/api/categories-unprotected",
+        "POST,/api/products/probe/images", "GET,/api/product-images/probe",
+        "DELETE,/api/products/probe/images/probe"
     })
     void blocksUnconfiguredRoutes(String method, String path) throws Exception {
         mvc.perform(request(HttpMethod.valueOf(method), path)).andExpect(status().isForbidden());
@@ -112,7 +114,8 @@ class ProductServiceSecurityTest {
         private final AtomicInteger invocations = new AtomicInteger();
 
         @RequestMapping({"/api/products/probe", "/api/reviews/probe", "/internal/products/probe",
-                "/api/categories-unprotected", "/actuator/health", "/internal/catalog/checkout/validate"})
+                "/api/categories-unprotected", "/actuator/health", "/internal/catalog/checkout/validate",
+                "/api/products/probe/images", "/api/product-images/probe", "/api/products/probe/images/probe"})
         String probe() {
             invocations.incrementAndGet();
             return "probe";
