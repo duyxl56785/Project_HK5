@@ -50,9 +50,16 @@ class CatalogSchemaProposalPostgresTest {
 
     @Test void proposalDoesNotBecomeAnAppliedProductFlywayMigration() throws Exception {
         try (Connection connection = connect(); var statement = connection.createStatement();
-             var rows = statement.executeQuery("SELECT count(*) FROM flyway_schema_history WHERE success AND version IS NOT NULL")) {
+             var rows = statement.executeQuery("SELECT string_agg(version, ',' ORDER BY installed_rank)"
+                     + " FROM flyway_schema_history WHERE success AND version IS NOT NULL")) {
             assertTrue(rows.next());
-            assertEquals(1, rows.getInt(1));
+            assertEquals("1,2", rows.getString(1), "Only Category V1 and production Product V2 are migrations");
+        }
+        try (Connection connection = connect(); var statement = connection.createStatement();
+             var rows = statement.executeQuery("SELECT count(*) FROM flyway_schema_history"
+                     + " WHERE script='catalog-product-candidate.sql'")) {
+            assertTrue(rows.next());
+            assertEquals(0, rows.getInt(1), "The historical SQL candidate remains outside Flyway history");
         }
     }
 

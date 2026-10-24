@@ -28,8 +28,8 @@ class CatalogBatchValidatorTest {
 
     private ResolvedProduct facts(UUID id, UUID storeId, UUID sellerId, String sku, String price) {
         return new ResolvedProduct(new ProductListing(id, storeId, categoryId, sku, "Product",
-                new BigDecimal(price), ProductStatus.ACTIVE, null),
-                new StoreAccess(storeId, sellerId, "private-owner-reference", true, true, false), "TEST-CURRENCY", true);
+                new BigDecimal(price), "VND", ProductStatus.ACTIVE, null),
+                new StoreAccess(storeId, sellerId, "private-owner-reference", true, true, false), "VND", true);
     }
 
     private ExpectedItem expected(ResolvedProduct facts) {
@@ -41,8 +41,17 @@ class CatalogBatchValidatorTest {
         return new LookupResult(facts.product().id(), LookupStatus.FOUND, facts);
     }
 
+    @Test void conflictingProductAndResolvedCurrencyFailsTheWholeBatchClosed() {
+        var row = facts(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID(), "SKU", "10");
+        var conflicting = new ResolvedProduct(row.product(), row.store(), "USD", true);
+        CatalogBatchException error = assertThrows(CatalogBatchException.class,
+                () -> new CatalogBatchValidator(ids -> List.of(found(conflicting)))
+                        .validate(List.of(expected(conflicting))));
+        assertEquals(CatalogBatchException.Code.DEPENDENCY_UNAVAILABLE, error.getCode());
+    }
+
     @Test void resolvesTwoStoresOnceAndPreservesRequestOrderAndAuthoritativeSku() throws Exception {
-        var first = facts(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID(), "Sku-A", "10.1234567");
+        var first = facts(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID(), "Sku-A", "10.0000000");
         var second = facts(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID(), "Sku-B", "20");
         CatalogSnapshotSource source = mock(CatalogSnapshotSource.class);
         when(source.load(Set.of(first.product().id(), second.product().id()))).thenReturn(List.of(found(second), found(first)));
@@ -50,7 +59,7 @@ class CatalogBatchValidatorTest {
         assertTrue(result.valid());
         assertEquals(List.of(first.product().id(), second.product().id()), result.items().stream().map(ItemResult::productId).toList());
         assertEquals("Sku-A", result.items().get(0).snapshot().inventorySku());
-        assertEquals(new BigDecimal("10.1234567"), result.items().get(0).snapshot().unitPrice());
+        assertEquals(new BigDecimal("10.0000000"), result.items().get(0).snapshot().unitPrice());
         verify(source, times(1)).load(Set.of(first.product().id(), second.product().id()));
         assertThrows(UnsupportedOperationException.class, () -> result.items().clear());
         String serialized = new ObjectMapper().writeValueAsString(result);
@@ -64,7 +73,7 @@ class CatalogBatchValidatorTest {
         var row = facts(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID(), "SKU", "10");
         String reason = status == ProductStatus.REJECTED || status == ProductStatus.SUSPENDED ? "private reason" : null;
         ProductListing product = new ProductListing(row.product().id(), row.product().storeId(), categoryId,
-                "SKU", "Private", BigDecimal.TEN, status, reason);
+                "SKU", "Private", BigDecimal.TEN, "VND", status, reason);
         var result = new CatalogBatchValidator(ids -> List.of(found(new ResolvedProduct(product, row.store(), row.currency(), true))))
                 .validate(List.of(expected(row)));
         assertEquals(ItemCode.PRODUCT_NOT_SELLABLE, result.items().get(0).code());
@@ -87,7 +96,7 @@ class CatalogBatchValidatorTest {
     @ParameterizedTest
     @ValueSource(strings = {"store", "seller", "price", "currency"})
     void clientExpectationsCannotReplaceAuthoritativeFacts(String mismatch) {
-        var row = facts(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID(), "SKU", "10.01");
+        var row = facts(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID(), "SKU", "10.00");
         ExpectedItem item = new ExpectedItem(row.product().id(), mismatch.equals("store") ? UUID.randomUUID() : row.store().storeId(),
                 mismatch.equals("seller") ? UUID.randomUUID() : row.store().sellerId(),
                 mismatch.equals("price") ? BigDecimal.ONE : row.product().unitPrice(),
@@ -287,7 +296,7 @@ class CatalogBatchValidatorTest {
                 rejection.equals("ownership") ? UUID.randomUUID() : second.store().sellerId(), second.product().unitPrice(),
                 rejection.equals("currency") ? "CALLER-CURRENCY" : second.currency());
         var privateProduct = new ProductListing(second.product().id(), second.product().storeId(), categoryId,
-                "SKU-B", "Private", BigDecimal.TEN, ProductStatus.REJECTED, "private reason");
+                "SKU-B", "Private", BigDecimal.TEN, "VND", ProductStatus.REJECTED, "private reason");
         var rejected = switch (rejection) {
             case "absent" -> new LookupResult(second.product().id(), LookupStatus.ABSENT, null);
             case "private" -> found(new ResolvedProduct(privateProduct, second.store(), second.currency(), true));
