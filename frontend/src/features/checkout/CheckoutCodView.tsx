@@ -58,7 +58,7 @@ export function CheckoutCodView({ state, onConfirm, trustedSessionScope }: Check
     ]),
   ]);
   const existingGate = attempts.current.get(state.idempotencyKey);
-  return <CheckoutCodReady key={scope} cart={cart} request={request}
+  return <CheckoutCodReady key={scope} cart={cart} request={request} checkoutKey={state.idempotencyKey}
     onConfirm={onConfirm} gateStatus={existingGate?.status ?? 'idle'}
     sendWithGate={async run => {
       let gate = attempts.current.get(state.idempotencyKey);
@@ -75,12 +75,13 @@ type AttemptOutcome = AttemptResult | 'blocked';
 type CheckoutCodReadyProps = {
   readonly cart: NonNullable<ReturnType<typeof projectCart>>;
   readonly request: ReturnType<typeof prepareCheckout>;
+  readonly checkoutKey: string;
   readonly onConfirm?: CheckoutCodViewProps['onConfirm'];
   readonly gateStatus: ReturnType<typeof createCheckoutOnce>['status'];
   readonly sendWithGate: (run: () => Promise<AttemptResult>) => Promise<AttemptOutcome>;
 };
 
-function CheckoutCodReady({ cart, request, onConfirm, gateStatus, sendWithGate }: CheckoutCodReadyProps) {
+function CheckoutCodReady({ cart, request, checkoutKey, onConfirm, gateStatus, sendWithGate }: CheckoutCodReadyProps) {
   const mounted = useRef(false);
   const [display, setDisplay] = useState<Display>('idle');
   const [orderId, setOrderId] = useState<string | null>(null);
@@ -135,7 +136,7 @@ function CheckoutCodReady({ cart, request, onConfirm, gateStatus, sendWithGate }
       <small>Đơn vị tiền tệ/phí/giao hàng chưa được quyết định tại giao diện; cần xác nhận từ backend/M01.</small>
     </div>
     {cart.claimed && <p role="alert">Giỏ đang được Checkout khác giữ. Không gửi lặp.</p>}
-    {!canonicalCheckoutKey(state.idempotencyKey) && <p role="alert">Thiếu mã yêu cầu đặt hàng hợp lệ.</p>}
+    {!canonicalCheckoutKey(checkoutKey) && <p role="alert">Thiếu mã yêu cầu đặt hàng hợp lệ.</p>}
     {!onConfirm && <p role="status">Chưa nối bộ xử lý đặt hàng đã xác thực. Chế độ xem trước chỉ hiển thị dữ liệu.</p>}
     {gateStatus !== 'idle' && display === 'idle' && <p role="alert">Mã yêu cầu đã được dùng ở lần Checkout trước. Không gửi lại hoặc đổi mã để thử lại; cần đối soát trạng thái.</p>}
     {display === 'unknown' && <p role="alert">Kết quả chưa xác định. Giữ nguyên Idempotency-Key; đối soát đơn trước khi thao tác tiếp.</p>}
