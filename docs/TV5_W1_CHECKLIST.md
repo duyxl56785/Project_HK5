@@ -226,3 +226,13 @@ Evidence: [R2 report and test commands](../reports/TV5_PR_REVIEW_FOLLOWUP_2026-1
 - [ ] Human decisions89/94/90/91,TV2own86P1thread/CR,TV1new80passwordP2; overallM01/Finance/runtime/liveE2E still blocked. No agentApprove/Merge/flags or duplicate requests. Issue5/12 PARTIAL.
 
 [Current report refresh](../reports/TV5_PRODUCT_INTEGRATION_REVIEW_2026-10-25.md), [reviewers audit](../reports/evidence/tv5-review-refresh-20261025-r2/audit.json), [actual86RED/GREEN](../reports/evidence/tv5-review-refresh-20261025-r2/pr86-red-green.json).
+
+
+#### Sequential Product integration handoff —25/10/2026
+
+- [x] Sequence locked:humanTV5review→TV2integrate89→newmaincheck→90→newmaincheck→91→newmaincheck;94separate. Mainstill88baselineed85f62; allactualpostmergeA/B/Cchecks NOT_RUN, historical640notasubstitute.
+- [x] New97wholeprivatehandlerreview:488unit+115PG=603PASS;96childNULfix:25securityunit+28AuthPG+5explicitQA=58PASS,0FAIL/skip/exit0 each. Parent80notfixedbychilduntilintegration+parentrerun; no other-reviewerthreadresolve.
+- [x] Seven-item TV1 Auth/currentroles/policy/Gateway/pairs/frontendclient/frontendCI handoff has source/version/test/CI/interface/blocker/owner; runtimeisnotreadyfromunit tests. Productpriceapprovalretained,Finance/HTTP/E2Egatesseparate.
+- [ ] Humanformalreviews,TV2sequentialactualintegrationchecks,TV1runtime+frontendCI,liveacceptance. Issue5/12 PARTIAL; no agentApprove/Merge/flags or ownercodechanges.
+
+[Sequential handoff](../reports/TV5_PRODUCT_SEQUENTIAL_HANDOFF_2026-10-25.md), [sequence snapshot](../reports/evidence/tv5-integration-sequence-20261025-r3/sequence.json), [97actual](../reports/evidence/tv5-integration-sequence-20261025-r3/pr97.json), [96actual](../reports/evidence/tv5-integration-sequence-20261025-r3/pr96.json).
