@@ -17,6 +17,8 @@ export type CheckoutUiState =
 
 export interface CheckoutCodViewProps {
   readonly state: CheckoutUiState;
+  /** UI-isolation marker from a trusted future Auth host, not a Cart value or authorization grant. */
+  readonly trustedSessionScope?: string;
   /** Must be bound by TV1/TV3 to an approved authenticated backend adapter. */
   readonly onConfirm?: (request: CheckoutSubmission) => Promise<CheckoutResponse>;
 }
