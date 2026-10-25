@@ -195,3 +195,16 @@ Evidence: [R2 report and test commands](../reports/TV5_PR_REVIEW_FOLLOWUP_2026-1
 - [x] COMMENTQA83/85/87/89/90/91published,83inlineintegrationcompilefinding handedtoTV2; no duplicateapproval/request or86threadtakeover.
 
 [Current report section7](../reports/TV5_PR_REVIEW_UNBLOCK_2026-10-25.md#7-later-authorized-level-b-decision-and-published-review-handoff), [reviewreceipt](../reports/evidence/tv5-audit-20261025/review-publication.json).
+
+
+### TV5 current Product/Seller review — 25/10/2026, later integration checkpoint
+
+- [x]88 MERGED recognized;89/17f98f4 440unit+98PG,94/96d59ca 246unit+138PG,90/6a290ff 447unit+107PG,91/4915c37 448unit+96PG and83/c831edb 437unit+70PG PASS, each separate full build/exit0. No release-total sum.
+- [x]Actual combined89→90→91 tree29d2904:461unit+179PG=640PASS in one fresh TV5 invocation. Not an individual PR head, CI or live E2E.
+- [x]Current main ed85f62:109Orderunit+25PG+3original FIN01/06/control PASS. Existing technical bugs fixed, not policy/atomicsettlement acceptance.
+- [x]All89/94/90/91 changed paths reviewed; no actionable introduced blocker found; READY_FOR_HUMAN_APPROVAL for their entire internal PR scopes.83own finding FIXED_VERIFIED; thread/publication receipt kept separately.
+- [x]Current price-only business/LevelA/TV2ACK/LevelB88 receipt appended to Finance ledger, original signed packet/history retained.
+- [ ]Human TV5 actual formal reviews; owner readiness/integration and runtime gates.95 source-only TV1approval is not HTTP/E2E; TV5 frontend runtime NOT_RUN in this checkpoint.
+- [ ]FullM01/COD/refund/currentAuth/House/C01E01/MD07/reservation/atomicsettlement/Storequeries/live2StoreE2E; Issue5/12 OPEN/PARTIAL, flags unchanged.
+
+[Current review, commands and member handoff](../reports/TV5_PRODUCT_INTEGRATION_REVIEW_2026-10-25.md); [source/CI/reviews/compatibility receipt](../reports/evidence/tv5-product-integration-20261025/review-context.json). Original raw logs/XML private and byte-preserved; publication derived, never mock-as-E2E.
