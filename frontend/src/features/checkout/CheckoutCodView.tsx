@@ -65,7 +65,7 @@ export function CheckoutCodView({ state, onConfirm }: CheckoutCodViewProps) {
 
   return <section className="tv3-checkout" aria-label="Xác nhận đơn COD">
     <header><span className="tv3-checkout__eyebrow">TV3 · COD</span>
-      <h2>Kiểm tra trước khi đặt hàng</h2>
+      <h2>Thanh toán khi nhận hàng</h2>
       <p>Chỉ thanh toán khi nhận hàng. Không tích hợp cổng thanh toán trực tuyến.</p>
     </header>
     <div className="tv3-checkout__stores">
