@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { projectCart } from '../cart/cartModel.ts';
 import { canonicalCheckoutKey, createCheckoutOnce, prepareCheckout } from './checkoutModel.ts';
 import type { CheckoutCodViewProps, CheckoutResponse } from './checkoutTypes.ts';
@@ -14,11 +14,10 @@ const errorText = {
 
 type Display = 'idle' | 'sending' | 'unknown' | 'confirmed' | 'rejected';
 
-export function CheckoutCodView({ state, onConfirm }: CheckoutCodViewProps) {
-  const gate = useRef(createCheckoutOnce());
-  const [display, setDisplay] = useState<Display>('idle');
-  const [orderId, setOrderId] = useState<string | null>(null);
-  const [reason, setReason] = useState<keyof typeof errorText | null>(null);
+export function CheckoutCodView({ state, onConfirm, trustedSessionScope }: CheckoutCodViewProps) {
+  // Keep the result of every submitted key for this mounted host lifetime.
+  // Unmounting/replacing a visible Cart scope must NOT make the same key retryable.
+  const attempts = useRef(new Map<string, ReturnType<typeof createCheckoutOnce>>());
 
   if (state.status !== 'ready') {
     const messages = {
@@ -37,29 +36,83 @@ export function CheckoutCodView({ state, onConfirm }: CheckoutCodViewProps) {
   }
 
   const cart = projectCart(state.cart);
-  const ready = cart && cart.itemCount > 0 && !cart.claimed
-    && canonicalCheckoutKey(state.idempotencyKey);
-  const request = ready ? prepareCheckout(state.cart, state.idempotencyKey) : null;
   if (!cart) return <section className="tv3-checkout" role="alert">
     <h2>Thanh toán khi nhận hàng</h2><p>Dữ liệu giỏ hàng không hợp lệ. Đã chặn gửi yêu cầu.</p>
   </section>;
 
+  const ready = cart.itemCount > 0 && !cart.claimed
+    && canonicalCheckoutKey(state.idempotencyKey);
+  const request = ready ? prepareCheckout(state.cart, state.idempotencyKey) : null;
+
+  // A keyed child is destroyed on unauthorized/loading or ANY Cart/session/attempt
+  // scope switch. React will never render order A's local private state in scope B.
+  // The optional trusted session marker must be supplied by the future TV1 host,
+  // never inferred from user-controlled Cart data or treated as authorization.
+  const scope = JSON.stringify([
+    trustedSessionScope ?? null, state.idempotencyKey, cart.revision, cart.claimed,
+    cart.groups.map(group => [
+      group.storeId, group.sellerId,
+      group.lines.map(line => [
+        line.productId, line.title, line.quantity, line.unitPriceSnapshot,
+      ]),
+    ]),
+  ]);
+  const existingGate = attempts.current.get(state.idempotencyKey);
+  return <CheckoutCodReady key={scope} cart={cart} request={request}
+    onConfirm={onConfirm} gateStatus={existingGate?.status ?? 'idle'}
+    sendWithGate={async run => {
+      let gate = attempts.current.get(state.idempotencyKey);
+      if (!gate) {
+        gate = createCheckoutOnce();
+        attempts.current.set(state.idempotencyKey, gate);
+      }
+      return gate.send(run);
+    }}/>;
+}
+
+type AttemptResult = 'confirmed' | 'unknown' | 'rejected';
+type AttemptOutcome = AttemptResult | 'blocked';
+type CheckoutCodReadyProps = {
+  readonly cart: NonNullable<ReturnType<typeof projectCart>>;
+  readonly request: ReturnType<typeof prepareCheckout>;
+  readonly onConfirm?: CheckoutCodViewProps['onConfirm'];
+  readonly gateStatus: ReturnType<typeof createCheckoutOnce>['status'];
+  readonly sendWithGate: (run: () => Promise<AttemptResult>) => Promise<AttemptOutcome>;
+};
+
+function CheckoutCodReady({ cart, request, onConfirm, gateStatus, sendWithGate }: CheckoutCodReadyProps) {
+  const mounted = useRef(false);
+  const [display, setDisplay] = useState<Display>('idle');
+  const [orderId, setOrderId] = useState<string | null>(null);
+  const [reason, setReason] = useState<keyof typeof errorText | null>(null);
+  useEffect(() => {
+    mounted.current = true;
+    return () => { mounted.current = false; };
+  }, []);
+
   async function submit() {
-    if (!request || !onConfirm) return;
+    if (!request || !onConfirm || gateStatus !== 'idle' || display !== 'idle') return;
     setDisplay('sending');
-    const outcome = await gate.current.send(async () => {
+    let confirmedOrder: string | null = null;
+    let rejectedReason: keyof typeof errorText | null = null;
+    const outcome = await sendWithGate(async () => {
       const response: CheckoutResponse = await onConfirm(request);
       if (response?.status === 'confirmed'
         && /^[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}$/i.test(response.orderId)) {
-        setOrderId(response.orderId);
+        confirmedOrder = response.orderId;
         return 'confirmed';
       }
       if (response?.status === 'rejected' && Object.hasOwn(errorText, response.reason)) {
-        setReason(response.reason);
+        rejectedReason = response.reason;
         return 'rejected';
       }
       return 'unknown';
     });
+    // The old child was removed when access/cart/session scope changed.
+    // Late success/rejection must not mutate another scope or show its Order ID.
+    if (!mounted.current) return;
+    if (outcome === 'confirmed' && confirmedOrder) setOrderId(confirmedOrder);
+    if (outcome === 'rejected' && rejectedReason) setReason(rejectedReason);
     if (outcome !== 'blocked') setDisplay(outcome);
   }
 
@@ -84,10 +137,11 @@ export function CheckoutCodView({ state, onConfirm }: CheckoutCodViewProps) {
     {cart.claimed && <p role="alert">Giỏ đang được Checkout khác giữ. Không gửi lặp.</p>}
     {!canonicalCheckoutKey(state.idempotencyKey) && <p role="alert">Thiếu mã yêu cầu đặt hàng hợp lệ.</p>}
     {!onConfirm && <p role="status">Chưa nối bộ xử lý đặt hàng đã xác thực. Chế độ xem trước chỉ hiển thị dữ liệu.</p>}
+    {gateStatus !== 'idle' && display === 'idle' && <p role="alert">Mã yêu cầu đã được dùng ở lần Checkout trước. Không gửi lại hoặc đổi mã để thử lại; cần đối soát trạng thái.</p>}
     {display === 'unknown' && <p role="alert">Kết quả chưa xác định. Giữ nguyên Idempotency-Key; đối soát đơn trước khi thao tác tiếp.</p>}
     {display === 'rejected' && <p role="alert">{reason ? errorText[reason] : 'Đơn hàng bị từ chối.'}</p>}
     {display === 'confirmed' && orderId && <p role="status">Backend đã xác nhận đơn hàng: {orderId}</p>}
-    <button type="button" disabled={!request || !onConfirm || display !== 'idle'}
+    <button type="button" disabled={!request || !onConfirm || gateStatus !== 'idle' || display !== 'idle'}
       onClick={() => { void submit(); }}>
       {display === 'sending' ? 'Đang xác minh yêu cầu…' : 'Xác nhận đặt hàng COD'}
     </button>
