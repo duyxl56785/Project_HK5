@@ -110,3 +110,51 @@ test('real browser: Store switch discards old editor', async () => {
     await page.getByText('Gốm Việt — Cửa hàng thứ hai', { exact: true }).waitFor();
   } finally { await context.close(); }
 });
+
+// Browser-only host/callback fixture, never imported by the application or feature bundle.
+async function mountWriteSafetyHarness(page) {
+  await page.evaluate(async () => {
+    const { default: React } = await import('/node_modules/.vite/deps/react.js');
+    const { default: ReactDOMClient } = await import('/node_modules/.vite/deps/react-dom_client.js');
+    const { ProductManagementPage } = await import('/src/features/product/ProductManagementPage.tsx');
+    const { ready } = await import('/src/features/product/productTestFixtures.mjs');
+    const target = document.createElement('div'); document.body.append(target);
+    let setSource, calls = 0, confirmReload = false;
+    const actions = { update: async () => { calls++; return { status: 'unavailable' }; } };
+    const onReload = async (request) => confirmReload
+      ? { status: 'confirmed', receipt: { ...request }, snapshot: ready }
+      : { status: 'unavailable' };
+    function Harness() {
+      const [state, setState] = React.useState(ready); setSource = setState;
+      return React.createElement(ProductManagementPage, { state, sessionKey: 'browser-test-session', actions, onReload });
+    }
+    ReactDOMClient.createRoot(target).render(React.createElement(Harness));
+    window.TV2ProductWriteSafetyTest = { clone() { setSource((current) => ({ ...current, products: [...current.products] })); }, confirm() { confirmReload = true; }, count() { return calls; } };
+  });
+  const harness = page.locator('body > div').last();
+  await harness.getByRole('heading', { name: 'Sản phẩm của bạn' }).waitFor();
+  return harness;
+}
+for (const allowReload of [false, true]) {
+  test(`Chrome write-safety: stale clone stays locked; explicit reload confirmed=${allowReload}`, async () => {
+    const { page, context, errors, api } = await pageFor(1280);
+    try {
+      const harness = await mountWriteSafetyHarness(page);
+      await harness.getByRole('button', { name: 'Sửa Cốc gốm men mây', exact: true }).click();
+      await harness.getByRole('button', { name: 'Lưu thay đổi' }).click();
+      await page.evaluate(() => { for (let i = 0; i < 3; i++) window.TV2ProductWriteSafetyTest.clone(); });
+      assert.equal(await harness.getByRole('button', { name: 'Lưu thay đổi' }).isDisabled(), true);
+      await harness.locator('form').evaluate((form) => form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true })));
+      assert.equal(await page.evaluate(() => window.TV2ProductWriteSafetyTest.count()), 1);
+      if (allowReload) await page.evaluate(() => window.TV2ProductWriteSafetyTest.confirm());
+      await harness.getByRole('button', { name: 'Tải lại danh sách' }).click();
+      if (allowReload) {
+        await harness.getByText('Danh sách đã được tải lại. Kiểm tra thông tin trước khi tiếp tục.', { exact: true }).waitFor();
+        assert.equal(await harness.getByRole('button', { name: 'Lưu thay đổi' }).isEnabled(), true);
+        await harness.getByRole('button', { name: 'Lưu thay đổi' }).click();
+        assert.equal(await page.evaluate(() => window.TV2ProductWriteSafetyTest.count()), 2);
+      } else assert.equal(await harness.getByRole('button', { name: 'Lưu thay đổi' }).isDisabled(), true);
+      assert.deepEqual(errors, []); assert.deepEqual(api, []);
+    } finally { await context.close(); }
+  });
+}

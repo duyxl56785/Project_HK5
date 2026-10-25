@@ -46,3 +46,15 @@ export interface ProductManagementActions {
   readonly update?: (command: UpdateProductCommand) => Promise<ProductMutationResult>;
   readonly submitForReview?: (command: SubmitProductCommand) => Promise<ProductMutationResult>;
 }
+
+/** Correlation/lifetime context only: none of these values grant server authorization. */
+export interface ProductReloadRequest {
+  readonly requestId: string;
+  readonly storeId: string;
+  readonly sessionKey: string;
+}
+export type ProductReloadResult =
+  | { readonly status: 'confirmed'; readonly receipt: ProductReloadRequest; readonly snapshot: ProductManagementData }
+  | { readonly status: 'error' | 'conflict' | 'unauthorized' | 'unavailable' };
+/** Trusted host returns confirmed only after a successful verified Store-scoped read. */
+export type ProductReloadHandler = (request: ProductReloadRequest) => Promise<ProductReloadResult>;

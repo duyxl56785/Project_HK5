@@ -48,3 +48,7 @@ test('form uses only domain fields and keeps SKU immutable in edit mode', () => 
   assert.doesNotMatch(html, /name="(?:ownerReference|reviewReason|status|storeId)"/);
   assert.match(html, /9007199254740993/);
 });
+test('adapter presence without session lifetime context does not enable submit', () => {
+  const html = render(ready, { actions: { submitForReview: async () => ({ status: 'confirmed' }) } });
+  assert.match(html, /<button[^>]*disabled[^>]*>Gửi duyệt<\/button>/);
+});
