@@ -1,0 +1,97 @@
+{
+  "kind": "DERIVED SUMMARY; raw logs/XML preserved private local originals, not public CI artifacts",
+  "metadata": {
+    "pr": 65,
+    "head": "5bfbc15c328179f119f5e07552c67dc1cd6e9ebc",
+    "command": [
+      "<isolated-pr-checkout>/backend/gradlew.bat",
+      "-p",
+      "backend",
+      ":inventory-service:postgresIntegrationTest",
+      "--tests",
+      "*InventoryOperationPostgresIT",
+      "--rerun-tasks",
+      "--no-daemon",
+      "--console=plain"
+    ],
+    "startedUtc": "2026-10-20T14:57:19.480231+00:00",
+    "environment": {
+      "java": "21.0.7",
+      "gradle": "8.10",
+      "Docker": "29.8.1",
+      "JAVA_TOOL_OPTIONS": "-Duser.timezone=UTC -Dapi.version=1.44"
+    },
+    "executor": "TV5 independent current-session run",
+    "exitCode": 0,
+    "completedUtc": "2026-10-20T14:57:41.616635+00:00"
+  },
+  "cases": [
+    {
+      "class": "com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT",
+      "name": "reserveConsumeAndReleaseRetriesDoNotApplyStockTwice()",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT",
+      "name": "failureOnLaterSkuRollsBackEarlierStockMutationAndClaimedLedger()",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT",
+      "name": "disjointSkuSameIdCannotReplaceWinnerAfterEarlierEmptyLedgerRead()",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT",
+      "name": "concurrentDuplicateMultiSkuReleaseReplaysAfterFirstCommitWithoutDoubleReturn()",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT",
+      "name": "concurrentDifferentIdsCannotOversellSharedSkuAndLosingClaimRollsBack()",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT",
+      "name": "multiSkuReserveAndReleaseReplayCanonicalizeLineOrderAndRejectPayloadReuse()",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT",
+      "name": "[1] samePayload=true",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT",
+      "name": "[2] samePayload=false",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT",
+      "name": "competingMultiSkuReleaseIdsCannotOverdrawReservedBalances()",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT",
+      "name": "multiSkuReleaseAfterConsumeRejectsExcessHeldQuantityAndRollsBackWholeBatch()",
+      "result": "PASS"
+    }
+  ],
+  "counts": {
+    "PASS": 10
+  },
+  "staleXmlExcluded": [],
+  "rawArtifacts": [
+    {
+      "localPath": ".verification/tv5-pr63-followup-20261020/runs/pr65-retry/runtime.log",
+      "bytes": 2127,
+      "sha256": "cd5256ae5560309a29ca9c989923cf898920b5ab2c7c1fc243f89a03723dc0b9"
+    },
+    {
+      "localPath": ".verification/tv5-pr63-followup-20261020/runs/pr65-retry/TEST-com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT.xml",
+      "bytes": 10824,
+      "sha256": "8cc9475992ba23b4b8ccc3f2ebb85b88dcd4126e5ffe2b749c71a2b99cf6bba9"
+    }
+  ],
+  "assessment": "10 PostgreSQL regression PASS at same PR65 head after Docker startup; original failure retained, no source/assertion change. Not live cross-service E2E."
+}

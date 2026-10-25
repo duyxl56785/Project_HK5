@@ -1,0 +1,100 @@
+{
+  "kind": "DERIVED SUMMARY; raw logs/XML private local originals",
+  "metadata": {
+    "label": "green",
+    "source": "add83ec2c7f43e5f942c42682d6a4574c152318d",
+    "qaSourceHashes": {
+      "tests/finance/cart-storage-regression.init.gradle": "0c63863b197aa9665b02fc871de6958e1f8a1c1759f448d86f2e43dc0893893a",
+      "tests/finance/cart-storage-regression/CartMoneyStoragePostgresRegressionTest.java": "26d645975cceec2ac6d6ca2cfe76ff18f32f0f1c5dd6fcf0fb4fcdb0e4d26810"
+    },
+    "command": [
+      "<TARGET_CHECKOUT>/backend/gradlew.bat",
+      "-p",
+      "backend",
+      "--init-script",
+      "<QA_CHECKOUT>/tests/finance/cart-storage-regression.init.gradle",
+      "-Ptv5CartRegressionSources=<QA_CHECKOUT>/tests/finance/cart-storage-regression",
+      ":cart-service:tv5CartStorageRegression",
+      "--rerun-tasks",
+      "--no-daemon",
+      "--console=plain"
+    ],
+    "startedUtc": "2026-10-22T05:30:08.254934+00:00",
+    "environment": {
+      "Java": "21.0.7",
+      "Gradle": "8.10",
+      "Docker": "29.8.1",
+      "JAVA_TOOL_OPTIONS": "-Duser.timezone=UTC -Dapi.version=1.44"
+    },
+    "scope": "Real PostgreSQL/Flyway/JPA plus CartService, Catalog mock fixture; not authenticated API or live E2E",
+    "exitCode": 0,
+    "completedUtc": "2026-10-22T05:30:36.806122+00:00"
+  },
+  "cases": [
+    {
+      "class": "com.projecthk5.cartservice.finance.CartMoneyStoragePostgresRegressionTest",
+      "name": "[1] price=0",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.cartservice.finance.CartMoneyStoragePostgresRegressionTest",
+      "name": "[2] price=1.2300",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.cartservice.finance.CartMoneyStoragePostgresRegressionTest",
+      "name": "[3] price=99999999999999999.99",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.cartservice.finance.CartMoneyStoragePostgresRegressionTest",
+      "name": "postgresWouldSilentlyRoundTheOriginalUnsafePrice()",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.cartservice.finance.CartMoneyStoragePostgresRegressionTest",
+      "name": "[1] price=1.001",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.cartservice.finance.CartMoneyStoragePostgresRegressionTest",
+      "name": "[2] price=1.005",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.cartservice.finance.CartMoneyStoragePostgresRegressionTest",
+      "name": "[3] price=100000000000000000.00",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.cartservice.finance.CartMoneyStoragePostgresRegressionTest",
+      "name": "[1] price=1.001",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.cartservice.finance.CartMoneyStoragePostgresRegressionTest",
+      "name": "[2] price=1.005",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.cartservice.finance.CartMoneyStoragePostgresRegressionTest",
+      "name": "[3] price=100000000000000000.00",
+      "result": "PASS"
+    }
+  ],
+  "counts": {
+    "PASS": 10
+  },
+  "rawArtifacts": [
+    {
+      "localPath": ".verification/tv5-audit-20261022/runs/cart-regression-green/runtime.log",
+      "bytes": 3453,
+      "sha256": "fbfa598462b95697460505e07934e5e8e1445ae270346bd3df6bf0d793332342"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261022/runs/cart-regression-green/TEST-com.projecthk5.cartservice.finance.CartMoneyStoragePostgresRegressionTest.xml",
+      "bytes": 11786,
+      "sha256": "ac1f74845551f43d9e54668a2881add27d2ccc106bf83f47c2da03b1d5e6ae1b"
+    }
+  ]
+}

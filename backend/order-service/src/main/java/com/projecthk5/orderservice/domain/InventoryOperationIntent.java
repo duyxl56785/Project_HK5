@@ -31,11 +31,22 @@ public final class InventoryOperationIntent {
             Objects.requireNonNull(sku, "sku");
             // Inventory trims SKU before hashing. Require the authoritative ID
             // already be canonical instead of silently changing its identity.
-            if (sku.isBlank() || sku.length() > 128 || !sku.equals(sku.trim())) {
+            if (sku.isBlank() || sku.length() > 128 || !sku.equals(sku.trim())
+                    || hasBoundaryWhitespace(sku)) {
                 throw new IllegalArgumentException("SKU must be nonblank, canonical and at most 128 characters");
             }
             if (quantity <= 0) throw new IllegalArgumentException("quantity must be positive");
         }
+    }
+
+    // Do not silently normalize a Product-owned SKU before journal hashing. Java's
+    // String.trim() misses Unicode boundary spaces such as U+2003 and U+00A0.
+    // Keep the existing trim() check as it also rejects ASCII control padding.
+    private static boolean hasBoundaryWhitespace(String value) {
+        int first = value.codePointAt(0);
+        int last = value.codePointBefore(value.length());
+        return Character.isWhitespace(first) || Character.isSpaceChar(first)
+                || Character.isWhitespace(last) || Character.isSpaceChar(last);
     }
 
     private final UUID checkoutAttemptId;

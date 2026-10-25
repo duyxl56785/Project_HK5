@@ -1,0 +1,37 @@
+{
+  "commit": "b923736ac35811f93b78f2fd2f420b7b65a1638b",
+  "qaPR": "https://github.com/duyxl56785/Project_HK5/pull/63",
+  "actions": [
+    {
+      "pr": 60,
+      "sha": "e0a28de663b3488178a616770eb82de9fd46e580",
+      "kind": "COMMENT_REVIEW",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/60#pullrequestreview-5580455810"
+    },
+    {
+      "pr": 61,
+      "sha": "0af4754b2d2b0925cd3b6c27f698f5d2667f66d1",
+      "kind": "COMMENT_REVIEW",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/61#pullrequestreview-5580456309"
+    },
+    {
+      "issue": 5,
+      "url": "https://github.com/duyxl56785/Project_HK5/issues/5#issuecomment-6282711041",
+      "state": "open",
+      "kind": "ISSUE_CHECKPOINT"
+    },
+    {
+      "issue": 12,
+      "url": "https://github.com/duyxl56785/Project_HK5/issues/12#issuecomment-6282712138",
+      "state": "open",
+      "kind": "ISSUE_CHECKPOINT"
+    }
+  ],
+  "completedUtc": "2026-10-20T03:34:07.7044713Z",
+  "qaReviewers": [
+    "lexuanbao258-collab",
+    "duyxl56785"
+  ],
+  "qaNumber": 63,
+  "kind": "Verified publication receipt, initial commit/reviews/Issue checkpoints. Subsequent PR62 delta is separately recorded."
+}

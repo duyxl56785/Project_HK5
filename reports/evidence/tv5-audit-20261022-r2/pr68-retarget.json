@@ -1,0 +1,25 @@
+{
+  "verifiedAtUtc": "2026-10-22T13:28:45.385787+00:00",
+  "url": "https://github.com/duyxl56785/Project_HK5/pull/68",
+  "head": "ae8ceaaccad5c527662345590005178bea8ee614",
+  "base": "main",
+  "mainCompared": "aca5dff247ef8eae3ce97c1a73b9474b87e94110",
+  "files": [
+    "reports/evidence/tv5-cart-storage-20261022/green.json",
+    "reports/evidence/tv5-cart-storage-20261022/main-retarget.json",
+    "reports/evidence/tv5-cart-storage-20261022/merged-head.json",
+    "reports/evidence/tv5-cart-storage-20261022/red.json",
+    "tests/finance/README_CART_STORAGE_REGRESSION.md",
+    "tests/finance/cart-storage-regression.init.gradle",
+    "tests/finance/cart-storage-regression/CartMoneyStoragePostgresRegressionTest.java"
+  ],
+  "requestedReviewers": [
+    "lexuanbao258-collab",
+    "tranvanchinhbg2006-alt",
+    "duyxl56785"
+  ],
+  "newRequests": [
+    "duyxl56785",
+    "lexuanbao258-collab"
+  ]
+}

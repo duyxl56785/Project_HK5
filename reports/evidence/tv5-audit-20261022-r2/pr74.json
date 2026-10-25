@@ -1,0 +1,158 @@
+{
+  "kind": "DERIVED SUMMARY; private original logs; not owner evidence or browser/CI result",
+  "source": "165f5d96e4045b91fd90993085e28acf9cb30463",
+  "PR": 74,
+  "environment": {
+    "Node": "v24.19.0",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "typescript": "5.6.3",
+    "vite": "6.4.5",
+    "happy-dom": "21.0.4"
+  },
+  "runs": [
+    {
+      "label": "tooling-install",
+      "command": [
+        "node",
+        "<npm-cli>",
+        "install",
+        "--ignore-scripts",
+        "--no-save",
+        "--package-lock=false",
+        "happy-dom@21.0.4"
+      ],
+      "startedUtc": "2026-10-22T13:48:27.272542+00:00",
+      "completedUtc": "2026-10-22T13:48:47.924026+00:00",
+      "exitCode": 0,
+      "rawArtifact": {
+        "localPath": ".verification/tv5-audit-20261022-r2/runs/pr74/tooling-install.log",
+        "bytes": 142,
+        "sha256": "5c5b7db5f3231ce5d34ec38184c98bfbc3ea62942bd513e640011e137386fdef"
+      }
+    },
+    {
+      "label": "combined-tests",
+      "command": [
+        "node",
+        "--test",
+        "src/features/catalog/categoryTree.test.mjs",
+        "src/features/catalog/CategoryBrowser.test.mjs",
+        "src/features/catalog/CategoryBrowser.dom.mjs"
+      ],
+      "startedUtc": "2026-10-22T13:48:47.931502+00:00",
+      "completedUtc": "2026-10-22T13:48:49.136494+00:00",
+      "exitCode": 0,
+      "rawArtifact": {
+        "localPath": ".verification/tv5-audit-20261022-r2/runs/pr74/combined-tests.log",
+        "bytes": 2877,
+        "sha256": "51d9e966429d6348dd9d8bad2dae8ffd8bd0e47bacd54809493949174cf599fd"
+      },
+      "counts": {
+        "tests": 37,
+        "pass": 37,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "cases": [
+        "clearing search restores focus to the still-mounted search input",
+        "click selects only the exact DTO and toggles a branch",
+        "Arrow keys, Home and End navigate focus without changing selection",
+        "search opens matching ancestry, supports collapse and no-match recovery",
+        "expanded ARIA groups own exactly their direct children",
+        "retry invokes the supplied callback exactly once",
+        "loading is announced without an empty or usable tree",
+        "source error has an accessible retry action and no tree",
+        "a valid empty result has its own state",
+        "invalid duplicate data displays an error instead of a partial tree",
+        "invalid orphan data displays an error instead of a partial tree",
+        "invalid cycle data displays an error instead of a partial tree",
+        "initial tree shows roots with collapsed branch and explicit ARIA positions",
+        "selection is controlled and can describe a hidden descendant",
+        "category names are escaped, never interpreted as markup",
+        "each browser has distinct labels and search control IDs",
+        "empty category collection is valid",
+        "one root retains the exact DTO and accessible position",
+        "multiple roots preserve backend order and sibling positions",
+        "unordered parent/child records become a complete preorder hierarchy",
+        "input objects and arrays are never changed or normalized",
+        "inconsistent input fails as a whole: duplicate IDs",
+        "inconsistent input fails as a whole: missing parent",
+        "inconsistent input fails as a whole: self-parent",
+        "inconsistent input fails as a whole: cycle without roots",
+        "inconsistent input fails as a whole: cycle beside valid root",
+        "inconsistent input fails as a whole: null collection",
+        "inconsistent input fails as a whole: non-array collection",
+        "inconsistent input fails as a whole: null record",
+        "inconsistent input fails as a whole: wrong ID type",
+        "inconsistent input fails as a whole: blank name",
+        "inconsistent input fails as a whole: missing parent field",
+        "a deep hierarchy is built without recursive stack growth",
+        "search is case-insensitive and retains all ancestors without changing names",
+        "search with no match returns no rows; blank query restores all rows",
+        "filtered sibling positions and branch flags describe the filtered tree",
+        "collapsed and expanded branches never reveal hidden descendants"
+      ]
+    },
+    {
+      "label": "typecheck",
+      "command": [
+        "node",
+        "node_modules/typescript/bin/tsc",
+        "--noEmit"
+      ],
+      "startedUtc": "2026-10-22T13:48:49.145635+00:00",
+      "completedUtc": "2026-10-22T13:48:50.106157+00:00",
+      "exitCode": 0,
+      "rawArtifact": {
+        "localPath": ".verification/tv5-audit-20261022-r2/runs/pr74/typecheck.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "label": "application-build",
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "startedUtc": "2026-10-22T13:48:50.107312+00:00",
+      "completedUtc": "2026-10-22T13:48:52.610459+00:00",
+      "exitCode": 0,
+      "rawArtifact": {
+        "localPath": ".verification/tv5-audit-20261022-r2/runs/pr74/application-build.log",
+        "bytes": 392,
+        "sha256": "ff5f783994c1fdd43714f94654b68d379e55e1ea90249d67c36027719dd98e55"
+      }
+    },
+    {
+      "label": "feature-build",
+      "command": [
+        "node",
+        "node_modules/vite/bin/vite.js",
+        "build",
+        "--config",
+        "src/features/catalog/vite.category.config.ts"
+      ],
+      "startedUtc": "2026-10-22T13:48:52.615597+00:00",
+      "completedUtc": "2026-10-22T13:48:52.977855+00:00",
+      "exitCode": 0,
+      "rawArtifact": {
+        "localPath": ".verification/tv5-audit-20261022-r2/runs/pr74/feature-build.log",
+        "bytes": 285,
+        "sha256": "4d18a40cc5c4f82458df4708076314787a87e3fce9a24b3b88f7366ae7ffe9ae"
+      }
+    }
+  ],
+  "sourceUntouched": true,
+  "scope": "Supplied DTO tree +React SSR +HappyDOM interactions; typecheck and both app/unmounted-feature builds",
+  "NOT_RUN": [
+    "Real Chromium/browser/mobile visual/screen-reader/native keyboard",
+    "Actual Router/Gateway/API/Auth integration and live E2E",
+    "Backend/PostgreSQL regression; frontend-only source"
+  ],
+  "publication": "Raw logs private at listed paths, bytes/hash preserved; no credentials/log output published; no cross-run release total"
+}

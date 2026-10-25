@@ -393,3 +393,287 @@ Checkpoint branch: `codex/tv2-m01-price-proposal`; commit/PR/publication evidenc
 không báo M01 DONE. Sau khi được chỉ định đúng authority và ký đủ price scope, TV2 kiểm applicable schema/S01/auth gates
 để triển khai riêng Product price/currency; không tự mở MD04–MD10 hoặc Finance. `HK5_FINANCE_POLICY_APPROVED=false` giữ nguyên.
 Runtime unit/PostgreSQL/E2E trong lượt tài liệu này: **NOT_RUN — docs-only**, không dùng lại số PASS lịch sử làm lượt chạy mới.
+
+## 15. TV5-UNBLOCK-20261020-v1 — evidence and owner-response checkpoint
+
+No business choice, authority, snapshot/wire/schema or enablement is approved by this checkpoint.
+[Current MD01–MD10 matrix and COD handoff](../reports/TV5_OWNER_UNBLOCK_HANDOFF_2026-10-20.md) records merged46/53/58/59,
+latest Productunit1..1billion candidate, existing TV5/TV3 technical compatibility for that delta and TV1's explicit non-delegation.
+The named-authority request already exists; no duplicate reminder or repeat unchanged C01/E01/SKU technical vote.
+New TV3 COD/current-ADMIN/source/atomic-payment request onIssue12 is answered as **COD POLICY PENDING**, not human/business approval.
+TV4's global immutable SKU/exact retry and TV3 candidate/helper confirmations are retained; exact runtime state/payment/event/refund semantics remain joint decisions.
+
+Fresh main03fb1b2 FIN01/06 original3diagnostics and25taggedPG passed after Docker startup; initial Engine-off failures retained.
+Technical storagefix remains verified; tests do not choose VND/businesscap, approve House or provide productionsettlement/currentStoreproof.
+HumanTV5 remains proposer/synthesizer with no assumed final business mandate. TV1/projectauthority must record named accountable
+approver/delegation/scope/operator; priceMD01/02/unitcapMD03 can be signed separately fromMD04–10 with applicable schema/S01/security gates.
+Keep Finance/pairflagsOFF andIssue5/12PARTIAL; do not push closed46 or treat merge53 as businessAPPROVED.
+
+
+## 16. M01-MVP-v1.0-DRAFT — lựa chọn chờ ký, 23/10/2026
+
+**DRAFT FOR HUMAN SIGNATURE / SELECTED–NOT SIGNED / KHÔNG CÓ HIỆU LỰC PRODUCTION.** Phần này là phụ lục
+đề xuất trong Draft PR cho packet canonical, không phải policy thứ hai. TV5 Finance owner cần review/tiếp nhận; agent không ký
+business hoặc technical approval. Giữ nguyên §§1–15, mọi QA evidence và trạng thái tại thời điểm lịch sử.
+
+### 16.1. Provenance, thẩm quyền và quy tắc phiên bản
+
+- Audit main **33853a1db219b45ff045e6e81c621275e831007a** ngày 23/10/2026, Asia/Saigon.
+  PR44/46/47/53 đã MERGED; PR83 OPEN/DRAFT, head **1018c2d7d8323aa0ba2a312fc278ee37c0b57a0c**.
+  Merge/publication/CI/review APPROVE cũ không phải business signature M01.
+- **U01 — nguồn mới:** yêu cầu người dùng “CODEX MASTER PROMPT — M01 BUSINESS DECISION FINALIZATION”,
+  nhận ngày 23/10/2026 trong phiên TV2; nguồn là chỉ thị người dùng, chưa là receipt GitHub đã ký.
+  Nguyễn Văn Duy xác nhận mình có thẩm quyền quyết định nghiệp vụ. Ghi nhận là **USER-DECLARED BUSINESS AUTHORITY**,
+  không tiếp tục coi như người dùng chưa trả lời. Đây chưa phải chữ ký policy, bằng chứng quyền operator,
+  hoặc xác nhận đã đăng công khai bằng tài khoản GitHub. Không suy quyền từ repository ownership.
+- Danh tính dự kiến ghi vào record ký: **Nguyễn Văn Duy — TV2 — `duyxl56785`**; tài khoản này khớp ownership
+  và tác giả PR53/83. Người ký phải tự xác nhận account/role/phạm vi/cơ sở thẩm quyền và timestamp trong bước ký;
+  agent không tạo chữ ký hay URL chứng cứ thay người dùng. MD09 operator vẫn **AUTHORIZATION PENDING**.
+- `M01-MVP-v1.0-DRAFT` là revision lựa chọn hiện tại để xem xét, **không supersede policy approved** vì chưa ký.
+  Sau khi ký một slice, record phải chỉ rõ predecessor, MD/giá trị/phạm vi thay thế, document SHA256,
+  source commit, thời điểm hiệu lực và các owner receipts cùng nội dung. Sửa giá trị/semantics sau ký cần revision mới.
+  Các con số 17 chữ số trong §§2–13 và reports/tv5-m01-review là historical candidates, không phải policy song song hiện hành.
+  §14 `M01-PRICE-SCOPE-v1-DRAFT` là predecessor proposal của price slice; aggregate cap mới dưới đây là lựa chọn
+  riêng U01, **không suy ra từ unit cap**, chưa có consumer sign-off cho delta aggregate này.
+- **U04 — xác nhận trực tiếp ngày 23/10/2026:** Nguyễn Văn Duy chọn **MD01=VND_ONLY**: chỉ VND nguyên,
+  currency bắt buộc/tường minh; missing/other currency bị từ chối; không default, không FX, không phần lẻ,
+  không tự làm tròn; BigDecimal exact. Người dùng cho phép commit/push branch tài liệu và tạo Draft PR để review,
+  **chưa ký business APPROVED**, không merge, không triển khai persistence/deploy hoặc bật feature flags.
+- **SELECTED** = người dùng đã chọn, chưa ký; **PROPOSED** = còn là phương án; **PENDING** = thiếu quyết định/chữ ký;
+  **BLOCKED** = dependency implementation chưa được mở; **APPROVED** chỉ sau record do người thật ký đúng scope/version.
+  Mọi hàng dưới đây có `approval=PENDING`, `effective_scope=NONE_UNTIL_SIGNED`; không có MD business APPROVED mới.
+
+### 16.2. Ma trận MD01–MD10: lựa chọn, xung đột và chữ ký
+
+| MD | Existing policy/source fact | User decision (U01/U02/U04) | Conflict / delta | Missing approval | Impacted owner/module |
+|---|---|---|---|---|---|
+| MD01 | VND-only/integral/explicit currency là candidate; Product/Cart/Order chưa có currency snapshot production. | **SELECTED–NOT SIGNED (U04)**: VND_ONLY; chỉ VND nguyên, currency bắt buộc/tường minh; reject missing/other currency, không default/FX/phần lẻ/làm tròn, BigDecimal exact. | UI tiếng Việt, `.00` và TEST-CURRENCY không tự chứng minh VND. MD02 bounds không tự ký MD01. | Business signature MD01; TV2 mapping/schema, human TV5 money/QA và applicable TV1/TV3 implementation delta; reuse compatibility cũ. | TV2 Product/Catalog; TV3 Cart/Order; TV4 COD; TV5 Finance; TV1 security. |
+| MD02 | ProductListing chỉ kiểm unitPrice >0; candidate cũ unit17digits; §14 đã đề xuất unit1..1000000000. | **SELECTED–NOT SIGNED**: inclusive **1..1000000000 VND**, không làm tròn giá, không floating-point; canonical decimal string **SELECTED–NOT SIGNED** theo U02; shared HTTP contract chưa publish. | Chưa enforce cap/integral trong domain/schema; MD01 đã chọn nhưng còn chờ business signature và implementation. Technical compatibility #53 không là chữ ký version mới. | Business price choice; TV2 schema, TV3 representation, human TV5; TV1 validation/privacy. | TV2 Product/Catalog; TV3 Cart/Order; TV5 Finance; TV1. |
+| MD03 | Quantity1..1000 đã có Cart service/DB và Checkout DTO; storage guard NUMERIC(19,2), chưa là business caps. | **SELECTED–NOT SIGNED**: quantity1..1000; unit<=1000000000; line, Store/SellerOrder merchandise subtotal, MarketplaceOrder merchandise total mỗi cấp **<=1000000000000 VND** inclusive. Fee/net >=0 và <=Store subtotal theo MD04 sau ký. | Aggregate cap1 nghìn tỷ mới, khác candidate17digits; hai Store riêng lẻ hợp lệ vẫn có thể vượt parent. Không áp unit1 tỷ lên aggregate hoặc cap Inventory long theo suy đoán. | Business MD03; TV3 pre-reserve checks/schema, human TV5 vectors; TV2 unit source, TV4 quantity/lifecycle compatibility trong own-scope. | TV3 Cart/Checkout/Order; TV2 price; TV4 Inventory/COD; TV5 money/QA. |
+| MD04 | CONTRIBUTING/FinanceRules có ordinary5%/House0%; scale0/per-Store rounding vẫn candidate; StoreEntity/StoreCurrentSource không có House classification. | **SELECTED / DETAILS PENDING**: House là Store nền tảng sở hữu hoặc trực tiếp vận hành; có audit; đổi chỉ cho Order mới, không hồi tố committed Order. **PROPOSED**: ordinary5%, House0%, HALF_UP0 một lần/SellerOrder subtotal; net=subtotal−fee; unknown House fail-closed. | Boolean fixture không phải persisted authority. Rate/House/net/policy snapshots thiếu; config helper hỗ trợ nhiều rate/scale. | Business rate/rounding + House details; TV2 House source/audit; TV1 quyền chuyên biệt/current ADMIN; TV3 snapshot; human TV5; TV4 COD. | TV2 Store; TV1 security; TV3 Order; TV4 COD; TV5 Finance. |
+| MD05 | Chưa có allocation model shipping/tax/discount/payable. | **PROPOSED** merchandise-only; không tự tính adjustments, không missing→0; reject hoặc giữ ngoài scope flow cần adjustment chưa ký. | Không được gọi gross hiện có là final payable gồm mọi phí. | Business +human TV5 chọn no-adjustment slice; TV3 totals, TV4 COD/refund. | TV3 Order; TV4 COD; TV5 Finance; TV2 price semantics. |
+| MD06 | FinanceRules.requireSettleable là pure guard; không payment ledger/atomic unique settlement production. | **SELECTED / DETAILS PENDING**: không refund tự động; tranh chấp HOLD/manual resolution; không sửa snapshot/settlement gốc. **PROPOSED** full COD, current authorized ADMIN sau DELIVERED, snapshot amount/currency exact, unique atomic settlement, stable actionId/payload, UNKNOWN HOLD/reconcile. | HOLD không là PAID/REFUNDED/settlement; Inventory CONSUME không là paid/delivered. Manual authority/reversal/window/fee treatment còn thiếu. | Business +human TV5, TV4 COD/returns, TV3 payment/state/outbox, TV1 current authorization; TV2 Store scope. | TV3 Order; TV4 fulfillment/COD; TV5 settlement; TV1/TV2 authority. |
+| MD07 | Last-verified A từng được TV2/TV3 khuyến nghị; provider/consumer runtime và concrete security chưa đầy đủ. | **SELECTED–CONDITIONAL / NOT SIGNED**: A, chấp nhận facts có thể đổi sau read cuối trước commit; authoritative checks, không reprice/partial batch, money trước reserve; journal/recovery bắt buộc; UNKNOWN HOLD/reconcile; PhaseB chỉ khi safe recovery có thật. | Không global atomic guarantee; timestamp, @Version hoặc hai reads không thành lease; còn security/implementation acknowledgement. | Business explicit risk acceptance; TV1 security; human TV5; TV2 sources, TV3/TV4 journal/recovery cùng version. | TV2 Catalog; TV3 Checkout; TV4 Inventory; TV1 security; TV5 risk/QA. |
+| MD08 | OrderItem có productId/unit/qty/line; SellerOrder có Store/Seller/gross/fee. Chưa có SKU/currency/House/rate/net/policy/source-ref snapshots đầy đủ. | **PROPOSED** immutable productId/exact SKU/Store/Seller/unit/qty/line/currency/subtotal/House/rate/fee/net/policyVersion/approved source refs+versions; không reprice successful replay/settlement. | Existing gross−fee derived không chứng minh snapshot completeness; phải chốt DTO/schema và legacy-data policy. | Business +human TV5; TV3 V2+ persistence, TV2 facts, TV4 lifecycle, TV1 exposure/privacy. | TV3 Order; TV2 provider; TV4 COD; TV5 Finance; TV1. |
+| MD09 | YAML default Finance/pair false; chưa có operator grant được audit. | **SELECTED PROPOSAL / AUTHORIZATION PENDING**: Nguyễn Văn Duy có thể kiêm business approver/operator với **kiểm tra độc lập bắt buộc**. | User-declared business authority không cấp deployment permissions, môi trường hoặc quyền bật flag. GitHub write/Admin role không thay grant. | TV1/project authority cấp exact operator scope/env; business record; named independent checker và acceptance/rollback/audit procedure. | TV1 deployment/security; Duy proposed operator; human TV5 QA, TV2/TV3/TV4 dependency receipts. |
+| MD10 | Bốn nhóm trước đây chưa có đủ tên/formula/source/time cutoff. | **SELECTED DIRECTION / DETAILS PENDING**: gross settled merchandise; platform commission; seller net; adjustments/reversals. **PROPOSED** source committed postings, UTC timestamps, report Asia/Ho_Chi_Minh, adjustment posting riêng. | Chưa ký formulas/recognition/cutoff/late attribution/Store scope; không cộng cả4 như doanh thu độc lập. | Business +human TV5 reporting; TV3/TV4 authoritative facts/time; TV1 privacy/time boundary; TV2 Store scope. | TV5 reporting; TV3/TV4 sources; TV1/TV2 scope. |
+
+Metadata áp dụng **cho từng MD**: `policyVersion=M01-MVP-v1.0-DRAFT`, responsible/required signatures theo cột owner
+và “Missing approval”; “Existing” là fact/candidate, không phải approved policy. Evidence và rationale/risk/gate dưới đây
+là phần của cùng decision record. Owner kỹ thuật chỉ ký trách nhiệm của mình; không ký thay business hoặc owner khác.
+
+| MD | Business rationale / trade-off / risk | Effective scope & implementation gate | Evidence |
+|---|---|---|---|
+| MD01 | Một currency giảm ambiguity; loại fractional/FX là giới hạn MVP cần chấp nhận, không suy từ thị trường. | MD01 đã SELECTED theo U04, chưa hiệu lực; currency/whole-VND còn cần business signature trước money schema/wire. | U04 (23/10/2026); §14; S1/S2/S3 bên dưới. |
+| MD02 | Giới hạn đơn giá và không mất precision; cap giới hạn hàng giá cao. String-wire giảm JS numeric risk nhưng chưa được publish. | Chỉ unit Product; không cap Order total; slice16.5 sau đủ receipts. | U01; [#53](https://github.com/duyxl56785/Project_HK5/pull/53); S1/S2. |
+| MD03 | Chặn đơn merchandise vượt giới hạn; check từng Store không đủ cho multi-Store parent. | Chưa hiệu lực; TV3 kiểm mọi cấp trước reserveRequested; không sửa V1 hoặc gọi DB capacity là business cap. | U01; S3/S4/S5; vectors16.4. |
+| MD04 | Audit phân biệt House/ordinary, giữ lịch sử tái lập; sai classification ảnh hưởng fee và chưa có correction procedure. | Chỉ Order mới theo effective time khi ký; Order cũ giữ snapshots, correction sau commit phải theo MD06 riêng. | U01; S6/S7/S8. |
+| MD05 | Giữ MVP nhỏ, tránh chia phí/discount sai Store; đổi lại chưa phục vụ flow cần adjustment. | BLOCKED cho unknown adjustments; không điền zero để vượt gate. | U01; packet§9 MD05; S4/S5. |
+| MD06 | Manual HOLD giảm tự chi sai; chưa giải quyết tranh chấp hoặc chứng minh thanh toán. | BLOCKED payment/refund/settlement runtime đến khi đủ authority, source, audit và policy bên dưới. | U01; S5/S6; [TV3 COD handoff](https://github.com/duyxl56785/Project_HK5/issues/12#issuecomment-6282489759). |
+| MD07 | A phù hợp kiến trúc hiện tại; residual read→commit race được người dùng chọn có điều kiện, chưa ký. | Không hạ current auth; live/PhaseB BLOCKED nếu journal/proven reservation/recovery/security chưa đạt. | U01; [Catalog handoff](TV2_CATALOG_HANDOFF.md); S4; [#78](https://github.com/duyxl56785/Project_HK5/pull/78). |
+| MD08 | Bất biến giúp replay/audit; thêm fields/migrations/legacy handling và privacy review. | V2+ sau sign-off; không tự đoán legacy currency/House hoặc recompute snapshot. | U01; S5/S7; packet§5/§12. |
+| MD09 | Kiêm nhiệm giảm handoff nhưng tăng rủi ro; independent check bắt buộc không được tự kiểm chính mình. | Không có operator grant/enable từ draft; env/scope/checker/rollback record còn PENDING. | U01; [TV1 #53 review](https://github.com/duyxl56785/Project_HK5/pull/53#pullrequestreview-5579455852); S9. |
+| MD10 | Nhóm giúp tách GMV/fee/net/corrections; dễ double-count nếu cộng groups hoặc nhầm eligible với settled. | Reporting formulas/recognition/scopes BLOCKED đến TV5/business ký; chưa SQL/report runtime. | U01; packet§9 MD10; S5/S6. |
+
+### 16.3. Audit mã nguồn và việc còn thiếu
+
+Source refs dưới đây cố định tại main33853a1, không phải kết quả runtime mới:
+
+- **S1:** [ProductListing:13](https://github.com/duyxl56785/Project_HK5/blob/33853a1db219b45ff045e6e81c621275e831007a/backend/product-service/src/main/java/com/projecthk5/productservice/product/ProductListing.java#L13): BigDecimal >0, chưa unit cap/currency/integral gate; không có production Product table/JPA.
+- **S2:** [TV3 #53 compatibility](https://github.com/duyxl56785/Project_HK5/pull/53#pullrequestreview-5579396238) chỉ docs/consumer scope cho predecessor d08f3e5, không business approval hoặc acceptance mới cho aggregate cap.
+- **S3:** [CartService:43](https://github.com/duyxl56785/Project_HK5/blob/33853a1db219b45ff045e6e81c621275e831007a/backend/cart-service/src/main/java/com/projecthk5/cartservice/service/CartService.java#L43): storage exactness trước mutation; zero vẫn được hiện tại chấp nhận; qty1..1000, PESSIMISTIC_WRITE cho Cart hiện hữu. Không business-total validation hoặc currency snapshot từ đó.
+- **S4:** [CheckoutService:81](https://github.com/duyxl56785/Project_HK5/blob/33853a1db219b45ff045e6e81c621275e831007a/backend/order-service/src/main/java/com/projecthk5/orderservice/service/CheckoutService.java#L81): prepareOrder +serialization trước reserveRequested/Inventory; unit/line/Store/fee/net/parent dùng [storage guard:15](https://github.com/duyxl56785/Project_HK5/blob/33853a1db219b45ff045e6e81c621275e831007a/backend/order-service/src/main/java/com/projecthk5/orderservice/domain/OrderAmountStorageBounds.java#L15), không phải cap1e9/1e12. Đây là stage kiểm tra cần bổ sung sau ký, **không sửa source TV3 trong lượt này**.
+- **S5:** [Order V1](https://github.com/duyxl56785/Project_HK5/blob/33853a1db219b45ff045e6e81c621275e831007a/backend/order-service/src/main/resources/db/migration/V1__checkout_baseline.sql), [OrderWriteService:14](https://github.com/duyxl56785/Project_HK5/blob/33853a1db219b45ff045e6e81c621275e831007a/backend/order-service/src/main/java/com/projecthk5/orderservice/service/OrderWriteService.java#L14): NUMERIC(19,2), Order+outbox+attempt có local transaction. UNIQUE(customer,key), conditional failIfProcessing và SKU journal không tạo global price/eligibility lock hoặc atomic settlement. Race/snapshot requirements vẫn cần approved orchestration; test runtime concurrency **NOT_RUN** ở lượt docs này.
+- **S6:** [FinanceRules:16](https://github.com/duyxl56785/Project_HK5/blob/33853a1db219b45ff045e6e81c621275e831007a/backend/order-service/src/main/java/com/projecthk5/orderservice/finance/FinanceRules.java#L16) là pure helper, scale0..4, fee HALF_UP; settleability/Store equality guards không DB uniqueness/current-JWT proof.
+- **S7:** [SellerOrder](https://github.com/duyxl56785/Project_HK5/blob/33853a1db219b45ff045e6e81c621275e831007a/backend/order-service/src/main/java/com/projecthk5/orderservice/entity/SellerOrder.java), [OrderItem](https://github.com/duyxl56785/Project_HK5/blob/33853a1db219b45ff045e6e81c621275e831007a/backend/order-service/src/main/java/com/projecthk5/orderservice/entity/OrderItem.java): chưa persist currency/inventorySku/House/rate/net/policyVersion/fact refs đầy đủ. SKU trong journal không thay thế snapshot OrderItem.
+- **S8:** [Store V2](https://github.com/duyxl56785/Project_HK5/blob/33853a1db219b45ff045e6e81c621275e831007a/backend/seller-service/src/main/resources/db/migration/V2__create_stores.sql), [StoreCurrentSource](https://github.com/duyxl56785/Project_HK5/blob/33853a1db219b45ff045e6e81c621275e831007a/backend/seller-service/src/main/java/com/projecthk5/sellerservice/store/StoreCurrentSource.java): trusted local status/versions và OPEN+APPROVED, không House/actor authorization/commit-time lease.
+- **S9:** [Finance config](https://github.com/duyxl56785/Project_HK5/blob/33853a1db219b45ff045e6e81c621275e831007a/backend/order-service/src/main/resources/application.yml), [Inventory config](https://github.com/duyxl56785/Project_HK5/blob/33853a1db219b45ff045e6e81c621275e831007a/backend/inventory-service/src/main/resources/application.yml): Finance và Inventory pair default OFF. Không kiểm tra deployed environments hoặc đọc secrets để suy flags live.
+
+FIN-01/FIN-06 storage defects đã được sửa và có historical GREEN trong packet§13/§15; không làm lại fix,
+không gọi source hiện tại “unwired”. Source audit xác nhận checks trước RESERVE nhưng không chứng minh implementation
+đã chấp nhận business caps mới. Không chạy lại unit/PG/FIN/E2E trong nhiệm vụ docs này.
+
+Giá/tổng integer1e9/1e12 đều fit existing NUMERIC(19,2) chính xác `.00`; capacity thực là **99999999999999999.99**,
+khác cả business cap lẫn candidate integer17digits cũ. Cart không có marketplace monetary total model để suy cap đã enforce.
+Rule mới có thể được triển khai bằng validation/approved migration version mới khi cần, **không sửa applied V1**;
+legacy data vượt cap phải được inventory/audit và quyết định reject-new/compatibility/backfill riêng, không clamp/round/rewrite.
+
+**MD04 chi tiết còn chờ:** ai quyết định/thi hành House; current ADMIN cần quyền chuyên biệt nào; evidence sở hữu/vận hành;
+audit actor/time/reason/version/effective time; cơ chế sửa classification sai và Order đã commit; rate/config snapshots.
+Không cho Seller tự set House, không mặc định unknown=false; việc không hồi tố đã SELECTED, correction tiền phải theo MD06.
+
+**MD06 câu hỏi không tự quyết:** người xử lý tranh chấp; người duyệt reversal; thời hạn hoàn/trả;
+commission xử lý thế nào khi refund sau settlement; audit/evidence thanh toán manual; trường hợp nào được giải tỏa HOLD.
+Cho đến khi có quy trình riêng, partial COD, auto refund, reversal, sửa settlement, trả hàng sau settle hoặc ghi nhận
+manual refund hoàn tất đều **BLOCKED**. Không tuyên bố đã trả tiền chỉ vì operator ghi HOLD/resolve.
+
+**MD09 grant còn thiếu:** account/role/business scope, deployment action+environment, người cấp quyền,
+named independent checker không trùng người thực thi, evidence theo exact build/policy version, staged approval,
+operator/time/change record, rollback-to-closed procedure, handoff TV1/TV5. Chưa có quyền bật flag trong draft.
+
+**MD10 chi tiết còn chờ TV5:** exact formulas và recognition event/posting source, cutoff/timezone,
+late event policy, refund/reversal attribution, Store/Admin query scope. Gross settled merchandise là GMV,
+không tự là platform revenue; commission+seller net phân chia cùng gross trước adjustments. Không cộng4nhóm.
+UTC/Asia/Ho_Chi_Minh, kỳ ngày [00:00,next00:00) và posting-time adjustments vẫn PROPOSED, không được coi đã SELECTED.
+
+### 16.4. Vectors kiểm tra số học của draft, không phải runtime acceptance
+
+| Vector | Kết quả cần có theo draft nếu ký |
+|---|---|
+| Unit1;1000000000 | Inclusive bounds; MD01 integral/currency vẫn cần ký. |
+| Unit1000000001;0;−1 | Reject; không clamp về bound. |
+| Unit1.5 | Không round; reject nếu MD01 integral được ký. |
+| Unit1000000000 × qty1000 | Line1000000000000, đúng max; qty1001 vẫn reject riêng. |
+| Store600000000000 +Store400000000000 | Parent1000000000000, hợp lệ về cap. |
+| Store600000000000 +Store400000000001 | Mỗi Store dưới cap nhưng parent vượt1; reject toàn batch trước reserveRequested. |
+| Hai Store600000000000 mỗi Store | Parent1200000000000: reject business cap dù vẫn fit NUMERIC(19,2). |
+| 1.001 tại scale2 | UNNECESSARY phải reject FIN-01 representation; không để DB round thành1.00. |
+| Hai Store60000000000000000 | Từng Store fit storage, parent120000000000000000 vượt storage: FIN-06 guard; không business-cap acceptance. |
+| Ordinary subtotal9/10/11 | Proposed fee0/1/1; net9/9/10. |
+| Hai line10 trong1Store vs hai Store10 | Proposed tổng fee1 vs2; không gộp rounding qua Store. |
+| Ordinary Store1000000000000 /House cùng subtotal | Proposed fee50000000000/net950000000000; House fee0/net1000000000000. |
+
+### 16.5. M01-PRICE-SCHEMA-v1.0 — approval record chưa ký
+
+**PREPARED_FOR_SIGNATURE / NOT_SIGNED / IMPLEMENTATION BLOCKED.** Đây là record trong packet canonical,
+không phải một policy copy. ID phiên bản không có hậu tố DRAFT **không** có nghĩa đã approved.
+Record tiếp nối `M01-PRICE-SCHEMA-v1.0-DRAFT` của bản local trước; predecessor chưa từng được ký.
+Parent tiếp tục là `M01-MVP-v1.0-DRAFT`; chỉ supersede nội dung mẫu ký local sau khi owner tiếp nhận,
+không đổi các quyết định/historical evidence §§1–15 hoặc tự có hiệu lực nghiệp vụ.
+
+**U02 — yêu cầu tiếp nối ngày 23/10/2026:** người dùng chọn canonical decimal string, chưa ký.
+MD02 canonical decimal string nay được ghi nhận **SELECTED–NOT SIGNED** theo yêu cầu này;
+không còn ghi lựa chọn representation đó như chưa được người dùng chọn. Shared HTTP DTO/version,
+lexical validation, privacy và positive transport vẫn là technical/runtime gates riêng.
+MD01 nay **SELECTED–NOT SIGNED** theo xác nhận U04 ngày 23/10/2026. Không suy chữ ký business từ lựa chọn MD01/MD02/MD03 hoặc quyền xuất bản Draft PR.
+
+#### Record identity và quyết định chờ ký
+
+| Field | Nội dung chuẩn bị / trạng thái |
+|---|---|
+| Decision version | `M01-PRICE-SCHEMA-v1.0` |
+| Parent / predecessor | `M01-MVP-v1.0-DRAFT` / local `M01-PRICE-SCHEMA-v1.0-DRAFT` chưa ký |
+| Proposed business approver | Nguyễn Văn Duy, TV2; GitHub `duyxl56785` do người ký tự xác nhận khi ký |
+| Business authority | USER-DECLARED BUSINESS AUTHORITY theo U01; ghi nhận tự xác nhận của người dùng, không suy quyền từ repo |
+| Business decision / signature / signed_at | **CHƯA ĐIỀN**; không có chữ ký hoặc timestamp ký do agent tạo |
+| Evidence/source | Main `33853a1db219b45ff045e6e81c621275e831007a`; PR53 `d08f3e5154d7568d754dea8758a7a145ef2ab2b5`; PR83 `1018c2d7d8323aa0ba2a312fc278ee37c0b57a0c`; U01/U02/U04 |
+| Document binding | SHA256 của **toàn packet**, UTF-8/LF/no-BOM, ghi ở Finance ledger và PR description; receipt phải dẫn immutable commit permalink. Không nhúng digest tự tham chiếu; sửa nội dung phải tính lại digest và coverage |
+| Effective scope/time | Chưa hiệu lực; người ký xác nhận scope/effective-time, implementation chỉ sau đủ applicable technical gates |
+| Operator grant | AUTHORIZATION PENDING; record business này không cấp quyền deploy hoặc bật flag |
+
+| MD / giá trị chính xác | Decision hiện tại | Phạm vi của record |
+|---|---|---|
+| MD01 | **SELECTED–NOT SIGNED (U04)**: explicit VND, whole-VND; reject missing/other currency, không default/FX/phần lẻ/làm tròn; BigDecimal exact, không floating-point | Đã được người dùng chọn ngày 23/10/2026; business signature còn PENDING |
+| MD02 | **SELECTED–NOT SIGNED**: unit price **1..1000000000 VND inclusive**; không round/clamp; canonical decimal string | Product price/representation; chưa publish HTTP contract |
+| MD03 — unit portion | **SELECTED–NOT SIGNED**: unit cap **1000000000 VND inclusive** | Phần MD03 được đưa vào business signature của slice |
+| MD03 — quantity/context | **SELECTED–NOT SIGNED**: quantity **1..1000** mỗi dòng | Chỉ ghi đầy đủ context; **ngoài phạm vi phê duyệt/triển khai Product price schema** |
+| MD03 — aggregate/context | **SELECTED–NOT SIGNED**: line total, Store/SellerOrder merchandise subtotal, MarketplaceOrder merchandise total mỗi cấp **<=1000000000000 VND inclusive** | Context riêng cho TV3/TV5 và consumers; không tự ký aggregate cap bằng price-slice record |
+
+Cap1 tỷ không áp lên line/Store/parent. Cap1 nghìn tỷ là lựa chọn U01/MD03 riêng, không suy từ phép nhân.
+Commission/net phải >=0 và <=Store subtotal theo MD04 sau ký; không nằm trong slice hẹp này.
+VND/integral cho toàn bộ Finance/Order, aggregate cap enforcement và amount allocation vẫn cần record own-scope tương ứng;
+ký MD01 trong Product slice không tự enable toàn bộ M01.
+
+#### Technical acknowledgments: phần đã có và phần thực sự còn thiếu
+
+Các reviews dưới đây là **evidence cũ đúng phiên bản/phạm vi** cần reuse; không yêu cầu bỏ đi rồi ký lại cùng facts.
+Record mới dẫn cả predecessor, source SHA và delta. Không coi APPROVED trên GitHub cho docs là business signature mới.
+
+| Owner | Acknowledgment đã có | Còn thiếu để mở Product Persistence | Runtime hiện có/chưa có |
+|---|---|---|---|
+| TV2 | Provider-design compatibility, S01 Store boundary; #70 giữ exact SKU; PR83 candidate constraints/33 SQL PG có evidence lịch sử | Reviewed production price/currency mapping, no-rounding constraints, UTF-16/exact immutable global SKU strategy, local Category FK/logical Store UUID, transaction/version mapping | Domain/lifecycle/Category production có; Product production table/JPA/adapter/UNIQUE SKU chưa có |
+| TV3 | [#53 review5579396238](https://github.com/duyxl56785/Project_HK5/pull/53#pullrequestreview-5579396238) tại d08f3e5 đã chấp nhận own-scope price/currency/string compatibility của unit1..1e9 | Reuse giá trị/shape đã được xác nhận; chỉ ghi delta nếu production storage/representation thực tế khác hoặc currency propagation/wire implementation thay đổi. Không xin duyệt lại unit cap/shape không đổi; aggregate1e12 là scope riêng còn chờ | Cart/Order storage guards có; currency/SKU/House/rate/net/policy snapshots và live Catalog adapter còn thiếu |
+| Human TV5 | [#53 review5566442640](https://github.com/duyxl56785/Project_HK5/pull/53#pullrequestreview-5566442640) xác nhận technical compatibility và boundaries/storage fit, COMMENT không business signature | Money/QA acknowledgment cho delta **production schema/no-rounding constraint strategy** và target record; không bắt chứng minh lại arithmetic/17digit→1b đã được review | Pure FinanceRules/QA có; payment/unique atomic settlement/Finance production chưa có |
+| TV1 | [#53 review5579455852](https://github.com/duyxl56785/Project_HK5/pull/53#pullrequestreview-5579455852) cho docs publication; S01/OD09 technical boundary tại [receipt6251503735](https://github.com/duyxl56785/Project_HK5/pull/48#issuecomment-6251503735) đã DECIDED | Applicable private schema/architecture/security isolation review cho implementation delta; không xin bỏ phiếu lại Store-in-Seller-DB hoặc nguyên tắc pair đã chốt | Auth foundation #80 còn Draft; không yêu cầu positive JWT/Gateway để giả mở private persistence, cũng không cho expose HTTP |
+
+Không có receipt cho production Product schema mới trên PR83; #83 không chứa schema production.
+Same-version compatibility record có thể **dẫn lại rõ** các acknowledgment không đổi ở predecessor;
+chỉ phần delta cần owner review bổ sung. Phải ghi được coverage đầy đủ của **giá trị + mapping thực tế**
+trong target revision, không biến việc đổi tên version thành vòng xin xác nhận lặp vô ích.
+
+#### Storage conflict và phương án schema cần review
+
+Existing Cart/Order `NUMERIC(19,2)` có capacity **99999999999999999.99**; candidate integer17digits cũ
+là **99999999999999999**, đều khác business unit1e9/aggregate1e12. Các số nguyên mới fit exact `.00`,
+nhưng fit storage không đồng nghĩa đã enforce business policy.
+
+**Technical option PROPOSED:** Product `unit_price NUMERIC` không typmod + NOT NULL +
+finite/integral check (`unit_price=trunc(unit_price)`) + bounds1..1000000000; currency exact `VND`,
+NOT NULL, không DEFAULT/FX/case normalization. Kiểu/mapping/DDL/JPA cuối cùng chưa được phê duyệt.
+[PostgreSQL16 numeric](https://www.postgresql.org/docs/16/datatype-numeric.html) xác nhận declared scale
+có thể round trước CHECK; vì vậy không dùng `NUMERIC(10,0)` rồi nhận CHECK integer là chống rounding.
+Không sửa applied V1 hoặc chọn kiểu chỉ vì candidate test trước đã PASS. Phải kiểm JPA/schema validation,
+raw SQL fractional/nonfinite/cap boundaries, rollback/concurrency bằng PostgreSQL thực trong implementation PR sau.
+
+Exact SKU là Product-owned mapping khác Product ID, global uniqueness target, immutable, giữ case/NFC/NFD,
+không trim/lowercase/normalize. Domain dùng Java UTF-16 <=128; SQL candidate code-point envelope chưa là
+production parity. Price signature không tự chứng minh constraint này hoặc current Store/Seller/House authority.
+
+#### Điều kiện mở khóa và các giới hạn
+
+- Business record do **người dùng tự ký**, có MD01 choice, MD02/unit MD03 values, identity/authority/scope,
+  digest và thời điểm do người ký xác nhận; không có giá trị thay cho chữ ký.
+- Technical compatibility coverage cho target revision: reuse receipts đúng giá trị/phạm vi đã có,
+  xử lý delta schema/representation và ghi TV2 schema, TV3 consumer, human TV5 money/QA, TV1 applicable boundary.
+- TV5 tiếp nhận nội dung canonical theo ownership; record/evidence phải có thể đối chiếu, không chỉ nằm ở lịch sử chat.
+- Chốt production Product mapping và migration version mới phù hợp, không sửa V1; có phạm vi implementation
+  được giao riêng. **Lượt này chỉ chuẩn bị hồ sơ**, không tự chạy production task sau khi viết record.
+
+Sau khi đạt các gate: có thể giao TV2 PR riêng cho Flyway/JPA/repository/REQUIRED adapter, global exact SKU,
+restrictive Category FK/logical Store UUID và PG tests. Không đòi hoàn thành MD04–MD10 không liên quan để mở riêng price slice.
+Không chuyển PR83 candidate/test-only thành production PR khi chưa đủ quyết định.
+
+**Không mở khóa:** Product JWT HTTP API, shared Catalog wire/live provider/Checkout, House assignment, quantity/aggregate
+business validation của TV3, refund/settlement/reporting, COD live E2E, operator permissions, Finance/Inventory flags.
+
+#### Cách ký và ràng buộc digest
+
+Digest trong Finance ledger/PR description áp dụng cho **toàn unsigned packet** theo UTF-8/LF/no-BOM.
+Người dùng chỉ ký khi có immutable commit permalink của packet cuối; không dùng digest preview trước publication.
+YAML dưới đây là mẫu **detached decision/signature receipt**: người dùng sao chép để điền/ký riêng,
+tham chiếu decision version và digest của packet đã xem. Receipt chỉ ghi quyết định/chữ ký và nguồn tham chiếu;
+không tạo policy thứ hai. Không điền checksum vào chính packet rồi đòi checksum của packet vẫn giữ nguyên.
+MD01 đã được người dùng chọn theo U04; business approval chính thức vẫn phải do người dùng tự ký trong receipt;
+nếu muốn đổi nội dung/giá trị đề xuất, phải sửa preview, kiểm tra và tính lại digest **trước** khi ký.
+Agent không tự tạo receipt đã điền hoặc timestamp ký. Chữ ký cho digest cũ không tự áp cho nội dung mới.
+
+#### Mẫu record để người dùng kiểm tra và tự ký
+
+Các `null` dưới đây **cố ý để trống**. Không có business approval, chữ ký hoặc timestamp ký đã điền.
+
+```yaml
+decision_version: M01-PRICE-SCHEMA-v1.0
+parent: M01-MVP-v1.0-DRAFT
+source_main: 33853a1db219b45ff045e6e81c621275e831007a
+document_sha256: null # người ký đối chiếu digest packet trong Finance ledger/PR description
+packet_commit: null # người ký dẫn immutable commit SHA/permalink, không tự tham chiếu commit đang được tạo
+proposed_approver:
+  name: Nguyễn Văn Duy
+  github_account_to_confirm: duyxl56785
+  authority_source: USER_DECLARED_BUSINESS_AUTHORITY_U01
+business_decision: null
+business_signature: null
+signed_at: null
+authority_and_scope_confirmation: null
+effective_time: null
+md01_selected_choice: VND_ONLY
+md01_selection_status: SELECTED_NOT_SIGNED # U04, xác nhận trực tiếp của người dùng ngày 23/10/2026
+selected_values_to_confirm:
+  md02_unit_min: "1"
+  md02_unit_max: "1000000000"
+  bounds: inclusive
+  rounding: REJECT_FRACTION_NO_CLAMP
+  representation: canonical-decimal-string
+signed_scope_to_confirm: Product price/currency/schema; MD01 + MD02 + MD03.UNIT_PRICE_ONLY
+context_outside_signature:
+  quantity_per_line: "1..1000"
+  line_merchandise_total_max: "1000000000000"
+  store_merchandise_subtotal_max: "1000000000000"
+  marketplace_merchandise_total_max: "1000000000000"
+technical_coverage_record: null # references reused acknowledgments + resolved schema deltas, không giả receipt
+deployment_operator_grant: null
+```
+
+Người dùng có thể ký business slice **một lần sau khi xem đúng immutable packet**, gồm MD01/MD02/Product-unit MD03 đã SELECTED nhưng chưa ký.
+Business signature và technical coverage là hai loại record khác nhau: ghi evidence/reference không tự ký hộ owners.
+Toàn M01 vẫn PARTIAL cho scope chưa ký. Quyền xuất bản Draft PR tài liệu theo U04 không cấp business approval, operator grant hoặc quyền production enable.

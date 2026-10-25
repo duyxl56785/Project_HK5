@@ -1,0 +1,724 @@
+{
+  "kind": "DERIVED SUMMARY; original logs/XML private, not public CI artifacts",
+  "metadata": {
+    "label": "main-finance",
+    "source": "e55f6b893799afe96b56297a86b1884578f4567c",
+    "command": [
+      "backend/gradlew.bat",
+      "-p",
+      "backend",
+      "--init-script",
+      "tests/finance/fin06-regression.init.gradle",
+      ":order-service:fin06Regression",
+      ":product-service:test",
+      "--tests",
+      "*ReviewRules*",
+      ":order-service:test",
+      "--tests",
+      "*finance.*",
+      "--tests",
+      "*InventoryOperationIntentTest",
+      "--rerun-tasks",
+      "--no-daemon",
+      "--console=plain"
+    ],
+    "startedUtc": "2026-10-23T00:33:50.489152+00:00",
+    "environment": {
+      "Java": "java version \"21.0.7\" 2025-04-15 LTS",
+      "Gradle": "8.10",
+      "Docker": "29.8.1",
+      "JAVA_TOOL_OPTIONS": "-Duser.timezone=UTC -Dapi.version=1.44"
+    },
+    "executor": "TV5 independent exact-source execution",
+    "exitCode": 0,
+    "completedUtc": "2026-10-23T00:34:28.573472+00:00"
+  },
+  "counts": {
+    "order-service:fin06Regression": {
+      "PASS": 3
+    },
+    "product-service:test": {
+      "PASS": 30
+    },
+    "order-service:test": {
+      "PASS": 55
+    }
+  },
+  "cases": [
+    {
+      "module": "order-service",
+      "task": "fin06Regression",
+      "class": "com.projecthk5.orderservice.finance.CheckoutMoneyPreflightRegressionTest",
+      "name": "unsupportedStoragePrecisionMustBeRejectedRatherThanChangingMoneyOnReplay()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "fin06Regression",
+      "class": "com.projecthk5.orderservice.finance.CheckoutMoneyPreflightRegressionTest",
+      "name": "parentOverflowMustBeRejectedBeforeReserveOrOrderWrite()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "fin06Regression",
+      "class": "com.projecthk5.orderservice.finance.CheckoutMoneyPreflightRegressionTest",
+      "name": "positiveControlPersistsExactAmountsAndReplayDoesNotReserveOrWriteAgain()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.review.ReviewRulesBoundaryTest",
+      "name": "missingPurchaseIsRejectedInsteadOfAssumingDelivery()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.review.ReviewRulesBoundaryTest",
+      "name": "rejectsMalformedRatingCollectionAndDirectInvalidRating()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.review.ReviewRulesBoundaryTest",
+      "name": "eachModerationIncludingReplayRequiresFreshAccessCheck()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.review.ReviewRulesBoundaryTest",
+      "name": "visibilityChangesPublicCountAndAverageAndUnhideRestoresThem()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.review.ReviewRulesBoundaryTest",
+      "name": "[1] identity=null",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.review.ReviewRulesBoundaryTest",
+      "name": "[2] identity=",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.review.ReviewRulesBoundaryTest",
+      "name": "[3] identity= ",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.review.ReviewRulesBoundaryTest",
+      "name": "[4] identity=\t\n",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.review.ReviewRulesBoundaryTest",
+      "name": "[5] identity= ",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.review.ReviewRulesBoundaryTest",
+      "name": "hiddenValuesAndInputOrderDoNotBiasPublicAverage()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.review.ReviewRulesBoundaryTest",
+      "name": "authorizedModerationStillRejectsMissingStoredReview()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.review.ReviewRulesBoundaryTest",
+      "name": "[1] identity=Buyer",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.review.ReviewRulesBoundaryTest",
+      "name": "[2] identity= buyer",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.review.ReviewRulesBoundaryTest",
+      "name": "[3] identity=buyer ",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.review.ReviewRulesBoundaryTest",
+      "name": "[4] identity=other",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.review.ReviewRulesTest",
+      "name": "adminCanHideUnhideAndRepeatWithoutChangingStars()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.review.ReviewRulesTest",
+      "name": "rejectsOtherBuyerAndMissingVerifiedIdentity()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.review.ReviewRulesTest",
+      "name": "[1] stars=-1",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.review.ReviewRulesTest",
+      "name": "[2] stars=0",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.review.ReviewRulesTest",
+      "name": "[3] stars=6",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.review.ReviewRulesTest",
+      "name": "[4] stars=2147483647",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.review.ReviewRulesTest",
+      "name": "[1] stars=1",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.review.ReviewRulesTest",
+      "name": "[2] stars=2",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.review.ReviewRulesTest",
+      "name": "[3] stars=3",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.review.ReviewRulesTest",
+      "name": "[4] stars=4",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.review.ReviewRulesTest",
+      "name": "[5] stars=5",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.review.ReviewRulesTest",
+      "name": "roundsPublicAverageHalfUp()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.review.ReviewRulesTest",
+      "name": "rejectsUndeliveredUnpurchasedAndDuplicateReview()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.review.ReviewRulesTest",
+      "name": "hiddenReviewDoesNotAffectPublicSumOrCount()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.review.ReviewRulesTest",
+      "name": "deniedAdminPolicyCannotModerate()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.domain.InventoryOperationIntentTest",
+      "name": "journalRehydrateRequiresIdenticalFingerprint()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.domain.InventoryOperationIntentTest",
+      "name": "invalidExternalInventoryIdentifiersFailClosed()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.domain.InventoryOperationIntentTest",
+      "name": "unicodeBoundaryPaddedSkuFailsClosedWithoutChangingExactIdentity()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.domain.InventoryOperationIntentTest",
+      "name": "requestHashIsCanonicalButOperationIdIsSeparate()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.domain.InventoryOperationIntentTest",
+      "name": "lineSetCannotBeMutatedOrHaveDuplicates()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.domain.InventoryOperationIntentTest",
+      "name": "changedTypeOrQuantityIsNotAValidReplay()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceCheckoutPreflightTest",
+      "name": "closedFinanceGateCannotReserveStockOrWriteOrder()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceCheckoutPreflightTest",
+      "name": "currentServiceRoundsOnceForTheStoreRatherThanEachLine()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceCheckoutPreflightTest",
+      "name": "conflictingHouseFactsWithinOneStoreCannotSelectAnExemption()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceCheckoutPreflightTest",
+      "name": "matchingPerItemFactsWithTwoSellersCannotShareOneStoreOrder()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceConsumerParityTest",
+      "name": "largeQuantityMultiplicationStaysExactBeforeAnyPersistenceBoundCheck()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceConsumerParityTest",
+      "name": "[1] scale=0",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceConsumerParityTest",
+      "name": "[2] scale=1",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceConsumerParityTest",
+      "name": "[3] scale=2",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceConsumerParityTest",
+      "name": "[4] scale=3",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceConsumerParityTest",
+      "name": "[5] scale=4",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceConsumerParityTest",
+      "name": "roundingEachStoreIsNotRoundingTheParentOrder()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceConsumerParityTest",
+      "name": "perSellerOrderRoundingDiffersFromPerLineAndMustBeSignedExplicitly()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinancePolicyConfigurationTest",
+      "name": "fixtureApprovalWithoutCompleteInputsFailsStartup()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinancePolicyConfigurationTest",
+      "name": "realYamlDefaultsClosedEvenWithAllPricingInputs()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinancePolicyConfigurationTest",
+      "name": "malformedFixturePolicyCannotCreateReadyMoneyRules()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinancePolicyConfigurationTest",
+      "name": "explicitFixtureEnvironmentBindsRateScaleAndHouseExemptionThroughYaml()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest",
+      "name": "computingNewStoreConfigurationDoesNotMutateEarlierSnapshot()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest",
+      "name": "[1] input=0.09, fee=0.00, net=0.09",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest",
+      "name": "[2] input=0.10, fee=0.01, net=0.09",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest",
+      "name": "[3] input=0.11, fee=0.01, net=0.10",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest",
+      "name": "[4] input=123.45, fee=6.17, net=117.28",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest",
+      "name": "[1] identity=null",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest",
+      "name": "[2] identity=",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest",
+      "name": "[3] identity= ",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest",
+      "name": "[4] identity=\t\n",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest",
+      "name": "[5] identity= ",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest",
+      "name": "rejectsMissingAmountInvalidScaleAndHousePrecisionLossToo()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest",
+      "name": "[1] other=Store-a",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest",
+      "name": "[2] other= store-a",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest",
+      "name": "[3] other=store-a ",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest",
+      "name": "[4] other=store-b",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest",
+      "name": "twoStoreArithmeticAndGuardsRemainIndependent()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest",
+      "name": "conservesMoneyForDeterministicRangeOfAmountsAndBothStoreTypes()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest",
+      "name": "acceptsExactTrailingZeroRescalingWithoutLosingMoney()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesTest",
+      "name": "houseStoreHasZeroCommission()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesTest",
+      "name": "deniesOtherStoreAndUnverifiedStore()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesTest",
+      "name": "rejectsNegativeMoneyAndSilentPrecisionLoss()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesTest",
+      "name": "[1] delivered=false, paid=false, settled=false",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesTest",
+      "name": "[2] delivered=false, paid=true, settled=false",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesTest",
+      "name": "[3] delivered=true, paid=false, settled=false",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesTest",
+      "name": "[4] delivered=true, paid=true, settled=true",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesTest",
+      "name": "[5] delivered=false, paid=false, settled=true",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesTest",
+      "name": "[6] delivered=false, paid=true, settled=true",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesTest",
+      "name": "[7] delivered=true, paid=false, settled=true",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesTest",
+      "name": "[1] subtotal=100000, commission=5000, net=95000",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesTest",
+      "name": "[2] subtotal=10, commission=1, net=9",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesTest",
+      "name": "[3] subtotal=0, commission=0, net=0",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesTest",
+      "name": "[4] subtotal=999999999999999999, commission=50000000000000000, net=949999999999999999",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesTest",
+      "name": "permitsOnlyDeliveredPaidUnsettledOrder()",
+      "result": "PASS"
+    }
+  ],
+  "staleXmlExcluded": [],
+  "rawArtifacts": [
+    {
+      "localPath": ".verification/tv5-audit-20261023/runs/main-finance/order-service/fin06Regression/TEST-com.projecthk5.orderservice.finance.CheckoutMoneyPreflightRegressionTest.xml",
+      "bytes": 9434,
+      "sha256": "d84007533a4af6316fb2be5a52c4a02a70b6ad9c38fa6f4d97204e80901055c7"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261023/runs/main-finance/order-service/test/TEST-com.projecthk5.orderservice.domain.InventoryOperationIntentTest.xml",
+      "bytes": 1306,
+      "sha256": "5b64e83df560fe9c023785bfc71236d0bb1f264fcba48cbdbab1eba3320479eb"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261023/runs/main-finance/order-service/test/TEST-com.projecthk5.orderservice.finance.FinanceCheckoutPreflightTest.xml",
+      "bytes": 1552,
+      "sha256": "ea16dda20f4a38aeb8ee2ff146015f08d566669a65a61d76601f296edbb764c7"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261023/runs/main-finance/order-service/test/TEST-com.projecthk5.orderservice.finance.FinanceConsumerParityTest.xml",
+      "bytes": 1456,
+      "sha256": "8ec3a1c5a7b964f540f32dd347851e958d8bf1dea586c190571129d9ee03cbab"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261023/runs/main-finance/order-service/test/TEST-com.projecthk5.orderservice.finance.FinancePolicyConfigurationTest.xml",
+      "bytes": 2599,
+      "sha256": "ae0911026ddc348761b31ef06058b4db209a839edf94cd1c457e99a8966c0bb6"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261023/runs/main-finance/order-service/test/TEST-com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest.xml",
+      "bytes": 2871,
+      "sha256": "8b93795a73f29083246418484337112ce0c35b72340dbb5eb6f9e8f541c7a947"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261023/runs/main-finance/order-service/test/TEST-com.projecthk5.orderservice.finance.FinanceRulesTest.xml",
+      "bytes": 2504,
+      "sha256": "2d9e4f672f05c939f5430c107be5c7aea769564890597cc1e68db5fa0211603f"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261023/runs/main-finance/product-service/test/TEST-com.projecthk5.productservice.review.ReviewRulesBoundaryTest.xml",
+      "bytes": 2452,
+      "sha256": "68e3a86d097dfee61d603417e6533011fe1e8935574b13d3a26e638c3a4e5941"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261023/runs/main-finance/product-service/test/TEST-com.projecthk5.productservice.review.ReviewRulesTest.xml",
+      "bytes": 2197,
+      "sha256": "80a23b8db4747a22880f1fc4d163ba73f25f90a5a0c2d3bc04da030fe3582cfc"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261023/runs/main-finance/runtime.log",
+      "bytes": 3193,
+      "sha256": "7100dd77ffee5799ab041cf250233b8c263521e8c0b6c05d785710fcbec1b95b"
+    }
+  ],
+  "publication": {
+    "type": "DERIVED SUMMARY",
+    "raw": "Original byte-preserved logs/XML/screenshots/AX files remain private at localPath; not CI/downloadable raw artifacts",
+    "verification": "All listed raw artifact sizes and SHA256 independently rechecked before export",
+    "limits": "Separate invocations/snapshots/owner evidence; no release total, policy approval, physical mobile or live E2E inferred"
+  }
+}

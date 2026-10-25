@@ -1,0 +1,25 @@
+import org.gradle.api.tasks.testing.Test
+
+// Explicit TV5 QA task: no production source, standard task, or dependency is changed.
+def sources = gradle.startParameter.projectProperties['tv5CartRegressionSources']
+if (!sources || !new File(sources).isDirectory()) {
+    throw new GradleException('Set -Ptv5CartRegressionSources to the absolute Cart QA source directory')
+}
+
+gradle.projectsEvaluated {
+    def cart = gradle.rootProject.project(':cart-service')
+    def regression = cart.sourceSets.create('tv5CartStorageRegression')
+    regression.java.setSrcDirs([sources])
+    regression.compileClasspath += cart.sourceSets.main.output
+    regression.runtimeClasspath += cart.sourceSets.main.output
+    cart.configurations.tv5CartStorageRegressionImplementation.extendsFrom(cart.configurations.testImplementation)
+    cart.configurations.tv5CartStorageRegressionRuntimeOnly.extendsFrom(cart.configurations.testRuntimeOnly)
+    cart.tasks.register('tv5CartStorageRegression', Test) {
+        group = 'verification'
+        description = 'Real PostgreSQL Cart price storage regression, with a fixture Catalog'
+        testClassesDirs = regression.output.classesDirs
+        classpath = regression.runtimeClasspath
+        useJUnitPlatform { includeTags 'postgres-integration' }
+        testLogging { events 'passed', 'failed', 'skipped' }
+    }
+}

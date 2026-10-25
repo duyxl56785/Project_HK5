@@ -1,5 +1,120 @@
 # TV2 — Week 1 implementation and handoff
 
+## Strict JSON and private response preparation — 2026-10-22
+
+**PARTIAL — WAITING_TV1_RUNTIME.** Continues PR66 on `feat/tv2-seller-store-http-v02`, base deliveryce2e684;
+code/test commit `fcaca6d34f234a505a5ade46ce8e53128ff20bde`. PR66 is returned to Draft per the new task;
+no Approve/Merge or new PR. Existing input/domain/persistence are reused; no schema/build/other-module changes.
+
+TV1's response relayed by the user confirms11paths/201-create/200-other, required registration `{}`,
+canonical decimal-string version and strict JSON/private representations. No newer public TV1 review or
+comment was present on PR66 when checked; this is not a forged GitHub approval. Exact joint HTTP wire/error
+review and production JWT/current authority/Gateway/role-sync remain pending. Earlier checkpoints below
+retain their historical scope/test outcomes, including Docker failures and successful recovery.
+
+- [x] Immutable SellerPrivate/StoreOwner response DTOs and explicit mapping from trusted service results,
+  no ownerReference/role grants/JWT/JPA internals. reviewReason only exists on private Seller representation.
+  Mapper does not authorize callers; existing guarded own-read/moderation methods must precede mapping.
+- [x] Isolated SellerStoreJson parser for registration and existing5input shapes: exact fields/types,
+  duplicate detection including escaped names, missing/null/unknown/type/coercion/overflow rejection,
+  object-only root and no trailing JSON. No Spring ObjectMapper/HTTP handler change.
+- [x] CanonicalVersion parse/format, including0/Long.MAX_VALUE and JS-unsafe integers; typed response writers
+  emit version strings and UTC timestamp text without exposing Entity serialization.
+- [x] New90unit contract/version/response cases: RED77assertionFAIL/0error/skip then GREEN. Full Seller build
+  **353PASS/0FAIL/errors/0SKIPPED**, exit0/55s:236unit (90new included) +117tagged integration.
+  Integration: Seller26 +Store65 +SQL prototype26 =85production DB/business +6closed-route checks +26SQL prototype.
+  Two new PostgreSQL cases check private mapping after owner reads, cross-Seller moderation denial and
+  unavailable/missing fixture authority; not real JWT/current ADMIN or positive HTTP authorization.
+- [x] Independent read-only reviewer found no actionable code findings. Scope/diff/secret-marker checks;
+  no production REST/security bean/role-sync wiring, no schema or shared config changes.
+- [ ] Joint HTTP handler/error review and production issuer/verifier/current-account/current ADMIN/SELLER
+  adapters, Gateway/public/private method allowlist, role-sync command/ack/retry/reconciliation and live E2E.
+  No REST/JWT/role-sync/E2E aggregate checkbox or entire Issue2/9 DONE from these results; flags OFF.
+
+Java21.0.12 / Gradle8.10 / Docker29.9.1; JVM UTC; existing integration task Docker API1.44;
+real PostgreSQL16.6 Testcontainers with production Flyway/JPA validation. Current commands, separate runs:
+
+```powershell
+backend/gradlew.bat -p backend :seller-service:test --tests '*http.*Test' --rerun-tasks --no-daemon --console=plain
+backend/gradlew.bat -p backend :seller-service:build --rerun-tasks --no-daemon --console=plain
+backend/gradlew.bat -p backend :product-service:build --rerun-tasks --no-daemon --console=plain
+```
+
+First command is preserved RED90/77FAIL before implementation. Seller full55s/exit0 is the current353PASS.
+Separate Product55s/exit0:309PASS/0FAIL/errors/0SKIP (271unit/API/security +38integration =14Category +24SQL prototype).
+No combined662release count, no earlier261/CI/historical counts reused as a fresh run.
+Original raw log/XML and per-suite counts stay ignored under `backend/seller-service/build/http-json-20261022/`;
+Seller resource manifests0prior containers/volumes missing. Hashes below identify local originals, not public artifacts.
+
+| Raw log | SHA256 |
+|---|---|
+| contract-red.log | BF53E2E9FE748EDF847A40D536893C47E636C49B818F0D3CB48C9F9E6908F4F6 |
+| full-build.log | BC583DEC98C026B9120B5C99635DB13CDB4C00FB4048B45EC597B8366BC4994A |
+| product-regression.log | 91E1093E5F72D05D0568580D77CE6A493CEE5D553D16D3B51C6D3BB490E34794 |
+
+Positive JWT/current authority, HTTP status/body binding through controllers, Gateway and live cross-service
+E2E **NOT_RUN**; parser/fixture-policy tests do not substitute for them. Next: TV1 final review of this prep
+and delivery of actual security adapters, then a separately verified controller integration. Publication
+SHA/PR/checklist/CI receipts are recorded on GitHub after push, not inferred from this checkpoint.
+
+## Seller/Store v0.2 preparation — 2026-10-21
+
+**PARTIAL — WAITING_HTTP_AGREEMENT.** Current work starts from main
+`4f12b05d0d6408deb42cb329676e643351106fcd`, branch `feat/tv2-seller-store-http-v02`.
+The dated checkpoints below remain historical. PR61 is merged; no exact joint HTTP wire approval or
+Auth issuer/verifier/current-authority runtime was found in latest source, Issue1/2/9 or PR61 replies.
+The user's new TV1 handoff accepts v0.1 as a basis; HS256/verified account sub/current ADMIN/DB status/
+Gateway/after-commit durable role synchronization stay existing requirements, not new runtime claims.
+Code/test commit: `2e79c66f27fcda31e06369154212b55fb88908d7`; Java/test/resources are identical to the
+tested worktree. Documentation-only follow-up does not change that test source. Independent read-only
+whole-patch review found no actionable code findings; it recommends Draft PR while PostgreSQL is blocked.
+
+- [x] [v0.2 candidate](../backend/seller-service/README.md#sellerstore-http-v02-preparation--2026-10-21)
+  consolidates eleven endpoint/body/success/response/state/error/privacy/transaction proposals and four
+  exact TV1 decisions. Decimal-string versions, JSON strictness, private reason visibility and role-sync
+  intent/ack remain pending. No shared contract or signature is invented.
+- [x] Five internal typed input DTOs: Seller Version/Moderation, Store Create/Update/SetOpen, consumed by
+  additive persistence-service overloads. Registration keeps existing verified-applicant-only method.
+  StoreDetails shares unchanged name/slug validation with StoreProfile; no schema/business invariant change.
+  Null/version/reason/Unicode boundaries checked; identity/status/grants cannot be supplied through these inputs.
+- [x] Internal mapping delegates the existing policy/REQUIRED/ownership/version operations. No controller,
+  production writer/policy bean, response serializer, public handler, JWT adapter or new dependency.
+  Domain-compatible inputs are not an approved JSON wire or HTTP forbidden-field rejection.
+- [x] Fresh baseline107unit PASS; new input RED31cases/30assertion FAIL then GREEN full138unit PASS;
+  mapping/null regression RED19cases/2assertion FAIL then full146unit PASS. These are separate invocations,
+  not counts to sum. No assertions disabled or tests removed to obtain GREEN.
+- [ ] Local full Seller build: **FAIL/exit1** because integrationTest has three Testcontainers class-init
+  failures. Compile/assemble and146unit PASS in that invocation; PostgreSQL business cases **BLOCKED/NOT_RUN**,
+  not113/115PG PASS. Docker Linux Engine pipe unavailable; normal Desktop startup fails on Secrets Engine
+  engine.sock rename/access. No socket/config/volume/database deletion or test exclusions.
+- [ ] Two added PostgreSQL cases compile but await execution: typed Seller lifecycle/ID/version/permission/
+  REQUIRED rollback and typed Store metadata/open/ID/current-owner/stale-version/rollback. Existing migrations,
+  uniqueness, optimistic-lock/concurrency suites remain unchanged and require actual PostgreSQL regression.
+- [ ] HTTP request/response binding, strict unknown/duplicate-field handling, response privacy mapper and
+  error handler await exact joint wire approval. Real JWT/current ADMIN/current SELLER/Gateway/role-sync
+  positive integration and live E2E remain NOT_RUN. Product/M01/Finance/Inventory unchanged, flags OFF.
+
+Java21.0.12, Gradle8.10, JVM UTC; existing module task pins Docker client API1.44. Full attempt:
+
+```powershell
+backend/gradlew.bat -p backend :seller-service:build --rerun-tasks --no-daemon --continue --console=plain
+```
+
+Full attempt21s/exit1; unit146PASS/0FAIL/error/skip, integration3initializationFAIL/0skip. Raw log/XML and
+per-class counters preserved under ignored `backend/seller-service/build/http-v02-20261021/`.
+`full-build-initial.log` SHA256 `BA86421ADD8F59C741E27194EDB097EFCB200F379002FC8049D051135DC6ABDF`.
+Input RED `2160E2D899A538023F28A7F076F8F92EA08E1861A75AF1FA97F3989FD23BC632`;
+input GREEN `123FEF318D8A468E007A2295B320E081EC793B9204BC3AC4114F9D9957722B88`;
+mapping RED `4186DA9842A91B7D7E42A98A9653C2B6286EAD0411379E4B0A5095E42E3CB588`.
+Private raw logs/XML are not public CI artifacts. Future CI/owner/local DB retries must be recorded as
+separate evidence at their exact SHA; do not relabel this failed build as PASS.
+
+Product/Category regression and full-backend build **NOT_RUN** here: no Product/shared-build dependency
+or implementation changed. Commit/PR publication receipts and granular Issue2/9 updates belong on GitHub
+after push verification, not inferred from this pre-publication checkpoint. Issues remain OPEN/PARTIAL;
+REST/JWT/role-sync/E2E aggregate boxes remain unchecked. Next highest-value coding task is the TV1-approved
+verified HTTP adapter using these inputs after concrete verifier/current-authority and wire handoff.
+
 ## Current W1 boundaries — 2026-10-20
 
 **W1 BLOCKED** on shared wire/current-authority/business decisions, not on another Store DB architecture vote.

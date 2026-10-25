@@ -1,0 +1,534 @@
+{
+  "kind": "DERIVED SUMMARY; private raw logs/XML, not public CI artifacts",
+  "metadata": {
+    "pr": 69,
+    "source": "4eeeb3843f2795168ca03cdd3cd2e8be9f825ec6",
+    "command": [
+      "backend/gradlew.bat",
+      "-p",
+      "backend",
+      ":inventory-service:test",
+      ":inventory-service:postgresIntegrationTest",
+      "--rerun-tasks",
+      "--no-daemon",
+      "--console=plain"
+    ],
+    "startedUtc": "2026-10-22T13:19:44.699304+00:00",
+    "environment": {
+      "Java": "21.0.7",
+      "Gradle": "8.10",
+      "Docker": "29.8.1",
+      "JAVA_TOOL_OPTIONS": "-Duser.timezone=UTC -Dapi.version=1.44"
+    },
+    "executor": "TV5 independent exact-head execution",
+    "exitCode": 0,
+    "completedUtc": "2026-10-22T13:20:29.124711+00:00"
+  },
+  "counts": {
+    "test": {
+      "PASS": 27
+    },
+    "postgresIntegrationTest": {
+      "PASS": 34
+    }
+  },
+  "cases": [
+    {
+      "module": "inventory-service",
+      "task": "test",
+      "class": "com.projecthk5.inventoryservice.api.InventoryRequestValidationTest",
+      "name": "initializeSkuAccepts128CharactersAndRejects129()",
+      "result": "PASS"
+    },
+    {
+      "module": "inventory-service",
+      "task": "test",
+      "class": "com.projecthk5.inventoryservice.api.InventoryRequestValidationTest",
+      "name": "operationIdAndSkuAccept128CharactersAndReject129()",
+      "result": "PASS"
+    },
+    {
+      "module": "inventory-service",
+      "task": "test",
+      "class": "com.projecthk5.inventoryservice.api.InventoryRequestValidationTest",
+      "name": "invalidArgumentAndOverflowUseBadRequestErrorCodes()",
+      "result": "PASS"
+    },
+    {
+      "module": "inventory-service",
+      "task": "test",
+      "class": "com.projecthk5.inventoryservice.model.InventoryItemTest",
+      "name": "cannotDecreaseAvailableStockBelowZero()",
+      "result": "PASS"
+    },
+    {
+      "module": "inventory-service",
+      "task": "test",
+      "class": "com.projecthk5.inventoryservice.model.InventoryItemTest",
+      "name": "releaseRestoresAvailableQuantityOnlyOncePerRequestedAmount()",
+      "result": "PASS"
+    },
+    {
+      "module": "inventory-service",
+      "task": "test",
+      "class": "com.projecthk5.inventoryservice.model.InventoryItemTest",
+      "name": "consumeReducesReservedQuantityWithoutIncreasingAvailableStock()",
+      "result": "PASS"
+    },
+    {
+      "module": "inventory-service",
+      "task": "test",
+      "class": "com.projecthk5.inventoryservice.model.InventoryItemTest",
+      "name": "quantitiesMustBePositiveForOperations()",
+      "result": "PASS"
+    },
+    {
+      "module": "inventory-service",
+      "task": "test",
+      "class": "com.projecthk5.inventoryservice.model.InventoryItemTest",
+      "name": "reserveMovesQuantityFromAvailableToReserved()",
+      "result": "PASS"
+    },
+    {
+      "module": "inventory-service",
+      "task": "test",
+      "class": "com.projecthk5.inventoryservice.model.InventoryItemTest",
+      "name": "increasingBeyondLongRangeThrowsWithoutChangingBalance()",
+      "result": "PASS"
+    },
+    {
+      "module": "inventory-service",
+      "task": "test",
+      "class": "com.projecthk5.inventoryservice.model.InventoryItemTest",
+      "name": "cannotReleaseMoreThanReserved()",
+      "result": "PASS"
+    },
+    {
+      "module": "inventory-service",
+      "task": "test",
+      "class": "com.projecthk5.inventoryservice.security.InventoryInternalTokenFilterTest",
+      "name": "missingTokenConfigurationFailsClosedForEncodedAndMatrixPaths()",
+      "result": "PASS"
+    },
+    {
+      "module": "inventory-service",
+      "task": "test",
+      "class": "com.projecthk5.inventoryservice.security.InventoryOrderPairGateTest",
+      "name": "pairTokenOnlyAllowsPostOperationsForReserveConsumeReleaseAndPreservesBody()",
+      "result": "PASS"
+    },
+    {
+      "module": "inventory-service",
+      "task": "test",
+      "class": "com.projecthk5.inventoryservice.security.InventoryOrderPairGateTest",
+      "name": "bodyOneByteOverMaximumIsRejectedWith413()",
+      "result": "PASS"
+    },
+    {
+      "module": "inventory-service",
+      "task": "test",
+      "class": "com.projecthk5.inventoryservice.security.InventoryOrderPairGateTest",
+      "name": "pairTokenAloneCannotEnableMutationWhenFeatureFlagIsOff()",
+      "result": "PASS"
+    },
+    {
+      "module": "inventory-service",
+      "task": "test",
+      "class": "com.projecthk5.inventoryservice.security.InventoryOrderPairGateTest",
+      "name": "pairCredentialRejectsPathAliasesAndNonCanonicalOperationPaths()",
+      "result": "PASS"
+    },
+    {
+      "module": "inventory-service",
+      "task": "test",
+      "class": "com.projecthk5.inventoryservice.security.InventoryOrderPairGateTest",
+      "name": "bodyLimitAlsoAppliesWhenContentLengthIsUnknown()",
+      "result": "PASS"
+    },
+    {
+      "module": "inventory-service",
+      "task": "test",
+      "class": "com.projecthk5.inventoryservice.security.InventoryOrderPairGateTest",
+      "name": "pairCredentialCannotInitializeOrUseIncreaseDecreaseOrWrongMethodPath()",
+      "result": "PASS"
+    },
+    {
+      "module": "inventory-service",
+      "task": "test",
+      "class": "com.projecthk5.inventoryservice.security.InventoryOrderPairGateTest",
+      "name": "missingOrWrongPairCredentialIsUnauthorized()",
+      "result": "PASS"
+    },
+    {
+      "module": "inventory-service",
+      "task": "test",
+      "class": "com.projecthk5.inventoryservice.security.InventoryOrderPairGateTest",
+      "name": "unconfiguredPairVerifierFailsClosed()",
+      "result": "PASS"
+    },
+    {
+      "module": "inventory-service",
+      "task": "test",
+      "class": "com.projecthk5.inventoryservice.security.InventoryOrderPairGateTest",
+      "name": "exactMaximumBodySizeIsAcceptedAndReplayed()",
+      "result": "PASS"
+    },
+    {
+      "module": "inventory-service",
+      "task": "test",
+      "class": "com.projecthk5.inventoryservice.security.InventoryOrderPairGateTest",
+      "name": "pairCredentialRejectsMissingNullNonTextualAndPaddedOperationTypes()",
+      "result": "PASS"
+    },
+    {
+      "module": "inventory-service",
+      "task": "test",
+      "class": "com.projecthk5.inventoryservice.service.InventoryOperationServiceTest",
+      "name": "replayWithSameIdAndPayloadDoesNotApplyStockTwice()",
+      "result": "PASS"
+    },
+    {
+      "module": "inventory-service",
+      "task": "test",
+      "class": "com.projecthk5.inventoryservice.service.InventoryOperationServiceTest",
+      "name": "insufficientStockDoesNotChangeBalance()",
+      "result": "PASS"
+    },
+    {
+      "module": "inventory-service",
+      "task": "test",
+      "class": "com.projecthk5.inventoryservice.service.InventoryOperationServiceTest",
+      "name": "operationIdCannotBeReusedForDifferentPayload()",
+      "result": "PASS"
+    },
+    {
+      "module": "inventory-service",
+      "task": "test",
+      "class": "com.projecthk5.inventoryservice.service.InventoryOperationServiceTest",
+      "name": "successfulMultiSkuReserveChangesAllRequestedBalances()",
+      "result": "PASS"
+    },
+    {
+      "module": "inventory-service",
+      "task": "test",
+      "class": "com.projecthk5.inventoryservice.service.InventoryOperationServiceTest",
+      "name": "concurrentClaimWithSamePayloadIsTreatedAsReplay()",
+      "result": "PASS"
+    },
+    {
+      "module": "inventory-service",
+      "task": "test",
+      "class": "com.projecthk5.inventoryservice.service.InventoryOperationServiceTest",
+      "name": "delimiterContainingSkuCannotCollideWithMultipleItems()",
+      "result": "PASS"
+    },
+    {
+      "module": "inventory-service",
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.inventoryservice.integration.InventoryDefaultFlywayPostgresIT",
+      "name": "defaultFlywayLocationAppliesOnlyApprovedV1AndV2AndJpaValidationStarts()",
+      "result": "PASS"
+    },
+    {
+      "module": "inventory-service",
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.inventoryservice.integration.InventoryInitializePostgresIT",
+      "name": "competingInitializationWaitsForUniqueRowAndReturns409AfterWinnerCommits()",
+      "result": "PASS"
+    },
+    {
+      "module": "inventory-service",
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.inventoryservice.integration.InventoryInitializePostgresIT",
+      "name": "encodedAndMatrixPathsRequireTokenAndNeverWriteWithoutIt()",
+      "result": "PASS"
+    },
+    {
+      "module": "inventory-service",
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.inventoryservice.integration.InventoryInitializePostgresIT",
+      "name": "duplicateAfterReservationPreservesAvailableReservedVersionAndTimestamp()",
+      "result": "PASS"
+    },
+    {
+      "module": "inventory-service",
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.inventoryservice.integration.InventoryInitializePostgresIT",
+      "name": "duplicateFreshSkuReturns409WithoutChangingAnyStoredBalanceField()",
+      "result": "PASS"
+    },
+    {
+      "module": "inventory-service",
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT",
+      "name": "reserveConsumeAndReleaseRetriesDoNotApplyStockTwice()",
+      "result": "PASS"
+    },
+    {
+      "module": "inventory-service",
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT",
+      "name": "failureOnLaterSkuRollsBackEarlierStockMutationAndClaimedLedger()",
+      "result": "PASS"
+    },
+    {
+      "module": "inventory-service",
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT",
+      "name": "disjointSkuSameIdCannotReplaceWinnerAfterEarlierEmptyLedgerRead()",
+      "result": "PASS"
+    },
+    {
+      "module": "inventory-service",
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT",
+      "name": "concurrentDuplicateMultiSkuReleaseReplaysAfterFirstCommitWithoutDoubleReturn()",
+      "result": "PASS"
+    },
+    {
+      "module": "inventory-service",
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT",
+      "name": "concurrentDifferentIdsCannotOversellSharedSkuAndLosingClaimRollsBack()",
+      "result": "PASS"
+    },
+    {
+      "module": "inventory-service",
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT",
+      "name": "multiSkuReserveAndReleaseReplayCanonicalizeLineOrderAndRejectPayloadReuse()",
+      "result": "PASS"
+    },
+    {
+      "module": "inventory-service",
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT",
+      "name": "[1] samePayload=true",
+      "result": "PASS"
+    },
+    {
+      "module": "inventory-service",
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT",
+      "name": "[2] samePayload=false",
+      "result": "PASS"
+    },
+    {
+      "module": "inventory-service",
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT",
+      "name": "competingMultiSkuReleaseIdsCannotOverdrawReservedBalances()",
+      "result": "PASS"
+    },
+    {
+      "module": "inventory-service",
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT",
+      "name": "multiSkuReleaseAfterConsumeRejectsExcessHeldQuantityAndRollsBackWholeBatch()",
+      "result": "PASS"
+    },
+    {
+      "module": "inventory-service",
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.inventoryservice.integration.InventoryReservationLedgerCandidatePostgresIT",
+      "name": "failedMultiSkuReserveRollsBackReservationAndOperationLedger()",
+      "result": "PASS"
+    },
+    {
+      "module": "inventory-service",
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.inventoryservice.integration.InventoryReservationLedgerCandidatePostgresIT",
+      "name": "multiSkuPartialBudgetFailureRollsBackEarlierLineAndOperationClaim()",
+      "result": "PASS"
+    },
+    {
+      "module": "inventory-service",
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.inventoryservice.integration.InventoryReservationLedgerCandidatePostgresIT",
+      "name": "twoStoresWithSameSkuKeepIndependentOwnerBudgetsAndLookupSurvivesLostResponse()",
+      "result": "PASS"
+    },
+    {
+      "module": "inventory-service",
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.inventoryservice.integration.InventoryReservationLedgerCandidatePostgresIT",
+      "name": "concurrentSameReserveOperationIdReplaysWinnerWithoutDuplicatingOwnerOrStock()",
+      "result": "PASS"
+    },
+    {
+      "module": "inventory-service",
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.inventoryservice.integration.InventoryReservationLedgerCandidatePostgresIT",
+      "name": "concurrentSameReleaseOperationIdReplaysWithoutReturningStockTwice()",
+      "result": "PASS"
+    },
+    {
+      "module": "inventory-service",
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.inventoryservice.integration.InventoryReservationLedgerCandidatePostgresIT",
+      "name": "reservationOwnerCannotChangeInitialSkuLinesWithANewOperationId()",
+      "result": "PASS"
+    },
+    {
+      "module": "inventory-service",
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.inventoryservice.integration.InventoryReservationLedgerCandidatePostgresIT",
+      "name": "sameOperationIdWithChangedOwnerTypeOrPayloadConflictsWithoutStockChange()",
+      "result": "PASS"
+    },
+    {
+      "module": "inventory-service",
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.inventoryservice.integration.InventoryReservationLedgerCandidatePostgresIT",
+      "name": "concurrentDistinctReleaseIdsCannotSpendTheSameOwnerBudgetTwice()",
+      "result": "PASS"
+    },
+    {
+      "module": "inventory-service",
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.inventoryservice.integration.InventoryReservationLedgerCandidatePostgresIT",
+      "name": "reservationCandidateRejectsStockAdjustmentTypesBeforeCreatingLedgerRows()",
+      "result": "PASS"
+    },
+    {
+      "module": "inventory-service",
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.inventoryservice.integration.InventoryReservationLedgerCandidatePostgresIT",
+      "name": "[1] nonCanonicalSku= SKU-A ",
+      "result": "PASS"
+    },
+    {
+      "module": "inventory-service",
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.inventoryservice.integration.InventoryReservationLedgerCandidatePostgresIT",
+      "name": "[2] nonCanonicalSku= SKU-A",
+      "result": "PASS"
+    },
+    {
+      "module": "inventory-service",
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.inventoryservice.integration.InventoryReservationLedgerCandidatePostgresIT",
+      "name": "[3] nonCanonicalSku=SKU-A ",
+      "result": "PASS"
+    },
+    {
+      "module": "inventory-service",
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.inventoryservice.integration.InventoryReservationLedgerCandidatePostgresIT",
+      "name": "wrongStoreAndSellerOrderCannotUseAnotherReservationsHold()",
+      "result": "PASS"
+    },
+    {
+      "module": "inventory-service",
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.inventoryservice.integration.InventoryReservationLedgerCandidatePostgresIT",
+      "name": "concurrentReleaseRetryWithChangedPayloadConflictsAfterWinnerCommits()",
+      "result": "PASS"
+    },
+    {
+      "module": "inventory-service",
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.inventoryservice.integration.InventorySchemaPostgresIT",
+      "name": "forwardMigrationSchemaValidatesAndHashRoundTripsThroughJpa()",
+      "result": "PASS"
+    },
+    {
+      "module": "inventory-service",
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.inventoryservice.integration.InventorySchemaPostgresIT",
+      "name": "upgradingExistingV1PreservesHashLedgerAndStockAndV1Checksum()",
+      "result": "PASS"
+    },
+    {
+      "module": "inventory-service",
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.inventoryservice.InventoryPostgresIntegrationTest",
+      "name": "flywaySchemaMatchesJpaValidationAtApplicationStartup()",
+      "result": "PASS"
+    },
+    {
+      "module": "inventory-service",
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.inventoryservice.InventoryPostgresIntegrationTest",
+      "name": "duplicateInitializationReturnsConflictWithoutChangingBalance()",
+      "result": "PASS"
+    },
+    {
+      "module": "inventory-service",
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.inventoryservice.InventoryPostgresIntegrationTest",
+      "name": "concurrentDifferentPayloadsCannotBothClaimSameOperationId()",
+      "result": "PASS"
+    }
+  ],
+  "staleXmlExcluded": [],
+  "rawArtifacts": [
+    {
+      "localPath": ".verification/tv5-audit-20261022-r2/runs/pr69/inventory-service/postgresIntegrationTest/TEST-com.projecthk5.inventoryservice.integration.InventoryDefaultFlywayPostgresIT.xml",
+      "bytes": 6631,
+      "sha256": "7555d9b94a66f0dfc29c36b039d9822881fe66a0efe7aeffde82783549337689"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261022-r2/runs/pr69/inventory-service/postgresIntegrationTest/TEST-com.projecthk5.inventoryservice.integration.InventoryInitializePostgresIT.xml",
+      "bytes": 7840,
+      "sha256": "ee5299fa6cc23e4ed1d52b716d2de3afa08d12886e40c394d48fd99a9c68b391"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261022-r2/runs/pr69/inventory-service/postgresIntegrationTest/TEST-com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT.xml",
+      "bytes": 6685,
+      "sha256": "f19743dedaa74fa1de06955d0c266e87453778c57b62f72385c8b795ec5f1388"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261022-r2/runs/pr69/inventory-service/postgresIntegrationTest/TEST-com.projecthk5.inventoryservice.integration.InventoryReservationLedgerCandidatePostgresIT.xml",
+      "bytes": 3883,
+      "sha256": "f15d11fadbfc86e6ed6ad34044855fc708ea033ebf032930206180a2c02e0703"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261022-r2/runs/pr69/inventory-service/postgresIntegrationTest/TEST-com.projecthk5.inventoryservice.integration.InventorySchemaPostgresIT.xml",
+      "bytes": 3765,
+      "sha256": "b19c15b7bcc617c3cdac350072f2c3b99d07a974e394b0797bf64f89d4ac87db"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261022-r2/runs/pr69/inventory-service/postgresIntegrationTest/TEST-com.projecthk5.inventoryservice.InventoryPostgresIntegrationTest.xml",
+      "bytes": 8987,
+      "sha256": "f9609bb342a011df406b83f421eb2d951c79406963b2fe48813a86f55cad4c4f"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261022-r2/runs/pr69/inventory-service/test/TEST-com.projecthk5.inventoryservice.api.InventoryRequestValidationTest.xml",
+      "bytes": 970,
+      "sha256": "a613cc67ebfdae7269954080323ae15cf86c82f36ef35e5ed52d92df58e957f6"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261022-r2/runs/pr69/inventory-service/test/TEST-com.projecthk5.inventoryservice.model.InventoryItemTest.xml",
+      "bytes": 1395,
+      "sha256": "5308f49d8e5549eaa7011a4979c2182b48672fc58fe0405275f62c36dd5fd047"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261022-r2/runs/pr69/inventory-service/test/TEST-com.projecthk5.inventoryservice.security.InventoryInternalTokenFilterTest.xml",
+      "bytes": 543,
+      "sha256": "7b370ebe0493cb1a4f46a261fb89342c0d50486078a644c77349e5bdd63c52df"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261022-r2/runs/pr69/inventory-service/test/TEST-com.projecthk5.inventoryservice.security.InventoryOrderPairGateTest.xml",
+      "bytes": 2054,
+      "sha256": "e303cd5b2c6dda32f0d4c8d4f0c511d94a8951cac2c5148eb430ceb26ec75f32"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261022-r2/runs/pr69/inventory-service/test/TEST-com.projecthk5.inventoryservice.service.InventoryOperationServiceTest.xml",
+      "bytes": 1882,
+      "sha256": "6847ec598fd3ac30ed614965e2cfd1a1eb417d08c01eefb6ff3393289c0b9640"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261022-r2/runs/pr69/runtime.log",
+      "bytes": 3883,
+      "sha256": "40d84f3362571718d75328d17dee8925f3d7b2941725434b65ed226e2de34b0b"
+    }
+  ],
+  "publication": {
+    "type": "DERIVED SUMMARY",
+    "raw": "Original bytes retained privately at listed localPath; not public CI/downloadable raw artifacts",
+    "redaction": "Only command checkout paths replaced with placeholders; raw log/XML not edited or published",
+    "verification": "Every listed original size and SHA256 rechecked before writing this summary",
+    "limits": "No aggregated release total across runs, heads or suites; no business approval or live E2E implied"
+  }
+}

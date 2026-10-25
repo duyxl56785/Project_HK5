@@ -1,0 +1,200 @@
+{
+  "kind": "DERIVED SUMMARY; raw logs/XML preserved private local originals, not public CI artifacts",
+  "metadata": {
+    "pr": 64,
+    "head": "06ebfc423ede1bb07a2fa9b6804b21fe388991d7",
+    "command": [
+      "<isolated-pr-checkout>/backend/gradlew.bat",
+      "-p",
+      "backend",
+      ":inventory-service:test",
+      "--rerun-tasks",
+      "--no-daemon",
+      "--console=plain"
+    ],
+    "startedUtc": "2026-10-20T14:55:26.289298+00:00",
+    "environment": {
+      "java": "21.0.7",
+      "gradle": "8.10",
+      "Docker": "29.8.1",
+      "JAVA_TOOL_OPTIONS": "-Duser.timezone=UTC -Dapi.version=1.44"
+    },
+    "executor": "TV5 independent current-session run",
+    "exitCode": 0,
+    "completedUtc": "2026-10-20T14:55:43.358669+00:00"
+  },
+  "cases": [
+    {
+      "class": "com.projecthk5.inventoryservice.api.InventoryRequestValidationTest",
+      "name": "initializeSkuAccepts128CharactersAndRejects129()",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.inventoryservice.api.InventoryRequestValidationTest",
+      "name": "operationIdAndSkuAccept128CharactersAndReject129()",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.inventoryservice.api.InventoryRequestValidationTest",
+      "name": "invalidArgumentAndOverflowUseBadRequestErrorCodes()",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.inventoryservice.model.InventoryItemTest",
+      "name": "cannotDecreaseAvailableStockBelowZero()",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.inventoryservice.model.InventoryItemTest",
+      "name": "releaseRestoresAvailableQuantityOnlyOncePerRequestedAmount()",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.inventoryservice.model.InventoryItemTest",
+      "name": "consumeReducesReservedQuantityWithoutIncreasingAvailableStock()",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.inventoryservice.model.InventoryItemTest",
+      "name": "quantitiesMustBePositiveForOperations()",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.inventoryservice.model.InventoryItemTest",
+      "name": "reserveMovesQuantityFromAvailableToReserved()",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.inventoryservice.model.InventoryItemTest",
+      "name": "increasingBeyondLongRangeThrowsWithoutChangingBalance()",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.inventoryservice.model.InventoryItemTest",
+      "name": "cannotReleaseMoreThanReserved()",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.inventoryservice.security.InventoryInternalTokenFilterTest",
+      "name": "missingTokenConfigurationFailsClosedForEncodedAndMatrixPaths()",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.inventoryservice.security.InventoryOrderPairGateTest",
+      "name": "pairTokenOnlyAllowsPostOperationsForReserveConsumeReleaseAndPreservesBody()",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.inventoryservice.security.InventoryOrderPairGateTest",
+      "name": "bodyOneByteOverMaximumIsRejectedWith413()",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.inventoryservice.security.InventoryOrderPairGateTest",
+      "name": "pairTokenAloneCannotEnableMutationWhenFeatureFlagIsOff()",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.inventoryservice.security.InventoryOrderPairGateTest",
+      "name": "pairCredentialRejectsPathAliasesAndNonCanonicalOperationPaths()",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.inventoryservice.security.InventoryOrderPairGateTest",
+      "name": "bodyLimitAlsoAppliesWhenContentLengthIsUnknown()",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.inventoryservice.security.InventoryOrderPairGateTest",
+      "name": "pairCredentialCannotInitializeOrUseIncreaseDecreaseOrWrongMethodPath()",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.inventoryservice.security.InventoryOrderPairGateTest",
+      "name": "missingOrWrongPairCredentialIsUnauthorized()",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.inventoryservice.security.InventoryOrderPairGateTest",
+      "name": "unconfiguredPairVerifierFailsClosed()",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.inventoryservice.security.InventoryOrderPairGateTest",
+      "name": "exactMaximumBodySizeIsAcceptedAndReplayed()",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.inventoryservice.security.InventoryOrderPairGateTest",
+      "name": "pairCredentialRejectsMissingNullNonTextualAndPaddedOperationTypes()",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.inventoryservice.service.InventoryOperationServiceTest",
+      "name": "replayWithSameIdAndPayloadDoesNotApplyStockTwice()",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.inventoryservice.service.InventoryOperationServiceTest",
+      "name": "insufficientStockDoesNotChangeBalance()",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.inventoryservice.service.InventoryOperationServiceTest",
+      "name": "operationIdCannotBeReusedForDifferentPayload()",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.inventoryservice.service.InventoryOperationServiceTest",
+      "name": "successfulMultiSkuReserveChangesAllRequestedBalances()",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.inventoryservice.service.InventoryOperationServiceTest",
+      "name": "concurrentClaimWithSamePayloadIsTreatedAsReplay()",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.inventoryservice.service.InventoryOperationServiceTest",
+      "name": "delimiterContainingSkuCannotCollideWithMultipleItems()",
+      "result": "PASS"
+    }
+  ],
+  "counts": {
+    "PASS": 27
+  },
+  "staleXmlExcluded": [],
+  "rawArtifacts": [
+    {
+      "localPath": ".verification/tv5-pr63-followup-20261020/runs/pr64/runtime.log",
+      "bytes": 1603,
+      "sha256": "74f98a798863fdf575b76b457b93437f89cb16558a471257aa4bcf811e1f920e"
+    },
+    {
+      "localPath": ".verification/tv5-pr63-followup-20261020/runs/pr64/TEST-com.projecthk5.inventoryservice.api.InventoryRequestValidationTest.xml",
+      "bytes": 970,
+      "sha256": "634dffb6ae1fe1b1318b47c6b080e5146974529bcbbec0a3010479a7e9fb88a8"
+    },
+    {
+      "localPath": ".verification/tv5-pr63-followup-20261020/runs/pr64/TEST-com.projecthk5.inventoryservice.model.InventoryItemTest.xml",
+      "bytes": 1393,
+      "sha256": "4e77e05de81e78d032288e42ccf2a78326c8b88cbc3ed9935be12cdc2b1b7746"
+    },
+    {
+      "localPath": ".verification/tv5-pr63-followup-20261020/runs/pr64/TEST-com.projecthk5.inventoryservice.security.InventoryInternalTokenFilterTest.xml",
+      "bytes": 543,
+      "sha256": "4267dd88fe9c9de03026683dcf600e741d5be167700ffd40e01bcc5b4f811e09"
+    },
+    {
+      "localPath": ".verification/tv5-pr63-followup-20261020/runs/pr64/TEST-com.projecthk5.inventoryservice.security.InventoryOrderPairGateTest.xml",
+      "bytes": 2058,
+      "sha256": "e49365273e4c8f7df9a672b45506347ced2c53a7a2954abb6f8f2f1ae5b858e4"
+    },
+    {
+      "localPath": ".verification/tv5-pr63-followup-20261020/runs/pr64/TEST-com.projecthk5.inventoryservice.service.InventoryOperationServiceTest.xml",
+      "bytes": 1882,
+      "sha256": "b38968777764ce90d2d0f0dddf5e31d71cc62e6a5569e8e0a8031fc0f9c6301a"
+    }
+  ],
+  "assessment": "27 unit PASS at exact PR64 head; filter unit tests, not deployed HTTP or positive pair authorization."
+}

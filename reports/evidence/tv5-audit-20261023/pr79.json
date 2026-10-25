@@ -1,0 +1,187 @@
+{
+  "kind": "DERIVED SUMMARY; original logs/XML private, not public CI artifacts",
+  "metadata": {
+    "label": "pr79",
+    "source": "f8a242d5af2fb9095ed707ca551b8c92d8fd9102",
+    "command": [
+      "backend/gradlew.bat",
+      "-p",
+      "backend",
+      ":order-service:test",
+      "--tests",
+      "*CheckoutServiceTest",
+      "--rerun-tasks",
+      "--no-daemon",
+      "--console=plain"
+    ],
+    "startedUtc": "2026-10-23T00:33:38.226971+00:00",
+    "environment": {
+      "Java": "java version \"21.0.7\" 2025-04-15 LTS",
+      "Gradle": "8.10",
+      "Docker": "29.8.1",
+      "JAVA_TOOL_OPTIONS": "-Duser.timezone=UTC -Dapi.version=1.44"
+    },
+    "executor": "TV5 independent exact-source execution",
+    "exitCode": 0,
+    "completedUtc": "2026-10-23T00:33:51.648780+00:00"
+  },
+  "counts": {
+    "order-service:test": {
+      "PASS": 19
+    }
+  },
+  "cases": [
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.CheckoutServiceTest",
+      "name": "commitConfirmedByReadNeverCompensates()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.CheckoutServiceTest",
+      "name": "invalidClaimedCartQuantityCannotReachReservationOrWriter()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.CheckoutServiceTest",
+      "name": "unsupportedUnitPrecisionNeverReachesInventoryOrWriter()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.CheckoutServiceTest",
+      "name": "unrepresentableFeeUnderSyntheticPolicyFailsBeforeReserve()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.CheckoutServiceTest",
+      "name": "outboxSerializationFailureCannotReserveStockOrWriteOrder()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.CheckoutServiceTest",
+      "name": "twoProductsFromSameSellerAndStoreCreateOneSellerOrder()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.CheckoutServiceTest",
+      "name": "inventoryTimeoutPreservesCartAndReservationForReconciliation()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.CheckoutServiceTest",
+      "name": "conflictingCatalogSellerStoreFactsNeverReachInventoryOrOrderWriter()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.CheckoutServiceTest",
+      "name": "twoStoresGenerateOneOrderWithTwoSellerOrdersAndSnapshot()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.CheckoutServiceTest",
+      "name": "malformedClaimedCartNullLineReleasesClaimWithoutExternalSideEffects()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.CheckoutServiceTest",
+      "name": "parentOverflowAcrossTwoIndividuallyValidStoresFailsBeforeReserve()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.CheckoutServiceTest",
+      "name": "nullCartClaimReplyIsUnknownAndNeverBlindlyReleasesOrReserves()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.CheckoutServiceTest",
+      "name": "explicitlyUnclaimedCartCannotProceedOrReleaseAnotherClaim()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.CheckoutServiceTest",
+      "name": "reversedCartOrderStillRejectsOneSellerFromTwoStoresBeforeInventory()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.CheckoutServiceTest",
+      "name": "changedPriceRejectsCheckoutBeforeStockReservation()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.CheckoutServiceTest",
+      "name": "sameKeyAndExistingSuccessfulOrderReplaysWithoutCreating()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.CheckoutServiceTest",
+      "name": "commitUnknownDoesNotCompensateAndFlagsForReconciliation()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.CheckoutServiceTest",
+      "name": "nonFinalProcessingReplayNeverCallsInventory()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.CheckoutServiceTest",
+      "name": "malformedRequestCannotCreateAttemptOrCallRemotePorts()",
+      "result": "PASS"
+    }
+  ],
+  "staleXmlExcluded": [],
+  "rawArtifacts": [
+    {
+      "localPath": ".verification/tv5-audit-20261023/runs/pr79/order-service/test/TEST-com.projecthk5.orderservice.service.CheckoutServiceTest.xml",
+      "bytes": 3943,
+      "sha256": "899874a4619c810e3a119bc3dc3dab1dd18e36d452592073c9a84ec65b3825a6"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261023/runs/pr79/runtime.log",
+      "bytes": 1559,
+      "sha256": "c39e6371b1aef67532d93878052cf81e711f0b0db9e9dccbe4653e70c68b400e"
+    }
+  ],
+  "publication": {
+    "type": "DERIVED SUMMARY",
+    "raw": "Original byte-preserved logs/XML/screenshots/AX files remain private at localPath; not CI/downloadable raw artifacts",
+    "verification": "All listed raw artifact sizes and SHA256 independently rechecked before export",
+    "limits": "Separate invocations/snapshots/owner evidence; no release total, policy approval, physical mobile or live E2E inferred"
+  }
+}

@@ -30,16 +30,20 @@ class ProductLifecycleServiceTest {
     }
 
     @Test void createEditAndModerateRetainsIdentitySkuAndExactPrice() {
-        ProductListing draft = service.create("owner", storeId, categoryId, "Sku-A", " Product ", new BigDecimal("12.34567"));
+        BigDecimal createPrice = new BigDecimal("12.00000"), editPrice = new BigDecimal("13.00000");
+        ProductListing draft = service.create("owner", storeId, categoryId, "Sku-A", " Product ", createPrice, "VND");
         assertEquals(ProductStatus.DRAFT, draft.status());
         assertEquals("Product", draft.name());
-        ProductListing edited = service.edit("owner", draft, categoryId, "New", new BigDecimal("13.12345"));
+        assertSame(createPrice, draft.unitPrice());
+        ProductListing edited = service.edit("owner", draft, categoryId, "New", editPrice, "VND");
         ProductListing submitted = service.submit("owner", edited);
         ProductListing rejected = service.reject("admin", submitted, " Fix details ");
         ProductListing active = service.approve("admin", service.submit("owner", rejected));
         assertEquals(draft.id(), active.id());
         assertEquals("Sku-A", active.sku());
-        assertEquals(new BigDecimal("13.12345"), active.unitPrice());
+        assertEquals(new BigDecimal("13.00000"), active.unitPrice());
+        assertSame(editPrice, active.unitPrice());
+        assertEquals("VND", active.currency());
         assertEquals("Fix details", rejected.reviewReason());
         assertNull(active.reviewReason());
         assertEquals(ProductStatus.DRAFT, draft.status());
@@ -76,7 +80,7 @@ class ProductLifecycleServiceTest {
 
     private ProductListing operate(String action, ProductListing product) {
         return switch (action) {
-            case "edit" -> service.edit("owner", product, categoryId, "Changed", BigDecimal.TEN);
+            case "edit" -> service.edit("owner", product, categoryId, "Changed", BigDecimal.TEN, "VND");
             case "submit" -> service.submit("owner", product);
             case "approve" -> service.approve("admin", product);
             case "reject" -> service.reject("admin", product, "reason");
@@ -89,9 +93,9 @@ class ProductLifecycleServiceTest {
     @Test void foreignOwnerAndWrongRoleCannotManageOrModerate() {
         ProductListing product = listing(ProductStatus.PENDING_REVIEW);
         assertThrows(ProductRuleException.class,
-                () -> service.create("other", storeId, categoryId, "SKU", "Name", BigDecimal.ONE));
+                () -> service.create("other", storeId, categoryId, "SKU", "Name", BigDecimal.ONE, "VND"));
         assertThrows(ProductRuleException.class,
-                () -> service.edit("other", listing(ProductStatus.DRAFT), categoryId, "Name", BigDecimal.ONE));
+                () -> service.edit("other", listing(ProductStatus.DRAFT), categoryId, "Name", BigDecimal.ONE, "VND"));
         assertThrows(ProductRuleException.class, () -> service.submit("other", listing(ProductStatus.DRAFT)));
         assertThrows(ProductRuleException.class, () -> service.deactivate("other", listing(ProductStatus.ACTIVE)));
         assertThrows(ProductRuleException.class, () -> service.approve("owner", product));
@@ -112,7 +116,7 @@ class ProductLifecycleServiceTest {
     @Test void closedStoreOrSuspendedSellerCannotManageProduct() {
         policy.approved = false;
         assertThrows(ProductRuleException.class,
-                () -> service.create("owner", storeId, categoryId, "SKU", "Name", BigDecimal.ONE));
+                () -> service.create("owner", storeId, categoryId, "SKU", "Name", BigDecimal.ONE, "VND"));
         policy.approved = true;
         policy.open = false;
         assertThrows(ProductRuleException.class, () -> service.submit("owner", listing(ProductStatus.DRAFT)));
@@ -126,17 +130,17 @@ class ProductLifecycleServiceTest {
         when(unavailable.requireSellerManagement("owner", storeId)).thenReturn(
                 new ProductAccessPolicy.StoreAccess(UUID.randomUUID(), sellerId, "owner", true, true, false));
         assertEquals(ProductRuleException.Code.AUTHORIZATION_UNAVAILABLE, assertThrows(ProductRuleException.class,
-                () -> guarded.create("owner", storeId, categoryId, "SKU", "Name", BigDecimal.ONE)).getCode());
+                () -> guarded.create("owner", storeId, categoryId, "SKU", "Name", BigDecimal.ONE, "VND")).getCode());
         policy.owner = "Owner";
         assertThrows(ProductRuleException.class,
-                () -> service.create("owner", storeId, categoryId, "SKU", "Name", BigDecimal.ONE));
+                () -> service.create("owner", storeId, categoryId, "SKU", "Name", BigDecimal.ONE, "VND"));
     }
 
     @Test void invalidActorIsRejectedBeforePolicyOrCategory() {
         ProductAccessPolicy guarded = mock(ProductAccessPolicy.class);
         ProductLifecycleService target = new ProductLifecycleService(guarded, categories);
         assertThrows(ProductRuleException.class,
-                () -> target.create(null, storeId, categoryId, "SKU", "Name", BigDecimal.ONE));
+                () -> target.create(null, storeId, categoryId, "SKU", "Name", BigDecimal.ONE, "VND"));
         verifyNoInteractions(guarded);
         verify(categories, never()).existsById(any());
     }
@@ -144,7 +148,7 @@ class ProductLifecycleServiceTest {
     @Test void missingCategoryCannotBeCreatedSubmittedApprovedOrPublic() {
         when(categories.existsById(categoryId)).thenReturn(false);
         assertEquals(ProductRuleException.Code.CATEGORY_NOT_FOUND, assertThrows(ProductRuleException.class,
-                () -> service.create("owner", storeId, categoryId, "SKU", "Name", BigDecimal.ONE)).getCode());
+                () -> service.create("owner", storeId, categoryId, "SKU", "Name", BigDecimal.ONE, "VND")).getCode());
         assertThrows(ProductRuleException.class, () -> service.submit("owner", listing(ProductStatus.DRAFT)));
         assertThrows(ProductRuleException.class, () -> service.approve("admin", listing(ProductStatus.PENDING_REVIEW)));
         assertTrue(service.publicView(listing(ProductStatus.ACTIVE)).isEmpty());
@@ -167,38 +171,59 @@ class ProductLifecycleServiceTest {
             assertEquals(sellerId, view.get().sellerId());
             assertEquals(storeId, view.get().storeId());
             assertEquals("Sku-A", view.get().sku());
-            assertEquals(new BigDecimal("12.34567"), view.get().unitPrice());
+            assertEquals(new BigDecimal("12.00000"), view.get().unitPrice());
+            assertEquals("VND", view.get().currency());
         }
     }
 
     @ParameterizedTest
     @NullAndEmptySource
-    @ValueSource(strings = {" ", " SKU", "SKU ", "\t"})
+    @ValueSource(strings = {" ", " SKU", "SKU ", "\t", "\u00a0SKU", "SKU\u00a0", "\u00a0",
+            "\u2007SKU", "SKU\u2007", "\u202fSKU", "SKU\u202f", "\u2003SKU", "SKU\u2003"})
     void invalidSkuIsRejected(String sku) {
         assertThrows(ProductRuleException.class, () -> new ProductListing(UUID.randomUUID(), storeId, categoryId,
-                sku, "Name", BigDecimal.ONE, ProductStatus.DRAFT, null));
+                sku, "Name", BigDecimal.ONE, "VND", ProductStatus.DRAFT, null));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"Sku-A", "sku-a", "SKU-A", "\u00e9-SKU", "e\u0301-SKU"})
+    void validSkuRemainsExactAcrossCreateAndEdit(String sku) {
+        ProductListing created = service.create("owner", storeId, categoryId, sku, "Name", BigDecimal.ONE, "VND");
+        ProductListing edited = service.edit("owner", created, categoryId, "Edited", BigDecimal.TEN, "VND");
+        assertEquals(sku, created.sku());
+        assertEquals(sku, edited.sku());
+    }
+
+    @ParameterizedTest
+    @NullAndEmptySource
+    @ValueSource(strings = {"USD", "vnd", " VND", "VND "})
+    void createAndEditRequireExplicitExactCurrency(String currency) {
+        assertEquals(ProductRuleException.Code.INVALID_INPUT, assertThrows(ProductRuleException.class,
+                () -> service.create("owner", storeId, categoryId, "SKU", "Name", BigDecimal.ONE, currency)).getCode());
+        assertEquals(ProductRuleException.Code.INVALID_INPUT, assertThrows(ProductRuleException.class,
+                () -> service.edit("owner", listing(ProductStatus.DRAFT), categoryId, "Name", BigDecimal.ONE, currency)).getCode());
     }
 
     @Test void invalidPriceAndMetadataAreRejectedWithoutRounding() {
         for (BigDecimal price : new BigDecimal[]{null, BigDecimal.ZERO, new BigDecimal("-0.01")}) {
-            assertThrows(ProductRuleException.class, () -> service.create("owner", storeId, categoryId, "SKU", "Name", price));
+            assertThrows(ProductRuleException.class, () -> service.create("owner", storeId, categoryId, "SKU", "Name", price, "VND"));
         }
         assertThrows(ProductRuleException.class,
-                () -> service.create("owner", storeId, categoryId, "s".repeat(129), "Name", BigDecimal.ONE));
+                () -> service.create("owner", storeId, categoryId, "s".repeat(129), "Name", BigDecimal.ONE, "VND"));
         assertThrows(ProductRuleException.class,
-                () -> service.create("owner", storeId, categoryId, "SKU", "n".repeat(256), BigDecimal.ONE));
+                () -> service.create("owner", storeId, categoryId, "SKU", "n".repeat(256), BigDecimal.ONE, "VND"));
         assertThrows(ProductRuleException.class,
                 () -> service.reject("admin", listing(ProductStatus.PENDING_REVIEW), " "));
         assertThrows(ProductRuleException.class,
                 () -> service.suspend("admin", listing(ProductStatus.ACTIVE), "r".repeat(501)));
         assertThrows(ProductRuleException.class,
-                () -> service.create("owner", storeId, null, "SKU", "Name", BigDecimal.ONE));
+                () -> service.create("owner", storeId, null, "SKU", "Name", BigDecimal.ONE, "VND"));
     }
 
     private ProductListing listing(ProductStatus status) {
         String reason = status == ProductStatus.REJECTED || status == ProductStatus.SUSPENDED ? "reason" : null;
         return new ProductListing(UUID.randomUUID(), storeId, categoryId, "Sku-A", "Name",
-                new BigDecimal("12.34567"), status, reason);
+                new BigDecimal("12.00000"), "VND", status, reason);
     }
 
     private class FixturePolicy implements ProductAccessPolicy {
