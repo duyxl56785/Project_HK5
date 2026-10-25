@@ -13,7 +13,7 @@ before(async () => {
   environment = new Window({ url: 'http://localhost/' });
   globalThis.window = environment;
   globalThis.document = environment.document;
-  globalThis.navigator = environment.navigator;
+  Object.defineProperty(globalThis, 'navigator', { configurable: true, value: environment.navigator });
   globalThis.HTMLElement = environment.HTMLElement;
   globalThis.Node = environment.Node;
   globalThis.IS_REACT_ACT_ENVIRONMENT = true;
