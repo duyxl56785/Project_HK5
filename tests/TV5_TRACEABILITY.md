@@ -282,3 +282,12 @@ Evidence: [R2 report and test commands](../reports/TV5_PR_REVIEW_FOLLOWUP_2026-1
 - [ ]FullM01/COD/refund/currentAuth/House/C01E01/MD07/reservation/atomicsettlement/Storequeries/live2StoreE2E; Issue5/12 OPEN/PARTIAL, flags unchanged.
 
 [Current review, commands and member handoff](../reports/TV5_PRODUCT_INTEGRATION_REVIEW_2026-10-25.md); [source/CI/reviews/compatibility receipt](../reports/evidence/tv5-product-integration-20261025/review-context.json). Original raw logs/XML private and byte-preserved; publication derived, never mock-as-E2E.
+
+
+#### Publication receipt — Product/Seller integration review
+
+- [x] COMMENT89/94/90/91/83 published at exact tested heads; own83thread RESOLVED_FIXED_VERIFIED after507PASS. [Reply](https://github.com/duyxl56785/Project_HK5/pull/83#discussion_r4371081982).
+- [x] Commit76e9957 pushed on existing TV5 PR93; own Issue5/12 evidence/checklists updated and historical content preserved, issues OPEN/PARTIAL. TV1/default TV2 re-requested once for substantive delta.
+- [ ] Human formal review and external runtime/business gates remain pending. No agent APPROVE/Merge/Ready; no test rerun claimed for this receipt-only update.
+
+[Published receipts](../reports/evidence/tv5-product-integration-20261025/publication.json), [current review report](../reports/TV5_PRODUCT_INTEGRATION_REVIEW_2026-10-25.md).

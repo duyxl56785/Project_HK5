@@ -78,3 +78,15 @@ Finance flags remain unchanged/default OFF. Pure49Finance tests within109Orderun
 - [x] Finance price-only acceptance ledger corrected append-only; signed packet/history preserved.
 - [ ] Human TV5 formal whole-PR review89/94/90/91 (and83 test-only if desired). Agent submits COMMENT only.
 - [ ] Owner normal integration/readiness, runtime contracts/Auth/COD/atomic settlement/live E2E; Issues5/12 remain OPEN/PARTIAL.
+
+
+## Published review and own-thread disposition
+
+After evidence commit76e99572cce68a43a45dd764b3b303d7c4d00557 was pushed and GitHub head verified, TV5 submitted COMMENT reviews [#89](https://github.com/duyxl56785/Project_HK5/pull/89#pullrequestreview-5643550058) · [#94](https://github.com/duyxl56785/Project_HK5/pull/94#pullrequestreview-5643550440) · [#90](https://github.com/duyxl56785/Project_HK5/pull/90#pullrequestreview-5643550842) · [#91](https://github.com/duyxl56785/Project_HK5/pull/91#pullrequestreview-5643551253) · [#83](https://github.com/duyxl56785/Project_HK5/pull/83#pullrequestreview-5643551596). No APPROVE submitted; human TV5 whole-PR decisions remain pending, not silently ticked by technical QA.
+
+- [x] #83 own thread PRRT_kwDOVGqk_M6v6eDr is **RESOLVED_FIXED_VERIFIED**, [verification reply](https://github.com/duyxl56785/Project_HK5/pull/83#discussion_r4371081982); original review and synthetic RED remain unchanged. No other reviewer's thread resolved.
+- [x] Issue5/12 own checkpoint comments updated with evidence-backed subtasks, all history retained; both OPEN/PARTIAL. [Issue5](https://github.com/duyxl56785/Project_HK5/issues/5#issuecomment-6282711041) · [Issue12](https://github.com/duyxl56785/Project_HK5/issues/12#issuecomment-6282712138).
+- [x] PR93 updated in place; TV1 and default TV2 re-requested **once** for substantial new source-bound QA/Finance-ledger delta after their oldbffe reviews. No duplicate, self-review or restored deliberate removal. This later receipt-only commit does not request again.
+- [ ] Human decisions89/94/90/91/83; TV2 integration/readiness; TV1/TV2/TV3 runtime wire/current-authority/House/freshness and TV3/TV4/Finance/business COD/refund/settlement gates as above. No new execution inferred from docs-only publication.
+
+[Publication receipt](evidence/tv5-product-integration-20261025/publication.json) records actual review/Issue URLs and reviewer request state at its timestamp, not future live state.
