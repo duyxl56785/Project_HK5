@@ -1,3 +1,7 @@
+> **LaterAuthdelta23/10:** [P2/PR80 and diagnostic82:4PASS/1FAIL](../reports/TV5_REVIEW_ACCEPTANCE_2026-10-23.md#8-later-auth-pr80--diagnostic82-delta--p2-remains-open-not-a-green-fix). TV1ownerfix pending; no broadgreen claim.
+
+> **Current23/10checkpoint:** [63PR/allreviewers/currentQA and ownerhuman decisions](../reports/TV5_REVIEW_ACCEPTANCE_2026-10-23.md). Prior22/10snapshots below retain history;69oldCRsuperseded,68/70/73/75MERGED. M01PENDING,FinanceproductionBLOCKED.
+
 > **Current R2 checkpoint 22/10/2026:** [fresh56PR audit, merged63/66/67, open68–72 and exact-head QA](../reports/TV5_PR_REVIEW_FOLLOWUP_2026-10-22_R2.md). Earlier checkpoints below remain historical. M01 PENDING; Finance production BLOCKED.
 
 # Checklist bàn giao độc lập tuần 1 của TV5
@@ -134,3 +138,41 @@ Evidence: [R2 report and test commands](../reports/TV5_PR_REVIEW_FOLLOWUP_2026-1
 - [ ] Real browser/mobile/screen-reader/native keyboard/router/Gateway/API/liveE2E remain NOT_RUN; TV1 runtime integration pending.
 
 [R2 sections7–8](../reports/TV5_PR_REVIEW_FOLLOWUP_2026-10-22_R2.md#7-new-pr74-discovered-during-final-scan--separate-verification-delta), [derived74evidence](../reports/evidence/tv5-audit-20261022-r2/pr74.json). Snapshot56PR and later58PR kept separate;37 is not added to earlier runs or owner counts.
+
+## Independent verification — 23/10/2026
+
+- [x]63PR/allreviews/16Issue audit;69TV1APPROVED exact4ee supersedesoldCR; no openTV5CHANGES_REQUESTED.71needs humanformaldecision, no newcode/repeatedtechnicalreview required.
+- [x]77/cbbdb86 16unitPASS;78/ac5da33 108unit+29PGPASS (12caller/13journal subsets);79/f8a242d 19focusedPASS; source-specific evidence, no release total.
+- [x]Main/e55f6b8 30Reviewunit+49Financeunit+6Intentunit and3FINPGdiagnostics PASS; not productionreviewDB/settlementproof or approvedM01.
+- [x]74/2215d61 37logic/SSR/DOM+12realChromePASS;76/93f6a08 32model/SSR+11ChromePASS in separateinvocations; eachtypecheck/app+standalonefeaturebuild exit0.
+- [x]375/1280screenshots visually inspected;768viewportasserted; private rawlog/XML/AX/screenshots hashes and derivedsummaries retained. Preview fixtures are not realaccount/API/UAT.
+- [ ]Human71finalreview, TV4review78/79, authorDraftdispositions and normalmergegates; no agentApprove/Merge or duplicate owner requests.
+- [ ]M01/designatedauthority/C06/COD/refund/currentAuth/currentStore/ProductSKU/atomicsettlement/liveE2E; Issue5/12/18remainPARTIAL.
+
+[Report/commands/source/ownerledger](../reports/TV5_REVIEW_ACCEPTANCE_2026-10-23.md), [metadata/evidence](../reports/evidence/tv5-audit-20261023/repository-reviewers.json).
+
+### QA23-AUTH01 — later current-authority real PostgreSQL diagnostic
+
+- [x]80/f88baseline8newunit+28persistencePGPASS; actualSpringproxy/lazycurrentrole/faulttests added in own[DraftQA82](https://github.com/duyxl56785/Project_HK5/pull/82) from correctAuthhead.
+- [x]Reproduced4PASS/1FAIL/exit1 with unchanged5caseassertions; failedLAZYrolequery leaksSQLGrammarException instead of promised503, [inlineP2](https://github.com/duyxl56785/Project_HK5/pull/80#pullrequestreview-5622704537), [deriveddelta](../reports/evidence/tv5-audit-20261023/auth-foundation-delta.json).
+- [x]TV4responses recorded:79scopedAPPROVED,78COMMENT nofinding; do not repeat pendingreview claims from earlier datedsnapshot.
+- [ ]TV1rootfix+sameQA GREEN atnewSHA, then reviewerverifiedclosure; no sourceAuth edit byTV5, no Finance/M01/DONE flag.
+
+### QA23-AUTH02 — authorized P2 supplement GREEN, parent still waiting
+
+- [x] Scoped P2 Auth explicitly authorized, minimal JPA read-failure→503 fix committed as ad25942998224451fb8c54677e028712e6921ae3 on TV5 PR82; no owner-branch push.
+- [x] At exact fix commit:8unit+28AuthPersistencePG PASS, separate unchanged5current-authorityPG PASS/0FAIL/0skip, exit0. QA Java/init and original RED remain unchanged. Evidence3338cfd pushed; TV1/TV2 requests retained, no duplicates.
+- [x]66PR/211review refresh and current owner replies reconciled; TV4 already COMMENT78/APPROVED79. Earlier checkpoints remain historical, not current pending claims.
+- [ ] Parent80 stillf88/P2OPEN; TV1 review/integration and rerun on actual parent SHA before thread closure. Supplement GREEN does not tick parent fix or production acceptance.
+- [ ] Human71formaldecision; designated M01business signer, C06/COD/currentAuth/Store/SKU/atomicsettlement/liveUAT. Issue5/12/18 remainOPEN/PARTIAL; Finance/pairOFF.
+
+[Current handoff section9](../reports/TV5_REVIEW_ACCEPTANCE_2026-10-23.md#9-r2--bản-sửa-p2-được-ủy-quyền-và-bàn-giao-hiện-tại-23102026), [derivedsource/run/ownerledger](../reports/evidence/tv5-audit-20261023/auth-p2-green-refresh.json).
+
+### QA79-REVIEW-20261023 — current S01 Checkout guard acceptance
+
+- [x] Re-audit79 exactf8a242d/2commits/2files; TV2+TV4APPROVED, TV5COMMENT,0activeCR/0threads/0pendingrequests. No new actionable finding; no duplicate reviewer request.
+- [x] Independent exact-head Orderbuild exit0;108unitPASS (19Checkout subset),25OrderPGPASS and separate3originalFINdiagnosticsPASS/0FAIL/0skip. Real PG is Order-local with mocked remote ports, not live Catalog/Inventory/COD/E2E.
+- [x] S01 both Cart orders reject before reserve/write and release only confirmed Cart claim; sameStore2Products→1SellerOrder/35000 remains valid. Source/tests unchanged, original historical evidence retained.
+- [ ] Human formal decision if needed and TV3Draft disposition; M01/business/currentAuth/Store/SKU/COD/atomicsettlement/liveUAT gates remain separate and pending. No Finance/pair enablement or IssueDONE.
+
+[Focused report, findings, reviewers and member handoff](../reports/TV5_PR79_REVIEW_2026-10-23.md), [derived test/source/CI receipt](../reports/evidence/tv5-audit-20261023/pr79-comprehensive.json). Initial TV5/owner/CI test counts are separate historical invocations, not a combined release total.

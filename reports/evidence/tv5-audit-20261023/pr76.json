@@ -1,0 +1,232 @@
+{
+  "kind": "DERIVED SUMMARY; TV5 independent exact-source runtime; originals private, not CI artifacts",
+  "PR": 76,
+  "source": "93f6a084f94dbcd32726ed451cbb1c69d9da6058",
+  "environment": {
+    "Node": "v24.19.0",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "typescript": "5.6.3",
+    "vite": "6.4.5",
+    "happy-dom": "21.0.4",
+    "playwright": "1.63.0"
+  },
+  "runs": [
+    {
+      "label": "unit-ssr-dom",
+      "command": [
+        "node",
+        "--test",
+        "src/features/seller/sellerStoreModel.test.mjs",
+        "src/features/seller/SellerStoreOverview.test.mjs"
+      ],
+      "startedUtc": "2026-10-23T00:34:43.117738+00:00",
+      "completedUtc": "2026-10-23T00:34:43.853521+00:00",
+      "exitCode": 0,
+      "counts": {
+        "tests": 32,
+        "pass": 32,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "cases": [
+        "renders actual Seller status PENDING_REVIEW as Vietnamese text",
+        "renders actual Seller status APPROVED as Vietnamese text",
+        "renders actual Seller status REJECTED as Vietnamese text",
+        "renders actual Seller status SUSPENDED as Vietnamese text",
+        "renders persisted Store open=true without granting selling permission",
+        "renders persisted Store open=false without granting selling permission",
+        "loading has a distinct state and conceals any attached stale data",
+        "empty has a distinct state and conceals any attached stale data",
+        "unauthorized has a distinct state and conceals any attached stale data",
+        "unavailable has a distinct state and conceals any attached stale data",
+        "error exposes retry, not stale data or backend diagnostic text",
+        "explicit no-Store state does not invent a Store or create action",
+        "invalid or cross-Seller source fails without partial private information",
+        "ready display never leaks private reason, owner, role or token extras",
+        "versions are displayed byte-for-byte beyond Number.MAX_SAFE_INTEGER",
+        "display names are escaped instead of interpreted as markup",
+        "multiple instances have unique labelled sections",
+        "canonical decimal versions remain exact beyond JS safe integer range",
+        "noncanonical, numeric and overflowing versions fail without normalization",
+        "all four actual Seller statuses are supported",
+        "unknown and client role strings are not Seller statuses",
+        "private/unknown fields never enter the display projection",
+        "frozen input is not mutated and the display model owns its copies",
+        "only explicit null represents a proven absent Store",
+        "cross-Seller Store data rejects the entire overview",
+        "malformed Seller data cannot create a ready overview",
+        "Store identities, boolean and version are required",
+        "Store names and slugs retain source values and existing length boundaries",
+        "closed Store and unapproved Seller are displayed facts, not a selling grant",
+        "canonical versions reject trailing line terminators rather than matching before them",
+        "UUID display keys reject trailing line terminators even when the relationship matches",
+        "Store slug rejects trailing line terminators"
+      ],
+      "rawArtifact": {
+        "localPath": ".verification/tv5-audit-20261023/runs/pr76/unit-ssr-dom.log",
+        "bytes": 2626,
+        "sha256": "23eb552e3d29069e198c2a7d16766b50f43b0976a0df0295decdb415dfe21d0d"
+      }
+    },
+    {
+      "label": "browser",
+      "command": [
+        "node",
+        "--test",
+        "src/features/seller/SellerStoreOverview.browser.mjs"
+      ],
+      "startedUtc": "2026-10-23T00:34:43.853521+00:00",
+      "completedUtc": "2026-10-23T00:34:47.930183+00:00",
+      "exitCode": 0,
+      "counts": {
+        "tests": 11,
+        "pass": 11,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "cases": [
+        "ready cards preserve full versions and never expose private fields",
+        "Store closed and proven no-Store remain distinct",
+        "loading conceals stale attached private data",
+        "empty conceals stale attached private data",
+        "unauthorized conceals stale attached private data",
+        "unavailable conceals stale attached private data",
+        "cross-Seller source exposes only a consistency error",
+        "native Tab/Enter activate retry callback without making a network request",
+        "responsive 375px keeps long names/slugs/versions readable",
+        "responsive 768px keeps long names/slugs/versions readable",
+        "responsive 1280px keeps long names/slugs/versions readable"
+      ],
+      "rawArtifact": {
+        "localPath": ".verification/tv5-audit-20261023/runs/pr76/browser.log",
+        "bytes": 907,
+        "sha256": "7af1503036dea1fcc6c3d8cfe79fbf54ce11fdfc755a7bcc8945bb3a37e46f6d"
+      }
+    },
+    {
+      "label": "typecheck",
+      "command": [
+        "node",
+        "node_modules/typescript/bin/tsc",
+        "--noEmit"
+      ],
+      "startedUtc": "2026-10-23T00:34:47.930183+00:00",
+      "completedUtc": "2026-10-23T00:34:48.887146+00:00",
+      "exitCode": 0,
+      "counts": {},
+      "cases": [],
+      "rawArtifact": {
+        "localPath": ".verification/tv5-audit-20261023/runs/pr76/typecheck.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "label": "application-build",
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "startedUtc": "2026-10-23T00:34:48.888146+00:00",
+      "completedUtc": "2026-10-23T00:34:51.309843+00:00",
+      "exitCode": 0,
+      "counts": {},
+      "cases": [],
+      "rawArtifact": {
+        "localPath": ".verification/tv5-audit-20261023/runs/pr76/application-build.log",
+        "bytes": 392,
+        "sha256": "b044dbfd5d0bf92fdd45b4dd3d7e6e1c4729792fcfa433deb08e8a1abb00a3b7"
+      }
+    },
+    {
+      "label": "feature-build",
+      "command": [
+        "node",
+        "node_modules/vite/bin/vite.js",
+        "build",
+        "--config",
+        "src/features/seller/vite.overview.config.ts"
+      ],
+      "startedUtc": "2026-10-23T00:34:51.310842+00:00",
+      "completedUtc": "2026-10-23T00:34:51.677742+00:00",
+      "exitCode": 0,
+      "counts": {},
+      "cases": [],
+      "rawArtifact": {
+        "localPath": ".verification/tv5-audit-20261023/runs/pr76/feature-build.log",
+        "bytes": 303,
+        "sha256": "d35569b0af6755c34e818c58b3b67fda9d7b7c541a8444f8cce5639df2441e4c"
+      }
+    }
+  ],
+  "rawArtifacts": [
+    {
+      "localPath": ".verification/tv5-audit-20261023/runs/pr76/application-build.log",
+      "bytes": 392,
+      "sha256": "b044dbfd5d0bf92fdd45b4dd3d7e6e1c4729792fcfa433deb08e8a1abb00a3b7"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261023/runs/pr76/browser-evidence/browser.json",
+      "bytes": 98,
+      "sha256": "b6473aac1874ff10b79666684b26e231e1c4a65b717f92464c375f96968ec543"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261023/runs/pr76/browser-evidence/overview-1280.png",
+      "bytes": 55716,
+      "sha256": "c763a3c65ae9d6d321319c1d754598f71a32ba9255fdc62974835e11a586ce98"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261023/runs/pr76/browser-evidence/overview-375.png",
+      "bytes": 47574,
+      "sha256": "f3a0a13ab9bd36336e41bb58327489d6ff7eacdb434cc181b097771b16b09ec4"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261023/runs/pr76/browser-evidence/overview-768.png",
+      "bytes": 53462,
+      "sha256": "f44ac3236997bde5dc71d8a2102c8d46f7d579a0c6c3144a5b58647b1a8429ec"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261023/runs/pr76/browser.log",
+      "bytes": 907,
+      "sha256": "7af1503036dea1fcc6c3d8cfe79fbf54ce11fdfc755a7bcc8945bb3a37e46f6d"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261023/runs/pr76/feature-build.log",
+      "bytes": 303,
+      "sha256": "d35569b0af6755c34e818c58b3b67fda9d7b7c541a8444f8cce5639df2441e4c"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261023/runs/pr76/typecheck.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261023/runs/pr76/unit-ssr-dom.log",
+      "bytes": 2626,
+      "sha256": "23eb552e3d29069e198c2a7d16766b50f43b0976a0df0295decdb415dfe21d0d"
+    }
+  ],
+  "scope": "Isolated fixture preview in actual installed Chrome, pure/SSR/DOM; no application Router/API/current-account integration",
+  "NOT_RUN": [
+    "Human screen-reader/physical touch device",
+    "Real Auth/JWT/Gateway/current ownership/API/production provider/live E2E",
+    "Backend/PostgreSQL: frontend-only scope"
+  ],
+  "sourceUntouched": true,
+  "browserVersion": {
+    "browser": "155.0.8059.85",
+    "scope": "fixture presentation only; no authorization/API/E2E"
+  },
+  "publication": {
+    "type": "DERIVED SUMMARY",
+    "raw": "Original byte-preserved logs/XML/screenshots/AX files remain private at localPath; not CI/downloadable raw artifacts",
+    "verification": "All listed raw artifact sizes and SHA256 independently rechecked before export",
+    "limits": "Separate invocations/snapshots/owner evidence; no release total, policy approval, physical mobile or live E2E inferred"
+  }
+}

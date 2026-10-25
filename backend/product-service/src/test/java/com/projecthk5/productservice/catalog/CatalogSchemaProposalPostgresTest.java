@@ -54,9 +54,16 @@ class CatalogSchemaProposalPostgresTest {
 
     @Test void proposalDoesNotBecomeAnAppliedProductFlywayMigration() throws Exception {
         try (Connection connection = connect(); var statement = connection.createStatement();
-             var rows = statement.executeQuery("SELECT count(*) FROM flyway_schema_history WHERE success AND version IS NOT NULL")) {
+             var rows = statement.executeQuery("SELECT string_agg(version, ',' ORDER BY installed_rank)"
+                     + " FROM flyway_schema_history WHERE success AND version IS NOT NULL")) {
             assertTrue(rows.next());
-            assertEquals(1, rows.getInt(1));
+            assertEquals("1,2", rows.getString(1), "Only Category V1 and production Product V2 are migrations");
+        }
+        try (Connection connection = connect(); var statement = connection.createStatement();
+             var rows = statement.executeQuery("SELECT count(*) FROM flyway_schema_history"
+                     + " WHERE script='catalog-product-candidate.sql'")) {
+            assertTrue(rows.next());
+            assertEquals(0, rows.getInt(1), "The historical SQL candidate remains outside Flyway history");
         }
     }
 
@@ -71,7 +78,7 @@ class CatalogSchemaProposalPostgresTest {
                 String sku = prefix ? space + "SKU" : "SKU" + space;
                 String diagnostic = "U+%04X prefix=%s".formatted(cp, prefix);
                 assertThrows(ProductRuleException.class, () -> new ProductListing(UUID.randomUUID(),
-                        UUID.randomUUID(), CATEGORY, sku, "Name", BigDecimal.ONE, ProductStatus.DRAFT, null), diagnostic);
+                        UUID.randomUUID(), CATEGORY, sku, "Name", BigDecimal.ONE, "VND", ProductStatus.DRAFT, null), diagnostic);
                 SQLException rejected = assertThrows(SQLException.class,
                         () -> insert(connection, "store-a", sku, "10"), diagnostic);
                 assertEquals("23514", rejected.getSQLState(), diagnostic);
@@ -135,8 +142,9 @@ class CatalogSchemaProposalPostgresTest {
                 .locations("classpath:db/migration").load();
         runtime.validate();
         assertEquals(0, runtime.migrate().migrationsExecuted);
-        assertEquals(1, runtime.info().applied().length);
-        assertEquals("1", runtime.info().current().getVersion().toString());
+        assertEquals(java.util.List.of("1", "2"), java.util.Arrays.stream(runtime.info().applied())
+                .map(migration -> migration.getVersion().toString()).toList());
+        assertEquals("2", runtime.info().current().getVersion().toString());
     }
 
     @ParameterizedTest

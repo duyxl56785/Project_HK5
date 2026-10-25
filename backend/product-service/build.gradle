@@ -12,6 +12,8 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
     testImplementation 'org.testcontainers:junit-jupiter'
     testImplementation 'org.testcontainers:postgresql'
+    // Production persistence tests exercise PostgreSQL's COPY input path as well as JDBC/JPA.
+    testImplementation 'org.postgresql:postgresql'
 }
 
 tasks.named('test') {
@@ -19,7 +21,7 @@ tasks.named('test') {
 }
 
 tasks.register('integrationTest', Test) {
-    description = 'Runs Category integration tests against PostgreSQL via Docker.'
+    description = 'Runs product-service integration tests against PostgreSQL via Docker.'
     group = 'verification'
     testClassesDirs = sourceSets.test.output.classesDirs
     classpath = sourceSets.test.runtimeClasspath

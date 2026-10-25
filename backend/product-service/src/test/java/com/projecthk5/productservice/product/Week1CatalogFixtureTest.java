@@ -75,16 +75,18 @@ class Week1CatalogFixtureTest {
             assertNotEquals(id.toString(), row.path("sku").asText());
             ProductListing product = new ProductListing(id, storeId, UUID.fromString(row.path("categoryId").asText()),
                     row.path("sku").asText(), row.path("name").asText(), new BigDecimal(row.path("unitPrice").asText()),
-                    ProductStatus.DRAFT, null);
+                    row.path("currency").asText(), ProductStatus.DRAFT, null);
             String owner = stores.get(storeId).ownerReference();
             if ("ACTIVE".equals(row.path("status").asText())) {
                 product = service.approve(admin, service.submit(owner, product));
                 assertTrue(row.path("suggestedAvailableQuantity").asLong() > 0);
             }
+            assertEquals("VND", product.currency());
             service.publicView(product).ifPresent(publicProducts::add);
         }
         assertEquals(4, productIds.size());
         assertEquals(3, publicProducts.size());
+        assertTrue(publicProducts.stream().allMatch(product -> "VND".equals(product.currency())));
         assertEquals(2, publicProducts.stream().map(ProductLifecycleService.CatalogProduct::storeId).distinct().count());
     }
 }

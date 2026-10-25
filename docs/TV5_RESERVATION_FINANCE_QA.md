@@ -1,3 +1,5 @@
+> **Current23/10checkpoint:** [63PR/allreviewers/currentQA and ownerhuman decisions](../reports/TV5_REVIEW_ACCEPTANCE_2026-10-23.md). Prior22/10snapshots below retain history;69oldCRsuperseded,68/70/73/75MERGED. M01PENDING,FinanceproductionBLOCKED.
+
 # TV5 — reservation / Finance QA handoff, 22/10/2026 R2
 
 Refs #5/#12/#69/#70/#71. **Technical QA verified; shared contract and business decisions PENDING.**
@@ -69,3 +71,9 @@ Agent cannot supply another owner's or a business signer's acceptance.
 |RV-F06|Two Store React→Gateway→services→PostgreSQL UAT with realCatalog/Inventory/COD|NOT_RUN; actual positive providers/pair/routes/frontend, not fixtures|
 
 NormalCI does not imply these scenarios ran. No issue DONE, production gate enablement or live E2E conclusion follows from RV-Q01–Q09.
+
+## 23/10 owner-response delta (not a new contract signature)
+
+TV1scopedAPPROVED69/4ee now supersedes oldCR; owner keepsDraft/V3opt-in. TV3's SKU consumer boundary fix75 is merged; new77pureCatalogpreflight and78Order-local recovery tests restore closed-unmerged62/60 content under explicit new heads.79activeCheckoutguard is separate from unwired77. Current technical approvals are recorded in the linkedreport, not converted to C06/M01 signatures.
+TV5today verified77money/currency/House-consistency scope16unitPASS,78Order108unit+29PG (13journalPGsubset),79Checkout19mockedunit, andmain3originalFINPGdiagnostics. These do not prove Inventoryprovider ownership, remainingheld, authorizedcancellation, COD/paymenttruth or atomicsettlement.
+Existingoperationlookup timestamp question and authority/CODrequests remainpending; no sourcechange/readiness inferred from extra proposals. Human71formalreview is actionable without more code. TV1realAuthruntime is still pending per6354324181; don't reopen completed sourceprep review or wire positiveadapters yourself. Finance/pairflagsOFF, M01PENDING andIssue5/12PARTIAL.
