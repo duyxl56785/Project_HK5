@@ -70,7 +70,7 @@ The following is TV4's proposal, not an approved shared SellerOrder API/state ma
 
 TV3 must confirm the authoritative SellerOrder status/outbox source and payload. TV5 must confirm COD/DELIVERED/settlement separation. TV2 must provide the authoritative Product→SKU mapping and current Store/Seller facts. TV1 must approve the user/service authorization boundaries.
 
-TV2 has confirmed SKU-global-uniqueness as the target Product invariant, but has not claimed that Product persistence/API enforces it yet. Inventory will keep its existing SKU-only key; do not seed or enable a live adapter until TV2's authoritative mapping/ownership source is enforceable and available.
+TV2's global, immutable SKU invariant is now enforced by Product persistence merged in PR #88 at main SHA `ed85f6290de7f611c82e5c0ad973f98180f04df4`. This does not yet provide Order/Inventory an authoritative Product→SKU and current Store/Seller lookup: PR #94 is still a private Seller-service facts source candidate, not a cross-service API or Product adapter. Inventory keeps its existing SKU-only key; do not seed or enable a live adapter until the authoritative mapping and ownership source is available and verified.
 
 ## Security gate
 

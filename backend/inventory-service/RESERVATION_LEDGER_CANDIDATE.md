@@ -35,7 +35,7 @@ operationId, reservationId, status, operationType, requestFingerprint, committed
 - On timeout, connection loss, or 5xx, retain the same immutable tuple and reconcile by the approved authoritative lookup. If still unknown, keep the operation pending for bounded retry/manual reconciliation; never blind-release or mint a replacement key.
 - TV3's suggested lifecycle is RESERVE once, CONSUME after the durable dispatch boundary, and RELEASE only for a proven eligible pre-dispatch cancellation/rejection with no conflicting UNKNOWN/CONSUME. The exact state/outbox boundary is pending TV3, and cancellation/partial/COD policy is pending TV5/business approval.
 - Store/Seller values passed to this Java candidate are compared with the persisted owner tuple. This is not caller authentication. A caller with guessed identifiers is not authorized by this service; no route is exposed and the pair gate remains OFF until TV1 signs and verifies the caller/actor/system policy.
-- Product `productId → SKU`, current Store/Seller authority and global SKU guarantees remain TV2-owned. This candidate consumes SKU; it does not invent Product semantics.
+- Product `productId → SKU` and current Store/Seller authority remain TV2-owned. Main PR #88 now enforces global immutable SKU persistence (`ed85f6290de7f611c82e5c0ad973f98180f04df4`); this candidate still has no authoritative Product/Store lookup and does not invent Product semantics.
 
 ## PostgreSQL verification required
 
@@ -46,7 +46,7 @@ Even a green candidate suite proves only provider-side PostgreSQL behavior. It d
 ## Decisions required before merging/exposing V3
 
 1. TV1: exact path/method authorization, caller/pair role per operation, operation-query permission, original actor proof and asynchronous recovery-system provenance.
-2. TV2: authoritative Store/Seller and Product→SKU source, and whether SKU uniqueness is enforceable globally.
+2. TV2: authoritative Store/Seller and Product→SKU source. Global immutable SKU persistence is implemented by main PR #88, but that invariant alone is not an Order/Inventory lookup or Store-authority check.
 3. TV3: durable T1 reservation-to-SellerOrder mapping before RESERVE, exact operation/status/error contract, and transaction/outbox timing for dispatch, cancellation, and rejection.
 4. TV5/business: eligible partial consume/release, cancellation/refusal rules, COD authority and settlement/event boundary.
 
