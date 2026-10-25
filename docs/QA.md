@@ -329,3 +329,12 @@ Evidence: [R2 report and test commands](../reports/TV5_PR_REVIEW_FOLLOWUP_2026-1
 - [ ] Human formal review and external runtime/business gates remain pending. No agent APPROVE/Merge/Ready; no test rerun claimed for this receipt-only update.
 
 [Published receipts](../reports/evidence/tv5-product-integration-20261025/publication.json), [current review report](../reports/TV5_PRODUCT_INTEGRATION_REVIEW_2026-10-25.md).
+
+
+#### Later review refresh — 25/10/2026, independent86 QA
+
+- [x] All15open PRs checked:0activeTV5request/0effectiveTV5CR/0ownopen threads. Priority89/94/90/91 samehead/base/commits/full diff;146old raw artifact hashes verified. Their runtime thisrefresh NOT_RUN; previous exact-head execution remains historical/current-source evidence.
+- [x] New86P1 regression: unchanged tests old3c23319 **22PASS/3FAIL**, current28a8abc **25PASS/0FAIL**, typecheck/build exit0. Separate invocations, not release total; private raw bytes and source CRLF/LF boundary explicit. No production/assertion edits.
+- [ ] Human decisions89/94/90/91,TV2own86P1thread/CR,TV1new80passwordP2; overallM01/Finance/runtime/liveE2E still blocked. No agentApprove/Merge/flags or duplicate requests. Issue5/12 PARTIAL.
+
+[Current report refresh](../reports/TV5_PRODUCT_INTEGRATION_REVIEW_2026-10-25.md), [reviewers audit](../reports/evidence/tv5-review-refresh-20261025-r2/audit.json), [actual86RED/GREEN](../reports/evidence/tv5-review-refresh-20261025-r2/pr86-red-green.json).

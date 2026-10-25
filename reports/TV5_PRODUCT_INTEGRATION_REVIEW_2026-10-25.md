@@ -90,3 +90,42 @@ After evidence commit76e99572cce68a43a45dd764b3b303d7c4d00557 was pushed and Git
 - [ ] Human decisions89/94/90/91/83; TV2 integration/readiness; TV1/TV2/TV3 runtime wire/current-authority/House/freshness and TV3/TV4/Finance/business COD/refund/settlement gates as above. No new execution inferred from docs-only publication.
 
 [Publication receipt](evidence/tv5-product-integration-20261025/publication.json) records actual review/Issue URLs and reviewer request state at its timestamp, not future live state.
+
+
+## Review refresh and independent PR86 P1 verification — 25/10/2026, 21:54 UTC+7
+
+Fresh GitHub scan: **79 PR total,15 OPEN**; account `nguyenminhduy090-alt`. On every open PR there are **0 current TV5 review requests,0 effective TV5 CHANGES_REQUESTED,0 unresolved threads opened by TV5**. Formal human TV5 decisions89/94/90/91 remain requested by the owner workflow even though COMMENT submissions consumed the GitHub request. Do not recreate self review requests. TV5 has no remaining old CR/thread blocking the server merge gate.
+
+89@17f98f4,94@96d59ca,90@6a290ff,91@4915c37 have exactly the same heads, bases, commits and complete file diffs as the previous independent runtime evidence. CI remains exact-head SUCCESS, no unresolved thread/CR, mergeable=true; all4 remain Draft. TV1 final-head approvals remain;90 also has TV3 same-source consumer approval. **Runtime tests for those four PRs this refresh: NOT_RUN, unchanged verified source.** Revalidated146 original artifact hashes across seven previous runs; previous538/384/554/544, combined640 and mainFIN3 are still actual exact-source evidence, not new executions or one release total. Price business receipt84 author/revision/scope/digest and mained85f62/rules were rechecked. FullM01/Finance/COD/settlement remain PENDING/BLOCKED; no new signature/flag.
+
+[Fresh full reviewer/source/rules audit](evidence/tv5-review-refresh-20261025-r2/audit.json). protect-main requires1approval+resolvedthreads, stale approvals are not automatically dismissed; actual source/body reviewed. This is not permission to merge/Ready or bypass owner workflow.
+
+### New work: actual independent RED → GREEN for PR86
+
+TV2's current P1 thread concerns a late response for Order A appearing after access/Cart/session switches to B. TV3 fixed source at **28a8abcd5cf76b298e1e6b817da16337ba322ec6**; TV5 read the three-file fix, connected component/model and the original finding, then executed the unchanged latest regression on both sources in isolated worktrees:
+
+| Source / invocation | Actual result | Meaning |
+|---|---|---|
+|Old production3c233193825a6b6fb46206586b3191cc4422bcf6 + unchanged new DOM regression only|22PASS /3FAIL /0skip, exit1|Real RED: obsolete A confirmed Order UUID leaks into B/direct new session; old same-key state lacks the preserved blocked-attempt notice. All three failures are assertions, not missing-tool initialization.|
+|Current28a8abcd5cf76b298e1e6b817da16337ba322ec6|25PASS /0FAIL /0skip, exit0|13 Cart/Checkout model +9 SSR +3 real React HappyDOM regressions. P1 fix technically FIXED_VERIFIED byTV5 within the mounted UI scope.|
+|Current28a8abc npm run typecheck /npm run build|Both exit0|Actual TypeScript and Vite build, no owner source/assertion/config edit.|
+
+Command from frontend: `node --test --test-concurrency=1 src/features/cart/cartModel.test.mjs src/features/cart/CartView.test.mjs src/features/checkout/checkoutModel.test.mjs src/features/checkout/CheckoutCodView.test.mjs src/features/checkout/CheckoutCodView.dom.test.mjs`. Node24.22.1, React/ReactDOM19.3.1, Vite6.4.5, TypeScript5.6.3, HappyDOM21.0.4; offline npm tooling setup exit0. Earlier focused12-case invocations are separately retained and not added to25. Green checkout remains tracked-clean. Red overlays only the exact new test, never production source; the other four test blobs are identical across revisions.
+
+[Exact commands/time/raw hashes/environment and source equivalence](evidence/tv5-review-refresh-20261025-r2/pr86-red-green.json). Worktree source checkout CRLF differs from Git-blob LF; canonical test bytes verified equal after CRLF→LF, both raw source hashes retained rather than falsely equal. Original RED/GREEN logs remain private/unaltered. A source raw-hash comparison initially failed on that newline distinction after tests finished; corrected derived validation records the explicit boundary, not a test/code fix. No assertion weakened, no FAIL hidden.
+
+**Disposition:** TV5 independent verification completes the missing QA handoff, but **TV2's P1 CHANGES_REQUESTED and thread remain effective** until TV2 reviews the verified28a8abc and changes its own decision. Do not resolve another reviewer's thread. Trusted session marker is presentation correlation, not authorization; future host must supply current authenticated scope. In-memory same-key gate is not durable Order reconciliation. Real browser/currentAuth/protectedHTTP/Catalog/Inventory/Finance/liveE2E NOT_RUN; CI has no checks at86head.
+
+### Remaining owner actions
+
+| PR | Current gate | Who must act |
+|---|---|---|
+|89/94/90/91|READY_FOR_HUMAN_APPROVAL for their entire bounded internal PRs; TV5 COMMENT/evidence complete, authorDraft remains|HumanTV5 may use review text above; TV2 owns readiness/integration/final actual merged-source checks. No Finance/E2E gate added to private PRs.|
+|80/dfdc814|TV2 P2 CHANGES_REQUESTED,1TV2thread: accepted password with trailing U+0000 verifies as unsuffixed password|TV1 fix+regression;TV2 owns re-review. Not the old resolved lazy-role P2; no new TV5 runtime reproduction or unauthorized Auth fix.|
+|86/28a8abc|TV5 independent RED/GREEN complete; TV2 P1 still formally active|TV2 re-review/own thread disposition, TV3 owner workflow. Existing human-supplied25evidence separate from this TV5 execution.|
+|85/87|Draft/REVIEW_REQUIRED, no pending named request; old TV5 scoped QA/COMMENT unchanged|Human independent reviewer/owner readiness; no new source delta or fake approval.|
+|93/223bc2f prior snapshot|TV1 latest COMMENT at223bc2f has no new finding; TV2 requested for substantial previous delta|Keep existing TV2 request; do not re-request TV1 merely because it COMMENTed. NoCI for docs-only PR.|
+
+- [x] Fresh all-open review requests/effective decisions/own threads audit, priority source equivalence and146 prior raw hashes verified; no duplicate review/comment/request on unchanged89/94/90/91.
+- [x] Independent86exact-current GREEN25/typecheck/build and same-regression oldsource RED22/3 preserved; QA ready for TV2 disposition.
+- [ ] Human formal review89/94/90/91; TV1fix80P2,TV2disposition86P1,owner runtime/security/COD/Finance decisions. Issue5/12 remain OPEN/PARTIAL; no agentApprove/Merge/Ready, no flag or business policy change.
