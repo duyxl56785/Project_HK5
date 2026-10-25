@@ -4,9 +4,29 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Base64;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class AuthPasswordHasherTest {
     private final AuthPasswordHasher hasher = new AuthPasswordHasher();
+
+    @Test
+    void trailingNulCannotAuthenticateAsTheAcceptedPassword() {
+        String password = "abcdefghijkl";
+        String encoded = hasher.hashForRegistration(password);
+        assertTrue(hasher.verifyForLogin(password, encoded));
+        assertFalse(hasher.verifyForLogin(password + '\0', encoded));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"\u0000abcdefghijkl", "abcdef\u0000ghijkl", "abcdefghijkl\u0000"})
+    void nulAtAnyPositionIsRejectedForRegistrationAndLogin(String password) {
+        String encoded = hasher.hashForRegistration("abcdefghijkl");
+        assertAll(
+                () -> assertThrows(IllegalArgumentException.class,
+                        () -> hasher.hashForRegistration(password)),
+                () -> assertFalse(hasher.verifyForLogin(password, encoded)));
+    }
 
     @Test
     void acceptedRegistrationPasswordHashesAndVerifiesWithoutPersistingRawValue() {
@@ -32,9 +52,19 @@ class AuthPasswordHasherTest {
     }
 
     @Test
+    void full128CodeUnitPasswordWorksAndExcessInputIsRejectedRatherThanTruncated() {
+        String password = "🔐".repeat(64);
+        String encoded = hasher.hashForRegistration(password);
+        assertTrue(hasher.verifyForLogin(password, encoded));
+        assertFalse(hasher.verifyForLogin(password.substring(0, 126), encoded));
+        assertFalse(hasher.verifyForLogin(password + "x", encoded));
+        assertThrows(IllegalArgumentException.class, () -> hasher.hashForRegistration(password + "x"));
+    }
+
+    @Test
     void registrationRejectsWrongLengthOrMalformedUnicodeWithoutNormalization() {
         for (String password : new String[]{"", "12345678901", "x".repeat(129),
-                "abcdefghijk\uD800", "abcdefghijk\uDC00"}) {
+                "abcdefghijk\uD800", "abcdefghijk\uDC00", "abcdefghijk\uD800x"}) {
             assertThrows(IllegalArgumentException.class, () -> hasher.hashForRegistration(password));
         }
         assertThrows(IllegalArgumentException.class, () -> hasher.hashForRegistration(null));
@@ -59,6 +89,21 @@ class AuthPasswordHasherTest {
         assertFalse(hasher.verifyForLogin(null, encoded));
         assertFalse(hasher.verifyForLogin("x".repeat(129), encoded));
         assertFalse(hasher.verifyForLogin("\uD800", encoded));
+        assertFalse(hasher.verifyForLogin("\uDC00", encoded));
+        assertFalse(hasher.verifyForLogin("abcdefghijk\uD800x", encoded));
+    }
+
+    @Test
+    void tamperedSaltOrDigestCannotAuthenticate() {
+        String password = "a-valid-password";
+        String[] parts = hasher.hashForRegistration(password).split("\\$", -1);
+        for (int field : new int[]{2, 3}) {
+            String[] tampered = parts.clone();
+            byte[] bytes = Base64.getDecoder().decode(parts[field]);
+            bytes[0] ^= 1;
+            tampered[field] = Base64.getEncoder().encodeToString(bytes);
+            assertFalse(hasher.verifyForLogin(password, String.join("$", tampered)));
+        }
     }
 
     @Test
