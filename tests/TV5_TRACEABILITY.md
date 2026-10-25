@@ -310,3 +310,13 @@ Evidence: [R2 report and test commands](../reports/TV5_PR_REVIEW_FOLLOWUP_2026-1
 - [ ] Humanformalreviews,TV2sequentialactualintegrationchecks,TV1runtime+frontendCI,liveacceptance. Issue5/12 PARTIAL; no agentApprove/Merge/flags or ownercodechanges.
 
 [Sequential handoff](../reports/TV5_PRODUCT_SEQUENTIAL_HANDOFF_2026-10-25.md), [sequence snapshot](../reports/evidence/tv5-integration-sequence-20261025-r3/sequence.json), [97actual](../reports/evidence/tv5-integration-sequence-20261025-r3/pr97.json), [96actual](../reports/evidence/tv5-integration-sequence-20261025-r3/pr96.json).
+
+
+#### TV5 actual QA code —25/10/2026
+
+- [x]PR99/446ae44:4newactualFinancePostgreSQLregressions+reusabletwoStorefixture;exactcommittedOrder109unit+29PG+3originalFINdiagnosticsPASS,0FAIL/skip. NoProductionCheckout/settlement/schema/policyedit.
+- [x]PR100/8bf9f12:read-onlyauditCLI+27offlinecasesPASS;actualGitHub18PRmetadatareadcomplete/exit0,notapplicationE2E. Privatecollectorapproachpromoted,notanothernotificationbot.
+- [x]Coverageinventorychecked;no12duplicatedProduct/CatalogcasesorrewrittenFIN01/06. Codeonnewfeaturebranches,onlyderivedevidencein93;rawbytesprivate/hashchecked,reviewersrequestedonce.
+- [ ]IndependentcodePRreview/CI;human89/90/91/94decisions,ownerA→B→Cactualintegrationchecks;Finance/COD/HTTP/currentauthority/liveUATgatesremain. Issue5/12 PARTIAL.
+
+[Code/evidence/inventory](../reports/TV5_INDEPENDENT_QA_CODE_2026-10-25.md), [Financecommittedrun](../reports/evidence/tv5-independent-code-20261025/finance-committed.json), [auditoffline](../reports/evidence/tv5-independent-code-20261025/audit-offline.json), [livemetadata](../reports/evidence/tv5-independent-code-20261025/audit-live.json).
