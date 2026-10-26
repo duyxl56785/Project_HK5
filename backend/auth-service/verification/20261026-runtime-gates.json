@@ -1,0 +1,360 @@
+﻿{
+    "source_sha":  "f70dbdb1b61bff554fdf97be318a1e6c45b5a241",
+    "branch":  "feat/tv1-auth-runtime-p0-20261026",
+    "result":  "PASS",
+    "exit_code":  0,
+    "counts":  {
+                   "security_unit_and_configuration":  54,
+                   "auth_persistence_postgresql":  28,
+                   "current_authority_postgresql":  5,
+                   "total":  87,
+                   "failures":  0,
+                   "errors":  0,
+                   "skipped":  0
+               },
+    "environment":  {
+                        "jdk":  "Oracle JDK 21.0.11",
+                        "gradle":  "8.10",
+                        "docker_engine":  "29.7.2",
+                        "postgres":  "postgres:16 (fresh Testcontainers)",
+                        "jvm_options":  "-Duser.timezone=UTC -Dapi.version=1.44"
+                    },
+    "command":  "./backend/gradlew.bat -p backend --init-script \"D:\\CMC\\Project-HK5-Git\\.worktrees\\tv1-auth-runtime-p0\\tests\\security\\auth-current-authority.init.gradle\" \"-Ptv5AuthAuthoritySources=D:\\CMC\\Project-HK5-Git\\.worktrees\\tv1-auth-runtime-p0\\tests\\security\\auth-current-authority\" :auth-service:test --tests \"*security.*\" --tests \"*AuthPersistenceTest\" :auth-service:tv5CurrentAuthorityRegression --rerun-tasks --no-daemon --console=plain",
+    "log":  {
+                "path":  "backend/auth-service/build/verification/final/run.log",
+                "sha256":  "a3a449e4c68563ab6c7ed345d7a918b8942fc79c26cc67acecc4e9ffe2239649",
+                "bytes":  5634,
+                "created_utc":  "2026-10-26T05:44:19.1457247Z",
+                "last_written_utc":  "2026-10-26T05:45:10.3862419Z"
+            },
+    "sources":  [
+                    {
+                        "path":  "backend/auth-service/src/main/java/com/projecthk5/authservice/security/AuthBootstrapConfiguration.java",
+                        "sha256":  "5cf1c278d3ae07c2e3431f8c3e36519e8151d30bb545a912fd28c8ffd1606f92"
+                    },
+                    {
+                        "path":  "backend/auth-service/src/test/java/com/projecthk5/authservice/security/AuthBootstrapStartupTest.java",
+                        "sha256":  "9344659f57003c7b156b2bc64a9ce21322b1d98cbb667f35745547c5cd1d72f4"
+                    },
+                    {
+                        "path":  "backend/auth-service/src/test/java/com/projecthk5/authservice/security/CurrentAccountAuthorityTest.java",
+                        "sha256":  "804070a0c0ab24f458e2b9c89b43bb4a0db7caf1af5b203de4a40ae994722ecb"
+                    },
+                    {
+                        "path":  "tests/security/auth-current-authority.init.gradle",
+                        "sha256":  "365bf1f12103b7ed47848e572d66dbd529cbc2c86f90fadbd04dad19e775f077"
+                    },
+                    {
+                        "path":  "tests/security/auth-current-authority/CurrentAccountAuthorityPostgresRegressionTest.java",
+                        "sha256":  "e670f18ad523535db27a14e384226d1f99bcfd78fa04734cda242f9fc62fd51b"
+                    }
+                ],
+    "suites":  [
+                   {
+                       "task":  "test",
+                       "suite":  "com.projecthk5.authservice.AuthPersistenceTest",
+                       "tests":  28,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "cases":  [
+                                     "refreshConstraintsEnforceHashFamilyParentAndAbsoluteExpiry()",
+                                     "allJavaStripCharactersAreRejectedAtSqlEmailBoundaries()",
+                                     "tokenConsumptionAndChildInsertRollbackTogether()",
+                                     "schemaRejectsInvalidRolesEmailsAndMissingAccount()",
+                                     "accountPersistsNormalizedEmailRolesAndDurableTaskAtomically()",
+                                     "[1] (fixture parameters omitted)",
+                                     "[2] (fixture parameters omitted)",
+                                     "canonicalUnicodeIsNotRestrictedToAsciiOrCaseFolded()",
+                                     "familyLockBlocksOtherTransactionAndLogoutPreventsConsumption()",
+                                     "rawUnicodeAliasCannotBypassDatabaseNormalization()",
+                                     "accountRolesAndProvisioningRollbackTogether()",
+                                     "consumeKeepsFamilyLockUntilCallerCommits()",
+                                     "committedDataSurvivesApplicationRestartWithRuntimeFlywayDisabled()",
+                                     "twoRotationsSerializeAndReuseCanRevokeCommittedChild()",
+                                     "postgresConstraintRejectsExactlyJavaLowercaseChangingScalars()",
+                                     "[1] (fixture parameters omitted)",
+                                     "[2] (fixture parameters omitted)",
+                                     "[3] (fixture parameters omitted)",
+                                     "[4] (fixture parameters omitted)",
+                                     "[5] (fixture parameters omitted)",
+                                     "[1] (fixture parameters omitted)",
+                                     "[2] (fixture parameters omitted)",
+                                     "runtimeHasOnlyExplicitBusinessDmlAndCannotTouchSchemaHistory()",
+                                     "migrationRerunsAndValidatesWithRuntimeDdlDisabled()",
+                                     "migrationRejectsWrongActorBeforeCreatingBusinessTables()",
+                                     "unicodeDuplicateLookupAndCanonicalSqlInsertUseSameUniqueKey()",
+                                     "consumptionRequiresActiveUnexpiredTokenAndTransaction()",
+                                     "committedDataSurvivesPostgresRestart()"
+                                 ],
+                       "raw_path":  "backend\\auth-service\\build\\verification\\final\\test/TEST-com.projecthk5.authservice.AuthPersistenceTest.xml",
+                       "sha256":  "360a1236674015b2d51059f75df6b3007e8d0e441a26095bb35d30645305d0e8"
+                   },
+                   {
+                       "task":  "test",
+                       "suite":  "com.projecthk5.authservice.security.AuthBootstrapConfigurationTest",
+                       "tests":  5,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "cases":  [
+                                     "explicitCurrentAndPreviousKeysAreAcceptedWithoutFallback()",
+                                     "noImplicitIssuerKeyOrActiveStatusCanInitialize()",
+                                     "weakMalformedOrPaddedKeysFailClosedWithoutSecretDisclosure()",
+                                     "invalidOrPartialRotationCannotBeEnabled()",
+                                     "activeStatusMustBeExplicitExactAndBounded()"
+                                 ],
+                       "raw_path":  "backend\\auth-service\\build\\verification\\final\\test/TEST-com.projecthk5.authservice.security.AuthBootstrapConfigurationTest.xml",
+                       "sha256":  "16081930518ac661858cbae885d7c6b2b3799a41ed57770abb205a480624a19f"
+                   },
+                   {
+                       "task":  "test",
+                       "suite":  "com.projecthk5.authservice.security.AuthBootstrapStartupTest",
+                       "tests":  22,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "cases":  [
+                                     "absentOptInCreatesNoSecurityBeansEvenWithCompleteEnvironment()",
+                                     "springPropertiesCannotSupplyMissingRuntimeSecrets()",
+                                     "[1] (fixture parameters omitted)",
+                                     "[2] (fixture parameters omitted)",
+                                     "[3] (fixture parameters omitted)",
+                                     "[4] (fixture parameters omitted)",
+                                     "[5] (fixture parameters omitted)",
+                                     "runtimeKeyringAcceptsOldAndNewSignsOnlyCurrentAndRetiresPrevious()",
+                                     "explicitRuntimeEnvironmentCreatesBothBeans()",
+                                     "nonStringEnvironmentValuesAreRejectedWithoutCoercion()",
+                                     "[1] (fixture parameters omitted)",
+                                     "[2] (fixture parameters omitted)",
+                                     "[3] (fixture parameters omitted)",
+                                     "[4] (fixture parameters omitted)",
+                                     "[5] (fixture parameters omitted)",
+                                     "[6] (fixture parameters omitted)",
+                                     "[7] (fixture parameters omitted)",
+                                     "[1] (fixture parameters omitted)",
+                                     "[2] (fixture parameters omitted)",
+                                     "[3] (fixture parameters omitted)",
+                                     "[4] (fixture parameters omitted)",
+                                     "[5] (fixture parameters omitted)"
+                                 ],
+                       "raw_path":  "backend\\auth-service\\build\\verification\\final\\test/TEST-com.projecthk5.authservice.security.AuthBootstrapStartupTest.xml",
+                       "sha256":  "61f5184bdbe8ac51c6d4ef618d74248815f483cc200eb70a64402fa8f68f36b0"
+                   },
+                   {
+                       "task":  "test",
+                       "suite":  "com.projecthk5.authservice.security.AuthPasswordHasherTest",
+                       "tests":  11,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "cases":  [
+                                     "trailingNulCannotAuthenticateAsTheAcceptedPassword()",
+                                     "tamperedSaltOrDigestCannotAuthenticate()",
+                                     "loginSupportsLegacyShortLengthOnlyWhenMatchingAnExistingHash()",
+                                     "full128CodeUnitPasswordWorksAndExcessInputIsRejectedRatherThanTruncated()",
+                                     "registrationRejectsWrongLengthOrMalformedUnicodeWithoutNormalization()",
+                                     "[1] (fixture parameters omitted)",
+                                     "[2] (fixture parameters omitted)",
+                                     "[3] (fixture parameters omitted)",
+                                     "acceptedRegistrationPasswordHashesAndVerifiesWithoutPersistingRawValue()",
+                                     "multiByteAndLongPasswordNeverSilentlyTruncateAtBcrypt72Bytes()",
+                                     "malformedStoredRecordsCannotSelectWeakWorkFactorOrDifferentAlgorithm()"
+                                 ],
+                       "raw_path":  "backend\\auth-service\\build\\verification\\final\\test/TEST-com.projecthk5.authservice.security.AuthPasswordHasherTest.xml",
+                       "sha256":  "198711cdd0bde7d821b80221ba66429edd69a0c11709f620534b9f11e9ddbfa5"
+                   },
+                   {
+                       "task":  "test",
+                       "suite":  "com.projecthk5.authservice.security.CurrentAccountAuthorityTest",
+                       "tests":  12,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "cases":  [
+                                     "inactiveOrMissingAccountReturns401ButDependencyFailureReturns503()",
+                                     "staleJwtAdminIsDeniedOnceCurrentGrantIsRemoved()",
+                                     "currentGrantCannotElevateAnOldTokenMissingTheRole()",
+                                     "activeStatusIsExplicitAndNoRawPrincipalCanBeCreatedFromClientData()",
+                                     "lazyRolesReadExceptionMapsTo503WithoutMaskingInactiveAccounts()",
+                                     "[1] (fixture parameters omitted)",
+                                     "[2] (fixture parameters omitted)",
+                                     "[3] (fixture parameters omitted)",
+                                     "[4] (fixture parameters omitted)",
+                                     "[5] (fixture parameters omitted)",
+                                     "[6] (fixture parameters omitted)",
+                                     "[7] (fixture parameters omitted)"
+                                 ],
+                       "raw_path":  "backend\\auth-service\\build\\verification\\final\\test/TEST-com.projecthk5.authservice.security.CurrentAccountAuthorityTest.xml",
+                       "sha256":  "0b4c11cb8b9488d2e48ab666ffed8fd3dd6c2cedac8fbd5753f6337299d4419d"
+                   },
+                   {
+                       "task":  "test",
+                       "suite":  "com.projecthk5.authservice.security.Hk5JwtCodecTest",
+                       "tests":  4,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "cases":  [
+                                     "acceptsLocalPreviousKeyUntilRotationRetirementAndRejectsExpired()",
+                                     "rejectsTamperingUnknownKeyAndWrongIssuerAudience()",
+                                     "issuesExactContractAndVerifiesCurrentRoleAfterDatabaseRead()",
+                                     "missingWeakOrExcessKeysCannotInitializeAndAbsentConfigNeverDefaults()"
+                                 ],
+                       "raw_path":  "backend\\auth-service\\build\\verification\\final\\test/TEST-com.projecthk5.authservice.security.Hk5JwtCodecTest.xml",
+                       "sha256":  "68e00cf20869f174e4126945224329156621dee3d17c5050d38bb972b31f6991"
+                   },
+                   {
+                       "task":  "tv5CurrentAuthorityRegression",
+                       "suite":  "com.projecthk5.tv5authqa.CurrentAccountAuthorityPostgresRegressionTest",
+                       "tests":  5,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "cases":  [
+                                     "transactionalProxyLoadsLazyRolesAndCurrentRevocationOverridesSignedAdmin()",
+                                     "currentGrantCannotElevateOldTokenButFreshlyIssuedTokenCanUseIt()",
+                                     "unavailableLazyRoleQueryIsAlso503RatherThanLeakingPersistenceFailure()",
+                                     "unavailableAccountQueryIs503RatherThanAnInvalidAccount()",
+                                     "inactiveAndMissingCurrentAccountsReturn401()"
+                                 ],
+                       "raw_path":  "backend\\auth-service\\build\\verification\\final\\tv5CurrentAuthorityRegression/TEST-com.projecthk5.tv5authqa.CurrentAccountAuthorityPostgresRegressionTest.xml",
+                       "sha256":  "b99a88d1fb82a114a0b5db9ba1554994e7e352722277ca1593b99f00928b7b85"
+                   }
+               ],
+    "earlier_attempts":  [
+                             {
+                                 "name":  "gate3-red",
+                                 "exit_code":  1,
+                                 "log_path":  "backend/auth-service/build/verification/gate3-red/run.log",
+                                 "log_sha256":  "b5c14ab70f4737ff987c6b186c693f91c10d4b6053705b8d2fdca5df09641931",
+                                 "log_bytes":  4864,
+                                 "xml_evidence":  [
+                                                      {
+                                                          "path":  "backend\\auth-service\\build\\verification\\gate3-red/TEST-com.projecthk5.authservice.security.AuthBootstrapStartupTest.xml",
+                                                          "sha256":  "0796e0eaddeba1129fd51892c8beb9b0cce3ca24dd33441b6c1201b9e3b2f5a6",
+                                                          "bytes":  42829
+                                                      }
+                                                  ]
+                             },
+                             {
+                                 "name":  "gate3-green-env",
+                                 "exit_code":  0,
+                                 "log_path":  "backend/auth-service/build/verification/gate3-green-env/run.log",
+                                 "log_sha256":  "8935efc3ccbbeded3b102b9b0399ac41ca5bac17aefd339c013ec0ea978e686a",
+                                 "log_bytes":  3774,
+                                 "xml_evidence":  [
+                                                      {
+                                                          "path":  "backend\\auth-service\\build\\verification\\gate3-green-env/TEST-com.projecthk5.authservice.security.AuthBootstrapStartupTest.xml",
+                                                          "sha256":  "c51d6b7f9439ae389f26d681d1f828a12e91984663c9e8c2ce6e4354b9228fb9",
+                                                          "bytes":  1020
+                                                      }
+                                                  ]
+                             },
+                             {
+                                 "name":  "gate3-startup",
+                                 "exit_code":  1,
+                                 "log_path":  "backend/auth-service/build/verification/gate3-startup/run.log",
+                                 "log_sha256":  "b2d217742ed7586b9acc89683eac2020cfe05ef75fcbfec8d185c3988a7664a4",
+                                 "log_bytes":  5186
+                             },
+                             {
+                                 "name":  "gate3-startup-fixed",
+                                 "exit_code":  0,
+                                 "log_path":  "backend/auth-service/build/verification/gate3-startup-fixed/run.log",
+                                 "log_sha256":  "bcb449ecb55a67a77ebc8e9ac9a4c64960ddc2a52443b2d7c908a418d2462352",
+                                 "log_bytes":  3774,
+                                 "xml_evidence":  [
+                                                      {
+                                                          "path":  "backend\\auth-service\\build\\verification\\gate3-startup-fixed/TEST-com.projecthk5.authservice.security.AuthBootstrapConfigurationTest.xml",
+                                                          "sha256":  "50247331fab85553151cb52893c619043ef09c6adaeb4854b1aaa5ff43f3beb1",
+                                                          "bytes":  1698
+                                                      },
+                                                      {
+                                                          "path":  "backend\\auth-service\\build\\verification\\gate3-startup-fixed/TEST-com.projecthk5.authservice.security.AuthBootstrapStartupTest.xml",
+                                                          "sha256":  "ac63c8d20acd96653056be2d4f68b89b7a5441a5958a7c6714059fbc3d3576c0",
+                                                          "bytes":  13288
+                                                      }
+                                                  ]
+                             },
+                             {
+                                 "name":  "gate2-status",
+                                 "exit_code":  0,
+                                 "log_path":  "backend/auth-service/build/verification/gate2-status/run.log",
+                                 "log_sha256":  "a8914c39b0055a0d73c4ca30ba7b941a0a7bd1b7bff0a3c6a0432eafb6c9f359",
+                                 "log_bytes":  3774,
+                                 "xml_evidence":  [
+                                                      {
+                                                          "path":  "backend\\auth-service\\build\\verification\\gate2-status/TEST-com.projecthk5.authservice.security.CurrentAccountAuthorityTest.xml",
+                                                          "sha256":  "cb6ad2b31e1fe7095975a09efab7802370214d80e640b811d055f73c25264264",
+                                                          "bytes":  2706
+                                                      }
+                                                  ]
+                             },
+                             {
+                                 "name":  "gate3-complete-startup",
+                                 "exit_code":  0,
+                                 "log_path":  "backend/auth-service/build/verification/gate3-complete-startup/run.log",
+                                 "log_sha256":  "4a4fdce065547aceae1d9d1a04c4b1d9ce7112fdf40f805b1e98fc6099afe64d",
+                                 "log_bytes":  3774,
+                                 "xml_evidence":  [
+                                                      {
+                                                          "path":  "backend\\auth-service\\build\\verification\\gate3-complete-startup/TEST-com.projecthk5.authservice.security.AuthBootstrapStartupTest.xml",
+                                                          "sha256":  "cec3d27d762c97eff3a35414daef7474b0cdcb24f045b80da15811ed2b908e2d",
+                                                          "bytes":  13974
+                                                      }
+                                                  ]
+                             }
+                         ],
+    "tdd_notes":  [
+                      "RED: one new Spring context test failed against unchanged bootstrap source at parent f9dde45 plus the new uncommitted test. Root cause: static System.getenv bypassed the injected fixture environment. This is a testability/configuration seam, not a demonstrated production authentication bypass.",
+                      "GREEN-env: same test passed after binding beans through ConfigurableEnvironment.getSystemEnvironment; production continues to read process environment only.",
+                      "gate3-startup: compile failed due to unsupported AssertJ assertion; no tests ran. Any copied XML in that attempt is stale from the preceding run and excluded from evidence/counts.",
+                      "gate3-startup-fixed: 21 new startup/config plus 5 existing configuration tests passed. gate2-status: 12 authority tests passed. gate3-complete-startup: all 22 new tests passed. These are separate runs, not added to final counts.",
+                      "Final regression ran after code commit f70dbdb; only derived verification receipts were edited during/after the run. No Java/schema/QA source changed."
+                  ],
+    "gates":  {
+                  "gate1":  {
+                                "status":  "PASS",
+                                "source_sha":  "083355be16c4e3ea442ccd861d5f4b40236a0b12",
+                                "receipt":  "20261026-gate1.json",
+                                "counts":  "25 security unit + 28 Auth PG + 5 current-authority PG; zero fail/error/skip; exit 0",
+                                "reviewer_disposition":  "WAITING_TV2_P2_DISPOSITION; original NUL thread untouched"
+                            },
+                  "gate2":  {
+                                "status":  "WAITING_TV1_DECISION",
+                                "proposal":  "20261026-account-policy-proposal.md",
+                                "notes":  "ACTIVE/DISABLED and initial registration state proposed, not approved. Existing explicit QA-active matching denies every other state, including DISABLED/unknown/Seller-like states and stale ADMIN JWT."
+                            },
+                  "gate3":  {
+                                "status":  "SOURCE_VERIFIED_RUNTIME_NOT_ENABLED",
+                                "notes":  "Environment-only bootstrap, opt-in OFF by default; context startup missing/invalid config, no property fallback, sanitized exception chains, current/previous key rotation and retirement tested. Await canonical policy and independent runtime secret/bootstrap review."
+                            },
+                  "gate4":  {
+                                "status":  "BLOCKED_NOT_IMPLEMENTED",
+                                "notes":  "No public Auth HTTP controller/filter registered. Await canonical status/registration decision and security review of credential/work-factor/bootstrap before runtime wiring. Login must include atomic refresh family, cookie, logout, CSRF and throttle; no partial login route."
+                            },
+                  "gate5":  {
+                                "status":  "BLOCKED_NOT_IMPLEMENTED",
+                                "notes":  "No Gateway JWT chain/routes added. Runtime keyring/trust review and Auth dependencies pending. OD-09 method/path/operation/credentials per pair not confirmed; no invented wire API."
+                            }
+              },
+    "skills_read":  [
+                        "codex-evidence-loop",
+                        "spring-boot-backend",
+                        "postgresql-backend",
+                        "mattpocock-skills:tdd (including tests.md, mocking.md)",
+                        "postman:api-engineer",
+                        "ponytail:ponytail"
+                    ],
+    "limits":  [
+                   "Local unit/configuration context and disposable PostgreSQL only. MockMvc/WebTestClient/GitHub CI/live E2E: NOT_RUN; HTTP/Gateway runtime not implemented/enabled.",
+                   "No push, merge, deploy, production migration or API READY declaration. No external messages/reviewer/thread changes.",
+                   "No Product/Cart/Checkout/Inventory/Finance source changes or production flag changes.",
+                   "Untracked .serena and bin directories preserved, not staged. Raw logs/XML remain private under ignored build directories and are not sanitized/modified.",
+                   "Parameter display values omitted from derived testcase names; raw XML remains byte-identical.",
+                   "Gradle deprecation and existing unchecked-test warnings remain; no framework upgrade.",
+                   "HS256 verifiers retain signing capability per accepted ADR; these tests do not grant runtime security signoff."
+               ],
+    "working_directory":  "D:\\CMC\\Project-HK5-Git\\.worktrees\\tv1-auth-runtime-p0"
+}

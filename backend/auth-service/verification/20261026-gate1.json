@@ -11,7 +11,7 @@
                         "postgres":  "postgres:16 (fresh Testcontainers)",
                         "jvm_options":  "-Duser.timezone=UTC -Dapi.version=1.44"
                     },
-    "command":  "./backend/gradlew.bat -p backend --init-script \u003cabsolute-worktree\u003e/tests/security/auth-current-authority.init.gradle -Ptv5AuthAuthoritySources=\u003cabsolute-worktree\u003e/tests/security/auth-current-authority :auth-service:test --tests *security.* --tests *AuthPersistenceTest :auth-service:tv5CurrentAuthorityRegression --rerun-tasks --no-daemon --console=plain",
+    "command":  "./backend/gradlew.bat -p backend --init-script \"D:\\CMC\\Project-HK5-Git\\.worktrees\\tv1-auth-runtime-p0\\tests\\security\\auth-current-authority.init.gradle\" \"-Ptv5AuthAuthoritySources=D:\\CMC\\Project-HK5-Git\\.worktrees\\tv1-auth-runtime-p0\\tests\\security\\auth-current-authority\" :auth-service:test --tests \"*security.*\" --tests \"*AuthPersistenceTest\" :auth-service:tv5CurrentAuthorityRegression --rerun-tasks --no-daemon --console=plain",
     "log":  {
                 "path":  "backend/auth-service/build/verification/gate1/run.log",
                 "sha256":  "7c9a51da90d8532ca772a98d6357112474172d4af0ef100b2410de90757237c1",
@@ -51,8 +51,8 @@
                                      "tokenConsumptionAndChildInsertRollbackTogether()",
                                      "schemaRejectsInvalidRolesEmailsAndMissingAccount()",
                                      "accountPersistsNormalizedEmailRolesAndDurableTaskAtomically()",
-                                     "[1] logout=false",
-                                     "[2] logout=true",
+                                     "[1] (fixture parameters omitted)",
+                                     "[2] (fixture parameters omitted)",
                                      "canonicalUnicodeIsNotRestrictedToAsciiOrCaseFolded()",
                                      "familyLockBlocksOtherTransactionAndLogoutPreventsConsumption()",
                                      "rawUnicodeAliasCannotBypassDatabaseNormalization()",
@@ -61,13 +61,13 @@
                                      "committedDataSurvivesApplicationRestartWithRuntimeFlywayDisabled()",
                                      "twoRotationsSerializeAndReuseCanRevokeCommittedChild()",
                                      "postgresConstraintRejectsExactlyJavaLowercaseChangingScalars()",
-                                     "[1] prefix=ascii",
-                                     "[2] prefix=Ă‰",
-                                     "[3] prefix=Ä°",
-                                     "[4] prefix=ÎŸÎ£",
-                                     "[5] prefix=𐐀",
-                                     "[1] duplicate=false",
-                                     "[2] duplicate=true",
+                                     "[1] (fixture parameters omitted)",
+                                     "[2] (fixture parameters omitted)",
+                                     "[3] (fixture parameters omitted)",
+                                     "[4] (fixture parameters omitted)",
+                                     "[5] (fixture parameters omitted)",
+                                     "[1] (fixture parameters omitted)",
+                                     "[2] (fixture parameters omitted)",
                                      "runtimeHasOnlyExplicitBusinessDmlAndCannotTouchSchemaHistory()",
                                      "migrationRerunsAndValidatesWithRuntimeDdlDisabled()",
                                      "migrationRejectsWrongActorBeforeCreatingBusinessTables()",
@@ -108,9 +108,9 @@
                                      "loginSupportsLegacyShortLengthOnlyWhenMatchingAnExistingHash()",
                                      "full128CodeUnitPasswordWorksAndExcessInputIsRejectedRatherThanTruncated()",
                                      "registrationRejectsWrongLengthOrMalformedUnicodeWithoutNormalization()",
-                                     "[1] password=?abcdefghijkl",
-                                     "[2] password=abcdef?ghijkl",
-                                     "[3] password=abcdefghijkl?",
+                                     "[1] (fixture parameters omitted)",
+                                     "[2] (fixture parameters omitted)",
+                                     "[3] (fixture parameters omitted)",
                                      "acceptedRegistrationPasswordHashesAndVerifiesWithoutPersistingRawValue()",
                                      "multiByteAndLongPasswordNeverSilentlyTruncateAtBcrypt72Bytes()",
                                      "malformedStoredRecordsCannotSelectWeakWorkFactorOrDifferentAlgorithm()"
@@ -174,5 +174,7 @@
                    "Raw log/XML private under ignored build directory; preserved byte-for-byte.",
                    "Docker Desktop was initially stopped; started normally; no volume pruning or production migration.",
                    "No source changes during this run; child #96 and synthetic CI results are not substituted."
-               ]
+               ],
+    "parameter_values_omitted":  true,
+    "working_directory":  "D:\\CMC\\Project-HK5-Git\\.worktrees\\tv1-auth-runtime-p0"
 }
