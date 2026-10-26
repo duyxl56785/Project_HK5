@@ -93,9 +93,9 @@ public class GatewayAuthConfiguration {
                     .route("auth-public-exact", p -> p.path("/api/auth/register", "/api/auth/login",
                                     "/api/auth/refresh", "/api/auth/logout")
                             .and().method(HttpMethod.POST)
-                            .filters(OptIn::removeUntrustedHeaders).uri(upstream))
+                            .uri(upstream))
                     .route("auth-me-exact", p -> p.path("/api/auth/me").and().method(HttpMethod.GET)
-                            .filters(OptIn::removeUntrustedHeaders).uri(upstream))
+                            .uri(upstream))
                     .build();
         }
 
@@ -130,31 +130,20 @@ public class GatewayAuthConfiguration {
             return new CorsWebFilter(source);
         }
 
-        static org.springframework.cloud.gateway.filter.GatewayFilter sanitizeHeaders() {
-            return (exchange, chain) -> {
-                // Spring Web 6.1 / Gateway 4.1 may supply ReadOnlyHttpHeaders even
-                // inside request.mutate().headers(...). Never mutate that backing map.
-                // Copy each value list into a fresh, case-insensitive HttpHeaders map.
-                var safe = new org.springframework.http.HttpHeaders();
-                exchange.getRequest().getHeaders().forEach((name, values) ->
-                        safe.put(name, new ArrayList<>(values)));
-                for (String header : UNTRUSTED_HEADERS) safe.remove(header);
-
-                // Preserve request method, URI, body and native Netty connection while
-                // supplying only the sanitized header snapshot to downstream filters.
-                var request = new org.springframework.http.server.reactive.ServerHttpRequestDecorator(
-                        exchange.getRequest()) {
-                    @Override
-                    public org.springframework.http.HttpHeaders getHeaders() {
-                        return safe;
-                    }
-                };
-                return chain.filter(exchange.mutate().request(request).build());
+        /**
+         * NettyRoutingFilter calls HttpHeadersFilter on OUTBOUND headers before
+         * proxying. Never mutate inbound ReadOnlyHttpHeaders or decorate the
+         * request: both approaches were incompatible with this Spring 6.1 runtime.
+         */
+        @Bean
+        org.springframework.cloud.gateway.filter.headers.HttpHeadersFilter outgoingAuthHeaderSanitizer() {
+            return (headers, exchange) -> {
+                var sanitized = new org.springframework.http.HttpHeaders();
+                headers.forEach((name, values) ->
+                        sanitized.put(name, new ArrayList<>(values)));
+                for (String name : UNTRUSTED_HEADERS) sanitized.remove(name);
+                return sanitized;
             };
-        }
-
-        private static GatewayFilterSpec removeUntrustedHeaders(GatewayFilterSpec filters) {
-            return filters.filter(sanitizeHeaders());
         }
 
         private static String required(ConfigurableEnvironment env, String name) {
