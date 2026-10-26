@@ -35,7 +35,7 @@ class AuthBootstrapStartupTest {
                 AuthBootstrapConfiguration.AUDIENCE, "smart-ecommerce-api",
                 AuthBootstrapConfiguration.CURRENT_KID, "fixture-current",
                 AuthBootstrapConfiguration.CURRENT_KEY, Base64.getEncoder().encodeToString(new byte[32]),
-                AuthBootstrapConfiguration.ACTIVE_STATUS, "QA_EXPLICIT_ACTIVE"));
+                AuthBootstrapConfiguration.ACTIVE_STATUS, "ACTIVE"));
     }
 
     private static ApplicationContextRunner context(Map<String, String> variables,
@@ -107,6 +107,14 @@ class AuthBootstrapStartupTest {
     }
 
     @ParameterizedTest
+    @ValueSource(strings = {"DISABLED", "QA_EXPLICIT_ACTIVE", "active", "APPROVED", "SUSPENDED"})
+    void productionBootstrapRejectsAnyNonActivePolicyValue(String inactive) {
+        var variables = validEnvironment();
+        variables.put(AuthBootstrapConfiguration.ACTIVE_STATUS, inactive);
+        assertStartupRejected(variables);
+    }
+
+    @ParameterizedTest
     @ValueSource(strings = {"kid-only", "key-only", "same-kid", "same-key", "malformed-previous-key"})
     void invalidRotationPreventsStartup(String kind) {
         var variables = validEnvironment();
@@ -155,7 +163,7 @@ class AuthBootstrapStartupTest {
         UUID id = UUID.fromString("11111111-2222-4333-8444-555555555555");
         var accounts = mock(AccountRepository.class);
         when(accounts.findById(id)).thenReturn(Optional.of(new Account(id, "fixture@example.invalid",
-                "fixture-not-a-credential", "QA_EXPLICIT_ACTIVE", Set.of(Account.Role.CUSTOMER), Instant.now())));
+                "fixture-not-a-credential", "ACTIVE", Set.of(Account.Role.CUSTOMER), Instant.now())));
         var current = AuthBootstrapConfiguration.authorityFromEnvironment(accounts, rotated).requireCurrentForIssue(id);
         String oldToken = AuthBootstrapConfiguration.codecFromEnvironment(oldEnvironment, Clock.systemUTC()).issue(current);
         context(rotated, Map.of("hk5.auth.bootstrap.enabled", "true")).run(context -> {
