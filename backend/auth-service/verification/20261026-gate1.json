@@ -1,0 +1,178 @@
+﻿{
+    "source_sha":  "083355be16c4e3ea442ccd861d5f4b40236a0b12",
+    "branch":  "feat/tv1-auth-runtime-p0-20261026",
+    "gate":  "1",
+    "result":  "PASS",
+    "exit_code":  0,
+    "environment":  {
+                        "jdk":  "Oracle JDK 21.0.11",
+                        "gradle":  "8.10",
+                        "docker_engine":  "29.7.2",
+                        "postgres":  "postgres:16 (fresh Testcontainers)",
+                        "jvm_options":  "-Duser.timezone=UTC -Dapi.version=1.44"
+                    },
+    "command":  "./backend/gradlew.bat -p backend --init-script \u003cabsolute-worktree\u003e/tests/security/auth-current-authority.init.gradle -Ptv5AuthAuthoritySources=\u003cabsolute-worktree\u003e/tests/security/auth-current-authority :auth-service:test --tests *security.* --tests *AuthPersistenceTest :auth-service:tv5CurrentAuthorityRegression --rerun-tasks --no-daemon --console=plain",
+    "log":  {
+                "path":  "backend/auth-service/build/verification/gate1/run.log",
+                "sha256":  "7c9a51da90d8532ca772a98d6357112474172d4af0ef100b2410de90757237c1",
+                "bytes":  5640,
+                "created_utc":  "2026-10-26T05:29:28.4380710Z",
+                "last_written_utc":  "2026-10-26T05:31:06.4170178Z"
+            },
+    "sources":  [
+                    {
+                        "path":  "backend/auth-service/src/main/java/com/projecthk5/authservice/security/AuthPasswordHasher.java",
+                        "sha256":  "e9364a3ae03b0ae2e5837b0f81dbc163cae068a1f8ecad1414b45fd1ee728af9"
+                    },
+                    {
+                        "path":  "backend/auth-service/src/test/java/com/projecthk5/authservice/security/AuthPasswordHasherTest.java",
+                        "sha256":  "9493c0a1d28d74813a085810294b45151e04fa481ef9e87d1e349774fc933449"
+                    },
+                    {
+                        "path":  "tests/security/auth-current-authority.init.gradle",
+                        "sha256":  "365bf1f12103b7ed47848e572d66dbd529cbc2c86f90fadbd04dad19e775f077"
+                    },
+                    {
+                        "path":  "tests/security/auth-current-authority/CurrentAccountAuthorityPostgresRegressionTest.java",
+                        "sha256":  "e670f18ad523535db27a14e384226d1f99bcfd78fa04734cda242f9fc62fd51b"
+                    }
+                ],
+    "suites":  [
+                   {
+                       "task":  "test",
+                       "suite":  "com.projecthk5.authservice.AuthPersistenceTest",
+                       "tests":  28,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "cases":  [
+                                     "refreshConstraintsEnforceHashFamilyParentAndAbsoluteExpiry()",
+                                     "allJavaStripCharactersAreRejectedAtSqlEmailBoundaries()",
+                                     "tokenConsumptionAndChildInsertRollbackTogether()",
+                                     "schemaRejectsInvalidRolesEmailsAndMissingAccount()",
+                                     "accountPersistsNormalizedEmailRolesAndDurableTaskAtomically()",
+                                     "[1] logout=false",
+                                     "[2] logout=true",
+                                     "canonicalUnicodeIsNotRestrictedToAsciiOrCaseFolded()",
+                                     "familyLockBlocksOtherTransactionAndLogoutPreventsConsumption()",
+                                     "rawUnicodeAliasCannotBypassDatabaseNormalization()",
+                                     "accountRolesAndProvisioningRollbackTogether()",
+                                     "consumeKeepsFamilyLockUntilCallerCommits()",
+                                     "committedDataSurvivesApplicationRestartWithRuntimeFlywayDisabled()",
+                                     "twoRotationsSerializeAndReuseCanRevokeCommittedChild()",
+                                     "postgresConstraintRejectsExactlyJavaLowercaseChangingScalars()",
+                                     "[1] prefix=ascii",
+                                     "[2] prefix=Ă‰",
+                                     "[3] prefix=Ä°",
+                                     "[4] prefix=ÎŸÎ£",
+                                     "[5] prefix=𐐀",
+                                     "[1] duplicate=false",
+                                     "[2] duplicate=true",
+                                     "runtimeHasOnlyExplicitBusinessDmlAndCannotTouchSchemaHistory()",
+                                     "migrationRerunsAndValidatesWithRuntimeDdlDisabled()",
+                                     "migrationRejectsWrongActorBeforeCreatingBusinessTables()",
+                                     "unicodeDuplicateLookupAndCanonicalSqlInsertUseSameUniqueKey()",
+                                     "consumptionRequiresActiveUnexpiredTokenAndTransaction()",
+                                     "committedDataSurvivesPostgresRestart()"
+                                 ],
+                       "raw_path":  "backend\\auth-service\\build\\verification\\gate1\\test/TEST-com.projecthk5.authservice.AuthPersistenceTest.xml",
+                       "sha256":  "49d82e758734552bcb0089589052d18ea96fef9c0d69ba4ed37e71e48f0f33d7"
+                   },
+                   {
+                       "task":  "test",
+                       "suite":  "com.projecthk5.authservice.security.AuthBootstrapConfigurationTest",
+                       "tests":  5,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "cases":  [
+                                     "explicitCurrentAndPreviousKeysAreAcceptedWithoutFallback()",
+                                     "noImplicitIssuerKeyOrActiveStatusCanInitialize()",
+                                     "weakMalformedOrPaddedKeysFailClosedWithoutSecretDisclosure()",
+                                     "invalidOrPartialRotationCannotBeEnabled()",
+                                     "activeStatusMustBeExplicitExactAndBounded()"
+                                 ],
+                       "raw_path":  "backend\\auth-service\\build\\verification\\gate1\\test/TEST-com.projecthk5.authservice.security.AuthBootstrapConfigurationTest.xml",
+                       "sha256":  "815cbf4b9e509d9610c2f41ab4032705a730095b9535e51dd54f3599f3df3a1c"
+                   },
+                   {
+                       "task":  "test",
+                       "suite":  "com.projecthk5.authservice.security.AuthPasswordHasherTest",
+                       "tests":  11,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "cases":  [
+                                     "trailingNulCannotAuthenticateAsTheAcceptedPassword()",
+                                     "tamperedSaltOrDigestCannotAuthenticate()",
+                                     "loginSupportsLegacyShortLengthOnlyWhenMatchingAnExistingHash()",
+                                     "full128CodeUnitPasswordWorksAndExcessInputIsRejectedRatherThanTruncated()",
+                                     "registrationRejectsWrongLengthOrMalformedUnicodeWithoutNormalization()",
+                                     "[1] password=?abcdefghijkl",
+                                     "[2] password=abcdef?ghijkl",
+                                     "[3] password=abcdefghijkl?",
+                                     "acceptedRegistrationPasswordHashesAndVerifiesWithoutPersistingRawValue()",
+                                     "multiByteAndLongPasswordNeverSilentlyTruncateAtBcrypt72Bytes()",
+                                     "malformedStoredRecordsCannotSelectWeakWorkFactorOrDifferentAlgorithm()"
+                                 ],
+                       "raw_path":  "backend\\auth-service\\build\\verification\\gate1\\test/TEST-com.projecthk5.authservice.security.AuthPasswordHasherTest.xml",
+                       "sha256":  "47f1fc017d5ad7ed32a9b1074e068a14120fb54ffc00f511e7c5c3ee9c4e1ba9"
+                   },
+                   {
+                       "task":  "test",
+                       "suite":  "com.projecthk5.authservice.security.CurrentAccountAuthorityTest",
+                       "tests":  5,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "cases":  [
+                                     "inactiveOrMissingAccountReturns401ButDependencyFailureReturns503()",
+                                     "staleJwtAdminIsDeniedOnceCurrentGrantIsRemoved()",
+                                     "currentGrantCannotElevateAnOldTokenMissingTheRole()",
+                                     "activeStatusIsExplicitAndNoRawPrincipalCanBeCreatedFromClientData()",
+                                     "lazyRolesReadExceptionMapsTo503WithoutMaskingInactiveAccounts()"
+                                 ],
+                       "raw_path":  "backend\\auth-service\\build\\verification\\gate1\\test/TEST-com.projecthk5.authservice.security.CurrentAccountAuthorityTest.xml",
+                       "sha256":  "b81b3752b3ed2a0fe0cd5b5b118479db8622d3b337524ebbe1d7bc3274c08170"
+                   },
+                   {
+                       "task":  "test",
+                       "suite":  "com.projecthk5.authservice.security.Hk5JwtCodecTest",
+                       "tests":  4,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "cases":  [
+                                     "acceptsLocalPreviousKeyUntilRotationRetirementAndRejectsExpired()",
+                                     "rejectsTamperingUnknownKeyAndWrongIssuerAudience()",
+                                     "issuesExactContractAndVerifiesCurrentRoleAfterDatabaseRead()",
+                                     "missingWeakOrExcessKeysCannotInitializeAndAbsentConfigNeverDefaults()"
+                                 ],
+                       "raw_path":  "backend\\auth-service\\build\\verification\\gate1\\test/TEST-com.projecthk5.authservice.security.Hk5JwtCodecTest.xml",
+                       "sha256":  "9e1ca2cd8b280172a77c641b9e05b68273caf8a6dccbbde84f381fdbae847c95"
+                   },
+                   {
+                       "task":  "tv5CurrentAuthorityRegression",
+                       "suite":  "com.projecthk5.tv5authqa.CurrentAccountAuthorityPostgresRegressionTest",
+                       "tests":  5,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "cases":  [
+                                     "transactionalProxyLoadsLazyRolesAndCurrentRevocationOverridesSignedAdmin()",
+                                     "currentGrantCannotElevateOldTokenButFreshlyIssuedTokenCanUseIt()",
+                                     "unavailableLazyRoleQueryIsAlso503RatherThanLeakingPersistenceFailure()",
+                                     "unavailableAccountQueryIs503RatherThanAnInvalidAccount()",
+                                     "inactiveAndMissingCurrentAccountsReturn401()"
+                                 ],
+                       "raw_path":  "backend\\auth-service\\build\\verification\\gate1\\tv5CurrentAuthorityRegression/TEST-com.projecthk5.tv5authqa.CurrentAccountAuthorityPostgresRegressionTest.xml",
+                       "sha256":  "2087924982caaf308f3c5ed5b81927f4535cd62556668f83d73c973ac869090b"
+                   }
+               ],
+    "limits":  [
+                   "Local unit and disposable PostgreSQL only; no HTTP/Gateway/E2E or GitHub CI execution.",
+                   "Raw log/XML private under ignored build directory; preserved byte-for-byte.",
+                   "Docker Desktop was initially stopped; started normally; no volume pruning or production migration.",
+                   "No source changes during this run; child #96 and synthetic CI results are not substituted."
+               ]
+}
