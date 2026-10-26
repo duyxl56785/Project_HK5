@@ -33,7 +33,7 @@ Password hash lịch sử tạo từ đầu vào chứa NUL (nếu có) là vấ
 ## 4. Implementation gate
 
 - Phê duyệt ở đây **chỉ** chốt Account status policy và public register initial status; không phê duyệt credential strength, rate limiter, Origin/CSRF, keyring or route behavior nếu chưa được review.
-- Cần TV2 security review PR #101 (`AuthBootstrapConfiguration`, startup/rotation/config tests, compatibility), và TV2 giải quyết finding NUL trên #80 sau khi kiểm tra 58-case exact-parent receipt. 
+- Cần TV2 security review PR #101 (`AuthBootstrapConfiguration`, startup/rotation/config tests, compatibility), và TV2 giải quyết finding NUL trên #80 sau khi kiểm tra 58-case exact-parent receipt.
 - Sau review: lập PR/commits Auth API gồm transactional register; login + refresh-family/cookie contract; refresh/logout; verified `/api/auth/me`, servlet security filter, MockMvc + PostgreSQL negative/security tests. Gateway reactive JWT + allowlist, header stripping, CORS và downstream verification thuộc gate kế tiếp.
 - Không public route khi chưa có full security/refresh/CSRF/rate-limit checks; không tự mở OD-09 internal pair, service khác, Finance/Inventory flags; không merge vào main, không deploy/migrate production.
 

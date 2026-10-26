@@ -79,7 +79,8 @@ class AuthBootstrapConfigurationTest {
     void activeStatusMustBeExplicitExactAndBounded() {
         var env = valid();
         var accounts = mock(AccountRepository.class);
-        for (String status : new String[]{"", " ACTIVE", "ACTIVE ", "x".repeat(33)}) {
+        for (String status : new String[]{"", " ACTIVE", "ACTIVE ", "DISABLED", "QA_EXPLICIT_ACTIVE",
+                "active", "APPROVED", "SUSPENDED", "x".repeat(33)}) {
             env.put(AuthBootstrapConfiguration.ACTIVE_STATUS, status);
             assertThrows(IllegalArgumentException.class,
                     () -> AuthBootstrapConfiguration.authorityFromEnvironment(accounts, env));

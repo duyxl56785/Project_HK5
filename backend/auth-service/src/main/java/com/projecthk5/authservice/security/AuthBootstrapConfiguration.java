@@ -66,8 +66,8 @@ public class AuthBootstrapConfiguration {
     static CurrentAccountAuthority authorityFromEnvironment(AccountRepository accounts, Map<String, ?> env) {
         Objects.requireNonNull(env);
         String status = required(env, ACTIVE_STATUS);
-        if (status.length() > 32) throw invalidConfig();
-        // Do not infer ACTIVE from schema or silently coerce status values.
+        if (!"ACTIVE".equals(status)) throw invalidConfig();
+        // Approved TV1 policy: configuration cannot redefine an inactive state as active.
         return new CurrentAccountAuthority(accounts, status);
     }
 
