@@ -51,6 +51,26 @@ public class ProductPersistenceAdapter {
         }
     }
 
+    /** Lifecycle decisions require the current row even if an outer REQUIRED caller cached an older entity. */
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    public Optional<StoredProduct> findFreshById(UUID id) {
+        require(id != null, "Product ID is required");
+        try {
+            Optional<ProductEntity> entity = repository.findById(id);
+            entity.ifPresent(entityManager::refresh);
+            return entity.map(ProductPersistenceAdapter::stored);
+        } catch (EntityNotFoundException deleted) {
+            return Optional.empty();
+        } catch (PersistenceException failure) {
+            DataAccessException translated = EntityManagerFactoryUtils.convertJpaAccessExceptionIfPossible(failure);
+            if (translated != null) throw translate(translated);
+            throw new ProductPersistenceException(ProductPersistenceException.Code.UNAVAILABLE,
+                    "Product persistence is unavailable", failure);
+        } catch (DataAccessException failure) {
+            throw translate(failure);
+        }
+    }
+
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public Optional<StoredProduct> findBySku(String sku) {
         require(sku != null, "Inventory SKU is required");
