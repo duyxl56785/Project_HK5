@@ -320,3 +320,13 @@ Evidence: [R2 report and test commands](../reports/TV5_PR_REVIEW_FOLLOWUP_2026-1
 - [ ]IndependentcodePRreview/CI;human89/90/91/94decisions,ownerA→B→Cactualintegrationchecks;Finance/COD/HTTP/currentauthority/liveUATgatesremain. Issue5/12 PARTIAL.
 
 [Code/evidence/inventory](../reports/TV5_INDEPENDENT_QA_CODE_2026-10-25.md), [Financecommittedrun](../reports/evidence/tv5-independent-code-20261025/finance-committed.json), [auditoffline](../reports/evidence/tv5-independent-code-20261025/audit-offline.json), [livemetadata](../reports/evidence/tv5-independent-code-20261025/audit-live.json).
+
+
+## TV5-BACKLOG-20261026 — formal Product approvals and new Auth/Gateway QA
+
+This dated checkpoint supersedes earlier waiting labels only for scopes verified here; history stays intact. [All21OPENPR/reviewers, exact source/tests/remainingowner gates](../reports/TV5_ALL_PR_UNBLOCK_2026-10-26.md).
+
+- [x] TV5 user-authorized formalAPPROVED #89@17f98f4/#90@6a290ff/#91@4915c37/#94@96d59ca, API state/reviewer/commit readback verified; no duplicate. No89/90/91merge yet;94separate.
+- [x] NewTV5exact101/e45:95PASS/0FAIL/2SKIP;102/a4:137PASS/0FAIL/2SKIP (22Gateway,18realembedded/loopbackupstream);98/d53:3unitPASS;100/8bf:27offlinePASS+21/21metadatacomplete. Each invocation separate, rawlogs/XMLprivate/hashverified; skippedexistingDBprovision/inventory areNOT_RUN, notPASS.
+- [x]80NULnowintegratedtofeature083andTV2threadresolved; oldTV2formalCRstillneedsdisposition.102Gatewaytechnicalfixverifiedwithcurrenttests, TV2P1thread/CRstillitsown.86earlierTV5RED-GREENnotrerun; avoidduplicatehandoff.99CIgreen/nofindings/sourceunchanged;100CI_NOT_CONFIGURED (notrequiredbycurrentrules); existingownerreviewrequestsretained.
+- [ ] ActualTV2integration89→newmainPG/unit→90→newmainPG/unit→91→newmainPG/unit; human/ownerreview99/100/93,80/86/102decisions; realAuth/servicepair/House/C01E01/C06/COD/settlement/liveUAT gates. FullM01PARTIAL/PENDING, FinanceBLOCKED, flagsunchanged. Productpricesliceapprovalnotreopened; Issues5/12OPEN/PARTIAL.

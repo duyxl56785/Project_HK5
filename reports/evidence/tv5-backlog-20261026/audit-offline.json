@@ -1,0 +1,26 @@
+{
+  "kind": "DERIVED SUMMARY; raw output private/hash-preserved",
+  "source": "8bf9f12e1a7df92b77f8a506fba5e1907a4f1c6c",
+  "command": [
+    "C:\\Users\\Admin\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "scripts/qa/tests",
+    "-v"
+  ],
+  "startedUtc": "2026-10-26T14:40:12.938434+00:00",
+  "completedUtc": "2026-10-26T14:40:14.718262+00:00",
+  "exitCode": 0,
+  "PASS": 27,
+  "FAIL": 0,
+  "ERROR": 0,
+  "rawArtifacts": [
+    {
+      "localPath": ".verification/tv5-backlog-20261026/tool-offline/runtime.log",
+      "bytes": 4906,
+      "sha256": "51e2b186e8a5fac6a2bf1ceffdc824c856b2393709099f4fdbd5e07465d9f838"
+    }
+  ]
+}
