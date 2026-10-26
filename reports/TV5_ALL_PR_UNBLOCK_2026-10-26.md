@@ -93,3 +93,17 @@ Full M01 **PARTIAL/PENDING**, Finance production **BLOCKED**, flags OFF/unchange
 - [x] New101/102/98tests and100offline/live executed, logs/XML preserved, source/hash/counts reconciled.
 - [x]99unchanged source/CI/raw hashes,100review/security/optionalCI,93docs/RTM/checklist/Finance ledger checked.
 - [ ] TV2/TV1/TV3/TV4 remaining reviews and actualpostmerge/runtime/business gates; Issues #5/#12 OPEN/PARTIAL.
+
+
+## E. Late owner feedback — readback after publication, 26/10/2026
+
+This section supersedes only the initial snapshot's pending-request/open-thread labels. Source heads and TV5 test results above remain unchanged. [Owner receipt/links](evidence/tv5-backlog-20261026/late-owner-receipt.json).
+
+- **#86:** TV2 independently verified current28a (25suitePASS/typecheck/build plus separate8probe with3overlap) and [resolved its original P1](https://github.com/duyxl56785/Project_HK5/pull/86#discussion_r4378583543). No open threads/request now; **older formalCHANGES_REQUESTED remains effective**, not replaced by COMMENT.
+- **#102:** TV2 independently verified currenta4 (152PASS/2SKIP in its own invocation incl15privateGatewayprobes), and [resolved its last GatewayP1](https://github.com/duyxl56785/Project_HK5/pull/102#discussion_r4378581969). All3TV2threads resolved. **Older formalCHANGES_REQUESTED@62d remains effective**; only TV2 may change its decision under its review scope. No duplicate fix/retest/thread-resolution request is needed. TV5's later COMMENT receives an appended correction because its first wording used the earlier thread snapshot; original text/history is preserved.
+- **#99:** [TV2 COMMENT at current446](https://github.com/duyxl56785/Project_HK5/pull/99#pullrequestreview-5653851066) reports independent141PASS/no new defect. Remaining requested reviewers are **TV3 and TV4**; not an unanswered TV2 request. Formal review still REQUIRED.
+- **#100:** TV1 and TV2 now both COMMENT at unchanged8bf; TV2 reports27offlinePASS/no defect. No requested reviewers remain; formal review still REQUIRED. Preserve source reviews, do not re-request just because COMMENT consumed the request. CI_NOT_CONFIGURED remains accurate.
+- **#93:** TV2 COMMENT verifieddd69, then TV5 publishedd925 with11newdocs/evidence paths. TV2 re-requested **once for that substantial delta**, no removal event. This later receipt-only correction retains the active request without another notification. Old bffeAPPROVED is not current-delta review.
+- **Final metadata readback:**86total/21OPEN/4Draft/63MERGED/2CLOSED-unmerged; no currentCI FAIL, no conflict, no activeTV5request/CR/ownthread. FormalCRPRs80/86/102 remain distinct from resolved findings.89/90/91notmerged;94separate. TV2 owns nextintegration/decision; issues5/12 remainOPEN/PARTIAL and FinanceBLOCKED.
+
+TV2 case counts above are **other-member reported evidence**, not new TV5 executions, not independently raw-hash-verified by TV5 and not summed with TV5/CI or across snapshots. No source code, tests, flags, policy signatures or other-reviewer decisions were edited for this correction.

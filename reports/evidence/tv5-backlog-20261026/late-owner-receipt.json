@@ -1,0 +1,222 @@
+{
+  "kind": "DERIVED late GitHub owner feedback/readback, not another TV5 test execution",
+  "verifiedAtUtc": "2026-10-26T14:58:50.048648+00:00",
+  "PRs": [
+    {
+      "PR": 86,
+      "head": "28a8abcd5cf76b298e1e6b817da16337ba322ec6",
+      "requested": [],
+      "decision": "CHANGES_REQUESTED",
+      "opinions": [
+        {
+          "author": {
+            "login": "duyxl56785"
+          },
+          "state": "CHANGES_REQUESTED",
+          "submittedAt": "2026-10-25T13:17:48Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/86#pullrequestreview-5643356013",
+          "commit": {
+            "oid": "3c233193825a6b6fb46206586b3191cc4422bcf6"
+          }
+        }
+      ],
+      "threads": [
+        {
+          "id": "PRRT_kwDOVGqk_M6vuvHB",
+          "resolved": true,
+          "path": "frontend/src/features/checkout/CheckoutCodView.test.mjs",
+          "lastReply": {
+            "author": {
+              "login": "duyxl56785"
+            },
+            "url": "https://github.com/duyxl56785/Project_HK5/pull/86#discussion_r4370970892",
+            "createdAt": "2026-10-25T13:17:38Z",
+            "originalCommit": {
+              "oid": "ec8d881e8da5f7497aef7c4ad6018b215cf4a059"
+            },
+            "commit": {
+              "oid": "28a8abcd5cf76b298e1e6b817da16337ba322ec6"
+            }
+          }
+        },
+        {
+          "id": "PRRT_kwDOVGqk_M6wBlBb",
+          "resolved": true,
+          "path": "frontend/src/features/checkout/CheckoutCodView.tsx",
+          "lastReply": {
+            "author": {
+              "login": "duyxl56785"
+            },
+            "url": "https://github.com/duyxl56785/Project_HK5/pull/86#discussion_r4378583543",
+            "createdAt": "2026-10-26T14:42:43Z",
+            "originalCommit": {
+              "oid": "3c233193825a6b6fb46206586b3191cc4422bcf6"
+            },
+            "commit": {
+              "oid": "3c233193825a6b6fb46206586b3191cc4422bcf6"
+            }
+          }
+        }
+      ],
+      "reviews": [
+        {
+          "author": "duyxl56785",
+          "state": "COMMENTED",
+          "head": "28a8abcd5cf76b298e1e6b817da16337ba322ec6",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/86#pullrequestreview-5653825731",
+          "at": "2026-10-26T14:42:43Z"
+        },
+        {
+          "author": "duyxl56785",
+          "state": "COMMENTED",
+          "head": "28a8abcd5cf76b298e1e6b817da16337ba322ec6",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/86#pullrequestreview-5653848786",
+          "at": "2026-10-26T14:44:07Z"
+        }
+      ]
+    },
+    {
+      "PR": 99,
+      "head": "446ae44da90832df534b6e37150f26a71f2adf25",
+      "requested": [
+        "tranvanchinhbg2006-alt",
+        "phamthecuong2022006-alt"
+      ],
+      "decision": "REVIEW_REQUIRED",
+      "opinions": [],
+      "threads": [],
+      "reviews": [
+        {
+          "author": "duyxl56785",
+          "state": "COMMENTED",
+          "head": "446ae44da90832df534b6e37150f26a71f2adf25",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/99#pullrequestreview-5653851066",
+          "at": "2026-10-26T14:44:15Z"
+        }
+      ]
+    },
+    {
+      "PR": 100,
+      "head": "8bf9f12e1a7df92b77f8a506fba5e1907a4f1c6c",
+      "requested": [],
+      "decision": "REVIEW_REQUIRED",
+      "opinions": [],
+      "threads": [],
+      "reviews": [
+        {
+          "author": "lexuanbao258-collab",
+          "state": "COMMENTED",
+          "head": "8bf9f12e1a7df92b77f8a506fba5e1907a4f1c6c",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/100#pullrequestreview-5644435624",
+          "at": "2026-10-25T17:47:39Z"
+        },
+        {
+          "author": "duyxl56785",
+          "state": "COMMENTED",
+          "head": "8bf9f12e1a7df92b77f8a506fba5e1907a4f1c6c",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/100#pullrequestreview-5653850129",
+          "at": "2026-10-26T14:44:12Z"
+        }
+      ]
+    },
+    {
+      "PR": 102,
+      "head": "a4d63600d1c72712391566ac04d794149eab0c59",
+      "requested": [],
+      "decision": "CHANGES_REQUESTED",
+      "opinions": [
+        {
+          "author": {
+            "login": "duyxl56785"
+          },
+          "state": "CHANGES_REQUESTED",
+          "submittedAt": "2026-10-26T14:04:28Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/102#pullrequestreview-5653210933",
+          "commit": {
+            "oid": "62d7a9a7f743e4c6818d3adeb3674941a742f53c"
+          }
+        }
+      ],
+      "threads": [
+        {
+          "id": "PRRT_kwDOVGqk_M6wMHze",
+          "resolved": true,
+          "path": "backend/auth-service/src/main/java/com/projecthk5/authservice/runtime/AuthSessionService.java",
+          "lastReply": {
+            "author": {
+              "login": "duyxl56785"
+            },
+            "url": "https://github.com/duyxl56785/Project_HK5/pull/102#discussion_r4377360366",
+            "createdAt": "2026-10-26T12:48:09Z",
+            "originalCommit": {
+              "oid": "117e62c4172496917acae688534a70481e883111"
+            },
+            "commit": {
+              "oid": "a4d63600d1c72712391566ac04d794149eab0c59"
+            }
+          }
+        },
+        {
+          "id": "PRRT_kwDOVGqk_M6wMHzh",
+          "resolved": true,
+          "path": "backend/api-gateway/src/main/java/com/projecthk5/gateway/GatewayAuthConfiguration.java",
+          "lastReply": {
+            "author": {
+              "login": "duyxl56785"
+            },
+            "url": "https://github.com/duyxl56785/Project_HK5/pull/102#discussion_r4378581969",
+            "createdAt": "2026-10-26T14:42:34Z",
+            "originalCommit": {
+              "oid": "117e62c4172496917acae688534a70481e883111"
+            },
+            "commit": {
+              "oid": "117e62c4172496917acae688534a70481e883111"
+            }
+          }
+        },
+        {
+          "id": "PRRT_kwDOVGqk_M6wMHzj",
+          "resolved": true,
+          "path": "backend/auth-service/src/main/java/com/projecthk5/authservice/runtime/AuthSessionService.java",
+          "lastReply": {
+            "author": {
+              "login": "duyxl56785"
+            },
+            "url": "https://github.com/duyxl56785/Project_HK5/pull/102#discussion_r4377360972",
+            "createdAt": "2026-10-26T12:48:14Z",
+            "originalCommit": {
+              "oid": "117e62c4172496917acae688534a70481e883111"
+            },
+            "commit": {
+              "oid": "a4d63600d1c72712391566ac04d794149eab0c59"
+            }
+          }
+        }
+      ],
+      "reviews": [
+        {
+          "author": "duyxl56785",
+          "state": "COMMENTED",
+          "head": "a4d63600d1c72712391566ac04d794149eab0c59",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/102#pullrequestreview-5653847652",
+          "at": "2026-10-26T14:44:03Z"
+        },
+        {
+          "author": "nguyenminhduy090-alt",
+          "state": "COMMENTED",
+          "head": "a4d63600d1c72712391566ac04d794149eab0c59",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/102#pullrequestreview-5654013280",
+          "at": "2026-10-26T14:53:31Z"
+        }
+      ]
+    }
+  ],
+  "TV2ReportedResults": {
+    "86": "25 suite PASS, typecheck/build PASS; separate8probe includes3overlap, not8new; raw private/unverified by TV5",
+    "99": "109unit+29PG+3diagnostic=141PASS, independentTV2; raw private/unverified by TV5",
+    "100": "27offlinePASS, independentTV2; COMMENT notAPPROVED",
+    "102": "152PASS/2SKIPPED in TV2 invocation including15private probes; not summed withTV5137, raw private/unverified byTV5"
+  },
+  "disposition": "86 and102 threads resolved byTV2; formalCR remains effective on80/86/102; no duplicate review requests after current-sourceCOMMENT",
+  "originalDocsCommit": "d9257dc3f3c4a40ae3a29f46f0a462b8a8e5721d"
+}
