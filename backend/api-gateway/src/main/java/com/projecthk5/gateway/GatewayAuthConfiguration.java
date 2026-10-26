@@ -132,12 +132,24 @@ public class GatewayAuthConfiguration {
 
         static org.springframework.cloud.gateway.filter.GatewayFilter sanitizeHeaders() {
             return (exchange, chain) -> {
-                // Use a writable request builder, not Gateway's RemoveRequestHeader
-                // mutation of ReadOnlyHttpHeaders (Spring Web 6.1 / Gateway 4.1).
-                var sanitized = exchange.getRequest().mutate().headers(headers -> {
-                    for (String header : UNTRUSTED_HEADERS) headers.remove(header);
-                }).build();
-                return chain.filter(exchange.mutate().request(sanitized).build());
+                // Spring Web 6.1 / Gateway 4.1 may supply ReadOnlyHttpHeaders even
+                // inside request.mutate().headers(...). Never mutate that backing map.
+                // Copy each value list into a fresh, case-insensitive HttpHeaders map.
+                var safe = new org.springframework.http.HttpHeaders();
+                exchange.getRequest().getHeaders().forEach((name, values) ->
+                        safe.put(name, new ArrayList<>(values)));
+                for (String header : UNTRUSTED_HEADERS) safe.remove(header);
+
+                // Preserve request method, URI, body and native Netty connection while
+                // supplying only the sanitized header snapshot to downstream filters.
+                var request = new org.springframework.http.server.reactive.ServerHttpRequestDecorator(
+                        exchange.getRequest()) {
+                    @Override
+                    public org.springframework.http.HttpHeaders getHeaders() {
+                        return safe;
+                    }
+                };
+                return chain.filter(exchange.mutate().request(request).build());
             };
         }
 
