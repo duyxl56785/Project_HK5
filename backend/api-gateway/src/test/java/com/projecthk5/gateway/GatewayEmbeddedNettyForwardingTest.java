@@ -66,7 +66,9 @@ class GatewayEmbeddedNettyForwardingTest {
             request.getRequestHeaders().forEach((name, values) ->
                     headers.put(name, List.copyOf(values)));
             observed.add(headers);
-            request.getRequestBody().transferTo(java.io.OutputStream.nullOutputStream());
+            // No body is required by this dummy endpoint. Do not block reading
+            // inbound streams: a proxy may keep the client request stream open
+            // until an upstream response is received (request/response deadlock).
             byte[] response = "forwarded".getBytes(StandardCharsets.UTF_8);
             request.getResponseHeaders().set("Content-Type", "text/plain");
             request.sendResponseHeaders(200, response.length);
