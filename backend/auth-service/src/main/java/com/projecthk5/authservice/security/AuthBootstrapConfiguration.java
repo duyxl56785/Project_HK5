@@ -12,6 +12,7 @@ import javax.crypto.spec.SecretKeySpec;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.ConfigurableEnvironment;
 
 /**
  * Opt-in Auth service keyring and current-account authority bootstrap.
@@ -30,16 +31,16 @@ public class AuthBootstrapConfiguration {
     static final String ACTIVE_STATUS = "HK5_AUTH_ACTIVE_STATUS";
 
     @Bean
-    Hk5JwtCodec hk5JwtCodec() {
-        return codecFromEnvironment(System.getenv(), Clock.systemUTC());
+    Hk5JwtCodec hk5JwtCodec(ConfigurableEnvironment environment) {
+        return codecFromEnvironment(environment.getSystemEnvironment(), Clock.systemUTC());
     }
 
     @Bean
-    CurrentAccountAuthority hk5CurrentAccountAuthority(AccountRepository accounts) {
-        return authorityFromEnvironment(accounts, System.getenv());
+    CurrentAccountAuthority hk5CurrentAccountAuthority(AccountRepository accounts, ConfigurableEnvironment environment) {
+        return authorityFromEnvironment(accounts, environment.getSystemEnvironment());
     }
 
-    static Hk5JwtCodec codecFromEnvironment(Map<String, String> env, Clock clock) {
+    static Hk5JwtCodec codecFromEnvironment(Map<String, ?> env, Clock clock) {
         Objects.requireNonNull(env);
         String issuer = required(env, ISSUER);
         String audience = required(env, AUDIENCE);
@@ -62,7 +63,7 @@ public class AuthBootstrapConfiguration {
         return new Hk5JwtCodec(issuer, audience, currentKid, keys, Objects.requireNonNull(clock));
     }
 
-    static CurrentAccountAuthority authorityFromEnvironment(AccountRepository accounts, Map<String, String> env) {
+    static CurrentAccountAuthority authorityFromEnvironment(AccountRepository accounts, Map<String, ?> env) {
         Objects.requireNonNull(env);
         String status = required(env, ACTIVE_STATUS);
         if (status.length() > 32) throw invalidConfig();
@@ -86,15 +87,16 @@ public class AuthBootstrapConfiguration {
         }
     }
 
-    private static String required(Map<String, String> env, String name) {
+    private static String required(Map<String, ?> env, String name) {
         String value = optional(env, name);
         if (value == null) throw invalidConfig();
         return value;
     }
 
-    private static String optional(Map<String, String> env, String name) {
-        String value = env.get(name);
-        if (value == null) return null;
+    private static String optional(Map<String, ?> env, String name) {
+        Object raw = env.get(name);
+        if (raw == null) return null;
+        if (!(raw instanceof String value)) throw invalidConfig();
         if (value.isBlank() || !value.equals(value.strip())) throw invalidConfig();
         return value;
     }
