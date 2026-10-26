@@ -14,6 +14,7 @@ import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.UUID;
@@ -32,10 +33,11 @@ import org.springframework.boot.web.reactive.context.StandardReactiveWebEnvironm
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.MapPropertySource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 /**
- * Real Netty-bound Gateway + WebTestClient + separate JDK HTTP upstream.
+ * Real Netty-bound Gateway + WebTestClient + separate HTTP upstream.
  * Uses production route/decoder/CORS/security beans, not MockServerHttpRequest.
  * Fixture-only process environment: no deployment secrets or production flags.
  */
@@ -50,24 +52,27 @@ class GatewayEmbeddedNettyForwardingTest {
 
     // StandardReactiveWebEnvironment calls getSystemEnvironment while constructing.
     private static volatile Map<String, Object> fixtureProcessEnv = Map.of();
-    private final ConcurrentLinkedQueue<Map<String, List<String>>> observed = new ConcurrentLinkedQueue<>();
+    private record ForwardedRequest(String method, String uri, Map<String, List<String>> headers, String body) {}
+
+    private final ConcurrentLinkedQueue<ForwardedRequest> observed = new ConcurrentLinkedQueue<>();
     private reactor.netty.DisposableServer upstream;
     private ConfigurableApplicationContext gateway;
     private WebTestClient client;
 
     @BeforeAll
     void startRealServers() throws Exception {
-        // Use a nonblocking Reactor Netty dummy upstream to avoid the JDK HTTP
-        // handler's request/response stream ordering interfering with Gateway.
         upstream = reactor.netty.http.server.HttpServer.create().host("127.0.0.1").port(0)
                 .handle((request, response) -> {
                     Map<String, List<String>> headers = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
                     request.requestHeaders().forEach(entry -> headers
                             .computeIfAbsent(entry.getKey(), key -> new ArrayList<>())
                             .add(entry.getValue()));
-                    observed.add(headers);
-                    return response.status(200).header("Content-Type", "text/plain")
-                            .sendString(reactor.core.publisher.Mono.just("forwarded")).then();
+                    return request.receive().aggregate().asString().defaultIfEmpty("")
+                            .flatMap(body -> {
+                                observed.add(new ForwardedRequest(request.method().name(), request.uri(), headers, body));
+                                return response.status(200).header("Content-Type", "text/plain")
+                                        .sendString(reactor.core.publisher.Mono.just("forwarded")).then();
+                            });
                 }).bindNow(java.time.Duration.ofSeconds(10));
 
         Map<String, Object> runtime = new HashMap<>();
@@ -115,6 +120,7 @@ class GatewayEmbeddedNettyForwardingTest {
         var http = java.net.http.HttpClient.newHttpClient();
         var request = java.net.http.HttpRequest.newBuilder()
                 .uri(java.net.URI.create("http://127.0.0.1:" + upstream.port() + "/direct"))
+                .timeout(java.time.Duration.ofSeconds(5))
                 .GET().build();
         var result = http.send(request, java.net.http.HttpResponse.BodyHandlers.ofString());
         assertEquals(200, result.statusCode(), "Netty dummy upstream did not respond");
@@ -126,21 +132,23 @@ class GatewayEmbeddedNettyForwardingTest {
     @ValueSource(strings = {"/api/auth/register", "/api/auth/login", "/api/auth/refresh", "/api/auth/logout"})
     void actualNettyPublicMutationsForwardWithout500AndStripAllNineSpoofedHeaders(String path) {
         observed.clear();
+        String body = path.endsWith("register") || path.endsWith("login")
+                ? "{\"email\":\"fixture@example.invalid\",\"password\":\"fixture-only\"}" : "";
         var request = client.post().uri(path)
                 .header(HttpHeaders.ORIGIN, TRUSTED_ORIGIN)
                 .header("X-CSRF-Protection", "1")
+                .header(HttpHeaders.COOKIE, "refresh_token=fixture-only")
+                .contentType(MediaType.APPLICATION_JSON)
                 .header(HttpHeaders.AUTHORIZATION, "Bearer stale-allowed-on-public-post");
-        for (String spoof : SPOOFED) request.header(spoof, "client-controlled");
-        try {
-            request.exchange().expectStatus().isOk().expectBody(String.class).isEqualTo("forwarded");
-        } catch (RuntimeException failure) {
-            System.err.println("GATEWAY_FORWARD_DIAGNOSTIC path=" + path
-                    + " observedUpstream=" + observed.size()
-                    + " upstreamHeaders=" + observed.peek()
-                    + " upstreamPort=" + upstream.port());
-            throw failure;
+        for (String spoof : SPOOFED) {
+            request.header(spoof, "client-controlled")
+                    .header(spoof.toLowerCase(Locale.ROOT), "duplicate-forgery");
         }
-        verifyForwarding("Bearer stale-allowed-on-public-post");
+        request.bodyValue(body).exchange().expectStatus().isOk()
+                .expectBody(String.class).isEqualTo("forwarded");
+        var forwarded = verifyForwarding("POST", path, body, "Bearer stale-allowed-on-public-post");
+        assertEquals("refresh_token=fixture-only", first(forwarded.headers(), HttpHeaders.COOKIE));
+        assertEquals(MediaType.APPLICATION_JSON_VALUE, first(forwarded.headers(), HttpHeaders.CONTENT_TYPE));
     }
 
     @Test
@@ -151,17 +159,12 @@ class GatewayEmbeddedNettyForwardingTest {
                 .header(HttpHeaders.AUTHORIZATION, bearer)
                 .header(HttpHeaders.ORIGIN, TRUSTED_ORIGIN)
                 .header("X-CSRF-Protection", "1");
-        for (String spoof : SPOOFED) request.header(spoof, "client-controlled");
-        try {
-            request.exchange().expectStatus().isOk().expectBody(String.class).isEqualTo("forwarded");
-        } catch (RuntimeException failure) {
-            System.err.println("GATEWAY_FORWARD_DIAGNOSTIC path=/api/auth/me"
-                    + " observedUpstream=" + observed.size()
-                    + " upstreamHeaders=" + observed.peek()
-                    + " upstreamPort=" + upstream.port());
-            throw failure;
+        for (String spoof : SPOOFED) {
+            request.header(spoof, "client-controlled")
+                    .header(spoof.toLowerCase(Locale.ROOT), "duplicate-forgery");
         }
-        verifyForwarding(bearer);
+        request.exchange().expectStatus().isOk().expectBody(String.class).isEqualTo("forwarded");
+        verifyForwarding("GET", "/api/auth/me", "", bearer);
     }
 
     @Test
@@ -173,16 +176,78 @@ class GatewayEmbeddedNettyForwardingTest {
         assertTrue(observed.isEmpty());
     }
 
-    private void verifyForwarding(String expectedBearer) {
+    @Test
+    void missingBearerCannotBeReplacedBySpoofedIdentity() {
+        observed.clear();
+        var request = client.get().uri("/api/auth/me");
+        for (String spoof : SPOOFED) request.header(spoof, "ADMIN");
+        request.exchange().expectStatus().isUnauthorized();
+        assertTrue(observed.isEmpty());
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"/api/auth/login", "/api/auth/me/extra", "/api/auth/unknown",
+            "/internal", "/internal/accounts", "/api/products"})
+    void signedRequestsOutsideExactGetAllowlistNeverReachUpstream(String path) throws Exception {
+        observed.clear();
+        client.get().uri(path).header(HttpHeaders.AUTHORIZATION, "Bearer " + signedCustomerJwt())
+                .exchange().expectStatus().isForbidden();
+        assertTrue(observed.isEmpty());
+    }
+
+    @Test
+    void signedMeWithWrongMethodNeverReachesUpstream() throws Exception {
+        observed.clear();
+        client.post().uri("/api/auth/me")
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + signedCustomerJwt())
+                .exchange().expectStatus().isForbidden();
+        assertTrue(observed.isEmpty());
+    }
+
+    @Test
+    void untrustedOriginIsRejectedBeforePublicForwarding() {
+        observed.clear();
+        client.post().uri("/api/auth/login").header(HttpHeaders.ORIGIN, "https://untrusted.example.invalid")
+                .header("X-CSRF-Protection", "1").exchange().expectStatus().isForbidden();
+        assertTrue(observed.isEmpty());
+    }
+
+    @Test
+    void trustedPreflightAllowsOnlyReviewedHeadersWithoutUpstreamCall() {
+        observed.clear();
+        client.options().uri("/api/auth/login").header(HttpHeaders.ORIGIN, TRUSTED_ORIGIN)
+                .header(HttpHeaders.ACCESS_CONTROL_REQUEST_METHOD, "POST")
+                .header(HttpHeaders.ACCESS_CONTROL_REQUEST_HEADERS, "Authorization, Content-Type, X-CSRF-Protection")
+                .exchange().expectStatus().isOk()
+                .expectHeader().valueEquals(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, TRUSTED_ORIGIN)
+                .expectHeader().valueEquals(HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS, "true");
+        assertTrue(observed.isEmpty());
+    }
+
+    @Test
+    void preflightCannotAuthorizeSpoofedInternalHeader() {
+        observed.clear();
+        client.options().uri("/api/auth/login").header(HttpHeaders.ORIGIN, TRUSTED_ORIGIN)
+                .header(HttpHeaders.ACCESS_CONTROL_REQUEST_METHOD, "POST")
+                .header(HttpHeaders.ACCESS_CONTROL_REQUEST_HEADERS, "X-Internal-Token")
+                .exchange().expectStatus().isForbidden();
+        assertTrue(observed.isEmpty());
+    }
+
+    private ForwardedRequest verifyForwarding(String method, String path, String body, String expectedBearer) {
         var forwarded = observed.poll();
         assertNotNull(forwarded, "Actual HTTP upstream was not contacted");
+        assertEquals(method, forwarded.method());
+        assertEquals(path, forwarded.uri());
+        assertEquals(body, forwarded.body());
         for (String spoof : SPOOFED) {
-            assertFalse(forwarded.containsKey(spoof), "Spoofed header leaked upstream: " + spoof);
+            assertFalse(forwarded.headers().containsKey(spoof), "Spoofed header leaked upstream: " + spoof);
         }
-        assertEquals(expectedBearer, first(forwarded, HttpHeaders.AUTHORIZATION));
-        assertEquals(TRUSTED_ORIGIN, first(forwarded, HttpHeaders.ORIGIN));
-        assertEquals("1", first(forwarded, "X-CSRF-Protection"));
+        assertEquals(expectedBearer, first(forwarded.headers(), HttpHeaders.AUTHORIZATION));
+        assertEquals(TRUSTED_ORIGIN, first(forwarded.headers(), HttpHeaders.ORIGIN));
+        assertEquals("1", first(forwarded.headers(), "X-CSRF-Protection"));
         assertTrue(observed.isEmpty(), "Only one upstream request expected");
+        return forwarded;
     }
 
     private static String first(Map<String, List<String>> headers, String key) {
