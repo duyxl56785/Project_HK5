@@ -25,8 +25,8 @@ public final class AuthPasswordHasher {
     private final SecureRandom random = new SecureRandom();
 
     /**
-     * A register password is 12-128 UTF-16 code units. All valid Unicode is
-     * passed through unchanged, with no trim, normalization or case folding.
+     * A register password is 12-128 UTF-16 code units, excluding NUL. Valid
+     * Unicode is passed unchanged, with no trim, normalization or case folding.
      */
     public String hashForRegistration(String password) {
         if (!validPassword(password, 12)) {
@@ -104,6 +104,8 @@ public final class AuthPasswordHasher {
         // Fail closed rather than allowing a provider to replace malformed UTF-16.
         for (int i = 0; i < password.length(); i++) {
             char c = password.charAt(i);
+            // HMAC zero-padding can make distinct trailing-NUL passwords equivalent.
+            if (c == '\0') return false;
             if (Character.isHighSurrogate(c)) {
                 if (i + 1 >= password.length() || !Character.isLowSurrogate(password.charAt(i + 1)))
                     return false;
