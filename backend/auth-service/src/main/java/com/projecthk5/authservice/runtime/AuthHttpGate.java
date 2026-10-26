@@ -38,7 +38,8 @@ public final class AuthHttpGate {
     }
 
     public void check(HttpServletRequest request) {
-        if (!origins.contains(request.getHeader("Origin"))
+        String origin = request.getHeader("Origin");
+        if (origin == null || !origins.contains(origin)
                 || !"1".equals(request.getHeader("X-CSRF-Protection"))) {
             throw new HttpFailure(403, "AUTH_CSRF_REJECTED");
         }
