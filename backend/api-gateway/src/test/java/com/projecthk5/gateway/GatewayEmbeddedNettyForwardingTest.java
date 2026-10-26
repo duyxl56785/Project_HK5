@@ -131,7 +131,15 @@ class GatewayEmbeddedNettyForwardingTest {
                 .header("X-CSRF-Protection", "1")
                 .header(HttpHeaders.AUTHORIZATION, "Bearer stale-allowed-on-public-post");
         for (String spoof : SPOOFED) request.header(spoof, "client-controlled");
-        request.exchange().expectStatus().isOk().expectBody(String.class).isEqualTo("forwarded");
+        try {
+            request.exchange().expectStatus().isOk().expectBody(String.class).isEqualTo("forwarded");
+        } catch (RuntimeException failure) {
+            System.err.println("GATEWAY_FORWARD_DIAGNOSTIC path=" + path
+                    + " observedUpstream=" + observed.size()
+                    + " upstreamHeaders=" + observed.peek()
+                    + " upstreamPort=" + upstream.port());
+            throw failure;
+        }
         verifyForwarding("Bearer stale-allowed-on-public-post");
     }
 
@@ -144,7 +152,15 @@ class GatewayEmbeddedNettyForwardingTest {
                 .header(HttpHeaders.ORIGIN, TRUSTED_ORIGIN)
                 .header("X-CSRF-Protection", "1");
         for (String spoof : SPOOFED) request.header(spoof, "client-controlled");
-        request.exchange().expectStatus().isOk().expectBody(String.class).isEqualTo("forwarded");
+        try {
+            request.exchange().expectStatus().isOk().expectBody(String.class).isEqualTo("forwarded");
+        } catch (RuntimeException failure) {
+            System.err.println("GATEWAY_FORWARD_DIAGNOSTIC path=/api/auth/me"
+                    + " observedUpstream=" + observed.size()
+                    + " upstreamHeaders=" + observed.peek()
+                    + " upstreamPort=" + upstream.port());
+            throw failure;
+        }
         verifyForwarding(bearer);
     }
 
