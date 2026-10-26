@@ -59,6 +59,28 @@ public class CurrentAccountAuthority {
         return current;
     }
 
+    /**
+     * Used by /me only after Hk5JwtCodec verified the access JWT. The JWT must
+     * share at least one role with current DB grants; token claims cannot elevate.
+     * The returned roles are the authoritative current DB grants (for account DTO).
+     */
+    @Transactional(readOnly = true)
+    public CurrentAccount requireCurrentForRequest(Hk5JwtCodec.VerifiedPrincipal principal) {
+        if (principal == null) throw DecisionFailure.accessInvalid();
+        UUID accountId;
+        try {
+            accountId = UUID.fromString(principal.subject());
+            if (!accountId.toString().equals(principal.subject())) throw DecisionFailure.accessInvalid();
+        } catch (IllegalArgumentException badSubject) {
+            throw DecisionFailure.accessInvalid();
+        }
+        CurrentAccount current = loadCurrent(accountId);
+        if (java.util.Collections.disjoint(current.roles(), principal.tokenRoles())) {
+            throw DecisionFailure.forbidden();
+        }
+        return current;
+    }
+
     private CurrentAccount loadCurrent(UUID id) {
         try {
             Account account = accounts.findById(id).orElseThrow(DecisionFailure::accessInvalid);
