@@ -15,6 +15,8 @@ import java.util.Set;
 import java.util.UUID;
 import javax.crypto.spec.SecretKeySpec;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.dao.DataAccessResourceFailureException;
 
 class CurrentAccountAuthorityTest {
@@ -80,6 +82,29 @@ class CurrentAccountAuthorityTest {
                 () -> guard.requireCurrentForIssue(id));
         assertEquals(503, outage.httpStatus());
         assertEquals("AUTHORIZATION_DEPENDENCY_UNAVAILABLE", outage.code());
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"DISABLED", "UNKNOWN", "ACTIVE", "active", "APPROVED", "SUSPENDED", "QA_EXPLICIT_ACTIVE "})
+    void onlyExplicitConfiguredStatusCanIssueOrUseEvenAnAdminToken(String inactiveStatus) {
+        var repo = mock(AccountRepository.class);
+        // Explicit QA vocabulary is not a decision about canonical production status.
+        var guard = new CurrentAccountAuthority(repo, "QA_EXPLICIT_ACTIVE");
+        var roles = Set.of(Account.Role.CUSTOMER, Account.Role.ADMIN);
+        when(repo.findById(id)).thenReturn(Optional.of(account("QA_EXPLICIT_ACTIVE", roles)));
+        var codec = jwt();
+        var token = codec.verify(codec.issue(guard.requireCurrentForIssue(id)));
+        assertEquals(id, guard.requireCurrentForRequest(token, Account.Role.ADMIN).accountId());
+
+        when(repo.findById(id)).thenReturn(Optional.of(account(inactiveStatus, roles)));
+        var issueFailure = assertThrows(CurrentAccountAuthority.DecisionFailure.class,
+                () -> guard.requireCurrentForIssue(id));
+        var requestFailure = assertThrows(CurrentAccountAuthority.DecisionFailure.class,
+                () -> guard.requireCurrentForRequest(token, Account.Role.ADMIN));
+        assertEquals(401, issueFailure.httpStatus());
+        assertEquals("AUTH_ACCESS_INVALID", issueFailure.code());
+        assertEquals(401, requestFailure.httpStatus());
+        assertEquals("AUTH_ACCESS_INVALID", requestFailure.code());
     }
 
     @Test
