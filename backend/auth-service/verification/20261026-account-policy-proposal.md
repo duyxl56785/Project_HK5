@@ -1,35 +1,40 @@
-# Đề xuất chính sách Account để TV1 phê duyệt
+# TV1 — Account status policy v1.1: OWNER DECIDED (26/10/2026)
 
-Refs #1, #80. **PROPOSED / WAITING_TV1_DECISION**, không phải quyết định đã duyệt.
-Đối chiếu source nền `083355be16c4e3ea442ccd861d5f4b40236a0b12`, Issue #1 và
-review/checkpoint PR #80 đọc ngày 26/10/2026. Không truy vấn dữ liệu production.
+Refs #1, #80, #96, #101; kế thừa khảo sát trong bản proposal ngày 26/10/2026. **Quyết định nghiệp vụ của TV1 cho Auth account status**; không phải phê duyệt bootstrap, HTTP endpoint, migration hay deployment. Đây là cập nhật chính sách trong Draft PR #101; chưa merge vào main.
 
-| Nguồn | Trạng thái thực tế và giới hạn |
+## 1. Đối chiếu baseline
+
+- `Account.java`: `String status`, nonblank; role là enum `CUSTOMER/SELLER/ADMIN` riêng.
+- Migration V1: `accounts.status varchar(32) NOT NULL`, không enum, default hay canonical vocabulary; V2 chỉ chuẩn hóa email. Không sửa migration đã áp dụng.
+- `CurrentAccountAuthority`: so sánh status đúng giá trị active cấu hình; current account + current roles kiểm phía Auth DB, fail-closed; DB unavailable -> 503.
+- `AuthBootstrapConfiguration`: mặc định OFF; `HK5_AUTH_ACTIVE_STATUS` bắt buộc nếu bật, chưa có default; env là input cấu hình, không tự làm policy.
+- Test hiện dùng `ACTIVE`, `SUSPENDED`, `QA_EXPLICIT_ACTIVE`, `QA_INACTIVE` như fixture; không coi fixture là quyết định chính sách triển khai. Seller `APPROVED/SUSPENDED` thuộc miền TV2, không phải Account status.
+
+## 2. Quyết định chính thức — canonical v1.1
+
+| Trạng thái Auth Account | Chính sách |
 |---|---|
-| `Account.java` | `String status`, bắt buộc nonblank; không có enum/default. Role là enum CUSTOMER/SELLER/ADMIN riêng biệt. |
-| `V1__auth_persistence.sql`, V2 | `varchar(32) NOT NULL`, check nonblank; không giới hạn vocabulary/default. V2 chỉ sửa email normalization, không chốt status. Không sửa migration đã áp dụng. |
-| `CurrentAccountAuthority` | Chỉ cho phép đúng giá trị active được truyền rõ; status khác, account mất hoặc roles rỗng trả 401. DB/account hoặc lazy roles query lỗi trả 503. Role request phải có ở JWT lẫn DB hiện tại, thiếu trả 403. |
-| `AuthBootstrapConfiguration` | Yêu cầu `HK5_AUTH_ACTIVE_STATUS`, không default/coerce; mặc định không đăng ký bean. Cấu hình một string chưa chứng minh string đó được TV1 phê duyệt. |
-| Security unit / AuthPersistence tests | ACTIVE là fixture; SUSPENDED là fixture inactive trong unit, không phải trạng thái Account đã chốt. Các chuỗi blank/padded/overlength dùng làm negative input. |
-| Năm current-authority PostgreSQL regressions | QA_EXPLICIT_ACTIVE / QA_INACTIVE là fixture riêng, không phải vocabulary triển khai. Giữ nguyên Java/init đã review. |
-| Contract v1.0 §§2/4/5/6/7, ADR-0001 | Auth sở hữu Account status; inactive/deleted từ chối cấp/truy cập, kiểm current roles; register CUSTOMER-only. Seller APPROVED/SUSPENDED thuộc TV2, không định nghĩa Account status. |
-| Issue #1 và checkpoint PR #80 ngày 26/10 | Canonical active-status vẫn cần TV1 quyết định trước runtime/HTTP; không có phê duyệt ACTIVE/DISABLED trong các nguồn đã đọc. |
+| `ACTIVE` | **Giá trị active DUY NHẤT**, so sánh case-sensitive và exact; vẫn phải kiểm password, verified JWT, current Auth roles, ownership và policy miền tương ứng |
+| `DISABLED` | Không cấp token ở login/refresh, không cho truy cập protected API kể cả JWT cũ; logout vẫn được phép thu hồi refresh family theo Origin/CSRF và transaction |
+| Thiếu account, status null/blank/khác, sai hoa/thường, `SUSPENDED` / `APPROVED` / `PENDING` / `QA_EXPLICIT_ACTIVE` | **DENY / fail-closed**; không tự đổi thành ACTIVE hoặc map Seller status |
 
-## Chính sách tối thiểu đề nghị
+- Public register tạo account mới với `status=ACTIVE` và duy nhất `CUSTOMER` **sau khi Account + durable profile-provisioning task được commit atomically**. Không cho client truyền role, status hoặc account ID; register **không tự login**.
+- Login sai password, email không tồn tại hoặc status khác `ACTIVE` dùng cùng 401 `AUTH_INVALID_CREDENTIALS` với chống enumeration/timing theo contract; không trả status nội bộ ra response.
+- Access JWT hợp lệ nhưng Account hiện không còn active hoặc đã mất account trả 401 `AUTH_ACCESS_INVALID`. Principal active nhưng mất role/scope trả 403 `AUTH_FORBIDDEN`; DB/current-role read không kiểm chứng được trả 503 `AUTHORIZATION_DEPENDENCY_UNAVAILABLE`. Refresh invalid/inactive trả 401 `AUTH_REFRESH_INVALID`, outage trả 503.
+- `HK5_AUTH_ACTIVE_STATUS=ACTIVE` là giá trị vận hành duy nhất được phê duyệt khi/ nếu bootstrap được bật. Không hardcode secret, không thay bằng fixture `QA_EXPLICIT_ACTIVE` ở production. Bootstrap **vẫn OFF** cho đến khi có review, security filter chain và release gate.
+- Account `DISABLED` chỉ được tái kích hoạt qua workflow quản trị có xác thực, ủy quyền, audit và kiểm thử được phê duyệt riêng; không mở endpoint chuyển trạng thái trong PR này. Không biến Seller approval/revocation thành Account state transition; seller role-sync cần hợp đồng idempotent/versioned riêng.
 
-- `ACTIVE`: cho phép xác thực sau khi credential hợp lệ; cấp token bằng roles hiện tại từ Auth PostgreSQL. Request vẫn phải qua verified JWT và kiểm role/ownership cần thiết.
-- `DISABLED`: từ chối login/refresh/cấp access token và truy cập Auth, kể cả JWT cũ còn hạn. Logout được phép thu hồi refresh family sau Origin/CSRF và durable commit; không tạo phiên mới.
-- Mọi giá trị khác, sai hoa/thường, blank/null, account thiếu: fail-closed. Login trả lỗi generic `AUTH_INVALID_CREDENTIALS`; access trả `AUTH_ACCESS_INVALID`; refresh trả `AUTH_REFRESH_INVALID`. DB không đọc được là 503, không giả invalid credential.
-- Register tạo Account ở trạng thái ACTIVE **chỉ sau khi TV1 duyệt**; duy nhất CUSTOMER, không nhận role/status/userId từ request; Account + durable profile task commit cùng transaction. SELLER/ADMIN không được tự cấp qua register.
-- Không suy ra Account ACTIVE/DISABLED từ Seller APPROVED/SUSPENDED hoặc ngược lại. Đồng bộ role Seller cần contract versioned riêng; không tự mở OD-09.
+## 3. Dữ liệu trạng thái cũ — migration gate bắt buộc
 
-## Quyết định còn thiếu
+**Chưa có inventory dữ liệu production** nên KHÔNG khẳng định database chỉ chứa `ACTIVE/DISABLED`, và không có quyền tự chuyển trạng thái. Trước rollout ở từng môi trường có dữ liệu, operator được ủy quyền phải thực hiện kiểm kê read-only (phân loại `status` + số lượng bản ghi, không xuất PII), lưu biên bản và phương án cho từng giá trị khác canonical. Unknown/legacy status **vẫn deny theo mặc định**, kể cả khi làm giảm số tài khoản đăng nhập; không âm thầm `UPDATE status='ACTIVE'`, không tự bulk migration hay gộp account. Nếu cần mapping/chuyển trạng thái, cần một change/migration riêng có phê duyệt TV1, kiểm thử, kiểm soát quyền và rollback. Nếu inventory không hoàn thành hoặc có giá trị chưa được xử lý: **NO-GO deployment**.
 
-TV1 cần phê duyệt vocabulary ACTIVE/DISABLED, trạng thái khởi tạo registration,
-cách xử lý dữ liệu/status cũ nếu có và phiên bản áp dụng. TV2 cần review runtime
-bootstrap và credential policy/work factor trước wiring. Không biến fixture/test
-PASS hoặc tài liệu đề xuất này thành signoff của owner.
+Password hash lịch sử tạo từ đầu vào chứa NUL (nếu có) là vấn đề reauth/reset riêng; không thể xác định chỉ từ digest và không tự đổi hash.
 
-Chưa thêm enum/check constraint/migration hoặc default ACTIVE. Bootstrap/runtime
-tiếp tục OFF; Gate 3 chỉ hoàn thiện mã cấu hình chưa kích hoạt và negative startup
-tests. Gate 4/5 không mở route khi các phụ thuộc bảo mật bắt buộc chưa được duyệt.
+## 4. Implementation gate
+
+- Phê duyệt ở đây **chỉ** chốt Account status policy và public register initial status; không phê duyệt credential strength, rate limiter, Origin/CSRF, keyring or route behavior nếu chưa được review.
+- Cần TV2 security review PR #101 (`AuthBootstrapConfiguration`, startup/rotation/config tests, compatibility), và TV2 giải quyết finding NUL trên #80 sau khi kiểm tra 58-case exact-parent receipt. 
+- Sau review: lập PR/commits Auth API gồm transactional register; login + refresh-family/cookie contract; refresh/logout; verified `/api/auth/me`, servlet security filter, MockMvc + PostgreSQL negative/security tests. Gateway reactive JWT + allowlist, header stripping, CORS và downstream verification thuộc gate kế tiếp.
+- Không public route khi chưa có full security/refresh/CSRF/rate-limit checks; không tự mở OD-09 internal pair, service khác, Finance/Inventory flags; không merge vào main, không deploy/migrate production.
+
+**Status:** ACCOUNT_STATUS_POLICY = DECIDED BY TV1. IMPLEMENTATION / RUNTIME / DEPLOY = BLOCKED UNTIL SECURITY GATES.
