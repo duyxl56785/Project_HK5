@@ -23,6 +23,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import jakarta.persistence.PersistenceException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -48,6 +49,7 @@ public class AuthSessionService {
     private final SecureRandom random;
     private final String dummyHash;
 
+    @Autowired
     public AuthSessionService(AccountRepository accounts, AccountPersistence persistence,
             RefreshFamilyRepository families, RefreshTokenRepository tokens,
             CurrentAccountAuthority authority, Hk5JwtCodec jwt) {

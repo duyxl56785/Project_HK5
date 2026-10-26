@@ -130,9 +130,19 @@ public class GatewayAuthConfiguration {
             return new CorsWebFilter(source);
         }
 
+        static org.springframework.cloud.gateway.filter.GatewayFilter sanitizeHeaders() {
+            return (exchange, chain) -> {
+                // Use a writable request builder, not Gateway's RemoveRequestHeader
+                // mutation of ReadOnlyHttpHeaders (Spring Web 6.1 / Gateway 4.1).
+                var sanitized = exchange.getRequest().mutate().headers(headers -> {
+                    for (String header : UNTRUSTED_HEADERS) headers.remove(header);
+                }).build();
+                return chain.filter(exchange.mutate().request(sanitized).build());
+            };
+        }
+
         private static GatewayFilterSpec removeUntrustedHeaders(GatewayFilterSpec filters) {
-            for (String header : UNTRUSTED_HEADERS) filters.removeRequestHeader(header);
-            return filters;
+            return filters.filter(sanitizeHeaders());
         }
 
         private static String required(ConfigurableEnvironment env, String name) {
