@@ -189,4 +189,20 @@ class AuthSessionServiceTest {
         assertEquals(401, assertThrows(CurrentAccountAuthority.DecisionFailure.class,
                 () -> service.me(token)).httpStatus());
     }
+
+    @Test
+    void meExposesOnlySignedAndCurrentlyGrantedRolesAfterAccountPromotion() {
+        when(accounts.findById(id)).thenReturn(Optional.of(customer));
+        String oldCustomerJwt = jwt.issue(authority.requireCurrentForIssue(id));
+        Account promoted = new Account(id, "customer@example.invalid", customer.getPasswordHash(),
+                "ACTIVE", Set.of(Account.Role.CUSTOMER, Account.Role.ADMIN), now);
+        when(accounts.findById(id)).thenReturn(Optional.of(promoted));
+        var response = service.me(oldCustomerJwt);
+        assertEquals(Set.of(Account.Role.CUSTOMER), response.roles());
+        Account onlyAdmin = new Account(id, "customer@example.invalid", customer.getPasswordHash(),
+                "ACTIVE", Set.of(Account.Role.ADMIN), now);
+        when(accounts.findById(id)).thenReturn(Optional.of(onlyAdmin));
+        assertEquals(403, assertThrows(CurrentAccountAuthority.DecisionFailure.class,
+                () -> service.me(oldCustomerJwt)).httpStatus());
+    }
 }
