@@ -8,9 +8,6 @@ import com.nimbusds.jose.JWSHeader;
 import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
-import com.sun.net.httpserver.HttpServer;
-import java.net.InetSocketAddress;
-import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -54,32 +51,27 @@ class GatewayEmbeddedNettyForwardingTest {
     // StandardReactiveWebEnvironment calls getSystemEnvironment while constructing.
     private static volatile Map<String, Object> fixtureProcessEnv = Map.of();
     private final ConcurrentLinkedQueue<Map<String, List<String>>> observed = new ConcurrentLinkedQueue<>();
-    private HttpServer upstream;
+    private reactor.netty.DisposableServer upstream;
     private ConfigurableApplicationContext gateway;
     private WebTestClient client;
 
     @BeforeAll
     void startRealServers() throws Exception {
-        upstream = HttpServer.create(new InetSocketAddress("127.0.0.1", 0), 0);
-        upstream.createContext("/", request -> {
-            Map<String, List<String>> headers = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
-            request.getRequestHeaders().forEach((name, values) ->
-                    headers.put(name, List.copyOf(values)));
-            observed.add(headers);
-            // No body is required by this dummy endpoint. Do not block reading
-            // inbound streams: a proxy may keep the client request stream open
-            // until an upstream response is received (request/response deadlock).
-            byte[] response = "forwarded".getBytes(StandardCharsets.UTF_8);
-            request.getResponseHeaders().set("Content-Type", "text/plain");
-            request.sendResponseHeaders(200, response.length);
-            try (var output = request.getResponseBody()) {
-                output.write(response);
-            }
-        });
-        upstream.start();
+        // Use a nonblocking Reactor Netty dummy upstream to avoid the JDK HTTP
+        // handler's request/response stream ordering interfering with Gateway.
+        upstream = reactor.netty.http.server.HttpServer.create().host("127.0.0.1").port(0)
+                .handle((request, response) -> {
+                    Map<String, List<String>> headers = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+                    request.requestHeaders().forEach(entry -> headers
+                            .computeIfAbsent(entry.getKey(), key -> new ArrayList<>())
+                            .add(entry.getValue()));
+                    observed.add(headers);
+                    return response.status(200).header("Content-Type", "text/plain")
+                            .sendString(reactor.core.publisher.Mono.just("forwarded")).then();
+                }).bindNow(java.time.Duration.ofSeconds(10));
 
         Map<String, Object> runtime = new HashMap<>();
-        runtime.put("HK5_AUTH_UPSTREAM_URI", "http://127.0.0.1:" + upstream.getAddress().getPort());
+        runtime.put("HK5_AUTH_UPSTREAM_URI", "http://127.0.0.1:" + upstream.port());
         runtime.put("HK5_AUTH_ALLOWED_ORIGINS", TRUSTED_ORIGIN);
         runtime.put("HK5_AUTH_JWT_ISSUER", "https://identity.example.invalid");
         runtime.put("HK5_AUTH_JWT_AUDIENCE", "smart-ecommerce-api");
@@ -113,8 +105,21 @@ class GatewayEmbeddedNettyForwardingTest {
     @AfterAll
     void closeServers() {
         if (gateway != null) gateway.close();
-        if (upstream != null) upstream.stop(0);
+        if (upstream != null) upstream.disposeNow(java.time.Duration.ofSeconds(5));
         fixtureProcessEnv = Map.of();
+    }
+
+    @Test
+    void dummyUpstreamIsReachableIndependentOfGateway() throws Exception {
+        observed.clear();
+        var http = java.net.http.HttpClient.newHttpClient();
+        var request = java.net.http.HttpRequest.newBuilder()
+                .uri(java.net.URI.create("http://127.0.0.1:" + upstream.port() + "/direct"))
+                .GET().build();
+        var result = http.send(request, java.net.http.HttpResponse.BodyHandlers.ofString());
+        assertEquals(200, result.statusCode(), "Netty dummy upstream did not respond");
+        assertEquals("forwarded", result.body());
+        assertNotNull(observed.poll());
     }
 
     @ParameterizedTest
