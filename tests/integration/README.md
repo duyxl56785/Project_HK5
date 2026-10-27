@@ -2,7 +2,8 @@
 
 Refs #5 #12 #90 #97. QA-only sources outside owner production/test trees. Requires reviewed
 Product lifecycle #89 and batch source #90. Original base was #90/head273a44d with maina705052;
-the TV5 branch is now synchronized with actual main7d68e11 after #90/head0f9c0c8 merged.
+the TV5 branch first synchronized with main7d68e11 after #90/head0f9c0c8 merged,
+then mainf888725 after #91 integrated Search. Earlier receipts retain their own exact SHAs.
 It adds no controller, migration, production bean, shared Gradle edit, authority or feature flag.
 
 ## Run
