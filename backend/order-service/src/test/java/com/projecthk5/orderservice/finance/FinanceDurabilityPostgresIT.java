@@ -5,6 +5,8 @@ import static org.mockito.Mockito.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.projecthk5.orderservice.api.CheckoutDtos.CheckoutResult;
+import com.projecthk5.orderservice.api.CheckoutDtos.CheckoutRequest;
+import com.projecthk5.orderservice.api.CheckoutDtos.ExpectedItem;
 import com.projecthk5.orderservice.domain.MoneyRules;
 import com.projecthk5.orderservice.domain.RequestFingerprint;
 import com.projecthk5.orderservice.entity.CheckoutAttempt;
@@ -38,6 +40,7 @@ import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.support.TransactionTemplate;
+import org.springframework.web.server.ResponseStatusException;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -173,6 +176,51 @@ class FinanceDurabilityPostgresIT {
     private CheckoutService replayCaller(CartPort cart, CatalogPort catalog, InventoryPort inventory) {
         return new CheckoutService(cart, catalog, inventory, keys, writer, orders, json,
                 new MoneyRules(false, "", "", "")); // No synthetic approved Finance policy, even in this caller.
+    }
+
+    @Test void conflictingReplayCannotMutateTheFinancialAggregateWhileAValidReplayCompletes() throws Exception {
+        var pending = pending("mixed-replay", "100.00", "200.00");
+        writer.savePlaced(pending.order(), pending.attempt().getId(), payload());
+        var moneyBefore = snapshots(pending.order().getId());
+        var outboxBefore = sql.queryForList("select id,topic,aggregate_id,payload,created_at from outbox_events where aggregate_id=?",
+                pending.order().getId());
+        String fingerprintBefore = sql.queryForObject("select fingerprint from checkout_attempts where id=?",
+                String.class, pending.attempt().getId());
+        var changed = new CheckoutRequest(List.of(new ExpectedItem(FinanceTwoStoreFixture.PRODUCT_A, 2),
+                new ExpectedItem(FinanceTwoStoreFixture.PRODUCT_B, 1)), null);
+        CartPort cart = mock(CartPort.class);
+        CatalogPort catalog = mock(CatalogPort.class);
+        InventoryPort inventory = mock(InventoryPort.class);
+        var caller = replayCaller(cart, catalog, inventory);
+        var ready = new CountDownLatch(2); var start = new CountDownLatch(1);
+        var pool = Executors.newFixedThreadPool(2);
+        try {
+            var valid = pool.submit(() -> {
+                ready.countDown(); assertTrue(start.await(10, TimeUnit.SECONDS));
+                return caller.checkout(pending.attempt().getCustomerId(), "valid-fixture", pending.attempt().getIdempotencyKey(),
+                        FinanceTwoStoreFixture.request());
+            });
+            var invalid = pool.submit(() -> {
+                ready.countDown(); assertTrue(start.await(10, TimeUnit.SECONDS));
+                return assertThrows(ResponseStatusException.class, () -> caller.checkout(pending.attempt().getCustomerId(),
+                        "changed-fixture", pending.attempt().getIdempotencyKey(), changed));
+            });
+            assertTrue(ready.await(10, TimeUnit.SECONDS)); start.countDown();
+            assertReplay(valid.get(20, TimeUnit.SECONDS), pending, "300.00");
+            var conflict = invalid.get(20, TimeUnit.SECONDS);
+            assertEquals(409, conflict.getStatusCode().value());
+            assertEquals("IDEMPOTENCY_PAYLOAD_MISMATCH", conflict.getReason());
+        } finally {
+            start.countDown(); pool.shutdownNow(); assertTrue(pool.awaitTermination(10, TimeUnit.SECONDS));
+        }
+        assertEquals(moneyBefore, snapshots(pending.order().getId()));
+        assertEquals(outboxBefore, sql.queryForList("select id,topic,aggregate_id,payload,created_at from outbox_events where aggregate_id=?",
+                pending.order().getId()));
+        assertEquals(fingerprintBefore, sql.queryForObject("select fingerprint from checkout_attempts where id=?",
+                String.class, pending.attempt().getId()));
+        assertPlaced(pending, "300.00");
+        verify(cart).finalizeCart("valid-fixture", pending.attempt().getIdempotencyKey());
+        verifyNoMoreInteractions(cart); verifyNoInteractions(catalog, inventory);
     }
 
     private Pending pending(String prefix, String first, String second) {

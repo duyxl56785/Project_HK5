@@ -27,6 +27,7 @@ provides synthetic two-Store Order aggregates and an existing-format Checkout re
 | TV5-FD02 | An outer REQUIRED transaction sees complete flushed money/outbox/success, then throws. Outside it, every placement row is absent and the original attempt remains PROCESSING. | Verifies propagation/atomicity; not a distributed transaction |
 | TV5-FD03 | Four synchronized concurrent successful replays return the same Order ID/total/two-Store count; every stored fee/price/quantity row and the single placement event remain unchanged. Catalog/Inventory are never called. | Caller MoneyRules remains **false**; no synthetic approved Finance configuration |
 | TV5-FD04 | Two customers use the same idempotency key and concurrently replay different two-Store totals/Order IDs. Each receives its own aggregate, with two distinct key namespace rows. | Customer-ID-scoped service/storage behavior with fixture identities, not verified JWT or Store-scoped Finance API |
+| TV5-FD05 | A valid replay and a changed-quantity same-key replay start together: the valid caller receives the original two-Store result, the conflicting caller gets409 IDEMPOTENCY_PAYLOAD_MISMATCH. Every financial row, attempt fingerprint and exact outbox row/payload remain unchanged; only the valid caller finalizes Cart. | Adds mixed successful/conflicting contention with complete financial/outbox assertions, rather than duplicating the existing sequential generic mismatch case. MoneyRules stays false; no new policy or remote side-effect proof |
 
 Fees are supplied historical fixture values, **not** calculated or approved commission/House policy.
 The current Order schema does not persist complete currency/rate/House/settlement snapshots; these tests
@@ -59,3 +60,8 @@ It never connects to an existing DB, deletes an existing Docker volume or change
 Live HTTP, current Auth/Store/House, Inventory reservation, COD/settlement and two-Store live E2E remain
 **NOT_RUN/BLOCKED**. Product integration order remains TV2's #89 → check → #90 → check → #91 → check;
 #94 remains separate. These tests do not perform or replace that integration.
+
+27/10 follow-up: the TV5 branch is synchronized with actual merged main7d68e11. FD05 passed
+on its first focused run (five durability cases); record it as **PREVENTIVE/REGRESSION**,
+not a manufactured RED->GREEN. Existing generic mismatch, concurrent-success and customer
+namespace cases remain intact. The original counts above are historical, not new-HEAD receipts.
