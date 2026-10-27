@@ -256,3 +256,14 @@ This dated checkpoint supersedes earlier waiting labels only for scopes verified
 - [x] NewTV5exact101/e45:95PASS/0FAIL/2SKIP;102/a4:137PASS/0FAIL/2SKIP (22Gateway,18realembedded/loopbackupstream);98/d53:3unitPASS;100/8bf:27offlinePASS+21/21metadatacomplete. Each invocation separate, rawlogs/XMLprivate/hashverified; skippedexistingDBprovision/inventory areNOT_RUN, notPASS.
 - [x]80NULnowintegratedtofeature083andTV2threadresolved; oldTV2formalCRstillneedsdisposition.102Gatewaytechnicalfixverifiedwithcurrenttests, TV2P1thread/CRstillitsown.86earlierTV5RED-GREENnotrerun; avoidduplicatehandoff.99CIgreen/nofindings/sourceunchanged;100CI_NOT_CONFIGURED (notrequiredbycurrentrules); existingownerreviewrequestsretained.
 - [ ] ActualTV2integration89→newmainPG/unit→90→newmainPG/unit→91→newmainPG/unit; human/ownerreview99/100/93,80/86/102decisions; realAuth/servicepair/House/C01E01/C06/COD/settlement/liveUAT gates. FullM01PARTIAL/PENDING, FinanceBLOCKED, flagsunchanged. Productpricesliceapprovalnotreopened; Issues5/12OPEN/PARTIAL.
+
+
+## TV5-PRODUCT-SIX-TASKS-20261027 — current QA, formal review and diagnostics
+
+[Ma trận6nhiệm vụ/evidence](../reports/TV5_PRODUCT_SIX_TASKS_2026-10-27.md), [House/freshness/privacy/E2E gates](../docs/TV5_PRODUCT_CATALOG_INTEGRATION_GATES.md).
+
+- [x]90/head273:978candidatePASS; [formal APPROVED mới5661077942](https://github.com/duyxl56785/Project_HK5/pull/90#pullrequestreview-5661077942) đã được humanTV5 ủy quyền và API xác nhận.89/94đã merge; không gọi978là postmerge90.
+- [x]97/aa:603regularPASS; sau [TV1 narrowvisibilitydecision](https://github.com/duyxl56785/Project_HK5/pull/97#issuecomment-6430723502), bổ sung DraftQA#104/51be73e riêng:4PASS/4assertionFAIL,exit1, giữ originalRED/controls. TV2confirmation/fix còn chờ; không báo fixPASS.
+- [x]103/151361b:5committedPGPASS +fixture2Store +explicitcompositiontask, không productionedit. House/freshness/C01E01matrix và8livecases chuẩn bị, không tự ký policy.
+- [ ] Actual90merge +fresh actualmain Product/Seller/explicitQA;91sync sau đó. Main1833có thêm83/77/78, không dùng lại978cho nguồn mới.
+- [ ]97ownerfix→8diagnosticPASS, protectedHTTP/currentprincipal/Store/House/provider/C06/Checkout/Finance/COD/liveE2E. FullM01PARTIAL/PENDING; flags không đổi; Issues5/12OPEN/PARTIAL.
