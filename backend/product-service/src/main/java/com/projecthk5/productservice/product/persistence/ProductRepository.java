@@ -12,7 +12,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
-public interface ProductRepository extends JpaRepository<ProductEntity, UUID> {
+public interface ProductRepository extends JpaRepository<ProductEntity, UUID>, ProductCatalogSearch {
     Optional<ProductEntity> findByInventorySku(String inventorySku);
 
     // Scalar projection bypasses the persistence-context entity cache; Category is local to Product DB.
