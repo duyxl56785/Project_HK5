@@ -38,7 +38,7 @@ Do not label its PASS as HTTP, Cart, Order placement, Inventory or whole-flow E2
 | Stage | Prepared input / assertion | Remaining gate / owner |
 |---|---|---|
 | Seller login | Two separate current accounts/SELLER grants, Store A/B association | TV1 current principal and versioned Seller role-sync; TV2 trusted Store binding |
-| Create/moderate Product | Fixture Category, exact SKU/VND strings; real create/submit/approve persisted here | #97 protected routes/authority, TV1+TV2 403-vs404 visibility decision |
+| Create/moderate Product | Fixture Category, exact SKU/VND strings; real create/submit/approve persisted here | #97 protected routes/authority; TV1 scoped 404 decision is recorded, TV2 confirmation/implementation and unchanged diagnostic acceptance remain pending |
 | Catalog | DRAFT/PENDING/REJECTED/SUSPENDED withheld; ACTIVE visible; price and Store mapping rechecked | #90 merge, C01/E01 wire, House/current-facts provider, MD07 freshness |
 | Customer Cart | One unit of each fixture Product; compare authoritative IDs/prices, never client SKU/House authority | TV3 approved Cart adapter/current Customer; quantity1 is fixture data, not aggregate policy approval |
 | Checkout | One parent/two distinct SellerOrders, preserve per-line/Store price/SKU/currency; no partial reserve | TV3/TV4 C06 durable owner tuple/operationId/reconciliation and applicable signed money snapshots |
@@ -49,3 +49,5 @@ authority, independent downstream authorization, House/freshness and reservation
 are approved and deployed in an authorized test environment. A deny-default403 test is not positive
 HTTP authorization. An internal expected-item record is not a signed Cart/Checkout HTTP DTO.
 No TTL/quote/lease, replacement endpoint or test-only production adapter is invented by this harness.
+
+TV1 has [decided the narrow owner-resource visibility rule](https://github.com/duyxl56785/Project_HK5/pull/97#issuecomment-6430723502): after independent current Seller/Store-scope verification, owner GET/edit/submit/deactivate must return the same generic404 for foreign and missing Products. This decision does not register a protected route or globally remap403. Do not request the same decision again; TV2 must confirm and implement its mapping. [Draft diagnostic #104](https://github.com/duyxl56785/Project_HK5/pull/104) retains the original four parity failures and four controls until the unchanged acceptance cases are GREEN on the actual owner fix.
