@@ -1,0 +1,27 @@
+import org.gradle.api.tasks.testing.Test
+
+def qaRoot = gradle.startParameter.projectProperties['tv5VisibilitySources']
+if (!qaRoot || !new File(qaRoot).isDirectory()) {
+    throw new GradleException('Set -Ptv5VisibilitySources to the absolute TV5 tests/security/product-visibility directory')
+}
+gradle.projectsEvaluated {
+    def product = gradle.rootProject.project(':product-service')
+    def qa = product.sourceSets.create('tv5ProductVisibility')
+    qa.java.setSrcDirs([qaRoot])
+    // Reuse #97's existing TEST-only Store policy; do not create a production authority.
+    qa.compileClasspath += product.sourceSets.main.output + product.sourceSets.test.output
+    qa.runtimeClasspath += product.sourceSets.main.output + product.sourceSets.test.output
+    product.configurations.tv5ProductVisibilityImplementation.extendsFrom(product.configurations.testImplementation)
+    product.configurations.tv5ProductVisibilityRuntimeOnly.extendsFrom(product.configurations.testRuntimeOnly)
+    product.tasks.named(qa.compileJavaTaskName) { dependsOn product.tasks.named('testClasses') }
+    product.tasks.register('tv5ProductVisibility', Test) {
+        group = 'verification'
+        description = 'TV5 separate RED diagnostic for TV1 owner-resource visibility decision; no live HTTP'
+        testClassesDirs = qa.output.classesDirs
+        classpath = qa.runtimeClasspath
+        useJUnitPlatform { includeTags 'postgres-integration' }
+        systemProperty 'api.version', '1.44'
+        systemProperty 'user.timezone', 'UTC'
+        testLogging { events 'passed', 'failed', 'skipped' }
+    }
+}
