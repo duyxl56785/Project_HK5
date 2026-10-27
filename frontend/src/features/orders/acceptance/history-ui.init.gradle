@@ -1,0 +1,19 @@
+// Test-only source set. Does not edit or replace #107 source/build files.
+gradle.projectsEvaluated {
+    def order = gradle.rootProject.project(':order-service')
+    def uiRoot = gradle.startParameter.projectProperties.get('tv3UiRoot')
+    def domModule = gradle.startParameter.projectProperties.get('tv3DomModule')
+    if (!uiRoot || !domModule) throw new GradleException('Supply tv3UiRoot and tv3DomModule')
+    def acceptance = order.sourceSets.create('historyUiAcceptance')
+    acceptance.java.srcDir(new File(uiRoot, 'src/features/orders/acceptance'))
+    acceptance.compileClasspath += order.sourceSets.main.output + order.sourceSets.test.compileClasspath
+    acceptance.runtimeClasspath += order.sourceSets.main.output + order.sourceSets.test.runtimeClasspath
+    order.tasks.register('historyUiAcceptance', Test) {
+        testClassesDirs = acceptance.output.classesDirs
+        classpath = acceptance.runtimeClasspath
+        useJUnitPlatform()
+        systemProperty 'tv3.ui.root', uiRoot
+        systemProperty 'tv3.dom.module', domModule
+        testLogging { events 'passed', 'failed', 'skipped'; showStandardStreams = true }
+    }
+}

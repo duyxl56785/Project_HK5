@@ -1,0 +1,9 @@
+.tv3-history { max-width: 76rem; margin: auto; padding: 1.5rem; overflow-x: auto; }
+.tv3-history table { width: 100%; border-collapse: collapse; text-align: left; }
+.tv3-history th, .tv3-history td { padding: .75rem; border-bottom: 1px solid #94a3b8; }
+.tv3-history caption { text-align: left; padding-block: .75rem; }
+.tv3-history nav { display: flex; gap: 1rem; align-items: center; margin-block: 1rem; }
+.tv3-history article section { border: 1px solid #94a3b8; padding: 1rem; margin-block: 1rem; }
+.tv3-history button { padding: .5rem .75rem; border: 1px solid currentColor; border-radius: .3rem; cursor: pointer; }
+.tv3-history button:disabled { opacity: .5; cursor: default; }
+.tv3-history button:focus-visible { outline: 3px solid #2563eb; outline-offset: 3px; }
