@@ -179,7 +179,7 @@ class Collector:
         if self.tv5 in requested:
             signals.append("TV5_REVIEW_REQUESTED")
         author = after["user"]["login"]
-        return {"number": number, "url": after["html_url"], "author": author,
+        return {"number": number, "title": after.get("title") or "", "url": after["html_url"], "author": author,
             "workstream": OWNERS.get(author, "OTHER"), "state": after["state"], "draft": after["draft"],
             "head": head, "headRef": after["head"]["ref"], "headRepo": (after["head"].get("repo") or {}).get("full_name"),
             "base": base, "baseRef": after["base"]["ref"], "baseRepo": (after["base"].get("repo") or {}).get("full_name"),
@@ -190,11 +190,15 @@ class Collector:
             "TV5OpenThreads": sum(t["author"] == self.tv5 for t in unresolved),
             "approvalAttribution": "Review metadata only: read review body/diff to verify its scope; no auto-approval/readiness inference"}
 
-    def snapshot(self, workers=4):
+    def snapshot(self, workers=4, include_closed=False):
         if workers not in range(1, 5):
             raise AuditError("workers must be between 1 and 4")
         viewer = self.client.call("user")["login"]
-        opened = self.pages(self.prefix + "pulls?state=open&sort=created&direction=asc")
+        listed = self.pages(self.prefix + "pulls?state=" + ("all" if include_closed else "open")
+                            + "&sort=created&direction=asc")
+        if len({p['number'] for p in listed}) != len(listed):
+            raise AuditError("PR inventory pagination changed; rerun instead of mixing duplicate observations")
+        opened = [p for p in listed if p["state"] == "open"] if include_closed else listed
         numbers = [pr["number"] for pr in opened]
         if len(numbers) != len(set(numbers)):
             raise AuditError("Open-PR pagination changed; rerun instead of hiding duplicate observations")
@@ -212,7 +216,7 @@ class Collector:
             pr["stackedOnOpenPRs"] = [parent["number"] for parent in records if parent["number"] != pr["number"]
                 and parent["headRef"] == pr["baseRef"] and parent["headRepo"] is not None
                 and parent["headRepo"] == pr["baseRepo"]]
-        return {"schemaVersion": 1, "generatedAtUtc": dt.datetime.now(dt.timezone.utc).isoformat(),
+        result = {"schemaVersion": 1, "generatedAtUtc": dt.datetime.now(dt.timezone.utc).isoformat(),
             "repository": self.repo, "viewer": viewer, "TV5": self.tv5, "complete": not errors,
             "listedOpenPRs": len(numbers), "PRs": records, "errors": errors,
             "limits": ["Read-only metadata observations, not an atomic GitHub transaction or source/runtime review",
@@ -220,6 +224,31 @@ class Collector:
                 "Approval metadata/head can outlive or be rewritten after source changes: read actual review body",
                 "Stacked branch relations are not a complete contract/deployment dependency graph",
                 "No comments, review requests, Approve, merge, credentials or raw CI output are published"]}
+        if include_closed:
+            inventory, counts = inventory_view(listed)
+            result.update(schemaVersion=2, inventory=inventory, inventoryCounts=counts)
+            result['limits'].append('Closed/merged inventory is metadata only; deep review/check/thread collection remains OPEN-only. Draft is an OPEN subset, not an additional disjoint state.')
+        return result
+
+
+def inventory_view(listed):
+    """Project public metadata only; closed rows do not trigger source/review collection."""
+    inventory = []
+    for p in sorted(listed, key=lambda row: row['number']):
+        if p['state'] not in ('open', 'closed'):
+            raise AuditError('Unexpected PR inventory state; audit is incomplete')
+        classification = 'OPEN' if p['state'] == 'open' else 'MERGED' if p.get('merged_at') else 'CLOSED'
+        inventory.append({'number': p['number'], 'title': p.get('title') or '', 'url': p['html_url'],
+            'author': p['user']['login'], 'classification': classification, 'state': p['state'],
+            'draft': p['draft'], 'head': p['head']['sha'], 'base': p['base']['sha'],
+            'headRef': p['head']['ref'], 'baseRef': p['base']['ref'],
+            'mergedAt': p.get('merged_at'), 'closedAt': p.get('closed_at')})
+    counts = {
+        'total': len(inventory), 'open': sum(p['classification'] == 'OPEN' for p in inventory),
+        'draftOpen': sum(p['classification'] == 'OPEN' and p['draft'] for p in inventory),
+        'merged': sum(p['classification'] == 'MERGED' for p in inventory),
+        'closedUnmerged': sum(p['classification'] == 'CLOSED' for p in inventory)}
+    return inventory, counts
 
 
 def ci_state(checks, statuses):
@@ -244,16 +273,27 @@ def cell(value):
 def markdown(snapshot):
     lines = ["# Read-only PR review audit", "", f"UTC: {snapshot['generatedAtUtc']}",
         f"Repository: {snapshot['repository']} · viewer: {snapshot['viewer']} · complete: {snapshot['complete']}", "",
-        "| PR | HEAD / base | Author | Requested | Effective reviews | Open threads | CI | Observed gates / stacked on |",
-        "|---|---|---|---|---|---|---|---|"]
+        "| PR | Title | HEAD / base | Author | Requested | Effective reviews | Open threads | CI | Observed gates / stacked on |",
+        "|---|---|---|---|---|---|---|---|---|"]
     for pr in snapshot["PRs"]:
         reviews = ", ".join(r["author"] + ":" + r["state"] + "@" + (r["head"] or "?")[:7] for r in pr["effectiveReviews"])
         gates = ", ".join(pr["observedGateSignals"]) or "No metadata gate observed; manual scope/rules review required"
         deps = ", ".join("#" + str(n) for n in pr["stackedOnOpenPRs"])
-        values = [f"[#{pr['number']}]({pr['url']})", pr["head"] + " / " + pr["baseRef"] + "@" + pr["base"][:7],
+        values = [f"[#{pr['number']}]({pr['url']})", pr.get('title', ''), pr["head"] + " / " + pr["baseRef"] + "@" + pr["base"][:7],
                   pr["author"], ", ".join(pr["requestedReviewers"]) or "—", reviews or "—",
                   len(pr["unresolvedThreads"]), pr["ci"], gates + ("; base→" + deps if deps else "")]
         lines.append("| " + " | ".join(cell(v) for v in values) + " |")
+    if 'inventory' in snapshot:
+        counts = snapshot['inventoryCounts']
+        lines += ['', '## All PR inventory', '',
+            f"Total {counts['total']}; OPEN {counts['open']} (DRAFT subset {counts['draftOpen']}); MERGED {counts['merged']}; CLOSED unmerged {counts['closedUnmerged']}.",
+            'Closed/merged rows are metadata observations, not source/runtime review.', '',
+            '| PR | Title | Author | State | HEAD / base |', '|---|---|---|---|---|']
+        for p in snapshot['inventory']:
+            values = [f"[#{p['number']}]({p['url']})", p['title'], p['author'],
+                p['classification'] + (' / DRAFT' if p['classification'] == 'OPEN' and p['draft'] else ''),
+                p['head'][:7] + ' / ' + p['baseRef'] + '@' + p['base'][:7]]
+            lines.append('| ' + ' | '.join(cell(v) for v in values) + ' |')
     lines += ["", "## Incomplete records", ""]
     lines += [f"- #{error['number']}: {cell(error['error'])}" for error in snapshot["errors"]] or ["None."]
     lines += ["", "## Limits", ""] + ["- " + limit for limit in snapshot["limits"]]
@@ -265,6 +305,7 @@ def main(argv=None):
     parser.add_argument("--repo", default="duyxl56785/Project_HK5")
     parser.add_argument("--tv5", default=TV5)
     parser.add_argument("--workers", type=int, default=4)
+    parser.add_argument("--include-closed", action="store_true", help="Include paginated all-state inventory; deep review metadata stays OPEN-only")
     parser.add_argument("--output-dir", type=Path, default=Path(".verification/pr-review-audit") /
                         dt.datetime.now(dt.timezone.utc).strftime("%Y%m%dT%H%M%S%fZ"))
     args = parser.parse_args(argv)
@@ -272,7 +313,8 @@ def main(argv=None):
         # Never overwrite a user's earlier snapshot, even before doing network work.
         if any((args.output_dir / name).exists() for name in ("snapshot.json", "report.md")):
             raise AuditError("Output files already exist; choose a new output directory")
-        snapshot = Collector(GitHub(credential()), args.repo, args.tv5).snapshot(args.workers)
+        collector = Collector(GitHub(credential()), args.repo, args.tv5)
+        snapshot = collector.snapshot(args.workers, include_closed=True) if args.include_closed else collector.snapshot(args.workers)
         args.output_dir.mkdir(parents=True, exist_ok=True)
         with (args.output_dir / "snapshot.json").open("x", encoding="utf-8") as stream:
             stream.write(json.dumps(snapshot, ensure_ascii=False, indent=2) + "\n")
