@@ -153,6 +153,139 @@ class InventoryOperationJournalPostgres16IT {
         assertEquals(InventoryOperationJournal.State.REJECTED, journal.load(intent.operationId()).state());
     }
 
+    @Test void multiSkuReleaseCandidateRetainsExactLongQuantitiesAndIndependentOperationId() {
+        // Journal/storage test only: preparing a RELEASE does NOT prove authorization,
+        // physical held stock, current SellerOrder state or a live Inventory mutation.
+        var committedAttempt = freshIntent();
+        var lines = List.of(
+                new Line("SKU-Z", 3L),
+                new Line("SKU-A", 2_147_483_648L),
+                new Line("SKU-M", 17L));
+        var reserve = InventoryOperationIntent.prepare(committedAttempt.checkoutAttemptId(),
+                "reserve-multi-" + UUID.randomUUID(), InventoryOperationIntent.Type.RESERVE, lines);
+        var release = InventoryOperationIntent.prepare(committedAttempt.checkoutAttemptId(),
+                "release-multi-" + UUID.randomUUID(), InventoryOperationIntent.Type.RELEASE, lines);
+        journal.prepare(reserve);
+        var reserveClaim = journal.claimForSend(reserve.operationId());
+        assertEquals(1, reserveClaim);
+        journal.confirm(reserve.operationId(), reserveClaim);
+        journal.prepare(release);
+        var storedReserve = journal.load(reserve.operationId());
+        var storedRelease = journal.load(release.operationId());
+        var ordered = List.of(new Line("SKU-A", 2_147_483_648L),
+                new Line("SKU-M", 17L), new Line("SKU-Z", 3L));
+        assertEquals(ordered, storedReserve.intent().lines());
+        assertEquals(ordered, storedRelease.intent().lines());
+        assertEquals(InventoryOperationIntent.Type.RESERVE, storedReserve.intent().type());
+        assertEquals(InventoryOperationIntent.Type.RELEASE, storedRelease.intent().type());
+        assertNotEquals(storedReserve.intent().operationId(), storedRelease.intent().operationId());
+        assertNotEquals(storedReserve.intent().fingerprint(), storedRelease.intent().fingerprint());
+        assertEquals(InventoryOperationJournal.State.CONFIRMED, storedReserve.state());
+        assertEquals(InventoryOperationJournal.State.PENDING, storedRelease.state());
+        journal.prepare(release); // exactly the same RELEASE operationId + immutable lines is replay-safe
+        assertEquals(1, db.queryForObject(
+                "select count(*) from inventory_operation_journal where operation_id=?",
+                Integer.class, release.operationId()));
+        assertThrows(IllegalArgumentException.class, () -> journal.prepare(
+                InventoryOperationIntent.prepare(release.checkoutAttemptId(), release.operationId(),
+                        InventoryOperationIntent.Type.RELEASE, List.of(
+                                new Line("SKU-A", 2_147_483_648L),
+                                new Line("SKU-M", 18L), new Line("SKU-Z", 3L)))));
+        assertEquals(ordered, journal.load(release.operationId()).intent().lines());
+    }
+
+    @Test void unknownMultiSkuReservePreservesStableIdAndNeverCreatesImplicitRelease() {
+        var committedAttempt = freshIntent();
+        var reserve = InventoryOperationIntent.prepare(committedAttempt.checkoutAttemptId(),
+                "unknown-multi-" + UUID.randomUUID(), InventoryOperationIntent.Type.RESERVE,
+                List.of(new Line("SKU-C", 5), new Line("SKU-A", 11), new Line("SKU-B", 2)));
+        journal.prepare(reserve);
+        Integer first = journal.claimForSend(reserve.operationId());
+        assertEquals(1, first);
+        journal.unknown(reserve.operationId(), first, "TRANSPORT_OUTCOME_UNKNOWN");
+        var unknown = journal.load(reserve.operationId());
+        assertEquals(InventoryOperationJournal.State.UNKNOWN, unknown.state());
+        assertEquals(reserve.operationId(), unknown.intent().operationId());
+        assertEquals(reserve.fingerprint(), unknown.intent().fingerprint());
+        assertEquals(reserve.lines(), unknown.intent().lines());
+        // No RELEASE or replacement RESERVE side effect is inferred from UNKNOWN.
+        assertEquals(1, db.queryForObject(
+                "select count(*) from inventory_operation_journal where checkout_attempt_id=?",
+                Integer.class, committedAttempt.checkoutAttemptId()));
+        Integer second = journal.claimForSend(reserve.operationId());
+        assertEquals(2, second);
+        journal.unknown(reserve.operationId(), second, "SECOND_RESPONSE_MISSING");
+        assertEquals(1, db.queryForObject(
+                "select count(*) from inventory_operation_journal where checkout_attempt_id=?",
+                Integer.class, committedAttempt.checkoutAttemptId()));
+        assertEquals(reserve.operationId(), journal.load(reserve.operationId()).intent().operationId());
+        assertEquals(reserve.lines(), journal.load(reserve.operationId()).intent().lines());
+        assertEquals(2, journal.load(reserve.operationId()).sends());
+    }
+
+
+    @Test void multiSkuUnknownIntentRejectsSameIdDifferentTypeOrCheckoutAttempt() {
+        var existingAttempt = freshIntent();
+        var lines = List.of(new Line("SKU-C", 1L), new Line("SKU-A", 3L), new Line("SKU-B", 7L));
+        var reserve = InventoryOperationIntent.prepare(existingAttempt.checkoutAttemptId(),
+                "multi-conflict-" + UUID.randomUUID(), InventoryOperationIntent.Type.RESERVE, lines);
+        journal.prepare(reserve);
+        int first = journal.claimForSend(reserve.operationId());
+        assertEquals(1, first);
+        journal.unknown(reserve.operationId(), first, "TRANSPORT_OUTCOME_UNKNOWN");
+
+        var wrongType = InventoryOperationIntent.prepare(existingAttempt.checkoutAttemptId(),
+                reserve.operationId(), InventoryOperationIntent.Type.RELEASE, lines);
+        assertThrows(IllegalArgumentException.class, () -> journal.prepare(wrongType));
+
+        var differentAttempt = freshIntent();
+        var wrongOwner = InventoryOperationIntent.prepare(differentAttempt.checkoutAttemptId(),
+                reserve.operationId(), InventoryOperationIntent.Type.RESERVE, lines);
+        assertThrows(IllegalArgumentException.class, () -> journal.prepare(wrongOwner));
+
+        var stored = journal.load(reserve.operationId());
+        assertEquals(InventoryOperationJournal.State.UNKNOWN, stored.state());
+        assertEquals(reserve.checkoutAttemptId(), stored.intent().checkoutAttemptId());
+        assertEquals(InventoryOperationIntent.Type.RESERVE, stored.intent().type());
+        assertEquals(reserve.fingerprint(), stored.intent().fingerprint());
+        assertEquals(reserve.lines(), stored.intent().lines());
+        assertEquals(1, db.queryForObject(
+                "select count(*) from inventory_operation_journal where operation_id=?",
+                Integer.class, reserve.operationId()));
+    }
+
+    @Test void twoWorkersReclaimOneUnknownMultiSkuOperationOnlyOnce() throws Exception {
+        var committedAttempt = freshIntent();
+        var intent = InventoryOperationIntent.prepare(committedAttempt.checkoutAttemptId(),
+                "multi-reclaim-" + UUID.randomUUID(), InventoryOperationIntent.Type.RESERVE,
+                List.of(new Line("SKU-C", 5L), new Line("SKU-A", 11L), new Line("SKU-B", 2L)));
+        journal.prepare(intent);
+        int first = journal.claimForSend(intent.operationId());
+        assertEquals(1, first);
+        journal.unknown(intent.operationId(), first, "TIMEOUT");
+
+        ExecutorService pool = Executors.newFixedThreadPool(2);
+        CountDownLatch go = new CountDownLatch(1);
+        try {
+            Callable<Integer> task = () -> { go.await(); return journal.claimForSend(intent.operationId()); };
+            Future<Integer> a = pool.submit(task), b = pool.submit(task);
+            go.countDown();
+            Integer aa = a.get(30, TimeUnit.SECONDS), bb = b.get(30, TimeUnit.SECONDS);
+            assertTrue((Integer.valueOf(2).equals(aa) && bb == null)
+                    || (Integer.valueOf(2).equals(bb) && aa == null));
+            var claimed = journal.load(intent.operationId());
+            assertEquals(InventoryOperationJournal.State.IN_FLIGHT, claimed.state());
+            assertEquals(2, claimed.sends());
+            assertEquals(intent.fingerprint(), claimed.intent().fingerprint());
+            assertEquals(intent.lines(), claimed.intent().lines());
+            journal.confirm(intent.operationId(), 2);
+            assertEquals(InventoryOperationJournal.State.CONFIRMED, journal.load(intent.operationId()).state());
+            assertNull(journal.claimForSend(intent.operationId()));
+        } finally {
+            pool.shutdownNow();
+        }
+    }
+
     @Test void differentPayloadOnSameOperationIdIsRejectedWithoutMutation() {
         var intent=freshIntent();
         journal.prepare(intent);
