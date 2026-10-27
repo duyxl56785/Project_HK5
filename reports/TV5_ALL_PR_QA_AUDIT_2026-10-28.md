@@ -210,4 +210,3 @@ TV5 submitted scoped COMMENT reviews on107/110/111; GitHub consumed the earlier 
 87/108/109 formalAPPROVED still confirmed at their exact heads; evidence links were appended to the same reviews without a duplicate approval.103still has one TV2-owned open thread and oldCR; existing own reply was enriched with immutable749PASS/RED/GREEN links, no self-resolution.99has TV2current931approval, while TV3/TV4 requests remain.80/102retainTV2oldCR; there is no effectiveTV5CR/openTV5thread.
 
 Both Issue5/12 checkpoints were updated with evidence-backed[x]items and preserved history; both remainOPEN/PARTIAL. PR103remotee7d8948 and PR113remotee22365e were read back before this docs-only receipt follow-up. [32offline tests on exacte22365e](evidence/tv5-all-pr-20261028/cli-final-e22365e.json) PASS; the follow-up changes only this report/derived publication receipts, not CLI source or tests.
-
