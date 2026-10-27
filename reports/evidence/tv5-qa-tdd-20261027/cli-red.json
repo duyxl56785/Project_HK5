@@ -1,0 +1,41 @@
+{
+  "kind": "DERIVED TDD RED receipt",
+  "baseHEAD": "8bf9f12e1a7df92b77f8a506fba5e1907a4f1c6c",
+  "source": "new tests only; CLI source unchanged",
+  "command": [
+    "C:/Users/Admin/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "scripts/qa/tests",
+    "-v"
+  ],
+  "startedUtc": "2026-10-27T02:42:05.150556+00:00",
+  "completedUtc": "2026-10-27T02:42:05.938213+00:00",
+  "exitCode": 1,
+  "log": ".verification\\tv5-preflight-composition-20261027\\cli-red\\runtime.log",
+  "logSHA256": "332d2bb7df85a0bf59d3376612c1b4712f4bd2d0a9c4aa2499423defc53ef46e",
+  "sourceManifest": [
+    {
+      "path": "scripts/qa/pr_review_audit.py",
+      "bytes": 16580,
+      "sha256": "df8b30184c6d6259110498efc9451ec7fd639bed282749ea240338263a83629f",
+      "privateCopy": ".verification/tv5-preflight-composition-20261027/cli-red/pr_review_audit.py"
+    },
+    {
+      "path": "scripts/qa/tests/test_pr_review_audit.py",
+      "bytes": 18246,
+      "sha256": "cbb11a00bac6a7d5a9c3d145647d63fd16f4647bb5978126e70f98ca4f21b4b1",
+      "privateCopy": ".verification/tv5-preflight-composition-20261027/cli-red/test_pr_review_audit.py"
+    }
+  ],
+  "result": {
+    "tests": 29,
+    "PASS": 27,
+    "FAIL": 0,
+    "ERROR": 2,
+    "SKIP": 0
+  },
+  "privateOriginalSummarySHA256": "7b5c9ad562629babe87c0374aa6bc0c48b7f809d16d47cf097ccffca21b79364"
+}
