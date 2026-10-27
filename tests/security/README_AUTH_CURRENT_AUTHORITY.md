@@ -1,5 +1,19 @@
 # TV5 current-account authority PostgreSQL diagnostic
 
+## Current parent verification — 25 October 2026
+
+**P2 FIXED_VERIFIED on actual parent PR80 source `c8ebb98ed77b4e0ec7a8ef9b00839c31523c9ea2`.** The source fix is integrated, and PR82 is **MERGED into the Auth feature branch** at c8ebb98 on2026-10-24T07:42:05Z (live GitHub merge receipt), not merged into main; do not reapply/merge82 or treat f88 as current. Original RED, TV5 supplement GREEN and TV2 3a92ff1 runs below are dated history.
+
+TV5 independently ran this actual c8 parent on 2026-10-24T17:43:54.189142+00:00–2026-10-24T17:44:54.081868+00:00 (Asia/Bangkok date25October): **14Auth unit PASS +28AuthPersistence PostgreSQL PASS**, separate **5unchanged current-authority PostgreSQL PASS/0FAIL/0skip**, exit0. Units include5bootstrap+5current-role+4codec. [Derived current-parent receipt](../../reports/evidence/tv5-audit-20261025/auth80.json) records command/source/test hashes and private raw-log/XML byte hashes. This is not copied from earlier runs or inferred from normal CI.
+
+Original five-case Java/init Git blobs match82/3338cfd exactly. Original RED/raw bytes preserved; fault injection only in fresh disposable DB, no existing Docker volume/data deleted. TV5 resolved its own original P2 thread after publishing this parent evidence; scoped verification does not approve Auth readiness or deployment.
+
+AuthBootstrapConfiguration now supplies **conditional opt-in beans**, not always-inert classes: `hk5.auth.bootstrap.enabled=true` is required, with explicit reviewed active status and environment key configuration. Default remains disabled; missing/invalid config fails closed. No Auth HTTP/security filter, Gateway, register/login/refresh/logout/role-sync/currentStore or positive service-pair integration is provided. Keep bootstrap disabled pending owner gates. Finance/Inventory flags unchanged; overall Finance/COD/settlement approval is not granted by Auth tests.
+
+The current80 PR description must describe this opt-in boundary rather than claim no bean definition exists; TV1 owns that description/readiness decision. Read the following checkpoints as history, never current integration instructions.
+
+## Historical checkpoints — preserved verbatim
+
 ## Authorized P2 supplement — GREEN on TV5 branch, waiting for TV1 integration
 
 On23/10/2026 the user explicitly authorized **only P2 Auth** on PR82. Fix commit `ad25942998224451fb8c54677e028712e6921ae3` catches JPA `PersistenceException` as well as translated Spring `DataAccessException`, mapping a failed lazy-role read to the existing internal503 decision. It does not mask401/403, add runtime wiring or change schema, status vocabulary, API, Gateway or flags.
