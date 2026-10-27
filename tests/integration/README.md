@@ -1,7 +1,8 @@
 # TV5 Product lifecycle → Catalog PostgreSQL composition
 
 Refs #5 #12 #90 #97. QA-only sources outside owner production/test trees. Requires reviewed
-Product lifecycle #89 and batch source #90; original base is #90/head273a44d with maina705052.
+Product lifecycle #89 and batch source #90. Original base was #90/head273a44d with maina705052;
+the TV5 branch is now synchronized with actual main7d68e11 after #90/head0f9c0c8 merged.
 It adds no controller, migration, production bean, shared Gradle edit, authority or feature flag.
 
 ## Run
@@ -39,7 +40,7 @@ Do not label its PASS as HTTP, Cart, Order placement, Inventory or whole-flow E2
 |---|---|---|
 | Seller login | Two separate current accounts/SELLER grants, Store A/B association | TV1 current principal and versioned Seller role-sync; TV2 trusted Store binding |
 | Create/moderate Product | Fixture Category, exact SKU/VND strings; real create/submit/approve persisted here | #97 protected routes/authority; TV1 scoped 404 decision is recorded, TV2 confirmation/implementation and unchanged diagnostic acceptance remain pending |
-| Catalog | DRAFT/PENDING/REJECTED/SUSPENDED withheld; ACTIVE visible; price and Store mapping rechecked | #90 merge, C01/E01 wire, House/current-facts provider, MD07 freshness |
+| Catalog | DRAFT/PENDING/REJECTED/SUSPENDED withheld; ACTIVE visible; price and Store mapping rechecked | #90 is merged; C01/E01 wire, House/current-facts provider and MD07 freshness remain gated |
 | Customer Cart | One unit of each fixture Product; compare authoritative IDs/prices, never client SKU/House authority | TV3 approved Cart adapter/current Customer; quantity1 is fixture data, not aggregate policy approval |
 | Checkout | One parent/two distinct SellerOrders, preserve per-line/Store price/SKU/currency; no partial reserve | TV3/TV4 C06 durable owner tuple/operationId/reconciliation and applicable signed money snapshots |
 | Errors/recovery | Cross-Store mutation denied; changed price or incomplete facts withhold every snapshot; local rollback | Remote UNKNOWN must be reconciled, never blind RELEASE/new key; compensation/Order policies need owners |
