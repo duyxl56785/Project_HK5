@@ -101,8 +101,14 @@ class ProductManagementHandlerIntegrationTest {
     void otherSellerCannotAccessStoreOrProduct(String command) {
         var original = handler(OWNER).create(createPayload(STORE, "private"));
         handler(OTHER).create(createPayload(OTHER_STORE, "other-store"));
-        var failure = assertThrows(ProductRuleException.class, () -> invoke(handler(OTHER), command, original));
-        assertEquals(ProductRuleException.Code.ACCESS_DENIED, failure.getCode());
+        if (List.of("edit", "submit", "deactivate", "read").contains(command)) {
+            var failure = assertThrows(ProductPersistenceException.class, () -> invoke(handler(OTHER), command, original));
+            assertEquals(new ProductManagementErrors.Failure(404, "PRODUCT_NOT_FOUND", "Product was not found"),
+                    ProductManagementErrors.from(failure));
+        } else {
+            var failure = assertThrows(ProductRuleException.class, () -> invoke(handler(OTHER), command, original));
+            assertEquals(ProductRuleException.Code.ACCESS_DENIED, failure.getCode());
+        }
         assertEquals(original, handler(OWNER).findById(original.id()));
         assertEquals(2, jdbc.queryForObject("SELECT count(*) FROM products", Integer.class));
     }
@@ -211,6 +217,12 @@ class ProductManagementHandlerIntegrationTest {
     static class FixturePolicy implements ProductAccessPolicy {
         volatile CyclicBarrier barrier;
         volatile boolean ownerIsAdmin;
+        @Override public UUID currentManagementStore(String actor) {
+            // Existing TEST accounts only; not a production current-account/Store provider.
+            if (OWNER.equals(actor)) return STORE;
+            if (OTHER.equals(actor)) return OTHER_STORE;
+            throw denied();
+        }
         @Override public StoreAccess requireSellerManagement(String actor, UUID store) {
             var facts = readStore(store);
             if (!facts.ownerReference().equals(actor)) throw denied();
