@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-/** Trusted data boundary only; no production adapter, fixture fallback or HTTP contract. */
+/** Trusted data boundary only; no implicit fixture fallback or HTTP contract. */
 public interface CatalogSnapshotSource {
     // Exactly one result per requested ID. Omission is not authoritative absence.
     List<LookupResult> load(Set<UUID> productIds);
