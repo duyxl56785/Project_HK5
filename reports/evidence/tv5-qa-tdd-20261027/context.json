@@ -1,0 +1,91 @@
+{
+  "kind": "DERIVED source/signoff/publication context, not a release total",
+  "atUtc": "2026-10-27T02:55:53.199866+00:00",
+  "actualMain": "7d68e11ce3327aa0ac423938ab9d97a174438b78",
+  "PR90": {
+    "head": "0f9c0c84a310bcfcf86f06592b64aed6690258dd",
+    "merged": true,
+    "merge": "7d68e11ce3327aa0ac423938ab9d97a174438b78",
+    "historical273QA": "not reused as new-head proof"
+  },
+  "publications": [
+    {
+      "utc": "2026-10-27T02:51:04.577847+00:00",
+      "PR": 99,
+      "commit": "931feee45ac3f17293a4f200c604010fce63bf39",
+      "branch": "codex/tv5-finance-durability-qa",
+      "base": "main",
+      "push": "SUCCESS",
+      "reviewers": [
+        "duyxl56785",
+        "phamthecuong2022006-alt"
+      ],
+      "reviewerAction": "requested once after new mixed-replay QA delta",
+      "tests": "165PASS in one committed invocation; not Finance production acceptance"
+    },
+    {
+      "utc": "2026-10-27T02:44:11.944305+00:00",
+      "PR": 100,
+      "commit": "c25c67879b642b9a3521392dc02e648413ee5eca",
+      "branch": "codex/tv5-readonly-pr-audit",
+      "base": "main",
+      "push": "SUCCESS",
+      "reviewers": [
+        "duyxl56785"
+      ],
+      "reviewerAction": "requested once after material QA code delta",
+      "TDD": "1 real transport-handling RED/GREEN cycle, two new regression tests"
+    },
+    {
+      "utc": "2026-10-27T02:44:00.396581+00:00",
+      "PR": 103,
+      "commit": "53658de1f66140abbf293efb073486a17c2850ac",
+      "branch": "codex/tv5-product-catalog-composition-qa",
+      "base": "main",
+      "push": "SUCCESS",
+      "reviewers": [
+        "tranvanchinhbg2006-alt",
+        "duyxl56785"
+      ],
+      "reviewerAction": "kept existing request",
+      "TDD": "12 preventive tests;17PGPASS; no production delta"
+    }
+  ],
+  "sync": {
+    "utc": "2026-10-27T02:34:13.384769+00:00",
+    "PR": 103,
+    "head": "976a08c2ff0527c279e6d2629b0844f8cbc27c37",
+    "base": "main",
+    "actualMain": "7d68e11ce3327aa0ac423938ab9d97a174438b78",
+    "ownerPR90head": "0f9c0c84a310bcfcf86f06592b64aed6690258dd",
+    "focused": "5PGPASS",
+    "baseline": "1144PASS on exact actual main, separate invocation",
+    "push": "SUCCESS",
+    "uncommittedTask2": "New preflight suite/init preserved locally, not included in this push",
+    "reviewers": [
+      "tranvanchinhbg2006-alt",
+      "duyxl56785"
+    ]
+  },
+  "visibility97": {
+    "head": "aa790f422a8b3ee698f53e74c455edae7b77d6fa",
+    "ownerFix": "not yet pushed at checkpoint",
+    "TV1decision": "https://github.com/duyxl56785/Project_HK5/pull/97#issuecomment-6430723502",
+    "TV2confirmation": "already confirmed; do not re-request",
+    "diagnostic104head": "51be73e62de9ef20b47a838b53c0308a024268ef",
+    "diagnosticStatus": "Historical original4PASS/4FAIL retained, NOT_RUN this phase because no owner fix; WAITING_TV2_FIX"
+  },
+  "search91": {
+    "head": "e19624e47748be2404eab532ad62b809d0262bf7",
+    "status": "TV2 has now synced; fresh source review is separate from this QA/TDD scope, not WAITING_TV2_SYNC"
+  },
+  "newTestCases": {
+    "integrationPG": 12,
+    "financePG": 1,
+    "offlineCLI": 2
+  },
+  "realTDDCycles": 1,
+  "TDDclassification": "CLI only:27PASS+2ERROR ->29PASS ->refactor29PASS ->committed29PASS. Integration12 and Finance1 passed first run, preventive, no fake RED.",
+  "businessScope": "Approved Product-price slice only; fullM01/House/commission/rounding/refund/COD/settlement remains PENDING/BLOCKED. No flags or owner-production edits.",
+  "metadataAudit": "18/18 open records complete; TV5ChangesRequested=false and TV5OpenThreads=0 for all observed open PRs; metadata observation, not code approval"
+}

@@ -386,3 +386,13 @@ This dated checkpoint supersedes earlier waiting labels only for scopes verified
 - [x] Đối chiếu lại90/91/97: HEAD/diffblobs không đổi, approval90thật còn hiệu lực; không request/approve/finding trùng. [Current matrix/evidence](../reports/TV5_PRODUCT_SIX_TASKS_2026-10-27.md#follow-up-tv5-product-delta-20261027--sau-checkpoint-ban-đầu).
 - [x]103README phản ánh TV1 decision đã có, commit/pushdec62e9; focused5PGPASS mới. Dependency102/36ad mới được TV5 tự chạy147PASS/0FAIL/2SKIP,exit0; raw/childlogs giữ riêng byte/hash, SKIP không là PASS. Không cộng với các snapshot cũ.
 - [ ] Actual90merge/postmerge;91sync/finalreview;97TV2ACK/fix→8GREEN/protectedHTTP/currentStore; House/freshness/C01E01/C06/fullM01/liveE2E vẫn chờ. Issues5/12OPEN/PARTIAL; không đổi flags/deploy/source owner.
+
+
+## TV5-QA-TDD-PREFLIGHT-20261027
+
+[Source, TDD RED/GREEN, cases, receipts và giới hạn](../reports/TV5_QA_TDD_PREFLIGHT_2026-10-27.md).
+
+- [x]90đãmergeactualmain7d68:1144PASS mới (Product/Seller/Order unit+PG); không dùng978lịch sử.103sync/retargetmain,53658de có17PGPASS với12ca mới (preventive, không fakeRED).
+- [x]99/931feee:FD05mixed valid/conflicting replay giữ tiền/fingerprint/outbox;165PASS committed (128unit+34PG+3FIN), không Finance policy/StoreAPI/COD acceptance.
+- [x]100/c25c678:1realCLI TDDcycle,2newtests; RED27PASS/2ERROR→29PASS→refactor29PASS→committed29PASS. Firstlive failclosed retained; retry18/18complete. No credential/rawlog publication or mutation.
+- [ ]1048diagnostics còn original4PASS/4FAIL, WAITING_TV2_FIX; policy đã TV1decided/TV2confirmed, không hỏi lại. ProductHTTP/authority/House/C01E01/C06/fullM01/Finance/liveE2E vẫn BLOCKED/PENDING; Issues5/12OPEN/PARTIAL.

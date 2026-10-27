@@ -1,0 +1,25 @@
+{
+  "kind": "DERIVED bounded live retry receipt",
+  "head": "c25c67879b642b9a3521392dc02e648413ee5eca",
+  "command": [
+    "C:/Users/Admin/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe",
+    "scripts/qa/pr_review_audit.py",
+    "--repo",
+    "duyxl56785/Project_HK5",
+    "--output-dir",
+    "D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-preflight-composition-20261027\\cli-live-retry-snapshot"
+  ],
+  "startedUtc": "2026-10-27T02:49:13.044241+00:00",
+  "completedUtc": "2026-10-27T02:49:45.280560+00:00",
+  "exitCode": 0,
+  "credentialSource": "existing Git credential; env overrides omitted for identity consistency",
+  "logPath": ".verification/tv5-preflight-composition-20261027/cli-live-retry/runtime.log",
+  "logSHA256": "b52fb0191e991e19881ef56547dff4128b29e18885b8d9f4e204fbc4d9ddfd68",
+  "complete": true,
+  "viewer": "nguyenminhduy090-alt",
+  "listed": 18,
+  "collected": 18,
+  "errors": [],
+  "snapshotSHA256": "d05096f434cca6a83a2d26f76a29cdd8445ba8bdeeee070d3de644bce9d50795",
+  "privateOriginalSummarySHA256": "367b5657a4486c0aed9fb215a30f01e25675c3ac15df392c61832d1cbc3b4422"
+}
