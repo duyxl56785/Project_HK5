@@ -1,0 +1,99 @@
+{
+  "kind": "DERIVED isolated demo review110",
+  "head": "96886dddb320bf0abf963cfd629581cbc4a5b22e",
+  "base": "ceee8c8c4699e0b76a180c24365e4068d4c29770",
+  "steps": [
+    {
+      "step": "dependencies",
+      "command": [
+        "C:\\Program Files\\nodejs\\npm.cmd",
+        "install",
+        "--ignore-scripts",
+        "--no-audit",
+        "--no-fund"
+      ],
+      "startedUtc": "2026-10-27T17:07:45.105121+00:00",
+      "completedUtc": "2026-10-27T17:08:01.134449+00:00",
+      "exitCode": 0
+    },
+    {
+      "step": "typecheck",
+      "command": [
+        "C:\\Program Files\\nodejs\\npm.cmd",
+        "run",
+        "typecheck"
+      ],
+      "startedUtc": "2026-10-27T17:08:01.134449+00:00",
+      "completedUtc": "2026-10-27T17:08:03.480973+00:00",
+      "exitCode": 0
+    },
+    {
+      "step": "build",
+      "command": [
+        "C:\\Program Files\\nodejs\\npm.cmd",
+        "run",
+        "build"
+      ],
+      "startedUtc": "2026-10-27T17:08:03.480973+00:00",
+      "completedUtc": "2026-10-27T17:08:07.559228+00:00",
+      "exitCode": 0
+    },
+    {
+      "step": "demo-build",
+      "command": [
+        "C:\\Program Files\\nodejs\\node.exe",
+        "node_modules/vite/bin/vite.js",
+        "build",
+        "--config",
+        "demo/vite.config.ts"
+      ],
+      "startedUtc": "2026-10-27T17:08:07.559228+00:00",
+      "completedUtc": "2026-10-27T17:08:08.867223+00:00",
+      "exitCode": 0
+    },
+    {
+      "step": "demo-ssr-model",
+      "command": [
+        "C:\\Program Files\\nodejs\\node.exe",
+        "--test",
+        "--test-concurrency=1",
+        "src/demo/demoModel.test.mjs",
+        "src/demo/DemoApp.test.mjs",
+        "src/demo/AdminSellerPages.test.mjs"
+      ],
+      "startedUtc": "2026-10-27T17:08:08.867223+00:00",
+      "completedUtc": "2026-10-27T17:08:11.361307+00:00",
+      "exitCode": 0
+    }
+  ],
+  "rawArtifacts": [
+    {
+      "localPath": ".verification/tv5-all-pr-tdd-20261027/review110-run/build.log",
+      "bytes": 392,
+      "sha256": "65c953c80392c1d1aa3f671e60df14c8ca6364cab59dea40adb5fabea0e98c78"
+    },
+    {
+      "localPath": ".verification/tv5-all-pr-tdd-20261027/review110-run/demo-build.log",
+      "bytes": 433,
+      "sha256": "dcc74cfb807c4af8f49497e81e42d2afc4b64c9827f65c233bbd7cf251146a2d"
+    },
+    {
+      "localPath": ".verification/tv5-all-pr-tdd-20261027/review110-run/demo-ssr-model.log",
+      "bytes": 6035,
+      "sha256": "bd8edcacac88380347827b1097046f5344ac0b9465656089ee1682b321df271c"
+    },
+    {
+      "localPath": ".verification/tv5-all-pr-tdd-20261027/review110-run/dependencies.log",
+      "bytes": 26,
+      "sha256": "30f367587c8fdadc696e09282a33b1f1c2d3f40d0775c2cb4ad04a1da4800f22"
+    },
+    {
+      "localPath": ".verification/tv5-all-pr-tdd-20261027/review110-run/typecheck.log",
+      "bytes": 60,
+      "sha256": "8f64752c6a0e5c82820880600d7ab0365666f0d89c2fd8572944c694257792a5"
+    }
+  ],
+  "generatedDependencyLockSHA256": "e93c2d55f996824ba5257b28d8d71af69cb74ac5874f733044f6c8950d111762",
+  "generatedDependencyLock": "Local untracked only; owner had no package lock; no tracked source changed",
+  "boundary": "Demo UI/model/SSR and build only. DOM/browser/image-picker tests NOT_RUN in this invocation; no Auth/API/PG/business/E2E acceptance."
+}

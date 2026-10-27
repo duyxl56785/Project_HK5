@@ -1,0 +1,37 @@
+{
+  "kind": "DERIVED inventory refactor/offline regression",
+  "command": [
+    "C:/Users/Admin/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "scripts/qa/tests",
+    "-v"
+  ],
+  "startedUtc": "2026-10-27T16:59:23.919227+00:00",
+  "completedUtc": "2026-10-27T16:59:24.198798+00:00",
+  "exitCode": 0,
+  "result": {
+    "PASS": 32,
+    "FAIL": 0,
+    "ERROR": 0,
+    "SKIP": 0
+  },
+  "logPath": ".verification/tv5-all-pr-tdd-20261027/cli-inventory-refactor/runtime.log",
+  "logSHA256": "0c7bf4610a492f3adf475d3e1fd90f36f4e245025e3dfccdb108dfbc99bb02f6",
+  "sourceManifest": [
+    {
+      "path": "scripts/qa/pr_review_audit.py",
+      "sha256": "f5cd37b6aab13cc7f744982a0f6062f50584615e592262039df0e8d10549a006"
+    },
+    {
+      "path": "scripts/qa/tests/test_pr_review_audit.py",
+      "sha256": "3fcf6794c728a7c15a2572cf77a9fb8ad94503353a62f81cca40b5e705a09769"
+    },
+    {
+      "path": "scripts/qa/README.md",
+      "sha256": "abf493cd91a5a70497eccb520bb7a8a08cc5f29d52a5408ba961544e45f29036"
+    }
+  ]
+}
