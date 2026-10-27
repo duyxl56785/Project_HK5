@@ -358,3 +358,10 @@ This dated checkpoint supersedes earlier waiting labels only for scopes verified
 - [x]99/931feee:FD05mixed valid/conflicting replay giữ tiền/fingerprint/outbox;165PASS committed (128unit+34PG+3FIN), không Finance policy/StoreAPI/COD acceptance.
 - [x]100/c25c678:1realCLI TDDcycle,2newtests; RED27PASS/2ERROR→29PASS→refactor29PASS→committed29PASS. Firstlive failclosed retained; retry18/18complete. No credential/rawlog publication or mutation.
 - [ ]1048diagnostics còn original4PASS/4FAIL, WAITING_TV2_FIX; policy đã TV1decided/TV2confirmed, không hỏi lại. ProductHTTP/authority/House/C01E01/C06/fullM01/Finance/liveE2E vẫn BLOCKED/PENDING; Issues5/12OPEN/PARTIAL.
+
+
+## TV5-QA-TDD-FINAL-20261027
+
+- [x] Owner97/d376176 đã có fix;104/a0c9d4b chạy519unit+205PG+8originalQA PASS. Eight-test Java SHA256 giữ nguyên, original4FAIL retained. P2 FIXED_VERIFIED trong privatehandler/PG scope; không còn WAITING_TV2_FIX ở checkpoint hiện tại.
+- [x] Main đã merge91tạif888725;103sync6d99953 chạy461unit+188PG+17QA PASS. Các receipt/source tách riêng; không dùng approval/QA cũ để gán cho source mới.
+- [ ] ProtectedHTTP/currentStore/House/sharedwire/C06/fullM01/Finance/COD/settlement/liveE2E vẫn chờ; không tựApprove/Merge/flags. [Current evidence](../reports/TV5_QA_TDD_PREFLIGHT_2026-10-27.md#checkpoint-cuối--owner-fix-và-search-được-tích-hợp-trong-lúc-bàn-giao).

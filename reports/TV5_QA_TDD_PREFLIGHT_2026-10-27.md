@@ -113,3 +113,34 @@ CLI snapshot18open PR không thấy TV5ChangesRequested hoặc TV5OpenThreads; �
 không phải kết luận tất cả source đã review. Issue5/12 OPEN/PARTIAL; không có tool-approval blocker.
 Trong phạm vi TDD đã audit, chưa tìm thấy gap độc lập khác cần viết ngay; việc tiếp theo là ownerfix97
 và các gate runtime/business, cùng fresh review91ngoài nhóm code QA này.
+
+
+## Checkpoint cuối — owner fix và Search được tích hợp trong lúc bàn giao
+
+Phần WAITING_TV2_FIX/91fresh-review phía trên là checkpoint lịch sử trước khi owner push.
+TV2 đã push97/d376176 và main đã merge91tạif888725. Đã đọc delta policy/application/owner tests,
+đồng bộ branchQA riêng và chạy lại; không sửa production của TV2 hoặc tám assertions gốc.
+
+| Source đã test | Kết quả hiện tại | Evidence |
+|---|---|---|
+|104/a0c9d4b, production tree khớp97/d376176|519unit+205PG+8originalvisibility=732PASS,0FAIL/SKIP,exit0|[Owner-fix receipt](evidence/tv5-qa-tdd-20261027/visibility-owner-green.json)|
+|103/6d99953, production tree khớpmainf888725 sau91merge|461unit+188PG+17QA=666PASS,0FAIL/SKIP,exit0|[Latest-main QA candidate receipt](evidence/tv5-qa-tdd-20261027/integration-latest-main.json)|
+
+**Visibility P2 FIXED_VERIFIED tại private handler/PG boundary.** Original Java8test SHA256
+`cc95a20ea9f90f122a8803a68b508f3a794ee8a94c8876845eee105a9e1fe679` giữ nguyên từ51be73e;
+originalRED4PASS/4FAIL không bị sửa/xóa. Bốn foreign/missing parity cases nayGREEN, bốn controls
+về409/selfmoderation403/scope403/dependency503 vẫnGREEN; rollback/no-write assertions giữ nguyên.
+Đây là một RED→GREEN acceptance trace cho ownerTV2fix, tách khỏi một CLI TDDcycle doTV5tự sửa.
+Không tính hai trace thành hai production fixes củaTV5. Không thêm test trùng: owner đã bổ sung
+9mode scope-refusal/default/null/unavailable/mismatch/ownership/status unit cases cho cả4operations,
+plus invocation-order control; original8QA cung cấp actualPG/rollback coverage.
+
+103giữ nguyên5old+12new cases, thêm syncmain/README; không thay test logic theo production fix97.
+104merge owner source +README/task-description update, vẫn Draft chờreview; không selfApprove hoặc
+resolve thread khác. Protected Product HTTP/JWT/currentStore/House và fullM01/Finance production
+vẫn BLOCKED/PENDING. SharedC01E01/C06 không tự được duyệt bởi record conversionQA. Các lượt test
+trên tách riêng với actualpostmerge90main1144PASS tại7d68; không cộng thành release total.
+
+- [x] #103 đã tương thích cả merged90và91/Search tại scoped candidate6d99953,17QA và ProductregressionPASS.
+- [x] #104 nguyên8GREEN/ownerfixd376 verified; giao evidence cho TV2/TV1, giữoriginalRED.
+- [ ] Review PRQA, protectedHTTP/currentauthority, House/freshness/C01E01/C06/fullM01/Finance/liveE2E.
