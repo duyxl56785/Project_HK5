@@ -1,14 +1,17 @@
 # TV5 Product owner-resource visibility diagnostic
 
-Refs #5 #12 #97. This is a separate **RED diagnostic**, not a completed fix or live HTTP test.
+Refs #5 #12 #97. Independent PostgreSQL acceptance, not a live HTTP test or production enablement.
 Decision: [TV1 security-owner receipt6430723502](https://github.com/duyxl56785/Project_HK5/pull/97#issuecomment-6430723502),
-27/10/2026, source97/aa790f4. TV1 decided the narrow privacy exception; TV2 confirmation and implementation
-remain separate. This does not approve other contracts, production HTTP or global404remapping.
+27/10/2026. TV2 has CONFIRMED this narrow decision and pushed owner fix97/d376176.
+The TV5 branch incorporates that source without editing production. The original eight-test Java file
+is byte-identical to diagnostic51be73e. Exact run receipts on PR104 determine acceptance; source publication
+alone is not verification. This does not approve other contracts, production HTTP or global404remapping.
 
 After current actor/eligible Store scope has been independently verified, future owner-targeted
 GET/edit/submit/deactivate must conceal missing and foreign Product IDs with the same generic404.
-Current prepared handlers map foreign to403 and missing to404. Four real PostgreSQL cases intentionally
-assert the new scoped requirement and should remain RED until the owner fixes it. Rollback/no-write
+Historical source97/aa790f4 mapped foreign to403 and missing to404, producing four assertion failures
+and four controls PASS. Preserve those original RED logs/XML/hashes. The new owner source verifies
+management scope before lookup and conceals foreign IDs; rerun all eight unchanged tests. Rollback/no-write
 assertions run before the intended parity assertion. Positive controls preserve same-Store access,
 409version/state,403self-moderation and403/503independent authority refusal; a global403→404patch fails them.
 

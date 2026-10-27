@@ -16,7 +16,7 @@ gradle.projectsEvaluated {
     product.tasks.named(qa.compileJavaTaskName) { dependsOn product.tasks.named('testClasses') }
     product.tasks.register('tv5ProductVisibility', Test) {
         group = 'verification'
-        description = 'TV5 separate RED diagnostic for TV1 owner-resource visibility decision; no live HTTP'
+        description = 'TV5 independent owner-resource visibility PG acceptance; original RED retained, no live HTTP'
         testClassesDirs = qa.output.classesDirs
         classpath = qa.runtimeClasspath
         useJUnitPlatform { includeTags 'postgres-integration' }
