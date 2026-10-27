@@ -1,0 +1,25 @@
+{
+  "scope": "SYNTHETIC_PRIVATE_BOUNDARY_FIXTURE_NOT_AUTH_OR_HOUSE_APPROVAL",
+  "categoryId": "93000000-0000-4000-8000-000000000001",
+  "moderatorReference": "93000000-0000-4000-8000-000000000002",
+  "stores": [
+    {
+      "storeId": "93000000-0000-4000-8000-000000000003",
+      "sellerId": "93000000-0000-4000-8000-000000000004",
+      "actorReference": "93000000-0000-4000-8000-000000000005",
+      "inventorySku": "TV5-Mixé-A-001",
+      "unitPrice": "10000",
+      "currency": "VND",
+      "houseStore": false
+    },
+    {
+      "storeId": "93000000-0000-4000-8000-000000000006",
+      "sellerId": "93000000-0000-4000-8000-000000000007",
+      "actorReference": "93000000-0000-4000-8000-000000000008",
+      "inventorySku": "TV5-Mixé-B-002",
+      "unitPrice": "20000",
+      "currency": "VND",
+      "houseStore": false
+    }
+  ]
+}
