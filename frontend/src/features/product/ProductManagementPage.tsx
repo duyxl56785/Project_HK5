@@ -12,10 +12,12 @@ export interface ProductManagementPageProps {
   readonly sessionKey?: string;
   readonly onRetry?: () => void;
   readonly onReload?: ProductReloadHandler;
+  readonly confirmationMessage?: string;
+  readonly pageSize?: number;
 }
 const unavailable = { status: 'unavailable' } as const;
 interface WriteBarrier { scope: string; blocked: boolean }
-export function ProductManagementPage({ state = unavailable, actions, sessionKey, onRetry, onReload }: ProductManagementPageProps) {
+export function ProductManagementPage({ state = unavailable, actions, sessionKey, onRetry, onReload, confirmationMessage, pageSize }: ProductManagementPageProps) {
   const id = useId();
   const barrier = useRef<WriteBarrier | null>(null);
   if (state.status === 'ready') {
@@ -25,7 +27,7 @@ export function ProductManagementPage({ state = unavailable, actions, sessionKey
     const scopeId = JSON.stringify([storeId, scope]);
     if (barrier.current?.scope !== scopeId) barrier.current = { scope: scopeId, blocked: false };
     // Keep the same workspace/lock for invalid data in the same Store/session.
-    return <ProductWorkspace key={scopeId} barrier={barrier.current} data={data} storeId={storeId} sessionKey={scope} actions={actions} onRetry={onRetry} onReload={onReload} />;
+    return <ProductWorkspace key={scopeId} barrier={barrier.current} data={data} storeId={storeId} sessionKey={scope} actions={actions} onRetry={onRetry} onReload={onReload} confirmationMessage={confirmationMessage} pageSize={pageSize} />;
   }
   const messages = {
     loading: ['Đang tải sản phẩm', 'Vui lòng chờ trong giây lát.'],
@@ -37,7 +39,7 @@ export function ProductManagementPage({ state = unavailable, actions, sessionKey
   return <section className="tv2-product" aria-labelledby={id} aria-busy={state.status === 'loading'}><p className="tv2-product__eyebrow">KHÔNG GIAN NGƯỜI BÁN</p><h2 id={id}>Quản lý sản phẩm</h2><div className="tv2-product__notice" role={state.status === 'error' || state.status === 'unauthorized' ? 'alert' : 'status'}><h3>{title}</h3><p>{message}</p>{state.status === 'loading' && <div className="tv2-product__skeleton" aria-hidden="true" />}{state.status === 'error' && onRetry && <button onClick={onRetry}>Thử lại</button>}</div></section>;
 }
 
-function ProductWorkspace({ barrier, data, storeId, sessionKey, actions, onRetry, onReload }: {
+function ProductWorkspace({ barrier, data, storeId, sessionKey, actions, onRetry, onReload, confirmationMessage, pageSize }: {
   readonly barrier: WriteBarrier;
   readonly data: ProductManagementData | null;
   readonly storeId: string;
@@ -45,6 +47,8 @@ function ProductWorkspace({ barrier, data, storeId, sessionKey, actions, onRetry
   readonly actions?: ProductManagementActions;
   readonly onRetry?: () => void;
   readonly onReload?: ProductReloadHandler;
+  readonly confirmationMessage?: string;
+  readonly pageSize?: number;
 }) {
   const id = useId(), alive = useRef(true), running = useRef(false), latest = useRef(data);
   const pendingReload = useRef<ProductReloadRequest | null>(null);
@@ -55,6 +59,7 @@ function ProductWorkspace({ barrier, data, storeId, sessionKey, actions, onRetry
   const [notice, setNotice] = useState<{ text: string; error: boolean } | null>(null);
   const [completion, setCompletion] = useState<{ request: ProductReloadRequest; snapshot: string } | null>(null);
   const [query, setQuery] = useState(''), [status, setStatus] = useState('');
+  const [page, setPage] = useState(1);
   latest.current = data;
   const snapshot = data ? JSON.stringify(data) : null;
   useEffect(() => { alive.current = true; return () => { alive.current = false; pendingReload.current = null; }; }, []);
@@ -115,7 +120,7 @@ function ProductWorkspace({ barrier, data, storeId, sessionKey, actions, onRetry
     if (result?.status === 'unauthorized') { requireReload(); setDenied(true); setEditor(null); setConfirmation(null); return; }
     if (result?.status === 'confirmed') {
       setEditor(null); setConfirmation(null); requireReload();
-      setNotice({ text: 'Máy chủ đã xác nhận thao tác. Tải lại danh sách để xem dữ liệu mới.', error: false });
+      setNotice({ text: confirmationMessage ?? 'Máy chủ đã xác nhận thao tác. Tải lại danh sách để xem dữ liệu mới.', error: false });
       // The host fetches authoritative data; this feature never invents IDs/status/version.
       void reload();
       return;
@@ -142,7 +147,10 @@ function ProductWorkspace({ barrier, data, storeId, sessionKey, actions, onRetry
   if (denied) return <ProductManagementPage state={{ status: 'unauthorized' }} />;
   if (!data) return <section className="tv2-product" aria-labelledby={id}><h2 id={id}>Quản lý sản phẩm</h2><div role="alert" className="tv2-product__alert"><h3>Dữ liệu sản phẩm không nhất quán</h3><p>Vui lòng tải lại dữ liệu đúng cửa hàng.</p>{onRetry && <button onClick={onRetry}>Thử lại</button>}</div></section>;
   const term = query.trim().toLocaleLowerCase('vi');
-  const visible = data.products.filter((product) => (!status || product.status === status) && (!term || product.name.toLocaleLowerCase('vi').includes(term) || product.sku.toLocaleLowerCase('vi').includes(term)));
+  const filtered = data.products.filter((product) => (!status || product.status === status) && (!term || product.name.toLocaleLowerCase('vi').includes(term) || product.sku.toLocaleLowerCase('vi').includes(term)));
+  const size = Number.isInteger(pageSize) && pageSize! > 0 ? Math.min(100, pageSize!) : Math.max(1, filtered.length);
+  const pages = Math.max(1, Math.ceil(filtered.length / size)), currentPage = Math.min(page, pages);
+  const visible = filtered.slice((currentPage - 1) * size, currentPage * size);
   const categories = new Map(data.categories.map((category) => [category.id, category.name]));
   const connected = !!sessionKey && !!(actions?.create || actions?.update || actions?.submitForReview);
   const allConnected = !!sessionKey && !!(actions?.create && actions?.update && actions?.submitForReview);
@@ -158,6 +166,7 @@ function ProductWorkspace({ barrier, data, storeId, sessionKey, actions, onRetry
     }}>{busy ? 'Đang gửi…' : 'Xác nhận gửi duyệt'}</button><button className="tv2-product__secondary" disabled={busy} onClick={closePanel}>Hủy</button></div>{!isCurrent(confirmation) && <p role="alert">Sản phẩm đã thay đổi. Tải lại trước khi gửi duyệt.</p>}</section>}
     <div className="tv2-product__toolbar"><div><label htmlFor={`${id}-search`}>Tìm trong danh sách đã tải</label><input id={`${id}-search`} type="search" placeholder="Tên sản phẩm hoặc SKU" value={query} onChange={(event) => setQuery(event.target.value)} /></div><div><label htmlFor={`${id}-status`}>Trạng thái</label><select id={`${id}-status`} value={status} onChange={(event) => setStatus(event.target.value)}><option value="">Tất cả trạng thái</option>{Object.entries(PRODUCT_STATUS_LABELS).map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></div><p className="tv2-product__count" aria-live="polite">{visible.length}/{data.products.length} sản phẩm đã tải</p></div>
     {!data.products.length ? <div className="tv2-product__empty"><span aria-hidden="true" className="tv2-product__empty-symbol">+</span><h3>Chưa có sản phẩm</h3><p>Thêm sản phẩm đầu tiên cho cửa hàng của bạn.</p></div> : !visible.length ? <div className="tv2-product__empty"><h3>Không tìm thấy sản phẩm</h3><p>Thử tên, SKU hoặc trạng thái khác trong danh sách đã tải.</p><button className="tv2-product__secondary" onClick={() => { setQuery(''); setStatus(''); }}>Xóa bộ lọc</button></div> : <ul className="tv2-product__list" aria-label="Sản phẩm theo cửa hàng">{visible.map((product) => <li key={product.id} className="tv2-product__card"><div className="tv2-product__card-top"><span className={`tv2-product__badge tv2-product__badge--${product.status.toLowerCase()}`}>{PRODUCT_STATUS_LABELS[product.status]}</span><span className="tv2-product__category">{categories.get(product.categoryId)}</span></div><h3>{product.name}</h3><p className="tv2-product__sku">SKU <code>{product.sku}</code></p><p className="tv2-product__price">{formatProductPrice(product.unitPrice)} <span>VND</span></p><div className="tv2-product__card-actions">{canEditProduct(product.status) ? <><button className="tv2-product__secondary" aria-label={`Sửa ${product.name}`} disabled={mutationLocked} onClick={(event) => { returnFocus.current = event.currentTarget; setEditor(product); setConfirmation(null); setNotice(null); }}>Chỉnh sửa</button><button disabled={mutationLocked || !sessionKey || !actions?.submitForReview} onClick={(event) => { returnFocus.current = event.currentTarget; setConfirmation(product); setEditor(null); setNotice(null); }}>Gửi duyệt</button></> : <p className="tv2-product__subtle">{product.status === 'PENDING_REVIEW' ? 'Đang chờ người có quyền duyệt.' : 'Không thể sửa ở trạng thái này.'}</p>}</div></li>)}</ul>}
+    {pages > 1 && <nav className="tv2-product__pagination" aria-label="Phân trang sản phẩm quản lý"><button className="tv2-product__secondary" disabled={currentPage === 1} onClick={() => setPage(currentPage - 1)}>Trang trước</button><span>Trang {currentPage}/{pages}</span><button className="tv2-product__secondary" disabled={currentPage === pages} onClick={() => setPage(currentPage + 1)}>Trang sau</button></nav>}
     <p className="tv2-product__footnote">Danh sách quản lý theo cửa hàng. Trạng thái “Đang bán” không thay thế việc xác minh điều kiện hiển thị trên Catalog công khai.</p>
   </section>;
 }
