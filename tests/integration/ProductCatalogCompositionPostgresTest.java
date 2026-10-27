@@ -13,6 +13,7 @@ import com.projecthk5.productservice.catalog.ProductCatalogSnapshotSource;
 import com.projecthk5.productservice.product.*;
 import com.projecthk5.productservice.product.persistence.ProductPersistenceAdapter.StoredProduct;
 import com.projecthk5.productservice.product.persistence.ProductRepository;
+import com.projecthk5.productservice.product.persistence.ProductPersistenceException;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
@@ -122,11 +123,15 @@ class ProductCatalogCompositionPostgresTest {
 
     @Test void foreignStoreDenialRollsBackAnEarlierLifecycleWriteInTheSameTransaction() {
         StoredProduct first = active(A), second = active(B);
-        var failure = assertThrows(ProductRuleException.class, () -> transaction().executeWithoutResult(tx -> {
+        var failure = assertThrows(ProductPersistenceException.class, () -> transaction().executeWithoutResult(tx -> {
             application.deactivate(actor(A), first.listing().id(), first.version());
             application.deactivate(actor(A), second.listing().id(), second.version());
         }));
-        assertEquals(ProductRuleException.Code.ACCESS_DENIED, failure.getCode());
+        // Approved V01: verified owner scope conceals a foreign Product as NOT_FOUND.
+        assertEquals(ProductPersistenceException.Code.NOT_FOUND, failure.getCode());
+        var unknown = assertThrows(ProductRuleException.class,
+                () -> application.findById("unknown-tv5-fixture-actor", first.listing().id()));
+        assertEquals(ProductRuleException.Code.ACCESS_DENIED, unknown.getCode());
         assertEquals(first, application.findById(actor(A), first.listing().id()));
         assertEquals(second, application.findById(actor(B), second.listing().id()));
         assertTrue(catalog.validate(expected(first, second)).valid());
@@ -188,6 +193,11 @@ class ProductCatalogCompositionPostgresTest {
     @TestConfiguration static class AuthorityFixture { @Bean FixturePolicy fixturePolicy() { return new FixturePolicy(); } }
     static final class FixturePolicy implements ProductAccessPolicy {
         volatile boolean unknownHouse;
+        @Override public UUID currentManagementStore(String actor) {
+            if (actor(A).equals(actor)) return id(A, "storeId");
+            if (actor(B).equals(actor)) return id(B, "storeId");
+            throw denied(); // Explicit synthetic fixtures only; no default Store or production authority.
+        }
         public StoreAccess requireSellerManagement(String actor, UUID store) {
             StoreAccess facts = readStore(store);
             if (!Set.of(actor(A), actor(B)).contains(actor) || !facts.ownerReference().equals(actor)) throw denied();

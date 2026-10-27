@@ -3,7 +3,8 @@
 Refs #5 #12 #90 #97. QA-only sources outside owner production/test trees. Requires reviewed
 Product lifecycle #89 and batch source #90. Original base was #90/head273a44d with maina705052;
 the TV5 branch first synchronized with main7d68e11 after #90/head0f9c0c8 merged,
-then mainf888725 after #91 integrated Search. Earlier receipts retain their own exact SHAs.
+then mainf888725 after #91 integrated Search, and mainc7b8460 after #97/#104 integrated
+the current-management-Store policy and its acceptance suite. Earlier receipts retain their exact SHAs.
 It adds no controller, migration, production bean, shared Gradle edit, authority or feature flag.
 
 ## Run
@@ -82,5 +83,18 @@ Store/House facts remain synthetic fixtures; selectors do not grant authorizatio
 Original five cases remain unchanged. The first expanded run passed immediately (17 total,
 12 new); label it **PREVENTIVE/REGRESSION**, not an invented TDD RED->GREEN. Unit/PG/runtime
 receipts are separately bound to source manifests/SHAs. Full M01/Finance gates stay unchanged.
+
+## Current-scope fixture compatibility after #97 merged
+
+The merged Product policy deliberately defaults `currentManagementStore` to unavailable.
+The shared TEST FixturePolicy now explicitly maps only fixture actor A/B to its own Store;
+unknown actors are denied. No production authority or fallback is supplied. The previous harness
+failed all17cases before their intended assertions at owner submit; implementing this TEST port
+left one obsolete assertion expecting ACCESS_DENIED for a verified owner touching a foreign Product.
+The approved V01 policy requires NOT_FOUND there, so that assertion now checks the precise
+ProductPersistenceException.NOT_FOUND. All rollback/row-invariance checks remain, and an additional
+unknown-actor ACCESS_DENIED control distinguishes genuine scope refusal. The new12case source and
+the original eight visibility acceptance tests are untouched. Original RED logs/XML are retained;
+record Docker initialization failure separately from the real17FAIL/16PASS1FAIL/17PASS sequence.
 
 TV1 has [decided the narrow owner-resource visibility rule](https://github.com/duyxl56785/Project_HK5/pull/97#issuecomment-6430723502): after independent current Seller/Store-scope verification, owner GET/edit/submit/deactivate must return the same generic404 for foreign and missing Products. This decision does not register a protected route or globally remap403. Do not request the same decision again; TV2 must confirm and implement its mapping. [Draft diagnostic #104](https://github.com/duyxl56785/Project_HK5/pull/104) retains the original four parity failures and four controls until the unchanged acceptance cases are GREEN on the actual owner fix.
