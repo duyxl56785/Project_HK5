@@ -200,3 +200,14 @@ Integration order remains owner-managed: already merged89→90→91 are not re-r
 | #110 | #2, #9, #15 | No closingIssuesReferences in GraphQL checkpoint; Refs != Closes |
 | #111 | #1, #2, #3, #4, #5 | No closingIssuesReferences in GraphQL checkpoint; Refs != Closes |
 | #113 | #5, #12 | No closingIssuesReferences in GraphQL checkpoint; Refs != Closes |
+
+## Final read-back after publication (00:24–00:25 ICT,28/10)
+
+[GitHub mutation/read-back receipts](evidence/tv5-all-pr-20261028/github-publication.json) and [fresh18OPEN metadata](evidence/tv5-all-pr-20261028/post-publication-readback.json) supersede the reviewer-request queue in the earlier audit snapshot above. Counts remain97/18OPEN(4Draft)/76MERGED/3CLOSED. All18 have `mergeable=true`, which does not bypass review/contract/CI gates.
+
+TV5 submitted scoped COMMENT reviews on107/110/111; GitHub consumed the earlier TV5 requests on110/111 as expected. No review request was re-added. **111 already has TV1 formal docs APPROVED, no unresolved thread and no additional named-required-reviewer rule; TV5 COMMENT introduces no merge block.** Its NO_CHECKS is documented docs-only, not proof of failed CI.110 remains REVIEW_REQUIRED: a human authorized formal scoped decision is still needed if the owner seeks acceptance.107 remainsDraft/REVIEW_REQUIRED; defaultTV2 requested once after confirming no prior removal/current review.
+
+87/108/109 formalAPPROVED still confirmed at their exact heads; evidence links were appended to the same reviews without a duplicate approval.103still has one TV2-owned open thread and oldCR; existing own reply was enriched with immutable749PASS/RED/GREEN links, no self-resolution.99has TV2current931approval, while TV3/TV4 requests remain.80/102retainTV2oldCR; there is no effectiveTV5CR/openTV5thread.
+
+Both Issue5/12 checkpoints were updated with evidence-backed[x]items and preserved history; both remainOPEN/PARTIAL. PR103remotee7d8948 and PR113remotee22365e were read back before this docs-only receipt follow-up. [32offline tests on exacte22365e](evidence/tv5-all-pr-20261028/cli-final-e22365e.json) PASS; the follow-up changes only this report/derived publication receipts, not CLI source or tests.
+

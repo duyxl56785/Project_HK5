@@ -1,0 +1,86 @@
+[
+  {
+    "action": "confirmed scoped formal approval with published evidence",
+    "url": "https://github.com/duyxl56785/Project_HK5/pull/87#pullrequestreview-5671228181",
+    "PR": 87,
+    "head": "7f2c6b2fc45055635b2fcf7d3b05bba4a854465a",
+    "state": "APPROVED"
+  },
+  {
+    "action": "confirmed scoped formal approval with published evidence",
+    "url": "https://github.com/duyxl56785/Project_HK5/pull/108#pullrequestreview-5671229407",
+    "PR": 108,
+    "head": "8d4186ccf4369c9ac27fd19f49e54c9bc1740a6d",
+    "state": "APPROVED"
+  },
+  {
+    "action": "confirmed scoped formal approval with published evidence",
+    "url": "https://github.com/duyxl56785/Project_HK5/pull/109#pullrequestreview-5671230753",
+    "PR": 109,
+    "head": "cdea2839a6dfb0dd6b9c3f038f192e3080330db4",
+    "state": "APPROVED"
+  },
+  {
+    "action": "PR description updated",
+    "url": "https://github.com/duyxl56785/Project_HK5/pull/103",
+    "PR": 103,
+    "head": "e7d894848b1415121f02ee551d070c7f03fdb241",
+    "requested": [
+      "tranvanchinhbg2006-alt",
+      "duyxl56785"
+    ]
+  },
+  {
+    "action": "PR description updated",
+    "url": "https://github.com/duyxl56785/Project_HK5/pull/113",
+    "PR": 113,
+    "head": "e22365e9c0da5c2adf8906ef1bbf1f19539e6f06",
+    "requested": [
+      "duyxl56785"
+    ]
+  },
+  {
+    "action": "existing reviewer-thread reply enriched without resolution",
+    "url": "https://github.com/duyxl56785/Project_HK5/pull/103#discussion_r4391712321",
+    "PR": 103
+  },
+  {
+    "action": "scoped evidence COMMENT, not APPROVED",
+    "url": "https://github.com/duyxl56785/Project_HK5/pull/107#pullrequestreview-5671493071",
+    "PR": 107,
+    "head": "b155f799eaea8e49837d5d2970a78b369d7c0924"
+  },
+  {
+    "action": "scoped evidence COMMENT, not APPROVED",
+    "url": "https://github.com/duyxl56785/Project_HK5/pull/110#pullrequestreview-5671494072",
+    "PR": 110,
+    "head": "96886dddb320bf0abf963cfd629581cbc4a5b22e"
+  },
+  {
+    "action": "scoped evidence COMMENT, not APPROVED",
+    "url": "https://github.com/duyxl56785/Project_HK5/pull/111#pullrequestreview-5671494803",
+    "PR": 111,
+    "head": "42b2d2a33b6ed69124988a6dc88e6c0087488e25"
+  },
+  {
+    "action": "default reviewer requested once",
+    "url": "https://github.com/duyxl56785/Project_HK5/pull/107",
+    "PR": 107,
+    "reviewer": "duyxl56785"
+  },
+  {
+    "action": "evidence-backed checklist OPEN/PARTIAL",
+    "url": "https://github.com/duyxl56785/Project_HK5/issues/5#issuecomment-6282711041",
+    "Issue": 5
+  },
+  {
+    "action": "evidence-backed checklist OPEN/PARTIAL",
+    "url": "https://github.com/duyxl56785/Project_HK5/issues/12#issuecomment-6282712138",
+    "Issue": 12
+  },
+  {
+    "action": "publication complete",
+    "url": "https://github.com/duyxl56785/Project_HK5/pull/113",
+    "completedAtUtc": "2026-10-27T17:24:26.480332+00:00"
+  }
+]
