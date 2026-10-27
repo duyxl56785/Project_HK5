@@ -1,9 +1,5 @@
 # Smart E-Commerce Marketplace V2 — Project_HK5
 
-> **TRẠNG THÁI: BỘ KHUNG DỰ ÁN (SCAFFOLD), CHƯA PHẢI HỆ THỐNG V2 ĐÃ TRIỂN KHAI.**
-> Repository được khởi tạo để 5 thành viên cùng phát triển theo phân công 3 tuần.
-> Mã nguồn V2 cũ (nếu có) phải được đối chiếu trước khi chuyển vào; không ghi đè mất tính năng hiện có.
-
 ## Công nghệ và mô hình theo báo cáo V2
 
 - Backend: Java 21, Spring Boot 3.3, Spring Cloud 2023, Gradle multi-project; 8 service nghiệp vụ.
