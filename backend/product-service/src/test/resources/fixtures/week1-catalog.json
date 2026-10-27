@@ -27,28 +27,28 @@
       "storeId": "40000000-0000-4000-8000-000000000001",
       "categoryId": "20000000-0000-4000-8000-000000000001",
       "sku": "TV2-DEMO-A-001", "name": "Demo Product A1",
-      "unitPrice": "10000", "status": "ACTIVE", "suggestedAvailableQuantity": 20
+      "unitPrice": "10000", "currency": "VND", "status": "ACTIVE", "suggestedAvailableQuantity": 20
     },
     {
       "productId": "50000000-0000-4000-8000-000000000002",
       "storeId": "40000000-0000-4000-8000-000000000002",
       "categoryId": "20000000-0000-4000-8000-000000000001",
       "sku": "TV2-DEMO-B-001", "name": "Demo Product B1",
-      "unitPrice": "15000", "status": "ACTIVE", "suggestedAvailableQuantity": 20
+      "unitPrice": "15000", "currency": "VND", "status": "ACTIVE", "suggestedAvailableQuantity": 20
     },
     {
       "productId": "50000000-0000-4000-8000-000000000003",
       "storeId": "40000000-0000-4000-8000-000000000001",
       "categoryId": "20000000-0000-4000-8000-000000000001",
       "sku": "TV2-DEMO-A-002", "name": "Demo Product A2",
-      "unitPrice": "25000", "status": "ACTIVE", "suggestedAvailableQuantity": 10
+      "unitPrice": "25000", "currency": "VND", "status": "ACTIVE", "suggestedAvailableQuantity": 10
     },
     {
       "productId": "50000000-0000-4000-8000-000000000004",
       "storeId": "40000000-0000-4000-8000-000000000002",
       "categoryId": "20000000-0000-4000-8000-000000000001",
       "sku": "TV2-DEMO-B-PRIVATE", "name": "Private Draft",
-      "unitPrice": "5000", "status": "DRAFT", "suggestedAvailableQuantity": 0
+      "unitPrice": "5000", "currency": "VND", "status": "DRAFT", "suggestedAvailableQuantity": 0
     }
   ]
 }

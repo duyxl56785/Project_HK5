@@ -6,7 +6,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
-/** Not a Spring bean: verified policies and Product persistence are deliberately not wired yet. */
+/** Pure lifecycle rules; orchestration supplies the verified policy and handles persistence. */
 public class ProductLifecycleService {
     private final ProductAccessPolicy policy;
     private final CategoryRepository categories;
@@ -16,17 +16,19 @@ public class ProductLifecycleService {
         this.categories = Objects.requireNonNull(categories);
     }
 
-    public ProductListing create(String actor, UUID storeId, UUID categoryId, String sku, String name, BigDecimal price) {
+    public ProductListing create(String actor, UUID storeId, UUID categoryId, String sku, String name,
+                                 BigDecimal price, String currency) {
         managedStore(actor, storeId);
         requireCategory(categoryId);
-        return new ProductListing(UUID.randomUUID(), storeId, categoryId, sku, name, price, ProductStatus.DRAFT, null);
+        return new ProductListing(UUID.randomUUID(), storeId, categoryId, sku, name, price, currency, ProductStatus.DRAFT, null);
     }
 
-    public ProductListing edit(String actor, ProductListing current, UUID categoryId, String name, BigDecimal price) {
+    public ProductListing edit(String actor, ProductListing current, UUID categoryId, String name,
+                               BigDecimal price, String currency) {
         managedStore(actor, current.storeId());
         requireState(current, ProductStatus.DRAFT, ProductStatus.REJECTED, ProductStatus.INACTIVE);
         requireCategory(categoryId);
-        return new ProductListing(current.id(), current.storeId(), categoryId, current.sku(), name, price,
+        return new ProductListing(current.id(), current.storeId(), categoryId, current.sku(), name, price, currency,
                 current.status(), current.reviewReason());
     }
 
@@ -62,6 +64,11 @@ public class ProductLifecycleService {
         return current.withState(ProductStatus.INACTIVE, null);
     }
 
+    public ProductListing managementView(String actor, ProductListing current) {
+        managedStore(actor, current.storeId());
+        return current;
+    }
+
     public Optional<CatalogProduct> publicView(ProductListing current) {
         ProductAccessPolicy.StoreAccess store = store(policy.readStore(current.storeId()), current.storeId());
         if (current.status() != ProductStatus.ACTIVE || !store.sellerApproved() || !store.storeOpen()
@@ -69,12 +76,12 @@ public class ProductLifecycleService {
             return Optional.empty();
         }
         return Optional.of(new CatalogProduct(current.id(), store.sellerId(), current.storeId(),
-                current.categoryId(), current.sku(), current.name(), current.unitPrice(), store.houseStore()));
+                current.categoryId(), current.sku(), current.name(), current.unitPrice(), current.currency(), store.houseStore()));
     }
 
     // Internal projection only, not an agreed CatalogPort or public HTTP DTO.
     public record CatalogProduct(UUID productId, UUID sellerId, UUID storeId, UUID categoryId,
-                                 String sku, String name, BigDecimal unitPrice, boolean houseStore) { }
+                                 String sku, String name, BigDecimal unitPrice, String currency, boolean houseStore) { }
 
     private void managedStore(String actor, UUID storeId) {
         requireActor(actor);

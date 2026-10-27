@@ -2,6 +2,9 @@ package com.projecthk5.productservice.catalog;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.projecthk5.productservice.product.ProductListing;
+import com.projecthk5.productservice.product.ProductRuleException;
+import com.projecthk5.productservice.product.ProductStatus;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
@@ -11,6 +14,7 @@ import java.util.UUID;
 import java.time.Duration;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.IntStream;
 import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -50,9 +54,200 @@ class CatalogSchemaProposalPostgresTest {
 
     @Test void proposalDoesNotBecomeAnAppliedProductFlywayMigration() throws Exception {
         try (Connection connection = connect(); var statement = connection.createStatement();
-             var rows = statement.executeQuery("SELECT count(*) FROM flyway_schema_history WHERE success AND version IS NOT NULL")) {
+             var rows = statement.executeQuery("SELECT string_agg(version, ',' ORDER BY installed_rank)"
+                     + " FROM flyway_schema_history WHERE success AND version IS NOT NULL")) {
             assertTrue(rows.next());
-            assertEquals(1, rows.getInt(1));
+            assertEquals("1,2", rows.getString(1), "Only Category V1 and production Product V2 are migrations");
+        }
+        try (Connection connection = connect(); var statement = connection.createStatement();
+             var rows = statement.executeQuery("SELECT count(*) FROM flyway_schema_history"
+                     + " WHERE script='catalog-product-candidate.sql'")) {
+            assertTrue(rows.next());
+            assertEquals(0, rows.getInt(1), "The historical SQL candidate remains outside Flyway history");
+        }
+    }
+
+    @ParameterizedTest
+    @ValueSource(booleans = {true, false})
+    void candidateRejectsEveryJava21BoundarySpaceWithoutRewritingSku(boolean prefix) throws Exception {
+        int[] spaces = IntStream.rangeClosed(0, Character.MAX_CODE_POINT)
+                .filter(cp -> Character.isWhitespace(cp) || Character.isSpaceChar(cp)).toArray();
+        try (Connection connection = connect()) {
+            for (int cp : spaces) {
+                String space = new String(Character.toChars(cp));
+                String sku = prefix ? space + "SKU" : "SKU" + space;
+                String diagnostic = "U+%04X prefix=%s".formatted(cp, prefix);
+                assertThrows(ProductRuleException.class, () -> new ProductListing(UUID.randomUUID(),
+                        UUID.randomUUID(), CATEGORY, sku, "Name", BigDecimal.ONE, "VND", ProductStatus.DRAFT, null), diagnostic);
+                SQLException rejected = assertThrows(SQLException.class,
+                        () -> insert(connection, "store-a", sku, "10"), diagnostic);
+                assertEquals("23514", rejected.getSQLState(), diagnostic);
+            }
+        }
+        assertCounts(1, 0);
+    }
+
+    @Test void candidateExactLookupPreservesCaseCompositionAndInternalSpaces() throws Exception {
+        String[] skus = {"SKU", "sku", "\u00e9-SKU", "e\u0301-SKU", "S\u00a0K\u2007U\u202fX", "S\tKU"};
+        try (Connection connection = connect()) {
+            for (String sku : skus) insert(connection, "store-a", sku, "10");
+        }
+        try (Connection fresh = connect()) {
+            try (var query = fresh.createStatement(); var rows = query.executeQuery(
+                    "SELECT c.collname,c.collisdeterministic,current_setting('server_encoding')"
+                            + " FROM pg_attribute a JOIN pg_collation c ON c.oid=a.attcollation"
+                            + " WHERE a.attrelid='catalog_product_candidate'::regclass AND a.attname='inventory_sku'")) {
+                assertTrue(rows.next());
+                assertEquals("C", rows.getString(1));
+                assertTrue(rows.getBoolean(2));
+                assertEquals("UTF8", rows.getString(3));
+            }
+            try (var query = fresh.prepareStatement(
+                    "SELECT inventory_sku FROM catalog_product_candidate WHERE inventory_sku=?")) {
+                for (String sku : skus) {
+                    query.setString(1, sku);
+                    try (var rows = query.executeQuery()) {
+                        assertTrue(rows.next());
+                        assertArrayEquals(sku.getBytes(StandardCharsets.UTF_8), rows.getBytes(1));
+                        assertFalse(rows.next(), "Exact lookup must not fold case or Unicode composition");
+                    }
+                }
+            }
+        }
+        assertCounts(1, skus.length);
+    }
+
+    @Test void oversizedSkuCannotBeSilentlyTruncatedBeforeBoundaryValidation() throws Exception {
+        String maximum = "A".repeat(128);
+        try (Connection connection = connect()) {
+            assertEquals("23514", assertThrows(SQLException.class,
+                    () -> insert(connection, "store-a", maximum + " ", "10")).getSQLState());
+        }
+        assertCounts(1, 0);
+        try (Connection connection = connect()) {
+            assertEquals("23514", assertThrows(SQLException.class,
+                    () -> insert(connection, "store-a", maximum + "A", "10")).getSQLState());
+            insert(connection, "store-a", maximum, "10");
+        }
+        try (Connection fresh = connect(); var query = fresh.createStatement();
+             var rows = query.executeQuery("SELECT inventory_sku FROM catalog_product_candidate")) {
+            assertTrue(rows.next());
+            assertEquals(maximum, rows.getString(1));
+            assertFalse(rows.next());
+        }
+    }
+
+    @Test void runtimeFlywayRevalidationLeavesCandidateOutsideMigrationHistory() throws Exception {
+        Flyway runtime = Flyway.configure().dataSource(PG.getJdbcUrl(), PG.getUsername(), PG.getPassword())
+                .locations("classpath:db/migration").load();
+        runtime.validate();
+        assertEquals(0, runtime.migrate().migrationsExecuted);
+        assertEquals(java.util.List.of("1", "2"), java.util.Arrays.stream(runtime.info().applied())
+                .map(migration -> migration.getVersion().toString()).toList());
+        assertEquals("2", runtime.info().current().getVersion().toString());
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"UNIQUE", "FK"})
+    void constraintConflictRollsBackEarlierWritesInTheSameTransaction(String conflict) throws Exception {
+        try (Connection connection = connect()) {
+            insert(connection, "store-a", "existing", "10");
+            connection.setAutoCommit(false);
+            insert(connection, "store-b", "must-rollback", "20");
+            SQLException rejected;
+            if (conflict.equals("UNIQUE")) {
+                rejected = assertThrows(SQLException.class,
+                        () -> insert(connection, "store-b", "existing", "30"));
+            } else {
+                try (var query = connection.prepareStatement(
+                        "UPDATE catalog_product_candidate SET category_id=? WHERE inventory_sku='must-rollback'")) {
+                    query.setObject(1, UUID.randomUUID());
+                    rejected = assertThrows(SQLException.class, query::executeUpdate);
+                }
+            }
+            assertEquals(conflict.equals("UNIQUE") ? "23505" : "23503", rejected.getSQLState());
+            try (var query = connection.createStatement()) {
+                assertEquals("25P02", assertThrows(SQLException.class,
+                        () -> query.executeQuery("SELECT 1")).getSQLState());
+            }
+            connection.rollback();
+        }
+        assertCounts(1, 1);
+        try (Connection fresh = connect(); var query = fresh.createStatement();
+             var rows = query.executeQuery("SELECT inventory_sku FROM catalog_product_candidate")) {
+            assertTrue(rows.next());
+            assertEquals("existing", rows.getString(1));
+            assertFalse(rows.next());
+        }
+    }
+
+    @ParameterizedTest
+    @ValueSource(booleans = {true, false})
+    void categoryDeleteAndProductInsertCannotCommitAnOrphanInEitherOrder(boolean productFirst) throws Exception {
+        var workers = Executors.newSingleThreadExecutor();
+        // Close the uncommitted holder first even when observing the competitor fails.
+        try (Connection competitor = connect(); Connection holder = connect()) {
+            holder.setAutoCommit(false);
+            if (productFirst) insert(holder, "store-a", "race-sku", "10");
+            else deleteCategory(holder);
+            int holderPid = backendPid(holder), competitorPid = backendPid(competitor);
+            var pending = workers.submit(() -> {
+                try {
+                    if (productFirst) deleteCategory(competitor);
+                    else insert(competitor, "store-b", "race-sku", "10");
+                    return "COMMITTED";
+                } catch (SQLException rejected) {
+                    return rejected.getSQLState();
+                }
+            });
+            assertTimeoutPreemptively(Duration.ofSeconds(10), () -> {
+                try (Connection observer = connect(); var query = observer.prepareStatement(
+                        "SELECT ? = ANY(pg_blocking_pids(?))")) {
+                    query.setInt(1, holderPid);
+                    query.setInt(2, competitorPid);
+                    while (true) {
+                        try (var rows = query.executeQuery()) {
+                            assertTrue(rows.next());
+                            if (rows.getBoolean(1)) break;
+                        }
+                        assertFalse(pending.isDone(), "Competitor must wait for the actual FK lock");
+                        Thread.sleep(25);
+                    }
+                }
+            });
+            holder.commit();
+            assertEquals("23503", pending.get(10, TimeUnit.SECONDS));
+        } finally {
+            workers.shutdownNow();
+            assertTrue(workers.awaitTermination(20, TimeUnit.SECONDS));
+        }
+        assertCounts(productFirst ? 1 : 0, productFirst ? 1 : 0);
+    }
+
+    private static int backendPid(Connection connection) throws SQLException {
+        try (var query = connection.createStatement(); var rows = query.executeQuery("SELECT pg_backend_pid()")) {
+            assertTrue(rows.next());
+            return rows.getInt(1);
+        }
+    }
+
+    private static void deleteCategory(Connection connection) throws SQLException {
+        try (var query = connection.prepareStatement("DELETE FROM categories WHERE id=?")) {
+            query.setObject(1, CATEGORY);
+            assertEquals(1, query.executeUpdate());
+        }
+    }
+
+    private static void assertCounts(int categories, int products) throws SQLException {
+        try (Connection fresh = connect(); var query = fresh.createStatement();
+             var rows = query.executeQuery("SELECT (SELECT count(*) FROM categories),"
+                     + " (SELECT count(*) FROM catalog_product_candidate),"
+                     + " (SELECT count(*) FROM catalog_product_candidate p LEFT JOIN categories c"
+                     + " ON c.id=p.category_id WHERE c.id IS NULL)")) {
+            assertTrue(rows.next());
+            assertEquals(categories, rows.getInt(1));
+            assertEquals(products, rows.getInt(2));
+            assertEquals(0, rows.getInt(3), "No orphan or cascade deletion is permitted");
         }
     }
 
@@ -271,7 +466,14 @@ class CatalogSchemaProposalPostgresTest {
     }
 
     private static Connection connect() throws SQLException {
-        return DriverManager.getConnection(PG.getJdbcUrl(), PG.getUsername(), PG.getPassword());
+        Connection connection = DriverManager.getConnection(PG.getJdbcUrl(), PG.getUsername(), PG.getPassword());
+        try (var query = connection.createStatement()) {
+            query.execute("SET statement_timeout='15s'");
+        } catch (SQLException failure) {
+            connection.close();
+            throw failure;
+        }
+        return connection;
     }
 
     private void insert(Connection connection, String store, String sku, String price) throws SQLException {

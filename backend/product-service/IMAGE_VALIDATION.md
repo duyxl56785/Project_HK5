@@ -1,6 +1,6 @@
 # Product image validation — module usage
 
-Refs #2. Validation and an internal local-disk storage adapter are available. There is no upload controller, Product entity/Flyway migration, authorization policy or background work. Existing Spring Security chains and shared API contracts are unchanged. Internal error codes below are not a new HTTP contract.
+Refs #2. Validation and an internal local-disk storage adapter are available. This image slice adds no upload controller, Product-image entity/Flyway migration, authorization policy or background work. Product persistence is inherited from merged main; Product-to-image linkage remains pending. Existing Spring Security chains and shared API contracts are unchanged. Internal error codes below are not a new HTTP contract.
 
 ## Rules
 
