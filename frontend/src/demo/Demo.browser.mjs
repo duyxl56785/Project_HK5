@@ -171,3 +171,18 @@ test('Category CRUD protects Product references/cycles; Seller B sees only its S
     assert.equal(await page.locator('.demo-table').count(), 0); assert.deepEqual(errors, []);
   } finally { await context.close(); }
 });
+test('real Chrome decodes JPEG PNG WebP previews without uploading bytes', async () => {
+  const { page, context, errors, api } = await open();
+  try {
+    await role(page, 'seller'); await go(page, '/seller/images');
+    await page.getByLabel('Chọn sản phẩm quản lý ảnh').selectOption({ label: 'Cốc men sương · Nháp' });
+    const files = await page.evaluate(() => ['image/jpeg', 'image/png', 'image/webp'].map(type => {
+      const canvas = document.createElement('canvas'); canvas.width = canvas.height = 16;
+      canvas.getContext('2d').fillRect(0, 0, 16, 16); return { type, data: canvas.toDataURL(type).split(',')[1] };
+    }));
+    await page.locator('input[type=file]').setInputFiles(files.map((file, i) => ({ name: `demo.${['jpg', 'png', 'webp'][i]}`, mimeType: file.type, buffer: Buffer.from(file.data, 'base64') })));
+    await page.locator('.demo-image-thumb').nth(2).waitFor();
+    assert.equal(await page.locator('.demo-image-thumb img').evaluateAll(images => images.every(image => image.complete && image.naturalWidth === 16)), true);
+    assert.deepEqual(errors, []); assert.deepEqual(api, []);
+  } finally { await context.close(); }
+});
