@@ -6,7 +6,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.cloud.gateway.route.builder.GatewayFilterSpec;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
@@ -15,12 +14,21 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
+import org.springframework.security.web.server.ServerAuthenticationEntryPoint;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.security.web.server.util.matcher.ServerWebExchangeMatchers;
 import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.reactive.CorsWebFilter;
+import org.springframework.web.cors.reactive.CorsUtils;
+import org.springframework.web.cors.reactive.DefaultCorsProcessor;
 import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
+import org.springframework.web.server.ServerWebExchange;
+import org.springframework.web.server.WebFilter;
+import reactor.core.publisher.Mono;
 
 /**
  * Gateway is deny-all in default configuration. Opt-in routes are restricted to
@@ -68,13 +76,60 @@ public class GatewayAuthConfiguration {
         @Bean
         @Order(1)
         SecurityWebFilterChain protectedAuth(ServerHttpSecurity http, GatewayJwtDecoder decoder) {
+            ServerAuthenticationEntryPoint entryPoint = (exchange, failure) -> {
+                String code = "AUTH_ACCESS_REQUIRED";
+                if (failure instanceof OAuth2AuthenticationException oauth) {
+                    code = "invalid_request".equals(oauth.getError().getErrorCode())
+                            ? "AUTH_REQUEST_INVALID" : "AUTH_ACCESS_INVALID";
+                }
+                return denied(exchange, code);
+            };
             return http.csrf(ServerHttpSecurity.CsrfSpec::disable)
                     .httpBasic(ServerHttpSecurity.HttpBasicSpec::disable)
                     .formLogin(ServerHttpSecurity.FormLoginSpec::disable)
                     .authorizeExchange(a -> a.pathMatchers("/actuator/health", "/actuator/info").permitAll()
                             .pathMatchers(HttpMethod.GET, "/api/auth/me").authenticated()
                             .anyExchange().denyAll())
-                    .oauth2ResourceServer(o -> o.jwt(jwt -> jwt.jwtDecoder(decoder))).build();
+                    .exceptionHandling(e -> e.authenticationEntryPoint(entryPoint)
+                            .accessDeniedHandler((exchange, failure) -> denied(exchange, "AUTH_FORBIDDEN")))
+                    .oauth2ResourceServer(o -> o.authenticationEntryPoint(entryPoint)
+                            .jwt(jwt -> jwt.jwtDecoder(decoder))).build();
+        }
+
+        private static Mono<Void> denied(ServerWebExchange exchange, String code) {
+            String path = exchange.getRequest().getPath().value();
+            int status;
+            if (!Set.of("/api/auth/register", "/api/auth/login", "/api/auth/refresh", "/api/auth/logout",
+                    "/api/auth/me", "/actuator/health", "/actuator/info").contains(path)) {
+                status = 404; code = "GATEWAY_ROUTE_NOT_FOUND";
+            } else {
+                HttpMethod allowed = path.equals("/api/auth/me") || path.startsWith("/actuator/")
+                        ? HttpMethod.GET : HttpMethod.POST;
+                if (!allowed.equals(exchange.getRequest().getMethod())) {
+                    status = 405; code = "METHOD_NOT_ALLOWED";
+                    exchange.getResponse().getHeaders().set(HttpHeaders.ALLOW, allowed.name());
+                } else {
+                    status = "AUTH_FORBIDDEN".equals(code) ? 403 : "AUTH_REQUEST_INVALID".equals(code) ? 400 : 401;
+                }
+            }
+            return error(exchange, status, code);
+        }
+
+        private static Mono<Void> error(ServerWebExchange exchange, int status, String code) {
+            var response = exchange.getResponse();
+            response.setStatusCode(HttpStatus.valueOf(status));
+            response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
+            response.getHeaders().setCacheControl("no-store");
+            response.getHeaders().setPragma("no-cache");
+            if (status == 401 || status == 400) {
+                String challenge = "Bearer realm=\"smart-ecommerce\"";
+                if ("AUTH_ACCESS_INVALID".equals(code)) challenge += ", error=\"invalid_token\"";
+                if (status == 400) challenge += ", error=\"invalid_request\"";
+                response.getHeaders().set(HttpHeaders.WWW_AUTHENTICATE, challenge);
+            }
+            byte[] body = ("{\"code\":\"" + code + "\",\"message\":\"Request rejected\"}")
+                    .getBytes(java.nio.charset.StandardCharsets.UTF_8);
+            return response.writeWith(Mono.just(response.bufferFactory().wrap(body)));
         }
 
         @Bean
@@ -101,7 +156,7 @@ public class GatewayAuthConfiguration {
 
         @Bean
         @Order(Ordered.HIGHEST_PRECEDENCE)
-        CorsWebFilter authCors(ConfigurableEnvironment env) {
+        WebFilter authCors(ConfigurableEnvironment env) {
             String values = required(env, "HK5_AUTH_ALLOWED_ORIGINS");
             var origins = new HashSet<String>();
             for (String value : values.split(",", -1)) {
@@ -126,8 +181,19 @@ public class GatewayAuthConfiguration {
             config.setAllowedHeaders(List.of("Authorization", "Content-Type", "X-CSRF-Protection"));
             config.setExposedHeaders(List.of("WWW-Authenticate", "Retry-After", "Location"));
             var source = new UrlBasedCorsConfigurationSource();
-            source.registerCorsConfiguration("/api/auth/**", config);
-            return new CorsWebFilter(source);
+            for (String path : List.of("/api/auth/register", "/api/auth/login", "/api/auth/refresh", "/api/auth/logout", "/api/auth/me")) {
+                var routeConfig = new CorsConfiguration(config);
+                routeConfig.setAllowedMethods(List.of(path.equals("/api/auth/me") ? "GET" : "POST"));
+                source.registerCorsConfiguration(path, routeConfig);
+            }
+            var processor = new DefaultCorsProcessor();
+            return (exchange, chain) -> {
+                if (!processor.process(source.getCorsConfiguration(exchange), exchange)) {
+                    return error(exchange, 403, "AUTH_CSRF_REJECTED");
+                }
+                if (CorsUtils.isPreFlightRequest(exchange.getRequest())) return exchange.getResponse().setComplete();
+                return chain.filter(exchange);
+            };
         }
 
         /**

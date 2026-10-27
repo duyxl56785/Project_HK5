@@ -40,8 +40,23 @@ jobs:
             try {
               ./gradlew --version
               if ($LASTEXITCODE -ne 0) { throw 'Wrapper failed' }
-              ./gradlew build --console=plain
+              $authoritySources = (Resolve-Path '../tests/security/auth-current-authority').Path
+              ./gradlew --init-script ../tests/security/auth-current-authority.init.gradle "-Ptv5AuthAuthoritySources=$authoritySources" build :auth-service:tv5CurrentAuthorityRegression --console=plain
               if ($LASTEXITCODE -ne 0) { throw 'Backend build/tests failed' }
+              $e2eFile = 'api-gateway/build/test-results/test/TEST-com.projecthk5.gateway.GatewayAuthPostgresE2ETest.xml'
+              [xml]$e2e = Get-Content -LiteralPath $e2eFile -Raw
+              $suite = $e2e.testsuite
+              if ([int]$suite.tests -lt 1 -or [int]$suite.failures -ne 0 -or [int]$suite.errors -ne 0 -or [int]$suite.skipped -ne 0) {
+                throw 'Gateway -> Auth HTTP -> PostgreSQL16 E2E must execute without failures or skips'
+              }
+              Write-Output "TV1_AUTH_GATEWAY_PG16_E2E tests=$($suite.tests) failures=$($suite.failures) errors=$($suite.errors) skipped=$($suite.skipped) checkout=$(git rev-parse HEAD)"
+              Write-Output "TV1_AUTH_GATEWAY_PG16_XML_SHA256=$((Get-FileHash -LiteralPath $e2eFile -Algorithm SHA256).Hash)"
+              [xml]$authority = Get-Content -LiteralPath 'auth-service/build/test-results/tv5CurrentAuthorityRegression/TEST-com.projecthk5.tv5authqa.CurrentAccountAuthorityPostgresRegressionTest.xml' -Raw
+              $suite = $authority.testsuite
+              if ([int]$suite.tests -lt 1 -or [int]$suite.failures -ne 0 -or [int]$suite.errors -ne 0 -or [int]$suite.skipped -ne 0) {
+                throw 'Independent current-authority PostgreSQL regression must execute without failures or skips'
+              }
+              Write-Output "TV1_CURRENT_AUTHORITY_PG16 tests=$($suite.tests) failures=$($suite.failures) errors=$($suite.errors) skipped=$($suite.skipped)"
             } finally { Pop-Location }
           } finally {
             docker compose -f docker/compose.dev.yml stop postgres

@@ -30,7 +30,8 @@ public class CurrentAccountAuthority {
     }
 
     /** Call after credential verification, before creating an access JWT. */
-    @Transactional(readOnly = true)
+    // A denied read must not poison refresh's enclosing transaction when it returns 401.
+    @Transactional(readOnly = true, noRollbackFor = AccessInvalidFailure.class)
     public CurrentAccount requireCurrentForIssue(UUID accountId) {
         if (accountId == null) throw DecisionFailure.accessInvalid();
         return loadCurrent(accountId);
@@ -111,7 +112,7 @@ public class CurrentAccountAuthority {
     }
 
     /** Internal decision result; a later HTTP adapter maps this to reviewed 401/403/503. */
-    public static final class DecisionFailure extends RuntimeException {
+    public static class DecisionFailure extends RuntimeException {
         private final int httpStatus;
         private final String code;
         private DecisionFailure(int status, String code) {
@@ -121,10 +122,14 @@ public class CurrentAccountAuthority {
         }
         public int httpStatus() { return httpStatus; }
         public String code() { return code; }
-        private static DecisionFailure accessInvalid() { return new DecisionFailure(401, "AUTH_ACCESS_INVALID"); }
+        private static DecisionFailure accessInvalid() { return new AccessInvalidFailure(); }
         private static DecisionFailure forbidden() { return new DecisionFailure(403, "AUTH_FORBIDDEN"); }
         private static DecisionFailure unavailable() {
             return new DecisionFailure(503, "AUTHORIZATION_DEPENDENCY_UNAVAILABLE");
         }
+    }
+
+    private static final class AccessInvalidFailure extends DecisionFailure {
+        private AccessInvalidFailure() { super(401, "AUTH_ACCESS_INVALID"); }
     }
 }

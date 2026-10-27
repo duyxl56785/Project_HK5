@@ -186,12 +186,12 @@ class GatewayEmbeddedNettyForwardingTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"/api/auth/login", "/api/auth/me/extra", "/api/auth/unknown",
+    @ValueSource(strings = {"/api/auth/me/extra", "/api/auth/unknown",
             "/internal", "/internal/accounts", "/api/products"})
     void signedRequestsOutsideExactGetAllowlistNeverReachUpstream(String path) throws Exception {
         observed.clear();
         client.get().uri(path).header(HttpHeaders.AUTHORIZATION, "Bearer " + signedCustomerJwt())
-                .exchange().expectStatus().isForbidden();
+                .exchange().expectStatus().isNotFound();
         assertTrue(observed.isEmpty());
     }
 
@@ -200,8 +200,26 @@ class GatewayEmbeddedNettyForwardingTest {
         observed.clear();
         client.post().uri("/api/auth/me")
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + signedCustomerJwt())
-                .exchange().expectStatus().isForbidden();
+                .exchange().expectStatus().isEqualTo(405).expectHeader().valueEquals("Allow", "GET");
         assertTrue(observed.isEmpty());
+    }
+
+    @Test
+    void publicMutationWrongMethodAndUnknownPreflightFollowExactContract() throws Exception {
+        client.get().uri("/api/auth/login").header(HttpHeaders.AUTHORIZATION, "Bearer " + signedCustomerJwt())
+                .exchange().expectStatus().isEqualTo(405).expectHeader().valueEquals("Allow", "POST");
+        client.get().uri("/internal/accounts").exchange().expectStatus().isNotFound();
+        client.get().uri("/api/auth/me").exchange().expectStatus().isUnauthorized()
+                .expectBody().jsonPath("$.code").isEqualTo("AUTH_ACCESS_REQUIRED");
+        client.get().uri("/api/auth/me").header(HttpHeaders.AUTHORIZATION, "Bearer invalid")
+                .exchange().expectStatus().isUnauthorized()
+                .expectBody().jsonPath("$.code").isEqualTo("AUTH_ACCESS_INVALID");
+        client.options().uri("/api/auth/unknown").header(HttpHeaders.ORIGIN, TRUSTED_ORIGIN)
+                .header(HttpHeaders.ACCESS_CONTROL_REQUEST_METHOD, "POST")
+                .exchange().expectStatus().isForbidden();
+        client.options().uri("/api/auth/login").header(HttpHeaders.ORIGIN, TRUSTED_ORIGIN)
+                .header(HttpHeaders.ACCESS_CONTROL_REQUEST_METHOD, "GET")
+                .exchange().expectStatus().isForbidden();
     }
 
     @Test
