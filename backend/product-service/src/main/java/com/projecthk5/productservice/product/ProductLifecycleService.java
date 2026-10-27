@@ -6,7 +6,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
-/** Not a Spring bean: verified policies and Product persistence are deliberately not wired yet. */
+/** Pure lifecycle rules; orchestration supplies the verified policy and handles persistence. */
 public class ProductLifecycleService {
     private final ProductAccessPolicy policy;
     private final CategoryRepository categories;
@@ -62,6 +62,11 @@ public class ProductLifecycleService {
         managedStore(actor, current.storeId());
         requireState(current, ProductStatus.ACTIVE);
         return current.withState(ProductStatus.INACTIVE, null);
+    }
+
+    public ProductListing managementView(String actor, ProductListing current) {
+        managedStore(actor, current.storeId());
+        return current;
     }
 
     public Optional<CatalogProduct> publicView(ProductListing current) {
