@@ -80,7 +80,7 @@ zero Order/outbox/journal rows do **not** prove production Checkout ordering, re
 absence, compensation or live E2E. Inventory storage is not inspected. Current principal,
 Store/House facts remain synthetic fixtures; selectors do not grant authorization.
 
-Original five cases remain unchanged. The first expanded run passed immediately (17 total,
+The original five cases were retained unchanged at the initial expansion. That first run passed immediately (17 total,
 12 new); label it **PREVENTIVE/REGRESSION**, not an invented TDD RED->GREEN. Unit/PG/runtime
 receipts are separately bound to source manifests/SHAs. Full M01/Finance gates stay unchanged.
 
