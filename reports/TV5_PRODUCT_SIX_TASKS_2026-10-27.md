@@ -66,3 +66,42 @@ Chúng không chứng minh durable Order snapshots, remote authority hay live E2
 ## Main tiến trong lúc làm
 
 Sau baseline a705, main đã lên `1833dd4e5baf61683adaea34a54b6bb9a239e43d` qua #83/#77/#78. Production Product/Seller và root build không đổi, nhưng SQL-proposal tests của Product có delta.978chỉ thuộc candidate273; không áp lại nó cho main1833hoặc future postmerge90. Trước/sau merge phải dùng đúng final source và đếm XML mới, không ép tổng test bằng số cũ.
+
+
+## Follow-up TV5-PRODUCT-DELTA-20261027 — sau checkpoint ban đầu
+
+Tài khoản vẫn `nguyenminhduy090-alt`; main vẫn `1833dd4`. Đã đọc lại toàn bộ diff/commits/reviews/comments/threads của90/91/97, các dependency và Issue owners. [Delta/source/CI](evidence/tv5-product-followup-20261027/context.json). HEAD và Git blobs thuộc diff của90/91/97 không đổi; không tạo PR/test trùng và không gửi approval90 lần nữa. Hai mục local `.vs/` và `reports/tv5-m01-local/` được giữ nguyên.
+
+| Ưu tiên | Nhiệm vụ | Status | Evidence | Blocker | Next action |
+|---|---|---|---|---|---|
+|1|Review90|DONE|Formal5661077942 APPROVED đúng273; CI SUCCESS,0open threads;978 là lượt exact-head đã lưu, không chạy lại lượt này|Không còn technical blocker TV5 trong scope Batch nội bộ|TV2 thực hiện merge theo quy trình|
+|2|Sau merge90|WAITING_MERGE/NOT_RUN|GitHub merged=false, main chưa chứa90|Owner chưa merge|Sau actualmerge: fetch/ancestry và Product/Seller/PG regression mới|
+|3|Review91 sau sync|WAITING_OWNER|491 chưa đổi; approval/CI cũ không thay review final source|Chưa sync sau90|TV2 sync rồi TV5 review/test delta|
+|4|Product97|PARTIAL/WAITING_OWNER|aa chưa đổi;603regularPASS và diagnostic51be4PASS/4FAIL là receipt checkpoint trước, không gọi là lượt mới|TV2 chưa ACK/sửa narrow404; protected handler/authority không đăng ký|TV2 CONFIRMED/REVISE và owner fix; chạy nguyên8acceptances trên fix SHA|
+|5|House/freshness/C01E01|WAITING_OWNER|Ma trận H01/H02/F01/F02/C01/E01/V01/I01 vẫn đúng, không có sign-off mới|House, residual race/remote adapter/shared wire và C06|Owners xác nhận phần chưa chốt; không hỏi lại Price-only/S01/TV1V01|
+|6|Chuẩn bị live flow|PARTIAL|103README sửa gate; exactdec62e9 có5PGPASS mới. Dependency102 có147PASS/2SKIP mới, gồm10AuthHTTPPG|Không có Seller role-sync/currentStore, protectedProduct, shared providers/Checkout/C06|Không gọi Auth/Gateway hoặc Product→Catalog riêng là full liveE2E|
+
+### Lượt chạy mới của follow-up này
+
+1. **#103 tại `dec62e903eaa3fec0d768db7da46262b072b25b0`: 5 PG PASS,0FAIL/SKIP,exit0.** [Command/cases/raw hashes](evidence/tv5-product-followup-20261027/composition.json). Chỉ README đổi để dẫn TV1 decision6430723502 và chờ TV2 implementation; Java/init/fixture blobs không đổi từ151361b. Không tạo test mới không cần thiết. Push lên chính branch `codex/tv5-product-catalog-composition-qa`; TV2+TV3 requests giữ nguyên.
+
+2. **#102 tại `36ad517174ef3911bf794ef4ac568647cd9eb4eb`: 147 PASS,0FAIL,2SKIP,exit0.** [Command/cases/raw hashes](evidence/tv5-product-followup-20261027/auth-gateway.json). TV5 tự chạy source mới, tách khỏi owner report. Auth regular110PASS/2SKIP; current-authority5PGPASS; Gateway32PASS gồm10realGateway→Auth bootJar→PostgreSQL tests và22unit/transport tests. Bộ Auth regular gồm28PG; không cộng các lớp/suite con lần nữa. Hai SKIP là DatabaseReadinessTest (thiếu opt-in/DB provision riêng) và EmailInventoryTest (thiếu inventory JDBC config); NOT_RUN external data checks, không là PASS. Testcontainers disposable và loopback; giữ runtime log/XML/các Auth child logs riêng nguyên byte/hash, không xóa dữ liệu/volume cũ. Flags chỉ được test bật trong fixture như source owner, không đổi production/deployment config.
+
+Lệnh mới: `backend/gradlew.bat -p backend --init-script tests/security/auth-current-authority.init.gradle -Ptv5AuthAuthoritySources=<absolute QA dir> :auth-service:test :auth-service:tv5CurrentAuthorityRegression :api-gateway:test :auth-service:bootJar :api-gateway:bootJar --rerun-tasks --no-daemon --console=plain` (đường dẫn thực được ghi trong JSON). Java21.0.7/Gradle8.10/Docker29.8.1/PostgreSQL16,UTC/API1.44. Không sửa test/assertions/production owner để tạo kết quả này. Không cộng147với978/603/5 thành release total.
+
+Source102 mới thay Gateway HTTP/error/CORS và current-account transaction so với a4; đây là tiến bộ candidate có HTTP thật, không còn mô tả dependency Auth chỉ có mock. Nó vẫn Draft/chưa merge; không chứng minh approved/current Seller grant synchronization, ProductAccessPolicy, Store/House hay protected Product HTTP. Không tự đổi quyết định review hoặc resolve thread khác.
+
+### Coverage Product API còn có thể kết luận
+
+| Yêu cầu | Bằng chứng hiện có | Trạng thái tại boundary thực |
+|---|---|---|
+|Missing/invalid/expired JWT, current role intersection|102 HTTP/Auth kiểm token/current account trên candidate36ad;97 không có JWT adapter|Auth candidate được test riêng; protected Product401 vẫn BLOCKED/NOT_RUN|
+|Không tin actor/role/store do client khai|97 strict JSON/handler authority-before-access; `invalidAuthorityOutputFailsBeforeParsingOrDatabaseAccess`, `unknownAndDuplicateFieldsCannotSmuggleIdentityOrState`|Prepared contract/fixture proof, không phải current Auth→Store binding|
+|Cross-Store create/read/edit/moderation|97 `otherSellerCannotAccessStoreOrProduct`, DB state unchanged|Private PG controls; future protected routes chưa có|
+|Conceal foreign/missing|104 nguyên8acceptances; known4parityFAIL và4controlsPASS|OPEN/WAITING_TV2 theo TV1 scoped decision; không global403→404|
+|400/409/sanitized errors/exact money|97 JSON/error/lifecycle suites trong603 receipt; source không đổi|Private mapping có evidence; chưa phải HTTP wire acceptance|
+|Price/version/response privacy|97 allowlist không ownerReference/reviewReason; exact strings|Serialization preparation; không suy header/cache/browser behavior|
+|Search/filter/pagination visibility|91 cần sync sau90;97 chưa có Store-scoped list endpoint|WAITING_TV2_SYNC/HTTP_NOT_RUN|
+|Seller→Product→Cart→Checkout|103fixture2Store/5PG +8live scenarios;102chỉ identity slice|Full protected flow BLOCKED; không giả endpoint hoặc expected commission/net|
+
+Đã tick trong checklist phần review90, QA harness/evidence và chuẩn bị matrix ở checkpoint trước; không tick lại nhiệm vụ production hoặc tạo commit rỗng. Không có finding production mới để gửi trùng. Các lời bàn giao90/97 còn hiệu lực. FullM01/MD04–10/Finance production vẫn PENDING/BLOCKED; Price-only MD01/MD02/unitMD03 đã được duyệt không bị thu hồi. Issue5/12 OPEN/PARTIAL.

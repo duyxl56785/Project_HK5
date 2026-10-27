@@ -70,3 +70,8 @@ Known P2 trong [TV1 review](https://github.com/duyxl56785/Project_HK5/pull/97#pu
 |E2E08|Duplicate/UNKNOWN giữ cùng owner/operationId, reconcile thay blindrelease/newkey/doubleorder|BLOCKED/NOT_RUN|TV3durable recovery+TV4C06+TV1pair/security.|
 
 Phân loại: standalone JSON/handler tests là unit/contract preparation; harness5case là real PostgreSQL integration; tám hàng trên chưa có live HTTP E2E PASS. FullM01 PARTIAL/PENDING, Finance production BLOCKED, flags không đổi.
+
+
+## Dependency update — TV5-PRODUCT-DELTA-20261027
+
+Auth/Gateway candidate #102 đã lên36ad517; TV5 tự chạy147PASS/2SKIP (trong đó10realAuth/GatewayHTTP→PG và5current-authorityPG), raw/derived evidence tại [follow-up](../reports/TV5_PRODUCT_SIX_TASKS_2026-10-27.md#follow-up-tv5-product-delta-20261027--sau-checkpoint-ban-đầu). Đây là dependency candidate có realHTTP, chưa merge/approve production. Seller role-sync, trusted current Store/House và Product97 protected binding vẫn thiếu; không suy các ô E2E01–08 thành PASS. TV1V01 đã DECIDED, chờ TV2 ACK/fix; không yêu cầu TV1 quyết lại. Các business/shared-wire/freshness gates khác không có sign-off mới.

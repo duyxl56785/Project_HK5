@@ -379,3 +379,10 @@ This dated checkpoint supersedes earlier waiting labels only for scopes verified
 - [x]103/151361b:5committedPGPASS +fixture2Store +explicitcompositiontask, không productionedit. House/freshness/C01E01matrix và8livecases chuẩn bị, không tự ký policy.
 - [ ] Actual90merge +fresh actualmain Product/Seller/explicitQA;91sync sau đó. Main1833có thêm83/77/78, không dùng lại978cho nguồn mới.
 - [ ]97ownerfix→8diagnosticPASS, protectedHTTP/currentprincipal/Store/House/provider/C06/Checkout/Finance/COD/liveE2E. FullM01PARTIAL/PENDING; flags không đổi; Issues5/12OPEN/PARTIAL.
+
+
+## TV5-PRODUCT-DELTA-20261027
+
+- [x] Đối chiếu lại90/91/97: HEAD/diffblobs không đổi, approval90thật còn hiệu lực; không request/approve/finding trùng. [Current matrix/evidence](../reports/TV5_PRODUCT_SIX_TASKS_2026-10-27.md#follow-up-tv5-product-delta-20261027--sau-checkpoint-ban-đầu).
+- [x]103README phản ánh TV1 decision đã có, commit/pushdec62e9; focused5PGPASS mới. Dependency102/36ad mới được TV5 tự chạy147PASS/0FAIL/2SKIP,exit0; raw/childlogs giữ riêng byte/hash, SKIP không là PASS. Không cộng với các snapshot cũ.
+- [ ] Actual90merge/postmerge;91sync/finalreview;97TV2ACK/fix→8GREEN/protectedHTTP/currentStore; House/freshness/C01E01/C06/fullM01/liveE2E vẫn chờ. Issues5/12OPEN/PARTIAL; không đổi flags/deploy/source owner.
