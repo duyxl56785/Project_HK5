@@ -1,0 +1,25 @@
+.tv3-cart{color:#213047;font-family:system-ui,sans-serif;max-width:1080px;margin:0 auto;padding:1.25rem}
+.tv3-cart *{box-sizing:border-box}
+.tv3-cart__header{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}
+.tv3-cart__header h2{margin:.15rem 0;font-size:1.7rem}
+.tv3-cart__eyebrow{font-size:.75rem;letter-spacing:.08em;font-weight:750;color:#0f766e}
+.tv3-cart__header p{color:#64748b}
+.tv3-cart__warning{background:#fff7ed;color:#9a3412;padding:.8rem;border-radius:.6rem;border:1px solid #fdba74}
+.tv3-cart__stores{display:grid;gap:1rem;margin:1.25rem 0}
+.tv3-cart__store{background:#fff;border:1px solid #dbe3ed;border-radius:1rem;overflow:hidden}
+.tv3-cart__store>header,.tv3-cart__store>footer{display:flex;justify-content:space-between;gap:1rem;align-items:center;padding:1rem 1.15rem;background:#f8fafc}
+.tv3-cart__store h3{font-size:1rem;overflow-wrap:anywhere;margin:0}
+.tv3-cart__store ul{padding:0 1.1rem;margin:0;list-style:none}
+.tv3-cart__line{display:grid;grid-template-columns:minmax(140px,1fr) minmax(140px,190px) auto;align-items:center;gap:1rem;padding:1rem 0;border-bottom:1px solid #e2e8f0}
+.tv3-cart__line:last-child{border-bottom:0}
+.tv3-cart__line small{display:block;color:#64748b;margin-top:.3rem;overflow-wrap:anywhere}
+.tv3-cart__actions{display:flex;gap:.4rem;align-items:center;flex-wrap:wrap}
+.tv3-cart__actions label{font-size:.78rem}
+.tv3-cart__actions input{width:4.5rem;max-width:100%;padding:.4rem;border:1px solid #a1afbf;border-radius:.4rem}
+.tv3-cart button{border-radius:.45rem;padding:.48rem .75rem;background:#fff;color:#0f766e;border:1px solid #0f766e;cursor:pointer}
+.tv3-cart button:disabled{opacity:.55;cursor:not-allowed}
+.tv3-cart__price{white-space:nowrap}
+.tv3-cart__total{border-radius:.9rem;background:#ebf8f6;padding:1.15rem}
+.tv3-cart__total>div{display:flex;justify-content:space-between;gap:1rem}
+.tv3-cart__total small{display:block;color:#475569;margin-top:.6rem}
+@media(max-width:700px){.tv3-cart__line{grid-template-columns:1fr;gap:.6rem}.tv3-cart__price{justify-self:start}}
