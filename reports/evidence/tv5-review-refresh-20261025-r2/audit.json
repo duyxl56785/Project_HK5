@@ -1,0 +1,551 @@
+{
+  "kind": "DERIVED current GitHub audit / integrity check, not a new Product/PostgreSQL test run",
+  "timeUtc": "2026-10-25T14:54:32.116057+00:00",
+  "viewer": "nguyenminhduy090-alt",
+  "PRs": 79,
+  "openPRs": [
+    {
+      "PR": 93,
+      "head": "223bc2fd698c1aaf53bbb931ff15129d51045d94",
+      "base": "main",
+      "baseSHA": "23f583dd7dae164b0a2932d1fe66b2d0eaffdd9d",
+      "author": "nguyenminhduy090-alt",
+      "draft": false,
+      "reviewDecision": "APPROVED",
+      "requestedReviewers": [
+        "duyxl56785"
+      ],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "duyxl56785"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-25T13:17:35Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/93#pullrequestreview-5643355280",
+          "commit": {
+            "oid": "bffe12d737084d2a0809474a4faf3a7f216f8132"
+          }
+        }
+      ],
+      "openThreads": [],
+      "ci": [],
+      "mergeable": true
+    },
+    {
+      "PR": 86,
+      "head": "28a8abcd5cf76b298e1e6b817da16337ba322ec6",
+      "base": "main",
+      "baseSHA": "33853a1db219b45ff045e6e81c621275e831007a",
+      "author": "tranvanchinhbg2006-alt",
+      "draft": false,
+      "reviewDecision": "CHANGES_REQUESTED",
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "duyxl56785"
+          },
+          "state": "CHANGES_REQUESTED",
+          "submittedAt": "2026-10-25T13:17:48Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/86#pullrequestreview-5643356013",
+          "commit": {
+            "oid": "3c233193825a6b6fb46206586b3191cc4422bcf6"
+          }
+        }
+      ],
+      "openThreads": [
+        {
+          "id": "PRRT_kwDOVGqk_M6wBlBb",
+          "author": "duyxl56785",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/86#discussion_r4370971362"
+        }
+      ],
+      "ci": [],
+      "mergeable": true
+    },
+    {
+      "PR": 83,
+      "head": "c831edb4d7c610b76e434222d51b115cfb863d81",
+      "base": "main",
+      "baseSHA": "ed85f6290de7f611c82e5c0ad973f98180f04df4",
+      "author": "duyxl56785",
+      "draft": false,
+      "reviewDecision": "APPROVED",
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "lexuanbao258-collab"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-25T13:43:37Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/83#pullrequestreview-5643469786",
+          "commit": {
+            "oid": "c831edb4d7c610b76e434222d51b115cfb863d81"
+          }
+        }
+      ],
+      "openThreads": [],
+      "ci": [
+        {
+          "head": "c831edb4d7c610b76e434222d51b115cfb863d81",
+          "name": "readiness",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40197534885/job/121181511230"
+        }
+      ],
+      "mergeable": true
+    },
+    {
+      "PR": 91,
+      "head": "4915c3768a310b519e218674e405b132103cd024",
+      "base": "main",
+      "baseSHA": "ed85f6290de7f611c82e5c0ad973f98180f04df4",
+      "author": "duyxl56785",
+      "draft": true,
+      "reviewDecision": "APPROVED",
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "lexuanbao258-collab"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-25T13:43:39Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/91#pullrequestreview-5643470036",
+          "commit": {
+            "oid": "4915c3768a310b519e218674e405b132103cd024"
+          }
+        }
+      ],
+      "openThreads": [],
+      "ci": [
+        {
+          "head": "4915c3768a310b519e218674e405b132103cd024",
+          "name": "readiness",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40197452631/job/121181265196"
+        }
+      ],
+      "mergeable": true
+    },
+    {
+      "PR": 90,
+      "head": "6a290fffc35e6795f9e25f4a79b2b6fe74aa757f",
+      "base": "main",
+      "baseSHA": "ed85f6290de7f611c82e5c0ad973f98180f04df4",
+      "author": "duyxl56785",
+      "draft": true,
+      "reviewDecision": "APPROVED",
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "lexuanbao258-collab"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-25T13:43:42Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/90#pullrequestreview-5643470319",
+          "commit": {
+            "oid": "6a290fffc35e6795f9e25f4a79b2b6fe74aa757f"
+          }
+        },
+        {
+          "author": {
+            "login": "tranvanchinhbg2006-alt"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-25T12:42:46Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/90#pullrequestreview-5643242610",
+          "commit": {
+            "oid": "6a290fffc35e6795f9e25f4a79b2b6fe74aa757f"
+          }
+        }
+      ],
+      "openThreads": [],
+      "ci": [
+        {
+          "head": "6a290fffc35e6795f9e25f4a79b2b6fe74aa757f",
+          "name": "readiness",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40197447319/job/121181249738"
+        }
+      ],
+      "mergeable": true
+    },
+    {
+      "PR": 94,
+      "head": "96d59ca320845495dd2ce6acf42d0b10ee0286a6",
+      "base": "main",
+      "baseSHA": "ed85f6290de7f611c82e5c0ad973f98180f04df4",
+      "author": "duyxl56785",
+      "draft": true,
+      "reviewDecision": "APPROVED",
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "lexuanbao258-collab"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-25T07:05:18Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/94#pullrequestreview-5641995437",
+          "commit": {
+            "oid": "96d59ca320845495dd2ce6acf42d0b10ee0286a6"
+          }
+        }
+      ],
+      "openThreads": [],
+      "ci": [
+        {
+          "head": "96d59ca320845495dd2ce6acf42d0b10ee0286a6",
+          "name": "readiness",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40122424378/job/120956667721"
+        }
+      ],
+      "mergeable": true
+    },
+    {
+      "PR": 89,
+      "head": "17f98f4fc96b19f784fe39eeb5fd0c90e49915f6",
+      "base": "main",
+      "baseSHA": "ed85f6290de7f611c82e5c0ad973f98180f04df4",
+      "author": "duyxl56785",
+      "draft": true,
+      "reviewDecision": "APPROVED",
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "lexuanbao258-collab"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-25T11:11:37Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/89#pullrequestreview-5642873639",
+          "commit": {
+            "oid": "17f98f4fc96b19f784fe39eeb5fd0c90e49915f6"
+          }
+        }
+      ],
+      "openThreads": [],
+      "ci": [
+        {
+          "head": "17f98f4fc96b19f784fe39eeb5fd0c90e49915f6",
+          "name": "readiness",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40182643630/job/121136751572"
+        }
+      ],
+      "mergeable": true
+    },
+    {
+      "PR": 95,
+      "head": "53c2a1baf8988ef8878524e9aa742d4a78a690cf",
+      "base": "main",
+      "baseSHA": "ed85f6290de7f611c82e5c0ad973f98180f04df4",
+      "author": "duyxl56785",
+      "draft": true,
+      "reviewDecision": "APPROVED",
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "lexuanbao258-collab"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-25T12:49:55Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/95#pullrequestreview-5643263935",
+          "commit": {
+            "oid": "53c2a1baf8988ef8878524e9aa742d4a78a690cf"
+          }
+        }
+      ],
+      "openThreads": [],
+      "ci": [],
+      "mergeable": true
+    },
+    {
+      "PR": 80,
+      "head": "dfdc8143c4a86cdfce8eefc9a98e1b07126da41d",
+      "base": "main",
+      "baseSHA": "854d922bd7f1c1d7d9c5a6ef3ff2e04e6dca2b9c",
+      "author": "lexuanbao258-collab",
+      "draft": true,
+      "reviewDecision": "CHANGES_REQUESTED",
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "duyxl56785"
+          },
+          "state": "CHANGES_REQUESTED",
+          "submittedAt": "2026-10-25T13:17:26Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/80#pullrequestreview-5643354815",
+          "commit": {
+            "oid": "dfdc8143c4a86cdfce8eefc9a98e1b07126da41d"
+          }
+        }
+      ],
+      "openThreads": [
+        {
+          "id": "PRRT_kwDOVGqk_M6wBk1w",
+          "author": "duyxl56785",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/80#discussion_r4370970198"
+        }
+      ],
+      "ci": [
+        {
+          "head": "dfdc8143c4a86cdfce8eefc9a98e1b07126da41d",
+          "name": "readiness",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40120710982/job/120951422861"
+        }
+      ],
+      "mergeable": true
+    },
+    {
+      "PR": 78,
+      "head": "ac5da331e8cf6128b26ee850f87eef18d99a3317",
+      "base": "main",
+      "baseSHA": "aca5dff247ef8eae3ce97c1a73b9474b87e94110",
+      "author": "tranvanchinhbg2006-alt",
+      "draft": true,
+      "reviewDecision": "APPROVED",
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "duyxl56785"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-22T17:28:23Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/78#pullrequestreview-5618255429",
+          "commit": {
+            "oid": "ac5da331e8cf6128b26ee850f87eef18d99a3317"
+          }
+        }
+      ],
+      "openThreads": [],
+      "ci": [
+        {
+          "head": "ac5da331e8cf6128b26ee850f87eef18d99a3317",
+          "name": "readiness",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/39802869540/job/119908171234"
+        }
+      ],
+      "mergeable": true
+    },
+    {
+      "PR": 77,
+      "head": "cbbdb8667f689eddb75690274636504efc664706",
+      "base": "main",
+      "baseSHA": "aca5dff247ef8eae3ce97c1a73b9474b87e94110",
+      "author": "tranvanchinhbg2006-alt",
+      "draft": true,
+      "reviewDecision": "APPROVED",
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "duyxl56785"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-22T17:28:34Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/77#pullrequestreview-5618257780",
+          "commit": {
+            "oid": "cbbdb8667f689eddb75690274636504efc664706"
+          }
+        }
+      ],
+      "openThreads": [],
+      "ci": [
+        {
+          "head": "cbbdb8667f689eddb75690274636504efc664706",
+          "name": "readiness",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/39799849322/job/119897118709"
+        }
+      ],
+      "mergeable": true
+    },
+    {
+      "PR": 92,
+      "head": "67a802bd247fe93fe7f9aa944a64abebe8748d9a",
+      "base": "feat/tv1-auth-jwt-current-authority-foundation-20261023",
+      "baseSHA": "c8ebb98ed77b4e0ec7a8ef9b00839c31523c9ea2",
+      "author": "nguyenminhduy090-alt",
+      "draft": false,
+      "reviewDecision": "APPROVED",
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "duyxl56785"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-25T13:17:30Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/92#pullrequestreview-5643355055",
+          "commit": {
+            "oid": "67a802bd247fe93fe7f9aa944a64abebe8748d9a"
+          }
+        }
+      ],
+      "openThreads": [],
+      "ci": [],
+      "mergeable": true
+    },
+    {
+      "PR": 87,
+      "head": "1a67b01315cc328a9c28b4f728ad0cb17a7225a0",
+      "base": "main",
+      "baseSHA": "6816941d256efcd4c5823bec52aed82af23b7889",
+      "author": "duyxl56785",
+      "draft": true,
+      "reviewDecision": "REVIEW_REQUIRED",
+      "requestedReviewers": [],
+      "effectiveReviews": [],
+      "openThreads": [],
+      "ci": [
+        {
+          "head": "1a67b01315cc328a9c28b4f728ad0cb17a7225a0",
+          "name": "readiness",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40003903738/job/120586796756"
+        }
+      ],
+      "mergeable": true
+    },
+    {
+      "PR": 85,
+      "head": "fc39c7100caa7ffb49f9baa27b18dde595b54d1f",
+      "base": "main",
+      "baseSHA": "33853a1db219b45ff045e6e81c621275e831007a",
+      "author": "duyxl56785",
+      "draft": true,
+      "reviewDecision": "REVIEW_REQUIRED",
+      "requestedReviewers": [],
+      "effectiveReviews": [],
+      "openThreads": [],
+      "ci": [
+        {
+          "head": "fc39c7100caa7ffb49f9baa27b18dde595b54d1f",
+          "name": "readiness",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/39959381916/job/120433214014"
+        }
+      ],
+      "mergeable": true
+    },
+    {
+      "PR": 69,
+      "head": "4eeeb3843f2795168ca03cdd3cd2e8be9f825ec6",
+      "base": "main",
+      "baseSHA": "c2cf55a5b866937acd99ec554655aab249283d23",
+      "author": "phamthecuong2022006-alt",
+      "draft": true,
+      "reviewDecision": "APPROVED",
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "lexuanbao258-collab"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-23T00:17:49Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/69#pullrequestreview-5622479895",
+          "commit": {
+            "oid": "4eeeb3843f2795168ca03cdd3cd2e8be9f825ec6"
+          }
+        }
+      ],
+      "openThreads": [],
+      "ci": [
+        {
+          "head": "4eeeb3843f2795168ca03cdd3cd2e8be9f825ec6",
+          "name": "readiness",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/39750271933/job/119728804252"
+        }
+      ],
+      "mergeable": true
+    }
+  ],
+  "TV5PendingReviewRequests": [],
+  "TV5EffectiveChangesRequested": [],
+  "TV5OwnUnresolvedThreads": [],
+  "prioritySourceComparison": [
+    {
+      "PR": 89,
+      "head": "17f98f4fc96b19f784fe39eeb5fd0c90e49915f6",
+      "sameHeadBaseFilesCommits": true,
+      "runtimeThisRefresh": "NOT_RUN: no source/base/diff change; previous actual exact-head evidence hash-revalidated, not called new runtime PASS"
+    },
+    {
+      "PR": 94,
+      "head": "96d59ca320845495dd2ce6acf42d0b10ee0286a6",
+      "sameHeadBaseFilesCommits": true,
+      "runtimeThisRefresh": "NOT_RUN: no source/base/diff change; previous actual exact-head evidence hash-revalidated, not called new runtime PASS"
+    },
+    {
+      "PR": 90,
+      "head": "6a290fffc35e6795f9e25f4a79b2b6fe74aa757f",
+      "sameHeadBaseFilesCommits": true,
+      "runtimeThisRefresh": "NOT_RUN: no source/base/diff change; previous actual exact-head evidence hash-revalidated, not called new runtime PASS"
+    },
+    {
+      "PR": 91,
+      "head": "4915c3768a310b519e218674e405b132103cd024",
+      "sameHeadBaseFilesCommits": true,
+      "runtimeThisRefresh": "NOT_RUN: no source/base/diff change; previous actual exact-head evidence hash-revalidated, not called new runtime PASS"
+    }
+  ],
+  "previousRawArtifactsHashVerified": 146,
+  "main": "ed85f6290de7f611c82e5c0ad973f98180f04df4",
+  "rules": [
+    {
+      "type": "deletion",
+      "ruleset_source_type": "Repository",
+      "ruleset_source": "duyxl56785/Project_HK5",
+      "ruleset_id": 25059353
+    },
+    {
+      "type": "non_fast_forward",
+      "ruleset_source_type": "Repository",
+      "ruleset_source": "duyxl56785/Project_HK5",
+      "ruleset_id": 25059353
+    },
+    {
+      "type": "pull_request",
+      "parameters": {
+        "required_approving_review_count": 1,
+        "dismiss_stale_reviews_on_push": false,
+        "required_reviewers": [],
+        "require_code_owner_review": false,
+        "require_last_push_approval": false,
+        "required_review_thread_resolution": true,
+        "require_extra_approval_for_unattributed_changes": true,
+        "allowed_merge_methods": [
+          "merge",
+          "squash",
+          "rebase"
+        ]
+      },
+      "ruleset_source_type": "Repository",
+      "ruleset_source": "duyxl56785/Project_HK5",
+      "ruleset_id": 25059353
+    }
+  ],
+  "priceReceipt": {
+    "url": "https://github.com/duyxl56785/Project_HK5/pull/84#issuecomment-6364386964",
+    "author": "duyxl56785",
+    "updatedAt": "2026-10-23T12:01:06Z",
+    "revision": "463338e4fc3823b0720e1f840e637e0c5e946148",
+    "digest": "a02370d995ea2950b39d737c6a41c47f09da448a600b335905c080a8798b008a",
+    "approvedScope": "MD01/MD02/Product-unit MD03 only; no whole M01/COD/Finance/flags"
+  },
+  "FIN01FIN06": "Previous exact-main explicit diagnostic3PASS source/log hashes remain valid, not a new execution; no re-opened technical fix",
+  "noChangesToOwnerProduction": true
+}

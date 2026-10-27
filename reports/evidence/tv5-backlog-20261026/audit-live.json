@@ -1,0 +1,36 @@
+{
+  "kind": "DERIVED SUMMARY; raw output private/hash-preserved",
+  "source": "8bf9f12e1a7df92b77f8a506fba5e1907a4f1c6c",
+  "command": [
+    "C:\\Users\\Admin\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+    "scripts/qa/pr_review_audit.py",
+    "--repo",
+    "duyxl56785/Project_HK5",
+    "--output-dir",
+    "D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-backlog-20261026\\tool-live\\snapshot"
+  ],
+  "startedUtc": "2026-10-26T14:41:04.024425+00:00",
+  "completedUtc": "2026-10-26T14:41:31.739353+00:00",
+  "exitCode": 0,
+  "complete": true,
+  "records": 21,
+  "listed": 21,
+  "errors": [],
+  "rawArtifacts": [
+    {
+      "localPath": ".verification/tv5-backlog-20261026/tool-live/runtime.log",
+      "bytes": 146,
+      "sha256": "75488147a808da6eabeaf0e805a40fdd464e71a12cbfc9825794e5c2b1c79e78"
+    },
+    {
+      "localPath": ".verification/tv5-backlog-20261026/tool-live/snapshot/report.md",
+      "bytes": 6292,
+      "sha256": "8ec991fd676db118878e5994de7798672b4a544c5de79a26977c92ab3f6ab276"
+    },
+    {
+      "localPath": ".verification/tv5-backlog-20261026/tool-live/snapshot/snapshot.json",
+      "bytes": 33195,
+      "sha256": "d38de8932e436a1f23b06f19a98e5b20319103046ccfc9b7552cd8de4c7378c1"
+    }
+  ]
+}

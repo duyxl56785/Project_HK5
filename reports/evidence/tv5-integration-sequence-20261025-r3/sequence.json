@@ -1,0 +1,318 @@
+{
+  "kind": "DERIVED current review/sequence gate snapshot; not a new four-PR runtime or actual merge receipt",
+  "timeUtc": "2026-10-25T15:57:13.655905+00:00",
+  "main": "ed85f6290de7f611c82e5c0ad973f98180f04df4",
+  "PRs": [
+    {
+      "PR": 89,
+      "head": "17f98f4fc96b19f784fe39eeb5fd0c90e49915f6",
+      "base": "main",
+      "baseSHA": "ed85f6290de7f611c82e5c0ad973f98180f04df4",
+      "draft": false,
+      "merged": false,
+      "author": "duyxl56785",
+      "requestedReviewers": [],
+      "reviewDecision": "APPROVED",
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "lexuanbao258-collab"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-25T11:11:37Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/89#pullrequestreview-5642873639",
+          "commit": {
+            "oid": "17f98f4fc96b19f784fe39eeb5fd0c90e49915f6"
+          }
+        }
+      ],
+      "openThreads": [],
+      "ci": [
+        {
+          "head": "17f98f4fc96b19f784fe39eeb5fd0c90e49915f6",
+          "name": "readiness",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40182643630/job/121136751572"
+        }
+      ],
+      "files": [
+        "backend/product-service/src/main/java/com/projecthk5/productservice/product/ProductApplicationService.java",
+        "backend/product-service/src/main/java/com/projecthk5/productservice/product/ProductLifecycleService.java",
+        "backend/product-service/src/main/java/com/projecthk5/productservice/product/persistence/ProductPersistenceAdapter.java",
+        "backend/product-service/src/test/java/com/projecthk5/productservice/product/ProductApplicationServiceIntegrationTest.java",
+        "backend/product-service/src/test/java/com/projecthk5/productservice/product/ProductApplicationServiceTest.java",
+        "backend/product-service/src/test/java/com/projecthk5/productservice/product/persistence/ProductPersistenceIntegrationTest.java"
+      ]
+    },
+    {
+      "PR": 90,
+      "head": "6a290fffc35e6795f9e25f4a79b2b6fe74aa757f",
+      "base": "main",
+      "baseSHA": "ed85f6290de7f611c82e5c0ad973f98180f04df4",
+      "draft": false,
+      "merged": false,
+      "author": "duyxl56785",
+      "requestedReviewers": [],
+      "reviewDecision": "APPROVED",
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "lexuanbao258-collab"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-25T13:43:42Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/90#pullrequestreview-5643470319",
+          "commit": {
+            "oid": "6a290fffc35e6795f9e25f4a79b2b6fe74aa757f"
+          }
+        },
+        {
+          "author": {
+            "login": "tranvanchinhbg2006-alt"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-25T12:42:46Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/90#pullrequestreview-5643242610",
+          "commit": {
+            "oid": "6a290fffc35e6795f9e25f4a79b2b6fe74aa757f"
+          }
+        }
+      ],
+      "openThreads": [],
+      "ci": [
+        {
+          "head": "6a290fffc35e6795f9e25f4a79b2b6fe74aa757f",
+          "name": "readiness",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40197447319/job/121181249738"
+        }
+      ],
+      "files": [
+        "backend/product-service/src/main/java/com/projecthk5/productservice/catalog/CatalogSnapshotSource.java",
+        "backend/product-service/src/main/java/com/projecthk5/productservice/catalog/CurrentStoreFactsSource.java",
+        "backend/product-service/src/main/java/com/projecthk5/productservice/catalog/ProductCatalogSnapshotSource.java",
+        "backend/product-service/src/main/java/com/projecthk5/productservice/product/persistence/ProductRepository.java",
+        "backend/product-service/src/test/java/com/projecthk5/productservice/catalog/ProductCatalogSnapshotSourceIntegrationTest.java",
+        "backend/product-service/src/test/java/com/projecthk5/productservice/catalog/ProductCatalogSnapshotSourceTest.java"
+      ]
+    },
+    {
+      "PR": 91,
+      "head": "4915c3768a310b519e218674e405b132103cd024",
+      "base": "main",
+      "baseSHA": "ed85f6290de7f611c82e5c0ad973f98180f04df4",
+      "draft": false,
+      "merged": false,
+      "author": "duyxl56785",
+      "requestedReviewers": [],
+      "reviewDecision": "APPROVED",
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "lexuanbao258-collab"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-25T13:43:39Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/91#pullrequestreview-5643470036",
+          "commit": {
+            "oid": "4915c3768a310b519e218674e405b132103cd024"
+          }
+        }
+      ],
+      "openThreads": [],
+      "ci": [
+        {
+          "head": "4915c3768a310b519e218674e405b132103cd024",
+          "name": "readiness",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40197452631/job/121181265196"
+        }
+      ],
+      "files": [
+        "backend/product-service/src/main/java/com/projecthk5/productservice/catalog/CatalogCandidatePage.java",
+        "backend/product-service/src/main/java/com/projecthk5/productservice/catalog/CatalogSearchQuery.java",
+        "backend/product-service/src/main/java/com/projecthk5/productservice/product/persistence/ProductCatalogSearch.java",
+        "backend/product-service/src/main/java/com/projecthk5/productservice/product/persistence/ProductCatalogSearchImpl.java",
+        "backend/product-service/src/main/java/com/projecthk5/productservice/product/persistence/ProductRepository.java",
+        "backend/product-service/src/test/java/com/projecthk5/productservice/catalog/CatalogSearchQueryTest.java",
+        "backend/product-service/src/test/java/com/projecthk5/productservice/catalog/ProductCatalogSearchIntegrationTest.java"
+      ]
+    },
+    {
+      "PR": 94,
+      "head": "96d59ca320845495dd2ce6acf42d0b10ee0286a6",
+      "base": "main",
+      "baseSHA": "ed85f6290de7f611c82e5c0ad973f98180f04df4",
+      "draft": false,
+      "merged": false,
+      "author": "duyxl56785",
+      "requestedReviewers": [],
+      "reviewDecision": "APPROVED",
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "lexuanbao258-collab"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-25T07:05:18Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/94#pullrequestreview-5641995437",
+          "commit": {
+            "oid": "96d59ca320845495dd2ce6acf42d0b10ee0286a6"
+          }
+        }
+      ],
+      "openThreads": [],
+      "ci": [
+        {
+          "head": "96d59ca320845495dd2ce6acf42d0b10ee0286a6",
+          "name": "readiness",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40122424378/job/120956667721"
+        }
+      ],
+      "files": [
+        "backend/seller-service/src/main/java/com/projecthk5/sellerservice/store/StoreCurrentSource.java",
+        "backend/seller-service/src/main/java/com/projecthk5/sellerservice/store/StoreRepository.java",
+        "backend/seller-service/src/test/java/com/projecthk5/sellerservice/store/StoreOwnedFactsTest.java",
+        "backend/seller-service/src/test/java/com/projecthk5/sellerservice/store/StoreProductFactsIntegrationTest.java"
+      ]
+    },
+    {
+      "PR": 80,
+      "head": "dfdc8143c4a86cdfce8eefc9a98e1b07126da41d",
+      "base": "main",
+      "baseSHA": "854d922bd7f1c1d7d9c5a6ef3ff2e04e6dca2b9c",
+      "draft": false,
+      "merged": false,
+      "author": "lexuanbao258-collab",
+      "requestedReviewers": [],
+      "reviewDecision": "CHANGES_REQUESTED",
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "duyxl56785"
+          },
+          "state": "CHANGES_REQUESTED",
+          "submittedAt": "2026-10-25T13:17:26Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/80#pullrequestreview-5643354815",
+          "commit": {
+            "oid": "dfdc8143c4a86cdfce8eefc9a98e1b07126da41d"
+          }
+        }
+      ],
+      "openThreads": [
+        {
+          "id": "PRRT_kwDOVGqk_M6wBk1w",
+          "author": "duyxl56785",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/80#discussion_r4370970198"
+        }
+      ],
+      "ci": [
+        {
+          "head": "dfdc8143c4a86cdfce8eefc9a98e1b07126da41d",
+          "name": "readiness",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40120710982/job/120951422861"
+        }
+      ],
+      "files": [
+        "backend/auth-service/build.gradle",
+        "backend/auth-service/src/main/java/com/projecthk5/authservice/security/AuthBootstrapConfiguration.java",
+        "backend/auth-service/src/main/java/com/projecthk5/authservice/security/AuthPasswordHasher.java",
+        "backend/auth-service/src/main/java/com/projecthk5/authservice/security/CurrentAccountAuthority.java",
+        "backend/auth-service/src/main/java/com/projecthk5/authservice/security/Hk5JwtCodec.java",
+        "backend/auth-service/src/test/java/com/projecthk5/authservice/security/AuthBootstrapConfigurationTest.java",
+        "backend/auth-service/src/test/java/com/projecthk5/authservice/security/AuthPasswordHasherTest.java",
+        "backend/auth-service/src/test/java/com/projecthk5/authservice/security/CurrentAccountAuthorityTest.java",
+        "backend/auth-service/src/test/java/com/projecthk5/authservice/security/Hk5JwtCodecTest.java",
+        "docs/TV1_AUTH_BOOTSTRAP_GATES.md",
+        "reports/evidence/tv5-auth-authority-20261023/baseline.json",
+        "reports/evidence/tv5-auth-authority-20261023/green.json",
+        "reports/evidence/tv5-auth-authority-20261023/red.json",
+        "tests/security/README_AUTH_CURRENT_AUTHORITY.md",
+        "tests/security/auth-current-authority.init.gradle",
+        "tests/security/auth-current-authority/CurrentAccountAuthorityPostgresRegressionTest.java"
+      ]
+    },
+    {
+      "PR": 96,
+      "head": "c59f34024748f290bd304b64140cf6c0848940b5",
+      "base": "feat/tv1-auth-jwt-current-authority-foundation-20261023",
+      "baseSHA": "dfdc8143c4a86cdfce8eefc9a98e1b07126da41d",
+      "draft": false,
+      "merged": false,
+      "author": "lexuanbao258-collab",
+      "requestedReviewers": [
+        "duyxl56785"
+      ],
+      "reviewDecision": null,
+      "effectiveReviews": [],
+      "openThreads": [],
+      "ci": [
+        {
+          "head": "c59f34024748f290bd304b64140cf6c0848940b5",
+          "name": "readiness",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40207083756/job/121210224296"
+        }
+      ],
+      "files": [
+        "backend/auth-service/src/main/java/com/projecthk5/authservice/security/AuthPasswordHasher.java",
+        "backend/auth-service/src/test/java/com/projecthk5/authservice/security/AuthPasswordHasherTest.java",
+        "backend/auth-service/verification/20261025-password-nul.md"
+      ]
+    },
+    {
+      "PR": 97,
+      "head": "aa790f422a8b3ee698f53e74c455edae7b77d6fa",
+      "base": "codex/tv2-product-lifecycle-persistence",
+      "baseSHA": "17f98f4fc96b19f784fe39eeb5fd0c90e49915f6",
+      "draft": true,
+      "merged": false,
+      "author": "duyxl56785",
+      "requestedReviewers": [
+        "lexuanbao258-collab",
+        "nguyenminhduy090-alt"
+      ],
+      "reviewDecision": null,
+      "effectiveReviews": [],
+      "openThreads": [],
+      "ci": [
+        {
+          "head": "aa790f422a8b3ee698f53e74c455edae7b77d6fa",
+          "name": "readiness",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40207706263/job/121212104949"
+        }
+      ],
+      "files": [
+        "backend/product-service/src/main/java/com/projecthk5/productservice/product/http/ProductManagementAuthority.java",
+        "backend/product-service/src/main/java/com/projecthk5/productservice/product/http/ProductManagementErrors.java",
+        "backend/product-service/src/main/java/com/projecthk5/productservice/product/http/ProductManagementHandler.java",
+        "backend/product-service/src/main/java/com/projecthk5/productservice/product/http/ProductManagementJson.java",
+        "backend/product-service/src/main/java/com/projecthk5/productservice/product/http/ProductManagementResponse.java",
+        "backend/product-service/src/main/java/com/projecthk5/productservice/product/http/README.md",
+        "backend/product-service/src/test/java/com/projecthk5/productservice/product/http/ProductManagementHandlerIntegrationTest.java",
+        "backend/product-service/src/test/java/com/projecthk5/productservice/product/http/ProductManagementHandlerTest.java",
+        "backend/product-service/src/test/java/com/projecthk5/productservice/product/http/ProductManagementJsonTest.java"
+      ]
+    }
+  ],
+  "workflowPathsOnMain": [
+    ".github/workflows/backend-readiness.yml"
+  ],
+  "sequence": {
+    "order": [
+      89,
+      90,
+      91
+    ],
+    "94": "SEPARATE",
+    "postMerge89": "NOT_RUN:89notmerged",
+    "syncAndPostMerge90After89": "NOT_RUN/BLOCKED:89notmerged",
+    "syncAndPostMerge91After90": "NOT_RUN/BLOCKED:90notmerged",
+    "historicalCombined640": "Historical rehearsal only; never substitutes each newly integrated main check"
+  },
+  "previousPriorityRuntime": "Previous actual exact-head counts remain source-matching, not rerun this task",
+  "authRuntime": "96childGREEN doesnotfix parent80 until accepted/integrated+parentrerun; no production HTTP/Gateway/pair/frontendCI acceptance"
+}
