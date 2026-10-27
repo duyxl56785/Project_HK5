@@ -1,4 +1,5 @@
 import copy
+import http.client
 from contextlib import contextmanager
 import io
 import json
@@ -18,6 +19,13 @@ import pr_review_audit as audit
 REPO = "owner/repo"
 HEAD = "a" * 40
 BASE = "b" * 40
+
+
+class TruncatedResponse:
+    """Fault injected during JSON body reading, not a real credential or HTTP request."""
+    def __enter__(self): return self
+    def __exit__(self, *_): return False
+    def read(self, *_): raise http.client.IncompleteRead(b"private-body-value", 100)
 
 
 @contextmanager
@@ -104,6 +112,13 @@ class FakeGitHub:
 
 
 class CredentialsAndTransportTest(unittest.TestCase):
+    def test_truncated_http_response_is_a_sanitized_audit_error(self):
+        client = audit.GitHub("private-token-value", Mock(return_value=TruncatedResponse()))
+        with self.assertRaises(audit.AuditError) as error:
+            client.call("user")
+        self.assertNotIn("private", str(error.exception))
+        self.assertIn("incomplete", str(error.exception))
+
     def test_external_redirect_is_rejected_before_authorization_can_be_forwarded(self):
         request = urllib.request.Request("https://api.github.com/repos/owner/repo", headers={"Authorization": "Bearer private"})
         with self.assertRaises(audit.AuditError):
@@ -271,6 +286,18 @@ class CollectorTest(unittest.TestCase):
 
 
 class OutputTest(unittest.TestCase):
+    def test_truncated_http_response_returns_exit_two_without_partial_publication(self):
+        client = audit.GitHub("private-token-value", Mock(return_value=TruncatedResponse()))
+        with workspace_temp() as folder:
+            errors = io.StringIO()
+            with patch.object(audit, "credential", return_value="private-token-value"), \
+                    patch.object(audit, "GitHub", return_value=client), patch("sys.stderr", new=errors):
+                self.assertEqual(2, audit.main(["--output-dir", folder]))
+            self.assertIn("incomplete", errors.getvalue())
+            self.assertNotIn("private", errors.getvalue())
+            self.assertFalse((Path(folder) / "snapshot.json").exists())
+            self.assertFalse((Path(folder) / "report.md").exists())
+
     def test_output_created_during_network_read_is_not_overwritten(self):
         snapshot = audit.Collector(FakeGitHub(), REPO).snapshot(workers=1)
         with workspace_temp() as folder:

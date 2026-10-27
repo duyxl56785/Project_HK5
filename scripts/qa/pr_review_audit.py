@@ -7,6 +7,7 @@ scripts into a dependency-free, testable tool. Never publish API bodies or token
 import argparse
 import concurrent.futures
 import datetime as dt
+import http.client
 import json
 import os
 from pathlib import Path
@@ -72,7 +73,7 @@ class GitHub:
                 return json.load(response)
         except urllib.error.HTTPError as failure:
             raise AuditError(f"GitHub API HTTP {failure.code}; check access/rate limits") from None
-        except (urllib.error.URLError, TimeoutError, OSError, ValueError):
+        except (urllib.error.URLError, http.client.HTTPException, TimeoutError, OSError, ValueError):
             raise AuditError("GitHub request failed or returned invalid JSON; audit is incomplete") from None
 
 
