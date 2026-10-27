@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import com.projecthk5.productservice.catalog.CatalogSnapshotSource;
 import com.projecthk5.productservice.category.CategoryRepository;
 import com.projecthk5.productservice.product.ProductAccessPolicy;
+import com.projecthk5.productservice.product.ProductApplicationService;
 import com.projecthk5.productservice.product.ProductLifecycleService;
 import com.projecthk5.productservice.product.ProductListing;
 import com.projecthk5.productservice.product.ProductPrice;
@@ -101,6 +102,23 @@ class ProductPersistenceIntegrationTest {
         jdbc.update("UPDATE categories SET parent_id=NULL");
         jdbc.update("DELETE FROM categories");
         insertCategory(CATEGORY);
+    }
+
+    @Test
+    void productionContextWithoutAuthorityKeepsEveryLifecycleOperationClosed() {
+        assertTrue(context.getBeansOfType(ProductAccessPolicy.class).isEmpty());
+        ProductApplicationService service = context.getBean(ProductApplicationService.class);
+        UUID id = UUID.randomUUID();
+        for (Runnable operation : List.<Runnable>of(
+                () -> service.create("owner", STORE_A, CATEGORY, "closed", "Name", BigDecimal.ONE, "VND"),
+                () -> service.edit("owner", id, 0, CATEGORY, "Name", BigDecimal.ONE, "VND"),
+                () -> service.submit("owner", id, 0), () -> service.approve("admin", id, 0),
+                () -> service.reject("admin", id, 0, "Reason"), () -> service.suspend("admin", id, 0, "Reason"),
+                () -> service.deactivate("owner", id, 0), () -> service.findById("owner", id))) {
+            assertEquals(ProductRuleException.Code.AUTHORIZATION_UNAVAILABLE,
+                    assertThrows(ProductRuleException.class, operation::run).getCode());
+        }
+        assertEquals(0, products.count());
     }
 
     @Test
