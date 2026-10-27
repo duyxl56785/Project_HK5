@@ -51,4 +51,35 @@ are approved and deployed in an authorized test environment. A deny-default403 t
 HTTP authorization. An internal expected-item record is not a signed Cart/Checkout HTTP DTO.
 No TTL/quote/lease, replacement endpoint or test-only production adapter is invented by this harness.
 
+## Product -> Catalog -> existing Checkout preflight (12 additional PostgreSQL cases)
+
+`ProductCatalogCheckoutPreflightPostgresTest` joins actual proxied Product lifecycle/JPA writes,
+the actual ProductCatalogSnapshotSource/CatalogBatchValidator and TV3's existing
+`CatalogCheckoutBatchPreflight.requireFullyReady`. The record conversion exists **only in QA**:
+it copies actual fields/codes, preserves order and null snapshots, and chooses no HTTP DTO,
+endpoint, status mapping or approved shared wire. It is not a production adapter.
+
+| Cases | Added seam coverage |
+|---|---|
+| A (1) | Commit deactivate/edit/reapprove at the approved 1b VND unit cap; reject stale expectation, accept fresh exact price |
+| B (2) | Committed deactivate/suspend must fail consumer preflight; no individually READY companion snapshot escapes |
+| C/F (5) | Confirmed absent Product versus missing Store/unknown House/stale facts/one Seller claimed by two Stores; incomplete facts never reach the consumer as verified results |
+| D (3) | Positive reverse-request-order two-Store exact Unicode SKU/Store/Seller control and forged expected Store/Seller negatives |
+| E (1) | A preflight exception propagates through an outer Product transaction, rolling back a prior lifecycle write |
+
+Both Product and a separate Order database use fresh PostgreSQL16.6 Testcontainers. Product
+uses its normal Spring/JPA/Flyway context; the second database applies **unchanged Order V1/V2
+migrations directly through Flyway**. The init script adds only Order compiled classes, not
+its Spring application/resources, avoiding colliding migrations/configuration in Product.
+Tests compare all Product/Category rows and Order/child/item/attempt/outbox/journal rows before
+and after validation. This proves observed local invariance in this explicit composition.
+Order tables start empty and no CheckoutService/Order writer/Inventory transport is wired:
+zero Order/outbox/journal rows do **not** prove production Checkout ordering, remote reservation
+absence, compensation or live E2E. Inventory storage is not inspected. Current principal,
+Store/House facts remain synthetic fixtures; selectors do not grant authorization.
+
+Original five cases remain unchanged. The first expanded run passed immediately (17 total,
+12 new); label it **PREVENTIVE/REGRESSION**, not an invented TDD RED->GREEN. Unit/PG/runtime
+receipts are separately bound to source manifests/SHAs. Full M01/Finance gates stay unchanged.
+
 TV1 has [decided the narrow owner-resource visibility rule](https://github.com/duyxl56785/Project_HK5/pull/97#issuecomment-6430723502): after independent current Seller/Store-scope verification, owner GET/edit/submit/deactivate must return the same generic404 for foreign and missing Products. This decision does not register a protected route or globally remap403. Do not request the same decision again; TV2 must confirm and implement its mapping. [Draft diagnostic #104](https://github.com/duyxl56785/Project_HK5/pull/104) retains the original four parity failures and four controls until the unchanged acceptance cases are GREEN on the actual owner fix.
