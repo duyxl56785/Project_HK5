@@ -110,6 +110,139 @@ public final class LocalFileSystemImageStorage implements ImageStorage {
         }
     }
 
+
+    @Override
+    public StoredImage storeReserved(UUID imageId, ValidatedImage image) {
+        String key = reservedKey(imageId);
+        if (image == null) throw failure(INVALID_INPUT);
+        byte[] bytes = image.content();
+        String digest = digest(bytes);
+        checkRoot();
+        Path folder = root.resolve(key);
+        try {
+            try {
+                Files.createDirectory(folder, ownerOnly("rwx------"));
+                writeNew(folder.resolve(".binding"), digest.getBytes(java.nio.charset.StandardCharsets.US_ASCII));
+            } catch (FileAlreadyExistsException existing) {
+                // An existing directory is usable only with the same durable binding.
+            }
+            DirectoryIdentity identity = directory(folder);
+            checkOwnedDirectory(folder, identity);
+            Path binding = folder.resolve(".binding");
+            regular(binding);
+            try (var channel = FileChannel.open(binding, READ, WRITE, NOFOLLOW_LINKS);
+                 var lease = channel.lock()) {
+                requireBinding(channel, digest);
+                knownChildren(folder);
+                if (Files.exists(folder.resolve(".cancelled"), NOFOLLOW_LINKS)) throw failure(KEY_CONFLICT);
+                Path content = folder.resolve("content");
+                if (Files.exists(content, NOFOLLOW_LINKS)) {
+                    if (!digest.equals(digest(read(key)))) throw failure(KEY_CONFLICT);
+                } else {
+                    Path temporary = folder.resolve(".pending");
+                    if (Files.exists(temporary, NOFOLLOW_LINKS)) {
+                        regular(temporary);
+                        Files.delete(temporary);
+                    }
+                    writeNew(temporary, bytes);
+                    checkOwnedDirectory(folder, identity);
+                    if (Files.exists(content, NOFOLLOW_LINKS)) throw failure(KEY_CONFLICT);
+                    try { Files.move(temporary, content, StandardCopyOption.ATOMIC_MOVE); }
+                    catch (AtomicMoveNotSupportedException unsupported) { Files.move(temporary, content); }
+                }
+                checkOwnedDirectory(folder, identity);
+                if (!digest.equals(digest(read(key)))) throw failure(IO_FAILURE);
+                return new StoredImage(key, image.format(), bytes.length, image.width(), image.height());
+            }
+        } catch (NoSuchFileException unbound) { throw failure(KEY_CONFLICT); }
+        catch (IOException | SecurityException | java.nio.channels.OverlappingFileLockException unavailable) {
+            throw failure(IO_FAILURE);
+        }
+    }
+
+    @Override
+    public void deleteReserved(UUID imageId, String contentSha256) {
+        String key = reservedKey(imageId);
+        if (contentSha256 == null || !contentSha256.matches("[0-9a-f]{64}")) throw failure(INVALID_INPUT);
+        checkRoot();
+        Path folder = root.resolve(key);
+        if (!Files.exists(folder, NOFOLLOW_LINKS)) return;
+        try {
+            DirectoryIdentity identity = directory(folder);
+            checkOwnedDirectory(folder, identity);
+            Path binding = folder.resolve(".binding");
+            regular(binding);
+            try (var channel = FileChannel.open(binding, READ, WRITE, NOFOLLOW_LINKS);
+                 var lease = channel.lock()) {
+                requireBinding(channel, contentSha256);
+                knownChildren(folder);
+                Path content = folder.resolve("content");
+                if (Files.exists(content, NOFOLLOW_LINKS) && !contentSha256.equals(digest(read(key)))) {
+                    throw failure(KEY_CONFLICT);
+                }
+                Path temporary = folder.resolve(".pending");
+                if (Files.exists(temporary, NOFOLLOW_LINKS)) regular(temporary);
+                Path cancelled = folder.resolve(".cancelled");
+                if (!Files.exists(cancelled, NOFOLLOW_LINKS)) {
+                    writeNew(cancelled, contentSha256.getBytes(java.nio.charset.StandardCharsets.US_ASCII));
+                } else {
+                    regular(cancelled);
+                    try (var marker = FileChannel.open(cancelled, READ, NOFOLLOW_LINKS)) {
+                        requireBinding(marker, contentSha256);
+                    }
+                }
+                checkOwnedDirectory(folder, identity);
+                Files.deleteIfExists(content);
+                Files.deleteIfExists(temporary);
+                // Retain binding/cancellation tombstones for safe retries; no recursive deletion.
+            }
+        } catch (NoSuchFileException unbound) { throw failure(KEY_CONFLICT); }
+        catch (IOException | SecurityException | java.nio.channels.OverlappingFileLockException unavailable) {
+            throw failure(IO_FAILURE);
+        }
+    }
+
+    private static String reservedKey(UUID imageId) {
+        if (imageId == null || !KEY.matcher(imageId.toString()).matches()) throw failure(INVALID_KEY);
+        return imageId.toString();
+    }
+
+    private static void regular(Path file) throws IOException {
+        var attributes = Files.readAttributes(file, BasicFileAttributes.class, NOFOLLOW_LINKS);
+        if (!attributes.isRegularFile() || attributes.isSymbolicLink() || attributes.isOther()) throw failure(UNSAFE_STORAGE);
+    }
+
+    private static void knownChildren(Path folder) throws IOException {
+        try (var entries = Files.list(folder)) {
+            if (entries.anyMatch(path -> !Set.of(".binding", ".cancelled", ".pending", "content")
+                    .contains(path.getFileName().toString()))) throw failure(KEY_CONFLICT);
+        }
+    }
+
+    private void writeNew(Path path, byte[] bytes) throws IOException {
+        try (var channel = FileChannel.open(path, Set.of(CREATE_NEW, WRITE, NOFOLLOW_LINKS), ownerOnly("rw-------"))) {
+            ByteBuffer buffer = ByteBuffer.wrap(bytes);
+            while (buffer.hasRemaining()) channel.write(buffer);
+            channel.force(true);
+        }
+    }
+
+    private static void requireBinding(FileChannel channel, String digest) throws IOException {
+        channel.position(0);
+        byte[] bytes = Channels.newInputStream(channel).readNBytes(65);
+        if (!java.util.Arrays.equals(bytes, digest.getBytes(java.nio.charset.StandardCharsets.US_ASCII))) {
+            throw failure(KEY_CONFLICT);
+        }
+    }
+
+    private static String digest(byte[] bytes) {
+        try {
+            return java.util.HexFormat.of().formatHex(java.security.MessageDigest.getInstance("SHA-256").digest(bytes));
+        } catch (java.security.NoSuchAlgorithmException impossible) {
+            throw new IllegalStateException("SHA-256 is required by Java", impossible);
+        }
+    }
+
     private void checkRoot() {
         try {
             checkAncestors(root);
