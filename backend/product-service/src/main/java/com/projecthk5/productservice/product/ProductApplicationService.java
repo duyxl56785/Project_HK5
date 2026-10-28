@@ -10,6 +10,7 @@ import java.util.function.BiFunction;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 /** Internal orchestration; a verified ProductAccessPolicy is required before any resource lookup or write. */
@@ -69,6 +70,14 @@ public class ProductApplicationService {
         return current;
     }
 
+    /** All lifecycle states, only within independently verified current management Store. */
+    @Transactional(readOnly = true, isolation = Isolation.REPEATABLE_READ)
+    public ProductOwnerPage listOwned(String actor, ProductOwnerQuery query) {
+        UUID storeId = managementStore(policy(actor), actor);
+        if (query == null) throw invalid("Owner-list criteria are required");
+        return persistence.listOwned(storeId, query);
+    }
+
     private StoredProduct change(String actor, UUID id, long expectedVersion, boolean ownerManagement,
                                  BiFunction<ProductLifecycleService, ProductListing, ProductListing> transition) {
         if (expectedVersion < 0) throw invalid("A nonnegative expected version is required");
@@ -91,6 +100,15 @@ public class ProductApplicationService {
     }
 
     private StoredProduct currentOwned(ProductAccessPolicy policy, String actor, UUID id) {
+        UUID storeId = managementStore(policy, actor);
+        StoredProduct current = current(id);
+        if (!storeId.equals(current.listing().storeId())) {
+            throw new ProductPersistenceException(ProductPersistenceException.Code.NOT_FOUND, "Product was not found");
+        }
+        return current;
+    }
+
+    private UUID managementStore(ProductAccessPolicy policy, String actor) {
         // Verify current scope independently of the guessed Product ID, including when that ID is absent.
         UUID storeId = policy.currentManagementStore(actor);
         if (storeId == null) throw new ProductRuleException(ProductRuleException.Code.AUTHORIZATION_UNAVAILABLE,
@@ -103,11 +121,7 @@ public class ProductApplicationService {
         if (!actor.equals(facts.ownerReference()) || !facts.sellerApproved() || !facts.storeOpen()) {
             throw new ProductRuleException(ProductRuleException.Code.ACCESS_DENIED, "Store is not manageable by actor");
         }
-        StoredProduct current = current(id);
-        if (!storeId.equals(current.listing().storeId())) {
-            throw new ProductPersistenceException(ProductPersistenceException.Code.NOT_FOUND, "Product was not found");
-        }
-        return current;
+        return storeId;
     }
 
     private ProductLifecycleService domain(String actor) {

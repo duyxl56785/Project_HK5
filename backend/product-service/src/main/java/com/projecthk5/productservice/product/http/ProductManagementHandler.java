@@ -2,6 +2,8 @@ package com.projecthk5.productservice.product.http;
 
 import com.projecthk5.productservice.product.ProductApplicationService;
 import com.projecthk5.productservice.product.ProductRuleException;
+import com.projecthk5.productservice.product.ProductOwnerQuery;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -60,6 +62,17 @@ public final class ProductManagementHandler {
     public ProductManagementResponse findById(UUID id) {
         String actor = actor();
         return ProductManagementResponse.from(application.findById(actor, id));
+    }
+
+    public OwnedPage listOwned(ProductOwnerQuery query) {
+        var page = application.listOwned(actor(), query);
+        return new OwnedPage(page.products().stream().map(ProductManagementResponse::fromOwnerRow).toList(),
+                page.total(), page.page(), page.pageSize());
+    }
+
+    /** Internal prepared result; HTTP pagination/wire registration still requires owner agreement. */
+    public record OwnedPage(List<ProductManagementResponse> products, long total, int page, int pageSize) {
+        public OwnedPage { products = List.copyOf(products); }
     }
 
     private String actor() {
