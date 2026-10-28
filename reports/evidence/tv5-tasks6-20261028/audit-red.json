@@ -1,0 +1,20 @@
+{
+  "kind": "DERIVED synthetic-unit TDD, not Finance runtime",
+  "head": "bb0b9a2",
+  "command": [
+    "C:\\Users\\Admin\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "scripts/qa/tests",
+    "-p",
+    "test_finance_evidence_audit.py",
+    "-v"
+  ],
+  "startedUtc": "2026-10-28T01:52:34.761875+00:00",
+  "completedUtc": "2026-10-28T01:52:35.167653+00:00",
+  "exitCode": 1,
+  "logSHA256": "dca691fc6e1603b641f42b977c2bb066312eb2e9ddd1846a06734ced1c2cdcdd",
+  "interpretation": "BLOCKED_ENVIRONMENT mixed with missing capability: sandbox temporary-directory cleanup failed. Do not count as the valid TDD RED."
+}

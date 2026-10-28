@@ -291,3 +291,15 @@ This dated checkpoint supersedes earlier waiting labels only for scopes verified
 - [x] Owner97/d376176 đã có fix;104/a0c9d4b chạy519unit+205PG+8originalQA PASS. Eight-test Java SHA256 giữ nguyên, original4FAIL retained. P2 FIXED_VERIFIED trong privatehandler/PG scope; không còn WAITING_TV2_FIX ở checkpoint hiện tại.
 - [x] Main đã merge91tạif888725;103sync6d99953 chạy461unit+188PG+17QA PASS. Các receipt/source tách riêng; không dùng approval/QA cũ để gán cho source mới.
 - [ ] ProtectedHTTP/currentStore/House/sharedwire/C06/fullM01/Finance/COD/settlement/liveE2E vẫn chờ; không tựApprove/Merge/flags. [Current evidence](../reports/TV5_QA_TDD_PREFLIGHT_2026-10-27.md#checkpoint-cuối--owner-fix-và-search-được-tích-hợp-trong-lúc-bàn-giao).
+
+## TV5-TASKS61-66-20261028 — current source checkpoint
+
+Refs #5/#12/#99/#103/#117. [A–H task/RTM/readiness report](../reports/TV5_TASKS_6_1_TO_6_6_2026-10-28.md), [derived receipts](../reports/evidence/tv5-tasks6-20261028/).
+
+- [x]6.1originalcoreDONEverified79freshunit atmainbb0; no rules rewritten.
+- [x]6.2source931fresh165PASS(128unit+34PG+3FIN),FD01–05retained; TV3/TV4reviewpending, no mergedDONE claim.
+- [x]6.3original8visibilityGREEN andactual97/104mainmerges verified; no protectedHTTP/E2E claim.
+- [x]6.4stale17FAILcorrected: all17PASS ate7 andfinal0d; source-syncedmainbb0full901PASS atf666, final25PASS at0d. No newJava/assertionchanges; oldfixturefixkept.
+- [x]6.5independentauditor19newunitRED/GREEN+refactor48offlinePASS, real165/901/79artifacts verified; FinanceassessmentstillBLOCKED_DEPENDENCY.
+- [x]6.6RTM/results/defect/integration/E2E/reviewer/handofftables andrawhashes updated.
+- [ ]6.2/6.4formalownerreview/acceptance;6.5liveCOD/settlement;6.6fullprojectE2E remainWAITING_REVIEW/BLOCKED/PARTIAL. Issue5/12OPEN/PARTIAL; noflags/merge/businesssignature.

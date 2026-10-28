@@ -1,0 +1,18 @@
+{
+  "kind": "DERIVED synthetic-unit QA auditor plus existing CLI regression",
+  "head": "bb0b9a2",
+  "command": [
+    "C:\\Users\\Admin\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "scripts/qa/tests",
+    "-v"
+  ],
+  "startedUtc": "2026-10-28T02:04:27.060168+00:00",
+  "completedUtc": "2026-10-28T02:04:28.025191+00:00",
+  "exitCode": 0,
+  "logSHA256": "82a48f2450cf9597d44f8460f4a6ddb1ccccae8081cd75f9836c7e80392a81b1",
+  "interpretation": "Synthetic auditor/offline CLI verification, not payment or settlement runtime execution."
+}

@@ -1,0 +1,48 @@
+{
+  "gates": {
+    "finance_policy": {
+      "state": "PENDING",
+      "reference": null
+    },
+    "cod_source_and_authority": {
+      "state": "PENDING",
+      "reference": null
+    },
+    "settlement_contract": {
+      "state": "PENDING",
+      "reference": null
+    },
+    "reconciliation_contract": {
+      "state": "PENDING",
+      "reference": null
+    },
+    "store_authorization": {
+      "state": "PENDING",
+      "reference": null
+    },
+    "runtime_environment": {
+      "state": "PENDING",
+      "reference": null
+    }
+  },
+  "runs": [
+    {
+      "receipt": ".verification/tv5-tasks61-66-20261028/current-head-99/summary.json",
+      "head": "931feee45ac3f17293a4f200c604010fce63bf39",
+      "level": "POSTGRESQL",
+      "usesMocks": true
+    },
+    {
+      "receipt": ".verification/tv5-tasks61-66-20261028/main-synchronized-103/summary.json",
+      "head": "f666886c34e7df1e5eae42c9d476f340d733ea4a",
+      "level": "LOCAL_INTEGRATION",
+      "usesMocks": true
+    },
+    {
+      "receipt": ".verification/tv5-tasks61-66-20261028/current-main-rules/summary.json",
+      "head": "bb0b9a2d0d2e909a59653619bce98c77f75e77d2",
+      "level": "UNIT",
+      "usesMocks": true
+    }
+  ]
+}
