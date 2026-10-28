@@ -403,3 +403,13 @@ This dated checkpoint supersedes earlier waiting labels only for scopes verified
 - [x] Owner97/d376176 đã có fix;104/a0c9d4b chạy519unit+205PG+8originalQA PASS. Eight-test Java SHA256 giữ nguyên, original4FAIL retained. P2 FIXED_VERIFIED trong privatehandler/PG scope; không còn WAITING_TV2_FIX ở checkpoint hiện tại.
 - [x] Main đã merge91tạif888725;103sync6d99953 chạy461unit+188PG+17QA PASS. Các receipt/source tách riêng; không dùng approval/QA cũ để gán cho source mới.
 - [ ] ProtectedHTTP/currentStore/House/sharedwire/C06/fullM01/Finance/COD/settlement/liveE2E vẫn chờ; không tựApprove/Merge/flags. [Current evidence](../reports/TV5_QA_TDD_PREFLIGHT_2026-10-27.md#checkpoint-cuối--owner-fix-và-search-được-tích-hợp-trong-lúc-bàn-giao).
+
+## TV5-FRONTEND-20261028 — isolated read-only UI (explicit user task)
+
+Refs #5/#12/#115. [Acceptance and A–G report](../reports/TV5_FRONTEND_ACCEPTANCE_2026-10-28.md), [derived receipts/raw hashes](../reports/evidence/tv5-ui-20261028/).
+
+- [x]Finance/COD/Settlement read-only DEMO UI; QA/PR recorded-source views, filters/pagination/details and shared feature components implemented on separateTV5 branch.
+- [x]Exact9d62365:46model/render/DOM+18Chrome=64new frontendPASS,0FAIL/SKIP;85existing feature regression at6c74f05 is separate, not a release sum.
+- [x]Typecheck/appbuild/featurepreviewbuild and actual responsive/keyboard/screenshot checks;4RED→GREEN traces retained.3additional canonical money cases immediatelyPASS, not fakeRED.
+- [ ]Lint NOT_RUN: no configured repository linter. Protected Finance HTTP/liveE2E/API integration remainsNOT_RUN/BLOCKED; no production backend/Auth/shared-router edits.
+- [ ]TV1/TV2 review, owner routing/current authority, fullM01/Finance/COD/settlement policy/read contracts pending. Explicit frontend task does not close week1/fullF15/F16 gates; Issue5/12remainPARTIAL.

@@ -1,0 +1,43 @@
+{
+  "kind": "DERIVED actual TV5 frontend execution; raw log private byte-preserved",
+  "label": "model-red",
+  "branch": "codex/tv5-finance-qa-ui",
+  "head": "91e1a6c2cc2e2f08dfb905386ba21e4d34668bf6",
+  "base": "91e1a6c",
+  "command": [
+    "C:/Program Files/nodejs/node.exe",
+    "--test",
+    "src/features/finance/workspaceModel.test.mjs"
+  ],
+  "startedUtc": "2026-10-28T01:06:21.737373+00:00",
+  "completedUtc": "2026-10-28T01:06:23.841093+00:00",
+  "environment": {
+    "platform": "win32",
+    "node": "v22.23.3"
+  },
+  "exitCode": 1,
+  "counts": {
+    "tests": 26,
+    "pass": 0,
+    "fail": 26,
+    "skipped": 0
+  },
+  "log": ".verification/tv5-ui-20261028/model-red/runtime.log",
+  "logSHA256": "b686401a05d32fe96564ee56a5ea591089cb97be5cc76440ff72b2abf8eb0fcb",
+  "sourceManifest": [
+    {
+      "path": "frontend/src/features/finance/README.md",
+      "sha256": "25ae91ebcd163387b3db82e67832a1b026bbbfaa18348f4292357898d5d97c6f"
+    },
+    {
+      "path": "frontend/src/features/finance/workspaceModel.test.mjs",
+      "sha256": "adf19a7aedb4cfe28111e744b29e6c969a4acaed2ea411bd039b55d7b1bc49e0"
+    },
+    {
+      "path": "frontend/src/features/finance/workspaceModel.ts",
+      "sha256": "7786c5e52b15c45750c4f41af37978ab82255c71a9c6fcfb4dc331d798911eac"
+    }
+  ],
+  "scope": "Local isolated UI/fixtures or recorded QA/PR metadata; not production Finance/API/Auth/E2E",
+  "sourceAttribution": "See head + per-file sourceManifest. Pre-commit candidate receipts are not falsely described as exact committed-source runs. Final acceptance runs pin9d62365; later documentation-only publication preserves UI source blobs."
+}
