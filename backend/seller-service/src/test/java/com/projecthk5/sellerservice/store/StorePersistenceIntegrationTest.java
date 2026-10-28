@@ -190,13 +190,16 @@ class StorePersistenceIntegrationTest {
         Flyway current = Flyway.configure()
                 .dataSource(POSTGRES.getJdbcUrl(), POSTGRES.getUsername(), POSTGRES.getPassword())
                 .defaultSchema(schema).schemas(schema).locations("classpath:db/migration").load();
-        assertEquals(1, current.migrate().migrationsExecuted);
+        assertEquals(2, current.migrate().migrationsExecuted);
         current.validate();
         assertEquals(checksum, jdbc.queryForObject("SELECT checksum FROM " + schema
                 + ".flyway_schema_history WHERE version='1'", Integer.class));
         assertEquals(Map.of("owner_reference", " Kept-Owner ", "status", "SUSPENDED",
                 "review_reason", "Existing moderation reason", "version", 7L), jdbc.queryForMap(
                 "SELECT owner_reference,status,review_reason,version FROM " + schema + ".seller_profiles WHERE id=?", existing));
+        assertEquals(Map.of("owner_reference", " Kept-Owner ", "seller_status", "SUSPENDED", "source_version", 7L),
+                jdbc.queryForMap("SELECT owner_reference,seller_status,source_version FROM " + schema
+                        + ".seller_status_outbox WHERE seller_id=?", existing));
         jdbc.update("INSERT INTO " + schema + ".stores(id,seller_id,name,slug,status) VALUES (?,?,?,?,'CLOSED')",
                 UUID.randomUUID(), existing, "Existing seller store", "existing-store");
         assertEquals(1, jdbc.queryForObject("SELECT count(*) FROM " + schema + ".stores", Integer.class));

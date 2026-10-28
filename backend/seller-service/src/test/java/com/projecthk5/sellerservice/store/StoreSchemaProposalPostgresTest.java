@@ -66,6 +66,9 @@ class StoreSchemaProposalPostgresTest {
             assertTrue(rows.next());
             assertEquals("2", rows.getString(1));
             assertEquals("V2__create_stores.sql", rows.getString(2));
+            assertTrue(rows.next());
+            assertEquals("3", rows.getString(1));
+            assertEquals("V3__create_seller_status_outbox.sql", rows.getString(2));
             assertFalse(rows.next());
         }
     }

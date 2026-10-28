@@ -76,6 +76,7 @@ class SellerPersistenceIntegrationTest {
 
     @BeforeEach
     void reset() {
+        jdbc.update("DELETE FROM seller_status_outbox");
         jdbc.update("DELETE FROM seller_profiles");
         policy.known.clear();
         policy.known.addAll(Set.of(OWNER.reference(), ADMIN.reference(), OTHER.reference()));
@@ -345,6 +346,9 @@ class SellerPersistenceIntegrationTest {
             assertEquals(1, successes);
             assertEquals(1, conflicts);
             assertEquals(1, repository.findById(seller.id()).orElseThrow().getVersion());
+            var snapshots = statusSnapshots(seller.id());
+            assertEquals(2, snapshots.size());
+            assertEquals(service.findOwn(OWNER).application().status().name(), snapshots.getLast().get("seller_status"));
         } finally {
             stop(workers);
         }
@@ -362,6 +366,149 @@ class SellerPersistenceIntegrationTest {
 
     private static void assertCode(SellerPersistenceException.Code expected, SellerPersistenceException exception) {
         assertEquals(expected, exception.getCode());
+    }
+
+    @Test
+    void roleSyncRegistrationSnapshotIsDurableAndPreservesExactOwner() {
+        SellerIdentity exact = new SellerIdentity(" Owner-opaque-Ä ");
+        policy.known.add(exact.reference());
+        var seller = service.register(exact);
+        var row = statusSnapshots(seller.id()).getFirst();
+        assertEquals(seller.id(), row.get("seller_id"));
+        assertEquals(exact.reference(), row.get("owner_reference"));
+        assertEquals("PENDING_REVIEW", row.get("seller_status"));
+        assertEquals(seller.version(), ((Number) row.get("source_version")).longValue());
+        assertInstanceOf(UUID.class, row.get("event_id"));
+        assertNotNull(row.get("recorded_at"));
+        assertEquals(List.of(row), statusSnapshots(seller.id()));
+    }
+
+    @Test
+    void roleSyncEveryLifecycleStateHasOneOrderedPersistedSnapshot() {
+        var seller = service.register(OWNER);
+        var rejected = service.reject(seller.id(), seller.version(), ADMIN, "Fix");
+        var resubmitted = service.resubmit(seller.id(), rejected.version(), OWNER);
+        var approved = service.approve(seller.id(), resubmitted.version(), ADMIN);
+        var suspended = service.suspend(seller.id(), approved.version(), ADMIN, "Hold");
+        var reinstated = service.reinstate(seller.id(), suspended.version(), ADMIN);
+        var rows = statusSnapshots(seller.id());
+        assertEquals(List.of("PENDING_REVIEW", "REJECTED", "PENDING_REVIEW", "APPROVED", "SUSPENDED", "APPROVED"),
+                rows.stream().map(row -> row.get("seller_status")).toList());
+        assertEquals(List.of(0L, 1L, 2L, 3L, 4L, 5L), rows.stream()
+                .map(row -> ((Number) row.get("source_version")).longValue()).toList());
+        assertEquals(6, rows.stream().map(row -> row.get("event_id")).distinct().count());
+        assertEquals(reinstated.version(), ((Number) rows.getLast().get("source_version")).longValue());
+        assertTrue(rows.stream().allMatch(row -> OWNER.reference().equals(row.get("owner_reference"))));
+        assertFalse(rows.getFirst().containsKey("review_reason"));
+    }
+
+    @Test
+    void roleSyncUncommittedRegistrationIsInvisibleToAnotherConnection() {
+        var outside = new JdbcTemplate(new org.springframework.jdbc.datasource.DriverManagerDataSource(
+                POSTGRES.getJdbcUrl(), POSTGRES.getUsername(), POSTGRES.getPassword()));
+        var id = new TransactionTemplate(transactions).execute(tx -> {
+            var seller = service.register(OWNER);
+            assertEquals(1, statusSnapshots(seller.id()).size());
+            assertEquals(0L, outside.queryForObject(
+                    "SELECT count(*) FROM seller_status_outbox WHERE seller_id=?", Long.class, seller.id()));
+            return seller.id();
+        });
+        assertEquals(1L, outside.queryForObject(
+                "SELECT count(*) FROM seller_status_outbox WHERE seller_id=?", Long.class, id));
+    }
+
+    @Test
+    void roleSyncRegistrationRollbackLeavesNeitherSellerNorSnapshot() {
+        UUID id = new TransactionTemplate(transactions).execute(tx -> {
+            var seller = service.register(OWNER);
+            assertEquals(1, statusSnapshots(seller.id()).size());
+            tx.setRollbackOnly();
+            return seller.id();
+        });
+        assertFalse(repository.existsById(id));
+        assertTrue(statusSnapshots(id).isEmpty());
+    }
+
+    @Test
+    void roleSyncModerationRollbackRestoresStateVersionAndSnapshotCount() {
+        var seller = service.register(OWNER);
+        var before = statusSnapshots(seller.id());
+        new TransactionTemplate(transactions).executeWithoutResult(tx -> {
+            service.approve(seller.id(), seller.version(), ADMIN);
+            assertEquals(2, statusSnapshots(seller.id()).size());
+            tx.setRollbackOnly();
+        });
+        assertEquals(seller, service.findOwn(OWNER));
+        assertEquals(before, statusSnapshots(seller.id()));
+    }
+
+    @Test
+    void roleSyncOutboxFailureRollsBackOtherwiseValidApproval() {
+        var seller = service.register(OWNER);
+        var before = statusSnapshots(seller.id());
+        jdbc.execute("ALTER TABLE seller_status_outbox ADD CONSTRAINT test_refuse_approved CHECK (seller_status <> 'APPROVED')");
+        try {
+            assertThrows(DataIntegrityViolationException.class, () -> service.approve(seller.id(), seller.version(), ADMIN));
+            assertEquals(seller, service.findOwn(OWNER));
+            assertEquals(before, statusSnapshots(seller.id()));
+        } finally {
+            jdbc.execute("ALTER TABLE seller_status_outbox DROP CONSTRAINT test_refuse_approved");
+        }
+    }
+
+    @Test
+    void roleSyncDeniedOrStaleMutationCannotAppendSnapshot() {
+        var seller = service.register(OWNER);
+        assertThrows(SellerRuleException.class, () -> service.approve(seller.id(), seller.version(), OTHER));
+        var approved = service.approve(seller.id(), seller.version(), ADMIN);
+        assertThrows(SellerPersistenceException.class, () -> service.suspend(seller.id(), seller.version(), ADMIN, "Hold"));
+        assertEquals(2, statusSnapshots(seller.id()).size());
+        assertEquals(approved, service.findOwn(OWNER));
+    }
+
+    @Test
+    void roleSyncDatabaseRejectsDuplicateSellerVersionAndInvalidSnapshot() {
+        var seller = service.register(OWNER);
+        assertThrows(DataIntegrityViolationException.class, () -> jdbc.update(
+                "INSERT INTO seller_status_outbox(event_id,seller_id,owner_reference,seller_status,source_version) VALUES(?,?,?,?,?)",
+                UUID.randomUUID(), seller.id(), OWNER.reference(), "PENDING_REVIEW", seller.version()));
+        for (String status : List.of("ADMIN", "SELLER", "ACTIVE", "approved")) {
+            assertThrows(DataIntegrityViolationException.class, () -> jdbc.update(
+                    "INSERT INTO seller_status_outbox(event_id,seller_id,owner_reference,seller_status,source_version) VALUES(?,?,?,?,?)",
+                    UUID.randomUUID(), seller.id(), OWNER.reference(), status, 5L));
+        }
+        assertEquals(1, statusSnapshots(seller.id()).size());
+    }
+
+    private List<java.util.Map<String, Object>> statusSnapshots(UUID sellerId) {
+        return jdbc.queryForList("SELECT * FROM seller_status_outbox WHERE seller_id=? ORDER BY source_version", sellerId);
+    }
+
+    @Test
+    void roleSyncMigrationBackfillsExistingSellersWithoutPublishingOrChangingThem() {
+        String schema = "outbox_upgrade_" + UUID.randomUUID().toString().replace("-", "");
+        UUID id = UUID.randomUUID();
+        var flyway = org.flywaydb.core.Flyway.configure().dataSource(
+                POSTGRES.getJdbcUrl(), POSTGRES.getUsername(), POSTGRES.getPassword())
+                .schemas(schema).defaultSchema(schema).target("2").load();
+        try {
+            flyway.migrate();
+            jdbc.update("INSERT INTO " + schema + ".seller_profiles(id,owner_reference,status,version) VALUES(?,?,?,?)",
+                    id, " Legacy-OWNER ", "APPROVED", 9L);
+            var upgraded = org.flywaydb.core.Flyway.configure().dataSource(
+                    POSTGRES.getJdbcUrl(), POSTGRES.getUsername(), POSTGRES.getPassword())
+                    .schemas(schema).defaultSchema(schema).load();
+            upgraded.migrate();
+            upgraded.validate();
+            var row = jdbc.queryForMap("SELECT * FROM " + schema + ".seller_status_outbox WHERE seller_id=?", id);
+            assertEquals(" Legacy-OWNER ", row.get("owner_reference"));
+            assertEquals("APPROVED", row.get("seller_status"));
+            assertEquals(9L, ((Number) row.get("source_version")).longValue());
+            assertEquals(9L, jdbc.queryForObject("SELECT version FROM " + schema + ".seller_profiles WHERE id=?", Long.class, id));
+            assertEquals("3", upgraded.info().current().getVersion().toString());
+        } finally {
+            jdbc.execute("DROP SCHEMA IF EXISTS " + schema + " CASCADE");
+        }
     }
 
     private static void await(CountDownLatch latch) {
