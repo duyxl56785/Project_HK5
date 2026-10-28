@@ -272,3 +272,18 @@ Audit source main33853a1 giữ nguyên; FIN01/06 technical fix có evidence lị
 Business caps chưa được enforce production; no-rounding schema option còn PROPOSED, không có migration/DTO mới.
 PR83 vẫn Draft/candidate; PRODUCT_PERSISTENCE_PRODUCTION=BLOCKED, business signature PENDING, operator AUTHORIZATION PENDING.
 Chỉ xuất bản hai tài liệu để review; không Java/Flyway/API/runtime config/Finance hoặc Inventory flag changes, không merge/deploy.
+
+
+## Verified Product price-slice acceptance — 25/10/2026
+
+This dated receipt supersedes only older statements that MD01/MD02/Product-unit MD03 business signature, Level A or Product persistence implementation is still missing. Earlier sections remain historical; full M01 is PARTIAL, not globally APPROVED.
+
+- Human `duyxl56785` [business receipt84](https://github.com/duyxl56785/Project_HK5/pull/84#issuecomment-6364386964) signs **M01-PRICE-SCHEMA-v1.0**, packet463338e4fc3823b0720e1f840e637e0c5e946148, SHA256 `a02370d995ea2950b39d737c6a41c47f09da448a600b335905c080a8798b008a`: MD01 explicit VND_ONLY, MD02 exact positive integral1..1000000000/no-rounding/canonical string, MD03 Product unit cap only. Signature/author/revision/digest verified; packet bytes unchanged.
+- [TV5 human-authorized Level A](https://github.com/duyxl56785/Project_HK5/pull/84#pullrequestreview-5637148973), [TV2 implementation ACK](https://github.com/duyxl56785/Project_HK5/pull/84#issuecomment-6381447408) and [human-authorized Level B88](https://github.com/duyxl56785/Project_HK5/pull/88#pullrequestreview-5639341936) are recorded.88 is MERGED into main ed85f6290de7f611c82e5c0ad973f98180f04df4. Do not block private Product persistence on another unchanged unit-price signature or unrelated MD04–MD10.
+- Quantity1..1000/aggregate1e12, MD04–MD10, House/rates/rounding/COD/refund/settlement/operator and HTTP/current authority are outside that signature. Finance production BLOCKED; flags unchanged/OFF. COD PAID's proposed Order source/current ADMIN/atomic per-SellerOrder guard is not yet a versioned trusted runtime contract or production settlement.
+- FIN01/06 **technical existing-storage** fixes freshly verified on main ed85f62:109Orderunit+25OrderPG+3unchanged explicit diagnostics PASS, exit0, separate from Product/Seller/author/CI executions. No policy approval from tests. [Current QA and owner handoff](../reports/TV5_PRODUCT_INTEGRATION_REVIEW_2026-10-25.md), [source/commands/raw hashes](../reports/evidence/tv5-product-integration-20261025/finance.json).
+
+
+## Scoped internal review and QA receipt — 26/10/2026
+
+TV5 directly authorized formalAPPROVED89/90/91/94 is now recorded on GitHub at the verified unchanged heads, [current receipts/tests/handoff](../reports/TV5_ALL_PR_UNBLOCK_2026-10-26.md). This is internal source approval, not additionalMD/business or operational approval. New Auth/Gateway101/102QA is scoped to current bootstrap/transaction primitives and embedded forwarding; it doesnot establish currentStore/House/CODauthority/settlement/liveE2E. Previously signed MD01/02/ProductunitMD03 remains valid. FullM01PARTIAL/PENDING; FinanceproductionBLOCKED, noflags/deploy/merge. Signedpacket unchanged; no requirementto re-sign the existing Productpriceslice or redo FIN01/06 absent regression.
