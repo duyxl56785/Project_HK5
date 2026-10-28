@@ -1,6 +1,6 @@
 # Smart E-Commerce Marketplace V2 — Project_HK5
 
-> **Trạng thái: ĐANG PHÁT TRIỂN / PARTIAL** · Cập nhật: **27/10/2026**  
+> **Trạng thái: ĐANG PHÁT TRIỂN / PARTIAL** · Cập nhật: **28/10/2026**
 > Dự án nhóm 5 thành viên xây dựng sàn thương mại điện tử đa người bán, ưu tiên **thanh toán khi nhận hàng (COD)**. Nhiều thành phần đã được lập trình, kiểm thử và merge nhưng **toàn hệ thống chưa hoàn tất tích hợp, chưa được nghiệm thu E2E hoặc triển khai production**.
 
 ## 1. Giới thiệu
@@ -43,14 +43,14 @@ Tham khảo [kiến trúc](docs/ARCHITECTURE.md), [phân quyền mã nguồn](do
 
 **Frontend TV2 đã merge:** [Category Browser #74](https://github.com/duyxl56785/Project_HK5/pull/74), [Seller/Store Overview #76](https://github.com/duyxl56785/Project_HK5/pull/76). Các component này **chưa được nối vào website production với API thật**.
 
+**Source nội bộ TV2 vừa tích hợp:** [Image Storage #87](https://github.com/duyxl56785/Project_HK5/pull/87), [Product Owner List #108](https://github.com/duyxl56785/Project_HK5/pull/108), [Image Metadata V3 #109](https://github.com/duyxl56785/Project_HK5/pull/109). Đây là source đã merge, **chưa phải upload/protected HTTP hoặc triển khai database production**.
+
 ### Các phần đang ở PR riêng (chưa có trong `main`)
 
 | PR | Nội dung | Giới hạn hiện tại |
 |---|---|---|
-| [#87](https://github.com/duyxl56785/Project_HK5/pull/87) | Image Storage | Lưu file nội bộ; chưa phải API upload thật |
 | [#95](https://github.com/duyxl56785/Project_HK5/pull/95) | Product Management UI | Component độc lập; chưa nối Router/API |
-| [#108](https://github.com/duyxl56785/Project_HK5/pull/108) | Product Owner List | PostgreSQL query nội bộ, chưa có protected HTTP |
-| [#109](https://github.com/duyxl56785/Project_HK5/pull/109) | Metadata và đặt chỗ ảnh | PostgreSQL/Flyway V3; chưa có file binding/READY/upload |
+| [#116](https://github.com/duyxl56785/Project_HK5/pull/116) | Image Lifecycle V4 | PostgreSQL/file binding, READY/retry/cancel nội bộ; Draft chờ review, chưa có HTTP/JWT |
 | [#110](https://github.com/duyxl56785/Project_HK5/pull/110) | **Bản demo UI/UX TV2** | Dữ liệu mô phỏng, chưa xác thực/kết nối backend |
 | [#102](https://github.com/duyxl56785/Project_HK5/pull/102), [#105](https://github.com/duyxl56785/Project_HK5/pull/105) | Auth/Gateway và frontend chung TV1 | Đang chờ tích hợp thực tế |
 | [#106](https://github.com/duyxl56785/Project_HK5/pull/106) | Product SKU → Inventory intent TV3 | Chưa phải Checkout/Inventory liên service |
