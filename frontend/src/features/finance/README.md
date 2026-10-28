@@ -66,7 +66,7 @@ TV1 must review before linking into shared navigation/Auth/router/API client. No
 ## Acceptance checklist
 
 - [x] Five read-only views, typed adapter, source labels and explicit financial fixtures.
-- [x] Model26RED→26GREEN; component10FAIL/1existingPASS→11GREEN; browser13PASS/5FAIL→18GREEN after UI label fixes; adapter5PASS/1FAIL→6GREEN after sync-error fix.
+- [x] Model26RED→26GREEN; component10FAIL/1existingPASS→11GREEN; browser13PASS/5FAIL→18GREEN after UI label fixes; adapter5PASS/1FAIL→6GREEN after sync-error fix. Three additional canonical newline money cases passed immediately (REGRESSION_PASS, not another RED); model now29cases.
 - [x] Search/filter/pagination/details, exact money, missing snapshots and stale-result/Store isolation tested at UI boundary.
 - [x] Typecheck/appbuild/featurepreviewbuild actually executed; exact source/commands/log hashes in linked PR evidence.
 - [ ] Final owner review and integration into TV1 shared navigation/current authentication.

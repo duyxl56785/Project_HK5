@@ -15,7 +15,7 @@ test('formats exact integers above the JavaScript safe integer boundary', () => 
 test('preserves fractional snapshot digits without rounding or inventing policy', () => {
   assert.equal(model.formatVnd('1234567.0500', 'VND'), '1.234.567,0500 ₫');
 });
-for (const value of [1.5, '', '1e3', '01', ' 123', 'NaN', 'Infinity', '1.1234567']) {
+for (const value of [1.5, '', '1e3', '01', ' 123', 'NaN', 'Infinity', '1.1234567', '123\n', '123\r\n', '123\u2028']) {
   test(`rejects noncanonical money ${JSON.stringify(value)}`, () => assert.equal(model.formatVnd(value, 'VND'), 'Chưa có snapshot'));
 }
 test('currency is explicit and never silently defaults or converts', () => {
