@@ -9,6 +9,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface ProductImageMetadataRepository extends JpaRepository<ProductImageMetadataEntity, UUID> {
     Optional<ProductImageMetadataEntity> findByProductIdAndOperationId(UUID productId, UUID operationId);
     List<ProductImageMetadataEntity> findAllByProductIdAndStateOrderByDisplayOrderAsc(UUID productId, String state);
+    List<ProductImageMetadataEntity> findAllByProductIdAndStateInOrderByDisplayOrderAsc(UUID productId, List<String> states);
+    Optional<ProductImageMetadataEntity> findByProductIdAndContentSha256AndStateIn(
+            UUID productId, String contentSha256, List<String> states);
     Optional<ProductImageMetadataEntity> findByProductIdAndContentSha256AndState(
             UUID productId, String contentSha256, String state);
 }

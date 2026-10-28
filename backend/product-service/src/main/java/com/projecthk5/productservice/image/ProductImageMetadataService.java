@@ -29,7 +29,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-/** Durable, owner-scoped reservations only. No file is stored or publicly readable by this service. */
+/** Owner-scoped metadata and storage stages; no HTTP or public image access. */
 @Service
 @Transactional(propagation = Propagation.REQUIRED)
 public class ProductImageMetadataService {
@@ -71,11 +71,11 @@ public class ProductImageMetadataService {
                 return projection(existing, product);
             }
             mutable(product, expectedProductVersion);
-            if (images.findByProductIdAndContentSha256AndState(productId, digest, "PENDING_STORAGE").isPresent()) {
+            if (images.findByProductIdAndContentSha256AndStateIn(productId, digest, List.of("PENDING_STORAGE", "READY")).isPresent()) {
                 throw failure(DUPLICATE_IMAGE, "Image already has a pending reservation");
             }
             boolean[] occupied = new boolean[ProductImageValidator.MAX_IMAGES + 1];
-            images.findAllByProductIdAndStateOrderByDisplayOrderAsc(productId, "PENDING_STORAGE").stream()
+            images.findAllByProductIdAndStateInOrderByDisplayOrderAsc(productId, List.of("PENDING_STORAGE", "READY")).stream()
                     .forEach(row -> occupied[row.getDisplayOrder()] = true);
             int slot = 1;
             while (slot <= ProductImageValidator.MAX_IMAGES && occupied[slot]) slot++;
@@ -113,9 +113,90 @@ public class ProductImageMetadataService {
         return database(() -> {
             ProductEntity product = ownedProduct(actor, productId, false);
             // Filter in SQL: an outer REQUIRED persistence context may still cache a cancelled row as pending.
-            return images.findAllByProductIdAndStateOrderByDisplayOrderAsc(productId, "PENDING_STORAGE").stream()
+            return images.findAllByProductIdAndStateInOrderByDisplayOrderAsc(productId, List.of("PENDING_STORAGE", "READY")).stream()
                     .map(row -> projection(row, product)).toList();
         });
+    }
+
+
+    public Reservation completeStorage(String actor, UUID productId, long expectedProductVersion,
+                                       UUID imageId, long expectedImageVersion, ValidatedImage image, ImageStorage storage) {
+        if (imageId == null || image == null || storage == null || expectedProductVersion < 0 || expectedImageVersion < 0) {
+            throw failure(INVALID_INPUT, "Image, storage and nonnegative versions are required");
+        }
+        return database(() -> {
+            ProductEntity product = ownedProduct(actor, productId, true);
+            var row = imageRow(productId, imageId);
+            if (!digest(image.content()).equals(row.getContentSha256())
+                    || !image.format().contentType().equals(row.getMediaType())
+                    || image.size() != row.getSizeBytes() || image.width() != row.getWidth() || image.height() != row.getHeight()) {
+                throw failure(OPERATION_CONFLICT, "Operation was already used for another image");
+            }
+            if ("CANCELLED".equals(row.getState())) return projection(row, product);
+            if ("READY".equals(row.getState())) {
+                try {
+                    verifiedBytes(row, storage);
+                    return projection(row, product);
+                } catch (ImageStorageException missing) {
+                    if (missing.getCode() != ImageStorageException.Code.NOT_FOUND) throw missing;
+                    mutable(product, expectedProductVersion);
+                    storage.storeReserved(row.getId(), image);
+                    verifiedBytes(row, storage);
+                    return projection(row, product);
+                }
+            }
+            mutable(product, expectedProductVersion);
+            if (row.getVersion() != expectedImageVersion) throw failure(STALE_VERSION, "Image reservation changed");
+            var stored = storage.storeReserved(row.getId(), image);
+            if (stored == null || !row.getId().toString().equals(stored.key())
+                    || stored.format() != image.format() || stored.size() != image.size()
+                    || stored.width() != image.width() || stored.height() != image.height()) {
+                throw failure(UNAVAILABLE, "Storage did not confirm the reserved image");
+            }
+            row.ready(stored.key(), Instant.now());
+            verifiedBytes(row, storage);
+            images.flush();
+            changed(product);
+            return projection(row, product);
+        });
+    }
+
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    public byte[] readStored(String actor, UUID productId, UUID imageId, ImageStorage storage) {
+        if (imageId == null || storage == null) throw failure(INVALID_INPUT, "Image and storage are required");
+        return database(() -> {
+            ownedProduct(actor, productId, false);
+            var row = imageRow(productId, imageId);
+            if (!"READY".equals(row.getState())) throw failure(NOT_FOUND, "Ready image was not found");
+            return verifiedBytes(row, storage);
+        });
+    }
+
+    public void cleanupCancelled(String actor, UUID productId, UUID imageId, ImageStorage storage) {
+        if (imageId == null || storage == null) throw failure(INVALID_INPUT, "Image and storage are required");
+        database(() -> {
+            ownedProduct(actor, productId, true);
+            var row = imageRow(productId, imageId);
+            if (!"CANCELLED".equals(row.getState())) throw failure(OPERATION_CONFLICT, "Only cancelled images can be cleaned");
+            storage.deleteReserved(row.getId(), row.getContentSha256());
+            return null;
+        });
+    }
+
+    private ProductImageMetadataEntity imageRow(UUID productId, UUID imageId) {
+        var row = images.findById(imageId).filter(image -> productId.equals(image.getProductId()))
+                .orElseThrow(() -> failure(NOT_FOUND, "Image reservation was not found"));
+        entityManager.refresh(row);
+        return row;
+    }
+
+    private static byte[] verifiedBytes(ProductImageMetadataEntity row, ImageStorage storage) {
+        if (!row.getId().toString().equals(row.getStorageKey())) throw failure(UNAVAILABLE, "Image storage binding is unavailable");
+        byte[] bytes = storage.read(row.getStorageKey());
+        if (bytes == null || bytes.length != row.getSizeBytes() || !digest(bytes).equals(row.getContentSha256())) {
+            throw failure(UNAVAILABLE, "Stored image does not match its reservation");
+        }
+        return bytes;
     }
 
     private ProductEntity ownedProduct(String actor, UUID productId, boolean lock) {

@@ -10,7 +10,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 import java.util.UUID;
 
-/** Durable reservation, not proof that ImageStorage has accepted or published an image. */
+/** Durable image reservation and private storage binding. */
 @Entity
 @Table(name = "product_image_metadata")
 public class ProductImageMetadataEntity {
@@ -41,6 +41,8 @@ public class ProductImageMetadataEntity {
     private Instant createdAt;
     @Column(name = "cancelled_at")
     private Instant cancelledAt;
+    @Column(name = "ready_at")
+    private Instant readyAt;
     @Version
     @Column(nullable = false)
     private Long version;
@@ -66,6 +68,15 @@ public class ProductImageMetadataEntity {
         return image;
     }
 
+    public void ready(String key, Instant at) {
+        if (!"PENDING_STORAGE".equals(state) || !id.toString().equals(key)) {
+            throw new IllegalStateException("Image must bind its own pending reservation");
+        }
+        storageKey = key;
+        readyAt = Objects.requireNonNull(at).truncatedTo(ChronoUnit.MICROS);
+        state = "READY";
+    }
+
     public void cancel(Instant at) {
         if ("CANCELLED".equals(state)) return;
         cancelledAt = Objects.requireNonNull(at).truncatedTo(ChronoUnit.MICROS);
@@ -86,5 +97,6 @@ public class ProductImageMetadataEntity {
     public String getStorageKey() { return storageKey; }
     public Instant getCreatedAt() { return createdAt; }
     public Instant getCancelledAt() { return cancelledAt; }
+    public Instant getReadyAt() { return readyAt; }
     public Long getVersion() { return version; }
 }

@@ -376,7 +376,7 @@ class ProductImageMetadataServiceIntegrationTest {
         assertEquals(3, productVersion(PRODUCT_A));
     }
 
-    @Test void publicRecordCannotExposeStorageKeysOrOfferAStorageBindingCapability() {
+    @Test void publicRecordCannotExposePrivateKeysAndStorageCompletionRequiresValidatedBytes() throws Exception {
         Set<String> fields = Arrays.stream(ProductImageMetadataService.Reservation.class.getRecordComponents())
                 .map(java.lang.reflect.RecordComponent::getName).collect(java.util.stream.Collectors.toSet());
         assertTrue(fields.containsAll(Set.of("id", "productId", "state", "version", "productVersion")));
@@ -385,7 +385,9 @@ class ProductImageMetadataServiceIntegrationTest {
         assertFalse(fields.contains("ownerReference"));
         assertFalse(Arrays.stream(ProductImageMetadataService.class.getDeclaredMethods())
                 .filter(method -> java.lang.reflect.Modifier.isPublic(method.getModifiers()))
-                .anyMatch(method -> Set.of("upload", "completeStorage", "attachStorageKey").contains(method.getName())));
+                .anyMatch(method -> Set.of("upload", "attachStorageKey").contains(method.getName())));
+        assertNotNull(ProductImageMetadataService.class.getMethod("completeStorage", String.class, UUID.class,
+                long.class, UUID.class, long.class, ProductImageValidator.ValidatedImage.class, ImageStorage.class));
     }
 
     @Test void invalidCommandsCannotCreateMetadataOrAdvanceProductVersion() throws Exception {

@@ -113,3 +113,28 @@ headers and public URLs. A key does not grant ownership. PR72 PNG exact-scanline
 at the original storage baseline. It is now inherited from main via commit
 `61f39b42d63a59c76f5323581bf8fe98fa26faa2`; storage consumes the current validator without a separate
 copy of its patch. Preserving validated bytes does not certify antivirus safety or live upload P0 completion.
+
+## Internal Product image lifecycle
+
+`ProductImageLifecycleService` is unregistered. It uses the Spring-managed metadata service and rejects
+ambient transactions: a REQUIRED reservation commits before a separate REQUIRED file/finalization stage.
+Local file IO is bounded to 2 MiB under the Product lock; no network/service call is added under that lock.
+V4 upgrades V3 without editing V1–V3. READY binds the server image UUID, timestamp and storage key.
+READY and PENDING_STORAGE together occupy at most five slots and cannot duplicate live content.
+Product/image versions, current policy and SQL Store scope guard changes; SKU/price/currency are untouched.
+
+`storeReserved` publishes a complete digest-bound directory at the persisted UUID before writing content.
+Exact retry reuses that file after failed DB finalization; interrupted bound `.pending` writes can recover.
+Cancellation commits before cleanup. Cleanup verifies CANCELLED metadata, binding and actual bytes;
+it never scans or deletes unknown objects. A zero-length terminal marker makes interrupted cleanup retryable.
+Tiny filesystem binding/cancellation tombstones and CANCELLED DB rows remain; their retention and restrictive
+Product FK deletion policy need separate approval. No recursive deletion or unknown-orphan sweeper is added.
+
+Owner reads require READY and matching file size/digest. Missing/corrupt files fail closed; an identical
+retry can repair missing content while Product remains mutable. Unknown/corrupt bindings need operator review.
+A stopped process may leave a private staging directory; it does not strand retry at the persisted UUID.
+Private root/ancestor ACLs remain mandatory; hostile same-account races/physical power loss are not guaranteed.
+
+No client storage key/path is accepted by the lifecycle. No public URL, controller, automatic storage/lifecycle
+bean, real JWT/current-principal adapter, runtime bootstrap or live UI/E2E is provided. The deny-all chain
+is unchanged. Production storage/retention/migration rollout and delivery headers require independent acceptance.
