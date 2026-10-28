@@ -628,6 +628,8 @@ class StorePersistenceIntegrationTest {
                 .noneMatch(pattern -> new org.springframework.web.util.pattern.PathPatternParser().parse(pattern)
                         .matches(org.springframework.http.server.PathContainer.parsePath(path))),
                 "Business and legacy internal handlers must remain unregistered");
+        assertTrue(response.getContentAsString().contains("SELLER_ROUTE_AUTH_NOT_CONFIGURED"));
+        assertFalse(response.getContentAsString().contains(OWNER.reference()));
         assertEquals(0, stores.count());
     }
 
