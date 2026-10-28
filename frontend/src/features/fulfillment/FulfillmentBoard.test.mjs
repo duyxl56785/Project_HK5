@@ -32,3 +32,17 @@ test('keeps stale ready data hidden in unauthorized and error states', () => {
   assert.match(html, /Thử lại/);
   assert.doesNotMatch(html, /22222222-2222-4222-8222-222222222222/);
 });
+
+test('disables every command while the host is processing that SellerOrder', () => {
+  const html = render({
+    status: 'ready', storeId,
+    pendingOrderId: order.id,
+    orders: [{ ...order, actions: [
+      { id: 'DISPATCH', label: 'Xác nhận bàn giao' },
+      { id: 'RELEASE', label: 'Trả tồn kho', tone: 'secondary' },
+    ] }],
+    onAction() {},
+  });
+  assert.equal((html.match(/disabled=""/g) ?? []).length, 2);
+  assert.equal((html.match(/Đang gửi yêu cầu…/g) ?? []).length, 2);
+});
