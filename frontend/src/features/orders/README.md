@@ -1,7 +1,7 @@
 # Customer Order History client/UI — TV3
 
 Working feature implementation for backend PR107, not a mock preview. Independent
-of Cart/COD frontend PR86 and Catalog mapper PR106. No shared root, router, client,
+of Cart/COD frontend PR86 (now merged on main) and Catalog mapper PR106. No shared root, router, client,
 Auth, Gateway, dependency manifest or runtime flag changes.
 
 ## Host boundary for TV1
@@ -22,17 +22,47 @@ Import `OrderHistory` from this feature's `index.ts`. Host props:
 
 TV1 must supply the real Auth session/client and choose the Customer route in
 `src/app`. This patch intentionally has no global route or fixture entry page.
-Main currently has no such shared client/session, and Gateway application.yml
-has no Order routes. Auth README/source has persistence but no HTTP login/token
-issuer. No injected Gateway route names or required Order JWT verifier bindings
-were present during this execution (names/presence checked, values never printed).
-Those are observed local/source conditions, not a claim about external deployments.
+Synchronized main `91e1a6c2cc2e2f08dfb905386ba21e4d34668bf6` has no such shared
+client/session: App still renders placeholders, shared contains domains.ts only,
+Gateway application.yml has no business routes and Auth main has persistence only.
+Do not infer that TV1 has written no implementation: its separate candidates below
+contain substantial code, but are not merged/mounted or approved for Order routing.
+Earlier variable-presence observations were local only, not deployment evidence.
+
+### TV1 candidates inspected on 28/10/2026
+
+| Candidate | Delivered source | Specific remaining Order History boundary |
+|---|---|---|
+| PR101 `e45cede29435bbce553cb244cb956493cb98c26b` | Password/JWT/bootstrap/current-account configuration, exact ACTIVE-only operational guard. | Not on main; not an Order Gateway/session binding. Do not reopen its already-fixed ACTIVE policy decision. |
+| PR102 `36ad517174ef3911bf794ef4ac568647cd9eb4eb` | Gated Auth register/login/refresh/logout/me, real Gateway/Auth/PG acceptance source. | Gateway allowlist/RouteLocator/CORS cover only four POST Auth routes and GET `/api/auth/me`; even the candidate does not route `/api/orders`. Flags stay OFF. TV1 must add/review explicit Order GET forwarding/current-principal and downstream behavior. |
+| PR105 `09c26c784d82dfc275e4ae8f0ce0b2a458ec4490` | Prepared createApiClient, session subscription, SharedRouter, role guards; isolated Phase-C source approval exists. | Not on main or mounted in App. SharedRouter Customer route is a Shell; useClient is private. Source approval explicitly excludes mounting/runtime integration. TV1 owns the route/provider seam and session lifecycle. |
+
+There is no approved website mount contract to apply here. Keep this feature
+independent. Once TV1 approves the concrete host change, it must:
+
+1. Render this feature under the verified CUSTOMER guard with the actual client
+   supplied through an agreed public prop/provider seam, not a private-hook import.
+2. Derive `sessionScope` only for authenticated `/me` Customer sessions, for example
+   from the validated account userId and sessionKey; all other states pass null.
+   Change it on expiry/logout/account switch; never derive it from stored role text.
+3. Adapt `client.request` errors: PR105 throws ApiError on non-2xx. The host wrapper
+   must map trusted 401/403 to OrderHistoryError('unauthorized'), detail404 to
+   'not-found', other HTTP failures to 'unavailable', preserving AbortSignal and
+   not forwarding private error messages. Do not simply cast request as transport.
+4. Reconcile request cache policy: PR105 RequestOptions currently excludes `cache`
+   and its resource send builds a new init without it. TV1 must ensure authenticated
+   Order reads are no-store end-to-end, in addition to existing same-origin,
+   credentials-omit, header restrictions and redirect-error behavior.
+5. Keep refresh/single-flight/replay entirely within the reviewed shared client;
+   do not add another refresh implementation or retry Checkout writes here.
 
 GET forwarding must preserve the path/query and original Bearer to Order, with
 reviewed origin/CORS/session behavior. Do not expose internal routes or widen
 authorization just to render this feature. Backend107 at
 `b155f799eaea8e49837d5d2970a78b369d7c0924` stays unchanged; its Backend readiness
-run40450777345/job122012719419 succeeded at the observed PR head.
+run40450777345/job122012719419 succeeded for the PR. TV1's published readback identifies
+the runner checkout as synthetic merge `b4e86ab53b46cc1cc3d6e3a72702f48874d1c857`,
+not a standalone b155f79 checkout; local acceptance below uses standalone b155f79.
 
 ## Behavior
 
