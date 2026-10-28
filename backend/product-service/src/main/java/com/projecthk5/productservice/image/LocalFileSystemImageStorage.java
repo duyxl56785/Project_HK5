@@ -120,12 +120,7 @@ public final class LocalFileSystemImageStorage implements ImageStorage {
         checkRoot();
         Path folder = root.resolve(key);
         try {
-            try {
-                Files.createDirectory(folder, ownerOnly("rwx------"));
-                writeNew(folder.resolve(".binding"), digest.getBytes(java.nio.charset.StandardCharsets.US_ASCII));
-            } catch (FileAlreadyExistsException existing) {
-                // An existing directory is usable only with the same durable binding.
-            }
+            createBoundDirectory(folder, digest);
             DirectoryIdentity identity = directory(folder);
             checkOwnedDirectory(folder, identity);
             Path binding = folder.resolve(".binding");
@@ -184,12 +179,10 @@ public final class LocalFileSystemImageStorage implements ImageStorage {
                 if (Files.exists(temporary, NOFOLLOW_LINKS)) regular(temporary);
                 Path cancelled = folder.resolve(".cancelled");
                 if (!Files.exists(cancelled, NOFOLLOW_LINKS)) {
-                    writeNew(cancelled, contentSha256.getBytes(java.nio.charset.StandardCharsets.US_ASCII));
+                    Files.createFile(cancelled, ownerOnly("rw-------"));
                 } else {
                     regular(cancelled);
-                    try (var marker = FileChannel.open(cancelled, READ, NOFOLLOW_LINKS)) {
-                        requireBinding(marker, contentSha256);
-                    }
+                    if (Files.size(cancelled) != 0) throw failure(KEY_CONFLICT);
                 }
                 checkOwnedDirectory(folder, identity);
                 Files.deleteIfExists(content);
@@ -199,6 +192,27 @@ public final class LocalFileSystemImageStorage implements ImageStorage {
         } catch (NoSuchFileException unbound) { throw failure(KEY_CONFLICT); }
         catch (IOException | SecurityException | java.nio.channels.OverlappingFileLockException unavailable) {
             throw failure(IO_FAILURE);
+        }
+    }
+
+    private void createBoundDirectory(Path folder, String digest) throws IOException {
+        if (Files.exists(folder, NOFOLLOW_LINKS)) return;
+        Path staging = root.resolve(".binding-" + UUID.randomUUID());
+        DirectoryIdentity reserved = null;
+        try {
+            Files.createDirectory(staging, ownerOnly("rwx------"));
+            reserved = directory(staging);
+            writeNew(staging.resolve(".binding"), digest.getBytes(java.nio.charset.StandardCharsets.US_ASCII));
+            checkOwnedDirectory(staging, reserved);
+            // Publish a complete namespace; interruption cannot strand the persisted image UUID.
+            try { Files.move(staging, folder); }
+            catch (FileAlreadyExistsException concurrentReservation) {
+                if (!Files.exists(folder, NOFOLLOW_LINKS)) throw concurrentReservation;
+            }
+        } finally {
+            if (reserved != null && Files.exists(staging, NOFOLLOW_LINKS)) {
+                cleanup(staging, staging.resolve(".binding"), reserved);
+            }
         }
     }
 
