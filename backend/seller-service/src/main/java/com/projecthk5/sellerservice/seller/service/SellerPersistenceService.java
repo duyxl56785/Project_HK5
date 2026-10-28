@@ -52,7 +52,7 @@ public class SellerPersistenceService {
     public PersistedSeller register(SellerIdentity applicant) {
         SellerProfile profile = SellerProfile.registration(lifecycle.register(applicant));
         try {
-            return result(repository.saveAndFlush(profile));
+            return persistWithStatusSnapshot(profile);
         } catch (DataIntegrityViolationException exception) {
             for (Throwable cause = exception; cause != null; cause = cause.getCause()) {
                 if (cause instanceof ConstraintViolationException violation
@@ -127,7 +127,7 @@ public class SellerPersistenceService {
         }
         profile.applyLifecycleResult(transition.apply(application(profile)));
         try {
-            return result(repository.saveAndFlush(profile));
+            return persistWithStatusSnapshot(profile);
         } catch (OptimisticLockingFailureException exception) {
             throw versionConflict(exception);
         }
@@ -137,6 +137,14 @@ public class SellerPersistenceService {
         if (input == null) {
             throw new SellerRuleException(SellerRuleException.Code.INVALID_INPUT, "Seller input is required");
         }
+    }
+
+    private PersistedSeller persistWithStatusSnapshot(SellerProfile profile) {
+        SellerProfile stored = repository.saveAndFlush(profile);
+        if (repository.appendStatusSnapshot(UUID.randomUUID(), stored.getId(), stored.getVersion()) != 1) {
+            throw new IllegalStateException("Seller status snapshot could not be persisted");
+        }
+        return result(stored);
     }
 
     private void requireActor(SellerIdentity actor, boolean moderation) {

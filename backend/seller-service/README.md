@@ -347,3 +347,30 @@ missing/unavailable fixture authority. This is actual PostgreSQL with fixture po
 Separate Product build309PASS includes Category14PG regression. No sum across these separate invocations.
 Exact commands/counts/raw hashes and remaining NOT_RUN work are in the
 [new progress checkpoint](../../docs/TV2_WEEK1_PROGRESS.md#strict-json-and-private-response-preparation--2026-10-22).
+
+## Local Seller status outbox — preparation only
+
+V3 adds `seller_status_outbox`: immutable event identity by convention, Seller UUID,
+exact persisted owner reference, current Seller status, per-Seller source version and
+database recording timestamp. A unique `(seller_id, source_version)` prevents duplicate
+snapshots. Existing Seller rows are backfilled without changing their state or version.
+V1/V2 are unchanged; no cross-service FK or Account/role table is added. Snapshots have
+no Seller FK so future deletion cannot silently cascade away delivery evidence.
+
+`SellerPersistenceService` flushes each registration/lifecycle change, then appends a
+snapshot with a parameterized database `INSERT SELECT` in the same REQUIRED transaction.
+An append failure rolls back the Seller change. A separate connection cannot observe the
+snapshot before commit. Private moderation reasons are not copied into snapshots.
+
+This is **not an Auth wire contract or working Role Sync**. No sender, polling worker,
+HTTP endpoint, ACK/retry state, credential, role grant or reconciliation is activated.
+The persisted timestamp is `recorded_at`, not an agreed shared `occurredAt` field.
+TV1/TV2 still need to co-sign exact wire/ACK/error/version/credential semantics and test
+duplicate/stale/reordered/revocation and crash-retry delivery. A later sender must reuse
+the committed snapshot/event identity, never reconstruct a new event on each retry.
+
+Rollout requires coordinated/quiesced Seller writers for migration plus application
+upgrade, or explicit reconciliation before enabling any future delivery: old application
+instances/direct SQL writes do not execute the new service append. Retention, DB writer
+permissions and recovery/backup remain release decisions; do not delete snapshots just
+because there is currently no dispatcher. No live JWT, API or E2E readiness is implied.
