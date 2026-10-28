@@ -45,4 +45,5 @@ test('disables every command while the host is processing that SellerOrder', () 
   });
   assert.equal((html.match(/disabled=""/g) ?? []).length, 2);
   assert.equal((html.match(/Đang gửi yêu cầu…/g) ?? []).length, 2);
+  assert.match(html, /aria-busy="true"/);
 });

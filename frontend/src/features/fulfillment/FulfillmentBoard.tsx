@@ -40,7 +40,7 @@ export function FulfillmentBoard({ state }: FulfillmentBoardProps) {
           const pending = state.pendingOrderId === order.id;
           const canSubmit = typeof state.onAction === 'function';
           const actions = order.actions ?? [];
-          return <li key={order.id} className="tv4-fulfillment__order">
+          return <li key={order.id} className="tv4-fulfillment__order" aria-busy={pending || undefined}>
             <div className="tv4-fulfillment__order-head">
               <div><span className="tv4-fulfillment__eyebrow">SellerOrder</span><code>{order.id}</code></div>
               <span className={`tv4-fulfillment__status tv4-fulfillment__status--${order.status.toLowerCase()}`}>{statusLabels[order.status]}</span>
