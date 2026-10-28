@@ -28,7 +28,7 @@ public final class SellerStoreReadHandler {
         return SellerStoreResponses.storeOwner(stores.findOwn(actor));
     }
 
-    private static SellerIdentity requireIdentity(SellerIdentity actor) {
+    static SellerIdentity requireIdentity(SellerIdentity actor) {
         if (actor == null || actor.reference() == null || actor.reference().isBlank()
                 || actor.reference().codePointCount(0, actor.reference().length()) > 128) {
             // Invalid trusted output is unavailable authority, never anonymous/empty success.
