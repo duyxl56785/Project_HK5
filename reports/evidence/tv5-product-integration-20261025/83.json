@@ -1,0 +1,3685 @@
+{
+  "kind": "DERIVED SUMMARY, original logs/XML private and byte-preserved",
+  "metadata": {
+    "source": "c831edb4d7c610b76e434222d51b115cfb863d81",
+    "PR": 83,
+    "command": [
+      "D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-product-integration-20261025\\source83\\backend\\gradlew.bat",
+      "-p",
+      "backend",
+      ":product-service:build",
+      "--rerun-tasks",
+      "--no-daemon",
+      "--console=plain"
+    ],
+    "startedUtc": "2026-10-25T13:46:52.377908+00:00",
+    "executor": "TV5 independent exact-head execution",
+    "environment": {
+      "Java": "21.0.7",
+      "Gradle": "8.10",
+      "Docker": "29.8.1",
+      "PostgreSQL": "16 Testcontainers where tagged",
+      "JAVA_TOOL_OPTIONS": "-Duser.timezone=UTC -Dapi.version=1.44"
+    },
+    "exitCode": 0,
+    "completedUtc": "2026-10-25T13:47:47.732739+00:00"
+  },
+  "counts": {
+    "product-service:test": {
+      "PASS": 437
+    },
+    "product-service:integrationTest": {
+      "PASS": 70
+    }
+  },
+  "cases": [
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogBatchValidatorTest",
+      "name": "oneStoreMaySupplyMultipleProductsForItsSeller()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogBatchValidatorTest",
+      "name": "oneChangedPriceWithholdsEverySnapshot()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogBatchValidatorTest",
+      "name": "missingProductIsExplicitAndPartialResultIsNotAllValid()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogBatchValidatorTest",
+      "name": "[1] invalid=seller",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogBatchValidatorTest",
+      "name": "[2] invalid=store",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogBatchValidatorTest",
+      "name": "[3] invalid=category",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogBatchValidatorTest",
+      "name": "[1] rejection=ownership",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogBatchValidatorTest",
+      "name": "[2] rejection=currency",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogBatchValidatorTest",
+      "name": "[3] rejection=private",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogBatchValidatorTest",
+      "name": "[4] rejection=absent",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogBatchValidatorTest",
+      "name": "invalidBatchesAreRejectedBeforeLoadingData()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogBatchValidatorTest",
+      "name": "numericComparisonDoesNotRoundOrTreatDifferentScaleAsDifferentPrice()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogBatchValidatorTest",
+      "name": "sourceTimeoutOrMissingResponseFailsWholeBatchClosed()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogBatchValidatorTest",
+      "name": "[1] conflict=seller",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogBatchValidatorTest",
+      "name": "[2] conflict=owner",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogBatchValidatorTest",
+      "name": "[3] conflict=approved",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogBatchValidatorTest",
+      "name": "[4] conflict=open",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogBatchValidatorTest",
+      "name": "[5] conflict=house",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogBatchValidatorTest",
+      "name": "[1] fault=found-without-facts",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogBatchValidatorTest",
+      "name": "[2] fault=absent-with-facts",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogBatchValidatorTest",
+      "name": "[3] fault=wrong-product-id",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogBatchValidatorTest",
+      "name": "[4] fault=null-status",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogBatchValidatorTest",
+      "name": "[5] fault=null-id",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogBatchValidatorTest",
+      "name": "[6] fault=unrequested-absence",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogBatchValidatorTest",
+      "name": "[7] fault=duplicate-absence",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogBatchValidatorTest",
+      "name": "[8] fault=omitted-after-absence",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogBatchValidatorTest",
+      "name": "[9] fault=null-product",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogBatchValidatorTest",
+      "name": "[10] fault=null-store",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogBatchValidatorTest",
+      "name": "[11] fault=blank-currency",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogBatchValidatorTest",
+      "name": "[1] hasStaleFacts=false",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogBatchValidatorTest",
+      "name": "[2] hasStaleFacts=true",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogBatchValidatorTest",
+      "name": "[1] fault=extra",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogBatchValidatorTest",
+      "name": "[2] fault=duplicate-product",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogBatchValidatorTest",
+      "name": "[3] fault=duplicate-sku",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogBatchValidatorTest",
+      "name": "[4] fault=store",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogBatchValidatorTest",
+      "name": "[5] fault=currency",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogBatchValidatorTest",
+      "name": "[6] fault=null",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogBatchValidatorTest",
+      "name": "conflictingProductAndResolvedCurrencyFailsTheWholeBatchClosed()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogBatchValidatorTest",
+      "name": "sourceTimeoutCannotFallbackToCallerExpectations()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogBatchValidatorTest",
+      "name": "[1] mismatch=store",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogBatchValidatorTest",
+      "name": "[2] mismatch=seller",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogBatchValidatorTest",
+      "name": "[3] mismatch=price",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogBatchValidatorTest",
+      "name": "[4] mismatch=currency",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogBatchValidatorTest",
+      "name": "resolvesTwoStoresOnceAndPreservesRequestOrderAndAuthoritativeSku()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogBatchValidatorTest",
+      "name": "[1] reverseSourceOrder=false",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogBatchValidatorTest",
+      "name": "[2] reverseSourceOrder=true",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogBatchValidatorTest",
+      "name": "verifiedAbsenceAloneReturnsNotFoundWithoutUsingExpectedFacts()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogBatchValidatorTest",
+      "name": "[1] status=DRAFT",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogBatchValidatorTest",
+      "name": "[2] status=PENDING_REVIEW",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogBatchValidatorTest",
+      "name": "[3] status=REJECTED",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogBatchValidatorTest",
+      "name": "[4] status=SUSPENDED",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogBatchValidatorTest",
+      "name": "[5] status=INACTIVE",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogBatchValidatorTest",
+      "name": "[1] response=empty",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogBatchValidatorTest",
+      "name": "[2] response=partial",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.category.CategoryControllerTest",
+      "name": "listsAndGetsFlatCategoryDtos()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.category.CategoryControllerTest",
+      "name": "createsWithLocationAndParentId()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.category.CategoryControllerTest",
+      "name": "reportsMissingCategory()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.category.CategoryControllerTest",
+      "name": "reportsMissingParentAndCycle()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.category.CategoryControllerTest",
+      "name": "[1] body={}",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.category.CategoryControllerTest",
+      "name": "[2] body={\"name\":null}",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.category.CategoryControllerTest",
+      "name": "[3] body={\"name\":\"\"}",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.category.CategoryControllerTest",
+      "name": "[4] body={\"name\":\"   \"}",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.category.CategoryControllerTest",
+      "name": "rejectsMalformedUuidAndJson()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.category.CategoryControllerTest",
+      "name": "rejectsLongNameOnUpdate()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.category.CategoryControllerTest",
+      "name": "hidesUnexpectedFailureDetails()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.category.CategoryControllerTest",
+      "name": "updatesAndDeletes()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.category.CategoryControllerTest",
+      "name": "reportsChildrenConflictAndHidesDatabaseDetails()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.category.CategorySecurityTest",
+      "name": "[1] method=POST",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.category.CategorySecurityTest",
+      "name": "[2] method=PUT",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.category.CategorySecurityTest",
+      "name": "[3] method=DELETE",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.category.CategorySecurityTest",
+      "name": "[4] method=PATCH",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.category.CategorySecurityTest",
+      "name": "permitsAnonymousReads()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.category.CategorySecurityTest",
+      "name": "blocksEvenAnAuthenticatedAdminUntilContractIsConfirmed()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.category.CategorySecurityTest",
+      "name": "doesNotTrustAnUnverifiedBearerToken()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.category.CategoryServiceTest",
+      "name": "rejectsDeletingParent()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.category.CategoryServiceTest",
+      "name": "reportsMissingCategoryAndParent()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.category.CategoryServiceTest",
+      "name": "createsChildOnlyAfterLockingAndCheckingAncestors()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.category.CategoryServiceTest",
+      "name": "rejectsDeepCycle()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.category.CategoryServiceTest",
+      "name": "movesCategoryToAnotherValidParent()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.category.CategoryServiceTest",
+      "name": "rejectsAlreadyCorruptAncestorChainDuringCreate()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.category.CategoryServiceTest",
+      "name": "[1] name=null",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.category.CategoryServiceTest",
+      "name": "[2] name=",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.category.CategoryServiceTest",
+      "name": "[3] name= ",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.category.CategoryServiceTest",
+      "name": "[4] name=\t\n",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.category.CategoryServiceTest",
+      "name": "[5] name= ",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.category.CategoryServiceTest",
+      "name": "rejectsTwoNodeCycle()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.category.CategoryServiceTest",
+      "name": "rejectsLongNameAndNullRequest()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.category.CategoryServiceTest",
+      "name": "deletesLeafAfterAcquiringLock()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.category.CategoryServiceTest",
+      "name": "listsFlatDtosAndGetsChild()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.category.CategoryServiceTest",
+      "name": "createsRootAndTrimsName()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.category.CategoryServiceTest",
+      "name": "rejectsSelfParentWithoutChangingEntity()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.category.CategoryServiceTest",
+      "name": "updatesNameAndMovesChildToRoot()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[1] name=sample.jpg, format=JPEG",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[2] name=sample.png, format=PNG",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[3] name=sample.webp, format=WEBP",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[4] name=alpha.webp, format=WEBP",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[1] name=photo.svg",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[2] name=photo.gif",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[3] name=photo.png.exe",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[4] name=photo",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[5] name=",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[1] count=0",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[2] count=1",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[3] count=2",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[4] count=3",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[5] count=4",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[6] count=5",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "zeroBytesAreRejected()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "nullOrNulFilenameIsRejectedWithoutUsingItAsAPath()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "decodesActualLosslessWebpFixture()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[1] extraBytes=1",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[2] extraBytes=49",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "invalidBatchDoesNotReturnAUsableSubsetAndResultIsImmutable()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "webpWithValidRiffHeaderAndChunkSizesButGarbagePixelsIsRejected()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "jpegTruncatedInsideScanIsRejectedEvenWithRestoredEndMarker()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "sixthImageIsRejectedBeforeAnyStreamIsRead()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "endlessStreamReadsAtMostLimitPlusOneByte()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "compressedDataCannotExpandBeyondDeclaredPixelBudget()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[1] colorType=4, rawByteCount=18",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[2] colorType=6, rawByteCount=34",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "impossibleChunkLengthsCannotAllocateFromUntrustedMetadata()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "pngCrcMismatchAndMissingEndChunkAreRejected()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "animationIsRejectedRatherThanValidatingOnlyItsFirstFrame()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "oversizedDimensionsAndPixelBombAreRejectedBeforePixelDecode()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "realJpegDeclaredAsPngAndRealPngRenamedAsJpegAreRejected()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[1] name=sample.jpg, format=JPEG",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[2] name=sample.png, format=PNG",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[3] name=sample.webp, format=WEBP",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[4] name=alpha.webp, format=WEBP",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[1] value=hello world",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[2] value=<svg xmlns=\"http://www.w3.org/2000/svg\"></svg>",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[3] value=<script>alert(1)</script>",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[1] imageType=12, width=1, height=1, interlaced=true",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[2] imageType=12, width=9, height=3, interlaced=true",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[3] imageType=10, width=3, height=5, interlaced=false",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[4] imageType=11, width=2, height=2, interlaced=true",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[5] imageType=1, width=16, height=12, interlaced=false",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[6] imageType=2, width=9, height=9, interlaced=true",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[7] imageType=13, width=3, height=9, interlaced=false",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "webpRiffLengthMismatchAndTrailingDataAreRejected()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "pngBadZlibChecksumAndTrailingCompressedDataAreRejected()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "nullCollectionAndNullElementAreRejected()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "ioErrorsUseSafeInternalErrorAndCallerKeepsStreamOwnership()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "existingTrustedCountIsIncludedAndCannotOverflow()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "jpegAliasAndCaseInsensitiveDeclarationsAreAccepted()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[1] delta=-1",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[2] delta=0",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[3] delta=1",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "pngCorruptedCompressedPixelsAreRejectedEvenWithCorrectChunkCrc()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "pngMissingZlibChecksumIsRejectedEvenWhenOuterChunksAreWellFormed()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "resultOwnsItsBytesInsteadOfReopeningOrExposingTheInput()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[1] type=null",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[2] type=",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[3] type=image/gif",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[4] type=image/svg+xml",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[5] type=application/octet-stream",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[6] type=image/jpg",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[7] type=image/png; charset=utf-8",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "nullInputAndStreamAreRejected()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.persistence.ProductEntityTest",
+      "name": "applyChangesOnlyMutableFieldsAndKeepsOriginalBigDecimal()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.persistence.ProductEntityTest",
+      "name": "[1] identity=id",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.persistence.ProductEntityTest",
+      "name": "[2] identity=store",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.persistence.ProductEntityTest",
+      "name": "[3] identity=sku",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.persistence.ProductEntityTest",
+      "name": "newEntityRoundTripsExactPriceCurrencyAndUnicodeWithoutInventingVersion()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceAdapterTest",
+      "name": "[1] sku=Sku-A",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceAdapterTest",
+      "name": "[2] sku=sku-a",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceAdapterTest",
+      "name": "[3] sku=SKU-A",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceAdapterTest",
+      "name": "[4] sku=é-SKU",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceAdapterTest",
+      "name": "[5] sku=é-SKU",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceAdapterTest",
+      "name": "[6] sku=A B",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceAdapterTest",
+      "name": "[7] sku=A B",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceAdapterTest",
+      "name": "findByIdReturnsAuthoritativeListingAndExistingVersion()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceAdapterTest",
+      "name": "[1] identity=store",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceAdapterTest",
+      "name": "[2] identity=sku",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceAdapterTest",
+      "name": "genericPersistenceFailureDuringRefreshReturnsUnavailableWithoutMutationOrFlush()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceAdapterTest",
+      "name": "queryTimeoutIsUnavailableInsteadOfNotFound()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceAdapterTest",
+      "name": "[1] state=23505, constraint=products_inventory_sku_uk, expectedCode=DUPLICATE_SKU",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceAdapterTest",
+      "name": "[2] state=23505, constraint=products_pkey, expectedCode=CONSTRAINT_VIOLATION",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceAdapterTest",
+      "name": "[3] state=23503, constraint=products_category_fk, expectedCode=CATEGORY_NOT_FOUND",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceAdapterTest",
+      "name": "[4] state=23503, constraint=unrecognized_fk, expectedCode=CONSTRAINT_VIOLATION",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceAdapterTest",
+      "name": "[5] state=23514, constraint=products_sku_immutable, expectedCode=IMMUTABLE_IDENTITY",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceAdapterTest",
+      "name": "[6] state=23514, constraint=products_price_range, expectedCode=CONSTRAINT_VIOLATION",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceAdapterTest",
+      "name": "[7] state=23502, constraint=null, expectedCode=CONSTRAINT_VIOLATION",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceAdapterTest",
+      "name": "absentIdAndSkuRemainEmptyWithoutWriting()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceAdapterTest",
+      "name": "[1] operation=id",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceAdapterTest",
+      "name": "[2] operation=sku",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceAdapterTest",
+      "name": "[3] operation=create",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceAdapterTest",
+      "name": "[4] operation=update-load",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceAdapterTest",
+      "name": "[5] operation=update-flush",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceAdapterTest",
+      "name": "refreshOfDeletedEntityReturnsNotFoundWithoutMutationOrFlush()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceAdapterTest",
+      "name": "genericIntegrityFailureRemainsConstraintViolation()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceAdapterTest",
+      "name": "unknownUpdateIdIsNotAnUpsert()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceAdapterTest",
+      "name": "[1] state=23505, constraint=products_inventory_sku_uk, expectedCode=DUPLICATE_SKU",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceAdapterTest",
+      "name": "[2] state=23505, constraint=products_pkey, expectedCode=CONSTRAINT_VIOLATION",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceAdapterTest",
+      "name": "[3] state=23503, constraint=products_category_fk, expectedCode=CATEGORY_NOT_FOUND",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceAdapterTest",
+      "name": "[4] state=23503, constraint=unrecognized_fk, expectedCode=CONSTRAINT_VIOLATION",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceAdapterTest",
+      "name": "[5] state=23514, constraint=products_sku_immutable, expectedCode=IMMUTABLE_IDENTITY",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceAdapterTest",
+      "name": "[6] state=23514, constraint=products_price_range, expectedCode=CONSTRAINT_VIOLATION",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceAdapterTest",
+      "name": "[7] state=23502, constraint=null, expectedCode=CONSTRAINT_VIOLATION",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceAdapterTest",
+      "name": "createFlushesNewNullVersionEntityAndReturnsRepositoryResult()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceAdapterTest",
+      "name": "staleExpectedVersionIsRejectedBeforeApplyingEvenAnImmutableIdentityChange()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceAdapterTest",
+      "name": "concurrentOptimisticFlushFailureBecomesStaleVersion()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceAdapterTest",
+      "name": "successfulUpdateAppliesAndFlushesTheLoadedManagedEntity()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceAdapterTest",
+      "name": "optimisticFailureDuringRefreshReturnsStaleVersionWithoutMutationOrFlush()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[1] sku=null",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[2] sku=",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[3] sku= ",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[4] sku= SKU",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[5] sku=SKU ",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[6] sku=\t",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[7] sku= SKU",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[8] sku=SKU ",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[9] sku= ",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[10] sku= SKU",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[11] sku=SKU ",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[12] sku= SKU",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[13] sku=SKU ",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[14] sku= SKU",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[15] sku=SKU ",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[1] sku=Sku-A",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[2] sku=sku-a",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[3] sku=SKU-A",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[4] sku=é-SKU",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[5] sku=é-SKU",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "invalidPriceAndMetadataAreRejectedWithoutRounding()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[1] state=DRAFT, action=edit",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[2] state=DRAFT, action=submit",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[3] state=DRAFT, action=approve",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[4] state=DRAFT, action=reject",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[5] state=DRAFT, action=suspend",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[6] state=DRAFT, action=deactivate",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[7] state=PENDING_REVIEW, action=edit",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[8] state=PENDING_REVIEW, action=submit",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[9] state=PENDING_REVIEW, action=approve",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[10] state=PENDING_REVIEW, action=reject",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[11] state=PENDING_REVIEW, action=suspend",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[12] state=PENDING_REVIEW, action=deactivate",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[13] state=ACTIVE, action=edit",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[14] state=ACTIVE, action=submit",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[15] state=ACTIVE, action=approve",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[16] state=ACTIVE, action=reject",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[17] state=ACTIVE, action=suspend",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[18] state=ACTIVE, action=deactivate",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[19] state=REJECTED, action=edit",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[20] state=REJECTED, action=submit",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[21] state=REJECTED, action=approve",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[22] state=REJECTED, action=reject",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[23] state=REJECTED, action=suspend",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[24] state=REJECTED, action=deactivate",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[25] state=SUSPENDED, action=edit",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[26] state=SUSPENDED, action=submit",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[27] state=SUSPENDED, action=approve",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[28] state=SUSPENDED, action=reject",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[29] state=SUSPENDED, action=suspend",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[30] state=SUSPENDED, action=deactivate",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[31] state=INACTIVE, action=edit",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[32] state=INACTIVE, action=submit",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[33] state=INACTIVE, action=approve",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[34] state=INACTIVE, action=reject",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[35] state=INACTIVE, action=suspend",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[36] state=INACTIVE, action=deactivate",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[1] status=DRAFT, approved=false, open=false",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[2] status=DRAFT, approved=false, open=true",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[3] status=DRAFT, approved=true, open=false",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[4] status=DRAFT, approved=true, open=true",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[5] status=PENDING_REVIEW, approved=false, open=false",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[6] status=PENDING_REVIEW, approved=false, open=true",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[7] status=PENDING_REVIEW, approved=true, open=false",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[8] status=PENDING_REVIEW, approved=true, open=true",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[9] status=ACTIVE, approved=false, open=false",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[10] status=ACTIVE, approved=false, open=true",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[11] status=ACTIVE, approved=true, open=false",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[12] status=ACTIVE, approved=true, open=true",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[13] status=REJECTED, approved=false, open=false",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[14] status=REJECTED, approved=false, open=true",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[15] status=REJECTED, approved=true, open=false",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[16] status=REJECTED, approved=true, open=true",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[17] status=SUSPENDED, approved=false, open=false",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[18] status=SUSPENDED, approved=false, open=true",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[19] status=SUSPENDED, approved=true, open=false",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[20] status=SUSPENDED, approved=true, open=true",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[21] status=INACTIVE, approved=false, open=false",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[22] status=INACTIVE, approved=false, open=true",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[23] status=INACTIVE, approved=true, open=false",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[24] status=INACTIVE, approved=true, open=true",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "foreignOwnerAndWrongRoleCannotManageOrModerate()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "identityMismatchOrMissingPolicyFactsFailClosed()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "missingCategoryCannotBeCreatedSubmittedApprovedOrPublic()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "createEditAndModerateRetainsIdentitySkuAndExactPrice()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "invalidActorIsRejectedBeforePolicyOrCategory()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[1] action=approve",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[2] action=reject",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[3] action=suspend",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "closedStoreOrSuspendedSellerCannotManageProduct()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[1] currency=null",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[2] currency=",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[3] currency=USD",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[4] currency=vnd",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[5] currency= VND",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductLifecycleServiceTest",
+      "name": "[6] currency=VND ",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductListingValidationTest",
+      "name": "[1] sku=Sku-A",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductListingValidationTest",
+      "name": "[2] sku=sku-a",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductListingValidationTest",
+      "name": "[3] sku=SKU-A",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductListingValidationTest",
+      "name": "[4] sku=é-SKU",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductListingValidationTest",
+      "name": "[5] sku=é-SKU",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductListingValidationTest",
+      "name": "[6] sku=A B",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductListingValidationTest",
+      "name": "[7] sku=A B",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductListingValidationTest",
+      "name": "[8] sku=A\tB",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductListingValidationTest",
+      "name": "[9] sku=A😀B",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductListingValidationTest",
+      "name": "[1] currency=null",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductListingValidationTest",
+      "name": "[2] currency=",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductListingValidationTest",
+      "name": "[3] currency=USD",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductListingValidationTest",
+      "name": "[4] currency=vnd",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductListingValidationTest",
+      "name": "[5] currency= VND",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductListingValidationTest",
+      "name": "[6] currency=VND ",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductListingValidationTest",
+      "name": "[7] currency=VND\n",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductListingValidationTest",
+      "name": "[1] sku=A?B",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductListingValidationTest",
+      "name": "[2] sku=?SKU",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductListingValidationTest",
+      "name": "[3] sku=SKU?",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductListingValidationTest",
+      "name": "[4] sku=A?B",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductListingValidationTest",
+      "name": "[5] sku=A?B",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductListingValidationTest",
+      "name": "[6] sku=?",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductListingValidationTest",
+      "name": "[7] sku=?",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductListingValidationTest",
+      "name": "[1] value=0.01",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductListingValidationTest",
+      "name": "[2] value=1.1",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductListingValidationTest",
+      "name": "[3] value=1000000000.0001",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductListingValidationTest",
+      "name": "[4] value=1000000001",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductListingValidationTest",
+      "name": "[5] value=1E+10",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductListingValidationTest",
+      "name": "[1] value=A?B",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductListingValidationTest",
+      "name": "[2] value=A?B",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductListingValidationTest",
+      "name": "[3] value=A?B",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductListingValidationTest",
+      "name": "[4] value=?",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductListingValidationTest",
+      "name": "[5] value=?",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductListingValidationTest",
+      "name": "[1] value=A?B",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductListingValidationTest",
+      "name": "[2] value=A?B",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductListingValidationTest",
+      "name": "[3] value=A?B",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductListingValidationTest",
+      "name": "[4] value=?",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductListingValidationTest",
+      "name": "[5] value=?",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductListingValidationTest",
+      "name": "skuLengthUsesJavaUtf16UnitsIncludingValidSurrogatePairs()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductListingValidationTest",
+      "name": "validUnicodeKeepsNameUtf16AndReasonCodePointLimits()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductPriceTest",
+      "name": "[1] value=1",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductPriceTest",
+      "name": "[2] value=1.00000",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductPriceTest",
+      "name": "[3] value=10.0000",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductPriceTest",
+      "name": "[4] value=999999999",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductPriceTest",
+      "name": "[5] value=1000000000.00",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductPriceTest",
+      "name": "[6] value=1E+9",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductPriceTest",
+      "name": "[1] value=null",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductPriceTest",
+      "name": "[2] value=0",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductPriceTest",
+      "name": "[3] value=-1",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductPriceTest",
+      "name": "[4] value=0.01",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductPriceTest",
+      "name": "[5] value=1.01",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductPriceTest",
+      "name": "[6] value=1000000000.01",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductPriceTest",
+      "name": "[7] value=1000000001",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductPriceTest",
+      "name": "[8] value=1E+10",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductPriceTest",
+      "name": "[1] value=null",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductPriceTest",
+      "name": "[2] value=",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductPriceTest",
+      "name": "[3] value=0",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductPriceTest",
+      "name": "[4] value=00",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductPriceTest",
+      "name": "[5] value=01",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductPriceTest",
+      "name": "[6] value=0001",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductPriceTest",
+      "name": "[7] value=-1",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductPriceTest",
+      "name": "[8] value=+1",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductPriceTest",
+      "name": "[9] value=1.0",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductPriceTest",
+      "name": "[10] value=1.00",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductPriceTest",
+      "name": "[11] value=1E+2",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductPriceTest",
+      "name": "[12] value=1e2",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductPriceTest",
+      "name": "[13] value= 1",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductPriceTest",
+      "name": "[14] value=1 ",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductPriceTest",
+      "name": "[15] value=\t1",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductPriceTest",
+      "name": "[16] value=1\n",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductPriceTest",
+      "name": "[17] value= 1",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductPriceTest",
+      "name": "[18] value=1 ",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductPriceTest",
+      "name": "[19] value=１",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductPriceTest",
+      "name": "[20] value=١",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductPriceTest",
+      "name": "[21] value=1000000001",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductPriceTest",
+      "name": "[22] value=10000000000",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductPriceTest",
+      "name": "canonicalParserAcceptsBothLimits()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductPriceTest",
+      "name": "[1] currency=null",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductPriceTest",
+      "name": "[2] currency=",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductPriceTest",
+      "name": "[3] currency=USD",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductPriceTest",
+      "name": "[4] currency=vnd",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductPriceTest",
+      "name": "[5] currency=Vnd",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductPriceTest",
+      "name": "[6] currency= VND",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductPriceTest",
+      "name": "[7] currency=VND ",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductPriceTest",
+      "name": "[8] currency=VND\n",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductPriceTest",
+      "name": "[9] currency= VND",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.Week1CatalogFixtureTest",
+      "name": "twoStoreFixtureHasStableDistinctIdentitiesAndUsesActualDomainTransitions()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.review.ReviewRulesBoundaryTest",
+      "name": "missingPurchaseIsRejectedInsteadOfAssumingDelivery()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.review.ReviewRulesBoundaryTest",
+      "name": "rejectsMalformedRatingCollectionAndDirectInvalidRating()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.review.ReviewRulesBoundaryTest",
+      "name": "eachModerationIncludingReplayRequiresFreshAccessCheck()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.review.ReviewRulesBoundaryTest",
+      "name": "visibilityChangesPublicCountAndAverageAndUnhideRestoresThem()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.review.ReviewRulesBoundaryTest",
+      "name": "[1] identity=null",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.review.ReviewRulesBoundaryTest",
+      "name": "[2] identity=",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.review.ReviewRulesBoundaryTest",
+      "name": "[3] identity= ",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.review.ReviewRulesBoundaryTest",
+      "name": "[4] identity=\t\n",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.review.ReviewRulesBoundaryTest",
+      "name": "[5] identity= ",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.review.ReviewRulesBoundaryTest",
+      "name": "hiddenValuesAndInputOrderDoNotBiasPublicAverage()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.review.ReviewRulesBoundaryTest",
+      "name": "authorizedModerationStillRejectsMissingStoredReview()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.review.ReviewRulesBoundaryTest",
+      "name": "[1] identity=Buyer",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.review.ReviewRulesBoundaryTest",
+      "name": "[2] identity= buyer",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.review.ReviewRulesBoundaryTest",
+      "name": "[3] identity=buyer ",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.review.ReviewRulesBoundaryTest",
+      "name": "[4] identity=other",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.review.ReviewRulesTest",
+      "name": "adminCanHideUnhideAndRepeatWithoutChangingStars()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.review.ReviewRulesTest",
+      "name": "rejectsOtherBuyerAndMissingVerifiedIdentity()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.review.ReviewRulesTest",
+      "name": "[1] stars=-1",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.review.ReviewRulesTest",
+      "name": "[2] stars=0",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.review.ReviewRulesTest",
+      "name": "[3] stars=6",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.review.ReviewRulesTest",
+      "name": "[4] stars=2147483647",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.review.ReviewRulesTest",
+      "name": "[1] stars=1",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.review.ReviewRulesTest",
+      "name": "[2] stars=2",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.review.ReviewRulesTest",
+      "name": "[3] stars=3",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.review.ReviewRulesTest",
+      "name": "[4] stars=4",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.review.ReviewRulesTest",
+      "name": "[5] stars=5",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.review.ReviewRulesTest",
+      "name": "roundsPublicAverageHalfUp()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.review.ReviewRulesTest",
+      "name": "rejectsUndeliveredUnpurchasedAndDuplicateReview()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.review.ReviewRulesTest",
+      "name": "hiddenReviewDoesNotAffectPublicSumOrCount()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.review.ReviewRulesTest",
+      "name": "deniedAdminPolicyCannotModerate()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "rejectsUnverifiedBearerAndForgedIdentityHeaders()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "deniesHealthMutations()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "rejectsUnmatchedPathsToo()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "[1] method=GET",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "[2] method=HEAD",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "blocksEvenAMockedAdminWithoutAnExplicitRoutePolicy()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "[1] method=GET, path=/api/products/probe",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "[2] method=POST, path=/api/products/probe",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "[3] method=PUT, path=/api/products/probe",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "[4] method=PATCH, path=/api/products/probe",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "[5] method=DELETE, path=/api/products/probe",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "[6] method=HEAD, path=/api/reviews/probe",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "[7] method=GET, path=/api/reviews/probe",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "[8] method=GET, path=/internal/products/probe",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "[9] method=GET, path=/api/categories-unprotected",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "[1] credential=missing",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "[2] credential=bearer",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "[3] credential=headers",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "[4] credential=mock-admin",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "[5] credential=internal-token",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "proposalDoesNotBecomeAnAppliedProductFlywayMigration()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "candidateExactLookupPreservesCaseCompositionAndInternalSpaces()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "concurrentDifferentStoresCannotCommitTheSameSku()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "exactSkuMappingAndDecimalPricePersistWithoutCaseFoldingOrRounding()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "rollbackRestoresPriceVersionAndUpdateTimestampTogether()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "[1] price=0",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "[2] price=-1",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "[3] price=NaN",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "[4] price=Infinity",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "[5] price=-Infinity",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "[1] prefix=true",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "[2] prefix=false",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "runtimeFlywayRevalidationLeavesCandidateOutsideMigrationHistory()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "versionAndTimestampsAreDurableAndUpdatesRetainSku()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "categoryReferencePreventsDeletionAndUnknownCategoryInsert()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "concurrentCompareAndSetCannotOverwriteTheSameVersionTwice()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "globalSkuIsUniqueAcrossDifferentStoreReferences()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "[1] productFirst=true",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "[2] productFirst=false",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "[1] conflict=UNIQUE",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "[2] conflict=FK",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "oversizedSkuCannotBeSilentlyTruncatedBeforeBoundaryValidation()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "rollbackDoesNotLeaveCandidateProductBehind()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "[1] assignment=version=-1",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "[2] assignment=version=NULL",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "[3] assignment=status='UNKNOWN'",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "[4] assignment=inventory_sku=''",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "[5] assignment=inventory_sku=' padded '",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "[6] assignment=currency=' '",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "[7] assignment=store_reference=' '",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "[8] assignment=created_at=NULL",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "[9] assignment=updated_at=NULL",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "[10] assignment=updated_at=created_at-interval '1 second'",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.category.CategoryIntegrationTest",
+      "name": "rejectsCyclesAndRollsBackChanges()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.category.CategoryIntegrationTest",
+      "name": "rejectsDeletingParentWithoutRemovingAnything()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.category.CategoryIntegrationTest",
+      "name": "databaseRejectsBlankAndOversizedNames()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.category.CategoryIntegrationTest",
+      "name": "rejectsMissingParentAndCorruptAncestorCycle()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.category.CategoryIntegrationTest",
+      "name": "[1] operation=CREATE",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.category.CategoryIntegrationTest",
+      "name": "[2] operation=UPDATE",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.category.CategoryIntegrationTest",
+      "name": "[3] operation=DELETE",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.category.CategoryIntegrationTest",
+      "name": "simultaneousReparentingWaitsForLockAndCannotCreateTwoNodeCycle()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.category.CategoryIntegrationTest",
+      "name": "flywayCreatesSchemaAndJpaPersistsHierarchy()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.category.CategoryIntegrationTest",
+      "name": "realApplicationPermitsReadsAndBlocksPublicWrites()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.category.CategoryIntegrationTest",
+      "name": "reparentsThenDeletesLeafAndRejectsMissingId()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.category.CategoryIntegrationTest",
+      "name": "writeUsesFreshTransactionEvenWhenCallerHasAnOlderSnapshot()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.category.CategoryIntegrationTest",
+      "name": "databaseRejectsOrphanAndSelfParentAndDeletingReferencedParent()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.category.CategoryIntegrationTest",
+      "name": "lockCannotBeAcquiredOutsideTransaction()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.persistence.ProductMigrationPostgresTest",
+      "name": "T01_upgradeCategoryV1PreservesChecksumAndDataThenValidatesAndRerunsWithoutChanges()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceIntegrationTest",
+      "name": "T09_bigDecimalCurrencyAndAllProductFieldsRoundTripThroughFreshEntityManagers()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceIntegrationTest",
+      "name": "T11_exactUnicodeSkuIdentityUsesJavaUtf16LimitsAndRejectsEveryBoundarySpace()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceIntegrationTest",
+      "name": "cachedNoOpUpdateRejectsExpectedVersionOlderThanCommittedDatabaseVersion()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceIntegrationTest",
+      "name": "T14_storeUuidIsOnlyLogicalAndTwoEntityManagersRejectAStaleUpdate()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceIntegrationTest",
+      "name": "T02_minimumAndMaximumVndPersistExactlyThroughJpaAndRawSql()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceIntegrationTest",
+      "name": "T06_nonfiniteAndOversizeNumericFailInDatabaseAndJavaParser()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceIntegrationTest",
+      "name": "T03_fractionalInsertUpdateJpaAndCopyRejectOriginalValuesWithoutRounding()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceIntegrationTest",
+      "name": "T13_categoryRestrictAndBothDeleteInsertRaceOrdersNeverLeaveAnOrphan()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceIntegrationTest",
+      "name": "T07_canonicalPriceParserRejectsAliasesAndAppliesInclusiveCap()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceIntegrationTest",
+      "name": "duplicatePrimaryIdCannotMergeOverTheExistingProduct()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceIntegrationTest",
+      "name": "cachedOldEntityDoesNotRejectValidExpectedVersionFromCurrentDatabaseState()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceIntegrationTest",
+      "name": "T05_priceAndCurrencyAreRequiredExactVndTextWithoutDefaults()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceIntegrationTest",
+      "name": "T08_actualNumericHasNoTypmodOrDefaultAndJavaKeepsOriginalBigDecimal()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceIntegrationTest",
+      "name": "T15_requiredOuterRollbackAndIntegrityFailuresAreAtomicAndPublicGuardsStayClosed()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceIntegrationTest",
+      "name": "T10_globalSkuUniqueConstraintBlocksConcurrentStoresAndRollsBackLoserTransaction()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceIntegrationTest",
+      "name": "[1] status=REJECTED",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceIntegrationTest",
+      "name": "[2] status=SUSPENDED",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceIntegrationTest",
+      "name": "[1] status=REJECTED",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceIntegrationTest",
+      "name": "[2] status=SUSPENDED",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceIntegrationTest",
+      "name": "T12_domainEditJpaApplyAdapterAndDatabaseAllPreserveImmutableSku()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceIntegrationTest",
+      "name": "productionModerationConstraintsRequireReasonsAndCountSupplementaryCodepoints()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceIntegrationTest",
+      "name": "T04_zeroNegativeAndAboveCapFailInJavaAndDirectDatabaseWrites()",
+      "result": "PASS"
+    }
+  ],
+  "staleXmlExcluded": [],
+  "rawArtifacts": [
+    {
+      "localPath": ".verification/tv5-product-integration-20261025/run83/integrationTest/TEST-com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest.xml",
+      "bytes": 9880,
+      "sha256": "c36543ee01ccc29bcb0dd91954aa170b5f3be3e50baacce21681c848da5ee13a"
+    },
+    {
+      "localPath": ".verification/tv5-product-integration-20261025/run83/integrationTest/TEST-com.projecthk5.productservice.category.CategoryIntegrationTest.xml",
+      "bytes": 9941,
+      "sha256": "18574043cb92ae7cd92a524312c93a52a3eb75a4609137e39e9c71c4217f3427"
+    },
+    {
+      "localPath": ".verification/tv5-product-integration-20261025/run83/integrationTest/TEST-com.projecthk5.productservice.product.persistence.ProductMigrationPostgresTest.xml",
+      "bytes": 4331,
+      "sha256": "d806e274fa445ca52de0af6a2e6cda65769119339efb7a0d76df0aef910ecc68"
+    },
+    {
+      "localPath": ".verification/tv5-product-integration-20261025/run83/integrationTest/TEST-com.projecthk5.productservice.product.persistence.ProductPersistenceIntegrationTest.xml",
+      "bytes": 17256,
+      "sha256": "7a2ebd0e4a43e8e49214d14ff00e81acb1f1887243f3c945b61b6ca477d147df"
+    },
+    {
+      "localPath": ".verification/tv5-product-integration-20261025/run83/runtime.log",
+      "bytes": 2730,
+      "sha256": "570103a04236c43c7751143d94f1aecfd9277a992c30c166d74832366e958908"
+    },
+    {
+      "localPath": ".verification/tv5-product-integration-20261025/run83/test/TEST-com.projecthk5.productservice.catalog.CatalogBatchValidatorTest.xml",
+      "bytes": 8389,
+      "sha256": "14fcca675c97e1a9566d22018117d97cf7f319d6304e9deb9f3d70b3fbe3f8e2"
+    },
+    {
+      "localPath": ".verification/tv5-product-integration-20261025/run83/test/TEST-com.projecthk5.productservice.category.CategoryControllerTest.xml",
+      "bytes": 18342,
+      "sha256": "d2270185dd387bbca1fbe846711da6de4448c6474a4bcc3b4ca5f099ede91be5"
+    },
+    {
+      "localPath": ".verification/tv5-product-integration-20261025/run83/test/TEST-com.projecthk5.productservice.category.CategorySecurityTest.xml",
+      "bytes": 4259,
+      "sha256": "086f28c8499145f7867c79fadf63ebf53f293ac0e6f6efb7d93fbb1d8ff1c273"
+    },
+    {
+      "localPath": ".verification/tv5-product-integration-20261025/run83/test/TEST-com.projecthk5.productservice.category.CategoryServiceTest.xml",
+      "bytes": 2747,
+      "sha256": "a19f51dff3be7e1e4bc40de5c95d0c684dd36124889f43d17508d846a1eac363"
+    },
+    {
+      "localPath": ".verification/tv5-product-integration-20261025/run83/test/TEST-com.projecthk5.productservice.image.ProductImageValidatorTest.xml",
+      "bytes": 10111,
+      "sha256": "497c7dc72f3345f21ca99602f16ea1ab836c211e20926f171c48d4be5e94ab74"
+    },
+    {
+      "localPath": ".verification/tv5-product-integration-20261025/run83/test/TEST-com.projecthk5.productservice.product.persistence.ProductEntityTest.xml",
+      "bytes": 1105,
+      "sha256": "380e38a6c9d9392708ee74506861cc1e64575c562dbb98d71bacf44c005e2f08"
+    },
+    {
+      "localPath": ".verification/tv5-product-integration-20261025/run83/test/TEST-com.projecthk5.productservice.product.persistence.ProductPersistenceAdapterTest.xml",
+      "bytes": 7475,
+      "sha256": "c40a3e78343bb69921921096888fc345aa7b8f4ad84900f888478b77d723d34c"
+    },
+    {
+      "localPath": ".verification/tv5-product-integration-20261025/run83/test/TEST-com.projecthk5.productservice.product.ProductLifecycleServiceTest.xml",
+      "bytes": 14335,
+      "sha256": "5aedd123b60acefe787f88f2d107599ea9735c91f3462cb359a91b74e364b129"
+    },
+    {
+      "localPath": ".verification/tv5-product-integration-20261025/run83/test/TEST-com.projecthk5.productservice.product.ProductListingValidationTest.xml",
+      "bytes": 5527,
+      "sha256": "dbc801d7f3a6302d122288bfd7f9d411dca9f8d01907c235e1e2dc1f70c44da4"
+    },
+    {
+      "localPath": ".verification/tv5-product-integration-20261025/run83/test/TEST-com.projecthk5.productservice.product.ProductPriceTest.xml",
+      "bytes": 5718,
+      "sha256": "54cbeb9d5c8e892c80feda606466eebc08d8ae315f87efe9fa0fab5a5bef6181"
+    },
+    {
+      "localPath": ".verification/tv5-product-integration-20261025/run83/test/TEST-com.projecthk5.productservice.product.Week1CatalogFixtureTest.xml",
+      "bytes": 531,
+      "sha256": "c1e974399c159a14554eda39c6c9897419654774ab563239aaa661fa439b8508"
+    },
+    {
+      "localPath": ".verification/tv5-product-integration-20261025/run83/test/TEST-com.projecthk5.productservice.review.ReviewRulesBoundaryTest.xml",
+      "bytes": 2442,
+      "sha256": "f7073c5bd128603ecf6be7e11db108d3d76b570c2afb082a7753ca7d716033d7"
+    },
+    {
+      "localPath": ".verification/tv5-product-integration-20261025/run83/test/TEST-com.projecthk5.productservice.review.ReviewRulesTest.xml",
+      "bytes": 2185,
+      "sha256": "9325d4954c68d00619f1d24393a81a1fddd078dbbf2cf9751cee4bf2281ed449"
+    },
+    {
+      "localPath": ".verification/tv5-product-integration-20261025/run83/test/TEST-com.projecthk5.productservice.security.ProductServiceSecurityTest.xml",
+      "bytes": 6345,
+      "sha256": "43374b16e4a06283e08c703952b072e97998747b95e6da2875ca4c993e7201e3"
+    }
+  ],
+  "publication": "DERIVED SUMMARY only. Original log/XML including stdout/private ephemeral database details remain unmodified and private; raw artifact path/size/SHA256 is provenance, not a public link."
+}

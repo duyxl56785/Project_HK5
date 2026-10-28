@@ -1,0 +1,3256 @@
+{
+  "kind": "DERIVED metadata/source comparison, not application tests or an atomic snapshot",
+  "deepScan": {
+    "completedAtUtc": "2026-10-26T14:34:43.559860+00:00",
+    "PRs": 86,
+    "openPRs": [
+      102,
+      101,
+      89,
+      94,
+      91,
+      90,
+      80,
+      100,
+      99,
+      93,
+      97,
+      98,
+      69,
+      86,
+      77,
+      78,
+      87,
+      95,
+      83,
+      92,
+      85
+    ],
+    "merged": 63,
+    "closedUnmerged": 2,
+    "draft": 4,
+    "scope": "All PR metadata paginated; every OPEN deep API review with paginated files/commits/comments/reviews/threads; closed/merged metadata and dependency history only."
+  },
+  "liveGeneratedAtUtc": "2026-10-26T14:41:31.700297+00:00",
+  "liveCollectorSource": "8bf9f12e1a7df92b77f8a506fba5e1907a4f1c6c",
+  "PRs": [
+    {
+      "number": 69,
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/69",
+      "author": "phamthecuong2022006-alt",
+      "workstream": "OTHER",
+      "state": "open",
+      "draft": false,
+      "head": "b7e4b427525689d5685419644352efafd9fe78e3",
+      "headRef": "feat/tv4-reservation-ledger-candidate",
+      "headRepo": "duyxl56785/Project_HK5",
+      "base": "ed85f6290de7f611c82e5c0ad973f98180f04df4",
+      "baseRef": "main",
+      "baseRepo": "duyxl56785/Project_HK5",
+      "mergeable": true,
+      "reviewDecision": "APPROVED",
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": "lexuanbao258-collab",
+          "state": "APPROVED",
+          "head": "4eeeb3843f2795168ca03cdd3cd2e8be9f825ec6",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/69#pullrequestreview-5622479895",
+          "submittedAt": "2026-10-23T00:17:49Z"
+        }
+      ],
+      "unresolvedThreads": [],
+      "checks": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40206189723/job/121207517864"
+        }
+      ],
+      "statuses": [],
+      "ci": "SUCCESS",
+      "observedGateSignals": [],
+      "TV5ChangesRequested": false,
+      "TV5OpenThreads": 0,
+      "approvalAttribution": "Review metadata only: read review body/diff to verify its scope; no auto-approval/readiness inference",
+      "stackedOnOpenPRs": [],
+      "title": "feat(inventory): add reservation ownership ledger candidate",
+      "mergeableState": "clean",
+      "linkedIssueMentions": [
+        4,
+        11
+      ],
+      "changedFiles": [
+        "WEEK1_BASELINE.md",
+        "WEEK1_HANDOFF.md",
+        "WEEK1_TEST_BASELINE.md",
+        "backend/inventory-service/INVENTORY_CHECKOUT_CONTRACT.md",
+        "backend/inventory-service/README.md",
+        "backend/inventory-service/RESERVATION_LEDGER_CANDIDATE.md",
+        "backend/inventory-service/src/main/java/com/projecthk5/inventoryservice/candidate/InventoryReservationLedgerCandidateService.java",
+        "backend/inventory-service/src/main/java/com/projecthk5/inventoryservice/candidate/ReservationCandidateException.java",
+        "backend/inventory-service/src/main/java/com/projecthk5/inventoryservice/candidate/ReservationOperationCandidateRequest.java",
+        "backend/inventory-service/src/main/java/com/projecthk5/inventoryservice/candidate/ReservationOperationCandidateResponse.java",
+        "backend/inventory-service/src/main/java/com/projecthk5/inventoryservice/candidate/ReservationOperationLookupCandidate.java",
+        "backend/inventory-service/src/main/java/com/projecthk5/inventoryservice/repository/InventoryOperationRepository.java",
+        "backend/inventory-service/src/main/java/com/projecthk5/inventoryservice/service/InventoryOperationService.java",
+        "backend/inventory-service/src/main/resources/db/candidate-migration/V3__reservation_ledger_candidate.sql",
+        "backend/inventory-service/src/test/java/com/projecthk5/inventoryservice/InventoryPostgresIntegrationTest.java",
+        "backend/inventory-service/src/test/java/com/projecthk5/inventoryservice/integration/InventoryDefaultFlywayPostgresIT.java",
+        "backend/inventory-service/src/test/java/com/projecthk5/inventoryservice/integration/InventoryPostgresSupport.java",
+        "backend/inventory-service/src/test/java/com/projecthk5/inventoryservice/integration/InventoryReservationLedgerCandidatePostgresIT.java",
+        "backend/inventory-service/src/test/java/com/projecthk5/inventoryservice/integration/InventorySchemaPostgresIT.java",
+        "backend/inventory-service/src/test/java/com/projecthk5/inventoryservice/service/InventoryOperationServiceTest.java"
+      ],
+      "commitSHAs": [
+        "092e522b7eb4ad1c1f0c6d9a428035f85836e05b",
+        "4944f493a1446fbff97d826f565bcdc643f0e2a5",
+        "ae9b1c0564cde4c00be0c5e457c10fc26376a851",
+        "4eeeb3843f2795168ca03cdd3cd2e8be9f825ec6",
+        "41b86325eb3e9e019f5bc3ff5889df58dcb0d1e1",
+        "b7e4b427525689d5685419644352efafd9fe78e3"
+      ],
+      "priorSameHead": true,
+      "priorSameCompleteDiff": true,
+      "reviewHistory": [
+        {
+          "author": "lexuanbao258-collab",
+          "state": "CHANGES_REQUESTED",
+          "commit": "092e522b7eb4ad1c1f0c6d9a428035f85836e05b",
+          "submittedAt": "2026-10-22T08:23:54Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/69#pullrequestreview-5611268082"
+        },
+        {
+          "author": "duyxl56785",
+          "state": "COMMENTED",
+          "commit": "4eeeb3843f2795168ca03cdd3cd2e8be9f825ec6",
+          "submittedAt": "2026-10-22T08:53:46Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/69#pullrequestreview-5611613834"
+        },
+        {
+          "author": "nguyenminhduy090-alt",
+          "state": "COMMENTED",
+          "commit": "4eeeb3843f2795168ca03cdd3cd2e8be9f825ec6",
+          "submittedAt": "2026-10-22T13:43:46Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/69#pullrequestreview-5615186824"
+        },
+        {
+          "author": "tranvanchinhbg2006-alt",
+          "state": "COMMENTED",
+          "commit": "4eeeb3843f2795168ca03cdd3cd2e8be9f825ec6",
+          "submittedAt": "2026-10-22T14:37:31Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/69#pullrequestreview-5615969025"
+        },
+        {
+          "author": "lexuanbao258-collab",
+          "state": "APPROVED",
+          "commit": "4eeeb3843f2795168ca03cdd3cd2e8be9f825ec6",
+          "submittedAt": "2026-10-23T00:17:49Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/69#pullrequestreview-5622479895"
+        }
+      ],
+      "reviewerRemovalEvents": []
+    },
+    {
+      "number": 77,
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/77",
+      "author": "tranvanchinhbg2006-alt",
+      "workstream": "TV3",
+      "state": "open",
+      "draft": false,
+      "head": "cbbdb8667f689eddb75690274636504efc664706",
+      "headRef": "feat/tv3-catalog-preflight-s01-unicode-20261022",
+      "headRepo": "duyxl56785/Project_HK5",
+      "base": "aca5dff247ef8eae3ce97c1a73b9474b87e94110",
+      "baseRef": "main",
+      "baseRepo": "duyxl56785/Project_HK5",
+      "mergeable": true,
+      "reviewDecision": "APPROVED",
+      "requestedReviewers": [
+        "phamthecuong2022006-alt"
+      ],
+      "effectiveReviews": [
+        {
+          "author": "duyxl56785",
+          "state": "APPROVED",
+          "head": "cbbdb8667f689eddb75690274636504efc664706",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/77#pullrequestreview-5618257780",
+          "submittedAt": "2026-10-22T17:28:34Z"
+        }
+      ],
+      "unresolvedThreads": [],
+      "checks": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/39799849322/job/119897118709"
+        }
+      ],
+      "statuses": [],
+      "ci": "SUCCESS",
+      "observedGateSignals": [],
+      "TV5ChangesRequested": false,
+      "TV5OpenThreads": 0,
+      "approvalAttribution": "Review metadata only: read review body/diff to verify its scope; no auto-approval/readiness inference",
+      "stackedOnOpenPRs": [],
+      "title": "feat(tv3): restore Catalog batch preflight with Unicode and S01 consistency guards",
+      "mergeableState": "clean",
+      "linkedIssueMentions": [
+        2,
+        3,
+        4,
+        5,
+        12
+      ],
+      "changedFiles": [
+        "backend/order-service/TV3_CATALOG_CHECKOUT_HANDOFF.md",
+        "backend/order-service/src/main/java/com/projecthk5/orderservice/catalog/CatalogCheckoutBatchPreflight.java",
+        "backend/order-service/src/test/java/com/projecthk5/orderservice/catalog/CatalogCheckoutBatchPreflightTest.java"
+      ],
+      "commitSHAs": [
+        "6a2c875a3583120c89cd12cfcacef71317b9583f",
+        "d8e910393a9bac1832b2921bac0da48793862cd3",
+        "cbbdb8667f689eddb75690274636504efc664706"
+      ],
+      "priorSameHead": true,
+      "priorSameCompleteDiff": true,
+      "reviewHistory": [
+        {
+          "author": "duyxl56785",
+          "state": "COMMENTED",
+          "commit": "cbbdb8667f689eddb75690274636504efc664706",
+          "submittedAt": "2026-10-22T15:32:10Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/77#pullrequestreview-5616751270"
+        },
+        {
+          "author": "duyxl56785",
+          "state": "APPROVED",
+          "commit": "cbbdb8667f689eddb75690274636504efc664706",
+          "submittedAt": "2026-10-22T17:28:34Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/77#pullrequestreview-5618257780"
+        },
+        {
+          "author": "nguyenminhduy090-alt",
+          "state": "COMMENTED",
+          "commit": "cbbdb8667f689eddb75690274636504efc664706",
+          "submittedAt": "2026-10-23T00:44:43Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/77#pullrequestreview-5622639406"
+        }
+      ],
+      "reviewerRemovalEvents": []
+    },
+    {
+      "number": 78,
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/78",
+      "author": "tranvanchinhbg2006-alt",
+      "workstream": "TV3",
+      "state": "open",
+      "draft": false,
+      "head": "ac5da331e8cf6128b26ee850f87eef18d99a3317",
+      "headRef": "test/tv3-inventory-recovery-regression-20261022",
+      "headRepo": "duyxl56785/Project_HK5",
+      "base": "aca5dff247ef8eae3ce97c1a73b9474b87e94110",
+      "baseRef": "main",
+      "baseRepo": "duyxl56785/Project_HK5",
+      "mergeable": true,
+      "reviewDecision": "APPROVED",
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": "duyxl56785",
+          "state": "APPROVED",
+          "head": "ac5da331e8cf6128b26ee850f87eef18d99a3317",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/78#pullrequestreview-5618255429",
+          "submittedAt": "2026-10-22T17:28:23Z"
+        }
+      ],
+      "unresolvedThreads": [],
+      "checks": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/39802869540/job/119908171234"
+        }
+      ],
+      "statuses": [],
+      "ci": "SUCCESS",
+      "observedGateSignals": [],
+      "TV5ChangesRequested": false,
+      "TV5OpenThreads": 0,
+      "approvalAttribution": "Review metadata only: read review body/diff to verify its scope; no auto-approval/readiness inference",
+      "stackedOnOpenPRs": [],
+      "title": "test(tv3): restore multi-SKU Inventory journal recovery and replay regressions",
+      "mergeableState": "clean",
+      "linkedIssueMentions": [
+        3,
+        4
+      ],
+      "changedFiles": [
+        "backend/order-service/TV3_INVENTORY_RELEASE_RETRY_AUDIT.md",
+        "backend/order-service/src/test/java/com/projecthk5/orderservice/integration/InventoryOperationJournalPostgres16IT.java",
+        "backend/order-service/src/test/java/com/projecthk5/orderservice/service/InventoryOperationCallerTest.java"
+      ],
+      "commitSHAs": [
+        "2c8ee1ff266cc6b485bf4bb4be202f300dd84415",
+        "ccf986795b90d5bbe844c704ce19dbb2c59681fd",
+        "ac5da331e8cf6128b26ee850f87eef18d99a3317"
+      ],
+      "priorSameHead": true,
+      "priorSameCompleteDiff": true,
+      "reviewHistory": [
+        {
+          "author": "duyxl56785",
+          "state": "COMMENTED",
+          "commit": "ac5da331e8cf6128b26ee850f87eef18d99a3317",
+          "submittedAt": "2026-10-22T15:59:08Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/78#pullrequestreview-5617114921"
+        },
+        {
+          "author": "duyxl56785",
+          "state": "APPROVED",
+          "commit": "ac5da331e8cf6128b26ee850f87eef18d99a3317",
+          "submittedAt": "2026-10-22T17:28:23Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/78#pullrequestreview-5618255429"
+        },
+        {
+          "author": "phamthecuong2022006-alt",
+          "state": "COMMENTED",
+          "commit": "ac5da331e8cf6128b26ee850f87eef18d99a3317",
+          "submittedAt": "2026-10-23T00:29:44Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/78#pullrequestreview-5622551879"
+        },
+        {
+          "author": "nguyenminhduy090-alt",
+          "state": "COMMENTED",
+          "commit": "ac5da331e8cf6128b26ee850f87eef18d99a3317",
+          "submittedAt": "2026-10-23T00:44:46Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/78#pullrequestreview-5622639726"
+        }
+      ],
+      "reviewerRemovalEvents": []
+    },
+    {
+      "number": 80,
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/80",
+      "author": "lexuanbao258-collab",
+      "workstream": "OTHER",
+      "state": "open",
+      "draft": true,
+      "head": "083355be16c4e3ea442ccd861d5f4b40236a0b12",
+      "headRef": "feat/tv1-auth-jwt-current-authority-foundation-20261023",
+      "headRepo": "duyxl56785/Project_HK5",
+      "base": "854d922bd7f1c1d7d9c5a6ef3ff2e04e6dca2b9c",
+      "baseRef": "main",
+      "baseRepo": "duyxl56785/Project_HK5",
+      "mergeable": true,
+      "reviewDecision": "CHANGES_REQUESTED",
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": "duyxl56785",
+          "state": "CHANGES_REQUESTED",
+          "head": "dfdc8143c4a86cdfce8eefc9a98e1b07126da41d",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/80#pullrequestreview-5643354815",
+          "submittedAt": "2026-10-25T13:17:26Z"
+        }
+      ],
+      "unresolvedThreads": [],
+      "checks": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40273060353/job/121409875964"
+        }
+      ],
+      "statuses": [],
+      "ci": "SUCCESS",
+      "observedGateSignals": [
+        "DRAFT",
+        "CHANGES_REQUESTED"
+      ],
+      "TV5ChangesRequested": false,
+      "TV5OpenThreads": 0,
+      "approvalAttribution": "Review metadata only: read review body/diff to verify its scope; no auto-approval/readiness inference",
+      "stackedOnOpenPRs": [],
+      "title": "feat(tv1-auth): start HS256 JWT and current-account authority foundation",
+      "mergeableState": "blocked",
+      "linkedIssueMentions": [
+        1,
+        2,
+        8,
+        9
+      ],
+      "changedFiles": [
+        "backend/auth-service/build.gradle",
+        "backend/auth-service/src/main/java/com/projecthk5/authservice/security/AuthBootstrapConfiguration.java",
+        "backend/auth-service/src/main/java/com/projecthk5/authservice/security/AuthPasswordHasher.java",
+        "backend/auth-service/src/main/java/com/projecthk5/authservice/security/CurrentAccountAuthority.java",
+        "backend/auth-service/src/main/java/com/projecthk5/authservice/security/Hk5JwtCodec.java",
+        "backend/auth-service/src/test/java/com/projecthk5/authservice/security/AuthBootstrapConfigurationTest.java",
+        "backend/auth-service/src/test/java/com/projecthk5/authservice/security/AuthPasswordHasherTest.java",
+        "backend/auth-service/src/test/java/com/projecthk5/authservice/security/CurrentAccountAuthorityTest.java",
+        "backend/auth-service/src/test/java/com/projecthk5/authservice/security/Hk5JwtCodecTest.java",
+        "backend/auth-service/verification/20261025-password-nul.md",
+        "docs/TV1_AUTH_BOOTSTRAP_GATES.md",
+        "reports/evidence/tv5-auth-authority-20261023/baseline.json",
+        "reports/evidence/tv5-auth-authority-20261023/green.json",
+        "reports/evidence/tv5-auth-authority-20261023/red.json",
+        "tests/security/README_AUTH_CURRENT_AUTHORITY.md",
+        "tests/security/auth-current-authority.init.gradle",
+        "tests/security/auth-current-authority/CurrentAccountAuthorityPostgresRegressionTest.java"
+      ],
+      "commitSHAs": [
+        "523f6503a92194516ef81eec89b1406df33c1c6c",
+        "611b93614ee786caed8cefc9692bc3defae43a54",
+        "6149a6e6206bdc834f9fac5d454149a68f584ddf",
+        "98db2c5638f9797cf05018a5f6eec1cda510ebee",
+        "e187ac64065c1e0090057595a6e17d810f06383d",
+        "f88da6d2f87acfa136c955e8d099b9465c72f807",
+        "548d9585902558f2e705a437e9b01d2949518aaa",
+        "ad25942998224451fb8c54677e028712e6921ae3",
+        "3338cfd4d995fe286beb4be342681d5685eba5fb",
+        "08ea7812b71923e5e198abeafeb90a4c4b2b5ade",
+        "3a92ff16cab121ddf53f5d36d8d70df1af314e68",
+        "831692902e8b12c2c97f33020b351d3f467b2032",
+        "7bda00598fccd626dec077481b95b3fc24512476",
+        "f4604cac03462b81558a5f4d6fcfb0af0e6c401f",
+        "1fdf7baeaf1c3dea71cfc1c56b091e05e2a6b639",
+        "c8ebb98ed77b4e0ec7a8ef9b00839c31523c9ea2",
+        "291d17ac20528a90a97cfaedb9b77f958d043358",
+        "dfdc8143c4a86cdfce8eefc9a98e1b07126da41d",
+        "c59f34024748f290bd304b64140cf6c0848940b5",
+        "083355be16c4e3ea442ccd861d5f4b40236a0b12"
+      ],
+      "priorSameHead": false,
+      "priorSameCompleteDiff": false,
+      "reviewHistory": [
+        {
+          "author": "nguyenminhduy090-alt",
+          "state": "COMMENTED",
+          "commit": "f88da6d2f87acfa136c955e8d099b9465c72f807",
+          "submittedAt": "2026-10-23T00:56:08Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/80#pullrequestreview-5622704537"
+        },
+        {
+          "author": "nguyenminhduy090-alt",
+          "state": "COMMENTED",
+          "commit": "f88da6d2f87acfa136c955e8d099b9465c72f807",
+          "submittedAt": "2026-10-23T02:16:10Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/80#pullrequestreview-5623152879"
+        },
+        {
+          "author": "duyxl56785",
+          "state": "COMMENTED",
+          "commit": "3a92ff16cab121ddf53f5d36d8d70df1af314e68",
+          "submittedAt": "2026-10-23T18:28:31Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/80#pullrequestreview-5632810349"
+        },
+        {
+          "author": "duyxl56785",
+          "state": "APPROVED",
+          "commit": "3a92ff16cab121ddf53f5d36d8d70df1af314e68",
+          "submittedAt": "2026-10-23T18:28:42Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/80#pullrequestreview-5632812363"
+        },
+        {
+          "author": "lexuanbao258-collab",
+          "state": "COMMENTED",
+          "commit": "3a92ff16cab121ddf53f5d36d8d70df1af314e68",
+          "submittedAt": "2026-10-24T06:38:44Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/80#pullrequestreview-5637191433"
+        },
+        {
+          "author": "lexuanbao258-collab",
+          "state": "COMMENTED",
+          "commit": "c8ebb98ed77b4e0ec7a8ef9b00839c31523c9ea2",
+          "submittedAt": "2026-10-24T08:09:47Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/80#pullrequestreview-5637458443"
+        },
+        {
+          "author": "nguyenminhduy090-alt",
+          "state": "COMMENTED",
+          "commit": "c8ebb98ed77b4e0ec7a8ef9b00839c31523c9ea2",
+          "submittedAt": "2026-10-24T17:53:14Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/80#pullrequestreview-5639246763"
+        },
+        {
+          "author": "duyxl56785",
+          "state": "CHANGES_REQUESTED",
+          "commit": "dfdc8143c4a86cdfce8eefc9a98e1b07126da41d",
+          "submittedAt": "2026-10-25T13:17:26Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/80#pullrequestreview-5643354815"
+        },
+        {
+          "author": "duyxl56785",
+          "state": "COMMENTED",
+          "commit": "083355be16c4e3ea442ccd861d5f4b40236a0b12",
+          "submittedAt": "2026-10-26T06:17:26Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/80#pullrequestreview-5648071411"
+        }
+      ],
+      "reviewerRemovalEvents": []
+    },
+    {
+      "number": 83,
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/83",
+      "author": "duyxl56785",
+      "workstream": "TV2",
+      "state": "open",
+      "draft": false,
+      "head": "c831edb4d7c610b76e434222d51b115cfb863d81",
+      "headRef": "feat/tv2-product-persistence",
+      "headRepo": "duyxl56785/Project_HK5",
+      "base": "ed85f6290de7f611c82e5c0ad973f98180f04df4",
+      "baseRef": "main",
+      "baseRepo": "duyxl56785/Project_HK5",
+      "mergeable": true,
+      "reviewDecision": "APPROVED",
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": "lexuanbao258-collab",
+          "state": "APPROVED",
+          "head": "c831edb4d7c610b76e434222d51b115cfb863d81",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/83#pullrequestreview-5643469786",
+          "submittedAt": "2026-10-25T13:43:37Z"
+        }
+      ],
+      "unresolvedThreads": [],
+      "checks": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40197534885/job/121181511230"
+        }
+      ],
+      "statuses": [],
+      "ci": "SUCCESS",
+      "observedGateSignals": [],
+      "TV5ChangesRequested": false,
+      "TV5OpenThreads": 0,
+      "approvalAttribution": "Review metadata only: read review body/diff to verify its scope; no auto-approval/readiness inference",
+      "stackedOnOpenPRs": [],
+      "title": "test(tv2): align SQL candidate regressions with production Product schema",
+      "mergeableState": "clean",
+      "linkedIssueMentions": [
+        2,
+        9,
+        15
+      ],
+      "changedFiles": [
+        "backend/product-service/src/test/java/com/projecthk5/productservice/catalog/CatalogSchemaProposalPostgresTest.java",
+        "backend/product-service/src/test/resources/proposals/catalog-product-candidate.sql",
+        "docs/tv2-progress/PRODUCT_PERSISTENCE_PROGRESS.md"
+      ],
+      "commitSHAs": [
+        "69c9981c34c32cc25e9c23787b0ee3707af51dfa",
+        "a4e46636b6763393a2dd9b7146436c665e84bcd5",
+        "1018c2d7d8323aa0ba2a312fc278ee37c0b57a0c",
+        "c831edb4d7c610b76e434222d51b115cfb863d81"
+      ],
+      "priorSameHead": true,
+      "priorSameCompleteDiff": true,
+      "reviewHistory": [
+        {
+          "author": "lexuanbao258-collab",
+          "state": "COMMENTED",
+          "commit": "1018c2d7d8323aa0ba2a312fc278ee37c0b57a0c",
+          "submittedAt": "2026-10-24T06:42:07Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/83#pullrequestreview-5637202433"
+        },
+        {
+          "author": "nguyenminhduy090-alt",
+          "state": "COMMENTED",
+          "commit": "1018c2d7d8323aa0ba2a312fc278ee37c0b57a0c",
+          "submittedAt": "2026-10-24T18:08:49Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/83#pullrequestreview-5639342363"
+        },
+        {
+          "author": "duyxl56785",
+          "state": "COMMENTED",
+          "commit": "c831edb4d7c610b76e434222d51b115cfb863d81",
+          "submittedAt": "2026-10-25T13:28:05Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/83#pullrequestreview-5643387103"
+        },
+        {
+          "author": "lexuanbao258-collab",
+          "state": "APPROVED",
+          "commit": "c831edb4d7c610b76e434222d51b115cfb863d81",
+          "submittedAt": "2026-10-25T13:43:37Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/83#pullrequestreview-5643469786"
+        },
+        {
+          "author": "nguyenminhduy090-alt",
+          "state": "COMMENTED",
+          "commit": "c831edb4d7c610b76e434222d51b115cfb863d81",
+          "submittedAt": "2026-10-25T13:56:41Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/83#pullrequestreview-5643551596"
+        },
+        {
+          "author": "nguyenminhduy090-alt",
+          "state": "COMMENTED",
+          "commit": "c831edb4d7c610b76e434222d51b115cfb863d81",
+          "submittedAt": "2026-10-25T13:56:43Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/83#pullrequestreview-5643551895"
+        }
+      ],
+      "reviewerRemovalEvents": []
+    },
+    {
+      "number": 85,
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/85",
+      "author": "duyxl56785",
+      "workstream": "TV2",
+      "state": "open",
+      "draft": true,
+      "head": "fc39c7100caa7ffb49f9baa27b18dde595b54d1f",
+      "headRef": "feat/tv2-seller-store-http-read",
+      "headRepo": "duyxl56785/Project_HK5",
+      "base": "33853a1db219b45ff045e6e81c621275e831007a",
+      "baseRef": "main",
+      "baseRepo": "duyxl56785/Project_HK5",
+      "mergeable": true,
+      "reviewDecision": "REVIEW_REQUIRED",
+      "requestedReviewers": [],
+      "effectiveReviews": [],
+      "unresolvedThreads": [],
+      "checks": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/39959381916/job/120433214014"
+        }
+      ],
+      "statuses": [],
+      "ci": "SUCCESS",
+      "observedGateSignals": [
+        "DRAFT",
+        "REVIEW_REQUIRED"
+      ],
+      "TV5ChangesRequested": false,
+      "TV5OpenThreads": 0,
+      "approvalAttribution": "Review metadata only: read review body/diff to verify its scope; no auto-approval/readiness inference",
+      "stackedOnOpenPRs": [],
+      "title": "feat(seller): prepare guarded Seller Store own-read HTTP slice",
+      "mergeableState": "blocked",
+      "linkedIssueMentions": [
+        2,
+        9
+      ],
+      "changedFiles": [
+        "backend/seller-service/README.md",
+        "backend/seller-service/src/main/java/com/projecthk5/sellerservice/http/SellerStoreReadAuthority.java",
+        "backend/seller-service/src/main/java/com/projecthk5/sellerservice/http/SellerStoreReadHandler.java",
+        "backend/seller-service/src/test/java/com/projecthk5/sellerservice/http/SellerStoreReadHandlerTest.java",
+        "backend/seller-service/src/test/java/com/projecthk5/sellerservice/http/SellerStoreReadIntegrationTest.java"
+      ],
+      "commitSHAs": [
+        "fc39c7100caa7ffb49f9baa27b18dde595b54d1f"
+      ],
+      "priorSameHead": true,
+      "priorSameCompleteDiff": true,
+      "reviewHistory": [
+        {
+          "author": "lexuanbao258-collab",
+          "state": "COMMENTED",
+          "commit": "fc39c7100caa7ffb49f9baa27b18dde595b54d1f",
+          "submittedAt": "2026-10-24T06:42:04Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/85#pullrequestreview-5637202258"
+        },
+        {
+          "author": "nguyenminhduy090-alt",
+          "state": "COMMENTED",
+          "commit": "fc39c7100caa7ffb49f9baa27b18dde595b54d1f",
+          "submittedAt": "2026-10-24T18:08:53Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/85#pullrequestreview-5639342788"
+        }
+      ],
+      "reviewerRemovalEvents": []
+    },
+    {
+      "number": 86,
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/86",
+      "author": "tranvanchinhbg2006-alt",
+      "workstream": "TV3",
+      "state": "open",
+      "draft": false,
+      "head": "28a8abcd5cf76b298e1e6b817da16337ba322ec6",
+      "headRef": "feat/tv3-isolated-cart-cod-ui-20261023",
+      "headRepo": "duyxl56785/Project_HK5",
+      "base": "33853a1db219b45ff045e6e81c621275e831007a",
+      "baseRef": "main",
+      "baseRepo": "duyxl56785/Project_HK5",
+      "mergeable": true,
+      "reviewDecision": "CHANGES_REQUESTED",
+      "requestedReviewers": [
+        "duyxl56785"
+      ],
+      "effectiveReviews": [
+        {
+          "author": "duyxl56785",
+          "state": "CHANGES_REQUESTED",
+          "head": "3c233193825a6b6fb46206586b3191cc4422bcf6",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/86#pullrequestreview-5643356013",
+          "submittedAt": "2026-10-25T13:17:48Z"
+        }
+      ],
+      "unresolvedThreads": [
+        {
+          "id": "PRRT_kwDOVGqk_M6wBlBb",
+          "path": "frontend/src/features/checkout/CheckoutCodView.tsx",
+          "line": null,
+          "outdated": true,
+          "author": "duyxl56785",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/86#discussion_r4370971362"
+        }
+      ],
+      "checks": [],
+      "statuses": [],
+      "ci": "NO_CHECKS",
+      "observedGateSignals": [
+        "CHANGES_REQUESTED",
+        "UNRESOLVED_THREADS"
+      ],
+      "TV5ChangesRequested": false,
+      "TV5OpenThreads": 0,
+      "approvalAttribution": "Review metadata only: read review body/diff to verify its scope; no auto-approval/readiness inference",
+      "stackedOnOpenPRs": [],
+      "title": "feat(tv3): isolated multi-Store Cart and COD Checkout UI without shared wiring",
+      "mergeableState": "blocked",
+      "linkedIssueMentions": [
+        3,
+        10,
+        16
+      ],
+      "changedFiles": [
+        "frontend/src/features/cart/CartView.css",
+        "frontend/src/features/cart/CartView.test.mjs",
+        "frontend/src/features/cart/CartView.tsx",
+        "frontend/src/features/cart/README.md",
+        "frontend/src/features/cart/cartModel.test.mjs",
+        "frontend/src/features/cart/cartModel.ts",
+        "frontend/src/features/cart/cartTypes.ts",
+        "frontend/src/features/cart/index.ts",
+        "frontend/src/features/checkout/CheckoutCodView.css",
+        "frontend/src/features/checkout/CheckoutCodView.dom.test.mjs",
+        "frontend/src/features/checkout/CheckoutCodView.test.mjs",
+        "frontend/src/features/checkout/CheckoutCodView.tsx",
+        "frontend/src/features/checkout/README.md",
+        "frontend/src/features/checkout/TV3_TWO_STORE_UAT.md",
+        "frontend/src/features/checkout/checkoutModel.test.mjs",
+        "frontend/src/features/checkout/checkoutModel.ts",
+        "frontend/src/features/checkout/checkoutTypes.ts",
+        "frontend/src/features/checkout/index.ts",
+        "frontend/src/features/checkout/preview/index.html",
+        "frontend/src/features/checkout/preview/main.tsx",
+        "frontend/src/features/checkout/preview/preview.css"
+      ],
+      "commitSHAs": [
+        "a2dafb10842cb477d7cff2adff921960094b92fd",
+        "119fe1a1877f1b0855df558bc834f27ac260ba4c",
+        "364d429aa6b554f102fa04158fe87d09f1f78ec9",
+        "29ac53003bca4913e4a0a1fcda0a7e906571914b",
+        "1392ac06fc9f288f7e86eb22b88c94d850fa1c89",
+        "56ce022de3f7c6e17bb366eaa7c12e4b702dd223",
+        "a55c2d2b861e22bde59ab5bcee01a595b75b927e",
+        "37d4f1afdbd918556f2281dd06616d975e8c8892",
+        "12ace9357890d97d6ef831410ebe4e01a4eca6cb",
+        "dbc7bb4d86b5505d0e0029e8935607acbb71fbcf",
+        "89db342190979f741854cbc9c7f9d4122f45a5e4",
+        "9dcb15fd8b704d6d51c0bfc2196e4a8e818c3211",
+        "6d457fd4632fc30a6e97bdd256c56775b452fa42",
+        "7b3226394c2596a28dad75312dd7618914c317df",
+        "7234ec49cace160febd81f5f4bf5f98ccd7cec15",
+        "348c87cb1cddb94657c40d1554d2ffbfa4b29bd1",
+        "2f83f62b352106ac112a823dbb644cf9f0f64a8a",
+        "ec240c2a755dae2fb09ade44b8fc3b4c2f87452e",
+        "4e3a057f147c34460319e4e1ded55fae6a20fb17",
+        "87c6092561e3fa4f18cf7203c71ff5b22bf9c5c3",
+        "6b379b6903b8774f47b51e209ed8cd296464cf8a",
+        "e752373c5cab2eedc891ae194783d20ce51ba3ba",
+        "103c12648233dd09939137c83df57967b82fdc44",
+        "caec480cc7e647146f635c7205df245f0765279e",
+        "21843d2b02a6119794700208f5009dd853edf233",
+        "0ea9c7a6797741f1e08b47d7b4393f3397eea20c",
+        "973a1ae195f6d318df5d36e3d5ec576b27c2d6f6",
+        "2bcea5dd9aafbd55474bb3a89dc6eb8eb04cd591",
+        "8318a2b0a1664a69ba977ee6d15bcc1c27af46ba",
+        "ec8d881e8da5f7497aef7c4ad6018b215cf4a059",
+        "3c233193825a6b6fb46206586b3191cc4422bcf6",
+        "2044eb2d42f3536b9bcb140e4df56c15ebad5476",
+        "5e082cc561c383610a5c2d1cbebc3552331912b5",
+        "9f647036012ad900f253d7443e22e32fa6feb298",
+        "4a4c79699e6bcfcb6bfa782159ca0d6ffb083a01",
+        "28a8abcd5cf76b298e1e6b817da16337ba322ec6"
+      ],
+      "priorSameHead": true,
+      "priorSameCompleteDiff": true,
+      "reviewHistory": [
+        {
+          "author": "duyxl56785",
+          "state": "CHANGES_REQUESTED",
+          "commit": "ec8d881e8da5f7497aef7c4ad6018b215cf4a059",
+          "submittedAt": "2026-10-23T18:36:47Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/86#pullrequestreview-5632903768"
+        },
+        {
+          "author": "tranvanchinhbg2006-alt",
+          "state": "COMMENTED",
+          "commit": "3c233193825a6b6fb46206586b3191cc4422bcf6",
+          "submittedAt": "2026-10-25T12:43:59Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/86#pullrequestreview-5643246112"
+        },
+        {
+          "author": "duyxl56785",
+          "state": "COMMENTED",
+          "commit": "3c233193825a6b6fb46206586b3191cc4422bcf6",
+          "submittedAt": "2026-10-25T13:17:38Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/86#pullrequestreview-5643355491"
+        },
+        {
+          "author": "duyxl56785",
+          "state": "CHANGES_REQUESTED",
+          "commit": "3c233193825a6b6fb46206586b3191cc4422bcf6",
+          "submittedAt": "2026-10-25T13:17:48Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/86#pullrequestreview-5643356013"
+        },
+        {
+          "author": "lexuanbao258-collab",
+          "state": "COMMENTED",
+          "commit": "3c233193825a6b6fb46206586b3191cc4422bcf6",
+          "submittedAt": "2026-10-25T13:21:59Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/86#pullrequestreview-5643368758"
+        },
+        {
+          "author": "tranvanchinhbg2006-alt",
+          "state": "COMMENTED",
+          "commit": "28a8abcd5cf76b298e1e6b817da16337ba322ec6",
+          "submittedAt": "2026-10-25T13:55:46Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/86#pullrequestreview-5643545825"
+        },
+        {
+          "author": "tranvanchinhbg2006-alt",
+          "state": "COMMENTED",
+          "commit": "28a8abcd5cf76b298e1e6b817da16337ba322ec6",
+          "submittedAt": "2026-10-25T14:20:53Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/86#pullrequestreview-5643642306"
+        },
+        {
+          "author": "lexuanbao258-collab",
+          "state": "COMMENTED",
+          "commit": "28a8abcd5cf76b298e1e6b817da16337ba322ec6",
+          "submittedAt": "2026-10-25T14:46:25Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/86#pullrequestreview-5643723212"
+        },
+        {
+          "author": "nguyenminhduy090-alt",
+          "state": "COMMENTED",
+          "commit": "28a8abcd5cf76b298e1e6b817da16337ba322ec6",
+          "submittedAt": "2026-10-25T14:58:33Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/86#pullrequestreview-5643767171"
+        }
+      ],
+      "reviewerRemovalEvents": []
+    },
+    {
+      "number": 87,
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/87",
+      "author": "duyxl56785",
+      "workstream": "TV2",
+      "state": "open",
+      "draft": false,
+      "head": "1a67b01315cc328a9c28b4f728ad0cb17a7225a0",
+      "headRef": "feat/tv2-product-image-storage",
+      "headRepo": "duyxl56785/Project_HK5",
+      "base": "6816941d256efcd4c5823bec52aed82af23b7889",
+      "baseRef": "main",
+      "baseRepo": "duyxl56785/Project_HK5",
+      "mergeable": true,
+      "reviewDecision": "REVIEW_REQUIRED",
+      "requestedReviewers": [],
+      "effectiveReviews": [],
+      "unresolvedThreads": [],
+      "checks": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40003903738/job/120586796756"
+        }
+      ],
+      "statuses": [],
+      "ci": "SUCCESS",
+      "observedGateSignals": [
+        "REVIEW_REQUIRED"
+      ],
+      "TV5ChangesRequested": false,
+      "TV5OpenThreads": 0,
+      "approvalAttribution": "Review metadata only: read review body/diff to verify its scope; no auto-approval/readiness inference",
+      "stackedOnOpenPRs": [],
+      "title": "feat(product): implement internal validated image storage",
+      "mergeableState": "blocked",
+      "linkedIssueMentions": [
+        2,
+        9
+      ],
+      "changedFiles": [
+        "backend/product-service/IMAGE_VALIDATION.md",
+        "backend/product-service/src/main/java/com/projecthk5/productservice/image/ImageStorage.java",
+        "backend/product-service/src/main/java/com/projecthk5/productservice/image/ImageStorageException.java",
+        "backend/product-service/src/main/java/com/projecthk5/productservice/image/LocalFileSystemImageStorage.java",
+        "backend/product-service/src/test/java/com/projecthk5/productservice/image/LocalFileSystemImageStorageTest.java",
+        "backend/product-service/src/test/java/com/projecthk5/productservice/security/ProductServiceSecurityTest.java"
+      ],
+      "commitSHAs": [
+        "70416165b243f7bc5fdf444033a8cb64c59febe7",
+        "1a67b01315cc328a9c28b4f728ad0cb17a7225a0"
+      ],
+      "priorSameHead": true,
+      "priorSameCompleteDiff": true,
+      "reviewHistory": [
+        {
+          "author": "lexuanbao258-collab",
+          "state": "COMMENTED",
+          "commit": "1a67b01315cc328a9c28b4f728ad0cb17a7225a0",
+          "submittedAt": "2026-10-24T06:42:02Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/87#pullrequestreview-5637202067"
+        },
+        {
+          "author": "nguyenminhduy090-alt",
+          "state": "COMMENTED",
+          "commit": "1a67b01315cc328a9c28b4f728ad0cb17a7225a0",
+          "submittedAt": "2026-10-24T18:08:57Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/87#pullrequestreview-5639343199"
+        }
+      ],
+      "reviewerRemovalEvents": []
+    },
+    {
+      "number": 89,
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/89",
+      "author": "duyxl56785",
+      "workstream": "TV2",
+      "state": "open",
+      "draft": false,
+      "head": "17f98f4fc96b19f784fe39eeb5fd0c90e49915f6",
+      "headRef": "codex/tv2-product-lifecycle-persistence",
+      "headRepo": "duyxl56785/Project_HK5",
+      "base": "ed85f6290de7f611c82e5c0ad973f98180f04df4",
+      "baseRef": "main",
+      "baseRepo": "duyxl56785/Project_HK5",
+      "mergeable": true,
+      "reviewDecision": "APPROVED",
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": "nguyenminhduy090-alt",
+          "state": "APPROVED",
+          "head": "17f98f4fc96b19f784fe39eeb5fd0c90e49915f6",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/89#pullrequestreview-5653394111",
+          "submittedAt": "2026-10-26T14:16:27Z"
+        },
+        {
+          "author": "lexuanbao258-collab",
+          "state": "APPROVED",
+          "head": "17f98f4fc96b19f784fe39eeb5fd0c90e49915f6",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/89#pullrequestreview-5642873639",
+          "submittedAt": "2026-10-25T11:11:37Z"
+        }
+      ],
+      "unresolvedThreads": [],
+      "checks": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40182643630/job/121136751572"
+        }
+      ],
+      "statuses": [],
+      "ci": "SUCCESS",
+      "observedGateSignals": [],
+      "TV5ChangesRequested": false,
+      "TV5OpenThreads": 0,
+      "approvalAttribution": "Review metadata only: read review body/diff to verify its scope; no auto-approval/readiness inference",
+      "stackedOnOpenPRs": [],
+      "title": "feat(product): connect lifecycle operations to production persistence",
+      "mergeableState": "clean",
+      "linkedIssueMentions": [
+        2,
+        9,
+        15
+      ],
+      "changedFiles": [
+        "backend/product-service/src/main/java/com/projecthk5/productservice/product/ProductApplicationService.java",
+        "backend/product-service/src/main/java/com/projecthk5/productservice/product/ProductLifecycleService.java",
+        "backend/product-service/src/main/java/com/projecthk5/productservice/product/persistence/ProductPersistenceAdapter.java",
+        "backend/product-service/src/test/java/com/projecthk5/productservice/product/ProductApplicationServiceIntegrationTest.java",
+        "backend/product-service/src/test/java/com/projecthk5/productservice/product/ProductApplicationServiceTest.java",
+        "backend/product-service/src/test/java/com/projecthk5/productservice/product/persistence/ProductPersistenceIntegrationTest.java"
+      ],
+      "commitSHAs": [
+        "036c80db61684a5c0a22379c6215ef8cb76917cf",
+        "17f98f4fc96b19f784fe39eeb5fd0c90e49915f6"
+      ],
+      "priorSameHead": true,
+      "priorSameCompleteDiff": true,
+      "reviewHistory": [
+        {
+          "author": "lexuanbao258-collab",
+          "state": "COMMENTED",
+          "commit": "036c80db61684a5c0a22379c6215ef8cb76917cf",
+          "submittedAt": "2026-10-24T14:19:01Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/89#pullrequestreview-5638570191"
+        },
+        {
+          "author": "nguyenminhduy090-alt",
+          "state": "COMMENTED",
+          "commit": "036c80db61684a5c0a22379c6215ef8cb76917cf",
+          "submittedAt": "2026-10-24T18:09:00Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/89#pullrequestreview-5639343510"
+        },
+        {
+          "author": "lexuanbao258-collab",
+          "state": "APPROVED",
+          "commit": "17f98f4fc96b19f784fe39eeb5fd0c90e49915f6",
+          "submittedAt": "2026-10-25T07:05:01Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/89#pullrequestreview-5641993966"
+        },
+        {
+          "author": "lexuanbao258-collab",
+          "state": "APPROVED",
+          "commit": "17f98f4fc96b19f784fe39eeb5fd0c90e49915f6",
+          "submittedAt": "2026-10-25T11:11:37Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/89#pullrequestreview-5642873639"
+        },
+        {
+          "author": "nguyenminhduy090-alt",
+          "state": "COMMENTED",
+          "commit": "17f98f4fc96b19f784fe39eeb5fd0c90e49915f6",
+          "submittedAt": "2026-10-25T13:56:26Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/89#pullrequestreview-5643550058"
+        },
+        {
+          "author": "nguyenminhduy090-alt",
+          "state": "APPROVED",
+          "commit": "17f98f4fc96b19f784fe39eeb5fd0c90e49915f6",
+          "submittedAt": "2026-10-26T14:16:27Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/89#pullrequestreview-5653394111"
+        }
+      ],
+      "reviewerRemovalEvents": []
+    },
+    {
+      "number": 90,
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/90",
+      "author": "duyxl56785",
+      "workstream": "TV2",
+      "state": "open",
+      "draft": false,
+      "head": "6a290fffc35e6795f9e25f4a79b2b6fe74aa757f",
+      "headRef": "feat/tv2-catalog-postgres-batch-source",
+      "headRepo": "duyxl56785/Project_HK5",
+      "base": "ed85f6290de7f611c82e5c0ad973f98180f04df4",
+      "baseRef": "main",
+      "baseRepo": "duyxl56785/Project_HK5",
+      "mergeable": true,
+      "reviewDecision": "APPROVED",
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": "nguyenminhduy090-alt",
+          "state": "APPROVED",
+          "head": "6a290fffc35e6795f9e25f4a79b2b6fe74aa757f",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/90#pullrequestreview-5653400658",
+          "submittedAt": "2026-10-26T14:16:52Z"
+        },
+        {
+          "author": "lexuanbao258-collab",
+          "state": "APPROVED",
+          "head": "6a290fffc35e6795f9e25f4a79b2b6fe74aa757f",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/90#pullrequestreview-5643470319",
+          "submittedAt": "2026-10-25T13:43:42Z"
+        },
+        {
+          "author": "tranvanchinhbg2006-alt",
+          "state": "APPROVED",
+          "head": "6a290fffc35e6795f9e25f4a79b2b6fe74aa757f",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/90#pullrequestreview-5643242610",
+          "submittedAt": "2026-10-25T12:42:46Z"
+        }
+      ],
+      "unresolvedThreads": [],
+      "checks": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40197447319/job/121181249738"
+        }
+      ],
+      "statuses": [],
+      "ci": "SUCCESS",
+      "observedGateSignals": [],
+      "TV5ChangesRequested": false,
+      "TV5OpenThreads": 0,
+      "approvalAttribution": "Review metadata only: read review body/diff to verify its scope; no auto-approval/readiness inference",
+      "stackedOnOpenPRs": [],
+      "title": "feat(catalog): add PostgreSQL-backed Product batch lookup",
+      "mergeableState": "clean",
+      "linkedIssueMentions": [
+        2,
+        9,
+        15
+      ],
+      "changedFiles": [
+        "backend/product-service/src/main/java/com/projecthk5/productservice/catalog/CatalogSnapshotSource.java",
+        "backend/product-service/src/main/java/com/projecthk5/productservice/catalog/CurrentStoreFactsSource.java",
+        "backend/product-service/src/main/java/com/projecthk5/productservice/catalog/ProductCatalogSnapshotSource.java",
+        "backend/product-service/src/main/java/com/projecthk5/productservice/product/persistence/ProductRepository.java",
+        "backend/product-service/src/test/java/com/projecthk5/productservice/catalog/ProductCatalogSnapshotSourceIntegrationTest.java",
+        "backend/product-service/src/test/java/com/projecthk5/productservice/catalog/ProductCatalogSnapshotSourceTest.java"
+      ],
+      "commitSHAs": [
+        "6b5897956659439066500ccf6069b030ad8f7352",
+        "6a290fffc35e6795f9e25f4a79b2b6fe74aa757f"
+      ],
+      "priorSameHead": true,
+      "priorSameCompleteDiff": true,
+      "reviewHistory": [
+        {
+          "author": "lexuanbao258-collab",
+          "state": "COMMENTED",
+          "commit": "6b5897956659439066500ccf6069b030ad8f7352",
+          "submittedAt": "2026-10-24T15:20:28Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/90#pullrequestreview-5638760328"
+        },
+        {
+          "author": "nguyenminhduy090-alt",
+          "state": "COMMENTED",
+          "commit": "6b5897956659439066500ccf6069b030ad8f7352",
+          "submittedAt": "2026-10-24T18:09:04Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/90#pullrequestreview-5639343858"
+        },
+        {
+          "author": "lexuanbao258-collab",
+          "state": "APPROVED",
+          "commit": "6a290fffc35e6795f9e25f4a79b2b6fe74aa757f",
+          "submittedAt": "2026-10-25T07:05:07Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/90#pullrequestreview-5641994417"
+        },
+        {
+          "author": "tranvanchinhbg2006-alt",
+          "state": "APPROVED",
+          "commit": "6a290fffc35e6795f9e25f4a79b2b6fe74aa757f",
+          "submittedAt": "2026-10-25T12:42:46Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/90#pullrequestreview-5643242610"
+        },
+        {
+          "author": "lexuanbao258-collab",
+          "state": "APPROVED",
+          "commit": "6a290fffc35e6795f9e25f4a79b2b6fe74aa757f",
+          "submittedAt": "2026-10-25T13:43:42Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/90#pullrequestreview-5643470319"
+        },
+        {
+          "author": "nguyenminhduy090-alt",
+          "state": "COMMENTED",
+          "commit": "6a290fffc35e6795f9e25f4a79b2b6fe74aa757f",
+          "submittedAt": "2026-10-25T13:56:34Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/90#pullrequestreview-5643550842"
+        },
+        {
+          "author": "nguyenminhduy090-alt",
+          "state": "APPROVED",
+          "commit": "6a290fffc35e6795f9e25f4a79b2b6fe74aa757f",
+          "submittedAt": "2026-10-26T14:16:52Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/90#pullrequestreview-5653400658"
+        }
+      ],
+      "reviewerRemovalEvents": []
+    },
+    {
+      "number": 91,
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/91",
+      "author": "duyxl56785",
+      "workstream": "TV2",
+      "state": "open",
+      "draft": false,
+      "head": "4915c3768a310b519e218674e405b132103cd024",
+      "headRef": "feat/tv2-catalog-search-postgres",
+      "headRepo": "duyxl56785/Project_HK5",
+      "base": "ed85f6290de7f611c82e5c0ad973f98180f04df4",
+      "baseRef": "main",
+      "baseRepo": "duyxl56785/Project_HK5",
+      "mergeable": true,
+      "reviewDecision": "APPROVED",
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": "nguyenminhduy090-alt",
+          "state": "APPROVED",
+          "head": "4915c3768a310b519e218674e405b132103cd024",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/91#pullrequestreview-5653406890",
+          "submittedAt": "2026-10-26T14:17:16Z"
+        },
+        {
+          "author": "lexuanbao258-collab",
+          "state": "APPROVED",
+          "head": "4915c3768a310b519e218674e405b132103cd024",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/91#pullrequestreview-5643470036",
+          "submittedAt": "2026-10-25T13:43:39Z"
+        }
+      ],
+      "unresolvedThreads": [],
+      "checks": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40197452631/job/121181265196"
+        }
+      ],
+      "statuses": [],
+      "ci": "SUCCESS",
+      "observedGateSignals": [],
+      "TV5ChangesRequested": false,
+      "TV5OpenThreads": 0,
+      "approvalAttribution": "Review metadata only: read review body/diff to verify its scope; no auto-approval/readiness inference",
+      "stackedOnOpenPRs": [],
+      "title": "feat(catalog): add PostgreSQL Product candidate search",
+      "mergeableState": "clean",
+      "linkedIssueMentions": [
+        2,
+        9,
+        15
+      ],
+      "changedFiles": [
+        "backend/product-service/src/main/java/com/projecthk5/productservice/catalog/CatalogCandidatePage.java",
+        "backend/product-service/src/main/java/com/projecthk5/productservice/catalog/CatalogSearchQuery.java",
+        "backend/product-service/src/main/java/com/projecthk5/productservice/product/persistence/ProductCatalogSearch.java",
+        "backend/product-service/src/main/java/com/projecthk5/productservice/product/persistence/ProductCatalogSearchImpl.java",
+        "backend/product-service/src/main/java/com/projecthk5/productservice/product/persistence/ProductRepository.java",
+        "backend/product-service/src/test/java/com/projecthk5/productservice/catalog/CatalogSearchQueryTest.java",
+        "backend/product-service/src/test/java/com/projecthk5/productservice/catalog/ProductCatalogSearchIntegrationTest.java"
+      ],
+      "commitSHAs": [
+        "0860dc940bba44b5eceee082db2d2ea784a565b1",
+        "4915c3768a310b519e218674e405b132103cd024"
+      ],
+      "priorSameHead": true,
+      "priorSameCompleteDiff": true,
+      "reviewHistory": [
+        {
+          "author": "lexuanbao258-collab",
+          "state": "COMMENTED",
+          "commit": "0860dc940bba44b5eceee082db2d2ea784a565b1",
+          "submittedAt": "2026-10-24T17:45:55Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/91#pullrequestreview-5639206272"
+        },
+        {
+          "author": "nguyenminhduy090-alt",
+          "state": "COMMENTED",
+          "commit": "0860dc940bba44b5eceee082db2d2ea784a565b1",
+          "submittedAt": "2026-10-24T18:09:07Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/91#pullrequestreview-5639344207"
+        },
+        {
+          "author": "lexuanbao258-collab",
+          "state": "APPROVED",
+          "commit": "4915c3768a310b519e218674e405b132103cd024",
+          "submittedAt": "2026-10-25T07:05:13Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/91#pullrequestreview-5641994963"
+        },
+        {
+          "author": "lexuanbao258-collab",
+          "state": "APPROVED",
+          "commit": "4915c3768a310b519e218674e405b132103cd024",
+          "submittedAt": "2026-10-25T13:43:39Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/91#pullrequestreview-5643470036"
+        },
+        {
+          "author": "nguyenminhduy090-alt",
+          "state": "COMMENTED",
+          "commit": "4915c3768a310b519e218674e405b132103cd024",
+          "submittedAt": "2026-10-25T13:56:37Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/91#pullrequestreview-5643551253"
+        },
+        {
+          "author": "nguyenminhduy090-alt",
+          "state": "APPROVED",
+          "commit": "4915c3768a310b519e218674e405b132103cd024",
+          "submittedAt": "2026-10-26T14:17:16Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/91#pullrequestreview-5653406890"
+        }
+      ],
+      "reviewerRemovalEvents": []
+    },
+    {
+      "number": 92,
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/92",
+      "author": "nguyenminhduy090-alt",
+      "workstream": "OTHER",
+      "state": "open",
+      "draft": false,
+      "head": "67a802bd247fe93fe7f9aa944a64abebe8748d9a",
+      "headRef": "codex/tv5-auth-pg-handoff-20261025",
+      "headRepo": "duyxl56785/Project_HK5",
+      "base": "c8ebb98ed77b4e0ec7a8ef9b00839c31523c9ea2",
+      "baseRef": "feat/tv1-auth-jwt-current-authority-foundation-20261023",
+      "baseRepo": "duyxl56785/Project_HK5",
+      "mergeable": true,
+      "reviewDecision": "APPROVED",
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": "duyxl56785",
+          "state": "APPROVED",
+          "head": "67a802bd247fe93fe7f9aa944a64abebe8748d9a",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/92#pullrequestreview-5643355055",
+          "submittedAt": "2026-10-25T13:17:30Z"
+        }
+      ],
+      "unresolvedThreads": [],
+      "checks": [],
+      "statuses": [],
+      "ci": "NO_CHECKS",
+      "observedGateSignals": [],
+      "TV5ChangesRequested": false,
+      "TV5OpenThreads": 0,
+      "approvalAttribution": "Review metadata only: read review body/diff to verify its scope; no auto-approval/readiness inference",
+      "stackedOnOpenPRs": [
+        80
+      ],
+      "title": "docs(tv5): refresh verified Auth parent QA and bootstrap handoff",
+      "mergeableState": "clean",
+      "linkedIssueMentions": [
+        1,
+        5,
+        12
+      ],
+      "changedFiles": [
+        "reports/evidence/tv5-audit-20261025/auth80.json",
+        "tests/security/README_AUTH_CURRENT_AUTHORITY.md"
+      ],
+      "commitSHAs": [
+        "30751a0d08a452a2dfc456bbb36cc836ca4d48e6",
+        "67a802bd247fe93fe7f9aa944a64abebe8748d9a"
+      ],
+      "priorSameHead": true,
+      "priorSameCompleteDiff": true,
+      "reviewHistory": [
+        {
+          "author": "lexuanbao258-collab",
+          "state": "COMMENTED",
+          "commit": "67a802bd247fe93fe7f9aa944a64abebe8748d9a",
+          "submittedAt": "2026-10-24T18:27:48Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/92#pullrequestreview-5639419402"
+        },
+        {
+          "author": "duyxl56785",
+          "state": "APPROVED",
+          "commit": "67a802bd247fe93fe7f9aa944a64abebe8748d9a",
+          "submittedAt": "2026-10-25T13:17:30Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/92#pullrequestreview-5643355055"
+        }
+      ],
+      "reviewerRemovalEvents": []
+    },
+    {
+      "number": 93,
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/93",
+      "author": "nguyenminhduy090-alt",
+      "workstream": "OTHER",
+      "state": "open",
+      "draft": false,
+      "head": "dd69f3d065f40f697c255c34de641bea9f61cc9e",
+      "headRef": "codex/tv5-pr-backlog-20261025",
+      "headRepo": "duyxl56785/Project_HK5",
+      "base": "23f583dd7dae164b0a2932d1fe66b2d0eaffdd9d",
+      "baseRef": "main",
+      "baseRepo": "duyxl56785/Project_HK5",
+      "mergeable": true,
+      "reviewDecision": "APPROVED",
+      "requestedReviewers": [
+        "duyxl56785"
+      ],
+      "effectiveReviews": [
+        {
+          "author": "duyxl56785",
+          "state": "APPROVED",
+          "head": "bffe12d737084d2a0809474a4faf3a7f216f8132",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/93#pullrequestreview-5643355280",
+          "submittedAt": "2026-10-25T13:17:35Z"
+        }
+      ],
+      "unresolvedThreads": [],
+      "checks": [],
+      "statuses": [],
+      "ci": "NO_CHECKS",
+      "observedGateSignals": [],
+      "TV5ChangesRequested": false,
+      "TV5OpenThreads": 0,
+      "approvalAttribution": "Review metadata only: read review body/diff to verify its scope; no auto-approval/readiness inference",
+      "stackedOnOpenPRs": [],
+      "title": "docs(tv5): publish PR backlog QA and owner unblock evidence",
+      "mergeableState": "clean",
+      "linkedIssueMentions": [
+        5,
+        12,
+        18
+      ],
+      "changedFiles": [
+        "docs/QA.md",
+        "docs/TV5_FINANCE_CONTRACT_SIGNOFF.md",
+        "docs/TV5_W1_CHECKLIST.md",
+        "reports/TV5_INDEPENDENT_QA_CODE_2026-10-25.md",
+        "reports/TV5_PRODUCT_INTEGRATION_REVIEW_2026-10-25.md",
+        "reports/TV5_PRODUCT_SEQUENTIAL_HANDOFF_2026-10-25.md",
+        "reports/TV5_PR_REVIEW_UNBLOCK_2026-10-25.md",
+        "reports/evidence/tv5-audit-20261025/pr80.json",
+        "reports/evidence/tv5-audit-20261025/pr83.json",
+        "reports/evidence/tv5-audit-20261025/pr85.json",
+        "reports/evidence/tv5-audit-20261025/pr87.json",
+        "reports/evidence/tv5-audit-20261025/pr88.json",
+        "reports/evidence/tv5-audit-20261025/pr89.json",
+        "reports/evidence/tv5-audit-20261025/pr90.json",
+        "reports/evidence/tv5-audit-20261025/pr91.json",
+        "reports/evidence/tv5-audit-20261025/repository-reviewers.json",
+        "reports/evidence/tv5-audit-20261025/review-publication.json",
+        "reports/evidence/tv5-independent-code-20261025/audit-live.json",
+        "reports/evidence/tv5-independent-code-20261025/audit-offline.json",
+        "reports/evidence/tv5-independent-code-20261025/finance-committed.json",
+        "reports/evidence/tv5-independent-code-20261025/finance-focused.json",
+        "reports/evidence/tv5-independent-code-20261025/publication.json",
+        "reports/evidence/tv5-integration-sequence-20261025-r3/pr96.json",
+        "reports/evidence/tv5-integration-sequence-20261025-r3/pr97.json",
+        "reports/evidence/tv5-integration-sequence-20261025-r3/sequence.json",
+        "reports/evidence/tv5-product-integration-20261025/83.json",
+        "reports/evidence/tv5-product-integration-20261025/89.json",
+        "reports/evidence/tv5-product-integration-20261025/90.json",
+        "reports/evidence/tv5-product-integration-20261025/91.json",
+        "reports/evidence/tv5-product-integration-20261025/94.json",
+        "reports/evidence/tv5-product-integration-20261025/combined.json",
+        "reports/evidence/tv5-product-integration-20261025/finance.json",
+        "reports/evidence/tv5-product-integration-20261025/publication.json",
+        "reports/evidence/tv5-product-integration-20261025/review-context.json",
+        "reports/evidence/tv5-review-refresh-20261025-r2/audit.json",
+        "reports/evidence/tv5-review-refresh-20261025-r2/pr86-red-green.json",
+        "tests/TV5_TRACEABILITY.md"
+      ],
+      "commitSHAs": [
+        "0737ea7a1296298d3eec36585517b458c3468b96",
+        "bffe12d737084d2a0809474a4faf3a7f216f8132",
+        "76e99572cce68a43a45dd764b3b303d7c4d00557",
+        "223bc2fd698c1aaf53bbb931ff15129d51045d94",
+        "ce0a52e167b7992d4d196132e852d45b9bab3f1d",
+        "6652997bde96cbfd60aeead696cd27beeca33037",
+        "dd69f3d065f40f697c255c34de641bea9f61cc9e"
+      ],
+      "priorSameHead": false,
+      "priorSameCompleteDiff": false,
+      "reviewHistory": [
+        {
+          "author": "lexuanbao258-collab",
+          "state": "COMMENTED",
+          "commit": "bffe12d737084d2a0809474a4faf3a7f216f8132",
+          "submittedAt": "2026-10-24T18:28:08Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/93#pullrequestreview-5639420406"
+        },
+        {
+          "author": "duyxl56785",
+          "state": "APPROVED",
+          "commit": "bffe12d737084d2a0809474a4faf3a7f216f8132",
+          "submittedAt": "2026-10-25T13:17:35Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/93#pullrequestreview-5643355280"
+        },
+        {
+          "author": "lexuanbao258-collab",
+          "state": "COMMENTED",
+          "commit": "223bc2fd698c1aaf53bbb931ff15129d51045d94",
+          "submittedAt": "2026-10-25T14:46:40Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/93#pullrequestreview-5643724169"
+        },
+        {
+          "author": "lexuanbao258-collab",
+          "state": "COMMENTED",
+          "commit": "ce0a52e167b7992d4d196132e852d45b9bab3f1d",
+          "submittedAt": "2026-10-25T15:01:16Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/93#pullrequestreview-5643775362"
+        }
+      ],
+      "reviewerRemovalEvents": []
+    },
+    {
+      "number": 94,
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/94",
+      "author": "duyxl56785",
+      "workstream": "TV2",
+      "state": "open",
+      "draft": false,
+      "head": "96d59ca320845495dd2ce6acf42d0b10ee0286a6",
+      "headRef": "codex/tv2-seller-store-current-facts",
+      "headRepo": "duyxl56785/Project_HK5",
+      "base": "ed85f6290de7f611c82e5c0ad973f98180f04df4",
+      "baseRef": "main",
+      "baseRepo": "duyxl56785/Project_HK5",
+      "mergeable": true,
+      "reviewDecision": "APPROVED",
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": "nguyenminhduy090-alt",
+          "state": "APPROVED",
+          "head": "96d59ca320845495dd2ce6acf42d0b10ee0286a6",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/94#pullrequestreview-5653413107",
+          "submittedAt": "2026-10-26T14:17:37Z"
+        },
+        {
+          "author": "lexuanbao258-collab",
+          "state": "APPROVED",
+          "head": "96d59ca320845495dd2ce6acf42d0b10ee0286a6",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/94#pullrequestreview-5641995437",
+          "submittedAt": "2026-10-25T07:05:18Z"
+        }
+      ],
+      "unresolvedThreads": [],
+      "checks": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40122424378/job/120956667721"
+        }
+      ],
+      "statuses": [],
+      "ci": "SUCCESS",
+      "observedGateSignals": [],
+      "TV5ChangesRequested": false,
+      "TV5OpenThreads": 0,
+      "approvalAttribution": "Review metadata only: read review body/diff to verify its scope; no auto-approval/readiness inference",
+      "stackedOnOpenPRs": [],
+      "title": "feat(seller): provide current Store Seller ownership facts",
+      "mergeableState": "clean",
+      "linkedIssueMentions": [
+        2,
+        9,
+        15
+      ],
+      "changedFiles": [
+        "backend/seller-service/src/main/java/com/projecthk5/sellerservice/store/StoreCurrentSource.java",
+        "backend/seller-service/src/main/java/com/projecthk5/sellerservice/store/StoreRepository.java",
+        "backend/seller-service/src/test/java/com/projecthk5/sellerservice/store/StoreOwnedFactsTest.java",
+        "backend/seller-service/src/test/java/com/projecthk5/sellerservice/store/StoreProductFactsIntegrationTest.java"
+      ],
+      "commitSHAs": [
+        "96d59ca320845495dd2ce6acf42d0b10ee0286a6"
+      ],
+      "priorSameHead": true,
+      "priorSameCompleteDiff": true,
+      "reviewHistory": [
+        {
+          "author": "lexuanbao258-collab",
+          "state": "COMMENTED",
+          "commit": "96d59ca320845495dd2ce6acf42d0b10ee0286a6",
+          "submittedAt": "2026-10-24T19:49:07Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/94#pullrequestreview-5639699053"
+        },
+        {
+          "author": "lexuanbao258-collab",
+          "state": "APPROVED",
+          "commit": "96d59ca320845495dd2ce6acf42d0b10ee0286a6",
+          "submittedAt": "2026-10-25T07:05:18Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/94#pullrequestreview-5641995437"
+        },
+        {
+          "author": "nguyenminhduy090-alt",
+          "state": "COMMENTED",
+          "commit": "96d59ca320845495dd2ce6acf42d0b10ee0286a6",
+          "submittedAt": "2026-10-25T13:56:30Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/94#pullrequestreview-5643550440"
+        },
+        {
+          "author": "nguyenminhduy090-alt",
+          "state": "APPROVED",
+          "commit": "96d59ca320845495dd2ce6acf42d0b10ee0286a6",
+          "submittedAt": "2026-10-26T14:17:37Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/94#pullrequestreview-5653413107"
+        }
+      ],
+      "reviewerRemovalEvents": []
+    },
+    {
+      "number": 95,
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/95",
+      "author": "duyxl56785",
+      "workstream": "TV2",
+      "state": "open",
+      "draft": false,
+      "head": "53c2a1baf8988ef8878524e9aa742d4a78a690cf",
+      "headRef": "codex/tv2-product-management-ui",
+      "headRepo": "duyxl56785/Project_HK5",
+      "base": "ed85f6290de7f611c82e5c0ad973f98180f04df4",
+      "baseRef": "main",
+      "baseRepo": "duyxl56785/Project_HK5",
+      "mergeable": true,
+      "reviewDecision": "APPROVED",
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": "lexuanbao258-collab",
+          "state": "APPROVED",
+          "head": "53c2a1baf8988ef8878524e9aa742d4a78a690cf",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/95#pullrequestreview-5643263935",
+          "submittedAt": "2026-10-25T12:49:55Z"
+        }
+      ],
+      "unresolvedThreads": [],
+      "checks": [],
+      "statuses": [],
+      "ci": "NO_CHECKS",
+      "observedGateSignals": [],
+      "TV5ChangesRequested": false,
+      "TV5OpenThreads": 0,
+      "approvalAttribution": "Review metadata only: read review body/diff to verify its scope; no auto-approval/readiness inference",
+      "stackedOnOpenPRs": [],
+      "title": "feat(tv2): add Product management UI with domain validation",
+      "mergeableState": "clean",
+      "linkedIssueMentions": [
+        2
+      ],
+      "changedFiles": [
+        "frontend/src/features/product/ProductForm.tsx",
+        "frontend/src/features/product/ProductManagement.browser.mjs",
+        "frontend/src/features/product/ProductManagement.css",
+        "frontend/src/features/product/ProductManagement.dom.mjs",
+        "frontend/src/features/product/ProductManagementPage.test.mjs",
+        "frontend/src/features/product/ProductManagementPage.tsx",
+        "frontend/src/features/product/README.md",
+        "frontend/src/features/product/index.ts",
+        "frontend/src/features/product/preview/ProductManagementPreview.tsx",
+        "frontend/src/features/product/preview/index.html",
+        "frontend/src/features/product/productManagementModel.test.mjs",
+        "frontend/src/features/product/productManagementModel.ts",
+        "frontend/src/features/product/productManagementTypes.ts",
+        "frontend/src/features/product/productTestFixtures.mjs",
+        "frontend/src/features/product/vite.product.config.ts"
+      ],
+      "commitSHAs": [
+        "740938765083142f112f11f3e0798278933e8941",
+        "53c2a1baf8988ef8878524e9aa742d4a78a690cf"
+      ],
+      "priorSameHead": true,
+      "priorSameCompleteDiff": true,
+      "reviewHistory": [
+        {
+          "author": "lexuanbao258-collab",
+          "state": "CHANGES_REQUESTED",
+          "commit": "740938765083142f112f11f3e0798278933e8941",
+          "submittedAt": "2026-10-25T11:39:13Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/95#pullrequestreview-5643010988"
+        },
+        {
+          "author": "duyxl56785",
+          "state": "COMMENTED",
+          "commit": "53c2a1baf8988ef8878524e9aa742d4a78a690cf",
+          "submittedAt": "2026-10-25T12:15:23Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/95#pullrequestreview-5643160364"
+        },
+        {
+          "author": "lexuanbao258-collab",
+          "state": "APPROVED",
+          "commit": "53c2a1baf8988ef8878524e9aa742d4a78a690cf",
+          "submittedAt": "2026-10-25T12:49:55Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/95#pullrequestreview-5643263935"
+        }
+      ],
+      "reviewerRemovalEvents": []
+    },
+    {
+      "number": 97,
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/97",
+      "author": "duyxl56785",
+      "workstream": "TV2",
+      "state": "open",
+      "draft": false,
+      "head": "aa790f422a8b3ee698f53e74c455edae7b77d6fa",
+      "headRef": "codex/tv2-product-http-preparation",
+      "headRepo": "duyxl56785/Project_HK5",
+      "base": "17f98f4fc96b19f784fe39eeb5fd0c90e49915f6",
+      "baseRef": "codex/tv2-product-lifecycle-persistence",
+      "baseRepo": "duyxl56785/Project_HK5",
+      "mergeable": true,
+      "reviewDecision": null,
+      "requestedReviewers": [],
+      "effectiveReviews": [],
+      "unresolvedThreads": [],
+      "checks": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40207706263/job/121212104949"
+        }
+      ],
+      "statuses": [],
+      "ci": "SUCCESS",
+      "observedGateSignals": [],
+      "TV5ChangesRequested": false,
+      "TV5OpenThreads": 0,
+      "approvalAttribution": "Review metadata only: read review body/diff to verify its scope; no auto-approval/readiness inference",
+      "stackedOnOpenPRs": [
+        89
+      ],
+      "title": "feat(tv2): prepare guarded Product management JSON handlers",
+      "mergeableState": "clean",
+      "linkedIssueMentions": [
+        2,
+        9,
+        15
+      ],
+      "changedFiles": [
+        "backend/product-service/src/main/java/com/projecthk5/productservice/product/http/ProductManagementAuthority.java",
+        "backend/product-service/src/main/java/com/projecthk5/productservice/product/http/ProductManagementErrors.java",
+        "backend/product-service/src/main/java/com/projecthk5/productservice/product/http/ProductManagementHandler.java",
+        "backend/product-service/src/main/java/com/projecthk5/productservice/product/http/ProductManagementJson.java",
+        "backend/product-service/src/main/java/com/projecthk5/productservice/product/http/ProductManagementResponse.java",
+        "backend/product-service/src/main/java/com/projecthk5/productservice/product/http/README.md",
+        "backend/product-service/src/test/java/com/projecthk5/productservice/product/http/ProductManagementHandlerIntegrationTest.java",
+        "backend/product-service/src/test/java/com/projecthk5/productservice/product/http/ProductManagementHandlerTest.java",
+        "backend/product-service/src/test/java/com/projecthk5/productservice/product/http/ProductManagementJsonTest.java"
+      ],
+      "commitSHAs": [
+        "aa790f422a8b3ee698f53e74c455edae7b77d6fa"
+      ],
+      "priorSameHead": true,
+      "priorSameCompleteDiff": true,
+      "reviewHistory": [
+        {
+          "author": "nguyenminhduy090-alt",
+          "state": "COMMENTED",
+          "commit": "aa790f422a8b3ee698f53e74c455edae7b77d6fa",
+          "submittedAt": "2026-10-25T16:10:15Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/97#pullrequestreview-5644073946"
+        },
+        {
+          "author": "lexuanbao258-collab",
+          "state": "COMMENTED",
+          "commit": "aa790f422a8b3ee698f53e74c455edae7b77d6fa",
+          "submittedAt": "2026-10-25T16:23:43Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/97#pullrequestreview-5644116114"
+        }
+      ],
+      "reviewerRemovalEvents": []
+    },
+    {
+      "number": 98,
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/98",
+      "author": "phamthecuong2022006-alt",
+      "workstream": "OTHER",
+      "state": "open",
+      "draft": true,
+      "head": "d53e2a96833e246482c504879cd6d646dca82bf5",
+      "headRef": "feat/tv4-fulfillment-store-guard",
+      "headRepo": "duyxl56785/Project_HK5",
+      "base": "ed85f6290de7f611c82e5c0ad973f98180f04df4",
+      "baseRef": "main",
+      "baseRepo": "duyxl56785/Project_HK5",
+      "mergeable": true,
+      "reviewDecision": "REVIEW_REQUIRED",
+      "requestedReviewers": [],
+      "effectiveReviews": [],
+      "unresolvedThreads": [],
+      "checks": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40208896482/job/121215685405"
+        }
+      ],
+      "statuses": [],
+      "ci": "SUCCESS",
+      "observedGateSignals": [
+        "DRAFT",
+        "REVIEW_REQUIRED"
+      ],
+      "TV5ChangesRequested": false,
+      "TV5OpenThreads": 0,
+      "approvalAttribution": "Review metadata only: read review body/diff to verify its scope; no auto-approval/readiness inference",
+      "stackedOnOpenPRs": [],
+      "title": "feat(tv4): add fulfillment Store ownership guard",
+      "mergeableState": "blocked",
+      "linkedIssueMentions": [
+        4,
+        11
+      ],
+      "changedFiles": [
+        "backend/order-service/src/main/java/com/projecthk5/orderservice/fulfillment/FulfillmentStoreOwnership.java",
+        "backend/order-service/src/test/java/com/projecthk5/orderservice/fulfillment/FulfillmentStoreOwnershipTest.java"
+      ],
+      "commitSHAs": [
+        "d53e2a96833e246482c504879cd6d646dca82bf5"
+      ],
+      "priorSameHead": true,
+      "priorSameCompleteDiff": true,
+      "reviewHistory": [],
+      "reviewerRemovalEvents": []
+    },
+    {
+      "number": 99,
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/99",
+      "author": "nguyenminhduy090-alt",
+      "workstream": "OTHER",
+      "state": "open",
+      "draft": false,
+      "head": "446ae44da90832df534b6e37150f26a71f2adf25",
+      "headRef": "codex/tv5-finance-durability-qa",
+      "headRepo": "duyxl56785/Project_HK5",
+      "base": "ed85f6290de7f611c82e5c0ad973f98180f04df4",
+      "baseRef": "main",
+      "baseRepo": "duyxl56785/Project_HK5",
+      "mergeable": true,
+      "reviewDecision": "REVIEW_REQUIRED",
+      "requestedReviewers": [
+        "tranvanchinhbg2006-alt",
+        "duyxl56785",
+        "phamthecuong2022006-alt"
+      ],
+      "effectiveReviews": [],
+      "unresolvedThreads": [],
+      "checks": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40211934401/job/121224818127"
+        }
+      ],
+      "statuses": [],
+      "ci": "SUCCESS",
+      "observedGateSignals": [
+        "REVIEW_REQUIRED"
+      ],
+      "TV5ChangesRequested": false,
+      "TV5OpenThreads": 0,
+      "approvalAttribution": "Review metadata only: read review body/diff to verify its scope; no auto-approval/readiness inference",
+      "stackedOnOpenPRs": [],
+      "title": "test(tv5): verify two-Store financial rollback and concurrent replay",
+      "mergeableState": "blocked",
+      "linkedIssueMentions": [
+        5,
+        12
+      ],
+      "changedFiles": [
+        "backend/order-service/src/test/java/com/projecthk5/orderservice/finance/FinanceDurabilityPostgresIT.java",
+        "backend/order-service/src/test/java/com/projecthk5/orderservice/finance/FinanceTwoStoreFixture.java",
+        "tests/finance/README_DURABILITY.md"
+      ],
+      "commitSHAs": [
+        "446ae44da90832df534b6e37150f26a71f2adf25"
+      ],
+      "priorSameHead": false,
+      "priorSameCompleteDiff": false,
+      "reviewHistory": [],
+      "reviewerRemovalEvents": []
+    },
+    {
+      "number": 100,
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/100",
+      "author": "nguyenminhduy090-alt",
+      "workstream": "OTHER",
+      "state": "open",
+      "draft": false,
+      "head": "8bf9f12e1a7df92b77f8a506fba5e1907a4f1c6c",
+      "headRef": "codex/tv5-readonly-pr-audit",
+      "headRepo": "duyxl56785/Project_HK5",
+      "base": "ed85f6290de7f611c82e5c0ad973f98180f04df4",
+      "baseRef": "main",
+      "baseRepo": "duyxl56785/Project_HK5",
+      "mergeable": true,
+      "reviewDecision": "REVIEW_REQUIRED",
+      "requestedReviewers": [
+        "duyxl56785"
+      ],
+      "effectiveReviews": [],
+      "unresolvedThreads": [],
+      "checks": [],
+      "statuses": [],
+      "ci": "NO_CHECKS",
+      "observedGateSignals": [
+        "REVIEW_REQUIRED"
+      ],
+      "TV5ChangesRequested": false,
+      "TV5OpenThreads": 0,
+      "approvalAttribution": "Review metadata only: read review body/diff to verify its scope; no auto-approval/readiness inference",
+      "stackedOnOpenPRs": [],
+      "title": "chore(tv5): add read-only PR reviewer audit and regression tests",
+      "mergeableState": "blocked",
+      "linkedIssueMentions": [
+        5,
+        12
+      ],
+      "changedFiles": [
+        "scripts/qa/.gitignore",
+        "scripts/qa/README.md",
+        "scripts/qa/pr_review_audit.py",
+        "scripts/qa/tests/test_pr_review_audit.py"
+      ],
+      "commitSHAs": [
+        "8bf9f12e1a7df92b77f8a506fba5e1907a4f1c6c"
+      ],
+      "priorSameHead": false,
+      "priorSameCompleteDiff": false,
+      "reviewHistory": [
+        {
+          "author": "lexuanbao258-collab",
+          "state": "COMMENTED",
+          "commit": "8bf9f12e1a7df92b77f8a506fba5e1907a4f1c6c",
+          "submittedAt": "2026-10-25T17:47:39Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/100#pullrequestreview-5644435624"
+        }
+      ],
+      "reviewerRemovalEvents": []
+    },
+    {
+      "number": 101,
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/101",
+      "author": "lexuanbao258-collab",
+      "workstream": "OTHER",
+      "state": "open",
+      "draft": false,
+      "head": "e45cede29435bbce553cb244cb956493cb98c26b",
+      "headRef": "feat/tv1-auth-runtime-p0-20261026",
+      "headRepo": "duyxl56785/Project_HK5",
+      "base": "083355be16c4e3ea442ccd861d5f4b40236a0b12",
+      "baseRef": "feat/tv1-auth-jwt-current-authority-foundation-20261023",
+      "baseRepo": "duyxl56785/Project_HK5",
+      "mergeable": true,
+      "reviewDecision": null,
+      "requestedReviewers": [],
+      "effectiveReviews": [],
+      "unresolvedThreads": [],
+      "checks": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40281141939/job/121434492112"
+        }
+      ],
+      "statuses": [],
+      "ci": "SUCCESS",
+      "observedGateSignals": [],
+      "TV5ChangesRequested": false,
+      "TV5OpenThreads": 0,
+      "approvalAttribution": "Review metadata only: read review body/diff to verify its scope; no auto-approval/readiness inference",
+      "stackedOnOpenPRs": [
+        80
+      ],
+      "title": "test(tv1-auth): verify runtime bootstrap and account security gates",
+      "mergeableState": "clean",
+      "linkedIssueMentions": [],
+      "changedFiles": [
+        "backend/auth-service/src/main/java/com/projecthk5/authservice/security/AuthBootstrapConfiguration.java",
+        "backend/auth-service/src/test/java/com/projecthk5/authservice/security/AuthBootstrapConfigurationTest.java",
+        "backend/auth-service/src/test/java/com/projecthk5/authservice/security/AuthBootstrapStartupTest.java",
+        "backend/auth-service/src/test/java/com/projecthk5/authservice/security/CurrentAccountAuthorityTest.java",
+        "backend/auth-service/verification/20261026-account-policy-proposal.md",
+        "backend/auth-service/verification/20261026-gate1.json",
+        "backend/auth-service/verification/20261026-runtime-gates.json"
+      ],
+      "commitSHAs": [
+        "d965690f4de89965091bdfa4fc89ccff21b080d5",
+        "f9dde456a9e7b17143e013299f02708f9df583f3",
+        "15289f48b91c5267bc8ca2a133b3325de626f902",
+        "f70dbdb1b61bff554fdf97be318a1e6c45b5a241",
+        "f7c7b541af4a19897f5a07b256e522b590bf101e",
+        "be7845ffaa4f1b5ace9bbb97dc571c9c561c0175",
+        "e45cede29435bbce553cb244cb956493cb98c26b"
+      ],
+      "priorSameHead": false,
+      "priorSameCompleteDiff": false,
+      "reviewHistory": [
+        {
+          "author": "duyxl56785",
+          "state": "COMMENTED",
+          "commit": "be7845ffaa4f1b5ace9bbb97dc571c9c561c0175",
+          "submittedAt": "2026-10-26T06:19:07Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/101#pullrequestreview-5648082018"
+        },
+        {
+          "author": "lexuanbao258-collab",
+          "state": "COMMENTED",
+          "commit": "be7845ffaa4f1b5ace9bbb97dc571c9c561c0175",
+          "submittedAt": "2026-10-26T06:21:15Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/101#pullrequestreview-5648095484"
+        },
+        {
+          "author": "duyxl56785",
+          "state": "COMMENTED",
+          "commit": "e45cede29435bbce553cb244cb956493cb98c26b",
+          "submittedAt": "2026-10-26T08:43:21Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/101#pullrequestreview-5649381725"
+        }
+      ],
+      "reviewerRemovalEvents": []
+    },
+    {
+      "number": 102,
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/102",
+      "author": "lexuanbao258-collab",
+      "workstream": "OTHER",
+      "state": "open",
+      "draft": true,
+      "head": "a4d63600d1c72712391566ac04d794149eab0c59",
+      "headRef": "feat/tv1-auth-http-p0-candidate-20261026",
+      "headRepo": "duyxl56785/Project_HK5",
+      "base": "e45cede29435bbce553cb244cb956493cb98c26b",
+      "baseRef": "feat/tv1-auth-runtime-p0-20261026",
+      "baseRepo": "duyxl56785/Project_HK5",
+      "mergeable": true,
+      "reviewDecision": "CHANGES_REQUESTED",
+      "requestedReviewers": [
+        "duyxl56785"
+      ],
+      "effectiveReviews": [
+        {
+          "author": "duyxl56785",
+          "state": "CHANGES_REQUESTED",
+          "head": "62d7a9a7f743e4c6818d3adeb3674941a742f53c",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/102#pullrequestreview-5653210933",
+          "submittedAt": "2026-10-26T14:04:28Z"
+        }
+      ],
+      "unresolvedThreads": [
+        {
+          "id": "PRRT_kwDOVGqk_M6wMHzh",
+          "path": "backend/api-gateway/src/main/java/com/projecthk5/gateway/GatewayAuthConfiguration.java",
+          "line": null,
+          "outdated": true,
+          "author": "duyxl56785",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/102#discussion_r4375382681"
+        }
+      ],
+      "checks": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40338944762/job/121627993050"
+        }
+      ],
+      "statuses": [],
+      "ci": "SUCCESS",
+      "observedGateSignals": [
+        "DRAFT",
+        "CHANGES_REQUESTED",
+        "UNRESOLVED_THREADS"
+      ],
+      "TV5ChangesRequested": false,
+      "TV5OpenThreads": 0,
+      "approvalAttribution": "Review metadata only: read review body/diff to verify its scope; no auto-approval/readiness inference",
+      "stackedOnOpenPRs": [
+        101
+      ],
+      "title": "feat(tv1-auth): prepare inert transactional account/session core",
+      "mergeableState": "clean",
+      "linkedIssueMentions": [
+        1
+      ],
+      "changedFiles": [
+        "backend/api-gateway/build.gradle",
+        "backend/api-gateway/src/main/java/com/projecthk5/gateway/GatewayAuthConfiguration.java",
+        "backend/api-gateway/src/main/java/com/projecthk5/gateway/GatewayJwtDecoder.java",
+        "backend/api-gateway/src/test/java/com/projecthk5/gateway/GatewayEmbeddedNettyForwardingTest.java",
+        "backend/api-gateway/src/test/java/com/projecthk5/gateway/GatewayHeaderSanitizationTest.java",
+        "backend/api-gateway/src/test/java/com/projecthk5/gateway/GatewayJwtDecoderTest.java",
+        "backend/auth-service/build.gradle",
+        "backend/auth-service/src/main/java/com/projecthk5/authservice/runtime/AuthHttpController.java",
+        "backend/auth-service/src/main/java/com/projecthk5/authservice/runtime/AuthHttpGate.java",
+        "backend/auth-service/src/main/java/com/projecthk5/authservice/runtime/AuthServletSecurityConfiguration.java",
+        "backend/auth-service/src/main/java/com/projecthk5/authservice/runtime/AuthSessionService.java",
+        "backend/auth-service/src/main/java/com/projecthk5/authservice/security/CurrentAccountAuthority.java",
+        "backend/auth-service/src/test/java/com/projecthk5/authservice/runtime/AuthHttpControllerTest.java",
+        "backend/auth-service/src/test/java/com/projecthk5/authservice/runtime/AuthHttpGateTest.java",
+        "backend/auth-service/src/test/java/com/projecthk5/authservice/runtime/AuthSessionServiceTest.java",
+        "backend/auth-service/src/test/java/com/projecthk5/authservice/runtime/AuthSessionServiceWiringTest.java",
+        "backend/auth-service/verification/20261026-auth-http-p0-candidate.md"
+      ],
+      "commitSHAs": [
+        "8cd726ba42c9962f51c28741c426147436940027",
+        "c54bf20f2677a83ca46c2e91cc112e0111e5cd98",
+        "868af447dabfe33fca098f6d15ea3202fcaf695a",
+        "24e663f16fa8d80adc9eaea45730ab0a59789df7",
+        "34db7e744bb9c8767d044b63ce8775c68680bc4f",
+        "6931bd842dab8d0505088e672824ea417dd56337",
+        "e10acab82021f8f48c2562119832291eefdc24f7",
+        "c5a83e8ed66174caf15586739f9b6f22badce44b",
+        "738fa2f1ee5042daf72ad711c675406c66a1bc59",
+        "4d181128b62933330f342c09448f0b37412e2f28",
+        "802cb1cdfdc9a6f061835ea0e1f84c59a6068f12",
+        "117e62c4172496917acae688534a70481e883111",
+        "841e797788bf2a68a3abec03f6d2428becad0c08",
+        "9be8a3ba69e40cf1af8998d1e915f528fb8f1fa5",
+        "29fd6ae67f3d618b8220c4993f5b27aa0e27bf0e",
+        "716697a6aacba7d611a2c252ec0805633a43054b",
+        "a10935b09a998e3a0aadc44537959943a8ddb8c7",
+        "af311ff88f4335761a86ef42a90e0dd4213afd3e",
+        "7d9a5b9b760193c8f9810d86ee45ab9985797e4d",
+        "62d7a9a7f743e4c6818d3adeb3674941a742f53c",
+        "a4d63600d1c72712391566ac04d794149eab0c59"
+      ],
+      "priorSameHead": false,
+      "priorSameCompleteDiff": false,
+      "reviewHistory": [
+        {
+          "author": "lexuanbao258-collab",
+          "state": "COMMENTED",
+          "commit": "868af447dabfe33fca098f6d15ea3202fcaf695a",
+          "submittedAt": "2026-10-26T06:21:29Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/102#pullrequestreview-5648096984"
+        },
+        {
+          "author": "lexuanbao258-collab",
+          "state": "COMMENTED",
+          "commit": "117e62c4172496917acae688534a70481e883111",
+          "submittedAt": "2026-10-26T07:20:00Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/102#pullrequestreview-5648612643"
+        },
+        {
+          "author": "duyxl56785",
+          "state": "CHANGES_REQUESTED",
+          "commit": "117e62c4172496917acae688534a70481e883111",
+          "submittedAt": "2026-10-26T08:45:16Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/102#pullrequestreview-5649403069"
+        },
+        {
+          "author": "duyxl56785",
+          "state": "COMMENTED",
+          "commit": "9be8a3ba69e40cf1af8998d1e915f528fb8f1fa5",
+          "submittedAt": "2026-10-26T12:48:09Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/102#pullrequestreview-5652182092"
+        },
+        {
+          "author": "duyxl56785",
+          "state": "COMMENTED",
+          "commit": "9be8a3ba69e40cf1af8998d1e915f528fb8f1fa5",
+          "submittedAt": "2026-10-26T12:48:14Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/102#pullrequestreview-5652183090"
+        },
+        {
+          "author": "duyxl56785",
+          "state": "COMMENTED",
+          "commit": "9be8a3ba69e40cf1af8998d1e915f528fb8f1fa5",
+          "submittedAt": "2026-10-26T12:48:18Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/102#pullrequestreview-5652184061"
+        },
+        {
+          "author": "duyxl56785",
+          "state": "CHANGES_REQUESTED",
+          "commit": "9be8a3ba69e40cf1af8998d1e915f528fb8f1fa5",
+          "submittedAt": "2026-10-26T12:49:09Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/102#pullrequestreview-5652195634"
+        },
+        {
+          "author": "lexuanbao258-collab",
+          "state": "COMMENTED",
+          "commit": "716697a6aacba7d611a2c252ec0805633a43054b",
+          "submittedAt": "2026-10-26T13:18:34Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/102#pullrequestreview-5652581655"
+        },
+        {
+          "author": "duyxl56785",
+          "state": "COMMENTED",
+          "commit": "62d7a9a7f743e4c6818d3adeb3674941a742f53c",
+          "submittedAt": "2026-10-26T14:04:22Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/102#pullrequestreview-5653209394"
+        },
+        {
+          "author": "duyxl56785",
+          "state": "CHANGES_REQUESTED",
+          "commit": "62d7a9a7f743e4c6818d3adeb3674941a742f53c",
+          "submittedAt": "2026-10-26T14:04:28Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/102#pullrequestreview-5653210933"
+        }
+      ],
+      "reviewerRemovalEvents": []
+    }
+  ],
+  "allMetadata": [
+    {
+      "PR": 102,
+      "state": "open",
+      "draft": true,
+      "mergedAt": null,
+      "closedAt": null,
+      "head": "a4d63600d1c72712391566ac04d794149eab0c59",
+      "baseRef": "feat/tv1-auth-runtime-p0-20261026",
+      "author": "lexuanbao258-collab",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/102"
+    },
+    {
+      "PR": 101,
+      "state": "open",
+      "draft": false,
+      "mergedAt": null,
+      "closedAt": null,
+      "head": "e45cede29435bbce553cb244cb956493cb98c26b",
+      "baseRef": "feat/tv1-auth-jwt-current-authority-foundation-20261023",
+      "author": "lexuanbao258-collab",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/101"
+    },
+    {
+      "PR": 89,
+      "state": "open",
+      "draft": false,
+      "mergedAt": null,
+      "closedAt": null,
+      "head": "17f98f4fc96b19f784fe39eeb5fd0c90e49915f6",
+      "baseRef": "main",
+      "author": "duyxl56785",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/89"
+    },
+    {
+      "PR": 94,
+      "state": "open",
+      "draft": false,
+      "mergedAt": null,
+      "closedAt": null,
+      "head": "96d59ca320845495dd2ce6acf42d0b10ee0286a6",
+      "baseRef": "main",
+      "author": "duyxl56785",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/94"
+    },
+    {
+      "PR": 91,
+      "state": "open",
+      "draft": false,
+      "mergedAt": null,
+      "closedAt": null,
+      "head": "4915c3768a310b519e218674e405b132103cd024",
+      "baseRef": "main",
+      "author": "duyxl56785",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/91"
+    },
+    {
+      "PR": 90,
+      "state": "open",
+      "draft": false,
+      "mergedAt": null,
+      "closedAt": null,
+      "head": "6a290fffc35e6795f9e25f4a79b2b6fe74aa757f",
+      "baseRef": "main",
+      "author": "duyxl56785",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/90"
+    },
+    {
+      "PR": 80,
+      "state": "open",
+      "draft": true,
+      "mergedAt": null,
+      "closedAt": null,
+      "head": "083355be16c4e3ea442ccd861d5f4b40236a0b12",
+      "baseRef": "main",
+      "author": "lexuanbao258-collab",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/80"
+    },
+    {
+      "PR": 96,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-26T05:13:18Z",
+      "closedAt": "2026-10-26T05:13:18Z",
+      "head": "c59f34024748f290bd304b64140cf6c0848940b5",
+      "baseRef": "feat/tv1-auth-jwt-current-authority-foundation-20261023",
+      "author": "lexuanbao258-collab",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/96"
+    },
+    {
+      "PR": 100,
+      "state": "open",
+      "draft": false,
+      "mergedAt": null,
+      "closedAt": null,
+      "head": "8bf9f12e1a7df92b77f8a506fba5e1907a4f1c6c",
+      "baseRef": "main",
+      "author": "nguyenminhduy090-alt",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/100"
+    },
+    {
+      "PR": 99,
+      "state": "open",
+      "draft": false,
+      "mergedAt": null,
+      "closedAt": null,
+      "head": "446ae44da90832df534b6e37150f26a71f2adf25",
+      "baseRef": "main",
+      "author": "nguyenminhduy090-alt",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/99"
+    },
+    {
+      "PR": 93,
+      "state": "open",
+      "draft": false,
+      "mergedAt": null,
+      "closedAt": null,
+      "head": "dd69f3d065f40f697c255c34de641bea9f61cc9e",
+      "baseRef": "main",
+      "author": "nguyenminhduy090-alt",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/93"
+    },
+    {
+      "PR": 97,
+      "state": "open",
+      "draft": false,
+      "mergedAt": null,
+      "closedAt": null,
+      "head": "aa790f422a8b3ee698f53e74c455edae7b77d6fa",
+      "baseRef": "codex/tv2-product-lifecycle-persistence",
+      "author": "duyxl56785",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/97"
+    },
+    {
+      "PR": 98,
+      "state": "open",
+      "draft": true,
+      "mergedAt": null,
+      "closedAt": null,
+      "head": "d53e2a96833e246482c504879cd6d646dca82bf5",
+      "baseRef": "main",
+      "author": "phamthecuong2022006-alt",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/98"
+    },
+    {
+      "PR": 69,
+      "state": "open",
+      "draft": false,
+      "mergedAt": null,
+      "closedAt": null,
+      "head": "b7e4b427525689d5685419644352efafd9fe78e3",
+      "baseRef": "main",
+      "author": "phamthecuong2022006-alt",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/69"
+    },
+    {
+      "PR": 86,
+      "state": "open",
+      "draft": false,
+      "mergedAt": null,
+      "closedAt": null,
+      "head": "28a8abcd5cf76b298e1e6b817da16337ba322ec6",
+      "baseRef": "main",
+      "author": "tranvanchinhbg2006-alt",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/86"
+    },
+    {
+      "PR": 77,
+      "state": "open",
+      "draft": false,
+      "mergedAt": null,
+      "closedAt": null,
+      "head": "cbbdb8667f689eddb75690274636504efc664706",
+      "baseRef": "main",
+      "author": "tranvanchinhbg2006-alt",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/77"
+    },
+    {
+      "PR": 78,
+      "state": "open",
+      "draft": false,
+      "mergedAt": null,
+      "closedAt": null,
+      "head": "ac5da331e8cf6128b26ee850f87eef18d99a3317",
+      "baseRef": "main",
+      "author": "tranvanchinhbg2006-alt",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/78"
+    },
+    {
+      "PR": 87,
+      "state": "open",
+      "draft": false,
+      "mergedAt": null,
+      "closedAt": null,
+      "head": "1a67b01315cc328a9c28b4f728ad0cb17a7225a0",
+      "baseRef": "main",
+      "author": "duyxl56785",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/87"
+    },
+    {
+      "PR": 95,
+      "state": "open",
+      "draft": false,
+      "mergedAt": null,
+      "closedAt": null,
+      "head": "53c2a1baf8988ef8878524e9aa742d4a78a690cf",
+      "baseRef": "main",
+      "author": "duyxl56785",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/95"
+    },
+    {
+      "PR": 83,
+      "state": "open",
+      "draft": false,
+      "mergedAt": null,
+      "closedAt": null,
+      "head": "c831edb4d7c610b76e434222d51b115cfb863d81",
+      "baseRef": "main",
+      "author": "duyxl56785",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/83"
+    },
+    {
+      "PR": 92,
+      "state": "open",
+      "draft": false,
+      "mergedAt": null,
+      "closedAt": null,
+      "head": "67a802bd247fe93fe7f9aa944a64abebe8748d9a",
+      "baseRef": "feat/tv1-auth-jwt-current-authority-foundation-20261023",
+      "author": "nguyenminhduy090-alt",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/92"
+    },
+    {
+      "PR": 88,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-24T18:21:57Z",
+      "closedAt": "2026-10-24T18:21:57Z",
+      "head": "199211beb55656f88c7b33850289e887d1390fbe",
+      "baseRef": "main",
+      "author": "duyxl56785",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/88"
+    },
+    {
+      "PR": 85,
+      "state": "open",
+      "draft": true,
+      "mergedAt": null,
+      "closedAt": null,
+      "head": "fc39c7100caa7ffb49f9baa27b18dde595b54d1f",
+      "baseRef": "main",
+      "author": "duyxl56785",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/85"
+    },
+    {
+      "PR": 79,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-24T07:42:28Z",
+      "closedAt": "2026-10-24T07:42:28Z",
+      "head": "f8a242d5af2fb9095ed707ca551b8c92d8fd9102",
+      "baseRef": "main",
+      "author": "tranvanchinhbg2006-alt",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/79"
+    },
+    {
+      "PR": 82,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-24T07:42:05Z",
+      "closedAt": "2026-10-24T07:42:05Z",
+      "head": "3338cfd4d995fe286beb4be342681d5685eba5fb",
+      "baseRef": "feat/tv1-auth-jwt-current-authority-foundation-20261023",
+      "author": "nguyenminhduy090-alt",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/82"
+    },
+    {
+      "PR": 84,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-24T07:32:10Z",
+      "closedAt": "2026-10-24T07:32:10Z",
+      "head": "463338e4fc3823b0720e1f840e637e0c5e946148",
+      "baseRef": "main",
+      "author": "duyxl56785",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/84"
+    },
+    {
+      "PR": 81,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-23T18:41:35Z",
+      "closedAt": "2026-10-23T18:41:35Z",
+      "head": "45ed89ad69f2a3e920f25e8fbd3939117481a24a",
+      "baseRef": "main",
+      "author": "nguyenminhduy090-alt",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/81"
+    },
+    {
+      "PR": 74,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-23T18:23:45Z",
+      "closedAt": "2026-10-23T18:23:45Z",
+      "head": "2215d61685c8b28e3ecc31cb8c638ca6f13182a0",
+      "baseRef": "main",
+      "author": "duyxl56785",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/74"
+    },
+    {
+      "PR": 72,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-23T18:23:36Z",
+      "closedAt": "2026-10-23T18:23:36Z",
+      "head": "c0329a6278e0a3108f96b3b1485882a18177d929",
+      "baseRef": "main",
+      "author": "duyxl56785",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/72"
+    },
+    {
+      "PR": 71,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-23T18:23:22Z",
+      "closedAt": "2026-10-23T18:23:22Z",
+      "head": "59589902228a83eec72888bed6d4dca8084ab2c3",
+      "baseRef": "main",
+      "author": "duyxl56785",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/71"
+    },
+    {
+      "PR": 76,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-23T03:25:07Z",
+      "closedAt": "2026-10-23T03:25:07Z",
+      "head": "93f6a084f94dbcd32726ed451cbb1c69d9da6058",
+      "baseRef": "main",
+      "author": "duyxl56785",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/76"
+    },
+    {
+      "PR": 75,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-22T17:34:42Z",
+      "closedAt": "2026-10-22T17:34:42Z",
+      "head": "c9936adccfb7dfdb80ec974d34a97757a6ad3551",
+      "baseRef": "main",
+      "author": "tranvanchinhbg2006-alt",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/75"
+    },
+    {
+      "PR": 73,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-22T17:25:24Z",
+      "closedAt": "2026-10-22T17:25:24Z",
+      "head": "b2c3e79948f8694de3630ab9e8a009f3c7c13e27",
+      "baseRef": "main",
+      "author": "nguyenminhduy090-alt",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/73"
+    },
+    {
+      "PR": 68,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-22T17:23:43Z",
+      "closedAt": "2026-10-22T17:23:43Z",
+      "head": "ae8ceaaccad5c527662345590005178bea8ee614",
+      "baseRef": "main",
+      "author": "nguyenminhduy090-alt",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/68"
+    },
+    {
+      "PR": 70,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-22T17:19:52Z",
+      "closedAt": "2026-10-22T17:19:52Z",
+      "head": "84b3257109f0e2138eb28fbc4406b40d214cf3e1",
+      "baseRef": "main",
+      "author": "duyxl56785",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/70"
+    },
+    {
+      "PR": 67,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-22T09:17:11Z",
+      "closedAt": "2026-10-22T09:17:11Z",
+      "head": "add83ec2c7f43e5f942c42682d6a4574c152318d",
+      "baseRef": "main",
+      "author": "tranvanchinhbg2006-alt",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/67"
+    },
+    {
+      "PR": 66,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-22T09:15:23Z",
+      "closedAt": "2026-10-22T09:15:23Z",
+      "head": "e20263e2c903455337e8a9802aa2ffb6b1da8378",
+      "baseRef": "main",
+      "author": "duyxl56785",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/66"
+    },
+    {
+      "PR": 63,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-22T09:14:20Z",
+      "closedAt": "2026-10-22T09:14:20Z",
+      "head": "3261a642a2ecfed17d5d2bed63db65b3471ce59d",
+      "baseRef": "main",
+      "author": "nguyenminhduy090-alt",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/63"
+    },
+    {
+      "PR": 28,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-18T15:10:15Z",
+      "closedAt": "2026-10-18T15:10:15Z",
+      "head": "382f799866249342e5c8b7631c404509200f9222",
+      "baseRef": "main",
+      "author": "tranvanchinhbg2006-alt",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/28"
+    },
+    {
+      "PR": 65,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-21T16:52:21Z",
+      "closedAt": "2026-10-21T16:52:21Z",
+      "head": "433e446aebb2fe07883ae504f583a0f7d512682a",
+      "baseRef": "main",
+      "author": "phamthecuong2022006-alt",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/65"
+    },
+    {
+      "PR": 64,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-20T08:55:11Z",
+      "closedAt": "2026-10-20T08:55:11Z",
+      "head": "06ebfc423ede1bb07a2fa9b6804b21fe388991d7",
+      "baseRef": "main",
+      "author": "phamthecuong2022006-alt",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/64"
+    },
+    {
+      "PR": 62,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": null,
+      "closedAt": "2026-10-20T04:12:00Z",
+      "head": "6a79016eae71a93c8d55207482bc4785bd5f3281",
+      "baseRef": "main",
+      "author": "tranvanchinhbg2006-alt",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/62"
+    },
+    {
+      "PR": 60,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": null,
+      "closedAt": "2026-10-20T04:11:57Z",
+      "head": "e0a28de663b3488178a616770eb82de9fd46e580",
+      "baseRef": "main",
+      "author": "tranvanchinhbg2006-alt",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/60"
+    },
+    {
+      "PR": 39,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-20T04:06:41Z",
+      "closedAt": "2026-10-20T04:06:41Z",
+      "head": "4e4e6232bd9a515e11e1ab9ba433a6b2181c8efc",
+      "baseRef": "main",
+      "author": "phamthecuong2022006-alt",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/39"
+    },
+    {
+      "PR": 61,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-20T03:47:48Z",
+      "closedAt": "2026-10-20T03:47:48Z",
+      "head": "0af4754b2d2b0925cd3b6c27f698f5d2667f66d1",
+      "baseRef": "main",
+      "author": "duyxl56785",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/61"
+    },
+    {
+      "PR": 59,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-20T02:55:46Z",
+      "closedAt": "2026-10-20T02:55:46Z",
+      "head": "2a109381d0604b288d4a4be316a8e89225420c58",
+      "baseRef": "main",
+      "author": "nguyenminhduy090-alt",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/59"
+    },
+    {
+      "PR": 58,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-20T02:53:27Z",
+      "closedAt": "2026-10-20T02:53:27Z",
+      "head": "c85d74c885e6e6b9aee423d4a1f18099564958c8",
+      "baseRef": "main",
+      "author": "tranvanchinhbg2006-alt",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/58"
+    },
+    {
+      "PR": 37,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-18T14:00:22Z",
+      "closedAt": "2026-10-18T14:00:22Z",
+      "head": "ef62086048e2c7a00ecee16db0cc3cde2413deb6",
+      "baseRef": "main",
+      "author": "duyxl56785",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/37"
+    },
+    {
+      "PR": 54,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-20T02:17:17Z",
+      "closedAt": "2026-10-20T02:17:17Z",
+      "head": "5955b1f3bc039c8239a4b99ce76c1a48b7b9fc23",
+      "baseRef": "main",
+      "author": "tranvanchinhbg2006-alt",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/54"
+    },
+    {
+      "PR": 56,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-20T02:17:01Z",
+      "closedAt": "2026-10-20T02:17:01Z",
+      "head": "8c88fffbc83dd5c562f0189ad400d76bd1aaf5ea",
+      "baseRef": "main",
+      "author": "phamthecuong2022006-alt",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/56"
+    },
+    {
+      "PR": 57,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-20T02:03:42Z",
+      "closedAt": "2026-10-20T02:03:42Z",
+      "head": "5532178965714458ac25d82c333c936512611023",
+      "baseRef": "main",
+      "author": "phamthecuong2022006-alt",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/57"
+    },
+    {
+      "PR": 55,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-20T02:04:26Z",
+      "closedAt": "2026-10-20T02:04:26Z",
+      "head": "4e8a5ced0dea3db47be4a7a430e8ad961849903e",
+      "baseRef": "main",
+      "author": "duyxl56785",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/55"
+    },
+    {
+      "PR": 51,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-20T01:46:41Z",
+      "closedAt": "2026-10-20T01:46:41Z",
+      "head": "f98f9325dab72c68470d938b4d840840bdc451e9",
+      "baseRef": "main",
+      "author": "lexuanbao258-collab",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/51"
+    },
+    {
+      "PR": 49,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-20T00:44:32Z",
+      "closedAt": "2026-10-20T00:44:32Z",
+      "head": "0498d0bae741015582762ec29459c43cb6619723",
+      "baseRef": "main",
+      "author": "phamthecuong2022006-alt",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/49"
+    },
+    {
+      "PR": 53,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-20T00:41:51Z",
+      "closedAt": "2026-10-20T00:41:51Z",
+      "head": "d08f3e5154d7568d754dea8758a7a145ef2ab2b5",
+      "baseRef": "main",
+      "author": "duyxl56785",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/53"
+    },
+    {
+      "PR": 52,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-20T00:41:27Z",
+      "closedAt": "2026-10-20T00:41:27Z",
+      "head": "a00d3db475394c02f9d7e3ece2000afb5cc279de",
+      "baseRef": "main",
+      "author": "duyxl56785",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/52"
+    },
+    {
+      "PR": 48,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-18T15:21:41Z",
+      "closedAt": "2026-10-18T15:21:41Z",
+      "head": "c0b485aa62ee3275fe56053bdc40497aedbd3a73",
+      "baseRef": "main",
+      "author": "lexuanbao258-collab",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/48"
+    },
+    {
+      "PR": 50,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-18T15:03:32Z",
+      "closedAt": "2026-10-18T15:03:32Z",
+      "head": "80840365b510d5e90826ec92d317b51dd4c7f322",
+      "baseRef": "feat/tv3-cart-checkout-week1",
+      "author": "nguyenminhduy090-alt",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/50"
+    },
+    {
+      "PR": 47,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-18T14:00:58Z",
+      "closedAt": "2026-10-18T14:00:58Z",
+      "head": "a879b08dce5ef7b5c59fc9fb1fa18d6221cb4406",
+      "baseRef": "feat/tv3-cart-checkout-week1",
+      "author": "nguyenminhduy090-alt",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/47"
+    },
+    {
+      "PR": 38,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-18T14:00:39Z",
+      "closedAt": "2026-10-18T14:00:39Z",
+      "head": "7a8d18eb54c3d134964a282ddd7612283dcea66c",
+      "baseRef": "main",
+      "author": "phamthecuong2022006-alt",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/38"
+    },
+    {
+      "PR": 46,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-18T11:23:53Z",
+      "closedAt": "2026-10-18T11:23:53Z",
+      "head": "e597dafe7ac1fe178f2105608570f978da97120f",
+      "baseRef": "feat/tv3-cart-checkout-week1",
+      "author": "nguyenminhduy090-alt",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/46"
+    },
+    {
+      "PR": 45,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-18T11:03:59Z",
+      "closedAt": "2026-10-18T11:03:59Z",
+      "head": "9eb4ba0531815ea38a131c037216a41661b841ec",
+      "baseRef": "feat/tv3-cart-checkout-week1",
+      "author": "nguyenminhduy090-alt",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/45"
+    },
+    {
+      "PR": 44,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-18T10:48:42Z",
+      "closedAt": "2026-10-18T10:48:42Z",
+      "head": "1311f8a9f14639c4e42c7b8fbf2446a934abfbf2",
+      "baseRef": "feat/tv3-cart-checkout-week1",
+      "author": "nguyenminhduy090-alt",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/44"
+    },
+    {
+      "PR": 43,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-18T09:57:19Z",
+      "closedAt": "2026-10-18T09:57:19Z",
+      "head": "89cd293c08d7b9a840c9b022bd57866076d53a3c",
+      "baseRef": "feat/tv3-cart-checkout-week1",
+      "author": "nguyenminhduy090-alt",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/43"
+    },
+    {
+      "PR": 40,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-18T09:54:25Z",
+      "closedAt": "2026-10-18T09:54:25Z",
+      "head": "e91312c8d897b8faf12fed151022508025719de1",
+      "baseRef": "main",
+      "author": "nguyenminhduy090-alt",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/40"
+    },
+    {
+      "PR": 42,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-18T05:43:43Z",
+      "closedAt": "2026-10-18T05:43:43Z",
+      "head": "35297ac757261d85e9f3c50ebe4bf171c1fbf7fa",
+      "baseRef": "feat/tv3-cart-checkout-week1",
+      "author": "nguyenminhduy090-alt",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/42"
+    },
+    {
+      "PR": 41,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-18T05:16:55Z",
+      "closedAt": "2026-10-18T05:16:55Z",
+      "head": "aaf9d314b5ca907d5f5fead1394402e3cab690f9",
+      "baseRef": "feat/tv3-cart-checkout-week1",
+      "author": "nguyenminhduy090-alt",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/41"
+    },
+    {
+      "PR": 19,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-18T04:59:18Z",
+      "closedAt": "2026-10-18T04:59:18Z",
+      "head": "804d6f1658a590c8fe51a1b8e6ec70555ab0d88a",
+      "baseRef": "main",
+      "author": "duyxl56785",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/19"
+    },
+    {
+      "PR": 26,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-17T17:23:07Z",
+      "closedAt": "2026-10-17T17:23:07Z",
+      "head": "c4288d5c8c0cc4b8e3919dfce988b05c95a726a6",
+      "baseRef": "main",
+      "author": "phamthecuong2022006-alt",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/26"
+    },
+    {
+      "PR": 31,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-17T17:21:29Z",
+      "closedAt": "2026-10-17T17:21:29Z",
+      "head": "6fa018c340381d4220297a34b7b022115e3064c6",
+      "baseRef": "main",
+      "author": "phamthecuong2022006-alt",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/31"
+    },
+    {
+      "PR": 27,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-17T16:27:45Z",
+      "closedAt": "2026-10-17T16:27:45Z",
+      "head": "cebd1a390efa25a3517200177ab0359caa99cbde",
+      "baseRef": "main",
+      "author": "lexuanbao258-collab",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/27"
+    },
+    {
+      "PR": 36,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-17T16:18:37Z",
+      "closedAt": "2026-10-17T16:18:38Z",
+      "head": "3a095dca44cbcb3621ac5aba67afd71b30f6234f",
+      "baseRef": "feat/tv4-inventory-w1",
+      "author": "nguyenminhduy090-alt",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/36"
+    },
+    {
+      "PR": 29,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-17T16:06:38Z",
+      "closedAt": "2026-10-17T16:06:38Z",
+      "head": "f8b0ff4c3d0fbb4fc141cdf9ff98150b230142b8",
+      "baseRef": "main",
+      "author": "duyxl56785",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/29"
+    },
+    {
+      "PR": 30,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-17T15:57:54Z",
+      "closedAt": "2026-10-17T15:57:54Z",
+      "head": "9c5094cc8d4164d036fd2601f60741e7ceca3562",
+      "baseRef": "main",
+      "author": "nguyenminhduy090-alt",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/30"
+    },
+    {
+      "PR": 34,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-17T15:56:40Z",
+      "closedAt": "2026-10-17T15:56:40Z",
+      "head": "369b4f8184fb70b32ea870e5d9e1fc5d572a6199",
+      "baseRef": "chore/tv1-auth-readiness",
+      "author": "nguyenminhduy090-alt",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/34"
+    },
+    {
+      "PR": 35,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-17T15:56:26Z",
+      "closedAt": "2026-10-17T15:56:26Z",
+      "head": "14df61b6fb0f6238862320c21ace19779bc59fce",
+      "baseRef": "feat/tv4-inventory-w1",
+      "author": "nguyenminhduy090-alt",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/35"
+    },
+    {
+      "PR": 32,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-17T15:39:34Z",
+      "closedAt": "2026-10-17T15:39:34Z",
+      "head": "0c77df6fe81500cadc15d98ddeb851ae9cbe3231",
+      "baseRef": "docs/cod-mvp-21-day-plan",
+      "author": "nguyenminhduy090-alt",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/32"
+    },
+    {
+      "PR": 33,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-17T15:39:12Z",
+      "closedAt": "2026-10-17T15:39:12Z",
+      "head": "11dcf3969dc61ced0b819931cd946d8719617763",
+      "baseRef": "feat/tv3-cart-checkout-week1",
+      "author": "nguyenminhduy090-alt",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/33"
+    },
+    {
+      "PR": 25,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-16T07:59:18Z",
+      "closedAt": "2026-10-16T07:59:18Z",
+      "head": "52bee9360a61d55c1cb9bc4a6cbe210b0081b620",
+      "baseRef": "feat/tv2-seller-product",
+      "author": "duyxl56785",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/25"
+    },
+    {
+      "PR": 20,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-16T01:56:56Z",
+      "closedAt": "2026-10-16T01:56:56Z",
+      "head": "8d02e7431289d94bef16ff75a256f6e734f5b3fc",
+      "baseRef": "main",
+      "author": "nguyenminhduy090-alt",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/20"
+    },
+    {
+      "PR": 7,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-16T02:09:03Z",
+      "closedAt": "2026-10-16T02:09:03Z",
+      "head": "82dea095354c6d70b89379f0f33e49660b80e7a6",
+      "baseRef": "main",
+      "author": "duyxl56785",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/7"
+    },
+    {
+      "PR": 24,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-16T01:46:47Z",
+      "closedAt": "2026-10-16T01:46:47Z",
+      "head": "c8a4b44e546115fbcfacd3e29c014adc61e48fb8",
+      "baseRef": "main",
+      "author": "lexuanbao258-collab",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/24"
+    },
+    {
+      "PR": 21,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-16T00:50:06Z",
+      "closedAt": "2026-10-16T00:50:06Z",
+      "head": "e8efeda10255a56c263168db80817a76bc465214",
+      "baseRef": "docs/cod-mvp-21-day-plan",
+      "author": "nguyenminhduy090-alt",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/21"
+    },
+    {
+      "PR": 22,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-16T00:49:56Z",
+      "closedAt": "2026-10-16T00:49:56Z",
+      "head": "8af4cbe5ed6dba7b43ca7c85cb69aa58b2b674f8",
+      "baseRef": "main",
+      "author": "lexuanbao258-collab",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/22"
+    },
+    {
+      "PR": 23,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-16T00:33:18Z",
+      "closedAt": "2026-10-16T00:33:18Z",
+      "head": "bfcf5bd68084fbd60dd24aaa109f6ad447ca2195",
+      "baseRef": "main",
+      "author": "lexuanbao258-collab",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/23"
+    },
+    {
+      "PR": 6,
+      "state": "closed",
+      "draft": false,
+      "mergedAt": "2026-10-13T14:27:11Z",
+      "closedAt": "2026-10-13T14:27:11Z",
+      "head": "09bfaf71a7539b4010df114e333a9f8056c2e527",
+      "baseRef": "main",
+      "author": "duyxl56785",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/6"
+    }
+  ],
+  "main": "ed85f6290de7f611c82e5c0ad973f98180f04df4",
+  "rules": [
+    {
+      "type": "deletion",
+      "ruleset_source_type": "Repository",
+      "ruleset_source": "duyxl56785/Project_HK5",
+      "ruleset_id": 25059353
+    },
+    {
+      "type": "non_fast_forward",
+      "ruleset_source_type": "Repository",
+      "ruleset_source": "duyxl56785/Project_HK5",
+      "ruleset_id": 25059353
+    },
+    {
+      "type": "pull_request",
+      "parameters": {
+        "required_approving_review_count": 1,
+        "dismiss_stale_reviews_on_push": false,
+        "required_reviewers": [],
+        "require_code_owner_review": false,
+        "require_last_push_approval": false,
+        "required_review_thread_resolution": true,
+        "require_extra_approval_for_unattributed_changes": true,
+        "allowed_merge_methods": [
+          "merge",
+          "squash",
+          "rebase"
+        ]
+      },
+      "ruleset_source_type": "Repository",
+      "ruleset_source": "duyxl56785/Project_HK5",
+      "ruleset_id": 25059353
+    }
+  ],
+  "formalApprovals": {
+    "verifiedAtUtc": "2026-10-26T14:17:48.647399+00:00",
+    "account": "nguyenminhduy090-alt",
+    "directUserAuthorization": "Formal APPROVE PR89/90/91/94, current request",
+    "scope": "Entire bounded internal PRs; excludes separately gated runtime/Finance policy",
+    "reviews": [
+      {
+        "PR": 89,
+        "HEAD": "17f98f4fc96b19f784fe39eeb5fd0c90e49915f6",
+        "reviewer": "nguyenminhduy090-alt",
+        "state": "APPROVED",
+        "reviewId": 5653394111,
+        "url": "https://github.com/duyxl56785/Project_HK5/pull/89#pullrequestreview-5653394111",
+        "submittedAt": "2026-10-26T14:16:27Z",
+        "reviewDecision": "APPROVED",
+        "mergeable": true,
+        "mergeableState": "clean",
+        "openThreads": 0,
+        "effectiveChangesRequested": [],
+        "requestedReviewers": []
+      },
+      {
+        "PR": 90,
+        "HEAD": "6a290fffc35e6795f9e25f4a79b2b6fe74aa757f",
+        "reviewer": "nguyenminhduy090-alt",
+        "state": "APPROVED",
+        "reviewId": 5653400658,
+        "url": "https://github.com/duyxl56785/Project_HK5/pull/90#pullrequestreview-5653400658",
+        "submittedAt": "2026-10-26T14:16:52Z",
+        "reviewDecision": "APPROVED",
+        "mergeable": true,
+        "mergeableState": "clean",
+        "openThreads": 0,
+        "effectiveChangesRequested": [],
+        "requestedReviewers": []
+      },
+      {
+        "PR": 91,
+        "HEAD": "4915c3768a310b519e218674e405b132103cd024",
+        "reviewer": "nguyenminhduy090-alt",
+        "state": "APPROVED",
+        "reviewId": 5653406890,
+        "url": "https://github.com/duyxl56785/Project_HK5/pull/91#pullrequestreview-5653406890",
+        "submittedAt": "2026-10-26T14:17:16Z",
+        "reviewDecision": "APPROVED",
+        "mergeable": true,
+        "mergeableState": "clean",
+        "openThreads": 0,
+        "effectiveChangesRequested": [],
+        "requestedReviewers": []
+      },
+      {
+        "PR": 94,
+        "HEAD": "96d59ca320845495dd2ce6acf42d0b10ee0286a6",
+        "reviewer": "nguyenminhduy090-alt",
+        "state": "APPROVED",
+        "reviewId": 5653413107,
+        "url": "https://github.com/duyxl56785/Project_HK5/pull/94#pullrequestreview-5653413107",
+        "submittedAt": "2026-10-26T14:17:37Z",
+        "reviewDecision": "APPROVED",
+        "mergeable": true,
+        "mergeableState": "clean",
+        "openThreads": 0,
+        "effectiveChangesRequested": [],
+        "requestedReviewers": []
+      }
+    ],
+    "mergePerformed": false,
+    "ownerCodeEdited": false,
+    "flagsChanged": false
+  },
+  "unchangedEvidence": [
+    {
+      "PR": 99,
+      "sourceReceipt": ".verification/tv5-finance-durability-evidence-20261025/committed-regression/summary.json",
+      "rawArtifactsVerified": 22,
+      "reviewedCurrentHead": "446ae44da90832df534b6e37150f26a71f2adf25",
+      "runtimeThisSession": "NOT_RUN: unchanged source; no reviewer finding"
+    },
+    {
+      "PR": 100,
+      "sourceReceipt": ".verification/tv5-pr-audit-evidence-20261025/offline/summary.json",
+      "rawArtifactsVerified": 1,
+      "reviewedCurrentHead": "8bf9f12e1a7df92b77f8a506fba5e1907a4f1c6c",
+      "runtimeThisSession": "NOT_RUN: unchanged source; no reviewer finding"
+    }
+  ]
+}

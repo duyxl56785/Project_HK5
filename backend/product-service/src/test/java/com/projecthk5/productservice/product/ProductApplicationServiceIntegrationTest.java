@@ -105,7 +105,9 @@ class ProductApplicationServiceIntegrationTest {
     @ValueSource(strings = {"create", "edit", "submit", "approve", "reject", "suspend", "deactivate", "read"})
     void crossSellerAndUnprivilegedActorCannotReadOrWrite(String command) {
         StoredProduct original = create("owned-a");
-        rule(ProductRuleException.Code.ACCESS_DENIED, () -> invoke(command, OWNER_B, original));
+        if (Set.of("edit", "submit", "deactivate", "read").contains(command)) {
+            failure(ProductPersistenceException.Code.NOT_FOUND, () -> invoke(command, OWNER_B, original));
+        } else rule(ProductRuleException.Code.ACCESS_DENIED, () -> invoke(command, OWNER_B, original));
         assertEquals(original, persistence.findById(original.listing().id()).orElseThrow());
         assertEquals(1, jdbc.queryForObject("SELECT count(*) FROM products", Integer.class));
     }
@@ -205,6 +207,7 @@ class ProductApplicationServiceIntegrationTest {
         StoredProduct original = create("snapshot-version");
         policy.managementHook = () -> requiresNew().executeWithoutResult(other ->
                 service.submit(OWNER_A, original.listing().id(), original.version()));
+        policy.managementChecksBeforeHook = 2; // Current-scope precheck, then authorization of the loaded snapshot.
         // During authorization a second transaction submits version1, after the outer command read DRAFT0.
         failure(ProductPersistenceException.Code.STALE_VERSION, () -> service.edit(OWNER_A, original.listing().id(),
                 1, CATEGORY, "Forbidden stale draft", BigDecimal.TEN, "VND"));
@@ -273,7 +276,7 @@ class ProductApplicationServiceIntegrationTest {
                 () -> transaction().executeWithoutResult(tx -> { create("companion"); create(original.listing().sku()); }));
         if (mode.equals("invalid-state")) rule(ProductRuleException.Code.INVALID_STATE,
                 () -> transaction().executeWithoutResult(tx -> { create("companion"); service.approve(ADMIN, original.listing().id(), 0); }));
-        if (mode.equals("authorization")) rule(ProductRuleException.Code.ACCESS_DENIED,
+        if (mode.equals("authorization")) failure(ProductPersistenceException.Code.NOT_FOUND,
                 () -> transaction().executeWithoutResult(tx -> { create("companion"); service.findById(OWNER_B, original.listing().id()); }));
         if (mode.equals("stale")) failure(ProductPersistenceException.Code.STALE_VERSION,
                 () -> transaction().executeWithoutResult(tx -> { create("companion");
@@ -322,16 +325,26 @@ class ProductApplicationServiceIntegrationTest {
         private volatile String mode;
         private volatile CyclicBarrier writeBarrier;
         private volatile Runnable managementHook;
+        private volatile int managementChecksBeforeHook;
         void reset() {
-            mode = "normal"; writeBarrier = null; managementHook = null; admins.clear(); admins.add(ADMIN); stores.clear();
+            mode = "normal"; writeBarrier = null; managementHook = null; managementChecksBeforeHook = 0;
+            admins.clear(); admins.add(ADMIN); stores.clear();
             stores.put(STORE_A, new StoreAccess(STORE_A, UUID.randomUUID(), OWNER_A, true, true, false));
             stores.put(STORE_B, new StoreAccess(STORE_B, UUID.randomUUID(), OWNER_B, true, true, false));
+        }
+        @Override public UUID currentManagementStore(String actor) {
+            // Fixture-only current account/Store resolution; no production authority is registered.
+            if (OWNER_A.equals(actor)) return STORE_A;
+            if (OWNER_B.equals(actor)) return STORE_B;
+            throw new ProductRuleException(ProductRuleException.Code.ACCESS_DENIED, "Fixture role denied");
         }
         @Override public StoreAccess requireSellerManagement(String actor, UUID storeId) {
             if (!Set.of(OWNER_A, OWNER_B).contains(actor)) throw new ProductRuleException(ProductRuleException.Code.ACCESS_DENIED, "Fixture role denied");
             Runnable hook = managementHook;
-            managementHook = null;
-            if (hook != null) hook.run();
+            if (hook != null && --managementChecksBeforeHook <= 0) {
+                managementHook = null;
+                hook.run();
+            }
             CyclicBarrier barrier = writeBarrier;
             if (barrier != null) try { barrier.await(10, TimeUnit.SECONDS); }
             catch (Exception failure) { throw new IllegalStateException("Fixture barrier failed", failure); }

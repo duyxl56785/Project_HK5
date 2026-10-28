@@ -1,0 +1,172 @@
+{
+  "kind": "DERIVED source/signoff/publication context, not a release total",
+  "atUtc": "2026-10-27T02:55:53.199866+00:00",
+  "actualMain": "7d68e11ce3327aa0ac423938ab9d97a174438b78",
+  "PR90": {
+    "head": "0f9c0c84a310bcfcf86f06592b64aed6690258dd",
+    "merged": true,
+    "merge": "7d68e11ce3327aa0ac423938ab9d97a174438b78",
+    "historical273QA": "not reused as new-head proof"
+  },
+  "publications": [
+    {
+      "utc": "2026-10-27T02:51:04.577847+00:00",
+      "PR": 99,
+      "commit": "931feee45ac3f17293a4f200c604010fce63bf39",
+      "branch": "codex/tv5-finance-durability-qa",
+      "base": "main",
+      "push": "SUCCESS",
+      "reviewers": [
+        "duyxl56785",
+        "phamthecuong2022006-alt"
+      ],
+      "reviewerAction": "requested once after new mixed-replay QA delta",
+      "tests": "165PASS in one committed invocation; not Finance production acceptance"
+    },
+    {
+      "utc": "2026-10-27T02:44:11.944305+00:00",
+      "PR": 100,
+      "commit": "c25c67879b642b9a3521392dc02e648413ee5eca",
+      "branch": "codex/tv5-readonly-pr-audit",
+      "base": "main",
+      "push": "SUCCESS",
+      "reviewers": [
+        "duyxl56785"
+      ],
+      "reviewerAction": "requested once after material QA code delta",
+      "TDD": "1 real transport-handling RED/GREEN cycle, two new regression tests"
+    },
+    {
+      "utc": "2026-10-27T02:44:00.396581+00:00",
+      "PR": 103,
+      "commit": "53658de1f66140abbf293efb073486a17c2850ac",
+      "branch": "codex/tv5-product-catalog-composition-qa",
+      "base": "main",
+      "push": "SUCCESS",
+      "reviewers": [
+        "tranvanchinhbg2006-alt",
+        "duyxl56785"
+      ],
+      "reviewerAction": "kept existing request",
+      "TDD": "12 preventive tests;17PGPASS; no production delta"
+    }
+  ],
+  "sync": {
+    "utc": "2026-10-27T02:34:13.384769+00:00",
+    "PR": 103,
+    "head": "976a08c2ff0527c279e6d2629b0844f8cbc27c37",
+    "base": "main",
+    "actualMain": "7d68e11ce3327aa0ac423938ab9d97a174438b78",
+    "ownerPR90head": "0f9c0c84a310bcfcf86f06592b64aed6690258dd",
+    "focused": "5PGPASS",
+    "baseline": "1144PASS on exact actual main, separate invocation",
+    "push": "SUCCESS",
+    "uncommittedTask2": "New preflight suite/init preserved locally, not included in this push",
+    "reviewers": [
+      "tranvanchinhbg2006-alt",
+      "duyxl56785"
+    ]
+  },
+  "visibility97": {
+    "ownerHead": "d37617659f6e55a86e7aa39c7c86224fef9f0ef4",
+    "QAhead": "a0c9d4b4db219e7f5300b25ed5ada18f9ed136af",
+    "originalEightSHA256": "cc95a20ea9f90f122a8803a68b508f3a794ee8a94c8876845eee105a9e1fe679",
+    "assertionsUnchanged": true,
+    "currentResult": "FIXED_VERIFIED private handler/PG; original8GREEN plus519unit205PG; no HTTP/authority production acceptance"
+  },
+  "search91": {
+    "head": "e19624e47748be2404eab532ad62b809d0262bf7",
+    "merge": "f888725b9c8cdef31b46d8e0322f5d2d4869468f",
+    "merged": true,
+    "QA103head": "6d99953af6ab813f85e52277717152c07d798fb1",
+    "QA103result": "461unit188PG17QA PASS, separate candidate invocation"
+  },
+  "newTestCases": {
+    "integrationPG": 12,
+    "financePG": 1,
+    "offlineCLI": 2
+  },
+  "realTDDCycles": 1,
+  "TDDclassification": "CLI: one actual TV5 bugfix TDD cycle. Visibility: one cross-checkpoint acceptance RED/GREEN trace for owner TV2 fix.12integration+1finance cases preventive, original8visibility unchanged.",
+  "businessScope": "Approved Product-price slice only; fullM01/House/commission/rounding/refund/COD/settlement remains PENDING/BLOCKED. No flags or owner-production edits.",
+  "metadataAudit": "18/18 open records complete; TV5ChangesRequested=false and TV5OpenThreads=0 for all observed open PRs; metadata observation, not code approval",
+  "historicalVisibility97": {
+    "head": "aa790f422a8b3ee698f53e74c455edae7b77d6fa",
+    "ownerFix": "not yet pushed at checkpoint",
+    "TV1decision": "https://github.com/duyxl56785/Project_HK5/pull/97#issuecomment-6430723502",
+    "TV2confirmation": "already confirmed; do not re-request",
+    "diagnostic104head": "51be73e62de9ef20b47a838b53c0308a024268ef",
+    "diagnosticStatus": "Historical original4PASS/4FAIL retained, NOT_RUN this phase because no owner fix; WAITING_TV2_FIX"
+  },
+  "latestPublications": [
+    {
+      "utc": "2026-10-27T02:51:04.577847+00:00",
+      "PR": 99,
+      "commit": "931feee45ac3f17293a4f200c604010fce63bf39",
+      "branch": "codex/tv5-finance-durability-qa",
+      "base": "main",
+      "push": "SUCCESS",
+      "reviewers": [
+        "duyxl56785",
+        "phamthecuong2022006-alt"
+      ],
+      "reviewerAction": "requested once after new mixed-replay QA delta",
+      "tests": "165PASS in one committed invocation; not Finance production acceptance"
+    },
+    {
+      "utc": "2026-10-27T02:44:11.944305+00:00",
+      "PR": 100,
+      "commit": "c25c67879b642b9a3521392dc02e648413ee5eca",
+      "branch": "codex/tv5-readonly-pr-audit",
+      "base": "main",
+      "push": "SUCCESS",
+      "reviewers": [
+        "duyxl56785"
+      ],
+      "reviewerAction": "requested once after material QA code delta",
+      "TDD": "1 real transport-handling RED/GREEN cycle, two new regression tests"
+    },
+    {
+      "utc": "2026-10-27T03:11:28.404563+00:00",
+      "PR": 103,
+      "commit": "6d99953af6ab813f85e52277717152c07d798fb1",
+      "branch": "codex/tv5-product-catalog-composition-qa",
+      "base": "main",
+      "testedMain": "f888725b9c8cdef31b46d8e0322f5d2d4869468f",
+      "push": "SUCCESS",
+      "counts": {
+        "test": {
+          "PASS": 461
+        },
+        "integrationTest": {
+          "PASS": 188
+        },
+        "tv5ProductCatalogComposition": {
+          "PASS": 17
+        }
+      },
+      "reviewers": [
+        "tranvanchinhbg2006-alt",
+        "duyxl56785"
+      ],
+      "reviewerAction": "Existing requests retained; no duplicate"
+    },
+    {
+      "utc": "2026-10-27T03:09:48.771964+00:00",
+      "PR": 104,
+      "commit": "a0c9d4b4db219e7f5300b25ed5ada18f9ed136af",
+      "branch": "codex/tv5-product-visibility-diagnostic",
+      "base": "codex/tv2-product-http-preparation",
+      "ownerHead": "d37617659f6e55a86e7aa39c7c86224fef9f0ef4",
+      "push": "SUCCESS",
+      "reviewers": [
+        "duyxl56785"
+      ],
+      "reviewerAction": "Existing requests retained; no duplicate",
+      "draft": true,
+      "result": "Original8GREEN plus519unit205PG; scoped FIXED_VERIFIED; no formal approval/runtime acceptance"
+    }
+  ],
+  "realTV5OwnedTDDCycles": 1,
+  "ownerFixRedGreenVerificationTraces": 1
+}
