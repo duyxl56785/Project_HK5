@@ -1,0 +1,910 @@
+{
+  "kind": "DERIVED SUMMARY, original logs/XML private and byte-preserved",
+  "metadata": {
+    "source": "1a67b01315cc328a9c28b4f728ad0cb17a7225a0",
+    "PR": 87,
+    "command": [
+      "D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-audit-20261025\\source87\\backend\\gradlew.bat",
+      "-p",
+      "backend",
+      ":product-service:test",
+      "--tests",
+      "*LocalFileSystemImageStorageTest",
+      "--tests",
+      "*ProductImageValidatorTest",
+      "--tests",
+      "*ProductServiceSecurityTest",
+      "--rerun-tasks",
+      "--no-daemon",
+      "--console=plain"
+    ],
+    "startedUtc": "2026-10-24T17:48:08.857474+00:00",
+    "executor": "TV5 independent exact-head execution",
+    "environment": {
+      "Java": "21.0.7",
+      "Gradle": "8.10",
+      "Docker": "29.8.1",
+      "PostgreSQL": "16 Testcontainers where tagged",
+      "JAVA_TOOL_OPTIONS": "-Duser.timezone=UTC -Dapi.version=1.44"
+    },
+    "exitCode": 0,
+    "completedUtc": "2026-10-24T17:48:35.445733+00:00"
+  },
+  "counts": {
+    "product-service:test": {
+      "PASS": 121
+    }
+  },
+  "cases": [
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "rootReplacementAfterConstructionIsRejected()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "requiresExplicitExistingDirectoryInsteadOfCreatingDefaultOrParentPaths()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "unsupportedAtomicMoveFallsBackWithoutReplaceExisting()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "publishFailureCleansWrittenTemporaryBytesAndReservedDirectory()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "rejectsRedirectedRootAndAncestorWithoutReadingOrWritingOutside()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "missingObjectHasSanitizedErrorAndNoSideEffect()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "rejectsKeyDirectoryRedirectAndDoesNotRemoveItsOutsideTargetOnCollision()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "writeFailureCleansReservedDirectoryAndSanitizesFilesystemException()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "atomicPublishExposesNoPartialObjectAndLeavesNoTemporaryFile()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "nullImageDoesNotReserveStorageSpace()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "[1] name=sample.jpg",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "[2] name=sample.png",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "[3] name=sample.webp",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "ignoresClientFilenameAndDoesNotReopenValidatedInput()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "rejectsOversizedOrNonRegularStoredContentWithoutUnboundedRead()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "concurrentAdaptersWriteUniqueCompleteObjects()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "[1] key=null",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "[2] key=",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "[3] key=../outside",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "[4] key=..",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "[5] key=.",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "[6] key=/etc/passwd",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "[7] key=C:\\private\\image",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "[8] key=\\\\server\\share",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "[9] key=%2e%2e%2fsecret",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "[10] key=f1736435-4321-4123-9123-001122334455/../secret",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "[11] key=F1736435-4321-4123-9123-001122334455",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "[12] key=f1736435-4321-4123-9123-001122334455.png",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "[13] key= key ",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "[14] key=x?y",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "duplicateServerKeyNeverOverwritesOrDeletesPublishedImage()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[1] name=sample.jpg, format=JPEG",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[2] name=sample.png, format=PNG",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[3] name=sample.webp, format=WEBP",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[4] name=alpha.webp, format=WEBP",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[1] name=photo.svg",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[2] name=photo.gif",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[3] name=photo.png.exe",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[4] name=photo",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[5] name=",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[1] count=0",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[2] count=1",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[3] count=2",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[4] count=3",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[5] count=4",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[6] count=5",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "zeroBytesAreRejected()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "nullOrNulFilenameIsRejectedWithoutUsingItAsAPath()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "decodesActualLosslessWebpFixture()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[1] extraBytes=1",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[2] extraBytes=49",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "invalidBatchDoesNotReturnAUsableSubsetAndResultIsImmutable()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "webpWithValidRiffHeaderAndChunkSizesButGarbagePixelsIsRejected()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "jpegTruncatedInsideScanIsRejectedEvenWithRestoredEndMarker()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "sixthImageIsRejectedBeforeAnyStreamIsRead()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "endlessStreamReadsAtMostLimitPlusOneByte()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "compressedDataCannotExpandBeyondDeclaredPixelBudget()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[1] colorType=4, rawByteCount=18",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[2] colorType=6, rawByteCount=34",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "impossibleChunkLengthsCannotAllocateFromUntrustedMetadata()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "pngCrcMismatchAndMissingEndChunkAreRejected()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "animationIsRejectedRatherThanValidatingOnlyItsFirstFrame()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "oversizedDimensionsAndPixelBombAreRejectedBeforePixelDecode()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "realJpegDeclaredAsPngAndRealPngRenamedAsJpegAreRejected()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[1] name=sample.jpg, format=JPEG",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[2] name=sample.png, format=PNG",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[3] name=sample.webp, format=WEBP",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[4] name=alpha.webp, format=WEBP",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[1] value=hello world",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[2] value=<svg xmlns=\"http://www.w3.org/2000/svg\"></svg>",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[3] value=<script>alert(1)</script>",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[1] imageType=12, width=1, height=1, interlaced=true",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[2] imageType=12, width=9, height=3, interlaced=true",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[3] imageType=10, width=3, height=5, interlaced=false",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[4] imageType=11, width=2, height=2, interlaced=true",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[5] imageType=1, width=16, height=12, interlaced=false",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[6] imageType=2, width=9, height=9, interlaced=true",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[7] imageType=13, width=3, height=9, interlaced=false",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "webpRiffLengthMismatchAndTrailingDataAreRejected()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "pngBadZlibChecksumAndTrailingCompressedDataAreRejected()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "nullCollectionAndNullElementAreRejected()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "ioErrorsUseSafeInternalErrorAndCallerKeepsStreamOwnership()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "existingTrustedCountIsIncludedAndCannotOverflow()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "jpegAliasAndCaseInsensitiveDeclarationsAreAccepted()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[1] delta=-1",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[2] delta=0",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[3] delta=1",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "pngCorruptedCompressedPixelsAreRejectedEvenWithCorrectChunkCrc()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "pngMissingZlibChecksumIsRejectedEvenWhenOuterChunksAreWellFormed()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "resultOwnsItsBytesInsteadOfReopeningOrExposingTheInput()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[1] type=null",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[2] type=",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[3] type=image/gif",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[4] type=image/svg+xml",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[5] type=application/octet-stream",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[6] type=image/jpg",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "[7] type=image/png; charset=utf-8",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageValidatorTest",
+      "name": "nullInputAndStreamAreRejected()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "rejectsUnverifiedBearerAndForgedIdentityHeaders()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "deniesHealthMutations()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "rejectsUnmatchedPathsToo()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "[1] method=GET",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "[2] method=HEAD",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "blocksEvenAMockedAdminWithoutAnExplicitRoutePolicy()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "[1] method=GET, path=/api/products/probe",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "[2] method=POST, path=/api/products/probe",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "[3] method=PUT, path=/api/products/probe",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "[4] method=PATCH, path=/api/products/probe",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "[5] method=DELETE, path=/api/products/probe",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "[6] method=HEAD, path=/api/reviews/probe",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "[7] method=GET, path=/api/reviews/probe",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "[8] method=GET, path=/internal/products/probe",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "[9] method=GET, path=/api/categories-unprotected",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "[10] method=POST, path=/api/products/probe/images",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "[11] method=GET, path=/api/product-images/probe",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "[12] method=DELETE, path=/api/products/probe/images/probe",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "[1] credential=missing",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "[2] credential=bearer",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "[3] credential=headers",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "[4] credential=mock-admin",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "[5] credential=internal-token",
+      "result": "PASS"
+    }
+  ],
+  "staleXmlExcluded": [],
+  "rawArtifacts": [
+    {
+      "localPath": ".verification/tv5-audit-20261025/run87/runtime.log",
+      "bytes": 1276,
+      "sha256": "4ab905585cf0cd3ee6b865c8fc4328fef56135fc991ab4f42afdf6f50a7c3ab2"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261025/run87/test/TEST-com.projecthk5.productservice.image.LocalFileSystemImageStorageTest.xml",
+      "bytes": 5657,
+      "sha256": "efa43ab9fadc50451b92fec961c1a6fc0befc1f76a9efcda094b5f6ea8b662ed"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261025/run87/test/TEST-com.projecthk5.productservice.image.ProductImageValidatorTest.xml",
+      "bytes": 10124,
+      "sha256": "1ca0dfc57c116aada879f7a1f5f1e4db460074b3d4382a6a8967f63ca930c08e"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261025/run87/test/TEST-com.projecthk5.productservice.security.ProductServiceSecurityTest.xml",
+      "bytes": 6804,
+      "sha256": "471729ffb55da7735878709420fb9e64759ed15b1b5934af8ae4d9e12afcca66"
+    }
+  ]
+}

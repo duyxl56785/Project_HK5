@@ -1,0 +1,501 @@
+{
+  "kind": "DERIVED SUMMARY, original logs/XML private and byte-preserved",
+  "metadata": {
+    "source": "036c80db61684a5c0a22379c6215ef8cb76917cf",
+    "PR": 89,
+    "command": [
+      "D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-audit-20261025\\source89\\backend\\gradlew.bat",
+      "-p",
+      "backend",
+      ":product-service:test",
+      "--tests",
+      "*ProductApplicationServiceTest",
+      ":product-service:integrationTest",
+      "--tests",
+      "*ProductApplicationServiceIntegrationTest",
+      "--tests",
+      "*ProductPersistenceIntegrationTest",
+      "--rerun-tasks",
+      "--no-daemon",
+      "--console=plain"
+    ],
+    "startedUtc": "2026-10-24T17:46:11.091357+00:00",
+    "executor": "TV5 independent exact-head execution",
+    "environment": {
+      "Java": "21.0.7",
+      "Gradle": "8.10",
+      "Docker": "29.8.1",
+      "PostgreSQL": "16 Testcontainers where tagged",
+      "JAVA_TOOL_OPTIONS": "-Duser.timezone=UTC -Dapi.version=1.44"
+    },
+    "exitCode": 0,
+    "completedUtc": "2026-10-24T17:46:53.354791+00:00"
+  },
+  "counts": {
+    "product-service:test": {
+      "PASS": 3
+    },
+    "product-service:integrationTest": {
+      "PASS": 59
+    }
+  },
+  "cases": [
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductApplicationServiceTest",
+      "name": "invalidActorsCannotReachAuthorityOrPersistence()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductApplicationServiceTest",
+      "name": "missingProductionAuthorityRejectsEveryOperationBeforeLookupOrWrite()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductApplicationServiceTest",
+      "name": "ambiguousPoliciesFailClosedInsteadOfSelectingAnAuthority()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceIntegrationTest",
+      "name": "T09_bigDecimalCurrencyAndAllProductFieldsRoundTripThroughFreshEntityManagers()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceIntegrationTest",
+      "name": "T11_exactUnicodeSkuIdentityUsesJavaUtf16LimitsAndRejectsEveryBoundarySpace()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceIntegrationTest",
+      "name": "cachedNoOpUpdateRejectsExpectedVersionOlderThanCommittedDatabaseVersion()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceIntegrationTest",
+      "name": "T14_storeUuidIsOnlyLogicalAndTwoEntityManagersRejectAStaleUpdate()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceIntegrationTest",
+      "name": "T02_minimumAndMaximumVndPersistExactlyThroughJpaAndRawSql()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceIntegrationTest",
+      "name": "T06_nonfiniteAndOversizeNumericFailInDatabaseAndJavaParser()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceIntegrationTest",
+      "name": "T03_fractionalInsertUpdateJpaAndCopyRejectOriginalValuesWithoutRounding()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceIntegrationTest",
+      "name": "T13_categoryRestrictAndBothDeleteInsertRaceOrdersNeverLeaveAnOrphan()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceIntegrationTest",
+      "name": "T07_canonicalPriceParserRejectsAliasesAndAppliesInclusiveCap()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceIntegrationTest",
+      "name": "duplicatePrimaryIdCannotMergeOverTheExistingProduct()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceIntegrationTest",
+      "name": "cachedOldEntityDoesNotRejectValidExpectedVersionFromCurrentDatabaseState()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceIntegrationTest",
+      "name": "productionContextWithoutAuthorityKeepsEveryLifecycleOperationClosed()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceIntegrationTest",
+      "name": "T05_priceAndCurrencyAreRequiredExactVndTextWithoutDefaults()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceIntegrationTest",
+      "name": "T08_actualNumericHasNoTypmodOrDefaultAndJavaKeepsOriginalBigDecimal()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceIntegrationTest",
+      "name": "T15_requiredOuterRollbackAndIntegrityFailuresAreAtomicAndPublicGuardsStayClosed()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceIntegrationTest",
+      "name": "T10_globalSkuUniqueConstraintBlocksConcurrentStoresAndRollsBackLoserTransaction()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceIntegrationTest",
+      "name": "[1] status=REJECTED",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceIntegrationTest",
+      "name": "[2] status=SUSPENDED",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceIntegrationTest",
+      "name": "[1] status=REJECTED",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceIntegrationTest",
+      "name": "[2] status=SUSPENDED",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceIntegrationTest",
+      "name": "T12_domainEditJpaApplyAdapterAndDatabaseAllPreserveImmutableSku()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceIntegrationTest",
+      "name": "productionModerationConstraintsRequireReasonsAndCountSupplementaryCodepoints()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.persistence.ProductPersistenceIntegrationTest",
+      "name": "T04_zeroNegativeAndAboveCapFailInJavaAndDirectDatabaseWrites()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductApplicationServiceIntegrationTest",
+      "name": "exactMoneySkuAndCategoryRulesSurviveApplicationOrchestration()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductApplicationServiceIntegrationTest",
+      "name": "cachedOldEntityUsesCurrentStateAndVersionBeforeTransition()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductApplicationServiceIntegrationTest",
+      "name": "[1] mode=closed",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductApplicationServiceIntegrationTest",
+      "name": "[2] mode=unapproved",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductApplicationServiceIntegrationTest",
+      "name": "[3] mode=missing",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductApplicationServiceIntegrationTest",
+      "name": "[4] mode=mismatched",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductApplicationServiceIntegrationTest",
+      "name": "[5] mode=unavailable",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductApplicationServiceIntegrationTest",
+      "name": "completeLifecyclePersistsEveryTransitionVersionPriceCurrencyAndCanonicalReason()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductApplicationServiceIntegrationTest",
+      "name": "staleExpectedVersionDoesNotOverwriteWinnerAndNoOpStaleEditFails()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductApplicationServiceIntegrationTest",
+      "name": "missingProductReturnsNotFoundAfterAuthorityIsAvailable()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductApplicationServiceIntegrationTest",
+      "name": "[1] command=edit",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductApplicationServiceIntegrationTest",
+      "name": "[2] command=submit",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductApplicationServiceIntegrationTest",
+      "name": "[3] command=approve",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductApplicationServiceIntegrationTest",
+      "name": "[4] command=reject",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductApplicationServiceIntegrationTest",
+      "name": "[5] command=suspend",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductApplicationServiceIntegrationTest",
+      "name": "[6] command=deactivate",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductApplicationServiceIntegrationTest",
+      "name": "cachedOldDraftCannotAuthorizeEditOfCurrentPendingProduct()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductApplicationServiceIntegrationTest",
+      "name": "[1] command=create",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductApplicationServiceIntegrationTest",
+      "name": "[2] command=edit",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductApplicationServiceIntegrationTest",
+      "name": "[3] command=submit",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductApplicationServiceIntegrationTest",
+      "name": "[4] command=approve",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductApplicationServiceIntegrationTest",
+      "name": "[5] command=reject",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductApplicationServiceIntegrationTest",
+      "name": "[6] command=suspend",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductApplicationServiceIntegrationTest",
+      "name": "[7] command=deactivate",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductApplicationServiceIntegrationTest",
+      "name": "[8] command=read",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductApplicationServiceIntegrationTest",
+      "name": "aCachedDeletedProductCannotBeReturnedAsAnOwnedManagementRead()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductApplicationServiceIntegrationTest",
+      "name": "[1] mode=duplicate",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductApplicationServiceIntegrationTest",
+      "name": "[2] mode=invalid-state",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductApplicationServiceIntegrationTest",
+      "name": "[3] mode=authorization",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductApplicationServiceIntegrationTest",
+      "name": "[4] mode=stale",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductApplicationServiceIntegrationTest",
+      "name": "aVersionFromAfterTheReadCannotValidateATransitionComputedFromAnOlderSnapshot()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductApplicationServiceIntegrationTest",
+      "name": "concurrentEditsFromOneVersionHaveExactlyOneWinner()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductApplicationServiceIntegrationTest",
+      "name": "[1] command=approve",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductApplicationServiceIntegrationTest",
+      "name": "[2] command=reject",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductApplicationServiceIntegrationTest",
+      "name": "[3] command=suspend",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductApplicationServiceIntegrationTest",
+      "name": "requiredOuterRollbackRevertsMultipleLifecycleWrites()",
+      "result": "PASS"
+    }
+  ],
+  "staleXmlExcluded": [],
+  "rawArtifacts": [
+    {
+      "localPath": ".verification/tv5-audit-20261025/run89/integrationTest/TEST-com.projecthk5.productservice.product.persistence.ProductPersistenceIntegrationTest.xml",
+      "bytes": 17383,
+      "sha256": "0f677b61c345a9a003858269fc3a58aabb84de03251d97b155e2ed0793daa1ab"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261025/run89/integrationTest/TEST-com.projecthk5.productservice.product.ProductApplicationServiceIntegrationTest.xml",
+      "bytes": 15427,
+      "sha256": "d177be5afa22c9359a9a232f2d22bb20cd0f731652e39e6965c5dc820f7cbf5a"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261025/run89/runtime.log",
+      "bytes": 2518,
+      "sha256": "7ed567f9c88d425b13e0512e204ac0f76f2121745848c7713c4251e06eb72591"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261025/run89/test/TEST-com.projecthk5.productservice.product.ProductApplicationServiceTest.xml",
+      "bytes": 1402,
+      "sha256": "6947ceec942badbdc6bccaaa902aa7622e3cbb5c1ac5086ab10999480fb65e58"
+    }
+  ]
+}

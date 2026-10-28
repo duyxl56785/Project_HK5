@@ -1,0 +1,277 @@
+{
+  "kind": "DERIVED SUMMARY; TV5 independent exact-source runtime; originals private, not CI artifacts",
+  "PR": 74,
+  "source": "2215d61685c8b28e3ecc31cb8c638ca6f13182a0",
+  "environment": {
+    "Node": "v24.19.0",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "typescript": "5.6.3",
+    "vite": "6.4.5",
+    "happy-dom": "21.0.4",
+    "playwright": "1.63.0"
+  },
+  "runs": [
+    {
+      "label": "tooling-install",
+      "command": [
+        "node",
+        "<npm-cli>",
+        "install",
+        "--ignore-scripts",
+        "--no-save",
+        "--package-lock=false",
+        "happy-dom@21.0.4",
+        "playwright@1.63.0"
+      ],
+      "startedUtc": "2026-10-23T00:32:45.825798+00:00",
+      "completedUtc": "2026-10-23T00:33:03.644876+00:00",
+      "exitCode": 0,
+      "counts": {},
+      "cases": [],
+      "rawArtifact": {
+        "localPath": ".verification/tv5-audit-20261023/runs/pr74/tooling-install.log",
+        "bytes": 161,
+        "sha256": "e48faae9c9f227469845acc90ee085d40d7de4d8018f15c694f48df8dd9ed3e5"
+      }
+    },
+    {
+      "label": "unit-ssr-dom",
+      "command": [
+        "node",
+        "--test",
+        "src/features/catalog/categoryTree.test.mjs",
+        "src/features/catalog/CategoryBrowser.test.mjs",
+        "src/features/catalog/CategoryBrowser.dom.mjs"
+      ],
+      "startedUtc": "2026-10-23T00:33:03.645997+00:00",
+      "completedUtc": "2026-10-23T00:33:06.883086+00:00",
+      "exitCode": 0,
+      "counts": {
+        "tests": 37,
+        "pass": 37,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "cases": [
+        "clearing search restores focus to the still-mounted search input",
+        "click selects only the exact DTO and toggles a branch",
+        "Arrow keys, Home and End navigate focus without changing selection",
+        "search opens matching ancestry, supports collapse and no-match recovery",
+        "expanded ARIA groups own exactly their direct children",
+        "retry invokes the supplied callback exactly once",
+        "loading is announced without an empty or usable tree",
+        "source error has an accessible retry action and no tree",
+        "a valid empty result has its own state",
+        "invalid duplicate data displays an error instead of a partial tree",
+        "invalid orphan data displays an error instead of a partial tree",
+        "invalid cycle data displays an error instead of a partial tree",
+        "initial tree shows roots with collapsed branch and explicit ARIA positions",
+        "selection is controlled and can describe a hidden descendant",
+        "category names are escaped, never interpreted as markup",
+        "each browser has distinct labels and search control IDs",
+        "empty category collection is valid",
+        "one root retains the exact DTO and accessible position",
+        "multiple roots preserve backend order and sibling positions",
+        "unordered parent/child records become a complete preorder hierarchy",
+        "input objects and arrays are never changed or normalized",
+        "inconsistent input fails as a whole: duplicate IDs",
+        "inconsistent input fails as a whole: missing parent",
+        "inconsistent input fails as a whole: self-parent",
+        "inconsistent input fails as a whole: cycle without roots",
+        "inconsistent input fails as a whole: cycle beside valid root",
+        "inconsistent input fails as a whole: null collection",
+        "inconsistent input fails as a whole: non-array collection",
+        "inconsistent input fails as a whole: null record",
+        "inconsistent input fails as a whole: wrong ID type",
+        "inconsistent input fails as a whole: blank name",
+        "inconsistent input fails as a whole: missing parent field",
+        "a deep hierarchy is built without recursive stack growth",
+        "search is case-insensitive and retains all ancestors without changing names",
+        "search with no match returns no rows; blank query restores all rows",
+        "filtered sibling positions and branch flags describe the filtered tree",
+        "collapsed and expanded branches never reveal hidden descendants"
+      ],
+      "rawArtifact": {
+        "localPath": ".verification/tv5-audit-20261023/runs/pr74/unit-ssr-dom.log",
+        "bytes": 2880,
+        "sha256": "1f06fe828bc0927f988e30db73c5cdb40000139925aad14b3a812ed61daac1cf"
+      }
+    },
+    {
+      "label": "browser",
+      "command": [
+        "node",
+        "--test",
+        "src/features/catalog/CategoryBrowser.browser.mjs"
+      ],
+      "startedUtc": "2026-10-23T00:33:06.883591+00:00",
+      "completedUtc": "2026-10-23T00:33:15.031133+00:00",
+      "exitCode": 0,
+      "counts": {
+        "tests": 12,
+        "pass": 12,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "cases": [
+        "click expands/collapses multiple levels and controls selection",
+        "Vietnamese search keeps ancestors and clear restores focus",
+        "Arrow/Home/End keyboard navigation preserves selection",
+        "native Enter/Space select and toggle; Tab/Shift+Tab enter and leave the tree",
+        "loading is visible without a usable tree",
+        "empty is visible without a usable tree",
+        "invalid is visible without a usable tree",
+        "error preview retry invokes its callback and recovers to ready fixtures",
+        "expanded accessibility hierarchy owns direct children and exposes state",
+        "responsive 375px: deep long names, hit areas and visible focus",
+        "responsive 768px: deep long names, hit areas and visible focus",
+        "responsive 1280px: deep long names, hit areas and visible focus"
+      ],
+      "rawArtifact": {
+        "localPath": ".verification/tv5-audit-20261023/runs/pr74/browser.log",
+        "bytes": 1030,
+        "sha256": "50cf05a194bc4283b5c2a62aac44a05a698ec887df943bf14cd939513704b1ce"
+      }
+    },
+    {
+      "label": "typecheck",
+      "command": [
+        "node",
+        "node_modules/typescript/bin/tsc",
+        "--noEmit"
+      ],
+      "startedUtc": "2026-10-23T00:33:15.031133+00:00",
+      "completedUtc": "2026-10-23T00:33:18.835009+00:00",
+      "exitCode": 0,
+      "counts": {},
+      "cases": [],
+      "rawArtifact": {
+        "localPath": ".verification/tv5-audit-20261023/runs/pr74/typecheck.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "label": "application-build",
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "startedUtc": "2026-10-23T00:33:18.836009+00:00",
+      "completedUtc": "2026-10-23T00:33:21.894415+00:00",
+      "exitCode": 0,
+      "counts": {},
+      "cases": [],
+      "rawArtifact": {
+        "localPath": ".verification/tv5-audit-20261023/runs/pr74/application-build.log",
+        "bytes": 392,
+        "sha256": "7fdf616836628135cdb10644e9f1a83015053f0f7ab1ba5f46e03f5bc9ab6f07"
+      }
+    },
+    {
+      "label": "feature-build",
+      "command": [
+        "node",
+        "node_modules/vite/bin/vite.js",
+        "build",
+        "--config",
+        "src/features/catalog/vite.category.config.ts"
+      ],
+      "startedUtc": "2026-10-23T00:33:21.894415+00:00",
+      "completedUtc": "2026-10-23T00:33:22.254398+00:00",
+      "exitCode": 0,
+      "counts": {},
+      "cases": [],
+      "rawArtifact": {
+        "localPath": ".verification/tv5-audit-20261023/runs/pr74/feature-build.log",
+        "bytes": 285,
+        "sha256": "77ff00816e37a10accca7e74d7c8eae422b2e7c6587769b798ffad74b93b4b1e"
+      }
+    }
+  ],
+  "rawArtifacts": [
+    {
+      "localPath": ".verification/tv5-audit-20261023/runs/pr74/application-build.log",
+      "bytes": 392,
+      "sha256": "7fdf616836628135cdb10644e9f1a83015053f0f7ab1ba5f46e03f5bc9ab6f07"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261023/runs/pr74/browser-evidence/browser.json",
+      "bytes": 85,
+      "sha256": "f048c2b684f2da8f79f509321e1df52ca6784a584a89812b546a57726723b42d"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261023/runs/pr74/browser-evidence/category-1280.png",
+      "bytes": 61551,
+      "sha256": "90a980b8133e5242d4f387e2119db0df6fa78dbea67872d3153db47c72c6ad39"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261023/runs/pr74/browser-evidence/category-375.png",
+      "bytes": 51517,
+      "sha256": "a24381ec5a367bf72e78946bb7a34c26c46da738eaa1fdab98cc473175601706"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261023/runs/pr74/browser-evidence/category-768.png",
+      "bytes": 55404,
+      "sha256": "161f2cb89bcb549f31deeeeb1291969bd1bba512f042eb259bad64d695142766"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261023/runs/pr74/browser-evidence/chrome-accessibility.json",
+      "bytes": 47051,
+      "sha256": "03960c34a0dc883def46ec7e690de412368aec23a3fc3efe927c9f1c23b4dd58"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261023/runs/pr74/browser-evidence/expanded-accessibility.yml",
+      "bytes": 269,
+      "sha256": "f2bb9ab6c0df95e7c0042666da6dc6a263c658cb2c704f3ddbae4a5c54523dbc"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261023/runs/pr74/browser.log",
+      "bytes": 1030,
+      "sha256": "50cf05a194bc4283b5c2a62aac44a05a698ec887df943bf14cd939513704b1ce"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261023/runs/pr74/feature-build.log",
+      "bytes": 285,
+      "sha256": "77ff00816e37a10accca7e74d7c8eae422b2e7c6587769b798ffad74b93b4b1e"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261023/runs/pr74/tooling-install.log",
+      "bytes": 161,
+      "sha256": "e48faae9c9f227469845acc90ee085d40d7de4d8018f15c694f48df8dd9ed3e5"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261023/runs/pr74/typecheck.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261023/runs/pr74/unit-ssr-dom.log",
+      "bytes": 2880,
+      "sha256": "1f06fe828bc0927f988e30db73c5cdb40000139925aad14b3a812ed61daac1cf"
+    }
+  ],
+  "scope": "Isolated fixture preview in actual installed Chrome, pure/SSR/DOM; no application Router/API/current-account integration",
+  "NOT_RUN": [
+    "Human screen-reader/physical touch device",
+    "Real Auth/JWT/Gateway/current ownership/API/production provider/live E2E",
+    "Backend/PostgreSQL: frontend-only scope"
+  ],
+  "sourceUntouched": true,
+  "browserVersion": {
+    "browser": "155.0.8059.85",
+    "source": "feature preview fixtures; not API/E2E"
+  },
+  "publication": {
+    "type": "DERIVED SUMMARY",
+    "raw": "Original byte-preserved logs/XML/screenshots/AX files remain private at localPath; not CI/downloadable raw artifacts",
+    "verification": "All listed raw artifact sizes and SHA256 independently rechecked before export",
+    "limits": "Separate invocations/snapshots/owner evidence; no release total, policy approval, physical mobile or live E2E inferred"
+  }
+}

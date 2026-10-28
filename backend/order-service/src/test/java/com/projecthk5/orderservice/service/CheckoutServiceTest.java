@@ -230,4 +230,66 @@ class CheckoutServiceTest {
         verify(cart,never()).finalizeCart(anyString(),anyString());
         verifyNoInteractions(inventory,write,repo);
     }
+
+    @Test void conflictingCatalogSellerStoreFactsNeverReachInventoryOrOrderWriter() {
+        CheckoutAttempt attempt=fresh();
+        when(cart.claim(bearer,key,null)).thenReturn(new CartPort.CartSnapshot(customer,1,true,List.of(
+            new CartPort.Item("p1","store1","seller-shared",2,new BigDecimal("10000")),
+            new CartPort.Item("p2","store2","seller-shared",1,new BigDecimal("15000")))));
+        when(catalog.verify("p1")).thenReturn(new CatalogPort.ProductSnapshot(
+            "p1","seller-shared","store1",true,true,true,false,new BigDecimal("10000")));
+        when(catalog.verify("p2")).thenReturn(new CatalogPort.ProductSnapshot(
+            "p2","seller-shared","store2",true,true,true,false,new BigDecimal("15000")));
+
+        IllegalStateException failure=assertThrows(IllegalStateException.class,
+            () -> svc.checkout(customer,bearer,key,request));
+        assertEquals("Catalog assigned one Seller to multiple Stores",failure.getMessage());
+        verify(cart).release(bearer,key);
+        verify(keys).fail(attempt.getId(),false);
+        verifyNoInteractions(inventory,write,repo);
+    }
+
+    @Test void reversedCartOrderStillRejectsOneSellerFromTwoStoresBeforeInventory() {
+        CheckoutAttempt attempt=fresh();
+        when(cart.claim(bearer,key,null)).thenReturn(new CartPort.CartSnapshot(customer,1,true,List.of(
+            new CartPort.Item("p2","store2","seller-shared",1,new BigDecimal("15000")),
+            new CartPort.Item("p1","store1","seller-shared",2,new BigDecimal("10000")))));
+        when(catalog.verify("p1")).thenReturn(new CatalogPort.ProductSnapshot(
+            "p1","seller-shared","store1",true,true,true,false,new BigDecimal("10000")));
+        when(catalog.verify("p2")).thenReturn(new CatalogPort.ProductSnapshot(
+            "p2","seller-shared","store2",true,true,true,false,new BigDecimal("15000")));
+
+        assertThrows(IllegalStateException.class,() -> svc.checkout(customer,bearer,key,request));
+        verify(cart).release(bearer,key);
+        verify(keys).fail(attempt.getId(),false);
+        verifyNoInteractions(inventory,write,repo);
+    }
+
+    @Test void twoProductsFromSameSellerAndStoreCreateOneSellerOrder() {
+        CheckoutAttempt attempt=fresh();
+        when(cart.claim(bearer,key,null)).thenReturn(new CartPort.CartSnapshot(customer,1,true,List.of(
+            new CartPort.Item("p1","store1","seller-shared",2,new BigDecimal("10000")),
+            new CartPort.Item("p2","store1","seller-shared",1,new BigDecimal("15000")))));
+        when(catalog.verify("p1")).thenReturn(new CatalogPort.ProductSnapshot(
+            "p1","seller-shared","store1",true,true,true,false,new BigDecimal("10000")));
+        when(catalog.verify("p2")).thenReturn(new CatalogPort.ProductSnapshot(
+            "p2","seller-shared","store1",true,true,true,false,new BigDecimal("15000")));
+        final Order[] captured=new Order[1];
+        when(write.savePlaced(any(Order.class),eq(attempt.getId()),anyString())).thenAnswer(inv -> {
+            captured[0]=inv.getArgument(0);
+            return captured[0];
+        });
+
+        CheckoutResult placed=svc.checkout(customer,bearer,key,request);
+        assertEquals(attempt.getId(),placed.orderId());
+        assertEquals("PLACED",placed.status());
+        assertEquals(1,placed.sellerOrderCount());
+        assertEquals(0,new BigDecimal("35000").compareTo(placed.total()));
+        assertNotNull(captured[0]);
+        assertEquals(1,captured[0].getSellerOrders().size());
+        assertEquals(2,captured[0].getSellerOrders().get(0).getItems().size());
+        verify(inventory).reserve(eq(attempt.getId()),argThat(items -> items.size()==2));
+        verify(cart).finalizeCart(bearer,key);
+        verify(cart,never()).release(anyString(),anyString());
+    }
 }

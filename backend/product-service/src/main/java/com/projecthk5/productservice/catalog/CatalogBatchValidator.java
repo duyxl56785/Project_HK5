@@ -88,6 +88,7 @@ public class CatalogBatchValidator {
         if (loaded == null) throw unavailable();
         Map<UUID, LookupResult> products = new HashMap<>();
         Map<UUID, StoreAccess> stores = new HashMap<>();
+        Map<UUID, UUID> sellerStores = new HashMap<>();
         Set<String> skus = new HashSet<>();
         for (LookupResult lookup : loaded) {
             if (lookup == null || lookup.status() == null || lookup.status() == LookupStatus.UNAVAILABLE
@@ -99,11 +100,15 @@ public class CatalogBatchValidator {
                 continue;
             }
             if (facts == null || facts.product() == null || facts.store() == null || facts.currency() == null
-                    || facts.currency().isBlank() || !lookup.productId().equals(facts.product().id())
+                    || facts.currency().isBlank() || !facts.currency().equals(facts.product().currency())
+                    || !lookup.productId().equals(facts.product().id())
                     || !facts.product().storeId().equals(facts.store().storeId())
                     || !skus.add(facts.product().sku())) throw unavailable();
             StoreAccess previous = stores.putIfAbsent(facts.store().storeId(), facts.store());
             if (previous != null && !previous.equals(facts.store())) throw unavailable();
+            // S01 permits one Store per Seller; contradictory source facts invalidate the batch.
+            UUID previousStore = sellerStores.putIfAbsent(facts.store().sellerId(), facts.store().storeId());
+            if (previousStore != null && !previousStore.equals(facts.store().storeId())) throw unavailable();
         }
         if (!products.keySet().equals(ids)) throw unavailable();
         return products;

@@ -1,0 +1,112 @@
+{
+  "kind": "DERIVED RED diagnostic summary; original failing logs/XML private and byte-preserved",
+  "ownerSourceBase": "aa790f422a8b3ee698f53e74c455edae7b77d6fa",
+  "qaCheckoutHEAD": "aa790f422a8b3ee698f53e74c455edae7b77d6fa",
+  "qaWorkingTree": "?? tests/security/",
+  "qaSourceManifest": [
+    {
+      "path": "tests/security/product-visibility.init.gradle",
+      "sha256": "671ad4193f3359f50f961af251ea1a7afc537c95039373a2903b60f5d0729f27",
+      "bytes": 1591
+    },
+    {
+      "path": "tests/security/product-visibility/ProductOwnerVisibilityPostgresDiagnosticTest.java",
+      "sha256": "cc95a20ea9f90f122a8803a68b508f3a794ee8a94c8876845eee105a9e1fe679",
+      "bytes": 8212
+    },
+    {
+      "path": "tests/security/product-visibility/README.md",
+      "sha256": "ea16cf0eca489a67a42b539bfd6b39641e784d39e192e5fd8c72e915d59d6403",
+      "bytes": 2532
+    }
+  ],
+  "sourceAttribution": "uncommitted QA working tree",
+  "expectationSource": "https://github.com/duyxl56785/Project_HK5/pull/97#issuecomment-6430723502",
+  "decisionScope": "TV1 decided owner-resource exception; TV2 confirmation/implementation separate, not overallHTTPapproval",
+  "command": [
+    "D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-product-six-tasks-20261027\\source97\\backend\\gradlew.bat",
+    "-p",
+    "backend",
+    "--init-script",
+    "D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-product-six-tasks-20261027\\source97\\tests\\security\\product-visibility.init.gradle",
+    "-Ptv5VisibilitySources=D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-product-six-tasks-20261027\\source97\\tests\\security\\product-visibility",
+    ":product-service:tv5ProductVisibility",
+    "--rerun-tasks",
+    "--no-daemon",
+    "--console=plain"
+  ],
+  "startedUtc": "2026-10-27T01:01:59.098814+00:00",
+  "completedUtc": "2026-10-27T01:02:34.349382+00:00",
+  "exitCode": 1,
+  "environment": {
+    "Java": "21.0.7",
+    "Gradle": "8.10",
+    "PostgreSQL": "16.6 Testcontainers",
+    "JAVA_TOOL_OPTIONS": "-Duser.timezone=UTC -Dapi.version=1.44"
+  },
+  "counts": {
+    "PASS": 4,
+    "FAIL": 4
+  },
+  "cases": [
+    {
+      "class": "com.projecthk5.productservice.product.http.ProductOwnerVisibilityPostgresDiagnosticTest",
+      "name": "[1] mode=denied",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.productservice.product.http.ProductOwnerVisibilityPostgresDiagnosticTest",
+      "name": "[2] mode=unavailable",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.productservice.product.http.ProductOwnerVisibilityPostgresDiagnosticTest",
+      "name": "[1] operation=read",
+      "result": "FAIL",
+      "failureType": "org.opentest4j.AssertionFailedError"
+    },
+    {
+      "class": "com.projecthk5.productservice.product.http.ProductOwnerVisibilityPostgresDiagnosticTest",
+      "name": "[2] operation=edit",
+      "result": "FAIL",
+      "failureType": "org.opentest4j.AssertionFailedError"
+    },
+    {
+      "class": "com.projecthk5.productservice.product.http.ProductOwnerVisibilityPostgresDiagnosticTest",
+      "name": "[3] operation=submit",
+      "result": "FAIL",
+      "failureType": "org.opentest4j.AssertionFailedError"
+    },
+    {
+      "class": "com.projecthk5.productservice.product.http.ProductOwnerVisibilityPostgresDiagnosticTest",
+      "name": "[4] operation=deactivate",
+      "result": "FAIL",
+      "failureType": "org.opentest4j.AssertionFailedError"
+    },
+    {
+      "class": "com.projecthk5.productservice.product.http.ProductOwnerVisibilityPostgresDiagnosticTest",
+      "name": "sameStoreReadAndVersionConflictRemainDistinctControls()",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.productservice.product.http.ProductOwnerVisibilityPostgresDiagnosticTest",
+      "name": "selfModerationStillReturns403InsteadOfGlobal404Remapping()",
+      "result": "PASS"
+    }
+  ],
+  "rawArtifacts": [
+    {
+      "localPath": ".verification/tv5-product-six-tasks-20261027/visibility-initial-red/runtime.log",
+      "bytes": 4051,
+      "sha256": "a1451687b7c489312f0e558a45ddcdd994faa15ebcf720d9d6908ff3f8bc81de"
+    },
+    {
+      "localPath": ".verification/tv5-product-six-tasks-20261027/visibility-initial-red/TEST-com.projecthk5.productservice.product.http.ProductOwnerVisibilityPostgresDiagnosticTest.xml",
+      "bytes": 72864,
+      "sha256": "8baacb4c381bdad61b14bc92f0efa04fc915550c24bd8d53d0dc937c72f63581"
+    }
+  ],
+  "excludedStaleXml": [],
+  "expectedMismatch": "foreign prepared Failure403/PRODUCT_ACCESS_DENIED versus missing404/PRODUCT_NOT_FOUND; current rule requires scoped parity, no-write/rollback controls run first",
+  "boundary": "Private handler prepared failure records with existing test authority, no realJWT/HTTP/controlplane proof"
+}

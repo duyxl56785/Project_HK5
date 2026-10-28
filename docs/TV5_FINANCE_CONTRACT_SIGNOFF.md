@@ -240,3 +240,50 @@ humanTV5 checks Finance compatibility and TV3 checks the changed unit-cap consum
 and applicable schema/S01/auth gates are still required before Product price persistence. PR52 Store review is independent.
 No Product schema, MD04–MD10, House, Checkout, Inventory, Finance flag or production enablement changes.
 Runtime tests this docs-only proposal: **NOT_RUN**. Issues2/5/12 remain OPEN/PARTIAL.
+
+
+## M01-MVP-v1.0-DRAFT — selected choices awaiting human signature, 23/10/2026
+
+**DRAFT FOR HUMAN SIGNATURE / NOT SIGNED / NOT EFFECTIVE.** Canonical decision detail nằm duy nhất ở
+[packet §16](TV5_M01_HUMAN_DECISION_PACKET.md#16-m01-mvp-v10-draft--lựa-chọn-chờ-ký-23102026).
+Ledger này chỉ ghi trạng thái/digest, không tạo policy copy hoặc thay lịch sử TV5-FIN-v0.1/§14.
+TV5 Finance owner cần review/tiếp nhận đề xuất canonical; publication không là business/technical approval.
+
+Nguồn U04: xác nhận trực tiếp của Nguyễn Văn Duy ngày 23/10/2026 trong phiên TV2; MD01=VND_ONLY đã SELECTED–NOT SIGNED.
+USER-DECLARED BUSINESS AUTHORITY không thay signed account/role/scope record hoặc operator grant.
+MD02/MD03 SELECTED–NOT SIGNED; scope business price slice chỉ MD01/MD02/Product unit-price portion MD03.
+MD04/MD06 SELECTED/details PENDING; MD07 SELECTED–CONDITIONAL; MD09 dual-role proposal AUTHORIZATION PENDING;
+MD10 SELECTED DIRECTION/details PENDING; MD05/MD08 PROPOSED. Không có MD business APPROVED mới.
+
+[M01-PRICE-SCHEMA-v1.0 — unsigned record](TV5_M01_HUMAN_DECISION_PACKET.md#165-m01-price-schema-v10--approval-record-chưa-ký)
+cần human business receipt +technical coverage target revision +TV2 implementation contract
++human TV5 money/QA/no-rounding +applicable TV1/TV3 delta trước private Product persistence.
+Reuse technical receipts #53/S01 đúng scope; không xin lại unit/shape/Store boundary không đổi.
+Không đòi MD04–MD10 không liên quan; cũng không mở Auth HTTP/Catalog/House/Finance/COD/flags.
+
+Unsigned packet SHA256 (toàn file docs/TV5_M01_HUMAN_DECISION_PACKET.md, UTF-8/LF/no-BOM):
+
+`a02370d995ea2950b39d737c6a41c47f09da448a600b335905c080a8798b008a`
+
+Hash nằm ngoài file được hash; người ký phải dẫn immutable commit permalink ở PR/receipt.
+Digest preview cũ trước U04 đã hết hiệu lực cho publication này; không dùng chữ ký/references của nội dung cũ cho packet mới.
+
+Audit source main33853a1 giữ nguyên; FIN01/06 technical fix có evidence lịch sử, không tính là runtime test mới.
+Business caps chưa được enforce production; no-rounding schema option còn PROPOSED, không có migration/DTO mới.
+PR83 vẫn Draft/candidate; PRODUCT_PERSISTENCE_PRODUCTION=BLOCKED, business signature PENDING, operator AUTHORIZATION PENDING.
+Chỉ xuất bản hai tài liệu để review; không Java/Flyway/API/runtime config/Finance hoặc Inventory flag changes, không merge/deploy.
+
+
+## Verified Product price-slice acceptance — 25/10/2026
+
+This dated receipt supersedes only older statements that MD01/MD02/Product-unit MD03 business signature, Level A or Product persistence implementation is still missing. Earlier sections remain historical; full M01 is PARTIAL, not globally APPROVED.
+
+- Human `duyxl56785` [business receipt84](https://github.com/duyxl56785/Project_HK5/pull/84#issuecomment-6364386964) signs **M01-PRICE-SCHEMA-v1.0**, packet463338e4fc3823b0720e1f840e637e0c5e946148, SHA256 `a02370d995ea2950b39d737c6a41c47f09da448a600b335905c080a8798b008a`: MD01 explicit VND_ONLY, MD02 exact positive integral1..1000000000/no-rounding/canonical string, MD03 Product unit cap only. Signature/author/revision/digest verified; packet bytes unchanged.
+- [TV5 human-authorized Level A](https://github.com/duyxl56785/Project_HK5/pull/84#pullrequestreview-5637148973), [TV2 implementation ACK](https://github.com/duyxl56785/Project_HK5/pull/84#issuecomment-6381447408) and [human-authorized Level B88](https://github.com/duyxl56785/Project_HK5/pull/88#pullrequestreview-5639341936) are recorded.88 is MERGED into main ed85f6290de7f611c82e5c0ad973f98180f04df4. Do not block private Product persistence on another unchanged unit-price signature or unrelated MD04–MD10.
+- Quantity1..1000/aggregate1e12, MD04–MD10, House/rates/rounding/COD/refund/settlement/operator and HTTP/current authority are outside that signature. Finance production BLOCKED; flags unchanged/OFF. COD PAID's proposed Order source/current ADMIN/atomic per-SellerOrder guard is not yet a versioned trusted runtime contract or production settlement.
+- FIN01/06 **technical existing-storage** fixes freshly verified on main ed85f62:109Orderunit+25OrderPG+3unchanged explicit diagnostics PASS, exit0, separate from Product/Seller/author/CI executions. No policy approval from tests. [Current QA and owner handoff](../reports/TV5_PRODUCT_INTEGRATION_REVIEW_2026-10-25.md), [source/commands/raw hashes](../reports/evidence/tv5-product-integration-20261025/finance.json).
+
+
+## Scoped internal review and QA receipt — 26/10/2026
+
+TV5 directly authorized formalAPPROVED89/90/91/94 is now recorded on GitHub at the verified unchanged heads, [current receipts/tests/handoff](../reports/TV5_ALL_PR_UNBLOCK_2026-10-26.md). This is internal source approval, not additionalMD/business or operational approval. New Auth/Gateway101/102QA is scoped to current bootstrap/transaction primitives and embedded forwarding; it doesnot establish currentStore/House/CODauthority/settlement/liveE2E. Previously signed MD01/02/ProductunitMD03 remains valid. FullM01PARTIAL/PENDING; FinanceproductionBLOCKED, noflags/deploy/merge. Signedpacket unchanged; no requirementto re-sign the existing Productpriceslice or redo FIN01/06 absent regression.
