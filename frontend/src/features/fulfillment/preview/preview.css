@@ -1,0 +1,9 @@
+body { margin: 0; background: #f1f5f9; font-family: system-ui, sans-serif; }
+.tv4-preview { min-height: 100vh; }
+.tv4-preview__banner { padding: 2.5rem max(1rem, calc((100vw - 1160px) / 2)); background: #123a45; color: #fff; }
+.tv4-preview__banner h1 { margin: .6rem 0; font-size: clamp(1.7rem, 4vw, 2.5rem); }
+.tv4-preview__banner p { max-width: 880px; color: #d1fae5; line-height: 1.6; }
+.tv4-preview__banner span { color: #a7f3d0; font-size: .8rem; letter-spacing: .09em; font-weight: 750; }
+.tv4-preview__content { max-width: 1160px; margin: 1.5rem auto; padding: 0 1rem; }
+.tv4-preview__result { max-width: 72rem; margin: 1rem auto; padding: .875rem 1rem; border-radius: .625rem; background: #ecfdf5; color: #166534; }
+.tv4-preview__footer { padding: 2rem 1rem; text-align: center; color: #475569; font-size: .88rem; }

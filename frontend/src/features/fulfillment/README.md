@@ -17,6 +17,16 @@ Run its focused checks from `frontend` after dependencies are available:
 node --experimental-strip-types --test src/features/fulfillment/fulfillmentModel.test.mjs src/features/fulfillment/FulfillmentBoard.test.mjs
 ```
 
+Run the isolated visual preview with:
+
+```powershell
+npx vite --config src/features/fulfillment/vite.fulfillment.config.ts
+```
+
+Use `?state=loading`, `?state=error`, `?state=unauthorized` or
+`?state=inconsistent` to inspect guarded UI states. The preview fixture records
+button callbacks locally and never calls a backend.
+
 Runtime Store authorization, SellerOrder persistence/status, action DTOs,
 COD-after-delivery policy, idempotency, API paths and event notifications remain
 pending cross-owner contracts.
