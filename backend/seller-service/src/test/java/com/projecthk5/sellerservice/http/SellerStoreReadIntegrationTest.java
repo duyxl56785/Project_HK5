@@ -187,15 +187,15 @@ class SellerStoreReadIntegrationTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"/api/sellers/me", "/api/stores/me"})
-    void ownReadHttpIsUnregisteredEvenWithSpoofedCredentials(String path) throws Exception {
+    void ownReadHttpRemainsBlockedEvenWithSpoofedCredentials(String path) throws Exception {
         var seller = approved(A);
         var store = stores.create(A, "Own", "own-store");
-        http.perform(get(path)).andExpect(status().isNotFound());
+        http.perform(get(path)).andExpect(status().isForbidden());
         var result = http.perform(get(path).header("Authorization", "Bearer not-a-verified-token")
                 .header("X-User-Id", A.reference()).header("X-Roles", "ADMIN,SELLER")
                 .queryParam("sellerId", seller.id().toString())
                 .queryParam("storeId", store.profile().id().toString()))
-                .andExpect(status().isNotFound()).andReturn().getResponse().getContentAsString();
+                .andExpect(status().isForbidden()).andReturn().getResponse().getContentAsString();
         assertFalse(result.contains(seller.id().toString()));
         assertFalse(result.contains(store.profile().id().toString()));
         assertFalse(result.contains("Private reason"));

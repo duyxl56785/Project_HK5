@@ -618,7 +618,9 @@ class StorePersistenceIntegrationTest {
                 .header("Authorization", "Bearer forged-not-a-verified-jwt")
                 .contentType("application/json").content("{\"sellerId\":\"" + SELLER_A + "\"}"))
                 .andReturn().getResponse();
-        assertEquals(404, response.getStatus());
+        assertEquals(403, response.getStatus());
+        assertTrue(response.getContentAsString().contains("SELLER_ROUTE_AUTH_NOT_CONFIGURED"));
+        assertFalse(response.getContentAsString().contains(OWNER.reference()));
         assertEquals(0, stores.count());
     }
 
