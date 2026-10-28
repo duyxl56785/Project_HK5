@@ -1,7 +1,5 @@
 import type { Transaction, WorkspaceAdapter } from './workspaceTypes';
 import { readPrAudit, scopeTransactions } from './workspaceModel';
-import qaRuns from './data/qa-runs.json';
-import prSnapshot from './data/pr-audit.json';
 import type { QaRun } from './workspaceTypes';
 
 // Explicit synthetic, READ-ONLY view fixtures. These are not persisted business records.
@@ -32,10 +30,11 @@ export function createPreviewAdapter(mode = 'ready', delay = 180): WorkspaceAdap
       if (mode === 'blocked') return { status: 'blocked' };
       if (mode === 'empty') return { status: 'empty' };
       if (mode === 'loading') return { status: 'loading' };
+      const recorded = scope.kind === 'admin' ? await Promise.all([import('./recorded/qa-runs.json'), import('./recorded/pr-audit.json')]) : null;
       return { status: 'ready', data: {
         source: 'DEMO', asOf: '2026-10-28T00:00:00Z', transactions: scopeTransactions(demoTransactions, scope),
-        qaRuns: scope.kind === 'admin' ? qaRuns as readonly QaRun[] : [],
-        audit: scope.kind === 'admin' ? readPrAudit(prSnapshot) : { status: 'blocked', rows: [], asOf: null },
+        qaRuns: recorded ? recorded[0].default as readonly QaRun[] : [],
+        audit: recorded ? readPrAudit(recorded[1].default) : { status: 'blocked', rows: [], asOf: null },
       } };
     },
   };

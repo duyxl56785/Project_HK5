@@ -13,12 +13,11 @@ export function FinanceWorkspace({ adapter = blockedWorkspaceAdapter, scope = de
     const abort = new AbortController();
     const identity = { adapter, key: scopeKey, attempt };
     if (scope.kind === 'denied') { setLoaded({ ...identity, state: { status: 'denied' } }); return () => abort.abort(); }
-    void adapter.read(scope, abort.signal).then(state => {
+    void (async () => adapter.read(scope, abort.signal))().then(state => {
       if (!abort.signal.aborted) setLoaded({ ...identity, state });
     }).catch(() => { if (!abort.signal.aborted) setLoaded({ ...identity, state: { status: 'error' } }); });
     return () => abort.abort();
     // scopeKey represents the complete immutable scope, including its kind and exact Store ID.
-    // eslint is not installed in this repository; no lint rule is disabled here.
   }, [adapter, scopeKey, attempt]);
   // Hide old data synchronously, before effects, on scope/source/retry changes.
   const state: LoadState<WorkspaceSnapshot> = loaded?.adapter === adapter && loaded.key === scopeKey && loaded.attempt === attempt ? loaded.state : { status: 'loading' };

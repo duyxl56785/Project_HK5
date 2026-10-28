@@ -16,8 +16,8 @@ export function QADashboard({ runs }: { runs: readonly QaRun[] }) {
   return <>
     <div className="tv5-source-banner"><StatusBadge value="SKIP" label="RECORDED QA" /><span>Biên nhận đã lưu · không phải test đang chạy hay tổng release</span></div>
     <FilterBar>
-      <label className="tv5-search">Lượt chạy<select value={run?.id ?? ''} onChange={e => selectRun(e.target.value)}>{choices.map(r => <option key={r.id} value={r.id}>{r.title} · {r.head.slice(0, 7)}</option>)}</select></label>
-      <label>Branch<select value={branch} onChange={e => { setBranch(e.target.value); setSelected(null); setPage(1); }}><option value="">Tất cả branch</option>{[...new Set(runs.map(r => r.branch))].map(b => <option key={b}>{b}</option>)}</select></label>
+      <label className="tv5-search">Lượt chạy<select aria-label="Lượt chạy" value={run?.id ?? ''} onChange={e => selectRun(e.target.value)}>{choices.map(r => <option key={r.id} value={r.id}>{r.title} · {r.head.slice(0, 7)}</option>)}</select></label>
+      <label>Branch<select aria-label="Branch" value={branch} onChange={e => { setBranch(e.target.value); setSelected(null); setPage(1); }}><option value="">Tất cả branch</option>{[...new Set(runs.map(r => r.branch))].map(b => <option key={b}>{b}</option>)}</select></label>
       <label>Commit SHA<input value={commit} placeholder="SHA hoặc tiền tố" onChange={e => { setCommit(e.target.value); setSelected(null); setPage(1); }} /></label>
     </FilterBar>
     {!run ? <StatePanel status="empty" /> : <>
@@ -29,9 +29,9 @@ export function QADashboard({ runs }: { runs: readonly QaRun[] }) {
       <SnapshotNote text="Bộ lọc bảng không đổi số liệu gốc của lượt chạy. PASS phải có đường dẫn receipt được phép; thiếu receipt hiển thị NOT_RUN. Các gate chưa chạy không phải lỗi test." />
       <section className="tv5-card tv5-table-card"><div className="tv5-card-heading"><h2>Test cases & evidence</h2><span className="tv5-count">{rows.length} ca phù hợp</span></div>
         <FilterBar><label className="tv5-search">Tìm test<input type="search" value={search} onChange={e => { setSearch(e.target.value); setPage(1); }} placeholder="Tên ca hoặc suite" /></label>
-          <label>Module<select value={module} onChange={e => { setModule(e.target.value); setPage(1); }}><option value="">Tất cả module</option>{[...new Set(cases.map(r => r.module))].map(m => <option key={m}>{m}</option>)}</select></label>
-          <label>Kết quả<select value={status} onChange={e => { setStatus(e.target.value); setPage(1); }}><option value="">Tất cả kết quả</option>{['PASS', 'FAIL', 'SKIP', 'NOT_RUN', 'BLOCKED'].map(s => <option key={s}>{s}</option>)}</select></label>
-          <label>Test type<select value={type} onChange={e => { setType(e.target.value); setPage(1); }}><option value="">Tất cả loại</option>{[...new Set(cases.map(r => r.type))].map(t => <option key={t}>{t}</option>)}</select></label>
+          <label>Module<select aria-label="Module" value={module} onChange={e => { setModule(e.target.value); setPage(1); }}><option value="">Tất cả module</option>{[...new Set(cases.map(r => r.module))].map(m => <option key={m}>{m}</option>)}</select></label>
+          <label>Kết quả<select aria-label="Kết quả" value={status} onChange={e => { setStatus(e.target.value); setPage(1); }}><option value="">Tất cả kết quả</option>{['PASS', 'FAIL', 'SKIP', 'NOT_RUN', 'BLOCKED'].map(s => <option key={s}>{s}</option>)}</select></label>
+          <label>Test type<select aria-label="Test type" value={type} onChange={e => { setType(e.target.value); setPage(1); }}><option value="">Tất cả loại</option>{[...new Set(cases.map(r => r.type))].map(t => <option key={t}>{t}</option>)}</select></label>
         </FilterBar>
         {!rows.length ? <StatePanel status="empty" /> : <DataTable label="Danh sách test" headers={['Test / Suite', 'Module / Type', 'Kết quả', 'SHA', 'Environment / Executed', 'Evidence', 'Chi tiết']}>
           {slice.rows.map(r => <tr key={r.id}><td><strong className="tv5-wrap">{r.name}</strong><small className="tv5-wrap">{r.suite}</small></td><td>{r.module}<small>{r.type}</small></td><td><StatusBadge value={qaResult(r)} /></td><td><code>{run.head.slice(0, 7)}</code></td><td>{run.environment}<small>{dateTime(run.executedAt)}</small></td><td><EvidenceLink href={r.evidence} /></td><td><button type="button" className="tv5-row-action" onClick={() => setSelected(r)} aria-label={`Chi tiết test ${r.id}`}>Xem →</button></td></tr>)}
@@ -62,7 +62,7 @@ export function PRDashboard({ audit }: { audit: AuditView }) {
     <SnapshotNote text="APPROVED chỉ đúng phạm vi/HEAD của review. CI xanh và mergeable không thay acceptance. NO_CHECKS không phải PASS; Draft và contract gates vẫn cần owner xác nhận. Snapshot này không tự cập nhật khi PR mới được tạo." />
     <section className="tv5-card tv5-table-card"><div className="tv5-card-heading"><h2>Pull Requests & Reviewers</h2><span className="tv5-count">{rows.length} PR phù hợp</span></div>
       <FilterBar><label className="tv5-search">Tìm Pull Request<input type="search" value={search} onChange={e => { setSearch(e.target.value); setPage(1); }} placeholder="Số PR, tiêu đề, author…" /></label>
-        <label>Phạm vi PR<select value={mode} onChange={e => { setMode(e.target.value); setPage(1); }}><option value="all">Tất cả snapshot</option><option value="open">OPEN</option><option value="tv5">Chờ TV5</option><option value="changes">CHANGES_REQUESTED</option><option value="failed">CI FAIL</option></select></label>
+        <label>Phạm vi PR<select aria-label="Phạm vi PR" value={mode} onChange={e => { setMode(e.target.value); setPage(1); }}><option value="all">Tất cả snapshot</option><option value="open">OPEN</option><option value="tv5">Chờ TV5</option><option value="changes">CHANGES_REQUESTED</option><option value="failed">CI FAIL</option></select></label>
       </FilterBar>
       {!rows.length ? <StatePanel status="empty" /> : <DataTable label="Pull Requests" headers={['PR / Author', 'HEAD / State', 'Reviewers / Decisions', 'CI', 'Mergeability / Threads', 'Next action', 'Chi tiết']}>
         {slice.rows.map(r => <tr key={r.number}><td><EvidenceLink href={r.url}>#{r.number} ↗</EvidenceLink><strong className="tv5-wrap">{r.title}</strong><small>{r.author}</small></td><td><code>{r.head.slice(0, 7)}</code><small>{r.draft ? 'DRAFT' : r.state.toUpperCase()}</small></td>

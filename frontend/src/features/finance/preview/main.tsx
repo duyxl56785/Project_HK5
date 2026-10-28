@@ -13,8 +13,8 @@ function Preview() {
   const adapter = useMemo(() => createPreviewAdapter(mode), [mode]);
   const initialView = ['finance', 'cod', 'settlement', 'qa', 'prs'].includes(params.get('view') ?? '') ? params.get('view') as View : 'finance';
   return <><div className="tv5-preview-controls"><strong>TV5 FEATURE PREVIEW</strong><span>Phạm vi mô phỏng, không phải đăng nhập hay phân quyền thật.</span>
-    <label>Preview scope<select value={kind} onChange={e => setKind(e.target.value)}><option value="admin">Admin demo</option><option value="store-a">Store A demo</option><option value="store-b">Store B demo</option><option value="denied">Không có quyền</option></select></label>
-    <label>Preview state<select value={mode} onChange={e => setMode(e.target.value)}>{['ready', 'loading', 'empty', 'error', 'denied', 'blocked'].map(v => <option key={v}>{v}</option>)}</select></label>
+    <label>Preview scope<select aria-label="Preview scope" value={kind} onChange={e => setKind(e.target.value)}><option value="admin">Admin demo</option><option value="store-a">Store A demo</option><option value="store-b">Store B demo</option><option value="denied">Không có quyền</option></select></label>
+    <label>Preview state<select aria-label="Preview state" value={mode} onChange={e => setMode(e.target.value)}>{['ready', 'loading', 'empty', 'error', 'denied', 'blocked'].map(v => <option key={v}>{v}</option>)}</select></label>
   </div><FinanceWorkspace adapter={adapter} scope={scope} initialView={initialView} /></>;
 }
 createRoot(document.getElementById('root')!).render(<Preview />);

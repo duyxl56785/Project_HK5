@@ -48,8 +48,8 @@ export function TransactionViews({ view, rows }: { view: Extract<View, 'finance'
     <section className="tv5-card tv5-table-card"><div className="tv5-card-heading"><div><h2>{title}</h2><small>Tìm kiếm và bộ lọc chỉ tác động dữ liệu đang xem.</small></div><span className="tv5-count">{list.length} bản ghi</span></div>
       <FilterBar>
         <label className="tv5-search">Tìm giao dịch<input type="search" placeholder="Order, SellerOrder, Store…" value={search} onChange={e => { setSearch(e.target.value); setPage(1); }} /></label>
-        <label>Store<select value={storeId} onChange={e => { setStoreId(e.target.value); setPage(1); }}><option value="">Tất cả trong phạm vi</option>{stores.map(([id, name]) => <option key={id} value={id}>{name}</option>)}</select></label>
-        <label>Trạng thái<select value={status} onChange={e => { setStatus(e.target.value); setPage(1); }}><option value="">Tất cả trạng thái</option>{(view === 'settlement' ? ['RECORDED', 'BLOCKED'] : ['PAID', 'UNPAID', 'UNVERIFIED', 'UNKNOWN', 'DELIVERED', 'DISPATCHED', 'CANCELLED']).map(s => <option key={s}>{s}</option>)}</select></label>
+        <label>Store<select aria-label="Store" value={storeId} onChange={e => { setStoreId(e.target.value); setPage(1); }}><option value="">Tất cả trong phạm vi</option>{stores.map(([id, name]) => <option key={id} value={id}>{name}</option>)}</select></label>
+        <label>Trạng thái<select aria-label="Trạng thái" value={status} onChange={e => { setStatus(e.target.value); setPage(1); }}><option value="">Tất cả trạng thái</option>{(view === 'settlement' ? ['RECORDED', 'BLOCKED'] : ['PAID', 'UNPAID', 'UNVERIFIED', 'UNKNOWN', 'DELIVERED', 'DISPATCHED', 'CANCELLED']).map(s => <option key={s}>{s}</option>)}</select></label>
         <label>Từ ngày UTC<input type="date" value={from} onChange={e => { setFrom(e.target.value); setPage(1); }} /></label>
         <label>Đến ngày UTC<input type="date" value={to} min={from || undefined} onChange={e => { setTo(e.target.value); setPage(1); }} /></label>
         <button className="tv5-button tv5-button--quiet" type="button" onClick={clear}>Xóa bộ lọc</button>
