@@ -98,3 +98,9 @@ the original eight visibility acceptance tests are untouched. Original RED logs/
 record Docker initialization failure separately from the real17FAIL/16PASS1FAIL/17PASS sequence.
 
 TV1 has [decided the narrow owner-resource visibility rule](https://github.com/duyxl56785/Project_HK5/pull/97#issuecomment-6430723502): after independent current Seller/Store-scope verification, owner GET/edit/submit/deactivate must return the same generic404 for foreign and missing Products. This decision does not register a protected route or globally remap403. Do not request the same decision again; TV2 must confirm and implement its mapping. [Draft diagnostic #104](https://github.com/duyxl56785/Project_HK5/pull/104) retains the original four parity failures and four controls until the unchanged acceptance cases are GREEN on the actual owner fix.
+
+## Task6.4 current-main regression — 28/10/2026
+
+Latest merged main `bb0b9a2d0d2e909a59653619bce98c77f75e77d2` includes reviewed image storage, owner-list and image-metadata V3 changes. QA103 synchronized by normal merge `f666886c34e7df1e5eae42c9d476f340d733ea4a`; no QA Java/fixture/visibility source changed from e7d8948. Full actual run on that exact merge: **573unit+303PostgreSQL+17composition+8originalvisibility=901PASS,0FAIL/SKIP,exit0**. Product build also succeeded.
+
+The earlier assignment's17FAIL is stale: actual pre-sync e7d8948 re-run also gave17composition+8visibilityPASS. Original17RED/16PASS1FAIL/17GREEN trace remains historical evidence of the earlier TEST-port/V01 fix, not a new regression manufactured here. Current main backend/config/migrations are byte-identical to this QA branch's production tree. A documentation-only follow-up does not change tested code; keep exact receipt SHA/source attribution. No COD/settlement/liveE2E acceptance follows.
