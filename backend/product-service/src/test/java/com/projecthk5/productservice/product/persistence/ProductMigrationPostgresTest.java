@@ -35,7 +35,7 @@ class ProductMigrationPostgresTest {
         }
 
         Flyway current = migration(null);
-        assertEquals(1, current.migrate().migrationsExecuted, "V1 must upgrade through exactly one Product V2 migration");
+        assertEquals(2, current.migrate().migrationsExecuted, "V1 must upgrade through Product V2 and image reservation V3");
         current.validate();
         assertEquals(0, current.migrate().migrationsExecuted, "A second migration run must be a no-op");
 
@@ -51,6 +51,11 @@ class ProductMigrationPostgresTest {
             }
             try (var statement = connection.createStatement(); var rows = statement.executeQuery(
                     "SELECT count(*) FROM flyway_schema_history WHERE success AND version='2'")) {
+                assertTrue(rows.next());
+                assertEquals(1, rows.getInt(1));
+            }
+            try (var statement = connection.createStatement(); var rows = statement.executeQuery(
+                    "SELECT count(*) FROM flyway_schema_history WHERE success AND version='3'")) {
                 assertTrue(rows.next());
                 assertEquals(1, rows.getInt(1));
             }
