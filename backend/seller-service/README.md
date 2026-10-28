@@ -360,7 +360,8 @@ Exact commands/counts/raw hashes and remaining NOT_RUN work are in the
 
 The handler takes no client identity/resource arguments. `SellerStoreReadAuthority` is a trusted,
 request-context port with separate account and Seller checks, not a verifier or authorization implementation.
-There is no production implementation, Spring bean, controller, route, security filter or dependency change.
+There is no production authority implementation, handler bean, business controller or business route.
+The module-local deny-default security boundary described below is registered separately.
 Invalid/missing trusted identity fails before persistence; domain absence/denial/dependency exceptions are
 propagated, never converted to empty/null success. No final HTTP status/error mapping is introduced.
 Responses reuse `SellerPrivate`/`StoreOwner`, canonical string versions and the existing JSON writers;
@@ -375,5 +376,27 @@ adding endpoints. Do not use a CUSTOMER requirement as a substitute for role-neu
 `SellerStoreReadHandlerTest` covers isolated authority orchestration and private JSON compatibility.
 `SellerStoreReadIntegrationTest` uses real PostgreSQL16.6, production Flyway/JPA and **test-only authority**
 to cover exact own reads, current status/role denial, rollback/fresh reads and absence. MockMvc confirms
-both future routes stay unregistered even with spoofed headers. These tests do not verify JWT, deployed
+both future routes remain denied even with spoofed headers; controller absence is established from source,
+not inferred from a403 response. These tests do not verify JWT, deployed
 Gateway or positive HTTP; `POSITIVE_JWT_HTTP_NOT_RUN / BLOCKED_TV1` remains.
+
+## Management boundary and default-deny security — 28/10/2026
+
+The unregistered `SellerStoreManagementHandler` adds register/resubmit, current Store create/revise/open,
+and Seller moderation commands through the existing strict JSON codec, private DTOs and transactional
+services. It does not add routes or decide public method/path/error contracts. Owner references and Store
+IDs are resolved from the trusted account/current owned resource, never body fields. Moderation targets
+are resource arguments only: existing `SellerAccessPolicy` still requires current moderation permission
+and the lifecycle forbids self-moderation. An active account alone does not grant ADMIN authority.
+
+`SellerHttpSecurityConfiguration` is a real fallback servlet filter chain: only health GET/HEAD are allowed;
+all other requests return403 `SELLER_ROUTE_AUTH_NOT_CONFIGURED`. CSRF stays enabled, session authentication
+is stateless, and Basic/form login/logout/request caching are disabled. The module excludes generated local
+password-user auto-configuration. This is the same deny-default boundary principle used by Product,
+not another JWT verifier or authority implementation. Even an authenticated test ADMIN cannot bypass it.
+
+The previous unregistered-route404 assertions now require403 plus no persistence/private-data leakage.
+Real JWT401/403/503 decisions, accepted current-account/SELLER/ADMIN adapters, reviewed Gateway/service-pair
+routes and business HTTP controllers remain blocked on TV1. Test-only principals/policies prove local
+orchestration and PostgreSQL rules, not signed-token/Gateway/E2E integration. The API inventory and resume
+instructions are in [HTTP_API_CHECKPOINT](../../docs/tv2/HTTP_API_CHECKPOINT.md).
