@@ -30,4 +30,9 @@ subprojects {
     }
 
     tasks.named('test') { useJUnitPlatform() }
+
+    tasks.withType(Test).configureEach {
+        // Apply to every forked test JVM, including Auth and custom PostgreSQL tasks.
+        systemProperty 'api.version', providers.gradleProperty('dockerApiVersion').getOrElse('1.44')
+    }
 }
