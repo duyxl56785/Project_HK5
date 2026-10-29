@@ -122,6 +122,24 @@ class FinanceEvidenceAuditTest(unittest.TestCase):
         self.receipt.update(exitCode=1, counts={'FAIL': 1});self.receipt['rawArtifacts'][1] = self.artifact(self.xml)
         self.assertEqual(self.run_audit()['status'], 'FAIL')
 
+    def test_docker_initialization_does_not_hide_an_independent_assertion_failure(self):
+        self.xml.write_text('<testsuite><testcase name="initializationError"><error>Docker unavailable</error></testcase>'
+                            '<testcase name="settlement-regression"><failure type="AssertionError">incorrect balance</failure></testcase></testsuite>', encoding='utf-8')
+        self.receipt.update(exitCode=1, counts={'FAIL': 2})
+        self.receipt['rawArtifacts'][1] = self.artifact(self.xml)
+        result = self.run_audit()
+        self.assertEqual(result['status'], 'FAIL')
+        self.assertEqual(result['counts']['FAIL'], 2)
+
+    def test_environment_failure_in_one_xml_cannot_mask_failure_in_another(self):
+        self.xml.write_text('<testsuite><testcase name="initializationError"><error>Docker unavailable</error></testcase></testsuite>', encoding='utf-8')
+        other = self.root/'TEST-assertion.xml'
+        other.write_text('<testsuite><testcase name="independent"><failure type="AssertionError">incorrect state</failure></testcase></testsuite>', encoding='utf-8')
+        self.receipt.update(exitCode=1, counts={'FAIL': 2})
+        self.receipt['rawArtifacts'][1] = self.artifact(self.xml)
+        self.receipt['rawArtifacts'].append(self.artifact(other))
+        self.assertEqual(self.run_audit()['status'], 'FAIL')
+
     def test_malformed_xml_and_doctype_are_rejected(self):
         for content in ['<broken', '<!DOCTYPE a [<!ENTITY x "x">]><testsuite/>']:
             self.xml.write_text(content, encoding='utf-8');self.receipt['rawArtifacts'][1] = self.artifact(self.xml)

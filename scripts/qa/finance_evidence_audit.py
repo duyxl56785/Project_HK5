@@ -55,7 +55,7 @@ def _reference(value):
 def _xml_cases(data):
     if len(data) > 8 * 1024 * 1024 or b'<!DOCTYPE' in data.upper() or b'<!ENTITY' in data.upper():
         raise ValueError('Unsafe XML')
-    counts, environment_failure = Counter(PASS=0, FAIL=0, SKIP=0), False
+    counts, environment_failures = Counter(PASS=0, FAIL=0, SKIP=0), 0
     for case in ET.fromstring(data).iter('testcase'):
         problem = case.find('failure')
         if problem is None:
@@ -64,8 +64,8 @@ def _xml_cases(data):
         counts[state] += 1
         if problem is not None:
             text = ''.join(problem.itertext()).lower()
-            environment_failure |= case.get('name') == 'initializationError' and 'docker' in text
-    return counts, environment_failure
+            environment_failures += int(case.get('name') == 'initializationError' and 'docker' in text)
+    return counts, environment_failures
 
 def audit_run(receipt, evidence_root, *, expected_head, level, uses_mocks):
     result = {'head': expected_head if isinstance(expected_head, str) and SHA.fullmatch(expected_head) else None,
@@ -88,7 +88,7 @@ def audit_run(receipt, evidence_root, *, expected_head, level, uses_mocks):
         if not isinstance(artifacts, list) or len(artifacts) > 500:
             return result
         actual = Counter(PASS=0, FAIL=0, SKIP=0)
-        xml_count, environment_failure, seen = 0, False, set()
+        xml_count, environment_failures, seen = 0, 0, set()
         for item in artifacts:
             path = _inside(evidence_root, item['localPath'])
             if path in seen or path.stat().st_size > 64 * 1024 * 1024:
@@ -102,16 +102,18 @@ def audit_run(receipt, evidence_root, *, expected_head, level, uses_mocks):
             xml_count += 1
             counts, blocked = _xml_cases(data)
             actual.update(counts)
-            environment_failure |= blocked
+            environment_failures += blocked
         result.update(artifactCount=len(seen), counts=dict(actual))
         if not xml_count:
             return {**result, 'status': 'NOT_RUN'}
         if actual != _counts(receipt.get('counts')):
             return {**result, 'status': 'INVALID_EVIDENCE'}
-        if environment_failure:
-            return {**result, 'status': 'BLOCKED_ENVIRONMENT'}
-        if actual['FAIL']:
+        # An infrastructure error must not hide another executed test failure,
+        # whether both are in one XML suite or in separate artifact files.
+        if actual['FAIL'] > environment_failures:
             return {**result, 'status': 'FAIL'}
+        if environment_failures:
+            return {**result, 'status': 'BLOCKED_ENVIRONMENT'}
         if receipt['exitCode'] != 0:
             return {**result, 'status': 'BLOCKED_EXECUTION'}
         return {**result, 'status': 'VERIFIED_ARTIFACTS' if actual['PASS'] else 'NOT_RUN'}

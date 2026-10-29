@@ -21,6 +21,11 @@ Each gate is PENDING or REFERENCE_PROVIDED plus a safe project GitHub reference.
 
 The auditor publishes only counters/static classifications and exact heads. It does not echo arbitrary commands, logs, XML, failure texts, local credentials or raw receipt metadata. Raw evidence remains private; publish sanitized derived output plus raw SHA256 through normal review.
 
+Mixed-failure precedence: Docker initialization errors yield BLOCKED_ENVIRONMENT only
+when every failing case is an environment initialization error. An independent failed
+assertion or other test error keeps the run FAIL, even if another suite could not start.
+All original failure counts remain visible; no failing case is converted to PASS.
+
 ## Current preparation / boundaries
 
 Current main has pure Finance eligibility/ownership guards and Order V1/V2 snapshot/outbox/journal storage. It lacks an approved persisted COD fact/confirmation authority, settlement table/unique atomic settlement, Finance Store query/API and full monetary/House/refund/reconciliation policy. FD01–05 and FIN01/06 prove local Order durability/replay/storage behavior with synthetic inputs/remote mocks; they do not prove live payment or settlement.
