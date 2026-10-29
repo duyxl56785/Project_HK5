@@ -407,6 +407,26 @@ class InventoryReservationLedgerCandidatePostgresIT extends InventoryPostgresSup
                 Boolean.class, nullTypeOperation));
     }
 
+    @Test void nullLineIsRejectedBeforeReservationOrInventoryMutation() {
+        String sku = initialize("null-line-sku", 3);
+        String operationId = id("null-line-operation");
+        String reservationId = id("null-line-reservation");
+        var malformed = new ReservationOperationCandidateRequest(operationId, reservationId,
+                id("null-line-store"), id("null-line-seller"), id("null-line-order"),
+                InventoryOperationType.RESERVE, java.util.Arrays.asList(line(sku, 1), null));
+
+        ReservationCandidateException failure = assertThrows(ReservationCandidateException.class,
+                () -> ledger.apply(malformed));
+
+        assertEquals("INVALID_RESERVATION_LINES", failure.getCode());
+        assertEquals(3, inventory.getBalance(sku).availableQuantity());
+        assertEquals(0, inventory.getBalance(sku).reservedQuantity());
+        assertFalse(sql.queryForObject("SELECT EXISTS(SELECT 1 FROM inventory_operation WHERE operation_id = ?)",
+                Boolean.class, operationId));
+        assertFalse(sql.queryForObject("SELECT EXISTS(SELECT 1 FROM inventory_reservation WHERE reservation_id = ?)",
+                Boolean.class, reservationId));
+    }
+
     @ParameterizedTest
     @ValueSource(strings = {" SKU-A ", "\u2003SKU-A", "SKU-A\u2003"})
     void rejectsPaddedSkuWithoutRewritingItToAnExistingInventoryKey(String nonCanonicalSku) {
