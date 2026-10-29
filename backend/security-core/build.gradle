@@ -1,0 +1,8 @@
+apply plugin: 'java-library'
+
+dependencies {
+    api 'org.springframework.security:spring-security-oauth2-jose'
+}
+
+tasks.named('bootJar') { enabled = false }
+tasks.named('jar') { enabled = true }

@@ -1,4 +1,5 @@
 rootProject.name = 'smart-ecommerce-backend'
+include 'security-core'
 include 'auth-service'
 include 'user-service'
 include 'seller-service'
