@@ -1,0 +1,94 @@
+{
+  "kind": "DERIVED SUMMARY; original raw private byte-preserved",
+  "branch": "codex/tv5-finance-durability-qa",
+  "baseMain": "7d68e11ce3327aa0ac423938ab9d97a174438b78",
+  "head": "3851b93b159e8997ce4557d1c237e01ba5385460",
+  "candidateTree": null,
+  "workingTree": "M backend/order-service/src/test/java/com/projecthk5/orderservice/finance/FinanceDurabilityPostgresIT.java",
+  "sourceManifest": [
+    {
+      "path": "backend/order-service/src/test/java/com/projecthk5/orderservice/finance/FinanceDurabilityPostgresIT.java",
+      "sha256": "028cdcdb50052955ae7031d4a8f34645f94ab44fbb5cb23f77efa2743c08ee8f"
+    },
+    {
+      "path": "backend/order-service/src/test/java/com/projecthk5/orderservice/finance/FinanceTwoStoreFixture.java",
+      "sha256": "1119649db3876f385f30d59592d72dd7e4dc8d54abf8e9f11f5f8bfacb0a540c"
+    },
+    {
+      "path": "tests/finance/README_DURABILITY.md",
+      "sha256": "819fad7fa6210cd8f797fc97935c14197a1bf8d776843f41b607ce8807b11563"
+    }
+  ],
+  "command": [
+    "D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-finance-durability-20261025\\backend\\gradlew.bat",
+    "-p",
+    "backend",
+    ":order-service:postgresIntegrationTest",
+    "--tests",
+    "*FinanceDurabilityPostgresIT",
+    "--rerun-tasks",
+    "--no-daemon",
+    "--console=plain"
+  ],
+  "startedUtc": "2026-10-27T02:45:21.835510+00:00",
+  "completedUtc": "2026-10-27T02:45:47.311747+00:00",
+  "exitCode": 0,
+  "environment": {
+    "Java": "21.0.7",
+    "Gradle": "8.10",
+    "PostgreSQL": "16.6 Testcontainers",
+    "JAVA_TOOL_OPTIONS": "-Duser.timezone=UTC -Dapi.version=1.44"
+  },
+  "counts": {
+    "postgresIntegrationTest": {
+      "PASS": 5
+    }
+  },
+  "cases": [
+    {
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.orderservice.finance.FinanceDurabilityPostgresIT",
+      "name": "conflictingReplayCannotMutateTheFinancialAggregateWhileAValidReplayCompletes()",
+      "result": "PASS"
+    },
+    {
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.orderservice.finance.FinanceDurabilityPostgresIT",
+      "name": "identicalIdempotencyKeysAcrossCustomersReplayOnlyTheirOwnTwoStoreFinancialAggregate()",
+      "result": "PASS"
+    },
+    {
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.orderservice.finance.FinanceDurabilityPostgresIT",
+      "name": "outerRollbackRevertsAlreadyFlushedTwoStoreMoneyOutboxAndSuccessfulAttemptTogether()",
+      "result": "PASS"
+    },
+    {
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.orderservice.finance.FinanceDurabilityPostgresIT",
+      "name": "concurrentSuccessfulReplaysKeepEveryStoredMoneySnapshotWhileFinancePolicyIsClosed()",
+      "result": "PASS"
+    },
+    {
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.orderservice.finance.FinanceDurabilityPostgresIT",
+      "name": "postgresOutboxFaultAfterTwoStoreFlushRollsBackEveryMoneyRowAndAllowsCleanLocalRetry()",
+      "result": "PASS"
+    }
+  ],
+  "rawArtifacts": [
+    {
+      "localPath": ".verification/tv5-preflight-composition-20261027/finance-first/postgresIntegrationTest/TEST-com.projecthk5.orderservice.finance.FinanceDurabilityPostgresIT.xml",
+      "bytes": 10192,
+      "sha256": "4053f9036195dfb0853f243e13478837872741c0651aefd7addfa679e26dae70"
+    },
+    {
+      "localPath": ".verification/tv5-preflight-composition-20261027/finance-first/runtime.log",
+      "bytes": 2186,
+      "sha256": "14288965bf22f80b7042f0cd843064ffb6e8314d32a114407ee2d6d0ace6a6e6"
+    }
+  ],
+  "excludedStaleXml": [],
+  "boundary": "Actual Order PG transactions and caller replay; remote ports mocked, MoneyRules=false, historical supplied amounts only. Not JWT/Store Finance query/COD/settlement/live E2E.",
+  "privateOriginalSummarySHA256": "a957660a884890ad4529ba38070921889ebf8426b1b045df0d0fb1412961d627"
+}

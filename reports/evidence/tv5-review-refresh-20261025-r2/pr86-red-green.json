@@ -1,0 +1,466 @@
+[
+  {
+    "kind": "DERIVED SUMMARY; original raw logs private and byte-preserved",
+    "PR": 86,
+    "source": "28a8abcd5cf76b298e1e6b817da16337ba322ec6",
+    "phase": "green86",
+    "sameRegressionSource": {
+      "revision": "28a8abcd5cf76b298e1e6b817da16337ba322ec6",
+      "path": "frontend/src/features/checkout/CheckoutCodView.dom.test.mjs",
+      "sha256": "4a608c28378a6129db5611ce9f9247a64cd20513af3ec0978566a6813cd546ed"
+    },
+    "testOverlayOnRedOnly": false,
+    "environment": {
+      "Node": "v24.22.1",
+      "react": "19.3.1",
+      "react-dom": "19.3.1",
+      "vite": "6.4.5",
+      "typescript": "5.6.3",
+      "happy-dom": "21.0.4"
+    },
+    "runs": [
+      {
+        "label": "tooling",
+        "command": [
+          "C:\\Users\\Admin\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin\\node.exe",
+          "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js",
+          "install",
+          "--offline",
+          "--ignore-scripts",
+          "--no-save",
+          "--package-lock=false",
+          "happy-dom@21.0.4"
+        ],
+        "startedUtc": "2026-10-25T14:50:57.885935+00:00",
+        "completedUtc": "2026-10-25T14:51:16.711077+00:00",
+        "exitCode": 0,
+        "counts": {},
+        "rawArtifact": {
+          "localPath": ".verification/tv5-review-refresh-20261025-r2/run-green86/tooling.log",
+          "bytes": 142,
+          "sha256": "b79f35db48e3c49ce8cee16b9ee23ca99b957d2ee1565550c99aa502fdb79ba0"
+        }
+      },
+      {
+        "label": "regression",
+        "command": [
+          "C:\\Users\\Admin\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin\\node.exe",
+          "--test",
+          "--test-concurrency=1",
+          "src/features/checkout/checkoutModel.test.mjs",
+          "src/features/checkout/CheckoutCodView.test.mjs",
+          "src/features/checkout/CheckoutCodView.dom.test.mjs"
+        ],
+        "startedUtc": "2026-10-25T14:51:16.711077+00:00",
+        "completedUtc": "2026-10-25T14:51:19.487423+00:00",
+        "exitCode": 0,
+        "counts": {
+          "tests": 12,
+          "pass": 12,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "rawArtifact": {
+          "localPath": ".verification/tv5-review-refresh-20261025-r2/run-green86/regression.log",
+          "bytes": 1177,
+          "sha256": "8c12de2d9a4e0ecc7c00e1339701189739b6a2f698ac4d0f6e00c7b50aa21f90"
+        }
+      },
+      {
+        "label": "typecheck",
+        "command": [
+          "C:\\Users\\Admin\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin\\node.exe",
+          "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js",
+          "run",
+          "typecheck"
+        ],
+        "startedUtc": "2026-10-25T14:51:19.488432+00:00",
+        "completedUtc": "2026-10-25T14:51:20.752177+00:00",
+        "exitCode": 0,
+        "counts": {},
+        "rawArtifact": {
+          "localPath": ".verification/tv5-review-refresh-20261025-r2/run-green86/typecheck.log",
+          "bytes": 60,
+          "sha256": "8f64752c6a0e5c82820880600d7ab0365666f0d89c2fd8572944c694257792a5"
+        }
+      },
+      {
+        "label": "build",
+        "command": [
+          "C:\\Users\\Admin\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin\\node.exe",
+          "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js",
+          "run",
+          "build"
+        ],
+        "startedUtc": "2026-10-25T14:51:20.752177+00:00",
+        "completedUtc": "2026-10-25T14:51:23.348040+00:00",
+        "exitCode": 0,
+        "counts": {},
+        "rawArtifact": {
+          "localPath": ".verification/tv5-review-refresh-20261025-r2/run-green86/build.log",
+          "bytes": 392,
+          "sha256": "fcf8289c50df91837f5048891a2557855a4ce203c9ccfe9562c831717fa29c5b"
+        }
+      }
+    ],
+    "limits": [
+      "Real React in HappyDOM, not real browser or authenticated HTTP/E2E",
+      "Old source retains exact production blobs, only unchanged latest regression test overlaid in private RED checkout",
+      "No owner branch push, production edit, APPROVE or resolving other reviewer thread"
+    ],
+    "finalFullRegression": {
+      "command": [
+        "C:\\Users\\Admin\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin\\node.exe",
+        "--test",
+        "--test-concurrency=1",
+        "src/features/cart/cartModel.test.mjs",
+        "src/features/cart/CartView.test.mjs",
+        "src/features/checkout/checkoutModel.test.mjs",
+        "src/features/checkout/CheckoutCodView.test.mjs",
+        "src/features/checkout/CheckoutCodView.dom.test.mjs"
+      ],
+      "startedUtc": "2026-10-25T14:52:31.260408+00:00",
+      "completedUtc": "2026-10-25T14:52:33.510264+00:00",
+      "exitCode": 0,
+      "counts": {
+        "tests": 25,
+        "pass": 25,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "cases": [
+        {
+          "name": "two Store groups show exact total, revision and accessible quantity labels",
+          "result": "PASS"
+        },
+        {
+          "name": "Cart claim prevents edit and remove even when callbacks were passed",
+          "result": "PASS"
+        },
+        {
+          "name": "unconfigured actions are disabled rather than pretending to call backend",
+          "result": "PASS"
+        },
+        {
+          "name": "invalid snapshot renders no stale partial store items",
+          "result": "PASS"
+        },
+        {
+          "name": "non-ready states never render stale Cart data or private source fields",
+          "result": "PASS"
+        },
+        {
+          "name": "two Store groups preserve exact revision and amount without JS floating point",
+          "result": "PASS"
+        },
+        {
+          "name": "multiple products in same Store and Seller render one Store group",
+          "result": "PASS"
+        },
+        {
+          "name": "conflicting Store to Seller or Seller to Store mapping fails closed",
+          "result": "PASS"
+        },
+        {
+          "name": "duplicates, malformed or padded identifiers fail without partial group",
+          "result": "PASS"
+        },
+        {
+          "name": "money uses exact decimal minor units and forbids silent rounding",
+          "result": "PASS"
+        },
+        {
+          "name": "line and aggregate overflow rejected before displaying calculated totals",
+          "result": "PASS"
+        },
+        {
+          "name": "quantity, claims and revisions are strictly validated",
+          "result": "PASS"
+        },
+        {
+          "name": "source input is neither mutated nor trusted for extra private fields",
+          "result": "PASS"
+        },
+        {
+          "name": "obsolete A confirmation never appears after unauthorized then ready with Cart B/key B",
+          "result": "PASS"
+        },
+        {
+          "name": "same Idempotency-Key cannot be replayed after access or Cart scope changed",
+          "result": "PASS"
+        },
+        {
+          "name": "direct trusted session switch hides obsolete A result even if cart and key match",
+          "result": "PASS"
+        },
+        {
+          "name": "COD preview shows two Store groups, exact total and no assumed monetary policy",
+          "result": "PASS"
+        },
+        {
+          "name": "only an explicitly connected handler enables submit button; SSR makes no network call",
+          "result": "PASS"
+        },
+        {
+          "name": "Claimed cart or malformed key cannot trigger checkout",
+          "result": "PASS"
+        },
+        {
+          "name": "UNKNOWN/reconciliation is prominent and cannot display a confirmed order",
+          "result": "PASS"
+        },
+        {
+          "name": "two-Store expectedItems never invents SKU, price or a new idempotency key",
+          "result": "PASS"
+        },
+        {
+          "name": "invalid key, untrusted Cart and in-progress claim fail without request",
+          "result": "PASS"
+        },
+        {
+          "name": "unknown from provider blocks all automatic repeat submissions",
+          "result": "PASS"
+        },
+        {
+          "name": "network failure is UNKNOWN and does not retry, mutate key or signal success",
+          "result": "PASS"
+        },
+        {
+          "name": "two concurrent clicks execute exactly one checkout request",
+          "result": "PASS"
+        }
+      ],
+      "rawArtifact": {
+        "localPath": ".verification/tv5-review-refresh-20261025-r2/run-green86/full-cart-checkout-regression.log",
+        "bytes": 2251,
+        "sha256": "cb40d8ed4dc010f192c6f0a833b2aa496f561149b686c5185c6350a79635ca70"
+      },
+      "priorFocusedInvocation": "12-case Checkout-only run above is separate, not added into final full25"
+    },
+    "regressionSourceEquivalence": {
+      "canonicalGitBlobSha256": "9dd11681bb340b3eec19a11b613fa814551d4e0903e12b22b6684f3aebe689a1",
+      "canonicalRevision": "28a8abcd5cf76b298e1e6b817da16337ba322ec6",
+      "canonicalPath": "frontend/src/features/checkout/CheckoutCodView.dom.test.mjs",
+      "equivalence": "Identical source after checkout CRLF→LF; original per-worktree raw source hashes retained, not falsely equal",
+      "otherFourRegressionFiles": "Git blobs identical at old3c23319 and current28a8abc"
+    }
+  },
+  {
+    "kind": "DERIVED SUMMARY; original raw logs private and byte-preserved",
+    "PR": 86,
+    "source": "3c233193825a6b6fb46206586b3191cc4422bcf6",
+    "phase": "red86",
+    "sameRegressionSource": {
+      "revision": "28a8abcd5cf76b298e1e6b817da16337ba322ec6",
+      "path": "frontend/src/features/checkout/CheckoutCodView.dom.test.mjs",
+      "sha256": "9dd11681bb340b3eec19a11b613fa814551d4e0903e12b22b6684f3aebe689a1"
+    },
+    "testOverlayOnRedOnly": true,
+    "environment": {
+      "Node": "v24.22.1",
+      "react": "19.3.1",
+      "react-dom": "19.3.1",
+      "vite": "6.4.5",
+      "typescript": "5.6.3",
+      "happy-dom": "21.0.4"
+    },
+    "runs": [
+      {
+        "label": "tooling",
+        "command": [
+          "C:\\Users\\Admin\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin\\node.exe",
+          "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js",
+          "install",
+          "--offline",
+          "--ignore-scripts",
+          "--no-save",
+          "--package-lock=false",
+          "happy-dom@21.0.4"
+        ],
+        "startedUtc": "2026-10-25T14:51:23.965938+00:00",
+        "completedUtc": "2026-10-25T14:51:32.843835+00:00",
+        "exitCode": 0,
+        "counts": {},
+        "rawArtifact": {
+          "localPath": ".verification/tv5-review-refresh-20261025-r2/run-red86/tooling.log",
+          "bytes": 141,
+          "sha256": "f078846163c0f9f230092a35a714964661bbe1459d2a9552c118153608327268"
+        }
+      },
+      {
+        "label": "regression",
+        "command": [
+          "C:\\Users\\Admin\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin\\node.exe",
+          "--test",
+          "--test-concurrency=1",
+          "src/features/checkout/checkoutModel.test.mjs",
+          "src/features/checkout/CheckoutCodView.test.mjs",
+          "src/features/checkout/CheckoutCodView.dom.test.mjs"
+        ],
+        "startedUtc": "2026-10-25T14:51:32.937407+00:00",
+        "completedUtc": "2026-10-25T14:51:35.422540+00:00",
+        "exitCode": 1,
+        "counts": {
+          "tests": 12,
+          "pass": 9,
+          "fail": 3,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "rawArtifact": {
+          "localPath": ".verification/tv5-review-refresh-20261025-r2/run-red86/regression.log",
+          "bytes": 6898,
+          "sha256": "fde9890f0c86e46b87a4517106de09224fe1a60eaf63c7a29a879172682790ff"
+        }
+      }
+    ],
+    "limits": [
+      "Real React in HappyDOM, not real browser or authenticated HTTP/E2E",
+      "Old source retains exact production blobs, only unchanged latest regression test overlaid in private RED checkout",
+      "No owner branch push, production edit, APPROVE or resolving other reviewer thread"
+    ],
+    "finalFullRegression": {
+      "command": [
+        "C:\\Users\\Admin\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin\\node.exe",
+        "--test",
+        "--test-concurrency=1",
+        "src/features/cart/cartModel.test.mjs",
+        "src/features/cart/CartView.test.mjs",
+        "src/features/checkout/checkoutModel.test.mjs",
+        "src/features/checkout/CheckoutCodView.test.mjs",
+        "src/features/checkout/CheckoutCodView.dom.test.mjs"
+      ],
+      "startedUtc": "2026-10-25T14:52:33.518144+00:00",
+      "completedUtc": "2026-10-25T14:52:35.730103+00:00",
+      "exitCode": 1,
+      "counts": {
+        "tests": 25,
+        "pass": 22,
+        "fail": 3,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "cases": [
+        {
+          "name": "two Store groups show exact total, revision and accessible quantity labels",
+          "result": "PASS"
+        },
+        {
+          "name": "Cart claim prevents edit and remove even when callbacks were passed",
+          "result": "PASS"
+        },
+        {
+          "name": "unconfigured actions are disabled rather than pretending to call backend",
+          "result": "PASS"
+        },
+        {
+          "name": "invalid snapshot renders no stale partial store items",
+          "result": "PASS"
+        },
+        {
+          "name": "non-ready states never render stale Cart data or private source fields",
+          "result": "PASS"
+        },
+        {
+          "name": "two Store groups preserve exact revision and amount without JS floating point",
+          "result": "PASS"
+        },
+        {
+          "name": "multiple products in same Store and Seller render one Store group",
+          "result": "PASS"
+        },
+        {
+          "name": "conflicting Store to Seller or Seller to Store mapping fails closed",
+          "result": "PASS"
+        },
+        {
+          "name": "duplicates, malformed or padded identifiers fail without partial group",
+          "result": "PASS"
+        },
+        {
+          "name": "money uses exact decimal minor units and forbids silent rounding",
+          "result": "PASS"
+        },
+        {
+          "name": "line and aggregate overflow rejected before displaying calculated totals",
+          "result": "PASS"
+        },
+        {
+          "name": "quantity, claims and revisions are strictly validated",
+          "result": "PASS"
+        },
+        {
+          "name": "source input is neither mutated nor trusted for extra private fields",
+          "result": "PASS"
+        },
+        {
+          "name": "obsolete A confirmation never appears after unauthorized then ready with Cart B/key B",
+          "result": "FAIL"
+        },
+        {
+          "name": "same Idempotency-Key cannot be replayed after access or Cart scope changed",
+          "result": "FAIL"
+        },
+        {
+          "name": "direct trusted session switch hides obsolete A result even if cart and key match",
+          "result": "FAIL"
+        },
+        {
+          "name": "COD preview shows two Store groups, exact total and no assumed monetary policy",
+          "result": "PASS"
+        },
+        {
+          "name": "only an explicitly connected handler enables submit button; SSR makes no network call",
+          "result": "PASS"
+        },
+        {
+          "name": "Claimed cart or malformed key cannot trigger checkout",
+          "result": "PASS"
+        },
+        {
+          "name": "UNKNOWN/reconciliation is prominent and cannot display a confirmed order",
+          "result": "PASS"
+        },
+        {
+          "name": "two-Store expectedItems never invents SKU, price or a new idempotency key",
+          "result": "PASS"
+        },
+        {
+          "name": "invalid key, untrusted Cart and in-progress claim fail without request",
+          "result": "PASS"
+        },
+        {
+          "name": "unknown from provider blocks all automatic repeat submissions",
+          "result": "PASS"
+        },
+        {
+          "name": "network failure is UNKNOWN and does not retry, mutate key or signal success",
+          "result": "PASS"
+        },
+        {
+          "name": "two concurrent clicks execute exactly one checkout request",
+          "result": "PASS"
+        }
+      ],
+      "rawArtifact": {
+        "localPath": ".verification/tv5-review-refresh-20261025-r2/run-red86/full-cart-checkout-regression.log",
+        "bytes": 7978,
+        "sha256": "e747cda6467f169e686a7fecf2810fb657d6d713a1f217cdde7aabd22b01084e"
+      },
+      "priorFocusedInvocation": "12-case Checkout-only run above is separate, not added into final full25"
+    },
+    "regressionSourceEquivalence": {
+      "canonicalGitBlobSha256": "9dd11681bb340b3eec19a11b613fa814551d4e0903e12b22b6684f3aebe689a1",
+      "canonicalRevision": "28a8abcd5cf76b298e1e6b817da16337ba322ec6",
+      "canonicalPath": "frontend/src/features/checkout/CheckoutCodView.dom.test.mjs",
+      "equivalence": "Identical source after checkout CRLF→LF; original per-worktree raw source hashes retained, not falsely equal",
+      "otherFourRegressionFiles": "Git blobs identical at old3c23319 and current28a8abc"
+    }
+  }
+]

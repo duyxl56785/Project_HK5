@@ -1,0 +1,35 @@
+{
+  "kind": "DERIVED TDD GREEN receipt before refactor",
+  "source": "8bf9f12 plus CLI fix/new tests manifest",
+  "command": [
+    "C:/Users/Admin/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "scripts/qa/tests",
+    "-v"
+  ],
+  "startedUtc": "2026-10-27T02:42:36.675325+00:00",
+  "completedUtc": "2026-10-27T02:42:37.041883+00:00",
+  "exitCode": 0,
+  "result": {
+    "PASS": 29,
+    "FAIL": 0,
+    "ERROR": 0,
+    "SKIP": 0
+  },
+  "logPath": ".verification/tv5-preflight-composition-20261027/cli-green/runtime.log",
+  "logSHA256": "a0aa20ca9ebf26b2054790fd87e4a3538ccb73c1a7e7d27fc7811aafe3c135cb",
+  "sourceManifest": [
+    {
+      "path": "scripts\\qa\\pr_review_audit.py",
+      "sha256": "9aa93513895b857abc391b9bdf69b5167a315d9b95b89bf0f54d04ccb50d1b69"
+    },
+    {
+      "path": "scripts\\qa\\tests\\test_pr_review_audit.py",
+      "sha256": "cbb11a00bac6a7d5a9c3d145647d63fd16f4647bb5978126e70f98ca4f21b4b1"
+    }
+  ],
+  "privateOriginalSummarySHA256": "9c2c49eefd89de75115f0dae0ae30a534b4d2a83c0b6a95a1f2951b1e8f26d57"
+}

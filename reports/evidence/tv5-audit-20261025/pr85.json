@@ -1,0 +1,270 @@
+{
+  "kind": "DERIVED SUMMARY, original logs/XML private and byte-preserved",
+  "metadata": {
+    "source": "fc39c7100caa7ffb49f9baa27b18dde595b54d1f",
+    "PR": 85,
+    "command": [
+      "D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-audit-20261025\\source85\\backend\\gradlew.bat",
+      "-p",
+      "backend",
+      ":seller-service:test",
+      "--tests",
+      "*SellerStoreReadHandlerTest",
+      ":seller-service:integrationTest",
+      "--tests",
+      "*SellerStoreReadIntegrationTest",
+      "--rerun-tasks",
+      "--no-daemon",
+      "--console=plain"
+    ],
+    "startedUtc": "2026-10-24T17:52:07.987079+00:00",
+    "executor": "TV5 independent exact-head execution",
+    "environment": {
+      "Java": "21.0.7",
+      "Gradle": "8.10",
+      "Docker": "29.8.1",
+      "PostgreSQL": "16 Testcontainers where tagged",
+      "JAVA_TOOL_OPTIONS": "-Duser.timezone=UTC -Dapi.version=1.44"
+    },
+    "exitCode": 0,
+    "completedUtc": "2026-10-24T17:52:40.157727+00:00"
+  },
+  "counts": {
+    "seller-service:test": {
+      "PASS": 16
+    },
+    "seller-service:integrationTest": {
+      "PASS": 14
+    }
+  },
+  "cases": [
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreReadHandlerTest",
+      "name": "[1] version=0",
+      "result": "PASS"
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreReadHandlerTest",
+      "name": "[2] version=9007199254740993",
+      "result": "PASS"
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreReadHandlerTest",
+      "name": "[3] version=9223372036854775807",
+      "result": "PASS"
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreReadHandlerTest",
+      "name": "sellerAbsenceIsNotTranslatedToEmptySuccess()",
+      "result": "PASS"
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreReadHandlerTest",
+      "name": "existingStorePolicyDenialIsNotSwallowedByPresentation()",
+      "result": "PASS"
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreReadHandlerTest",
+      "name": "[1] status=PENDING_REVIEW",
+      "result": "PASS"
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreReadHandlerTest",
+      "name": "[2] status=APPROVED",
+      "result": "PASS"
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreReadHandlerTest",
+      "name": "[3] status=REJECTED",
+      "result": "PASS"
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreReadHandlerTest",
+      "name": "[4] status=SUSPENDED",
+      "result": "PASS"
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreReadHandlerTest",
+      "name": "[1] store=false",
+      "result": "PASS"
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreReadHandlerTest",
+      "name": "[2] store=true",
+      "result": "PASS"
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreReadHandlerTest",
+      "name": "storeAbsenceIsNotTranslatedToNullOrEmptySuccess()",
+      "result": "PASS"
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreReadHandlerTest",
+      "name": "[1] store=false",
+      "result": "PASS"
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreReadHandlerTest",
+      "name": "[2] store=true",
+      "result": "PASS"
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreReadHandlerTest",
+      "name": "[1] store=false",
+      "result": "PASS"
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreReadHandlerTest",
+      "name": "[2] store=true",
+      "result": "PASS"
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreReadIntegrationTest",
+      "name": "unavailableAndInactiveAuthorityNeverReturnPrivateData()",
+      "result": "PASS"
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreReadIntegrationTest",
+      "name": "twoAccountsOnlyReadTheirOwnSellerAndStore()",
+      "result": "PASS"
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreReadIntegrationTest",
+      "name": "roleRevocationBlocksStoreButNotAuthenticatedOwnProfile()",
+      "result": "PASS"
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreReadIntegrationTest",
+      "name": "[1] state=PENDING_REVIEW",
+      "result": "PASS"
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreReadIntegrationTest",
+      "name": "[2] state=APPROVED",
+      "result": "PASS"
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreReadIntegrationTest",
+      "name": "[3] state=REJECTED",
+      "result": "PASS"
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreReadIntegrationTest",
+      "name": "[4] state=SUSPENDED",
+      "result": "PASS"
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreReadIntegrationTest",
+      "name": "[1] path=/api/sellers/me",
+      "result": "PASS"
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreReadIntegrationTest",
+      "name": "[2] path=/api/stores/me",
+      "result": "PASS"
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreReadIntegrationTest",
+      "name": "closedOwnStoreRemainsReadableButCurrentSuspensionBlocksManagement()",
+      "result": "PASS"
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreReadIntegrationTest",
+      "name": "missingSellerRemainsDomainAbsenceAfterAuthority()",
+      "result": "PASS"
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreReadIntegrationTest",
+      "name": "joinedReadsRespectOuterRollbackAndNextRequestReloadsCommittedFacts()",
+      "result": "PASS"
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreReadIntegrationTest",
+      "name": "missingStoreIsDistinctFromMissingCurrentSellerFacts()",
+      "result": "PASS"
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreReadIntegrationTest",
+      "name": "registrationIsDurableAndReadUsesExistingPrivateDto()",
+      "result": "PASS"
+    }
+  ],
+  "staleXmlExcluded": [],
+  "rawArtifacts": [
+    {
+      "localPath": ".verification/tv5-audit-20261025/run85/integrationTest/TEST-com.projecthk5.sellerservice.http.SellerStoreReadIntegrationTest.xml",
+      "bytes": 11103,
+      "sha256": "2a77f925907c7d4b3a5b8376b977a87c6c475677e0b386125890df0f5a2ac062"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261025/run85/runtime.log",
+      "bytes": 2014,
+      "sha256": "2c850bb99062dca328895b7bca5ce953b8b744e892fa9ab08560de9783f3b272"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261025/run85/test/TEST-com.projecthk5.sellerservice.http.SellerStoreReadHandlerTest.xml",
+      "bytes": 3008,
+      "sha256": "5a475374569398c2f3d030b0dad5a717234b06d9e1b5f842f3efc914004a72cb"
+    }
+  ]
+}

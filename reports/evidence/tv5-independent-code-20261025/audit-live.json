@@ -1,0 +1,42 @@
+{
+  "kind": "READ-ONLY live GitHub metadata verification, not application runtime tests",
+  "source": "8bf9f12e1a7df92b77f8a506fba5e1907a4f1c6c",
+  "command": [
+    "C:\\Users\\Admin\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+    "scripts/qa/pr_review_audit.py",
+    "--repo",
+    "duyxl56785/Project_HK5",
+    "--output-dir",
+    "D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-pr-audit-evidence-20261025\\live\\snapshot-output"
+  ],
+  "startedUtc": "2026-10-25T16:27:40.299418+00:00",
+  "completedUtc": "2026-10-25T16:28:02.030078+00:00",
+  "Python": "3.12.14",
+  "exitCode": 0,
+  "counts": null,
+  "live": {
+    "complete": true,
+    "viewer": "nguyenminhduy090-alt",
+    "listedOpenPRs": 18,
+    "collectedPRs": 18,
+    "errors": []
+  },
+  "rawArtifacts": [
+    {
+      "path": ".verification/tv5-pr-audit-evidence-20261025/live/runtime.log",
+      "bytes": 158,
+      "sha256": "7b013c9ddee790021ffddce3caba001653592685337a73930d3cb45c7b7b0a4b"
+    },
+    {
+      "path": ".verification/tv5-pr-audit-evidence-20261025/live/snapshot-output/report.md",
+      "bytes": 5414,
+      "sha256": "69010efbbb6a2d12c0156e07f6ddb10f2c214165494a35a354a2d112cd0a5100"
+    },
+    {
+      "path": ".verification/tv5-pr-audit-evidence-20261025/live/snapshot-output/snapshot.json",
+      "bytes": 27810,
+      "sha256": "ef2a58e8cd90b869ba9dda50193c071c87cb0f9f42d46738375a1adcf0237974"
+    }
+  ],
+  "publication": "DERIVED SUMMARY only. Raw stdout/XML/artifacts stay byte-preserved private; public SHA256 paths are provenance, not public raw downloads."
+}

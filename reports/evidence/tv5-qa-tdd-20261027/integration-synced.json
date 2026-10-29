@@ -1,0 +1,98 @@
+{
+  "kind": "DERIVED SUMMARY, original raw log/XML private and byte-preserved",
+  "qaCheckoutHEAD": "976a08c2ff0527c279e6d2629b0844f8cbc27c37",
+  "qaWorkingTree": "",
+  "qaSourceManifest": [
+    {
+      "path": "tests/integration/ProductCatalogCompositionPostgresTest.java",
+      "sha256": "e806cabf90e8eb5ace8c5b2735bc48735dbd58f2527f18225b1b19f2448495db",
+      "bytes": 12689
+    },
+    {
+      "path": "tests/integration/product-catalog-composition.init.gradle",
+      "sha256": "cbcc24b34e057094defad2f133929f9bf767ecb1a8ac52484544707b83ff1156",
+      "bytes": 1426
+    },
+    {
+      "path": "tests/integration/fixtures/tv5-two-store.json",
+      "sha256": "6133e3be6afb2f2fa28285d82ca02d95952fb6ef2d04001740f61beb2a55865f",
+      "bytes": 841
+    },
+    {
+      "path": "tests/integration/README.md",
+      "sha256": "f0ab02f9954732feae272a6e270f25ddf8df91301611833752c70ab6a45961ad",
+      "bytes": 5006
+    }
+  ],
+  "sourceAttribution": "exact committed QA source",
+  "command": [
+    "D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-product-six-tasks-20261027\\source90\\backend\\gradlew.bat",
+    "-p",
+    "backend",
+    "--init-script",
+    "D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-product-six-tasks-20261027\\source90\\tests\\integration\\product-catalog-composition.init.gradle",
+    "-Ptv5CompositionSources=D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-product-six-tasks-20261027\\source90\\tests\\integration",
+    ":product-service:tv5ProductCatalogComposition",
+    "--rerun-tasks",
+    "--no-daemon",
+    "--console=plain"
+  ],
+  "startedUtc": "2026-10-27T02:30:42.264365+00:00",
+  "completedUtc": "2026-10-27T02:31:11.317700+00:00",
+  "exitCode": 0,
+  "environment": {
+    "Java": "21.0.7",
+    "Gradle": "8.10",
+    "PostgreSQL": "16.6 Testcontainers",
+    "JAVA_TOOL_OPTIONS": "-Duser.timezone=UTC -Dapi.version=1.44"
+  },
+  "counts": {
+    "PASS": 5
+  },
+  "cases": [
+    {
+      "class": "com.projecthk5.tv5integration.ProductCatalogCompositionPostgresTest",
+      "name": "foreignStoreDenialRollsBackAnEarlierLifecycleWriteInTheSameTransaction()",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.tv5integration.ProductCatalogCompositionPostgresTest",
+      "name": "successfulLocalWriteCannotSupplyUnknownHouseAuthorityToTheBatchReader()",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.tv5integration.ProductCatalogCompositionPostgresTest",
+      "name": "changedPriceRejectsTheWholeCartExpectationAndDoesNotRewriteEarlierValueObjects()",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.tv5integration.ProductCatalogCompositionPostgresTest",
+      "name": "rolledBackApprovalCannotBecomeCommittedCatalogEligibility()",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.tv5integration.ProductCatalogCompositionPostgresTest",
+      "name": "committedLifecycleDrivesCatalogVisibilityWithoutDirectStateSql()",
+      "result": "PASS"
+    }
+  ],
+  "staleXmlExcluded": [],
+  "rawArtifacts": [
+    {
+      "localPath": ".verification/tv5-product-six-tasks-20261027/composition-synced-main/runtime.log",
+      "bytes": 2530,
+      "sha256": "1afc6f54f4dfc8126697309851a1eed8248b71dbebe2e594b355e752c2246052"
+    },
+    {
+      "localPath": ".verification/tv5-product-six-tasks-20261027/composition-synced-main/TEST-com.projecthk5.tv5integration.ProductCatalogCompositionPostgresTest.xml",
+      "bytes": 9766,
+      "sha256": "308995e5d1b6765f441fc32d27e61c061e5de3a73fa814939040f8ba3c59b457"
+    }
+  ],
+  "boundary": "Actual Product lifecycle to Catalog PG only; test authority/House fixtures; NOT live HTTP/Cart/Order/Inventory/E2E",
+  "historicalOwnerSourceBase": "273a44db9a24e5aac69e7d9f9e8e0208c9f963b7",
+  "baseMain": "7d68e11ce3327aa0ac423938ab9d97a174438b78",
+  "PR90head": "0f9c0c84a310bcfcf86f06592b64aed6690258dd",
+  "normalization": "Original runner retained its historical273 owner-source label. Renamed historical label here; exact QA976/main7d68 attribution verified by Git. Raw log/XML unchanged.",
+  "privateOriginalSummarySHA256": "800b38acaab417c85dde7ee992a45bee373c2881c69fa93a14661069b8c9be5b"
+}

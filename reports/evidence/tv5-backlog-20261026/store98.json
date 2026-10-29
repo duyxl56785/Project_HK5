@@ -1,0 +1,70 @@
+{
+  "kind": "DERIVED SUMMARY; original logs/XML private and byte-preserved",
+  "metadata": {
+    "source": "d53e2a96833e246482c504879cd6d646dca82bf5",
+    "PR": 98,
+    "command": [
+      "D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-backlog-20261026\\source98\\backend\\gradlew.bat",
+      "-p",
+      "backend",
+      ":order-service:test",
+      "--tests",
+      "*FulfillmentStoreOwnershipTest",
+      "--rerun-tasks",
+      "--no-daemon",
+      "--console=plain"
+    ],
+    "startedUtc": "2026-10-26T14:38:30.438001+00:00",
+    "executor": "TV5 independent exact-head execution",
+    "environment": {
+      "Java": "21.0.7",
+      "Gradle": "8.10",
+      "Docker": "29.8.1",
+      "PostgreSQL": "16 Testcontainers where applicable",
+      "JAVA_TOOL_OPTIONS": "-Duser.timezone=UTC -Dapi.version=1.44"
+    },
+    "exitCode": 0,
+    "completedUtc": "2026-10-26T14:38:48.559863+00:00"
+  },
+  "counts": {
+    "order-service:test": {
+      "PASS": 3
+    }
+  },
+  "cases": [
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.fulfillment.FulfillmentStoreOwnershipTest",
+      "name": "rejectsDifferentStoreWithoutRevealingOrderDetails()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.fulfillment.FulfillmentStoreOwnershipTest",
+      "name": "rejectsMissingOrBlankStoreIds()",
+      "result": "PASS"
+    },
+    {
+      "module": "order-service",
+      "task": "test",
+      "class": "com.projecthk5.orderservice.fulfillment.FulfillmentStoreOwnershipTest",
+      "name": "allowsOnlyExactVerifiedStoreMatch()",
+      "result": "PASS"
+    }
+  ],
+  "staleXmlExcluded": [],
+  "rawArtifacts": [
+    {
+      "localPath": ".verification/tv5-backlog-20261026/run98/order-service/test/TEST-com.projecthk5.orderservice.fulfillment.FulfillmentStoreOwnershipTest.xml",
+      "bytes": 825,
+      "sha256": "0548c0725be604e748bc73b609fe589ad6bb220a8c1f1bd7d26426851b431615"
+    },
+    {
+      "localPath": ".verification/tv5-backlog-20261026/run98/runtime.log",
+      "bytes": 1421,
+      "sha256": "aa7dd524ac73462b9d68f4d580a09d090cd770a518d7e49b91748e9311d357de"
+    }
+  ]
+}
