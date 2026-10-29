@@ -76,16 +76,38 @@ class ProductAuthorityHttpPostgresTest {
         token=codec.issue(current.requireCurrentForIssue(owner));otherToken=codec.issue(current.requireCurrentForIssue(other));
     }
     @AfterAll static void stop(){if(seller!=null)seller.close();if(auth!=null)auth.close();pg.stop();}
-    @Test void actualRpcFactsAndWriteBoundaryWithoutNetworkInsideTransaction(){
-        var policy=factory.prepareSellerManagement(token,store);int calls=networkCalls.get();
+    @Test void actualRpcPreflightCannotAuthorizeEvenUnchangedWrite() {
+        var policy=factory.prepareSellerManagement(token,store);
+        assertEquals(owner.toString(),policy.readStore(store).ownerReference());
+        assertWriteDenied(policy);
+    }
+    @Test void concurrentRevocationAfterActualHttpPreflightCannotCommitProductWrite() throws Exception {
+        var workers=Executors.newSingleThreadExecutor();
+        try {
+            List<Runnable> revocations=List.of(
+                ()->authDb.update("DELETE FROM account_role_grants WHERE account_id=?",owner),
+                ()->authDb.update("UPDATE accounts SET status='DISABLED' WHERE id=?",owner),
+                ()->sellerDb.update("UPDATE seller_profiles SET status='SUSPENDED',review_reason='test revocation',version=version+1 WHERE id=?",sellerId),
+                ()->sellerDb.update("UPDATE stores SET status='CLOSED',version=version+1 WHERE id=?",store));
+            for(var revoke:revocations) {
+                seed();var policy=factory.prepareSellerManagement(token,store);
+                workers.submit(revoke).get(10,TimeUnit.SECONDS);
+                assertWriteDenied(policy);
+            }
+        } finally {workers.shutdownNow();}
+    }
+    private void assertWriteDenied(ProductAccessPolicy policy) {
+        int calls=networkCalls.get();
+        assertEquals(ProductRuleException.Code.AUTHORIZATION_UNAVAILABLE,
+            assertThrows(ProductRuleException.class,()->policy.requireSellerManagement(owner.toString(),store)).getCode());
         var tx=new TransactionTemplate(new DataSourceTransactionManager(productDs));
-        tx.executeWithoutResult(status->{
-            assertThrows(ProductRuleException.class,()->factory.prepareSellerManagement(token,store));
-            assertEquals(owner.toString(),policy.requireSellerManagement(owner.toString(),store).ownerReference());
-            productProbe.update("INSERT INTO authority_write_probe VALUES(?)",UUID.randomUUID());
-        });
-        assertEquals(calls,networkCalls.get());assertEquals(1,productProbe.queryForObject("SELECT count(*) FROM authority_write_probe",Integer.class));
-        assertThrows(ProductRuleException.class,()->policy.readStore(store).houseStore());
+        assertEquals(ProductRuleException.Code.AUTHORIZATION_UNAVAILABLE,assertThrows(ProductRuleException.class,()->
+            tx.executeWithoutResult(status->{
+                productProbe.update("INSERT INTO authority_write_probe VALUES(?)",UUID.randomUUID());
+                policy.requireSellerManagement(owner.toString(),store);
+            })).getCode());
+        assertEquals(calls,networkCalls.get());
+        assertEquals(0,productProbe.queryForObject("SELECT count(*) FROM authority_write_probe",Integer.class));
     }
     @Test void revokedDisabledAndStoreTransitionsRejectNewRequests(){
         assertNotNull(factory.prepareSellerManagement(token,store));

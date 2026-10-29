@@ -20,9 +20,9 @@ ProductCurrentAuthority is unregistered preflight: reject actual/synchronized tr
 BEFORE any network; verifyJWT/currentAuth/effectiveSELLER orADMIN first, then freshStorefacts,
 exactowner/APPROVED/OPEN for management,ADMIN/no-self moderation via existingpolicy.
 Immutable per-request proof expires5seconds FROM preflightstart, rejects clockrollback;
-policy calls inside subsequentbusiness transaction do no network. Never cacheproof or share
+snapshot reads do no network; write authorizers now always fail closed. Never cacheproof or share
 it acrossrequests. Fresh request always reloads dependencies; no crossserviceDBaccess.
-Status/roles may change after remote read:5seconds is a local maximum proof age, NOT a
+Status/roles may change after remote read:5seconds is a local maximum snapshot age, NOT a
 revocationlease, distributedtransaction or atomic crossservice grant guarantee. BusinessHTTP
 remainsblocked until independentreview accepts middleware/transaction integration semantics.
 

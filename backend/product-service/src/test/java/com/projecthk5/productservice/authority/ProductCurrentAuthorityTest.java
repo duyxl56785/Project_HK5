@@ -57,10 +57,25 @@ class ProductCurrentAuthorityTest {
     @Test void connectsAuthorityWithoutInventingHouseAndDoesNoNetworkInBusinessTransaction() {
         var prepared=factory.prepareSellerManagement(token,store);
         int before=calls.get();org.springframework.transaction.support.TransactionSynchronizationManager.setActualTransactionActive(true);
-        var access=prepared.requireSellerManagement(owner.toString(),store);
+        var access=prepared.readStore(store);
         assertEquals(owner.toString(),access.ownerReference());assertEquals(before,calls.get());
         assertThrows(ProductRuleException.class,access::houseStore);
         assertThrows(ProductRuleException.class,()->factory.prepareSellerManagement(token,store));assertEquals(before,calls.get());
+    }
+    @Test void preflightCannotAuthorizeWritesAfterConcurrentRemoteRevocation() throws Exception {
+        var prepared=factory.prepareSellerManagement(token,store);
+        var changed=new java.util.concurrent.CountDownLatch(1);
+        var worker=new Thread(()->{currentRoles=Set.of();sellerStatus="SUSPENDED";storeStatus="CLOSED";changed.countDown();});
+        worker.start();assertTrue(changed.await(3,java.util.concurrent.TimeUnit.SECONDS));worker.join();
+        int before=calls.get();
+        for(boolean transaction:List.of(false,true)) {
+            org.springframework.transaction.support.TransactionSynchronizationManager.setActualTransactionActive(transaction);
+            assertEquals(ProductRuleException.Code.AUTHORIZATION_UNAVAILABLE,
+                assertThrows(ProductRuleException.class,()->prepared.requireSellerManagement(owner.toString(),store)).getCode());
+            assertEquals(ProductRuleException.Code.AUTHORIZATION_UNAVAILABLE,
+                assertThrows(ProductRuleException.class,()->prepared.requireModeration(owner.toString(),store)).getCode());
+        }
+        assertEquals(before,calls.get());
     }
     @Test void rejectsWrongOwnerAndUnapprovedClosedMissingStores() {
         storeOwner="someone-else";assertThrows(ProductRuleException.class,()->factory.prepareSellerManagement(token,store));
