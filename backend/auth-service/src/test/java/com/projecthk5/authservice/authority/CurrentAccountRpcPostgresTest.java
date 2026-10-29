@@ -42,7 +42,7 @@ class CurrentAccountRpcPostgresTest {
         admin=new JdbcTemplate(new DriverManagerDataSource(url,pg.getUsername(),pg.getPassword()));
         admin.execute("GRANT USAGE ON SCHEMA public TO auth_app");
         app=(ServletWebServerApplicationContext)new SpringApplicationBuilder(com.projecthk5.authservice.AuthServiceApplication.class,Wiring.class)
-            .run("--server.port=0","--spring.datasource.url="+url,"--spring.datasource.username=auth_app","--spring.datasource.password="+password,
+            .initializers(c -> com.projecthk5.security.PairManifestFixture.install(c.getEnvironment())).run("--server.port=0","--spring.datasource.url="+url,"--spring.datasource.username=auth_app","--spring.datasource.password="+password,
                 "--hk5.auth.current-account.enabled=true","--HK5_SELLER_AUTH_CURRENT_ACCOUNT_SECRET="+key,
                 "--HK5_PRODUCT_AUTH_CURRENT_ACCOUNT_SECRET=product-test-only-current-account-key-0123456789");
         base="http://127.0.0.1:"+app.getWebServer().getPort();
@@ -122,7 +122,7 @@ class CurrentAccountRpcPostgresTest {
         String url=pg.getJdbcUrl().replace("/test","/auth_db");
         for(boolean enabled:List.of(false,true)) {
             try(var other=(ServletWebServerApplicationContext)new SpringApplicationBuilder(com.projecthk5.authservice.AuthServiceApplication.class)
-                    .run("--server.port=0","--spring.datasource.url="+url,"--spring.datasource.username=auth_app","--spring.datasource.password="+password,
+                    .initializers(c -> com.projecthk5.security.PairManifestFixture.install(c.getEnvironment())).run("--server.port=0","--spring.datasource.url="+url,"--spring.datasource.username=auth_app","--spring.datasource.password="+password,
                         "--hk5.auth.current-account.enabled="+enabled,"--HK5_SELLER_AUTH_CURRENT_ACCOUNT_SECRET="+key)) {
                 var request=HttpRequest.newBuilder(URI.create("http://127.0.0.1:"+other.getWebServer().getPort()+PATH))
                     .header("X-HK5-Service-Credential",key).header("Authorization","Bearer "+token()).header("Content-Type","application/json")

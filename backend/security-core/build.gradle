@@ -1,6 +1,8 @@
 apply plugin: 'java-library'
+apply plugin: 'java-test-fixtures'
 
 dependencies {
+    testFixturesImplementation 'org.springframework:spring-core'
     api 'org.springframework.security:spring-security-oauth2-jose'
     implementation 'com.fasterxml.jackson.core:jackson-databind'
 }

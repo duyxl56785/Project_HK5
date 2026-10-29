@@ -154,7 +154,7 @@ class SellerRoleSyncPostgresTest {
             org.springframework.test.context.support.TestPropertySourceUtils.addInlinedPropertiesToEnvironment(host,
                 "hk5.auth.role-sync.enabled=true", "HK5_SELLER_AUTH_ROLE_SYNC_SECRET="+SellerRoleSyncHttpTest.KEY);
             host.addBeanFactoryPostProcessor(factory->{ if(factory.containsBeanDefinition("sellerRoleSyncService")) ((org.springframework.beans.factory.support.BeanDefinitionRegistry)factory).removeBeanDefinition("sellerRoleSyncService"); factory.registerSingleton("testedService",service); });
-            host.register(SellerRoleSyncHttpTest.Host.class); host.refresh();
+            host.register(SellerRoleSyncHttpTest.Host.class); com.projecthk5.security.PairManifestFixture.install(host.getEnvironment()); host.refresh();
             var mvc=org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup(host)
                 .addFilters(host.getBean("springSecurityFilterChain",jakarta.servlet.Filter.class)).build();
             var event=event(1,Status.APPROVED);
@@ -176,7 +176,7 @@ class SellerRoleSyncPostgresTest {
     }    @Test void realBootReceiverWithPostgresAndLoopbackHttp() throws Exception {
         String url=pg.getJdbcUrl().replace("/test","/auth_db");
         try(var app=new org.springframework.boot.builder.SpringApplicationBuilder(com.projecthk5.authservice.AuthServiceApplication.class)
-                .run("--server.port=0","--spring.datasource.url="+url,"--spring.datasource.username=auth_app",
+                .initializers(c -> com.projecthk5.security.PairManifestFixture.install(c.getEnvironment())).run("--server.port=0","--spring.datasource.url="+url,"--spring.datasource.username=auth_app",
                     "--spring.datasource.password="+password,"--hk5.auth.role-sync.enabled=true",
                     "--HK5_SELLER_AUTH_ROLE_SYNC_SECRET="+SellerRoleSyncHttpTest.KEY)) {
             assertTrue(org.springframework.aop.support.AopUtils.isAopProxy(app.getBean(SellerRoleSyncService.class)));
@@ -200,7 +200,7 @@ class SellerRoleSyncPostgresTest {
     @Test void crossPairAliasesCannotMutateRolesOverActualHttp() throws Exception {
         String url=pg.getJdbcUrl().replace("/test","/auth_db"),key=SellerRoleSyncHttpTest.KEY,previous="old-test-only-role-sync-credential-0123456789";
         try(var app=(org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext)new org.springframework.boot.builder.SpringApplicationBuilder(com.projecthk5.authservice.AuthServiceApplication.class)
-            .run("--server.port=0","--spring.datasource.url="+url,"--spring.datasource.username=auth_app","--spring.datasource.password="+password,
+            .initializers(c -> com.projecthk5.security.PairManifestFixture.install(c.getEnvironment())).run("--server.port=0","--spring.datasource.url="+url,"--spring.datasource.username=auth_app","--spring.datasource.password="+password,
                 "--hk5.auth.role-sync.enabled=true","--HK5_SELLER_AUTH_ROLE_SYNC_SECRET="+key)) {
             var http=java.net.http.HttpClient.newHttpClient();
             for(String foreign:List.of("HK5_SELLER_AUTH_CURRENT_ACCOUNT_","HK5_PRODUCT_AUTH_CURRENT_ACCOUNT_"))

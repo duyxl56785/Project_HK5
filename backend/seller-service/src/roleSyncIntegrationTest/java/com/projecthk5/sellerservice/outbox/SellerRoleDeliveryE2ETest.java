@@ -39,10 +39,10 @@ class SellerRoleDeliveryE2ETest {
         authDb=jdbc(au,pg.getUsername(),pg.getPassword());sellerDs=new DriverManagerDataSource(su,pg.getUsername(),pg.getPassword());sellerDb=new JdbcTemplate(sellerDs);
         authDb.execute("GRANT USAGE ON SCHEMA public TO auth_app");
         auth=(ServletWebServerApplicationContext)new SpringApplicationBuilder(com.projecthk5.authservice.AuthServiceApplication.class)
-            .run("--server.port=0","--spring.datasource.url="+au,"--spring.datasource.username=auth_app","--spring.datasource.password="+password,
+            .initializers(c -> com.projecthk5.security.PairManifestFixture.install(c.getEnvironment())).run("--server.port=0","--spring.datasource.url="+au,"--spring.datasource.username=auth_app","--spring.datasource.password="+password,
                 "--spring.flyway.enabled=false","--hk5.auth.role-sync.enabled=true","--HK5_SELLER_AUTH_ROLE_SYNC_SECRET="+key);
         seller=(ServletWebServerApplicationContext)new SpringApplicationBuilder(com.projecthk5.sellerservice.SellerServiceApplication.class,Wiring.class)
-            .run("--server.port=0","--spring.datasource.url="+su,"--spring.datasource.username="+pg.getUsername(),"--spring.datasource.password="+pg.getPassword(),"--spring.flyway.enabled=false","--test.role-sync.producer-fixture=true");
+            .initializers(c -> com.projecthk5.security.PairManifestFixture.install(c.getEnvironment())).run("--server.port=0","--spring.datasource.url="+su,"--spring.datasource.username="+pg.getUsername(),"--spring.datasource.password="+pg.getPassword(),"--spring.flyway.enabled=false","--test.role-sync.producer-fixture=true");
         service=seller.getBean(SellerPersistenceService.class);store=new DeliveryStore(sellerDs);
         client=new RoleSyncClient(URI.create("http://127.0.0.1:"+auth.getWebServer().getPort()+"/internal/auth/seller-role-sync"),()->key);
         dispatcher=new SellerRoleDispatcher(store,client);

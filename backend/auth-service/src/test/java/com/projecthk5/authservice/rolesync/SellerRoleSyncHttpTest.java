@@ -34,7 +34,7 @@ class SellerRoleSyncHttpTest {
         TestPropertySourceUtils.addInlinedPropertiesToEnvironment(context,
             "hk5.auth.role-sync.enabled="+enabled, "HK5_SELLER_AUTH_ROLE_SYNC_SECRET="+key);
         context.addBeanFactoryPostProcessor(factory->{ if(factory.containsBeanDefinition("sellerRoleSyncService")) ((org.springframework.beans.factory.support.BeanDefinitionRegistry)factory).removeBeanDefinition("sellerRoleSyncService"); factory.registerSingleton("testedService",service); });
-        context.register(Host.class); context.refresh();
+        context.register(Host.class); com.projecthk5.security.PairManifestFixture.install(context.getEnvironment()); context.refresh();
         mvc=MockMvcBuilders.webAppContextSetup(context)
             .addFilters(context.getBean("springSecurityFilterChain", Filter.class)).build();
     }

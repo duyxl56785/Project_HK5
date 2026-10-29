@@ -32,7 +32,7 @@ class StoreFactsHttpPostgresTest {
     }
     static ServletWebServerApplicationContext boot(boolean enabled) {
         return (ServletWebServerApplicationContext)new SpringApplicationBuilder(com.projecthk5.sellerservice.SellerServiceApplication.class)
-            .run("--server.port=0","--spring.datasource.url="+pg.getJdbcUrl(),"--spring.datasource.username=facts_app",
+            .initializers(c -> com.projecthk5.security.PairManifestFixture.install(c.getEnvironment())).run("--server.port=0","--spring.datasource.url="+pg.getJdbcUrl(),"--spring.datasource.username=facts_app",
                 "--spring.datasource.password="+password,"--spring.flyway.enabled=false","--hk5.seller.store-facts.enabled="+enabled,
                 "--HK5_PRODUCT_SELLER_STORE_FACTS_SECRET="+KEY,"--spring.jpa.properties.hibernate.generate_statistics=true");
     }

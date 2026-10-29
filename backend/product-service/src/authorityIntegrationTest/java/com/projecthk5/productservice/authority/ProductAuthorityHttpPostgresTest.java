@@ -49,10 +49,10 @@ class ProductAuthorityHttpPostgresTest {
         productDs=new DriverManagerDataSource(pg.getJdbcUrl().replace("/test","/product_db"),pg.getUsername(),pg.getPassword());
         productProbe=new JdbcTemplate(productDs);productProbe.execute("CREATE TABLE authority_write_probe(id UUID PRIMARY KEY)");
         auth=(ServletWebServerApplicationContext)new SpringApplicationBuilder(com.projecthk5.authservice.AuthServiceApplication.class,AuthWiring.class)
-            .run("--server.port=0","--spring.application.name=auth-service","--spring.datasource.url="+authUrl,"--spring.datasource.username=auth_app","--spring.datasource.password="+password,
+            .initializers(c -> com.projecthk5.security.PairManifestFixture.install(c.getEnvironment())).run("--server.port=0","--spring.application.name=auth-service","--spring.datasource.url="+authUrl,"--spring.datasource.username=auth_app","--spring.datasource.password="+password,
                 "--spring.flyway.enabled=false","--hk5.auth.current-account.enabled=true","--HK5_PRODUCT_AUTH_CURRENT_ACCOUNT_SECRET="+authKey);
         seller=(ServletWebServerApplicationContext)new SpringApplicationBuilder(com.projecthk5.sellerservice.SellerServiceApplication.class)
-            .run("--server.port=0","--spring.application.name=seller-service","--spring.datasource.url="+sellerUrl,"--spring.datasource.username=facts_app","--spring.datasource.password="+password,
+            .initializers(c -> com.projecthk5.security.PairManifestFixture.install(c.getEnvironment())).run("--server.port=0","--spring.application.name=seller-service","--spring.datasource.url="+sellerUrl,"--spring.datasource.username=facts_app","--spring.datasource.password="+password,
                 "--spring.flyway.enabled=false","--hk5.seller.store-facts.enabled=true","--HK5_PRODUCT_SELLER_STORE_FACTS_SECRET="+factsKey);
         var verifier=new JwtAccessVerifier("https://issuer.example.invalid","aud","test",Map.of("test",new SecretKeySpec(new byte[32],"HmacSHA256")),Clock.systemUTC());
         facts=new StoreFactsClient(URI.create(base(seller)+"/internal/seller/store-facts/batch"),()->factsKey);

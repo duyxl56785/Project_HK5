@@ -35,14 +35,14 @@ class SellerCurrentReadHttpE2ETest {
         migrate(au,"auth_migrator",password,"auth-service");migrate(su,pg.getUsername(),pg.getPassword(),"seller-service");
         authDb=jdbc(au,pg.getUsername(),pg.getPassword());sellerDb=jdbc(su,pg.getUsername(),pg.getPassword());authDb.execute("GRANT USAGE ON SCHEMA public TO auth_app");
         auth=(ServletWebServerApplicationContext)new SpringApplicationBuilder(com.projecthk5.authservice.AuthServiceApplication.class,AuthWiring.class)
-            .run("--server.port=0","--spring.datasource.url="+au,"--spring.datasource.username=auth_app","--spring.datasource.password="+password,"--spring.flyway.enabled=false",
-                "--hk5.auth.current-account.enabled=true","--HK5_SELLER_AUTH_CURRENT_ACCOUNT_SECRET="+pair);
+            .initializers(c -> com.projecthk5.security.PairManifestFixture.install(c.getEnvironment())).run("--server.port=0","--spring.datasource.url="+au,"--spring.datasource.username=auth_app","--spring.datasource.password="+password,"--spring.flyway.enabled=false",
+                "--hk5.auth.role-sync.enabled=true","--hk5.auth.current-account.enabled=true","--HK5_SELLER_AUTH_CURRENT_ACCOUNT_SECRET="+pair);
         seller=boot(su,true);base="http://127.0.0.1:"+seller.getWebServer().getPort();
     }
     static ServletWebServerApplicationContext boot(String url,boolean enabled){
         return (ServletWebServerApplicationContext)new SpringApplicationBuilder(com.projecthk5.sellerservice.SellerServiceApplication.class)
-            .run("--server.port=0","--spring.datasource.url="+url,"--spring.datasource.username="+pg.getUsername(),"--spring.datasource.password="+pg.getPassword(),"--spring.flyway.enabled=false",
-                "--hk5.seller.http.read.enabled="+enabled,"--HK5_AUTH_CURRENT_ACCOUNT_URL=http://127.0.0.1:"+auth.getWebServer().getPort()+"/internal/auth/current-account/seller",
+            .initializers(c -> com.projecthk5.security.PairManifestFixture.install(c.getEnvironment())).run("--server.port=0","--spring.datasource.url="+url,"--spring.datasource.username="+pg.getUsername(),"--spring.datasource.password="+pg.getPassword(),"--spring.flyway.enabled=false",
+                "--hk5.seller.store-facts.enabled=true","--hk5.seller.http.read.enabled="+enabled,"--HK5_AUTH_CURRENT_ACCOUNT_URL=http://127.0.0.1:"+auth.getWebServer().getPort()+"/internal/auth/current-account/seller",
                 "--HK5_SELLER_AUTH_CURRENT_ACCOUNT_SECRET="+pair,"--HK5_AUTH_JWT_ISSUER=https://issuer.example.invalid","--HK5_AUTH_JWT_AUDIENCE=aud",
                 "--HK5_AUTH_JWT_CURRENT_KID=test","--HK5_AUTH_JWT_CURRENT_KEY_B64="+Base64.getEncoder().encodeToString(new byte[32]));
     }
@@ -63,6 +63,49 @@ class SellerCurrentReadHttpE2ETest {
             .header("X-User-Id",other.toString()).header("X-Roles","ADMIN").GET().build();return http.send(request,HttpResponse.BodyHandlers.ofString());
     }
     @AfterAll static void stop(){if(seller!=null)seller.close();if(auth!=null)auth.close();pg.stop();}
+    @Test void separateServiceEnvironmentsRejectAliasedCredentialsWithoutMutationOrDisclosure() throws Exception {
+        String role="HK5_SELLER_AUTH_ROLE_SYNC_",facts="HK5_PRODUCT_SELLER_STORE_FACTS_";
+        String roleKey="test-only-role-sync-key-0123456789",factsKey="test-only-store-facts-key-0123456789";
+        var all=new HashMap<String,String>();
+        for(String p:com.projecthk5.security.PairCredentialManifest.PAIRS)all.put(p+"SECRET","test-only-global-key-0123456789-"+p);
+        all.put(role+"SECRET",roleKey);all.put(facts+"SECRET",factsKey);all.put("HK5_SELLER_AUTH_CURRENT_ACCOUNT_SECRET",pair);
+        String manifest=com.projecthk5.security.PairCredentialManifest.provision(all::get);
+        var authValues=new HashMap<String,Object>();authValues.put(role+"SECRET",roleKey);authValues.put(com.projecthk5.security.PairCredentialManifest.PROPERTY,manifest);
+        var sellerValues=new HashMap<String,Object>();sellerValues.put(facts+"SECRET",factsKey);sellerValues.put(com.projecthk5.security.PairCredentialManifest.PROPERTY,manifest);
+        auth.getEnvironment().getPropertySources().addFirst(new org.springframework.core.env.MapPropertySource("separate-auth",authValues));
+        seller.getEnvironment().getPropertySources().addFirst(new org.springframework.core.env.MapPropertySource("separate-seller",sellerValues));
+        try {
+            assertNull(auth.getEnvironment().getProperty(facts+"SECRET"));assertNull(seller.getEnvironment().getProperty(role+"SECRET"));
+            long grants=authDb.queryForObject("SELECT count(*) FROM account_role_grants",Long.class);
+            long receipts=authDb.queryForObject("SELECT count(*) FROM seller_role_sync_receipts",Long.class);
+            String event="{\"eventId\":\""+UUID.randomUUID()+"\",\"sellerId\":\""+profile+"\",\"accountId\":\""+owner+"\",\"sellerStatus\":\"APPROVED\",\"sourceVersion\":\"2\"}";
+            assertEquals(401,internal(auth,"/internal/auth/seller-role-sync",factsKey,event).statusCode());
+            assertEquals(401,internal(seller,"/internal/seller/store-facts/batch",roleKey,"{\"storeIds\":[\""+store+"\"]}").statusCode());
+            for(String slot:List.of("SECRET","PREVIOUS_SECRET")) {
+                authValues.put(role+slot,factsKey);
+                if(slot.equals("PREVIOUS_SECRET"))authValues.put(role+"PREVIOUS_UNTIL","2099-01-01T00:00:00Z");
+                for(int replay=0;replay<2;replay++)assertEquals(503,internal(auth,"/internal/auth/seller-role-sync",factsKey,event).statusCode());
+                authValues.put(role+"SECRET",roleKey);authValues.remove(role+"PREVIOUS_SECRET");authValues.remove(role+"PREVIOUS_UNTIL");
+                sellerValues.put(facts+slot,roleKey);
+                if(slot.equals("PREVIOUS_SECRET"))sellerValues.put(facts+"PREVIOUS_UNTIL","2099-01-01T00:00:00Z");
+                for(int replay=0;replay<2;replay++) {
+                    var result=internal(seller,"/internal/seller/store-facts/batch",roleKey,"{\"storeIds\":[\""+store+"\"]}");
+                    assertEquals(503,result.statusCode());assertFalse(result.body().contains("ownerReference"));assertFalse(result.body().contains(owner.toString()));
+                }
+                sellerValues.put(facts+"SECRET",factsKey);sellerValues.remove(facts+"PREVIOUS_SECRET");sellerValues.remove(facts+"PREVIOUS_UNTIL");
+            }
+            assertEquals(grants,authDb.queryForObject("SELECT count(*) FROM account_role_grants",Long.class));
+            assertEquals(receipts,authDb.queryForObject("SELECT count(*) FROM seller_role_sync_receipts",Long.class));
+            assertEquals(200,internal(seller,"/internal/seller/store-facts/batch",factsKey,"{\"storeIds\":[\""+store+"\"]}").statusCode());
+        } finally {
+            auth.getEnvironment().getPropertySources().remove("separate-auth");seller.getEnvironment().getPropertySources().remove("separate-seller");
+        }
+    }
+    static HttpResponse<String> internal(ServletWebServerApplicationContext app,String path,String credential,String body) throws Exception {
+        return http.send(HttpRequest.newBuilder(URI.create("http://127.0.0.1:"+app.getWebServer().getPort()+path))
+            .timeout(Duration.ofSeconds(8)).header("X-HK5-Service-Credential",credential).header("Content-Type","application/json")
+            .POST(HttpRequest.BodyPublishers.ofString(body)).build(),HttpResponse.BodyHandlers.ofString());
+    }
     @Test void realJwtAndCurrentRpcReadOnlyOwnDataThroughJpaProxies() throws Exception {
         var own=get(base,"/api/sellers/me",token);assertEquals(200,own.statusCode(),own.body());assertEquals(profile.toString(),json.readTree(own.body()).get("id").textValue());assertFalse(own.body().contains("ownerReference"));
         var shop=get(base,"/api/stores/me",token);assertEquals(200,shop.statusCode(),shop.body());assertFalse(json.readTree(shop.body()).get("open").booleanValue());assertEquals("3",json.readTree(shop.body()).get("version").textValue());
