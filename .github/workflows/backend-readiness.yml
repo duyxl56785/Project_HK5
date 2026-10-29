@@ -27,6 +27,8 @@ jobs:
             [Environment]::SetEnvironmentVariable($name, $secret, 'Process')
           }
           $env:TV1_DATABASE_TESTS = 'true'
+          docker version
+          if ($LASTEXITCODE -ne 0) { throw 'Docker Engine unavailable' }
           try {
             docker compose -f docker/compose.dev.yml config --quiet
             if ($LASTEXITCODE -ne 0) { throw 'Compose config failed' }
