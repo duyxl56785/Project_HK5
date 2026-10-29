@@ -33,3 +33,30 @@ tasks.register('integrationTest', Test) {
 }
 
 tasks.named('check') { dependsOn tasks.named('integrationTest') }
+sourceSets {
+    authorityIntegrationTest {
+        java.srcDir 'src/authorityIntegrationTest/java'
+        compileClasspath += sourceSets.main.output
+        runtimeClasspath += sourceSets.main.output
+    }
+}
+configurations {
+    authorityIntegrationTestImplementation.extendsFrom testImplementation
+    authorityIntegrationTestRuntimeOnly.extendsFrom testRuntimeOnly
+}
+dependencies {
+    authorityIntegrationTestImplementation project(':auth-service')
+    authorityIntegrationTestImplementation project(':seller-service')
+}
+tasks.register('authorityIntegrationTest', Test) {
+    description = 'Runs Product authority against actual Auth/Seller HTTP and isolated PostgreSQL databases.'
+    group = 'verification'
+    testClassesDirs = sourceSets.authorityIntegrationTest.output.classesDirs
+    classpath = sourceSets.authorityIntegrationTest.runtimeClasspath
+    workingDir projectDir
+    useJUnitPlatform()
+    shouldRunAfter tasks.named('integrationTest')
+    reports.html.outputLocation = layout.buildDirectory.dir('reports/tests/authorityIntegrationTest')
+    reports.junitXml.outputLocation = layout.buildDirectory.dir('test-results/authorityIntegrationTest')
+}
+tasks.named('check') { dependsOn tasks.named('authorityIntegrationTest') }

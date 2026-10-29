@@ -36,10 +36,7 @@ public final class CurrentAccountClient {
             var request=HttpRequest.newBuilder(endpoint).timeout(Duration.ofSeconds(3))
                 .header("Content-Type","application/json").header("Authorization","Bearer "+token)
                 .header("X-HK5-Service-Credential",secret).POST(HttpRequest.BodyPublishers.ofString("{\"requestId\":\""+nonce+"\"}")).build();
-            var pending=http.sendAsync(request,info->new BoundedBody());
-            HttpResponse<byte[]> response;
-            try {response=pending.get(3,java.util.concurrent.TimeUnit.SECONDS);}
-            catch(Exception failure){pending.cancel(true);throw failure;}
+            var response=BoundedHttpResponse.send(http,request,8192);
             {
                 int status=response.statusCode();
                 if(status==401 || status==403)throw failure(status);
@@ -72,18 +69,4 @@ public final class CurrentAccountClient {
         public int status(){return status;}
     }
     private static Failure failure(int status){return new Failure(status);}
-    private static final class BoundedBody implements HttpResponse.BodySubscriber<byte[]> {
-        private final java.util.concurrent.CompletableFuture<byte[]> result=new java.util.concurrent.CompletableFuture<>();
-        private final java.io.ByteArrayOutputStream bytes=new java.io.ByteArrayOutputStream();
-        private java.util.concurrent.Flow.Subscription subscription;
-        public java.util.concurrent.CompletionStage<byte[]> getBody(){return result;}
-        public void onSubscribe(java.util.concurrent.Flow.Subscription value){subscription=value;value.request(Long.MAX_VALUE);}
-        public void onNext(List<java.nio.ByteBuffer> buffers){
-            for(var buffer:buffers){
-                if(bytes.size()+buffer.remaining()>8192){subscription.cancel();result.completeExceptionally(new IllegalStateException("Authority response too large"));return;}
-                byte[] part=new byte[buffer.remaining()];buffer.get(part);bytes.writeBytes(part);
-            }
-        }
-        public void onError(Throwable failure){result.completeExceptionally(failure);}
-        public void onComplete(){result.complete(bytes.toByteArray());}
-    }}
+}

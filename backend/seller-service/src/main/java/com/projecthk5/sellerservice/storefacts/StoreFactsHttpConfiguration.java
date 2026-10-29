@@ -49,6 +49,13 @@ public class StoreFactsHttpConfiguration {
                 if(values.size()!=1 || values.getFirst().contains(",")){error(response,401,"INTERNAL_AUTH_INVALID");return;}
                 try{verifier.verify(values.getFirst(),request.getMethod(),request.getRequestURI());}
                 catch(InternalPairVerifier.Failure failure){error(response,failure.status(),failure.code());return;}
+                var nonces=Collections.list(request.getHeaders("X-HK5-Facts-Request-Id"));
+                if(!nonces.isEmpty()) {
+                    try {
+                        if(nonces.size()!=1 || !UUID.fromString(nonces.getFirst()).toString().equals(nonces.getFirst()))throw new IllegalArgumentException();
+                        response.setHeader("X-HK5-Facts-Request-Id",nonces.getFirst());
+                    }catch(IllegalArgumentException invalid){error(response,400,"VALIDATION_FAILED");return;}
+                }
                 request.setAttribute(VERIFIED,Boolean.TRUE);chain.doFilter(request,response);
             },AnonymousAuthenticationFilter.class);
         return http.build();
