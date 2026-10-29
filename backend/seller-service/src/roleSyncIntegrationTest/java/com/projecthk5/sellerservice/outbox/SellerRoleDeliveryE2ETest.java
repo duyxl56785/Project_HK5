@@ -24,7 +24,7 @@ class SellerRoleDeliveryE2ETest {
     static DriverManagerDataSource sellerDs;static DeliveryStore store;static RoleSyncClient client;static SellerRoleDispatcher dispatcher;
     static UUID owner=UUID.randomUUID();static SellerIdentity actor=new SellerIdentity(owner.toString()),admin=new SellerIdentity(UUID.randomUUID().toString());
     static SellerPersistenceService service;
-    @TestConfiguration static class Wiring {
+    @TestConfiguration @org.springframework.boot.autoconfigure.condition.ConditionalOnProperty(name="test.role-sync.producer-fixture",havingValue="true") static class Wiring {
         @Bean SellerPersistenceService service(SellerProfileRepository repository){return new SellerPersistenceService(repository,new SellerAccessPolicy(){
             public void requireAuthenticated(SellerIdentity who){if(who==null)throw new IllegalArgumentException();}
             public void requireSellerModerationPermission(SellerIdentity who){if(!admin.equals(who))throw new IllegalArgumentException();}
@@ -42,7 +42,7 @@ class SellerRoleDeliveryE2ETest {
             .run("--server.port=0","--spring.datasource.url="+au,"--spring.datasource.username=auth_app","--spring.datasource.password="+password,
                 "--spring.flyway.enabled=false","--hk5.auth.role-sync.enabled=true","--HK5_SELLER_AUTH_ROLE_SYNC_SECRET="+key);
         seller=(ServletWebServerApplicationContext)new SpringApplicationBuilder(com.projecthk5.sellerservice.SellerServiceApplication.class,Wiring.class)
-            .run("--server.port=0","--spring.datasource.url="+su,"--spring.datasource.username="+pg.getUsername(),"--spring.datasource.password="+pg.getPassword(),"--spring.flyway.enabled=false");
+            .run("--server.port=0","--spring.datasource.url="+su,"--spring.datasource.username="+pg.getUsername(),"--spring.datasource.password="+pg.getPassword(),"--spring.flyway.enabled=false","--test.role-sync.producer-fixture=true");
         service=seller.getBean(SellerPersistenceService.class);store=new DeliveryStore(sellerDs);
         client=new RoleSyncClient(URI.create("http://127.0.0.1:"+auth.getWebServer().getPort()+"/internal/auth/seller-role-sync"),()->key);
         dispatcher=new SellerRoleDispatcher(store,client);

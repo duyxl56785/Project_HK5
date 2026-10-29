@@ -5,7 +5,7 @@ import com.projecthk5.sellerservice.seller.domain.*;
 import com.projecthk5.sellerservice.seller.service.SellerAccessPolicy;
 
 /** Construct per request after RPC, before entering business transactions; intentionally not a bean. */
-public final class CurrentAccountSellerPolicy implements SellerAccessPolicy {
+public final class CurrentAccountSellerPolicy implements SellerAccessPolicy, com.projecthk5.sellerservice.http.SellerStoreReadAuthority {
     private final CurrentAccountClient.CurrentAccount current;
     public CurrentAccountSellerPolicy(CurrentAccountClient.CurrentAccount current){this.current=Objects.requireNonNull(current);}
     @Override public void requireAuthenticated(SellerIdentity actor) {
