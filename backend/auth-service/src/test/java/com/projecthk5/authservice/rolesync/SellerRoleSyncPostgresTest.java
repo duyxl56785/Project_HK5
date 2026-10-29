@@ -147,4 +147,54 @@ class SellerRoleSyncPostgresTest {
             assertEquals(1L,jdbc.queryForObject("SELECT count(*) FROM account_role_grants WHERE role='SELLER'",Long.class));
         }
     }
+    @Test void securedHttpAckUsesCommittedPostgresState() throws Exception {
+        SellerRoleSyncHttpTest.service=service;
+        try(var host=new org.springframework.web.context.support.AnnotationConfigWebApplicationContext()) {
+            host.setServletContext(new org.springframework.mock.web.MockServletContext());
+            org.springframework.test.context.support.TestPropertySourceUtils.addInlinedPropertiesToEnvironment(host,
+                "hk5.auth.role-sync.enabled=true", "HK5_SELLER_AUTH_ROLE_SYNC_SECRET="+SellerRoleSyncHttpTest.KEY);
+            host.addBeanFactoryPostProcessor(factory->{ if(factory.containsBeanDefinition("sellerRoleSyncService")) ((org.springframework.beans.factory.support.BeanDefinitionRegistry)factory).removeBeanDefinition("sellerRoleSyncService"); factory.registerSingleton("testedService",service); });
+            host.register(SellerRoleSyncHttpTest.Host.class); host.refresh();
+            var mvc=org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup(host)
+                .addFilters(host.getBean("springSecurityFilterChain",jakarta.servlet.Filter.class)).build();
+            var event=event(1,Status.APPROVED);
+            String body="{\"eventId\":\""+event.eventId()+"\",\"sellerId\":\""+seller
+                +"\",\"accountId\":\""+account+"\",\"sellerStatus\":\"APPROVED\",\"sourceVersion\":\"1\"}";
+            for(String result:List.of("APPLIED","DUPLICATE")) {
+                mvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post(SellerRoleSyncHttpTest.PATH)
+                    .header("X-HK5-Service-Credential",SellerRoleSyncHttpTest.KEY).contentType("application/json").content(body))
+                    .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.status().isOk())
+                    .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath("$.result").value(result));
+                assertTrue(sellerGranted()); assertEquals(1,latest());
+            }
+            mvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post(SellerRoleSyncHttpTest.PATH)
+                .header("X-HK5-Service-Credential",SellerRoleSyncHttpTest.KEY).contentType("application/json")
+                .content(body.replace("APPROVED","SUSPENDED")))
+                .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.status().isConflict());
+            assertTrue(sellerGranted());
+        }
+    }    @Test void realBootReceiverWithPostgresAndLoopbackHttp() throws Exception {
+        String url=pg.getJdbcUrl().replace("/test","/auth_db");
+        try(var app=new org.springframework.boot.builder.SpringApplicationBuilder(com.projecthk5.authservice.AuthServiceApplication.class)
+                .run("--server.port=0","--spring.datasource.url="+url,"--spring.datasource.username=auth_app",
+                    "--spring.datasource.password="+password,"--hk5.auth.role-sync.enabled=true",
+                    "--HK5_SELLER_AUTH_ROLE_SYNC_SECRET="+SellerRoleSyncHttpTest.KEY)) {
+            assertTrue(org.springframework.aop.support.AopUtils.isAopProxy(app.getBean(SellerRoleSyncService.class)));
+            int port=((org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext)app).getWebServer().getPort();
+            var client=java.net.http.HttpClient.newHttpClient();
+            String body="{\"eventId\":\""+UUID.randomUUID()+"\",\"sellerId\":\""+seller
+                +"\",\"accountId\":\""+account+"\",\"sellerStatus\":\"APPROVED\",\"sourceVersion\":\"1\"}";
+            var uri=java.net.URI.create("http://127.0.0.1:"+port+SellerRoleSyncHttpTest.PATH);
+            var denied=client.send(java.net.http.HttpRequest.newBuilder(uri).header("Content-Type","application/json")
+                .POST(java.net.http.HttpRequest.BodyPublishers.ofString(body)).build(),java.net.http.HttpResponse.BodyHandlers.ofString());
+            assertEquals(401,denied.statusCode()); assertFalse(sellerGranted());
+            var request=java.net.http.HttpRequest.newBuilder(uri).header("Content-Type","application/json")
+                .header("X-HK5-Service-Credential",SellerRoleSyncHttpTest.KEY)
+                .POST(java.net.http.HttpRequest.BodyPublishers.ofString(body)).build();
+            assertEquals(200,client.send(request,java.net.http.HttpResponse.BodyHandlers.ofString()).statusCode());
+            assertTrue(sellerGranted());
+            var retry=client.send(request,java.net.http.HttpResponse.BodyHandlers.ofString());
+            assertEquals(200,retry.statusCode()); assertTrue(retry.body().contains("DUPLICATE"));
+        }
+    }
 }
