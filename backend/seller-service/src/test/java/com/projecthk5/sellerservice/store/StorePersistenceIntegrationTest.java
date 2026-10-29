@@ -190,7 +190,7 @@ class StorePersistenceIntegrationTest {
         Flyway current = Flyway.configure()
                 .dataSource(POSTGRES.getJdbcUrl(), POSTGRES.getUsername(), POSTGRES.getPassword())
                 .defaultSchema(schema).schemas(schema).locations("classpath:db/migration").load();
-        assertEquals(2, current.migrate().migrationsExecuted);
+        assertEquals(3, current.migrate().migrationsExecuted);
         current.validate();
         assertEquals(checksum, jdbc.queryForObject("SELECT checksum FROM " + schema
                 + ".flyway_schema_history WHERE version='1'", Integer.class));

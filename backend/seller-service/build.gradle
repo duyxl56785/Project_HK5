@@ -28,3 +28,27 @@ tasks.register('integrationTest', Test) {
 }
 
 tasks.named('check') { dependsOn tasks.named('integrationTest') }
+sourceSets {
+    roleSyncIntegrationTest {
+        java.srcDir 'src/roleSyncIntegrationTest/java'
+        compileClasspath += sourceSets.main.output
+        runtimeClasspath += sourceSets.main.output
+    }
+}
+configurations {
+    roleSyncIntegrationTestImplementation.extendsFrom testImplementation
+    roleSyncIntegrationTestRuntimeOnly.extendsFrom testRuntimeOnly
+}
+dependencies { roleSyncIntegrationTestImplementation project(':auth-service') }
+tasks.register('roleSyncIntegrationTest', Test) {
+    description = 'Runs committed Seller outbox to actual Auth HTTP/PostgreSQL delivery.'
+    group = 'verification'
+    testClassesDirs = sourceSets.roleSyncIntegrationTest.output.classesDirs
+    classpath = sourceSets.roleSyncIntegrationTest.runtimeClasspath
+    workingDir projectDir
+    useJUnitPlatform()
+    shouldRunAfter tasks.named('integrationTest')
+    reports.html.outputLocation = layout.buildDirectory.dir('reports/tests/roleSyncIntegrationTest')
+    reports.junitXml.outputLocation = layout.buildDirectory.dir('test-results/roleSyncIntegrationTest')
+}
+tasks.named('check') { dependsOn tasks.named('roleSyncIntegrationTest') }
