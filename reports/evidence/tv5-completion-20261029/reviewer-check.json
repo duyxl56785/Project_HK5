@@ -1,0 +1,87 @@
+{
+  "kind": "DERIVED default-reviewer verification, no new request sent",
+  "viewer": "nguyenminhduy090-alt",
+  "openTV5PRs": [
+    {
+      "PR": 99,
+      "requested": [
+        "tranvanchinhbg2006-alt",
+        "phamthecuong2022006-alt"
+      ],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "duyxl56785"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-27T16:41:47Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/99#pullrequestreview-5670898290",
+          "commit": {
+            "oid": "931feee45ac3f17293a4f200c604010fce63bf39"
+          }
+        },
+        {
+          "author": {
+            "login": "tranvanchinhbg2006-alt"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-27T01:43:58Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/99#pullrequestreview-5661298914",
+          "commit": {
+            "oid": "446ae44da90832df534b6e37150f26a71f2adf25"
+          }
+        }
+      ],
+      "satisfied": true
+    },
+    {
+      "PR": 103,
+      "requested": [
+        "tranvanchinhbg2006-alt",
+        "duyxl56785"
+      ],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "duyxl56785"
+          },
+          "state": "CHANGES_REQUESTED",
+          "submittedAt": "2026-10-27T07:55:58Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/103#pullrequestreview-5663764170",
+          "commit": {
+            "oid": "6d99953af6ab813f85e52277717152c07d798fb1"
+          }
+        }
+      ],
+      "satisfied": true
+    },
+    {
+      "PR": 113,
+      "requested": [
+        "duyxl56785"
+      ],
+      "effectiveReviews": [],
+      "satisfied": true
+    },
+    {
+      "PR": 115,
+      "requested": [
+        "duyxl56785"
+      ],
+      "effectiveReviews": [],
+      "satisfied": true
+    },
+    {
+      "PR": 117,
+      "requested": [
+        "tranvanchinhbg2006-alt",
+        "duyxl56785",
+        "phamthecuong2022006-alt"
+      ],
+      "effectiveReviews": [],
+      "satisfied": true
+    }
+  ],
+  "noDuplicateRequests": true,
+  "noRemovedReviewerReadded": true
+}

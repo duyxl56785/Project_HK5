@@ -1,0 +1,3273 @@
+{
+  "kind": "DERIVED independent TV5 execution; original logs/XML private",
+  "PR": 118,
+  "head": "7d5213f3bf58b477fc77e50ba7459d61c2e0242f",
+  "startedUtc": "2026-10-29T06:53:45.334446+00:00",
+  "completedUtc": "2026-10-29T06:54:28.209184+00:00",
+  "command": [
+    "D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-completion-20261029\\source118\\backend\\gradlew.bat",
+    "-p",
+    "backend",
+    ":seller-service:build",
+    "--rerun-tasks",
+    "--no-daemon",
+    "--console=plain"
+  ],
+  "exitCode": 0,
+  "environment": {
+    "Java": "21.0.7",
+    "Gradle": "8.10",
+    "JAVA_TOOL_OPTIONS": "-Duser.timezone=UTC -Dapi.version=1.44",
+    "Docker": "existing Engine; isolated Testcontainers only; no existing volume deleted"
+  },
+  "counts": {
+    "PASS": 393
+  },
+  "countsByTask": {
+    "seller-service/integrationTest": {
+      "PASS": 147
+    },
+    "seller-service/test": {
+      "PASS": 246
+    }
+  },
+  "cases": [
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest",
+      "name": "roleSyncUncommittedRegistrationIsInvisibleToAnotherConnection()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest",
+      "name": "roleSyncMigrationBackfillsExistingSellersWithoutPublishingOrChangingThem()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest",
+      "name": "ownReadDoesNotNormalizeOpaqueIdentity()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest",
+      "name": "roleSyncRegistrationSnapshotIsDurableAndPreservesExactOwner()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest",
+      "name": "roleSyncRegistrationRollbackLeavesNeitherSellerNorSnapshot()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest",
+      "name": "resubmitKeepsIdAndLifecyclePersistsReasonsAndVersions()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest",
+      "name": "typedCommandsPreserveServerIdentityVersionPolicyAndRequiredRollback()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest",
+      "name": "migrationAndJpaPersistASeparateSellerIdentity()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest",
+      "name": "roleSyncOutboxFailureRollsBackOtherwiseValidApproval()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest",
+      "name": "twoRealTransactionsWithTheSameLoadedVersionCannotBothModerate()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest",
+      "name": "ownReadUsesExactIdentityAndCannotSelectAnotherOwnersId()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest",
+      "name": "roleSyncDatabaseRejectsDuplicateSellerVersionAndInvalidSnapshot()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest",
+      "name": "roleSyncEveryLifecycleStateHasOneOrderedPersistedSnapshot()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest",
+      "name": "requiredRegistrationRollsBackWithItsCaller()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest",
+      "name": "moderationReadChecksPermissionAndReturnsCommittedVersionWithoutWriting()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest",
+      "name": "database rejects null owner",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest",
+      "name": "database rejects blank owner",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest",
+      "name": "database rejects long owner",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest",
+      "name": "database rejects null status",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest",
+      "name": "database rejects unknown status",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest",
+      "name": "database rejects missing reason",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest",
+      "name": "database rejects blank reason",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest",
+      "name": "database rejects long reason",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest",
+      "name": "database rejects obsolete reason",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest",
+      "name": "database rejects null version",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest",
+      "name": "database rejects negative version",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest",
+      "name": "roleSyncModerationRollbackRestoresStateVersionAndSnapshotCount()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest",
+      "name": "privateResponseMappingFollowsGuardedOwnReadAndDoesNotGrantModeration()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest",
+      "name": "permissionsAndInvalidInputLeaveDatabaseUnchanged()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest",
+      "name": "staleExpectedVersionCannotApproveAfterRejectAndResubmit()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest",
+      "name": "duplicateOwnerIsRejectedWithoutCreatingAnotherSeller()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest",
+      "name": "databaseOwnerComparisonDoesNotTrimOrFoldCase()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest",
+      "name": "roleSyncDeniedOrStaleMutationCannotAppendSnapshot()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest",
+      "name": "requiredModerationRollsBackStateAndVersionWithItsCaller()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest",
+      "name": "concurrentRegistrationWaitsForTheUniqueConstraintAndOnlyOneCommits()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "migrationUpgradesExistingV1SellerWithoutChangingDataOrChecksum()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "databaseProtectsSellerAndSlugUniquenessAndRestrictsMissingOrDeletedSeller()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "staleExpectedVersionCannotOverwriteCommittedMetadataOrState()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "ownerResponseMappingRequiresSuccessfulCurrentOwnerRead()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "trustedSourceBypassesStaleFirstLevelEntitiesAtReadCommitted()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "database rejects seller_id=NULL",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "database rejects name=NULL",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "database rejects name=''",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "database rejects name='   '",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "database rejects name=' padded '",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "database rejects name=repeat('a',256)",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "database rejects slug=NULL",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "database rejects slug=repeat('a',129)",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "database rejects status=NULL",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "database rejects status='UNKNOWN'",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "database rejects version=NULL",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "database rejects version=-1",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "database rejects created_at=NULL",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "database rejects updated_at=NULL",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "database rejects created_at='infinity'",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "database rejects updated_at='infinity'",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "database rejects updated_at=created_at-interval '1 microsecond'",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "invalidActorIdentifierVersionAndMetadataLeaveDatabaseUnchanged()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "freshFlywaySchemaAndJpaPersistDurableStoreWithServerOwnership()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "createAndUpdateJoinRequiredCallerTransactionAndRollBackCompletely()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "staleManagedSellerIsRefreshedBeforeCurrentEligibilityCheck()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "[1] slug=",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "[2] slug= ",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "[3] slug=Upper",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "[4] slug=with space",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "[5] slug=-first",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "[6] slug=last-",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "[7] slug=two--parts",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "[8] slug=café",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "[9] slug=a\nb",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "trustedCurrentSourceRejectsRepeatableReadSnapshots()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "concurrentServiceUpdatesWithSameExpectedVersionHaveOneWinner()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "[1] sameSeller=true",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "[2] sameSeller=false",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "exceptionAfterAFlushedMutationRollsBackTheWholeCallerTransaction()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "actualJpaVersionRejectsTwoEntitiesLoadedBeforeEitherWrite()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "successfulMutationHoldsCurrentSellerEligibilityUntilItsTransactionCommits()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "typedCommandsKeepServerOwnershipVersionAndTransactionGuards()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "reviseCloseAndReopenKeepIdentityAndAdvanceVersionWithoutChangingSeller()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "[1] method=POST, path=/api/stores",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "[2] method=PUT, path=/api/stores/40000000-0000-4000-8000-000000000001",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "[3] method=PATCH, path=/api/stores/40000000-0000-4000-8000-000000000001/status",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "[4] method=DELETE, path=/api/stores/40000000-0000-4000-8000-000000000001",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "[5] method=GET, path=/internal/stores/40000000-0000-4000-8000-000000000001",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "[6] method=POST, path=/internal/stores/batch",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "[1] status=PENDING_REVIEW",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "[2] status=REJECTED",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "[3] status=SUSPENDED",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "currentSellerReadWaitsForConcurrentSuspensionAndDeniesMutationAfterItsCommit()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "ownReadAndMissingStoreErrorsDoNotAllowSelectingAnotherOwnersStore()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "policyCannotSubstituteAnotherSellerOrOwnerOrInventAnUnpersistedSeller()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "[1] status=PENDING_REVIEW",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "[2] status=APPROVED",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "[3] status=REJECTED",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "[4] status=SUSPENDED",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "crossSellerWritesAndUnverifiedOrNormalizedIdentitiesCannotReadOrMutate()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "trustedSourceMissingRowsStayAbsentAndPayloadHasNoOwnerOrHouseAuthority()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "duplicateSellerAndSlugHaveDifferentErrorsAndLeaveOriginalStoresIntact()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "suspendedSellerCannotReviseOrReopenAnExistingStoreDespiteStalePolicy()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest",
+      "name": "unavailablePolicyAndMissingPersistedSellerFailClosed()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StoreProductFactsIntegrationTest",
+      "name": "batchUsesOneScalarCurrentReadAndPreservesPrivatePersistedOwnerAndVersions()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StoreProductFactsIntegrationTest",
+      "name": "nullEmptyNullMemberAndOversizedBatchesNeverQueryTheDatabase()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StoreProductFactsIntegrationTest",
+      "name": "databaseTimeoutIsUnavailableNeverAnEmptyOrPartialBatch()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StoreProductFactsIntegrationTest",
+      "name": "unknownLocalStoreIdsAreOmittedOnlyAfterSuccessfulQuery()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StoreProductFactsIntegrationTest",
+      "name": "[1] seller=PENDING_REVIEW, store=OPEN",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StoreProductFactsIntegrationTest",
+      "name": "[2] seller=PENDING_REVIEW, store=CLOSED",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StoreProductFactsIntegrationTest",
+      "name": "[3] seller=APPROVED, store=OPEN",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StoreProductFactsIntegrationTest",
+      "name": "[4] seller=APPROVED, store=CLOSED",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StoreProductFactsIntegrationTest",
+      "name": "[5] seller=REJECTED, store=OPEN",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StoreProductFactsIntegrationTest",
+      "name": "[6] seller=REJECTED, store=CLOSED",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StoreProductFactsIntegrationTest",
+      "name": "[7] seller=SUSPENDED, store=OPEN",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StoreProductFactsIntegrationTest",
+      "name": "[8] seller=SUSPENDED, store=CLOSED",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StoreProductFactsIntegrationTest",
+      "name": "[1] isolation=default",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StoreProductFactsIntegrationTest",
+      "name": "[2] isolation=repeatable-read",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StoreProductFactsIntegrationTest",
+      "name": "[3] isolation=serializable",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StoreProductFactsIntegrationTest",
+      "name": "localForeignKeyPreventsSellerDisappearingWhileStoreExists()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StoreProductFactsIntegrationTest",
+      "name": "[1] mutation=status",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StoreProductFactsIntegrationTest",
+      "name": "[2] mutation=delete",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StoreProductFactsIntegrationTest",
+      "name": "deletedRowsAreNotResurrectedFromCachedJpaEntities()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StoreProductFactsIntegrationTest",
+      "name": "bypassingTransactionProxyCannotReadAuthoritativeOwnedFacts()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StoreProductFactsIntegrationTest",
+      "name": "scalarBatchBypassesStaleSellerAndStoreEntitiesAfterAnotherCommit()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StoreSchemaProposalPostgresTest",
+      "name": "durableStoresResolveExactCurrentOwnershipAndSellerStatus()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StoreSchemaProposalPostgresTest",
+      "name": "candidateDoesNotBecomeARuntimeFlywayMigration()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StoreSchemaProposalPostgresTest",
+      "name": "[1] assignment=slug=NULL",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StoreSchemaProposalPostgresTest",
+      "name": "[2] assignment=name=NULL",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StoreSchemaProposalPostgresTest",
+      "name": "[3] assignment=open=NULL",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StoreSchemaProposalPostgresTest",
+      "name": "[4] assignment=seller_id=NULL",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StoreSchemaProposalPostgresTest",
+      "name": "[5] assignment=name=''",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StoreSchemaProposalPostgresTest",
+      "name": "[6] assignment=name='   '",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StoreSchemaProposalPostgresTest",
+      "name": "[7] assignment=name=' padded '",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StoreSchemaProposalPostgresTest",
+      "name": "[8] assignment=slug=repeat('a',129)",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StoreSchemaProposalPostgresTest",
+      "name": "[9] assignment=name=repeat('a',256)",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StoreSchemaProposalPostgresTest",
+      "name": "[1] sameSeller=true",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StoreSchemaProposalPostgresTest",
+      "name": "[2] sameSeller=false",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StoreSchemaProposalPostgresTest",
+      "name": "[1] sameSeller=true",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StoreSchemaProposalPostgresTest",
+      "name": "[2] sameSeller=false",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StoreSchemaProposalPostgresTest",
+      "name": "registrationRollbackReleasesBothUniqueKeys()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StoreSchemaProposalPostgresTest",
+      "name": "[1] slug=",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StoreSchemaProposalPostgresTest",
+      "name": "[2] slug= ",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StoreSchemaProposalPostgresTest",
+      "name": "[3] slug=Upper",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StoreSchemaProposalPostgresTest",
+      "name": "[4] slug=with space",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StoreSchemaProposalPostgresTest",
+      "name": "[5] slug=-first",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StoreSchemaProposalPostgresTest",
+      "name": "[6] slug=last-",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StoreSchemaProposalPostgresTest",
+      "name": "[7] slug=two--parts",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StoreSchemaProposalPostgresTest",
+      "name": "[8] slug=café",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StoreSchemaProposalPostgresTest",
+      "name": "[9] slug=a\nb",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.sellerservice.store.StoreSchemaProposalPostgresTest",
+      "name": "sellerReferenceRejectsMissingSellerAndRestrictsDeletion()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.CanonicalVersionTest",
+      "name": "[1] text=null",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.CanonicalVersionTest",
+      "name": "[2] text=",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.CanonicalVersionTest",
+      "name": "[3] text=-1",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.CanonicalVersionTest",
+      "name": "[4] text=+1",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.CanonicalVersionTest",
+      "name": "[5] text=01",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.CanonicalVersionTest",
+      "name": "[6] text=00",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.CanonicalVersionTest",
+      "name": "[7] text= 1 ",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.CanonicalVersionTest",
+      "name": "[8] text=1.0",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.CanonicalVersionTest",
+      "name": "[9] text=1e3",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.CanonicalVersionTest",
+      "name": "[10] text=9223372036854775808",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.CanonicalVersionTest",
+      "name": "[11] text=99999999999999999999999999999999",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.CanonicalVersionTest",
+      "name": "[12] text= 1",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.CanonicalVersionTest",
+      "name": "[13] text=１",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.CanonicalVersionTest",
+      "name": "[14] text=١",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.CanonicalVersionTest",
+      "name": "[15] text=1\n",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.CanonicalVersionTest",
+      "name": "[1] text=0, value=0",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.CanonicalVersionTest",
+      "name": "[2] text=1, value=1",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.CanonicalVersionTest",
+      "name": "[3] text=123, value=123",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.CanonicalVersionTest",
+      "name": "[4] text=9223372036854775807, value=9223372036854775807",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.CanonicalVersionTest",
+      "name": "[1] value=-1",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.CanonicalVersionTest",
+      "name": "[2] value=-9223372036854775808",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "strictnessIsIsolatedFromApplicationObjectMapper()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "mapsAllSixSchemasToExistingValidatedInputsWithoutCoercion()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[1] payload=null",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[2] payload=",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[3] payload= ",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[4] payload=null",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[5] payload=[]",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[6] payload=\"text\"",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[7] payload=0",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[8] payload=true",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[9] payload={",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[10] payload={}{}",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[11] payload={} null",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[12] payload={} garbage",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[13] payload={\"role\":\"SELLER\"}",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[14] payload={\"ownerReference\":\"other-owner\"}",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[15] payload={\"status\":\"APPROVED\"}",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[16] payload={\"id\":\"other\"}",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[17] payload={\"sellerId\":\"other\"}",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[18] payload={\"storeId\":\"other\"}",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[19] payload={\"role\":null}",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[20] payload={\"extra\":{}}",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[21] payload={/*comment*/}",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[22] payload={,}",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[1] body=Body[schema=VERSION, payload={}]",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[2] body=Body[schema=VERSION, payload={\"expectedVersion\":\"0\",\"role\":\"ADMIN\"}]",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[3] body=Body[schema=VERSION, payload={\"expectedVersion\":\"0\",\"expectedVersion\":\"1\"}]",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[4] body=Body[schema=VERSION, payload={\"expectedVersion\":\"0\",\"expected\\u0056ersion\":\"1\"}]",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[5] body=Body[schema=MODERATION, payload={\"expectedVersion\":\"0\"}]",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[6] body=Body[schema=MODERATION, payload={\"expectedVersion\":\"0\",\"reason\":null}]",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[7] body=Body[schema=MODERATION, payload={\"expectedVersion\":\"0\",\"reason\":42}]",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[8] body=Body[schema=MODERATION, payload={\"expectedVersion\":\"0\",\"reason\":\" \"}]",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[9] body=Body[schema=MODERATION, payload={\"expectedVersion\":\"0\",\"reason\":\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx…",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[10] body=Body[schema=CREATE, payload={}]",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[11] body=Body[schema=CREATE, payload={\"name\":\"Store\"}]",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[12] body=Body[schema=CREATE, payload={\"name\":null,\"slug\":\"store\"}]",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[13] body=Body[schema=CREATE, payload={\"name\":1,\"slug\":\"store\"}]",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[14] body=Body[schema=CREATE, payload={\"name\":[],\"slug\":\"store\"}]",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[15] body=Body[schema=CREATE, payload={\"name\":\"Store\",\"slug\":true}]",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[16] body=Body[schema=CREATE, payload={\"name\":\"Store\",\"slug\":\"store\",\"slug\":\"other\"}]",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[17] body=Body[schema=CREATE, payload={\"name\":\"Store\",\"slug\":\"STORE\"}]",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[18] body=Body[schema=CREATE, payload={\"name\":\"Store\",\"slug\":\"store\",\"ownerReference\":\"B\"}]",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[19] body=Body[schema=UPDATE, payload={\"name\":\"Store\",\"slug\":\"store\"}]",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[20] body=Body[schema=UPDATE, payload={\"name\":\"Store\",\"slug\":\"store\",\"expectedVersion\":\"0\",\"status\":\"OPEN\"}]",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[21] body=Body[schema=OPEN, payload={\"expectedVersion\":\"0\"}]",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[22] body=Body[schema=OPEN, payload={\"expectedVersion\":\"0\",\"open\":null}]",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[23] body=Body[schema=OPEN, payload={\"expectedVersion\":\"0\",\"open\":\"false\"}]",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[24] body=Body[schema=OPEN, payload={\"expectedVersion\":\"0\",\"open\":0}]",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[25] body=Body[schema=OPEN, payload={\"expectedVersion\":\"0\",\"open\":[]}]",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[26] body=Body[schema=OPEN, payload={\"expectedVersion\":\"0\",\"open\":false,\"role\":\"SELLER\"}]",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[27] body=Body[schema=OPEN, payload={\"expectedVersion\":\"0\",\"open\":false}{}]",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[1] value=0",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[2] value=-1",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[3] value=true",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[4] value=[]",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[5] value={}",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[6] value=null",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[7] value=\"\"",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[8] value=\"+1\"",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[9] value=\"01\"",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[10] value=\" 1 \"",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[11] value=\"1.0\"",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[12] value=\"1e3\"",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "[13] value=\"9223372036854775808\"",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreJsonTest",
+      "name": "parseErrorsDoNotEchoUntrustedValuesOrJacksonSource()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreResponsesTest",
+      "name": "privateSellerRepresentationHasOnlyAllowedFieldsAndExactStringVersion()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreResponsesTest",
+      "name": "ownerStoreResponsePreservesIdentityOpenAndUtcTimestampsWithoutOwnerOrReason()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreResponsesTest",
+      "name": "invalidSourceCannotProduceAnApparentlyValidResponse()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.http.SellerStoreResponsesTest",
+      "name": "clearedReasonStaysExplicitNullInPrivateResponse()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.domain.SellerApplicationTest",
+      "name": "rejectsMissingOwnerAndStatus()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.domain.SellerApplicationTest",
+      "name": "[1] status=REJECTED",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.domain.SellerApplicationTest",
+      "name": "[2] status=SUSPENDED",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.domain.SellerApplicationTest",
+      "name": "[1] reference=null",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.domain.SellerApplicationTest",
+      "name": "[2] reference=",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.domain.SellerApplicationTest",
+      "name": "[3] reference= ",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.domain.SellerApplicationTest",
+      "name": "[4] reference=\t\n",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.domain.SellerApplicationTest",
+      "name": "[5] reference= ",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.domain.SellerApplicationTest",
+      "name": "[1] status=PENDING_REVIEW",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.domain.SellerApplicationTest",
+      "name": "[2] status=APPROVED",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.domain.SellerApplicationTest",
+      "name": "[3] status=REJECTED",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.domain.SellerApplicationTest",
+      "name": "[4] status=SUSPENDED",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.domain.SellerApplicationTest",
+      "name": "treatsIdentityAsExactOpaqueReference()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.entity.SellerProfileTest",
+      "name": "rejectsOwnershipChangesWithoutMutatingTheEntity()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.entity.SellerProfileTest",
+      "name": "createsSeparateSellerIdAndPreservesOpaqueOwner()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.entity.SellerProfileTest",
+      "name": "[1] status=PENDING_REVIEW",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.entity.SellerProfileTest",
+      "name": "[2] status=APPROVED",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.entity.SellerProfileTest",
+      "name": "[1] status=APPROVED",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.entity.SellerProfileTest",
+      "name": "[2] status=REJECTED",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.entity.SellerProfileTest",
+      "name": "[3] status=SUSPENDED",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.entity.SellerProfileTest",
+      "name": "reasonLengthMatchesPostgresqlCharactersForSupplementaryUnicode()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.entity.SellerProfileTest",
+      "name": "enforcesReasonLimitBeforeMutatingTheEntity()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.entity.SellerProfileTest",
+      "name": "enforcesOwnerLengthWithoutTruncating()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerInputsTest",
+      "name": "[1] reason=null",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerInputsTest",
+      "name": "[2] reason=",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerInputsTest",
+      "name": "[3] reason= ",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerInputsTest",
+      "name": "[4] reason= ",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerInputsTest",
+      "name": "reasonLimitCountsStrippedUnicodeCodePointsLikePersistence()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerInputsTest",
+      "name": "acceptsZeroAndMaximumVersionsWithoutOverflow()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerInputsTest",
+      "name": "[1] version=null",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerInputsTest",
+      "name": "[2] version=-1",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerInputsTest",
+      "name": "[3] version=-9223372036854775808",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest",
+      "name": "registrationStartsPendingReviewAfterAuthentication()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest",
+      "name": "completesRejectResubmitApproveSuspendReinstateLifecycle()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest",
+      "name": "[1] operation=APPROVE",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest",
+      "name": "[2] operation=REJECT",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest",
+      "name": "[3] operation=SUSPEND",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest",
+      "name": "[4] operation=REINSTATE",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest",
+      "name": "deniedRegistrationCannotCreateApplication()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest",
+      "name": "onlyTheOwnerCanResubmitEvenIfOtherActorIsAModerator()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest",
+      "name": "[1] operation=RESUBMIT, current=PENDING_REVIEW, allowed=REJECTED, target=PENDING_REVIEW",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest",
+      "name": "[2] operation=RESUBMIT, current=APPROVED, allowed=REJECTED, target=PENDING_REVIEW",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest",
+      "name": "[3] operation=RESUBMIT, current=REJECTED, allowed=REJECTED, target=PENDING_REVIEW",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest",
+      "name": "[4] operation=RESUBMIT, current=SUSPENDED, allowed=REJECTED, target=PENDING_REVIEW",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest",
+      "name": "[5] operation=APPROVE, current=PENDING_REVIEW, allowed=PENDING_REVIEW, target=APPROVED",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest",
+      "name": "[6] operation=APPROVE, current=APPROVED, allowed=PENDING_REVIEW, target=APPROVED",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest",
+      "name": "[7] operation=APPROVE, current=REJECTED, allowed=PENDING_REVIEW, target=APPROVED",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest",
+      "name": "[8] operation=APPROVE, current=SUSPENDED, allowed=PENDING_REVIEW, target=APPROVED",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest",
+      "name": "[9] operation=REJECT, current=PENDING_REVIEW, allowed=PENDING_REVIEW, target=REJECTED",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest",
+      "name": "[10] operation=REJECT, current=APPROVED, allowed=PENDING_REVIEW, target=REJECTED",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest",
+      "name": "[11] operation=REJECT, current=REJECTED, allowed=PENDING_REVIEW, target=REJECTED",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest",
+      "name": "[12] operation=REJECT, current=SUSPENDED, allowed=PENDING_REVIEW, target=REJECTED",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest",
+      "name": "[13] operation=SUSPEND, current=PENDING_REVIEW, allowed=APPROVED, target=SUSPENDED",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest",
+      "name": "[14] operation=SUSPEND, current=APPROVED, allowed=APPROVED, target=SUSPENDED",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest",
+      "name": "[15] operation=SUSPEND, current=REJECTED, allowed=APPROVED, target=SUSPENDED",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest",
+      "name": "[16] operation=SUSPEND, current=SUSPENDED, allowed=APPROVED, target=SUSPENDED",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest",
+      "name": "[17] operation=REINSTATE, current=PENDING_REVIEW, allowed=SUSPENDED, target=APPROVED",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest",
+      "name": "[18] operation=REINSTATE, current=APPROVED, allowed=SUSPENDED, target=APPROVED",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest",
+      "name": "[19] operation=REINSTATE, current=REJECTED, allowed=SUSPENDED, target=APPROVED",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest",
+      "name": "[20] operation=REINSTATE, current=SUSPENDED, allowed=SUSPENDED, target=APPROVED",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest",
+      "name": "[1] operation=RESUBMIT",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest",
+      "name": "[2] operation=APPROVE",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest",
+      "name": "[3] operation=REJECT",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest",
+      "name": "[4] operation=SUSPEND",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest",
+      "name": "[5] operation=REINSTATE",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest",
+      "name": "[1] operation=RESUBMIT",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest",
+      "name": "[2] operation=APPROVE",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest",
+      "name": "[3] operation=REJECT",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest",
+      "name": "[4] operation=SUSPEND",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest",
+      "name": "[5] operation=REINSTATE",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest",
+      "name": "[1] operation=REJECT",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest",
+      "name": "[2] operation=SUSPEND",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest",
+      "name": "requiresAccessPolicyAndApplicant()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest",
+      "name": "[1] operation=APPROVE",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest",
+      "name": "[2] operation=REJECT",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest",
+      "name": "[3] operation=SUSPEND",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest",
+      "name": "[4] operation=REINSTATE",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest",
+      "name": "[1] operation=RESUBMIT",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest",
+      "name": "[2] operation=APPROVE",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest",
+      "name": "[3] operation=REJECT",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest",
+      "name": "[4] operation=SUSPEND",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest",
+      "name": "[5] operation=REINSTATE",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerPersistenceServiceTest",
+      "name": "typedResubmissionRetainsAuthenticatedOwnerGate()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerPersistenceServiceTest",
+      "name": "nonModeratorCannotReadAnotherProfile()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerPersistenceServiceTest",
+      "name": "deniedRegistrationCannotWriteToRepository()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerPersistenceServiceTest",
+      "name": "missingReadActorIsRejectedBeforePolicyOrLookup()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerPersistenceServiceTest",
+      "name": "missingTypedInputsAreDomainValidationErrorsWithoutWriting()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerPersistenceServiceTest",
+      "name": "[1] operation=APPROVE",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerPersistenceServiceTest",
+      "name": "[2] operation=REJECT",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerPersistenceServiceTest",
+      "name": "[3] operation=SUSPEND",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerPersistenceServiceTest",
+      "name": "[4] operation=REINSTATE",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerPersistenceServiceTest",
+      "name": "deniedResubmissionCannotProbeStoredProfiles()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerPersistenceServiceTest",
+      "name": "missingActorCannotReachPolicyOrRepository()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerPersistenceServiceTest",
+      "name": "missingModerationIdDoesNotReachRepository()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerPersistenceServiceTest",
+      "name": "[1] operation=APPROVE",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerPersistenceServiceTest",
+      "name": "[2] operation=REJECT",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerPersistenceServiceTest",
+      "name": "[3] operation=SUSPEND",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerPersistenceServiceTest",
+      "name": "[4] operation=REINSTATE",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.seller.service.SellerPersistenceServiceTest",
+      "name": "deniedReadsCannotProbeProfiles()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.store.StoreEntityTest",
+      "name": "rejectsMissingOrMismatchedPersistedSeller()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.store.StoreEntityTest",
+      "name": "appliesMetadataAndExplicitOpenClosedStatusWithoutTransferringOwnership()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.store.StoreEntityTest",
+      "name": "mapsExistingDomainWithoutChangingItsIdentityOrOpaqueOwner()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.store.StoreEntityTest",
+      "name": "identityChangeAndForgedOwnerNeverMutateTheEntity()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.store.StoreInputsServiceTest",
+      "name": "typedInputsNeverReplaceThePolicyOrTurnItsDenialIntoAWrite()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.store.StoreInputsServiceTest",
+      "name": "missingTypedInputsNeverReachPersistence()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.store.StoreInputsTest",
+      "name": "exactLengthLimitsMatchExistingDomainIncludingUtf16Names()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.store.StoreInputsTest",
+      "name": "missingOpenIsNotSilentlyInterpretedAsClose()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.store.StoreInputsTest",
+      "name": "[1] version=null",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.store.StoreInputsTest",
+      "name": "[2] version=-1",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.store.StoreInputsTest",
+      "name": "[3] version=-9223372036854775808",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.store.StoreInputsTest",
+      "name": "[1] name=null",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.store.StoreInputsTest",
+      "name": "[2] name=",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.store.StoreInputsTest",
+      "name": "[3] name= ",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.store.StoreInputsTest",
+      "name": "[4] name= ",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.store.StoreInputsTest",
+      "name": "[1] slug=null",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.store.StoreInputsTest",
+      "name": "[2] slug=",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.store.StoreInputsTest",
+      "name": "[3] slug=Store",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.store.StoreInputsTest",
+      "name": "[4] slug= store",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.store.StoreInputsTest",
+      "name": "[5] slug=store ",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.store.StoreInputsTest",
+      "name": "[6] slug= store",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.store.StoreInputsTest",
+      "name": "[7] slug=store ",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.store.StoreInputsTest",
+      "name": "[8] slug=-store",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.store.StoreInputsTest",
+      "name": "[9] slug=store-",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.store.StoreInputsTest",
+      "name": "[10] slug=store--one",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.store.StoreInputsTest",
+      "name": "[11] slug=store_one",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.store.StoreInputsTest",
+      "name": "[12] slug=cửa-hàng",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.store.StoreInputsTest",
+      "name": "stripsOnlyNameAndPreservesCanonicalSlugAndExplicitFalse()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.store.StoreLifecycleServiceTest",
+      "name": "missingOrDeniedPolicyNeverCreatesAStore()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.store.StoreLifecycleServiceTest",
+      "name": "[1] slug=",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.store.StoreLifecycleServiceTest",
+      "name": "[2] slug= ",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.store.StoreLifecycleServiceTest",
+      "name": "[3] slug=Upper",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.store.StoreLifecycleServiceTest",
+      "name": "[4] slug=two words",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.store.StoreLifecycleServiceTest",
+      "name": "[5] slug=-start",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.store.StoreLifecycleServiceTest",
+      "name": "[6] slug=end-",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.store.StoreLifecycleServiceTest",
+      "name": "[7] slug=two--parts",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.store.StoreLifecycleServiceTest",
+      "name": "[8] slug=a/b",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.store.StoreLifecycleServiceTest",
+      "name": "[1] status=PENDING_REVIEW",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.store.StoreLifecycleServiceTest",
+      "name": "[2] status=REJECTED",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.store.StoreLifecycleServiceTest",
+      "name": "[3] status=SUSPENDED",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.store.StoreLifecycleServiceTest",
+      "name": "metadataBoundsAreValidatedWithoutChangingIdentity()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.store.StoreLifecycleServiceTest",
+      "name": "malformedPolicyResultFailsClosed()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.store.StoreLifecycleServiceTest",
+      "name": "approvedOwnerCreatesAndRevisesAnImmutableStore()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.store.StoreLifecycleServiceTest",
+      "name": "otherSellerCannotEditOrCloseStore()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.store.StoreLifecycleServiceTest",
+      "name": "suspensionIsRecheckedOnEveryMutation()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.store.StoreLifecycleServiceTest",
+      "name": "actorAndPolicyIdentityMustMatchExactly()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.store.StoreLifecycleServiceTest",
+      "name": "missingActorIsRejectedBeforePolicy()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.store.StoreOwnedFactsTest",
+      "name": "[1] owner= Exact-Owner ",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.store.StoreOwnedFactsTest",
+      "name": "[2] owner=MixedCASE",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.store.StoreOwnedFactsTest",
+      "name": "[3] owner=é",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.store.StoreOwnedFactsTest",
+      "name": "[4] owner=é",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.store.StoreOwnedFactsTest",
+      "name": "[5] owner=owner ",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.store.StoreOwnedFactsTest",
+      "name": "incompleteIdentifiersStatusesAndNegativeVersionsCannotBecomeFacts()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.store.StoreOwnedFactsTest",
+      "name": "ownerMustBePresentAndRespectPersistedCodePointLimit()",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.store.StoreOwnedFactsTest",
+      "name": "[1] owner=",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.store.StoreOwnedFactsTest",
+      "name": "[2] owner= ",
+      "result": "PASS",
+      "failureType": null
+    },
+    {
+      "module": "seller-service",
+      "task": "test",
+      "class": "com.projecthk5.sellerservice.store.StoreOwnedFactsTest",
+      "name": "[3] owner=\t\n",
+      "result": "PASS",
+      "failureType": null
+    }
+  ],
+  "rawArtifacts": [
+    {
+      "localPath": ".verification/tv5-completion-20261029/tests118/runtime.log",
+      "bytes": 3206,
+      "sha256": "74712b7d74230e1c98df253d91652f5128c2097c54ea3797c2c38fef6c38e8b8"
+    },
+    {
+      "localPath": ".verification/tv5-completion-20261029/tests118/backend/seller-service/build/test-results/integrationTest/TEST-com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest.xml",
+      "bytes": 18732,
+      "sha256": "0e88f02e08f09894c99e81a30b15bb054ad02f8a74bd09b9aede624fd132c19e"
+    },
+    {
+      "localPath": ".verification/tv5-completion-20261029/tests118/backend/seller-service/build/test-results/integrationTest/TEST-com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest.xml",
+      "bytes": 21599,
+      "sha256": "98eb5f50d1c089d528debd63fe098c58286bd7203f22ea783688f0b0a65d9ab7"
+    },
+    {
+      "localPath": ".verification/tv5-completion-20261029/tests118/backend/seller-service/build/test-results/integrationTest/TEST-com.projecthk5.sellerservice.store.StoreProductFactsIntegrationTest.xml",
+      "bytes": 56204,
+      "sha256": "7552603d7d33affa92673c2bd9f68631c531796aaea84e9b191dc042cb6212d0"
+    },
+    {
+      "localPath": ".verification/tv5-completion-20261029/tests118/backend/seller-service/build/test-results/integrationTest/TEST-com.projecthk5.sellerservice.store.StoreSchemaProposalPostgresTest.xml",
+      "bytes": 6481,
+      "sha256": "6d4bdb81345d6a8f1b1ebe57c1a3ad1be71ba6f3a0d5cee3ab536395e3f021d8"
+    },
+    {
+      "localPath": ".verification/tv5-completion-20261029/tests118/backend/seller-service/build/test-results/test/TEST-com.projecthk5.sellerservice.http.CanonicalVersionTest.xml",
+      "bytes": 2870,
+      "sha256": "25b305ad98c15a356a07176742b3eb70aeb9aa29287224ad152d14ebbd227c74"
+    },
+    {
+      "localPath": ".verification/tv5-completion-20261029/tests118/backend/seller-service/build/test-results/test/TEST-com.projecthk5.sellerservice.http.SellerStoreJsonTest.xml",
+      "bytes": 11295,
+      "sha256": "9aa9be7cbbcbc59565023a067581c59792f251d4eaa3f9e7a0952d49792ca737"
+    },
+    {
+      "localPath": ".verification/tv5-completion-20261029/tests118/backend/seller-service/build/test-results/test/TEST-com.projecthk5.sellerservice.http.SellerStoreResponsesTest.xml",
+      "bytes": 1017,
+      "sha256": "4ab0f06a3e0b20c2af47840c121bddc5187b41cf18c04543b4218d2c21bcb92a"
+    },
+    {
+      "localPath": ".verification/tv5-completion-20261029/tests118/backend/seller-service/build/test-results/test/TEST-com.projecthk5.sellerservice.seller.domain.SellerApplicationTest.xml",
+      "bytes": 2081,
+      "sha256": "4fc586fd4704f7c256f4b831ee0fe26d4484e094386e9b0fec51a3acf8f185c6"
+    },
+    {
+      "localPath": ".verification/tv5-completion-20261029/tests118/backend/seller-service/build/test-results/test/TEST-com.projecthk5.sellerservice.seller.entity.SellerProfileTest.xml",
+      "bytes": 1771,
+      "sha256": "da4d4454016cd40268fadb1e1fb23afe1f34f795296c7af14b5db7e506da16af"
+    },
+    {
+      "localPath": ".verification/tv5-completion-20261029/tests118/backend/seller-service/build/test-results/test/TEST-com.projecthk5.sellerservice.seller.service.SellerInputsTest.xml",
+      "bytes": 1536,
+      "sha256": "debb833d4ec93dab971311e95d44f19ea1d703e6fa2d00e8b6519a62932c01c9"
+    },
+    {
+      "localPath": ".verification/tv5-completion-20261029/tests118/backend/seller-service/build/test-results/test/TEST-com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest.xml",
+      "bytes": 9213,
+      "sha256": "29e996a1890c58ac7d7e15a731fc771f885580be733e6a571d5a68e318f92a52"
+    },
+    {
+      "localPath": ".verification/tv5-completion-20261029/tests118/backend/seller-service/build/test-results/test/TEST-com.projecthk5.sellerservice.seller.service.SellerPersistenceServiceTest.xml",
+      "bytes": 2985,
+      "sha256": "527dad594cb6d2b3ebe661c14bcaeb4e53b223fe2fb5da74f75b9df4076f6e84"
+    },
+    {
+      "localPath": ".verification/tv5-completion-20261029/tests118/backend/seller-service/build/test-results/test/TEST-com.projecthk5.sellerservice.store.StoreEntityTest.xml",
+      "bytes": 956,
+      "sha256": "988e9b84dfcfd332da1dd28eb4602662ae5cb7a10a2a572932b6b2a2c558c7e0"
+    },
+    {
+      "localPath": ".verification/tv5-completion-20261029/tests118/backend/seller-service/build/test-results/test/TEST-com.projecthk5.sellerservice.store.StoreInputsServiceTest.xml",
+      "bytes": 655,
+      "sha256": "82915fa64a04f1195e4559d87ea62c86dac01dec98a0d11d9ef6b233b21b5c10"
+    },
+    {
+      "localPath": ".verification/tv5-completion-20261029/tests118/backend/seller-service/build/test-results/test/TEST-com.projecthk5.sellerservice.store.StoreInputsTest.xml",
+      "bytes": 2953,
+      "sha256": "b91aff3dd80493dfc360a58ce30e0f13fd7f5e9009c040651ad99a0df8245d95"
+    },
+    {
+      "localPath": ".verification/tv5-completion-20261029/tests118/backend/seller-service/build/test-results/test/TEST-com.projecthk5.sellerservice.store.StoreLifecycleServiceTest.xml",
+      "bytes": 2906,
+      "sha256": "710b7626d705c101b1e997ae7d7767ccc6983ac900d39c5226cda5664034e35a"
+    },
+    {
+      "localPath": ".verification/tv5-completion-20261029/tests118/backend/seller-service/build/test-results/test/TEST-com.projecthk5.sellerservice.store.StoreOwnedFactsTest.xml",
+      "bytes": 1603,
+      "sha256": "7f0d13a652e2386f2cbdef412093fa5ac98ae846ccc10cda656f84c98cc7315a"
+    }
+  ],
+  "boundary": "Local selected unit/PostgreSQL, not production authorization/Finance acceptance. Optional external readiness inventory not configured. Separate PR heads must not be summed."
+}

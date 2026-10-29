@@ -1,0 +1,86 @@
+[
+  {
+    "PR": 119,
+    "featureHead": "edf0320db41a3026d9e447e8079cc7044a54c909",
+    "checkState": "success",
+    "runURL": "https://github.com/duyxl56785/Project_HK5/actions/runs/40821482449",
+    "jobURL": "https://github.com/duyxl56785/Project_HK5/actions/runs/40821482449/job/123274717594",
+    "checkoutSha": "5ec8ebb082d58ff597b9ba42d219d516a80a043c",
+    "checkoutParents": [
+      "bb0b9a2d0d2e909a59653619bce98c77f75e77d2",
+      "edf0320db41a3026d9e447e8079cc7044a54c909"
+    ],
+    "checkoutTree": "8b357cd7b2dfaa632543242118b68a391a8bc371",
+    "featureTree": "8b357cd7b2dfaa632543242118b68a391a8bc371",
+    "rawLog": {
+      "localPath": ".verification/tv5-completion-20261029/ci119-private.log",
+      "bytes": 50680,
+      "sha256": "58afdec7e649d65cd63edf4c4139dc439d0f3b6250f3331324f5b015dca5aed5"
+    },
+    "derivedSignals": {
+      "buildSuccessful": true,
+      "orderPG29": true,
+      "gateway10": false,
+      "authority5": false,
+      "coreTest": false
+    },
+    "boundary": "Signals are derived log checks, not invented CI aggregate totals. Original runner output remains private.",
+    "runFeatureSha": "edf0320db41a3026d9e447e8079cc7044a54c909"
+  },
+  {
+    "PR": 120,
+    "featureHead": "120d05e07d79ae2a4564bc7ef235b6b1e5f51488",
+    "checkState": "success",
+    "runURL": "https://github.com/duyxl56785/Project_HK5/actions/runs/40823547203",
+    "jobURL": "https://github.com/duyxl56785/Project_HK5/actions/runs/40823547203/job/123281283210",
+    "checkoutSha": "32bc68fcfd48350ccd777354b2367e048c9b4b01",
+    "checkoutParents": [
+      "36ad517174ef3911bf794ef4ac568647cd9eb4eb",
+      "120d05e07d79ae2a4564bc7ef235b6b1e5f51488"
+    ],
+    "checkoutTree": "2c12c866767a7cd24d1f90fb89a1b19f8664aacc",
+    "featureTree": "2c12c866767a7cd24d1f90fb89a1b19f8664aacc",
+    "rawLog": {
+      "localPath": ".verification/tv5-completion-20261029/ci120-private.log",
+      "bytes": 50271,
+      "sha256": "c309c1e7452f82d316170a1a221a84ec1ab4b5a11a9696b819bee8b6fcc9d765"
+    },
+    "derivedSignals": {
+      "buildSuccessful": true,
+      "orderPG29": false,
+      "gateway10": true,
+      "authority5": true,
+      "coreTest": true
+    },
+    "boundary": "Signals are derived log checks, not invented CI aggregate totals. Original runner output remains private.",
+    "runFeatureSha": "120d05e07d79ae2a4564bc7ef235b6b1e5f51488"
+  },
+  {
+    "PR": 121,
+    "featureHead": "4a5aa26f4933f5fd8795179ea41df4015bbd9064",
+    "checkState": "success",
+    "runURL": "https://github.com/duyxl56785/Project_HK5/actions/runs/40827225218",
+    "jobURL": "https://github.com/duyxl56785/Project_HK5/actions/runs/40827225218/job/123292929914",
+    "checkoutSha": "600a3923b09613c80bd0e8ba0735332c72644c8a",
+    "checkoutParents": [
+      "120d05e07d79ae2a4564bc7ef235b6b1e5f51488",
+      "4a5aa26f4933f5fd8795179ea41df4015bbd9064"
+    ],
+    "checkoutTree": "3a39627e08e65cea732bfdef70e77a32b6790c64",
+    "featureTree": "3a39627e08e65cea732bfdef70e77a32b6790c64",
+    "rawLog": {
+      "localPath": ".verification/tv5-completion-20261029/ci121-private.log",
+      "bytes": 50275,
+      "sha256": "0be318d5e4db13fc877b73ea87b0b59a5033fed49abd5bfc6fb8f242f23f72ec"
+    },
+    "derivedSignals": {
+      "buildSuccessful": true,
+      "orderPG29": false,
+      "gateway10": true,
+      "authority5": true,
+      "coreTest": true
+    },
+    "boundary": "Signals are derived log checks, not invented CI aggregate totals. Original runner output remains private.",
+    "runFeatureSha": "4a5aa26f4933f5fd8795179ea41df4015bbd9064"
+  }
+]

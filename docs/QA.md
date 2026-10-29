@@ -415,3 +415,15 @@ Refs #5/#12/#99/#103/#117. [A–H task/RTM/readiness report](../reports/TV5_TASK
 - [x]6.5independentauditor19newunitRED/GREEN+refactor48offlinePASS, real165/901/79artifacts verified; FinanceassessmentstillBLOCKED_DEPENDENCY.
 - [x]6.6RTM/results/defect/integration/E2E/reviewer/handofftables andrawhashes updated.
 - [ ]6.2/6.4formalownerreview/acceptance;6.5liveCOD/settlement;6.6fullprojectE2E remainWAITING_REVIEW/BLOCKED/PARTIAL. Issue5/12OPEN/PARTIAL; noflags/merge/businesssignature.
+
+## TV5-COMPLETION-20261029
+
+Refs #5/#12/#18. [Kiểm kê 105 PR, 16 Issue, kết quả test và 5 bảng bàn giao](../reports/TV5_COMPLETION_AUDIT_2026-10-29.md).
+
+- [x] Đọc đủ mọi trạng thái PR/reviews/threads/CI; 5/5 PR mở TV5 giữ reviewer phù hợp, không request trùng hoặc thêm lại reviewer bị gỡ.
+- [x] Sửa công cụ QA tại 120b5de: Docker init không che assertion FAIL độc lập; giữ 2 RED và 50 regression PASS.
+- [x] Independent tests từng HEAD: #119 1486 PASS/3 SKIP; #116 918 PASS; #118 393 PASS; #85 467 PASS; #120 177 PASS/2 SKIP; #121 206 PASS/2 SKIP. Không cộng thành release total.
+- [x] UI #115 cùng cae695c: 46 model/render/DOM + 18 Chrome PASS; typecheck, app build, preview build PASS. Lượt thiếu happy-dom giữ riêng là lỗi môi trường, không nhận là bug UI đã sửa.
+- [ ] Human/owner review, CR/thread TV2 của #103 và nghiệm thu #99/#113/#115/#117 còn chờ; COMMENT không thay APPROVE.
+- [ ] Full M01/COD/settlement/Store queries/security wire và live hai Store E2E BLOCKED/NOT_RUN; Issue #5/#12/#18 chưa DONE. Product price slice #84 giữ riêng.
+- [ ] Project V2 NOT_VERIFIED: token thiếu read:project; API milestones trả danh sách rỗng.
