@@ -28,7 +28,12 @@ public final class ProductCurrentAuthority {
         };
         var policy=new CurrentAccountProductPolicy(current,snapshot);
         if(moderation)policy.requireModeration(current.subject(),store);else policy.requireSellerManagement(current.subject(),store);
-        return policy;
+        // Remote snapshots are not revocation leases; no write may consume this preflight.
+        return new ProductAccessPolicy(){
+            public StoreAccess requireSellerManagement(String actor,UUID id){throw unavailable();}
+            public StoreAccess requireModeration(String actor,UUID id){throw unavailable();}
+            public StoreAccess readStore(UUID id){return policy.readStore(id);}
+        };
     }
     private static ProductRuleException unavailable(){return new ProductRuleException(ProductRuleException.Code.AUTHORIZATION_UNAVAILABLE,"Fresh pre-transaction authority is required");}
 }
