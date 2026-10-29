@@ -2,6 +2,7 @@ apply plugin: 'java-library'
 
 dependencies {
     api 'org.springframework.security:spring-security-oauth2-jose'
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
 }
 
 tasks.named('bootJar') { enabled = false }
