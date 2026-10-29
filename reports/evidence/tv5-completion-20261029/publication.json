@@ -1,0 +1,234 @@
+{
+  "kind": "DERIVED verified GitHub read-back; no automatic approval/merge/close",
+  "publishedAtUtc": "2026-10-29T07:06:10.511788+00:00",
+  "viewer": "nguyenminhduy090-alt",
+  "reportCommit": "6f8f7f48fd555cce0488cc3ec3a4e5c620477225",
+  "report": "https://github.com/duyxl56785/Project_HK5/blob/6f8f7f48fd555cce0488cc3ec3a4e5c620477225/reports/TV5_COMPLETION_AUDIT_2026-10-29.md",
+  "actions": [
+    {
+      "PR": 119,
+      "head": "edf0320db41a3026d9e447e8079cc7044a54c909",
+      "reviewState": "COMMENTED",
+      "reviewer": "nguyenminhduy090-alt",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/119#pullrequestreview-5694016994"
+    },
+    {
+      "PR": 116,
+      "head": "5d9c00864602716e853d7ffbca9742c3347381e6",
+      "reviewState": "COMMENTED",
+      "reviewer": "nguyenminhduy090-alt",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/116#pullrequestreview-5694017462"
+    },
+    {
+      "PR": 118,
+      "head": "7d5213f3bf58b477fc77e50ba7459d61c2e0242f",
+      "reviewState": "COMMENTED",
+      "reviewer": "nguyenminhduy090-alt",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/118#pullrequestreview-5694017977"
+    },
+    {
+      "PR": 85,
+      "head": "20be75527ad62b2e7c4d06d088b16963cd1bfb16",
+      "reviewState": "COMMENTED",
+      "reviewer": "nguyenminhduy090-alt",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/85#pullrequestreview-5694018509"
+    },
+    {
+      "PR": 120,
+      "head": "120d05e07d79ae2a4564bc7ef235b6b1e5f51488",
+      "reviewState": "COMMENTED",
+      "reviewer": "nguyenminhduy090-alt",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/120#pullrequestreview-5694018896"
+    },
+    {
+      "PR": 121,
+      "head": "4a5aa26f4933f5fd8795179ea41df4015bbd9064",
+      "reviewState": "COMMENTED",
+      "reviewer": "nguyenminhduy090-alt",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/121#pullrequestreview-5694019442"
+    },
+    {
+      "PR": 117,
+      "bodyUpdated": true,
+      "head": "6f8f7f48fd555cce0488cc3ec3a4e5c620477225",
+      "requestedReviewers": [
+        "tranvanchinhbg2006-alt",
+        "duyxl56785",
+        "phamthecuong2022006-alt"
+      ]
+    },
+    {
+      "PR": 115,
+      "bodyUpdated": true,
+      "head": "cae695c10f5d0e4f2b0f905516329e5b4be29850",
+      "requestedReviewers": [
+        "duyxl56785"
+      ]
+    },
+    {
+      "Issue": 5,
+      "state": "OPEN/PARTIAL",
+      "url": "https://github.com/duyxl56785/Project_HK5/issues/5#issuecomment-6490287973"
+    },
+    {
+      "Issue": 12,
+      "state": "OPEN/PARTIAL",
+      "url": "https://github.com/duyxl56785/Project_HK5/issues/12#issuecomment-6490289023"
+    },
+    {
+      "Issue": 18,
+      "state": "OPEN/PARTIAL",
+      "url": "https://github.com/duyxl56785/Project_HK5/issues/18#issuecomment-6490289856"
+    }
+  ],
+  "finalReadback": [
+    {
+      "PR": 99,
+      "head": "931feee45ac3f17293a4f200c604010fce63bf39",
+      "state": "open",
+      "draft": false,
+      "mergeable": true,
+      "requestedReviewers": [
+        "tranvanchinhbg2006-alt",
+        "phamthecuong2022006-alt"
+      ],
+      "checks": [
+        {
+          "name": "readiness",
+          "state": "success"
+        }
+      ]
+    },
+    {
+      "PR": 103,
+      "head": "0d8a203221a07bb0a3a9fa91dc9531d6c6cc16a0",
+      "state": "open",
+      "draft": false,
+      "mergeable": true,
+      "requestedReviewers": [
+        "tranvanchinhbg2006-alt",
+        "duyxl56785"
+      ],
+      "checks": []
+    },
+    {
+      "PR": 113,
+      "head": "5235aa395e604ba6eb33fe1b6bf2395f30837935",
+      "state": "open",
+      "draft": false,
+      "mergeable": true,
+      "requestedReviewers": [
+        "duyxl56785"
+      ],
+      "checks": []
+    },
+    {
+      "PR": 115,
+      "head": "cae695c10f5d0e4f2b0f905516329e5b4be29850",
+      "state": "open",
+      "draft": false,
+      "mergeable": true,
+      "requestedReviewers": [
+        "duyxl56785"
+      ],
+      "checks": []
+    },
+    {
+      "PR": 117,
+      "head": "6f8f7f48fd555cce0488cc3ec3a4e5c620477225",
+      "state": "open",
+      "draft": false,
+      "mergeable": true,
+      "requestedReviewers": [
+        "tranvanchinhbg2006-alt",
+        "duyxl56785",
+        "phamthecuong2022006-alt"
+      ],
+      "checks": []
+    },
+    {
+      "PR": 85,
+      "head": "20be75527ad62b2e7c4d06d088b16963cd1bfb16",
+      "state": "open",
+      "draft": true,
+      "mergeable": true,
+      "requestedReviewers": [],
+      "checks": [
+        {
+          "name": "readiness",
+          "state": "failure"
+        }
+      ]
+    },
+    {
+      "PR": 116,
+      "head": "5d9c00864602716e853d7ffbca9742c3347381e6",
+      "state": "open",
+      "draft": true,
+      "mergeable": true,
+      "requestedReviewers": [],
+      "checks": [
+        {
+          "name": "readiness",
+          "state": "failure"
+        }
+      ]
+    },
+    {
+      "PR": 118,
+      "head": "7d5213f3bf58b477fc77e50ba7459d61c2e0242f",
+      "state": "open",
+      "draft": true,
+      "mergeable": true,
+      "requestedReviewers": [],
+      "checks": [
+        {
+          "name": "readiness",
+          "state": "failure"
+        }
+      ]
+    },
+    {
+      "PR": 119,
+      "head": "edf0320db41a3026d9e447e8079cc7044a54c909",
+      "state": "open",
+      "draft": true,
+      "mergeable": true,
+      "requestedReviewers": [],
+      "checks": [
+        {
+          "name": "readiness",
+          "state": "success"
+        }
+      ]
+    },
+    {
+      "PR": 120,
+      "head": "120d05e07d79ae2a4564bc7ef235b6b1e5f51488",
+      "state": "open",
+      "draft": true,
+      "mergeable": true,
+      "requestedReviewers": [],
+      "checks": [
+        {
+          "name": "readiness",
+          "state": "success"
+        }
+      ]
+    },
+    {
+      "PR": 121,
+      "head": "4a5aa26f4933f5fd8795179ea41df4015bbd9064",
+      "state": "open",
+      "draft": true,
+      "mergeable": true,
+      "requestedReviewers": [],
+      "checks": [
+        {
+          "name": "readiness",
+          "state": "success"
+        }
+      ]
+    }
+  ]
+}
