@@ -505,7 +505,7 @@ class SellerPersistenceIntegrationTest {
             assertEquals("APPROVED", row.get("seller_status"));
             assertEquals(9L, ((Number) row.get("source_version")).longValue());
             assertEquals(9L, jdbc.queryForObject("SELECT version FROM " + schema + ".seller_profiles WHERE id=?", Long.class, id));
-            assertEquals("4", upgraded.info().current().getVersion().toString());
+            assertEquals("5", upgraded.info().current().getVersion().toString());
         } finally {
             jdbc.execute("DROP SCHEMA IF EXISTS " + schema + " CASCADE");
         }

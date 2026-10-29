@@ -28,6 +28,7 @@ public class SellerRoleSyncService {
 
     public Result apply(Command command) {
         Objects.requireNonNull(command);
+        jdbc.queryForObject("SELECT authority_fence_enter_mutation()", Long.class);
         // One durable lock gives a consistent order across event, Seller and Account uniqueness races.
         jdbc.queryForObject("SELECT id FROM seller_role_sync_lock WHERE id=1 FOR UPDATE", Integer.class);
         var existingEvent = jdbc.queryForList("SELECT r.seller_id,r.source_version,v.seller_status,s.account_id "

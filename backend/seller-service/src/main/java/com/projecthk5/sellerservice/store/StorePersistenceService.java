@@ -68,7 +68,7 @@ public class StorePersistenceService {
 
     // Management read: same verified owner/current APPROVED gate as the existing Store domain.
     public PersistedStore findOwn(SellerIdentity actor) {
-        SellerProfile seller = currentSeller(actor);
+        SellerProfile seller = currentSeller(actor, false);
         StoreEntity store = stores.findBySellerId(seller.getId()).orElseThrow(StorePersistenceService::notFound);
         entityManager.refresh(store);
         return result(store, seller.getOwnerReference());
@@ -91,6 +91,10 @@ public class StorePersistenceService {
     }
 
     private SellerProfile currentSeller(SellerIdentity actor) {
+        return currentSeller(actor, true);
+    }
+
+    private SellerProfile currentSeller(SellerIdentity actor, boolean mutation) {
         if (actor == null) throw invalid("Store actor is required");
         PersistedSeller verified = policy.requireSellerManagement(actor);
         if (verified == null || verified.id() == null || verified.application() == null) {
@@ -99,6 +103,7 @@ public class StorePersistenceService {
         if (!actor.equals(verified.application().owner())) {
             throw new StoreRuleException(StoreRuleException.Code.ACCESS_DENIED, "Seller identity mismatch");
         }
+        if (mutation) entityManager.createNativeQuery("SELECT authority_fence_enter_mutation()").getSingleResult();
         // Resolve identity only here: a locking query can version-check a stale managed Seller before refresh.
         SellerProfile seller = entityManager.createQuery(
                         "select s from SellerProfile s where s.ownerReference = :owner", SellerProfile.class)
