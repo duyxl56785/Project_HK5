@@ -87,6 +87,8 @@ class StorePersistenceIntegrationTest {
     @Autowired private JdbcTemplate jdbc;
     @Autowired private PlatformTransactionManager transactions;
     @Autowired private MockMvc http;
+    @Autowired @org.springframework.beans.factory.annotation.Qualifier("requestMappingHandlerMapping")
+    private org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping routes;
 
     @BeforeEach
     void resetIsolatedDatabase() {
@@ -618,7 +620,11 @@ class StorePersistenceIntegrationTest {
                 .header("Authorization", "Bearer forged-not-a-verified-jwt")
                 .contentType("application/json").content("{\"sellerId\":\"" + SELLER_A + "\"}"))
                 .andReturn().getResponse();
-        assertEquals(404, response.getStatus());
+        assertEquals(403, response.getStatus());
+        assertTrue(routes.getHandlerMethods().keySet().stream().flatMap(info -> info.getPatternValues().stream())
+                .noneMatch(pattern -> new org.springframework.web.util.pattern.PathPatternParser().parse(pattern)
+                        .matches(org.springframework.http.server.PathContainer.parsePath(path))),
+                "Business and legacy internal handlers must remain unregistered");
         assertEquals(0, stores.count());
     }
 

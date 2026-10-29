@@ -50,6 +50,21 @@ public class StoreCurrentSource {
         return stores.findFactsBySlug(slug);
     }
 
+    public record OwnedFacts(UUID storeId, UUID sellerId, StoreStatus storeStatus, SellerStatus sellerStatus,
+                             long storeVersion, long sellerVersion, String ownerReference) {
+        public OwnedFacts {
+            new Facts(storeId,sellerId,storeStatus,sellerStatus,storeVersion,sellerVersion);
+            if(ownerReference==null || ownerReference.isBlank() || ownerReference.codePointCount(0,ownerReference.length())>128)
+                throw new StoreRuleException(StoreRuleException.Code.AUTHORIZATION_UNAVAILABLE,"Incomplete Store owner mapping");
+        }
+    }
+
+    public java.util.List<OwnedFacts> findBatch(java.util.List<UUID> ids) {
+        requireCurrentRead();
+        if(ids==null || ids.isEmpty() || ids.size()>100 || ids.stream().anyMatch(Objects::isNull)
+                || new java.util.HashSet<>(ids).size()!=ids.size())throw invalid();
+        return java.util.List.copyOf(stores.findOwnedFactsByIds(ids));
+    }
     private void requireCurrentRead() {
         Integer isolation = TransactionSynchronizationManager.getCurrentTransactionIsolationLevel();
         if (isolation != null && isolation != TransactionDefinition.ISOLATION_READ_COMMITTED) {

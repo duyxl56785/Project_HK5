@@ -27,4 +27,8 @@ public interface StoreRepository extends JpaRepository<StoreEntity, UUID> {
             + "s.id, p.id, s.status, p.status, s.version, p.version) "
             + "from StoreEntity s join s.seller p where s.slug = :slug")
     Optional<StoreCurrentSource.Facts> findFactsBySlug(@Param("slug") String slug);
+    @Query("select new com.projecthk5.sellerservice.store.StoreCurrentSource$OwnedFacts("
+            + "s.id, p.id, s.status, p.status, s.version, p.version, p.ownerReference) "
+            + "from StoreEntity s left join s.seller p where s.id in :ids")
+    java.util.List<StoreCurrentSource.OwnedFacts> findOwnedFactsByIds(@Param("ids") java.util.Collection<UUID> ids);
 }
