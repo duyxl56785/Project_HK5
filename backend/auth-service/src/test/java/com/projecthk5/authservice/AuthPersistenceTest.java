@@ -80,14 +80,14 @@ class AuthPersistenceTest {
                 existing.put(insertEmail(c, email), email);
             }
         }
-        flyway = migrationFlyway().load();
+        flyway = migrationFlyway().target("2").load();
         assertEquals(1, flyway.migrate().migrationsExecuted);
         context = application(true);
         assertTrue(context.getEnvironment().getProperty("spring.flyway.enabled", Boolean.class));
         for (var entry : existing.entrySet()) {
             assertEquals(entry.getValue(), repo(AccountRepository.class).findById(entry.getKey()).orElseThrow().getEmail());
         }
-        assertEquals(List.of("1", "2"), Arrays.stream(flyway.info().applied())
+        assertEquals(List.of("1", "2", "3"), Arrays.stream(flyway.info().applied())
                 .map(info -> info.getVersion().getVersion()).toList());
         System.out.println("V1_TO_V2_UPGRADE: 5 ASCII/Unicode account IDs/emails preserved; V1 checksum validated");
     }
@@ -122,7 +122,7 @@ class AuthPersistenceTest {
         assertTrue(flyway.validateWithResult().validationSuccessful);
         assertEquals(0, flyway.migrate().migrationsExecuted);
         assertEquals(0, flyway.info().pending().length);
-        assertEquals("2", flyway.info().current().getVersion().getVersion());
+        assertEquals("3", flyway.info().current().getVersion().getVersion());
         assertEquals("validate", context.getEnvironment().getProperty("spring.jpa.hibernate.ddl-auto"));
         try (var c = appConnection(); var s = c.createStatement();
              var r = s.executeQuery("SELECT current_user,current_database(),current_setting('TimeZone')")) {
@@ -298,7 +298,8 @@ class AuthPersistenceTest {
         assertEquals("23514", ((SQLException) cause).getSQLState());
         assertTrue(legacy.validateWithResult().validationSuccessful);
         assertEquals("1", upgrade.info().current().getVersion().getVersion());
-        assertEquals(1, upgrade.info().pending().length);
+        assertEquals(List.of("2", "3"), Arrays.stream(upgrade.info().pending())
+                .map(info -> info.getVersion().getVersion()).toList());
         Map<UUID, String> after = new HashMap<>();
         try (var c = DriverManager.getConnection(jdbcUrl, "auth_migrator", migrationPassword)) {
             c.setSchema(schema);
