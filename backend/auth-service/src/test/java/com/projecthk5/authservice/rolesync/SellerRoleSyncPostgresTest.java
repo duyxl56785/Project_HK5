@@ -197,4 +197,27 @@ class SellerRoleSyncPostgresTest {
             assertEquals(200,retry.statusCode()); assertTrue(retry.body().contains("DUPLICATE"));
         }
     }
+    @Test void crossPairAliasesCannotMutateRolesOverActualHttp() throws Exception {
+        String url=pg.getJdbcUrl().replace("/test","/auth_db"),key=SellerRoleSyncHttpTest.KEY,previous="old-test-only-role-sync-credential-0123456789";
+        try(var app=(org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext)new org.springframework.boot.builder.SpringApplicationBuilder(com.projecthk5.authservice.AuthServiceApplication.class)
+            .run("--server.port=0","--spring.datasource.url="+url,"--spring.datasource.username=auth_app","--spring.datasource.password="+password,
+                "--hk5.auth.role-sync.enabled=true","--HK5_SELLER_AUTH_ROLE_SYNC_SECRET="+key)) {
+            var http=java.net.http.HttpClient.newHttpClient();
+            for(String foreign:List.of("HK5_SELLER_AUTH_CURRENT_ACCOUNT_","HK5_PRODUCT_AUTH_CURRENT_ACCOUNT_"))
+            for(String own:List.of(key,previous))for(String slot:List.of("SECRET","PREVIOUS_SECRET")) {
+                var values=new HashMap<String,Object>();values.put("HK5_SELLER_AUTH_ROLE_SYNC_PREVIOUS_SECRET",previous);
+                values.put("HK5_SELLER_AUTH_ROLE_SYNC_PREVIOUS_UNTIL",java.time.Instant.now().plusSeconds(60).toString());
+                values.put(foreign+slot,own);values.put(foreign+"PREVIOUS_UNTIL",java.time.Instant.now().plusSeconds(60).toString());
+                app.getEnvironment().getPropertySources().addFirst(new org.springframework.core.env.MapPropertySource("cross-alias",values));
+                try {
+                    String body="{\"eventId\":\""+UUID.randomUUID()+"\",\"sellerId\":\""+seller+"\",\"accountId\":\""+account+"\",\"sellerStatus\":\"APPROVED\",\"sourceVersion\":\"1\"}";
+                    var request=java.net.http.HttpRequest.newBuilder(java.net.URI.create("http://127.0.0.1:"+app.getWebServer().getPort()+"/internal/auth/seller-role-sync"))
+                        .header("Content-Type","application/json").header("X-HK5-Service-Credential",own)
+                        .POST(java.net.http.HttpRequest.BodyPublishers.ofString(body)).build();
+                    assertEquals(503,http.send(request,java.net.http.HttpResponse.BodyHandlers.ofString()).statusCode());
+                    assertFalse(sellerGranted());assertEquals(0L,jdbc.queryForObject("SELECT count(*) FROM seller_role_sync_receipts",Long.class));
+                }finally{app.getEnvironment().getPropertySources().remove("cross-alias");}
+            }
+        }
+    }
 }

@@ -60,16 +60,9 @@ public class CurrentAccountRpcConfiguration {
         return http.build();
     }
     private static InternalPairVerifier.Credentials credentials(Environment env,String prefix) {
-        String current=env.getProperty(prefix+"SECRET"),previous=env.getProperty(prefix+"PREVIOUS_SECRET"),until=env.getProperty(prefix+"PREVIOUS_UNTIL");
-        for(String other:List.of("HK5_SELLER_AUTH_CURRENT_ACCOUNT_","HK5_PRODUCT_AUTH_CURRENT_ACCOUNT_","HK5_SELLER_AUTH_ROLE_SYNC_")) {
-            if(other.equals(prefix))continue;
-            for(String field:List.of("SECRET","PREVIOUS_SECRET")) {
-                String value=env.getProperty(other+field);
-                if(value!=null && (value.equals(current) || value.equals(previous)))throw new IllegalArgumentException("Internal pair credentials must be distinct");
-            }
-        }
-        return new InternalPairVerifier.Credentials(current,previous,until==null?null:Instant.parse(until));
-    }    static void error(HttpServletResponse response,int status,String code) throws IOException {
+        return com.projecthk5.security.IsolatedPairCredentials.read(env::getProperty,prefix);
+    }
+    static void error(HttpServletResponse response,int status,String code) throws IOException {
         response.setStatus(status);response.setContentType("application/json");
         response.getWriter().write("{\"code\":\""+code+"\",\"message\":\"Current authority request rejected\"}");
     }

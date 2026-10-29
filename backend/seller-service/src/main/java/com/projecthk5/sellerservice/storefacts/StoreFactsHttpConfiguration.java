@@ -34,8 +34,7 @@ public class StoreFactsHttpConfiguration {
         String prefix="HK5_PRODUCT_SELLER_STORE_FACTS_";
         var verifier=new InternalPairVerifier("product-service","seller-service",Set.of(
             new InternalPairVerifier.Scope("POST",PATH,"CURRENT_STORE_FACTS_BATCH_READ")),()->{
-                String previous=env.getProperty(prefix+"PREVIOUS_SECRET"),until=env.getProperty(prefix+"PREVIOUS_UNTIL");
-                return new InternalPairVerifier.Credentials(env.getProperty(prefix+"SECRET"),previous,until==null?null:Instant.parse(until));
+                return com.projecthk5.security.IsolatedPairCredentials.read(env::getProperty,prefix);
             },Clock.systemUTC());
         http.securityMatcher("/internal/seller/**").csrf(AbstractHttpConfigurer::disable)
             .formLogin(AbstractHttpConfigurer::disable).httpBasic(AbstractHttpConfigurer::disable).logout(AbstractHttpConfigurer::disable)

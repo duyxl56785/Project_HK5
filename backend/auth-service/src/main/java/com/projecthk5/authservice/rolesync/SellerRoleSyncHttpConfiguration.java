@@ -37,10 +37,7 @@ public class SellerRoleSyncHttpConfiguration {
         boolean enabled="true".equals(env.getProperty("hk5.auth.role-sync.enabled","false"));
         var verifier=new InternalPairVerifier("seller-service","auth-service",Set.of(
             new InternalPairVerifier.Scope("POST",PATH,"SELLER_ROLE_SYNC")), () -> {
-                String previous=env.getProperty("HK5_SELLER_AUTH_ROLE_SYNC_PREVIOUS_SECRET");
-                String deadline=env.getProperty("HK5_SELLER_AUTH_ROLE_SYNC_PREVIOUS_UNTIL");
-                return new InternalPairVerifier.Credentials(env.getProperty("HK5_SELLER_AUTH_ROLE_SYNC_SECRET"),
-                    previous,deadline==null?null:Instant.parse(deadline));
+                return com.projecthk5.security.IsolatedPairCredentials.read(env::getProperty,"HK5_SELLER_AUTH_ROLE_SYNC_");
             }, Clock.systemUTC());
         http.securityMatcher("/internal/**").csrf(AbstractHttpConfigurer::disable)
             .httpBasic(AbstractHttpConfigurer::disable).formLogin(AbstractHttpConfigurer::disable)

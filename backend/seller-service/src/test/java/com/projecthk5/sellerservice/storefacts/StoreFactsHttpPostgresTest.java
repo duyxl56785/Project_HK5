@@ -145,4 +145,18 @@ class StoreFactsHttpPostgresTest {
         var absent=call(KEY,body(store));assertEquals(200,absent.statusCode());
         assertEquals("ABSENT",json.readTree(absent.body()).get("results").get(0).get("result").textValue());
     }
+    @Test void crossPairAliasesNeverDiscloseOwnerFacts() throws Exception {
+        String previous="old-test-only-product-facts-credential-0123456789";
+        var stats=app.getBean(jakarta.persistence.EntityManagerFactory.class).unwrap(org.hibernate.SessionFactory.class).getStatistics();stats.clear();
+        for(String foreign:List.of("HK5_SELLER_AUTH_ROLE_SYNC_","HK5_SELLER_AUTH_CURRENT_ACCOUNT_"))
+        for(String own:List.of(KEY,previous))for(String slot:List.of("SECRET","PREVIOUS_SECRET")) {
+            var values=new HashMap<String,Object>();values.put("HK5_PRODUCT_SELLER_STORE_FACTS_PREVIOUS_SECRET",previous);
+            values.put("HK5_PRODUCT_SELLER_STORE_FACTS_PREVIOUS_UNTIL",Instant.now().plusSeconds(60).toString());
+            values.put(foreign+slot,own);values.put(foreign+"PREVIOUS_UNTIL",Instant.now().plusSeconds(60).toString());
+            app.getEnvironment().getPropertySources().addFirst(new org.springframework.core.env.MapPropertySource("cross-alias",values));
+            try {var result=call(own,body(store));assertEquals(503,result.statusCode());assertFalse(result.body().contains("ownerReference"));}
+            finally{app.getEnvironment().getPropertySources().remove("cross-alias");}
+        }
+        assertEquals(0,stats.getPrepareStatementCount());
+    }
 }

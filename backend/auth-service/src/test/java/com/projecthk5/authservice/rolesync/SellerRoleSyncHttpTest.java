@@ -100,4 +100,18 @@ class SellerRoleSyncHttpTest {
         mvc.perform(post(PATH).header("X-HK5-Service-Credential",previous).contentType("application/json").content(payload()))
             .andExpect(status().isUnauthorized());
         verify(service,times(1)).apply(any());
-    }}
+    }    @Test void crossPairAliasesCannotReachRoleMutation() throws Exception {
+        host(true,KEY);when(service.apply(any())).thenReturn(SellerRoleSyncService.Result.APPLIED);
+        String previous="old-test-only-role-sync-credential-0123456789";
+        for(String foreign:List.of("HK5_SELLER_AUTH_CURRENT_ACCOUNT_","HK5_PRODUCT_AUTH_CURRENT_ACCOUNT_"))
+        for(String own:List.of(KEY,previous))for(String slot:List.of("SECRET","PREVIOUS_SECRET")) {
+            var values=new HashMap<String,Object>();values.put("HK5_SELLER_AUTH_ROLE_SYNC_PREVIOUS_SECRET",previous);
+            values.put("HK5_SELLER_AUTH_ROLE_SYNC_PREVIOUS_UNTIL",java.time.Instant.now().plusSeconds(60).toString());
+            values.put(foreign+slot,own);values.put(foreign+"PREVIOUS_UNTIL",java.time.Instant.now().plusSeconds(60).toString());
+            context.getEnvironment().getPropertySources().addFirst(new org.springframework.core.env.MapPropertySource("cross-alias",values));
+            try {mvc.perform(post(PATH).header("X-HK5-Service-Credential",own).contentType("application/json").content(payload()))
+                .andExpect(status().isServiceUnavailable());verifyNoInteractions(service);}
+            finally{context.getEnvironment().getPropertySources().remove("cross-alias");}
+        }
+    }
+}
