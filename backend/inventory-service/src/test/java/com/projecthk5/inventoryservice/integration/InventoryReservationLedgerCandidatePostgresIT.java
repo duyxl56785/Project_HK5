@@ -9,6 +9,7 @@ import com.projecthk5.inventoryservice.candidate.InventoryReservationLedgerCandi
 import com.projecthk5.inventoryservice.candidate.ReservationCandidateException;
 import com.projecthk5.inventoryservice.candidate.ReservationOperationCandidateRequest;
 import com.projecthk5.inventoryservice.candidate.ReservationOperationCandidateResponse;
+import com.projecthk5.inventoryservice.model.InsufficientStockException;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
@@ -425,6 +426,25 @@ class InventoryReservationLedgerCandidatePostgresIT extends InventoryPostgresSup
                 Boolean.class, operationId));
         assertFalse(sql.queryForObject("SELECT EXISTS(SELECT 1 FROM inventory_reservation WHERE reservation_id = ?)",
                 Boolean.class, reservationId));
+    }
+
+    @Test void maximumQuantityReserveNeverCreatesNegativeOrOverflowedStock() {
+        String sku = initialize("maximum-quantity", Long.MAX_VALUE);
+        var reserve = request("maximum-quantity-reserve", "maximum-quantity-reservation",
+                "maximum-quantity-store", "maximum-quantity-seller", "maximum-quantity-order",
+                InventoryOperationType.RESERVE, line(sku, Long.MAX_VALUE));
+
+        ledger.apply(reserve);
+
+        assertEquals(0, inventory.getBalance(sku).availableQuantity());
+        assertEquals(Long.MAX_VALUE, inventory.getBalance(sku).reservedQuantity());
+        InsufficientStockException secondReserve = assertThrows(InsufficientStockException.class,
+                () -> ledger.apply(request("maximum-quantity-second", "maximum-quantity-second-reservation",
+                        "maximum-quantity-store-2", "maximum-quantity-seller-2", "maximum-quantity-order-2",
+                        InventoryOperationType.RESERVE, line(sku, 1))));
+        assertNotNull(secondReserve);
+        assertEquals(0, inventory.getBalance(sku).availableQuantity());
+        assertEquals(Long.MAX_VALUE, inventory.getBalance(sku).reservedQuantity());
     }
 
     @ParameterizedTest
