@@ -1,6 +1,6 @@
 # Product image validation — module usage
 
-Refs #2. This module slice validates bytes only. It has no upload controller, storage adapter, Product entity/Flyway migration, authorization policy or background work. Existing Spring Security chains and shared API contracts are unchanged. Internal error codes below are not a new HTTP contract.
+Refs #2. Validation and an internal local-disk storage adapter are available. This image slice adds no upload controller, Product-image entity/Flyway migration, authorization policy or background work. Product persistence is inherited from merged main; Product-to-image linkage remains pending. Existing Spring Security chains and shared API contracts are unchanged. Internal error codes below are not a new HTTP contract.
 
 ## Rules
 
@@ -71,3 +71,45 @@ The validator now checks the complete inflated length against IHDR dimensions, c
 - Independent read-only review: no blocking findings in the validator/test diff. Existing Docker container IDs/names and volume names are unchanged before/after the full build. Only normal Testcontainers lifecycle cleanup occurred; no existing container, volume or DB was deleted.
 - Seller/full-backend reruns, real JWT/HTTP upload, storage/Product association and live Checkout E2E: **NOT_RUN**, outside this parser-only change or dependent on unapproved runtime/contracts. Product image upload/F06 aggregate remains incomplete.
 - Raw evidence stays ignored under `build/png-scanline-evidence-20261022`: actual RED log SHA256 `74EB57625C0558E5C5446C7105F2AFE3825F140C3903893B69A2FDB04EA9ABFE`; RED XML `7E447099F6C4C4EE97F0C4062118346F4B45DFAAFCD0FDE3F963A07143325DE3`; focused GREEN log `DB8366425A1E947F3C0538C2E270C367A2EF3611776E22D61CCF13D6502DE7AE`; full-build log `D83DA4ABCDE6AC1614A328F0018BE6561E4D5F94673B7ED2C0F916A45F114BEA`. Raw logs/XML are not edited or committed.
+
+## Internal local image storage — not an upload API
+
+`ImageStorage` stores a `ProductImageValidator.ValidatedImage` and returns opaque key/format/measured
+size/dimensions. `read(key)` returns freshly read bytes. No filename, stream, Product ID, owner or image
+count is accepted by storage. `LocalFileSystemImageStorage` takes an **explicit existing absolute private
+directory**; it has no default root, configuration bean, public URL or static-resource mapping.
+Provision that directory outside source/build/public/secret locations. The root and its ancestors must
+be controlled by the service account, protected from untrusted local writers. Windows inherits that ACL;
+on POSIX, newly reserved directories/files use0700/0600. The adapter does not modify existing root ACLs.
+
+Each server-generated UUID reserves its own directory using create-new semantics before writing.
+Only the defensive `ValidatedImage.content()` snapshot is written to `.pending`, forced and closed,
+then renamed to `content` with ATOMIC_MOVE. Only AtomicMoveNotSupportedException enables a same-directory
+move without replace. Reservation, not an existence precheck or ATOMIC_MOVE alone, prevents another
+adapter overwriting an existing key. Metadata is returned only after publication; no partial `.pending`
+bytes are readable through `read`. Non-atomic fallback does not promise atomic visibility or power-loss
+durability; force is not a portable directory fsync or transactional database commit.
+
+Strict canonical UUID keys reject separators, absolute paths, traversal, alternate encodings and suffixes.
+Root ancestry, key directories and content reject symlinks/reparse/junction/nonregular entries. Reads use
+NOFOLLOW_LINKS and are bounded to2MiB+1, including tampered/oversized stored files. Directory file keys are
+checked when available; Windows creation time is only a replacement diagnostic. **Portable Java on Windows
+cannot guarantee race-free directory traversal against a concurrent same-account filesystem attacker**;
+the private-root/ancestor ACL requirement is essential. No SecureDirectoryStream guarantee is claimed.
+
+I/O exceptions have fixed internal codes/messages with no filesystem cause/suppressed-path disclosure.
+Failure cleanup touches only the temp/empty directory reserved by that call, without recursive deletion;
+it never deletes a colliding key. If permission loss or unsafe redirection prevents cleanup, a private
+orphan can remain and the original sanitized failure is preserved. No destructive automatic sweeper is added.
+
+Tests use real temporary files and Windows junctions (Unix symlinks on Unix); deterministic filesystem
+failure/atomic-fallback injection is distinguished from a physically full disk. No existing user data or
+database is used for storage tests. Existing Product security denies proposed image upload/read/delete
+paths, including a test-only handler behind the unchanged filter chain; this is not real JWT acceptance.
+
+**Pending integration:** Product-to-image metadata/order/ownership/link persistence, concurrency-protected
+five-image count, compensation/orphan policy, verified authorization, upload/read/delete HTTP, delivery
+headers and public URLs. A key does not grant ownership. PR72 PNG exact-scanline hardening was unmerged
+at the original storage baseline. It is now inherited from main via commit
+`61f39b42d63a59c76f5323581bf8fe98fa26faa2`; storage consumes the current validator without a separate
+copy of its patch. Preserving validated bytes does not certify antivirus safety or live upload P0 completion.

@@ -1,6 +1,8 @@
 package com.projecthk5.productservice.product.persistence;
 
 import com.projecthk5.productservice.product.ProductListing;
+import com.projecthk5.productservice.product.ProductOwnerPage;
+import com.projecthk5.productservice.product.ProductOwnerQuery;
 import com.projecthk5.productservice.product.ProductRuleException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
@@ -14,6 +16,7 @@ import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.orm.jpa.EntityManagerFactoryUtils;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 /** Internal data adapter. Callers remain responsible for verified authorization and lifecycle policy. */
@@ -29,6 +32,11 @@ public class ProductPersistenceAdapter {
     }
 
     public record StoredProduct(ProductListing listing, long version) { }
+
+    @Transactional(readOnly = true, isolation = Isolation.REPEATABLE_READ)
+    public ProductOwnerPage listOwned(UUID storeId, ProductOwnerQuery query) {
+        return repository.listOwned(storeId, query);
+    }
 
     public StoredProduct create(ProductListing listing) {
         require(listing != null, "Product is required");
