@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestClient;
 
-/** Delivers committed Seller side effects; both targets are idempotent, so redelivery is safe. */
+/** Delivers committed Seller side effects; Auth ignores stale revisions, so redelivery and reordering are safe. */
 @Component
 public class SellerOutboxRelay {
     private static final Logger log = LoggerFactory.getLogger(SellerOutboxRelay.class);
@@ -46,7 +46,8 @@ public class SellerOutboxRelay {
                 if (item.getKind() == SellerOutbox.Kind.ROLE_SYNC) {
                     auth.put().uri("/internal/accounts/{id}/roles/SELLER", payload.get("accountId"))
                             .header(InternalTokens.HEADER, authToken)
-                            .body(Map.of("granted", payload.get("granted"))).retrieve().toBodilessEntity();
+                            .body(Map.of("granted", payload.get("granted"), "revision", payload.get("revision")))
+                            .retrieve().toBodilessEntity();
                 } else {
                     notifications.post().uri("/internal/notifications").header(InternalTokens.HEADER, notificationToken)
                             .body(payload).retrieve().toBodilessEntity();

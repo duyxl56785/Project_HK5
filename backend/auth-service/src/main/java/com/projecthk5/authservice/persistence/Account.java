@@ -19,6 +19,8 @@ public class Account {
     private String status;
     @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt;
+    @Column(name = "seller_role_revision", nullable = false)
+    private long sellerRoleRevision = -1;
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "account_role_grants", joinColumns = @JoinColumn(name = "account_id"))
     @Column(name = "role", nullable = false, length = 16)
@@ -52,6 +54,13 @@ public class Account {
     /** Role grants are idempotent; an account always keeps at least CUSTOMER. */
     public boolean grant(Role role) { return roles.add(Objects.requireNonNull(role)); }
     public boolean revoke(Role role) { return role != Role.CUSTOMER && roles.remove(role); }
+
+    /** Applies a Seller status event once; replayed or out-of-order revisions change nothing. */
+    public void applySellerRole(boolean granted, long revision) {
+        if (revision <= sellerRoleRevision) return;
+        sellerRoleRevision = revision;
+        if (granted) grant(Role.SELLER); else revoke(Role.SELLER);
+    }
 
     public UUID getId() { return id; }
     public String getEmail() { return email; }

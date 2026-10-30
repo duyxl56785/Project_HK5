@@ -126,12 +126,22 @@ public class AuthService {
         return account;
     }
 
-    /** Idempotent role change requested by a verified internal pair (Seller approval/suspension). */
+    /** Current roles of an ACTIVE account; empty for an unknown, disabled or malformed subject. */
+    @Transactional(readOnly = true)
+    public Optional<Set<Account.Role>> liveRoles(String subject) {
+        try {
+            return accounts.findById(UUID.fromString(subject)).filter(a -> ACTIVE.equals(a.getStatus())).map(Account::getRoles);
+        } catch (IllegalArgumentException malformed) {
+            return Optional.empty();
+        }
+    }
+
+    /** Seller status event from a verified internal pair; the row lock serializes concurrent deliveries. */
     @Transactional
-    public Account changeRole(UUID accountId, Account.Role role, boolean grant) {
-        Account account = accounts.findById(accountId)
+    public Account changeSellerRole(UUID accountId, boolean grant, long revision) {
+        Account account = accounts.findLockedById(accountId)
                 .orElseThrow(() -> ApiException.notFound("AUTH_ACCOUNT_NOT_FOUND", "Account not found"));
-        if (grant) account.grant(role); else account.revoke(role);
+        account.applySellerRole(grant, revision);
         return accounts.saveAndFlush(account);
     }
 

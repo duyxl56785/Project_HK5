@@ -89,7 +89,8 @@ public class SellerController {
         // Same transaction as the status change: the relay delivers these after commit, with retries.
         SellerStatus status = result.application().status();
         String owner = result.application().owner().reference();
-        enqueue(SellerOutbox.Kind.ROLE_SYNC, result.id(), Map.of("accountId", owner, "granted", status == SellerStatus.APPROVED));
+        enqueue(SellerOutbox.Kind.ROLE_SYNC, result.id(), Map.of("accountId", owner, "granted", status == SellerStatus.APPROVED,
+                "revision", result.version()));
         enqueue(SellerOutbox.Kind.NOTIFY, result.id(), Map.of("recipient", owner, "type", "SELLER_" + status.name(),
                 "title", switch (status) {
                     case APPROVED -> "Hồ sơ người bán đã được duyệt";
