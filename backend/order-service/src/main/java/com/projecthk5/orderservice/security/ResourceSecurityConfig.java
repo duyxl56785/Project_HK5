@@ -5,26 +5,24 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
-import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.security.web.SecurityFilterChain;
-import java.util.List;
 
 @Configuration
 public class ResourceSecurityConfig {
     @Bean
     SecurityFilterChain apiSecurity(HttpSecurity http) throws Exception {
-        return http.csrf(csrf -> csrf.disable())
-            .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        // Shared contract v1.0 policy: verified HS256 JWT, roles from the token only, JSON 401/403.
+        return com.projecthk5.security.JwtResourceServer.configure(http)
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(HttpMethod.GET, "/actuator/health", "/actuator/health/**", "/actuator/info").permitAll()
-                .anyRequest().authenticated())
-            .oauth2ResourceServer(oauth -> oauth.jwt(jwt -> jwt.jwtAuthenticationConverter(token ->
-                new JwtAuthenticationToken(token,
-                    ((List<String>) token.getClaim("roles")).stream()
-                        .map(role -> new SimpleGrantedAuthority("ROLE_" + role)).toList()))))
+                .requestMatchers("/error").permitAll()
+                // Pair routes authenticate with X-Internal-Token inside the controller; the gateway never forwards them.
+                .requestMatchers("/internal/**").permitAll()
+                .requestMatchers("/api/orders", "/api/orders/**").hasRole("CUSTOMER")
+                .requestMatchers("/api/seller/**").hasRole("SELLER")
+                .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                .anyRequest().denyAll())
             .build();
     }
 
