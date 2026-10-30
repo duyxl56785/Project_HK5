@@ -9,6 +9,7 @@ import { SellerStoreOverview } from './SellerStoreOverview';
 import type { SellerStatus } from './sellerStoreTypes';
 
 interface Seller { readonly id: string; readonly version: string; readonly status: SellerStatus; readonly reviewReason: string | null }
+interface Contact { readonly representativeName: string | null; readonly phone: string | null; readonly pickupAddress: string | null }
 interface Store { readonly id: string; readonly sellerId: string; readonly name: string; readonly slug: string; readonly open: boolean; readonly version: string }
 
 const orNull = <T,>(run: Promise<T>) => run.catch((error: unknown) => {
@@ -18,6 +19,22 @@ const orNull = <T,>(run: Promise<T>) => run.catch((error: unknown) => {
 
 export const slugify = (name: string) => name.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[đĐ]/g, 'd').toLowerCase()
   .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 128);
+
+function ContactForm({ contact, submitLabel, pending, onSubmit }: {
+  readonly contact?: Contact; readonly submitLabel: string; readonly pending: boolean;
+  readonly onSubmit: (contact: Contact) => void;
+}) {
+  const [representativeName, setName] = useState(contact?.representativeName ?? '');
+  const [phone, setPhone] = useState(contact?.phone ?? '');
+  const [pickupAddress, setAddress] = useState(contact?.pickupAddress ?? '');
+  function submit(event: FormEvent) { event.preventDefault(); onSubmit({ representativeName, phone, pickupAddress }); }
+  return <form className="stack" onSubmit={submit}>
+    <label className="field">Tên người đại diện<input required maxLength={100} value={representativeName} onChange={(e) => setName(e.currentTarget.value)} /></label>
+    <label className="field">Số điện thoại<input required type="tel" pattern="\+?[0-9]{8,15}" title="8–15 chữ số, có thể bắt đầu bằng dấu +" value={phone} onChange={(e) => setPhone(e.currentTarget.value)} /></label>
+    <label className="field">Địa chỉ lấy hàng<input required maxLength={255} value={pickupAddress} onChange={(e) => setAddress(e.currentTarget.value)} /></label>
+    <button className="btn btn--primary" disabled={pending}>{submitLabel}</button>
+  </form>;
+}
 
 function StoreForm({ store }: { readonly store: Store | null }) {
   const [name, setName] = useState(store?.name ?? '');
@@ -39,13 +56,13 @@ function StoreForm({ store }: { readonly store: Store | null }) {
 
 export function SellerHomePage() {
   const auth = useAuth();
-  const seller = useQuery({ queryKey: ['seller', 'me'], queryFn: () => orNull(api<{ seller: Seller }>('/api/sellers/me')) });
+  const seller = useQuery({ queryKey: ['seller', 'me'], queryFn: () => orNull(api<{ seller: Seller; contact: Contact }>('/api/sellers/me')) });
   // Store routes need the SELLER role, which an applicant does not have yet.
   const canManage = auth.has('SELLER');
   const store = useQuery({ queryKey: ['seller', 'store'], queryFn: () => orNull(api<Store>('/api/stores/me')), enabled: !!seller.data && canManage });
   const myStore = canManage ? store.data : null;
-  const register = useAction(() => api('/api/sellers', { method: 'POST', body: {} }), ['seller']);
-  const resubmit = useAction((expectedVersion: string) => api('/api/sellers/me/resubmit', { method: 'POST', body: { expectedVersion } }), ['seller']);
+  const register = useAction((contact: Contact) => api('/api/sellers', { method: 'POST', body: contact }), ['seller']);
+  const resubmit = useAction((body: Contact & { expectedVersion: string }) => api('/api/sellers/me/resubmit', { method: 'POST', body }), ['seller']);
   const setOpen = useAction((s: Store) => api(`/api/stores/${s.id}/open`, { method: 'PATCH', body: { open: !s.open, expectedVersion: s.version } }), ['seller']);
 
   const profile = seller.data?.seller;
@@ -65,13 +82,16 @@ export function SellerHomePage() {
     <h1>Trở thành người bán</h1>
     <p>Gửi hồ sơ để quản trị viên xét duyệt. Sau khi được duyệt, bạn có thể tạo cửa hàng và đăng sản phẩm.</p>
     <ErrorNote error={register.error} />
-    <button type="button" className="btn btn--primary" disabled={register.isPending} onClick={() => register.mutate(undefined)}>Gửi hồ sơ người bán</button>
+    <ContactForm submitLabel="Gửi hồ sơ người bán" pending={register.isPending} onSubmit={(contact) => register.mutate(contact)} />
   </div>;
 
   return <div className="stack">
     {myStore !== undefined && <SellerStoreOverview state={{ status: 'ready', seller: profile, store: myStore }} />}
     {profile.reviewReason && <p className="note">Lý do từ quản trị viên: {profile.reviewReason}</p>}
-    {profile.status === 'REJECTED' && <button type="button" className="btn btn--primary" disabled={resubmit.isPending} onClick={() => resubmit.mutate(profile.version)}>Gửi lại hồ sơ</button>}
+    {profile.status === 'REJECTED' && <div className="panel stack"><h2>Sửa và gửi lại hồ sơ</h2>
+      <ContactForm contact={seller.data?.contact} submitLabel="Gửi lại hồ sơ" pending={resubmit.isPending}
+        onSubmit={(contact) => resubmit.mutate({ ...contact, expectedVersion: profile.version })} />
+    </div>}
     {approved && stale && <p className="note" role="status">Đang cập nhật quyền người bán cho tài khoản…</p>}
     {approved && canManage && myStore !== undefined && <StoreForm key={myStore?.version ?? 'new'} store={myStore} />}
     {myStore && approved && <div className="row row--wrap">

@@ -27,6 +27,7 @@ function Moderate({ actions, needsReason, run, busy }: {
 
 interface SellerRow {
   readonly id: string; readonly ownerReference: string; readonly status: string; readonly reviewReason: string | null; readonly version: string;
+  readonly contact: { readonly representativeName: string | null; readonly phone: string | null; readonly pickupAddress: string | null };
   readonly store: { readonly name: string } | null;
 }
 const SELLER_ACTIONS: Record<string, { action: string; label: string }[]> = {
@@ -46,9 +47,11 @@ export function AdminSellersPage() {
     <StatusFilter value={status} options={['PENDING_REVIEW', 'APPROVED', 'REJECTED', 'SUSPENDED']} onChange={setStatus} allLabel="Tất cả" />
     <ErrorNote error={moderate.error} />
     <Loaded query={list} empty={(rows) => rows.length === 0}>{(rows) => <table className="table">
-      <thead><tr><th>Tài khoản</th><th>Cửa hàng</th><th>Trạng thái</th><th>Thao tác</th></tr></thead>
+      <thead><tr><th>Tài khoản</th><th>Hồ sơ</th><th>Cửa hàng</th><th>Trạng thái</th><th>Thao tác</th></tr></thead>
       <tbody>{rows.map((row) => <tr key={row.id}>
-        <td><code>{row.ownerReference}</code></td><td>{row.store?.name ?? '—'}</td>
+        <td><code>{row.ownerReference}</code></td>
+        <td>{row.contact.representativeName ?? '—'}<br /><small className="muted">{row.contact.phone} · {row.contact.pickupAddress}</small></td>
+        <td>{row.store?.name ?? '—'}</td>
         <td><Badge value={row.status} />{row.reviewReason && <small className="muted"> {row.reviewReason}</small>}</td>
         <td><Moderate actions={SELLER_ACTIONS[row.status] ?? []} needsReason={['reject', 'suspend']} busy={moderate.isPending}
           run={(action, reason) => moderate.mutate({ row, action, reason })} /></td>

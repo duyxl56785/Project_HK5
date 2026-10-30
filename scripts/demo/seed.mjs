@@ -49,7 +49,9 @@ async function account(email) {
 
 async function approvedSeller(email, admin) {
   const token = await account(email);
-  if ((await call('/api/sellers/me', { token })).status === 404) await must('/api/sellers', { token, method: 'POST', body: {} });
+  if ((await call('/api/sellers/me', { token })).status === 404) await must('/api/sellers', {
+    token, method: 'POST', body: { representativeName: 'Nguyễn Văn An', phone: '0901234567', pickupAddress: '1 Lê Lợi, Quận 1, TP.HCM' },
+  });
   const { seller } = await must('/api/sellers/me', { token });
   if (seller.status === 'PENDING_REVIEW') {
     await must(`/api/admin/sellers/${seller.id}/approve`, { token: admin, method: 'POST', body: { expectedVersion: seller.version } });

@@ -9,6 +9,7 @@ import com.projecthk5.sellerservice.http.SellerStoreResponses;
 import com.projecthk5.sellerservice.seller.domain.SellerIdentity;
 import com.projecthk5.sellerservice.seller.domain.SellerStatus;
 import com.projecthk5.sellerservice.seller.entity.SellerProfile;
+import com.projecthk5.sellerservice.seller.service.SellerInputs;
 import com.projecthk5.sellerservice.seller.service.SellerPersistenceService;
 import com.projecthk5.sellerservice.seller.service.SellerPersistenceService.PersistedSeller;
 import com.projecthk5.sellerservice.store.StoreEntity;
@@ -36,32 +37,34 @@ public class SellerController {
         this.em = em;
     }
 
-    public record SellerView(SellerStoreResponses.SellerPrivate seller, StoreSummary store) {}
+    public record SellerView(SellerStoreResponses.SellerPrivate seller, Contact contact, StoreSummary store) {}
+    public record Contact(String representativeName, String phone, String pickupAddress) {}
     public record StoreSummary(UUID id, String name, String slug, boolean open) {}
     public record AdminSellerRow(UUID id, String ownerReference, SellerStatus status, String reviewReason, String version,
-                                 StoreSummary store) {}
+                                 Contact contact, StoreSummary store) {}
 
     /** Any signed-in CUSTOMER may apply; owner comes from the JWT subject only. */
     @PostMapping("/api/sellers")
     @ResponseStatus(HttpStatus.CREATED)
-    public SellerStoreResponses.SellerPrivate register(@RequestBody(required = false) String body) {
-        json.registration(body == null ? "{}" : body);
-        Actor actor = Actor.require("CUSTOMER");
-        PersistedSeller seller = sellers.register(new SellerIdentity(actor.id()));
-        return SellerStoreResponses.sellerPrivate(seller);
+    public SellerStoreResponses.SellerPrivate register(@RequestBody String body) {
+        SellerInputs.Contact contact = json.registration(body);
+        SellerIdentity me = new SellerIdentity(Actor.require("CUSTOMER").id());
+        return saveContact(sellers.register(me), contact, me);
     }
 
     @GetMapping("/api/sellers/me")
     public SellerView me() {
         PersistedSeller seller = sellers.findOwn(new SellerIdentity(Actor.current().id()));
-        return new SellerView(SellerStoreResponses.sellerPrivate(seller), storeOf(seller.id()));
+        return new SellerView(SellerStoreResponses.sellerPrivate(seller), contactOf(em.find(SellerProfile.class, seller.id())),
+                storeOf(seller.id()));
     }
 
     @PostMapping("/api/sellers/me/resubmit")
     public SellerStoreResponses.SellerPrivate resubmit(@RequestBody String body) {
         SellerIdentity me = new SellerIdentity(Actor.current().id());
         PersistedSeller own = sellers.findOwn(me);
-        return SellerStoreResponses.sellerPrivate(sellers.resubmit(own.id(), json.version(body), me));
+        SellerInputs.Resubmission input = json.resubmission(body);
+        return saveContact(sellers.resubmit(own.id(), input.expectedVersion(), me), input.contact(), me);
     }
 
     @GetMapping("/api/admin/sellers")
@@ -70,7 +73,7 @@ public class SellerController {
                         + " order by s.status, s.id", SellerProfile.class)
                 .setParameter("status", status).setMaxResults(500).getResultList();
         return rows.stream().map(s -> new AdminSellerRow(s.getId(), s.getOwnerReference(), s.getStatus(), s.getReviewReason(),
-                Long.toString(s.getVersion()), storeOf(s.getId()))).toList();
+                Long.toString(s.getVersion()), contactOf(s), storeOf(s.getId()))).toList();
     }
 
     @PostMapping("/api/admin/sellers/{id}/{action}")
@@ -98,6 +101,17 @@ public class SellerController {
                         : "Lý do: " + result.application().reviewReason(),
                 "link", "/seller"));
         return SellerStoreResponses.sellerPrivate(result);
+    }
+
+    /** Flushes so the returned version is the one the next write must send. */
+    private SellerStoreResponses.SellerPrivate saveContact(PersistedSeller seller, SellerInputs.Contact contact, SellerIdentity me) {
+        em.find(SellerProfile.class, seller.id()).updateContact(contact.representativeName(), contact.phone(), contact.pickupAddress());
+        em.flush();
+        return SellerStoreResponses.sellerPrivate(sellers.findOwn(me));
+    }
+
+    private static Contact contactOf(SellerProfile seller) {
+        return new Contact(seller.getRepresentativeName(), seller.getPhone(), seller.getPickupAddress());
     }
 
     private void enqueue(SellerOutbox.Kind kind, UUID sellerId, Map<String, Object> payload) {
