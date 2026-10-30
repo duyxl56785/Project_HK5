@@ -1,6 +1,8 @@
 server:
   port: 8107
 spring:
+  config:
+    import: optional:configserver:${CONFIG_SERVER_URL:http://localhost:8888}
   application:
     name: order-service
   datasource:
@@ -13,6 +15,13 @@ spring:
       ddl-auto: validate
   flyway:
     enabled: true
+  kafka:
+    producer:
+      # A broker outage must fail fast: the relay holds a database claim while sending.
+      properties:
+        max.block.ms: 3000
+        request.timeout.ms: 3000
+        delivery.timeout.ms: 5000
 app:
   finance:
     # Set only after written TV5 policy approval; otherwise Checkout fails closed.

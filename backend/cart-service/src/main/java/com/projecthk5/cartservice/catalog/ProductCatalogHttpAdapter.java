@@ -3,7 +3,6 @@ package com.projecthk5.cartservice.catalog;
 import java.math.BigDecimal;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClient;
@@ -18,10 +17,7 @@ public class ProductCatalogHttpAdapter implements CartCatalogPort {
 
     public ProductCatalogHttpAdapter(@Value("${PRODUCT_INTERNAL_URL:http://localhost:8104}") String url,
                                      @Value("${CART_PRODUCT_TOKEN:}") String token) {
-        SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
-        factory.setConnectTimeout(2000);
-        factory.setReadTimeout(5000);
-        this.client = RestClient.builder().requestFactory(factory).baseUrl(url).build();
+        this.client = com.projecthk5.security.JwtResourceServer.internalClient(url);
         this.token = token;
     }
 

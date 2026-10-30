@@ -27,6 +27,10 @@ subprojects {
     dependencies {
         implementation 'org.springframework.boot:spring-boot-starter-actuator'
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
+        if (!['security-common', 'discovery-server', 'config-server'].contains(project.name)) {
+            implementation 'org.springframework.cloud:spring-cloud-starter-config'
+            implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+        }
     }
 
     tasks.named('test') { useJUnitPlatform() }
@@ -36,5 +40,9 @@ subprojects {
         systemProperty 'api.version', providers.gradleProperty('dockerApiVersion').getOrElse('1.44')
         // Tests have no Auth to ask; CurrentAuthorityFilterTest covers the filter directly.
         systemProperty 'security.current-authority.enabled', 'false'
+        // Tests run without the platform services; each integration test starts what it needs.
+        systemProperty 'spring.cloud.config.enabled', 'false'
+        systemProperty 'eureka.client.enabled', 'false'
+        systemProperty 'spring.kafka.listener.auto-startup', 'false'
     }
 }

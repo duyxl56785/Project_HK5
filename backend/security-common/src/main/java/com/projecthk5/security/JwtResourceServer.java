@@ -42,7 +42,7 @@ public class JwtResourceServer {
         var factory = new org.springframework.http.client.SimpleClientHttpRequestFactory();
         factory.setConnectTimeout(2000);
         factory.setReadTimeout(5000);
-        return RestClient.builder().requestFactory(factory).baseUrl(baseUrl).build();
+        return RestClient.builder().requestFactory(factory).requestInterceptor(InternalDiscovery::route).baseUrl(baseUrl).build();
     }
 
     /** Applies the shared JWT/session/error policy; callers then add their own route rules. */
