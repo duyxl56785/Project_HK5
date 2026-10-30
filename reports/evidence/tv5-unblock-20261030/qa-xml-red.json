@@ -1,0 +1,23 @@
+{
+  "head": "a5939ef39a05aa3b66413c4a31307978f1ac1d0f",
+  "workingTree": "Only3new synthetic auditor regression tests added; production tool unchanged",
+  "startedUtc": "2026-10-30T03:39:00.099083+00:00",
+  "completedUtc": "2026-10-30T03:39:00.782097+00:00",
+  "command": [
+    "C:\\Users\\Admin\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "scripts/qa/tests",
+    "-v"
+  ],
+  "exitCode": 1,
+  "rawArtifacts": [
+    {
+      "localPath": ".verification/tv5-unblock-20261030/qa-xml-red.log",
+      "bytes": 11315,
+      "sha256": "6b319743e2d029d36c46432be2d293e944ac64ab112a26bbf6954b2a96ef807c"
+    }
+  ]
+}

@@ -315,3 +315,16 @@ Refs #5/#12/#18. [Kiểm kê 105 PR, 16 Issue, kết quả test và 5 bảng bà
 - [ ] Human/owner review, CR/thread TV2 của #103 và nghiệm thu #99/#113/#115/#117 còn chờ; COMMENT không thay APPROVE.
 - [ ] Full M01/COD/settlement/Store queries/security wire và live hai Store E2E BLOCKED/NOT_RUN; Issue #5/#12/#18 chưa DONE. Product price slice #84 giữ riêng.
 - [ ] Project V2 NOT_VERIFIED: token thiếu read:project; API milestones trả danh sách rỗng.
+
+## TV5-UNBLOCK-20261030
+
+Refs #5/#12/#18. [117 PR/16 Issue audit, source fixes, exact-head tests and owner handoff](../reports/TV5_UNBLOCK_ALL_PR_2026-10-30.md).
+
+- [x] Full API pagination across all PR states/reviewers/comments/CI; old #39/#63/#64 MERGED and #60/#62 CLOSED without merge verified, no push/request on closed PRs.
+- [x] QA XML UTF-16 DOCTYPE bypass:2RED→53regressionPASS; code9cd635a pushed117, valid UTF-16 positive control retained.
+- [x] Finance UI same-Store session invalidation: corrected2behaviorRED→48model/render/DOM+18ChromePASS at6ab0f3f; code/evidence pushed115, host/API integration still separate.
+- [x] Stale Product-price PENDING rows explicitly superseded by existing84/88 acceptance; signed packet digest verified, no new policy/signature.
+- [x] TV5 current133 independent1102PASS/2optionalSKIP includes12forced child-JVM crashes and54authorityPG; not deployed Auth/Seller/businessE2E.
+- [x] Current107925f04c +1147c825b5:177backendPASS and8actualHTTP/PG/HappyDOMPASS; JUnit wrapper separate, not Chrome/liveAuth/Gateway.
+- [x] Original DOCX matches archived stacked source byte-for-byte; provenance only, no live report/NFR acceptance.
+- [ ] Owner review/target migration/global credential manifest/all mutation paths, fullM01/COD/Finance/ReviewAPI/live2StoreUAT remain BLOCKED/NOT_RUN; Issue5/12/18 notDONE.

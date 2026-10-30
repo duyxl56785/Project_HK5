@@ -1,0 +1,4182 @@
+{
+  "kind": "DERIVED full API inventory; not blanket105/117source/runtime approval",
+  "capture": {
+    "completedAtUtc": "2026-10-30T03:50:28.420813+00:00",
+    "PRs": 117,
+    "issues": 16,
+    "failures": [],
+    "complete": true,
+    "openPRs": [
+      133,
+      132,
+      131,
+      130,
+      128,
+      129,
+      125,
+      122,
+      127,
+      107,
+      114,
+      126,
+      124,
+      123,
+      115,
+      117,
+      121,
+      120,
+      85,
+      118,
+      116,
+      119,
+      102,
+      111,
+      103,
+      99,
+      113,
+      110,
+      80,
+      105,
+      106,
+      95,
+      98,
+      101,
+      69
+    ]
+  },
+  "rows": [
+    {
+      "PR": 6,
+      "title": "chore: khởi tạo kiến trúc V2 cho nhóm 5 thành viên",
+      "author": "duyxl56785",
+      "state": "MERGED",
+      "head": "09bfaf71a7539b4010df114e333a9f8056c2e527",
+      "headRef": "chore/project-scaffold-v2",
+      "base": "d2a173a5acff4878c754256bfbe1c728544c20d4",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [],
+      "reviewDecision": "REVIEW_REQUIRED",
+      "openThreads": 0,
+      "CI": [],
+      "files": 82,
+      "commits": 1,
+      "comments": 0,
+      "reviewComments": 0
+    },
+    {
+      "PR": 7,
+      "title": "feat(tv2): Category Management và Seller domain",
+      "author": "duyxl56785",
+      "state": "MERGED",
+      "head": "82dea095354c6d70b89379f0f33e49660b80e7a6",
+      "headRef": "feat/tv2-seller-product",
+      "base": "d6ddbb8261594024837a4b581003849e693a9335",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "lexuanbao258-collab"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-16T02:07:51Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/7#pullrequestreview-5542173818",
+          "commit": {
+            "oid": "82dea095354c6d70b89379f0f33e49660b80e7a6"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [],
+      "files": 32,
+      "commits": 9,
+      "comments": 2,
+      "reviewComments": 0
+    },
+    {
+      "PR": 19,
+      "title": "docs(plan): kế hoạch 21 ngày COD-only Marketplace MVP",
+      "author": "duyxl56785",
+      "state": "MERGED",
+      "head": "804d6f1658a590c8fe51a1b8e6ec70555ab0d88a",
+      "headRef": "docs/cod-mvp-21-day-plan",
+      "base": "d6ddbb8261594024837a4b581003849e693a9335",
+      "baseRef": "main",
+      "mergeable": null,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "nguyenminhduy090-alt"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-18T04:58:53Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/19#pullrequestreview-5561505938",
+          "commit": {
+            "oid": "804d6f1658a590c8fe51a1b8e6ec70555ab0d88a"
+          }
+        },
+        {
+          "author": {
+            "login": "lexuanbao258-collab"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-17T15:53:02Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/19#pullrequestreview-5558607500",
+          "commit": {
+            "oid": "804d6f1658a590c8fe51a1b8e6ec70555ab0d88a"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [],
+      "files": 1,
+      "commits": 4,
+      "comments": 4,
+      "reviewComments": 2
+    },
+    {
+      "PR": 20,
+      "title": "feat(tv5): Review/Finance rules và QA tuần 1 có bằng chứng",
+      "author": "nguyenminhduy090-alt",
+      "state": "MERGED",
+      "head": "8d02e7431289d94bef16ff75a256f6e734f5b3fc",
+      "headRef": "codex/tv5-w1-review-finance-qa",
+      "base": "d6ddbb8261594024837a4b581003849e693a9335",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [
+        "lexuanbao258-collab",
+        "tranvanchinhbg2006-alt",
+        "duyxl56785",
+        "phamthecuong2022006-alt"
+      ],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "duyxl56785"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-16T01:47:22Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/20#pullrequestreview-5542030627",
+          "commit": {
+            "oid": "02223789e997774887c293f709cbe607b4e11626"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [],
+      "files": 40,
+      "commits": 7,
+      "comments": 3,
+      "reviewComments": 0
+    },
+    {
+      "PR": 21,
+      "title": "docs(tv5): làm rõ contract Review và Finance trong kế hoạch #19",
+      "author": "nguyenminhduy090-alt",
+      "state": "MERGED",
+      "head": "e8efeda10255a56c263168db80817a76bc465214",
+      "headRef": "codex/tv5-plan-contract-clarifications",
+      "base": "ea754cef9382e0a64facfc62da92d25f41b0b29f",
+      "baseRef": "docs/cod-mvp-21-day-plan",
+      "mergeable": null,
+      "requestedReviewers": [
+        "duyxl56785"
+      ],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "duyxl56785"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-15T15:45:23Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/21#pullrequestreview-5535872908",
+          "commit": {
+            "oid": "e8efeda10255a56c263168db80817a76bc465214"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [],
+      "files": 1,
+      "commits": 1,
+      "comments": 0,
+      "reviewComments": 0
+    },
+    {
+      "PR": 22,
+      "title": "chore(build): add verified Gradle wrapper (refs #1)",
+      "author": "lexuanbao258-collab",
+      "state": "MERGED",
+      "head": "8af4cbe5ed6dba7b43ca7c85cb69aa58b2b674f8",
+      "headRef": "chore/tv1-gradle-wrapper",
+      "base": "d6ddbb8261594024837a4b581003849e693a9335",
+      "baseRef": "main",
+      "mergeable": null,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "duyxl56785"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-16T00:19:46Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/22#pullrequestreview-5541487054",
+          "commit": {
+            "oid": "8af4cbe5ed6dba7b43ca7c85cb69aa58b2b674f8"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [],
+      "files": 7,
+      "commits": 1,
+      "comments": 0,
+      "reviewComments": 0
+    },
+    {
+      "PR": 23,
+      "title": "docs(auth): đề xuất Auth/JWT/Identity/Gateway contract TV1 (refs #1)",
+      "author": "lexuanbao258-collab",
+      "state": "MERGED",
+      "head": "bfcf5bd68084fbd60dd24aaa109f6ad447ca2195",
+      "headRef": "docs/tv1-auth-contract",
+      "base": "d6ddbb8261594024837a4b581003849e693a9335",
+      "baseRef": "main",
+      "mergeable": null,
+      "requestedReviewers": [
+        "duyxl56785"
+      ],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "duyxl56785"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-16T00:28:34Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/23#pullrequestreview-5541539738",
+          "commit": {
+            "oid": "bfcf5bd68084fbd60dd24aaa109f6ad447ca2195"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [],
+      "files": 2,
+      "commits": 1,
+      "comments": 0,
+      "reviewComments": 4
+    },
+    {
+      "PR": 24,
+      "title": "docs(architecture): chốt Contract Auth/JWT v1.0 TV1 (refs #1)",
+      "author": "lexuanbao258-collab",
+      "state": "MERGED",
+      "head": "c8a4b44e546115fbcfacd3e29c014adc61e48fb8",
+      "headRef": "feat/tv1-contract-v1",
+      "base": "230d760fd71b8359bb00d4100c2eebb4829d1ffe",
+      "baseRef": "main",
+      "mergeable": null,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "duyxl56785"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-16T01:46:20Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/24#pullrequestreview-5542024723",
+          "commit": {
+            "oid": "c8a4b44e546115fbcfacd3e29c014adc61e48fb8"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [],
+      "files": 4,
+      "commits": 1,
+      "comments": 0,
+      "reviewComments": 0
+    },
+    {
+      "PR": 25,
+      "title": "feat(seller): add versioned persistence and transactional lifecycle",
+      "author": "duyxl56785",
+      "state": "MERGED",
+      "head": "52bee9360a61d55c1cb9bc4a6cbe210b0081b620",
+      "headRef": "feat/tv2-seller-persistence",
+      "base": "82dea095354c6d70b89379f0f33e49660b80e7a6",
+      "baseRef": "feat/tv2-seller-product",
+      "mergeable": true,
+      "requestedReviewers": [
+        "lexuanbao258-collab"
+      ],
+      "effectiveReviews": [],
+      "reviewDecision": null,
+      "openThreads": 0,
+      "CI": [],
+      "files": 14,
+      "commits": 4,
+      "comments": 3,
+      "reviewComments": 0
+    },
+    {
+      "PR": 26,
+      "title": "docs(tv4): Week 1 baseline, test matrix, and handoff",
+      "author": "phamthecuong2022006-alt",
+      "state": "MERGED",
+      "head": "c4288d5c8c0cc4b8e3919dfce988b05c95a726a6",
+      "headRef": "tv4/week1-analysis",
+      "base": "230d760fd71b8359bb00d4100c2eebb4829d1ffe",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [
+        "tranvanchinhbg2006-alt"
+      ],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "duyxl56785"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-17T17:16:22Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/26#pullrequestreview-5559022088",
+          "commit": {
+            "oid": "c4288d5c8c0cc4b8e3919dfce988b05c95a726a6"
+          }
+        },
+        {
+          "author": {
+            "login": "nguyenminhduy090-alt"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-17T14:56:56Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/26#pullrequestreview-5558347337",
+          "commit": {
+            "oid": "c4288d5c8c0cc4b8e3919dfce988b05c95a726a6"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [],
+      "files": 3,
+      "commits": 4,
+      "comments": 1,
+      "reviewComments": 6
+    },
+    {
+      "PR": 27,
+      "title": "chore(tv1): prepare Auth User database infrastructure",
+      "author": "lexuanbao258-collab",
+      "state": "MERGED",
+      "head": "cebd1a390efa25a3517200177ab0359caa99cbde",
+      "headRef": "chore/tv1-auth-readiness",
+      "base": "98268c291ed30ed5df1c981073e23bfa9b5093b2",
+      "baseRef": "main",
+      "mergeable": null,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "duyxl56785"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-17T16:23:39Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/27#pullrequestreview-5558747994",
+          "commit": {
+            "oid": "cebd1a390efa25a3517200177ab0359caa99cbde"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/39047263103/job/117438386289"
+        }
+      ],
+      "files": 55,
+      "commits": 6,
+      "comments": 5,
+      "reviewComments": 2
+    },
+    {
+      "PR": 28,
+      "title": "feat(tv3): Cart & Checkout COD multi-store, idempotency — W1 (refs #3)",
+      "author": "tranvanchinhbg2006-alt",
+      "state": "MERGED",
+      "head": "382f799866249342e5c8b7631c404509200f9222",
+      "headRef": "feat/tv3-cart-checkout-week1",
+      "base": "ab00881e340cc068df57a204f038a58a60d0ed34",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "lexuanbao258-collab"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-18T15:09:32Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/28#pullrequestreview-5563607286",
+          "commit": {
+            "oid": "382f799866249342e5c8b7631c404509200f9222"
+          }
+        },
+        {
+          "author": {
+            "login": "duyxl56785"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-18T04:34:46Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/28#pullrequestreview-5561443611",
+          "commit": {
+            "oid": "bd5ff09e89a50fea198fac38967d1565215fe2fe"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/39138761544/job/117708617850"
+        }
+      ],
+      "files": 391,
+      "commits": 55,
+      "comments": 52,
+      "reviewComments": 11
+    },
+    {
+      "PR": 29,
+      "title": "feat(seller): deliver verified PostgreSQL persistence to main (refs #2)",
+      "author": "duyxl56785",
+      "state": "MERGED",
+      "head": "f8b0ff4c3d0fbb4fc141cdf9ff98150b230142b8",
+      "headRef": "feat/tv2-seller-persistence",
+      "base": "98268c291ed30ed5df1c981073e23bfa9b5093b2",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "nguyenminhduy090-alt"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-17T14:58:35Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/29#pullrequestreview-5558354287",
+          "commit": {
+            "oid": "f8b0ff4c3d0fbb4fc141cdf9ff98150b230142b8"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [],
+      "files": 14,
+      "commits": 5,
+      "comments": 4,
+      "reviewComments": 0
+    },
+    {
+      "PR": 30,
+      "title": "docs(qa): verify TV5 week 1 gates with PostgreSQL evidence (Refs #5)",
+      "author": "nguyenminhduy090-alt",
+      "state": "MERGED",
+      "head": "9c5094cc8d4164d036fd2601f60741e7ceca3562",
+      "headRef": "codex/tv5-w1-acceptance-evidence",
+      "base": "98268c291ed30ed5df1c981073e23bfa9b5093b2",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "lexuanbao258-collab"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-17T15:53:53Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/30#pullrequestreview-5558612614",
+          "commit": {
+            "oid": "9c5094cc8d4164d036fd2601f60741e7ceca3562"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [],
+      "files": 49,
+      "commits": 6,
+      "comments": 0,
+      "reviewComments": 0
+    },
+    {
+      "PR": 31,
+      "title": "feat(tv4): implement inventory ledger and idempotent stock operations — W1",
+      "author": "phamthecuong2022006-alt",
+      "state": "MERGED",
+      "head": "6fa018c340381d4220297a34b7b022115e3064c6",
+      "headRef": "feat/tv4-inventory-w1",
+      "base": "98268c291ed30ed5df1c981073e23bfa9b5093b2",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [
+        "lexuanbao258-collab",
+        "tranvanchinhbg2006-alt"
+      ],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "duyxl56785"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-17T17:16:08Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/31#pullrequestreview-5559020762",
+          "commit": {
+            "oid": "6fa018c340381d4220297a34b7b022115e3064c6"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/39052106310/job/117452612314"
+        }
+      ],
+      "files": 94,
+      "commits": 54,
+      "comments": 11,
+      "reviewComments": 21
+    },
+    {
+      "PR": 32,
+      "title": "fix(docs): align PR19 plan with HS256 and merged baseline (Refs #5)",
+      "author": "nguyenminhduy090-alt",
+      "state": "MERGED",
+      "head": "0c77df6fe81500cadc15d98ddeb851ae9cbe3231",
+      "headRef": "codex/tv5-fix-pr19-contract-docs",
+      "base": "1407e9d9f4f5b13286474728f1beefebcb163abc",
+      "baseRef": "docs/cod-mvp-21-day-plan",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "lexuanbao258-collab"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-17T15:20:55Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/32#pullrequestreview-5558449943",
+          "commit": {
+            "oid": "0c77df6fe81500cadc15d98ddeb851ae9cbe3231"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [],
+      "files": 1,
+      "commits": 1,
+      "comments": 0,
+      "reviewComments": 0
+    },
+    {
+      "PR": 33,
+      "title": "fix(order): address PR28 JWT replay and scanner blockers (Refs #5)",
+      "author": "nguyenminhduy090-alt",
+      "state": "MERGED",
+      "head": "11dcf3969dc61ced0b819931cd946d8719617763",
+      "headRef": "codex/tv5-fix-pr28-checkout",
+      "base": "63f63c16d8e031f080e88d9e60a82f7d64bdf1af",
+      "baseRef": "feat/tv3-cart-checkout-week1",
+      "mergeable": true,
+      "requestedReviewers": [
+        "lexuanbao258-collab"
+      ],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "lexuanbao258-collab"
+          },
+          "state": "CHANGES_REQUESTED",
+          "submittedAt": "2026-10-17T15:21:01Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/33#pullrequestreview-5558450397",
+          "commit": {
+            "oid": "59dc95263e35e76d9f3b32c113407e94fa1cac17"
+          }
+        }
+      ],
+      "reviewDecision": "CHANGES_REQUESTED",
+      "openThreads": 0,
+      "CI": [],
+      "files": 58,
+      "commits": 3,
+      "comments": 1,
+      "reviewComments": 0
+    },
+    {
+      "PR": 34,
+      "title": "docs(qa): verify owner timezone fix with independent PostgreSQL evidence (Refs #5 #27)",
+      "author": "nguyenminhduy090-alt",
+      "state": "MERGED",
+      "head": "369b4f8184fb70b32ea870e5d9e1fc5d572a6199",
+      "headRef": "codex/tv5-fix-pr27-timezone",
+      "base": "a8103128d3c25975097f4c264a5c2a860e7c0c7c",
+      "baseRef": "chore/tv1-auth-readiness",
+      "mergeable": true,
+      "requestedReviewers": [
+        "duyxl56785"
+      ],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "lexuanbao258-collab"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-17T15:46:14Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/34#pullrequestreview-5558571856",
+          "commit": {
+            "oid": "369b4f8184fb70b32ea870e5d9e1fc5d572a6199"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [],
+      "files": 36,
+      "commits": 2,
+      "comments": 0,
+      "reviewComments": 0
+    },
+    {
+      "PR": 35,
+      "title": "fix(test): restore Inventory unit test compilation (Refs #4 #5 #31)",
+      "author": "nguyenminhduy090-alt",
+      "state": "MERGED",
+      "head": "14df61b6fb0f6238862320c21ace19779bc59fce",
+      "headRef": "codex/tv5-fix-pr31-test-compilation",
+      "base": "1abfd4fc6a71fb6ba9d0daec902f8c8a53cf7e30",
+      "baseRef": "feat/tv4-inventory-w1",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [],
+      "reviewDecision": null,
+      "openThreads": 0,
+      "CI": [],
+      "files": 12,
+      "commits": 2,
+      "comments": 0,
+      "reviewComments": 0
+    },
+    {
+      "PR": 36,
+      "title": "test(inventory): verify DB fixes with deterministic PostgreSQL regressions (Refs #4 #5 #31)",
+      "author": "nguyenminhduy090-alt",
+      "state": "MERGED",
+      "head": "3a095dca44cbcb3621ac5aba67afd71b30f6234f",
+      "headRef": "codex/tv5-fix-pr31-database",
+      "base": "adc705ea69fee23049d0c02528c363aa7085e98e",
+      "baseRef": "feat/tv4-inventory-w1",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [],
+      "reviewDecision": null,
+      "openThreads": 0,
+      "CI": [],
+      "files": 60,
+      "commits": 5,
+      "comments": 1,
+      "reviewComments": 0
+    },
+    {
+      "PR": 37,
+      "title": "feat(tv2): week1 domain foundations and guarded Seller queries",
+      "author": "duyxl56785",
+      "state": "MERGED",
+      "head": "ef62086048e2c7a00ecee16db0cc3cde2413deb6",
+      "headRef": "feat/tv2-week1-completion",
+      "base": "edb6886121bc4909931674d08d33a45850ca8143",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [
+        "phamthecuong2022006-alt"
+      ],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "lexuanbao258-collab"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-18T14:00:08Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/37#pullrequestreview-5563289288",
+          "commit": {
+            "oid": "ef62086048e2c7a00ecee16db0cc3cde2413deb6"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/39119406936/job/117651739392"
+        }
+      ],
+      "files": 35,
+      "commits": 15,
+      "comments": 26,
+      "reviewComments": 0
+    },
+    {
+      "PR": 38,
+      "title": "test(inventory): verify RESERVE/CONSUME/RELEASE replay safety",
+      "author": "phamthecuong2022006-alt",
+      "state": "MERGED",
+      "head": "7a8d18eb54c3d134964a282ddd7612283dcea66c",
+      "headRef": "feat/tv4-reservation-recovery",
+      "base": "edb6886121bc4909931674d08d33a45850ca8143",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "lexuanbao258-collab"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-18T13:58:36Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/38#pullrequestreview-5563283875",
+          "commit": {
+            "oid": "7a8d18eb54c3d134964a282ddd7612283dcea66c"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/39104374938/job/117606976044"
+        }
+      ],
+      "files": 2,
+      "commits": 4,
+      "comments": 4,
+      "reviewComments": 0
+    },
+    {
+      "PR": 39,
+      "title": "docs(tv4): define fulfillment/COD contract and acceptance matrix",
+      "author": "phamthecuong2022006-alt",
+      "state": "MERGED",
+      "head": "4e4e6232bd9a515e11e1ab9ba433a6b2181c8efc",
+      "headRef": "feat/tv4-fulfillment-contract-w1",
+      "base": "edb6886121bc4909931674d08d33a45850ca8143",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "nguyenminhduy090-alt"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-20T04:05:30Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/39#pullrequestreview-5580637495",
+          "commit": {
+            "oid": "4e4e6232bd9a515e11e1ab9ba433a6b2181c8efc"
+          }
+        },
+        {
+          "author": {
+            "login": "tranvanchinhbg2006-alt"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-18T15:48:23Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/39#pullrequestreview-5563741645",
+          "commit": {
+            "oid": "ec2ae5af5162aa93482b9439d1b39dbb7abb3bec"
+          }
+        },
+        {
+          "author": {
+            "login": "lexuanbao258-collab"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-18T13:58:42Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/39#pullrequestreview-5563284202",
+          "commit": {
+            "oid": "ec2ae5af5162aa93482b9439d1b39dbb7abb3bec"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [],
+      "files": 1,
+      "commits": 5,
+      "comments": 19,
+      "reviewComments": 0
+    },
+    {
+      "PR": 40,
+      "title": "docs(qa): audit all current PR reviewers and fresh test evidence (Refs #5)",
+      "author": "nguyenminhduy090-alt",
+      "state": "MERGED",
+      "head": "e91312c8d897b8faf12fed151022508025719de1",
+      "headRef": "codex/tv5-w1-pr-audit-20261018",
+      "base": "edb6886121bc4909931674d08d33a45850ca8143",
+      "baseRef": "main",
+      "mergeable": null,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "duyxl56785"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-18T09:53:58Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/40#pullrequestreview-5562452107",
+          "commit": {
+            "oid": "e91312c8d897b8faf12fed151022508025719de1"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [],
+      "files": 55,
+      "commits": 2,
+      "comments": 2,
+      "reviewComments": 0
+    },
+    {
+      "PR": 41,
+      "title": "test(finance): current-head QA and versioned contract sign-off (TV5)",
+      "author": "nguyenminhduy090-alt",
+      "state": "MERGED",
+      "head": "aaf9d314b5ca907d5f5fead1394402e3cab690f9",
+      "headRef": "codex/tv5-finance-contract-qa",
+      "base": "bd5ff09e89a50fea198fac38967d1565215fe2fe",
+      "baseRef": "feat/tv3-cart-checkout-week1",
+      "mergeable": true,
+      "requestedReviewers": [
+        "duyxl56785"
+      ],
+      "effectiveReviews": [],
+      "reviewDecision": null,
+      "openThreads": 0,
+      "CI": [],
+      "files": 55,
+      "commits": 3,
+      "comments": 0,
+      "reviewComments": 0
+    },
+    {
+      "PR": 42,
+      "title": "test(finance): PostgreSQL bounds rollback and financial replay QA",
+      "author": "nguyenminhduy090-alt",
+      "state": "MERGED",
+      "head": "35297ac757261d85e9f3c50ebe4bf171c1fbf7fa",
+      "headRef": "codex/tv5-finance-persistence-regression",
+      "base": "55bf5ff086633eddd37c245abc809f5e0ce57be8",
+      "baseRef": "feat/tv3-cart-checkout-week1",
+      "mergeable": true,
+      "requestedReviewers": [
+        "duyxl56785"
+      ],
+      "effectiveReviews": [],
+      "reviewDecision": null,
+      "openThreads": 0,
+      "CI": [],
+      "files": 51,
+      "commits": 2,
+      "comments": 2,
+      "reviewComments": 0
+    },
+    {
+      "PR": 43,
+      "title": "test(qa): RED FIN-06 pre-reserve and precision replay diagnostics",
+      "author": "nguyenminhduy090-alt",
+      "state": "MERGED",
+      "head": "89cd293c08d7b9a840c9b022bd57866076d53a3c",
+      "headRef": "codex/tv5-fin06-checkout-diagnostic",
+      "base": "ee15851047c6f191f0fdbbd828f87f598db4ff44",
+      "baseRef": "feat/tv3-cart-checkout-week1",
+      "mergeable": true,
+      "requestedReviewers": [
+        "duyxl56785",
+        "phamthecuong2022006-alt"
+      ],
+      "effectiveReviews": [],
+      "reviewDecision": null,
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/39109948086/job/117623718563"
+        }
+      ],
+      "files": 34,
+      "commits": 5,
+      "comments": 0,
+      "reviewComments": 0
+    },
+    {
+      "PR": 44,
+      "title": "docs/test(tv5): publish M01 decisions and Finance preflight QA",
+      "author": "nguyenminhduy090-alt",
+      "state": "MERGED",
+      "head": "1311f8a9f14639c4e42c7b8fbf2446a934abfbf2",
+      "headRef": "codex/tv5-money-qa-acceptance",
+      "base": "5ce06305c558263607adf11411bcce1ef1464fd6",
+      "baseRef": "feat/tv3-cart-checkout-week1",
+      "mergeable": true,
+      "requestedReviewers": [
+        "lexuanbao258-collab",
+        "tranvanchinhbg2006-alt",
+        "duyxl56785",
+        "phamthecuong2022006-alt"
+      ],
+      "effectiveReviews": [],
+      "reviewDecision": null,
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/39120539501/job/117655069809"
+        }
+      ],
+      "files": 7,
+      "commits": 4,
+      "comments": 0,
+      "reviewComments": 0
+    },
+    {
+      "PR": 45,
+      "title": "docs(qa): hand off Finance evidence after PR44 integration",
+      "author": "nguyenminhduy090-alt",
+      "state": "MERGED",
+      "head": "9eb4ba0531815ea38a131c037216a41661b841ec",
+      "headRef": "codex/tv5-finance-evidence-handoff",
+      "base": "ca639bbc5e810d6206ec0ed221ebfb308ced227e",
+      "baseRef": "feat/tv3-cart-checkout-week1",
+      "mergeable": true,
+      "requestedReviewers": [
+        "lexuanbao258-collab",
+        "tranvanchinhbg2006-alt",
+        "duyxl56785",
+        "phamthecuong2022006-alt"
+      ],
+      "effectiveReviews": [],
+      "reviewDecision": null,
+      "openThreads": 0,
+      "CI": [],
+      "files": 73,
+      "commits": 3,
+      "comments": 0,
+      "reviewComments": 0
+    },
+    {
+      "PR": 46,
+      "title": "docs(finance): prepare scoped M01 owner sign-off and implementation gates",
+      "author": "nguyenminhduy090-alt",
+      "state": "MERGED",
+      "head": "e597dafe7ac1fe178f2105608570f978da97120f",
+      "headRef": "codex/tv5-m01-owner-signoff",
+      "base": "5a3788b34ec4a2a91611d88020442a27b9dc7948",
+      "baseRef": "feat/tv3-cart-checkout-week1",
+      "mergeable": true,
+      "requestedReviewers": [
+        "lexuanbao258-collab",
+        "tranvanchinhbg2006-alt",
+        "duyxl56785",
+        "phamthecuong2022006-alt"
+      ],
+      "effectiveReviews": [],
+      "reviewDecision": null,
+      "openThreads": 0,
+      "CI": [],
+      "files": 6,
+      "commits": 2,
+      "comments": 0,
+      "reviewComments": 0
+    },
+    {
+      "PR": 47,
+      "title": "docs(tv5): re-audit M01 and current Finance diagnostic evidence",
+      "author": "nguyenminhduy090-alt",
+      "state": "MERGED",
+      "head": "a879b08dce5ef7b5c59fc9fb1fa18d6221cb4406",
+      "headRef": "codex/tv5-m01-reaudit",
+      "base": "8cc5ce4af1beacfe0d8467ec037d55e59a065691",
+      "baseRef": "feat/tv3-cart-checkout-week1",
+      "mergeable": true,
+      "requestedReviewers": [
+        "duyxl56785"
+      ],
+      "effectiveReviews": [],
+      "reviewDecision": null,
+      "openThreads": 0,
+      "CI": [],
+      "files": 32,
+      "commits": 1,
+      "comments": 0,
+      "reviewComments": 0
+    },
+    {
+      "PR": 48,
+      "title": "docs(tv1): S01 Store authority and OD-09 service-pair implementation gates",
+      "author": "lexuanbao258-collab",
+      "state": "MERGED",
+      "head": "c0b485aa62ee3275fe56053bdc40497aedbd3a73",
+      "headRef": "docs/tv1-s01-od09-integration-gates-20261018",
+      "base": "ab00881e340cc068df57a204f038a58a60d0ed34",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "phamthecuong2022006-alt"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-18T15:21:18Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/48#pullrequestreview-5563655032",
+          "commit": {
+            "oid": "c0b485aa62ee3275fe56053bdc40497aedbd3a73"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [],
+      "files": 1,
+      "commits": 1,
+      "comments": 5,
+      "reviewComments": 0
+    },
+    {
+      "PR": 49,
+      "title": "feat(tv4): add fail-closed Order-to-Inventory pair gate",
+      "author": "phamthecuong2022006-alt",
+      "state": "MERGED",
+      "head": "0498d0bae741015582762ec29459c43cb6619723",
+      "headRef": "feat/tv4-order-inventory-pair-gate",
+      "base": "ab00881e340cc068df57a204f038a58a60d0ed34",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "lexuanbao258-collab"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-20T00:40:40Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/49#pullrequestreview-5579450640",
+          "commit": {
+            "oid": "0498d0bae741015582762ec29459c43cb6619723"
+          }
+        },
+        {
+          "author": {
+            "login": "tranvanchinhbg2006-alt"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-18T15:28:54Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/49#pullrequestreview-5563679307",
+          "commit": {
+            "oid": "0498d0bae741015582762ec29459c43cb6619723"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/39139614402/job/117711151745"
+        }
+      ],
+      "files": 6,
+      "commits": 14,
+      "comments": 10,
+      "reviewComments": 0
+    },
+    {
+      "PR": 50,
+      "title": "docs(qa): audit all PR reviews and verify Finance owner fixes",
+      "author": "nguyenminhduy090-alt",
+      "state": "MERGED",
+      "head": "80840365b510d5e90826ec92d317b51dd4c7f322",
+      "headRef": "codex/tv5-project-review-audit",
+      "base": "c1816752ae4436453c8fc557f2394a67f445b8f2",
+      "baseRef": "feat/tv3-cart-checkout-week1",
+      "mergeable": true,
+      "requestedReviewers": [
+        "lexuanbao258-collab",
+        "tranvanchinhbg2006-alt",
+        "duyxl56785",
+        "phamthecuong2022006-alt"
+      ],
+      "effectiveReviews": [],
+      "reviewDecision": null,
+      "openThreads": 0,
+      "CI": [],
+      "files": 48,
+      "commits": 2,
+      "comments": 0,
+      "reviewComments": 0
+    },
+    {
+      "PR": 51,
+      "title": "feat(tv1): add auth persistence V2 and regression tests",
+      "author": "lexuanbao258-collab",
+      "state": "MERGED",
+      "head": "f98f9325dab72c68470d938b4d840840bdc451e9",
+      "headRef": "feat/tv1-auth-database",
+      "base": "a0e99b981a752026f8f7d29e3c6b7c43b6e5ac45",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "duyxl56785"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-20T01:45:17Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/51#pullrequestreview-5579841142",
+          "commit": {
+            "oid": "f98f9325dab72c68470d938b4d840840bdc451e9"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/39347175407/job/118382474305"
+        }
+      ],
+      "files": 20,
+      "commits": 2,
+      "comments": 3,
+      "reviewComments": 2
+    },
+    {
+      "PR": 52,
+      "title": "feat(tv2): implement Store JPA persistence and S01 ownership",
+      "author": "duyxl56785",
+      "state": "MERGED",
+      "head": "a00d3db475394c02f9d7e3ece2000afb5cc279de",
+      "headRef": "feat/tv2-store-persistence",
+      "base": "a0e99b981a752026f8f7d29e3c6b7c43b6e5ac45",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "lexuanbao258-collab"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-20T00:39:53Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/52#pullrequestreview-5579445625",
+          "commit": {
+            "oid": "a00d3db475394c02f9d7e3ece2000afb5cc279de"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/39158420455/job/117766395089"
+        }
+      ],
+      "files": 12,
+      "commits": 3,
+      "comments": 2,
+      "reviewComments": 0
+    },
+    {
+      "PR": 53,
+      "title": "docs(m01): propose scoped Product price decisions pending authority",
+      "author": "duyxl56785",
+      "state": "MERGED",
+      "head": "d08f3e5154d7568d754dea8758a7a145ef2ab2b5",
+      "headRef": "codex/tv2-m01-price-proposal",
+      "base": "a0e99b981a752026f8f7d29e3c6b7c43b6e5ac45",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "lexuanbao258-collab"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-20T00:41:34Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/53#pullrequestreview-5579455852",
+          "commit": {
+            "oid": "d08f3e5154d7568d754dea8758a7a145ef2ab2b5"
+          }
+        },
+        {
+          "author": {
+            "login": "tranvanchinhbg2006-alt"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-20T00:31:43Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/53#pullrequestreview-5579396238",
+          "commit": {
+            "oid": "d08f3e5154d7568d754dea8758a7a145ef2ab2b5"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [],
+      "files": 2,
+      "commits": 1,
+      "comments": 0,
+      "reviewComments": 0
+    },
+    {
+      "PR": 54,
+      "title": "feat(tv3): W2 durable Inventory journal and fail-closed caller scaffold",
+      "author": "tranvanchinhbg2006-alt",
+      "state": "MERGED",
+      "head": "5955b1f3bc039c8239a4b99ce76c1a48b7b9fc23",
+      "headRef": "feat/tv3-inventory-journal-w2",
+      "base": "8cc82541a69459391b27da8cb633851d5c1e07b7",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [
+        "nguyenminhduy090-alt"
+      ],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "lexuanbao258-collab"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-20T02:09:15Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/54#pullrequestreview-5579972800",
+          "commit": {
+            "oid": "5955b1f3bc039c8239a4b99ce76c1a48b7b9fc23"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/39352637513/job/118400134166"
+        }
+      ],
+      "files": 11,
+      "commits": 2,
+      "comments": 4,
+      "reviewComments": 0
+    },
+    {
+      "PR": 55,
+      "title": "feat(tv2): implement secure Product image validation",
+      "author": "duyxl56785",
+      "state": "MERGED",
+      "head": "4e8a5ced0dea3db47be4a7a430e8ad961849903e",
+      "headRef": "feat/tv2-product-image-validation",
+      "base": "8cc82541a69459391b27da8cb633851d5c1e07b7",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [
+        "nguyenminhduy090-alt"
+      ],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "lexuanbao258-collab"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-20T01:15:44Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/55#pullrequestreview-5579657648",
+          "commit": {
+            "oid": "4e8a5ced0dea3db47be4a7a430e8ad961849903e"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/39351556205/job/118396652712"
+        }
+      ],
+      "files": 13,
+      "commits": 3,
+      "comments": 0,
+      "reviewComments": 0
+    },
+    {
+      "PR": 56,
+      "title": "feat(tv4): add isolated SellerOrder lifecycle domain rules",
+      "author": "phamthecuong2022006-alt",
+      "state": "MERGED",
+      "head": "8c88fffbc83dd5c562f0189ad400d76bd1aaf5ea",
+      "headRef": "tv4/fulfillment-lifecycle-domain",
+      "base": "8cc82541a69459391b27da8cb633851d5c1e07b7",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [
+        "nguyenminhduy090-alt"
+      ],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "tranvanchinhbg2006-alt"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-20T02:14:42Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/56#pullrequestreview-5580002869",
+          "commit": {
+            "oid": "8c88fffbc83dd5c562f0189ad400d76bd1aaf5ea"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/39357050059/job/118414124891"
+        }
+      ],
+      "files": 2,
+      "commits": 5,
+      "comments": 3,
+      "reviewComments": 0
+    },
+    {
+      "PR": 57,
+      "title": "test(tv4): reject noncanonical Inventory pair paths",
+      "author": "phamthecuong2022006-alt",
+      "state": "MERGED",
+      "head": "5532178965714458ac25d82c333c936512611023",
+      "headRef": "tv4/inventory-pair-path-guards",
+      "base": "8cc82541a69459391b27da8cb633851d5c1e07b7",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [
+        "lexuanbao258-collab"
+      ],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "lexuanbao258-collab"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-20T01:53:00Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/57#pullrequestreview-5579883923",
+          "commit": {
+            "oid": "82e4cf6309dfd7d7157439bd8d202a5582ec5997"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/39356162737/job/118411312530"
+        }
+      ],
+      "files": 1,
+      "commits": 3,
+      "comments": 2,
+      "reviewComments": 0
+    },
+    {
+      "PR": 58,
+      "title": "fix(tv3): fence late Inventory journal responses across exact-ID retries",
+      "author": "tranvanchinhbg2006-alt",
+      "state": "MERGED",
+      "head": "c85d74c885e6e6b9aee423d4a1f18099564958c8",
+      "headRef": "feat/tv3-inventory-attempt-fencing-w2",
+      "base": "864c941bd88aa31e2ebba77d903bbb512ce0f732",
+      "baseRef": "main",
+      "mergeable": null,
+      "requestedReviewers": [
+        "nguyenminhduy090-alt"
+      ],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "duyxl56785"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-20T02:53:02Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/58#pullrequestreview-5580226982",
+          "commit": {
+            "oid": "c85d74c885e6e6b9aee423d4a1f18099564958c8"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/39359326863/job/118421496283"
+        }
+      ],
+      "files": 5,
+      "commits": 1,
+      "comments": 1,
+      "reviewComments": 0
+    },
+    {
+      "PR": 59,
+      "title": "docs(tv5): QA acceptance for PR39 PR54 PR56 and post-merge gates",
+      "author": "nguyenminhduy090-alt",
+      "state": "MERGED",
+      "head": "2a109381d0604b288d4a4be316a8e89225420c58",
+      "headRef": "codex/tv5-acceptance-pr39-54-56",
+      "base": "864c941bd88aa31e2ebba77d903bbb512ce0f732",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "duyxl56785"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-20T02:53:44Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/59#pullrequestreview-5580230853",
+          "commit": {
+            "oid": "2a109381d0604b288d4a4be316a8e89225420c58"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [],
+      "files": 8,
+      "commits": 1,
+      "comments": 0,
+      "reviewComments": 0
+    },
+    {
+      "PR": 60,
+      "title": "test(tv3): audit Inventory RELEASE retry, UNKNOWN and multi-SKU durability",
+      "author": "tranvanchinhbg2006-alt",
+      "state": "CLOSED",
+      "head": "e0a28de663b3488178a616770eb82de9fd46e580",
+      "headRef": "test/tv3-inventory-release-retry-multisku",
+      "base": "03fb1b2e8a1c1261568446c1f9ed68d264784e4e",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [
+        "duyxl56785"
+      ],
+      "effectiveReviews": [],
+      "reviewDecision": "REVIEW_REQUIRED",
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/39362488782/job/118431609629"
+        }
+      ],
+      "files": 3,
+      "commits": 1,
+      "comments": 1,
+      "reviewComments": 0
+    },
+    {
+      "PR": 61,
+      "title": "docs(tv2): clarify W1 Seller/Store HTTP decisions and Catalog handoff",
+      "author": "duyxl56785",
+      "state": "MERGED",
+      "head": "0af4754b2d2b0925cd3b6c27f698f5d2667f66d1",
+      "headRef": "feat/tv2-w1-seller-store-catalog-handoff",
+      "base": "03fb1b2e8a1c1261568446c1f9ed68d264784e4e",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [
+        "lexuanbao258-collab",
+        "phamthecuong2022006-alt"
+      ],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "tranvanchinhbg2006-alt"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-20T03:36:44Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/61#pullrequestreview-5580471406",
+          "commit": {
+            "oid": "0af4754b2d2b0925cd3b6c27f698f5d2667f66d1"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/39363627175/job/118435278103"
+        }
+      ],
+      "files": 3,
+      "commits": 1,
+      "comments": 1,
+      "reviewComments": 0
+    },
+    {
+      "PR": 62,
+      "title": "feat(tv3): candidate Catalog batch fail-closed preflight to unblock Product→SKU",
+      "author": "tranvanchinhbg2006-alt",
+      "state": "CLOSED",
+      "head": "6a79016eae71a93c8d55207482bc4785bd5f3281",
+      "headRef": "feat/tv3-catalog-batch-preflight-scaffold",
+      "base": "03fb1b2e8a1c1261568446c1f9ed68d264784e4e",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [
+        "duyxl56785"
+      ],
+      "effectiveReviews": [],
+      "reviewDecision": "REVIEW_REQUIRED",
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/39364384128/job/118437706575"
+        }
+      ],
+      "files": 3,
+      "commits": 1,
+      "comments": 0,
+      "reviewComments": 0
+    },
+    {
+      "PR": 63,
+      "title": "docs(tv5): unblock owner handoffs with current Finance QA evidence",
+      "author": "nguyenminhduy090-alt",
+      "state": "MERGED",
+      "head": "3261a642a2ecfed17d5d2bed63db65b3471ce59d",
+      "headRef": "codex/tv5-unblock-handoff-20261020",
+      "base": "03fb1b2e8a1c1261568446c1f9ed68d264784e4e",
+      "baseRef": "main",
+      "mergeable": null,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "lexuanbao258-collab"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-22T07:59:36Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/63#pullrequestreview-5610965143",
+          "commit": {
+            "oid": "3261a642a2ecfed17d5d2bed63db65b3471ce59d"
+          }
+        },
+        {
+          "author": {
+            "login": "duyxl56785"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-21T16:50:28Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/63#pullrequestreview-5603157970",
+          "commit": {
+            "oid": "7fd2dee57e49b2f2e14365af96ef3f2606d6cb00"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [],
+      "files": 26,
+      "commits": 5,
+      "comments": 1,
+      "reviewComments": 0
+    },
+    {
+      "PR": 64,
+      "title": "test(inventory): reject malformed pair-gate operation types",
+      "author": "phamthecuong2022006-alt",
+      "state": "MERGED",
+      "head": "06ebfc423ede1bb07a2fa9b6804b21fe388991d7",
+      "headRef": "test/tv4-pairgate-input-shapes",
+      "base": "277951063c6188e43de122cecdcf4f5e35611613",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "lexuanbao258-collab"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-20T04:21:47Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/64#pullrequestreview-5580730129",
+          "commit": {
+            "oid": "06ebfc423ede1bb07a2fa9b6804b21fe388991d7"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/39366203380/job/118443516337"
+        }
+      ],
+      "files": 1,
+      "commits": 1,
+      "comments": 0,
+      "reviewComments": 0
+    },
+    {
+      "PR": 65,
+      "title": "test(inventory): cover multi-SKU release retries",
+      "author": "phamthecuong2022006-alt",
+      "state": "MERGED",
+      "head": "433e446aebb2fe07883ae504f583a0f7d512682a",
+      "headRef": "test/tv4-multisku-release-acceptance",
+      "base": "277951063c6188e43de122cecdcf4f5e35611613",
+      "baseRef": "main",
+      "mergeable": null,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "duyxl56785"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-21T16:52:04Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/65#pullrequestreview-5603178141",
+          "commit": {
+            "oid": "433e446aebb2fe07883ae504f583a0f7d512682a"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/39461364915/job/118761374990"
+        }
+      ],
+      "files": 3,
+      "commits": 3,
+      "comments": 3,
+      "reviewComments": 0
+    },
+    {
+      "PR": 66,
+      "title": "feat(tv2): prepare Seller Store responses and strict JSON contracts",
+      "author": "duyxl56785",
+      "state": "MERGED",
+      "head": "e20263e2c903455337e8a9802aa2ffb6b1da8378",
+      "headRef": "feat/tv2-seller-store-http-v02",
+      "base": "4f12b05d0d6408deb42cb329676e643351106fcd",
+      "baseRef": "main",
+      "mergeable": null,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "lexuanbao258-collab"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-22T08:00:45Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/66#pullrequestreview-5610976773",
+          "commit": {
+            "oid": "e20263e2c903455337e8a9802aa2ffb6b1da8378"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/39646530564/job/119383456537"
+        }
+      ],
+      "files": 20,
+      "commits": 4,
+      "comments": 6,
+      "reviewComments": 0
+    },
+    {
+      "PR": 67,
+      "title": "fix(tv3): enforce exact Cart NUMERIC(19,2) price snapshots before write",
+      "author": "tranvanchinhbg2006-alt",
+      "state": "MERGED",
+      "head": "add83ec2c7f43e5f942c42682d6a4574c152318d",
+      "headRef": "fix/tv3-cart-money-storage-exactness",
+      "base": "c2cf55a5b866937acd99ec554655aab249283d23",
+      "baseRef": "main",
+      "mergeable": null,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "lexuanbao258-collab"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-22T08:01:31Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/67#pullrequestreview-5610984350",
+          "commit": {
+            "oid": "add83ec2c7f43e5f942c42682d6a4574c152318d"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/39703681421/job/119578557545"
+        }
+      ],
+      "files": 3,
+      "commits": 1,
+      "comments": 1,
+      "reviewComments": 0
+    },
+    {
+      "PR": 68,
+      "title": "test(tv5): prove Cart money storage guard with PostgreSQL RED GREEN",
+      "author": "nguyenminhduy090-alt",
+      "state": "MERGED",
+      "head": "ae8ceaaccad5c527662345590005178bea8ee614",
+      "headRef": "codex/tv5-cart-storage-qa-20261022",
+      "base": "aca5dff247ef8eae3ce97c1a73b9474b87e94110",
+      "baseRef": "main",
+      "mergeable": null,
+      "requestedReviewers": [
+        "lexuanbao258-collab"
+      ],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "duyxl56785"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-22T17:23:33Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/68#pullrequestreview-5618190405",
+          "commit": {
+            "oid": "ae8ceaaccad5c527662345590005178bea8ee614"
+          }
+        },
+        {
+          "author": {
+            "login": "lexuanbao258-collab"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-22T08:02:13Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/68#pullrequestreview-5610991438",
+          "commit": {
+            "oid": "e24731fa823dc50ba826b9e110a317b983d8c2e5"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/39787162779/job/119853316352"
+        }
+      ],
+      "files": 7,
+      "commits": 5,
+      "comments": 0,
+      "reviewComments": 0
+    },
+    {
+      "PR": 69,
+      "title": "feat(inventory): add reservation ownership ledger candidate",
+      "author": "phamthecuong2022006-alt",
+      "state": "OPEN",
+      "head": "b7e4b427525689d5685419644352efafd9fe78e3",
+      "headRef": "feat/tv4-reservation-ledger-candidate",
+      "base": "ed85f6290de7f611c82e5c0ad973f98180f04df4",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "lexuanbao258-collab"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-23T00:17:49Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/69#pullrequestreview-5622479895",
+          "commit": {
+            "oid": "4eeeb3843f2795168ca03cdd3cd2e8be9f825ec6"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40206189723/job/121207517864"
+        }
+      ],
+      "files": 20,
+      "commits": 6,
+      "comments": 8,
+      "reviewComments": 0
+    },
+    {
+      "PR": 70,
+      "title": "fix(product): reject Unicode padding in exact SKU keys",
+      "author": "duyxl56785",
+      "state": "MERGED",
+      "head": "84b3257109f0e2138eb28fbc4406b40d214cf3e1",
+      "headRef": "fix/tv2-product-sku-boundary",
+      "base": "aca5dff247ef8eae3ce97c1a73b9474b87e94110",
+      "baseRef": "main",
+      "mergeable": null,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "phamthecuong2022006-alt"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-22T15:54:10Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/70#pullrequestreview-5617043634",
+          "commit": {
+            "oid": "84b3257109f0e2138eb28fbc4406b40d214cf3e1"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/39770384981/job/119796134797"
+        }
+      ],
+      "files": 3,
+      "commits": 2,
+      "comments": 1,
+      "reviewComments": 0
+    },
+    {
+      "PR": 71,
+      "title": "fix(catalog): reject conflicting Seller to Store facts",
+      "author": "duyxl56785",
+      "state": "MERGED",
+      "head": "59589902228a83eec72888bed6d4dca8084ab2c3",
+      "headRef": "fix/tv2-catalog-seller-store-consistency",
+      "base": "aca5dff247ef8eae3ce97c1a73b9474b87e94110",
+      "baseRef": "main",
+      "mergeable": null,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "tranvanchinhbg2006-alt"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-23T15:17:56Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/71#pullrequestreview-5630413853",
+          "commit": {
+            "oid": "59589902228a83eec72888bed6d4dca8084ab2c3"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/39771174478/job/119798802584"
+        }
+      ],
+      "files": 2,
+      "commits": 1,
+      "comments": 1,
+      "reviewComments": 0
+    },
+    {
+      "PR": 72,
+      "title": "fix(product): reject surplus inflated PNG scanline data",
+      "author": "duyxl56785",
+      "state": "MERGED",
+      "head": "c0329a6278e0a3108f96b3b1485882a18177d929",
+      "headRef": "fix/tv2-png-scanline-validation",
+      "base": "aca5dff247ef8eae3ce97c1a73b9474b87e94110",
+      "baseRef": "main",
+      "mergeable": null,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "lexuanbao258-collab"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-23T00:18:09Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/72#pullrequestreview-5622481902",
+          "commit": {
+            "oid": "c0329a6278e0a3108f96b3b1485882a18177d929"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/39775742353/job/119814095404"
+        }
+      ],
+      "files": 3,
+      "commits": 1,
+      "comments": 0,
+      "reviewComments": 0
+    },
+    {
+      "PR": 73,
+      "title": "docs(tv5): verify reservation and Product follow-up QA",
+      "author": "nguyenminhduy090-alt",
+      "state": "MERGED",
+      "head": "b2c3e79948f8694de3630ab9e8a009f3c7c13e27",
+      "headRef": "codex/tv5-reservation-review-handoff-20261022",
+      "base": "aca5dff247ef8eae3ce97c1a73b9474b87e94110",
+      "baseRef": "main",
+      "mergeable": null,
+      "requestedReviewers": [
+        "lexuanbao258-collab",
+        "tranvanchinhbg2006-alt",
+        "phamthecuong2022006-alt"
+      ],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "duyxl56785"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-22T17:25:17Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/73#pullrequestreview-5618217189",
+          "commit": {
+            "oid": "b2c3e79948f8694de3630ab9e8a009f3c7c13e27"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [],
+      "files": 15,
+      "commits": 2,
+      "comments": 0,
+      "reviewComments": 0
+    },
+    {
+      "PR": 74,
+      "title": "feat(catalog): add reusable Vietnamese Category Browser",
+      "author": "duyxl56785",
+      "state": "MERGED",
+      "head": "2215d61685c8b28e3ecc31cb8c638ca6f13182a0",
+      "headRef": "feat/tv2-frontend-category-catalog",
+      "base": "aca5dff247ef8eae3ce97c1a73b9474b87e94110",
+      "baseRef": "main",
+      "mergeable": null,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "lexuanbao258-collab"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-23T00:18:29Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/74#pullrequestreview-5622483932",
+          "commit": {
+            "oid": "2215d61685c8b28e3ecc31cb8c638ca6f13182a0"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [],
+      "files": 13,
+      "commits": 4,
+      "comments": 0,
+      "reviewComments": 0
+    },
+    {
+      "PR": 75,
+      "title": "fix(tv3): fail closed on Unicode-padded Inventory SKU intent",
+      "author": "tranvanchinhbg2006-alt",
+      "state": "MERGED",
+      "head": "c9936adccfb7dfdb80ec974d34a97757a6ad3551",
+      "headRef": "fix/tv3-inventory-sku-unicode-boundary-20261022",
+      "base": "aca5dff247ef8eae3ce97c1a73b9474b87e94110",
+      "baseRef": "main",
+      "mergeable": null,
+      "requestedReviewers": [
+        "nguyenminhduy090-alt"
+      ],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "duyxl56785"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-22T17:28:29Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/75#pullrequestreview-5618256683",
+          "commit": {
+            "oid": "c9936adccfb7dfdb80ec974d34a97757a6ad3551"
+          }
+        },
+        {
+          "author": {
+            "login": "phamthecuong2022006-alt"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-22T15:54:22Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/75#pullrequestreview-5617046194",
+          "commit": {
+            "oid": "c9936adccfb7dfdb80ec974d34a97757a6ad3551"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/39797042337/job/119886829312"
+        }
+      ],
+      "files": 2,
+      "commits": 2,
+      "comments": 2,
+      "reviewComments": 0
+    },
+    {
+      "PR": 76,
+      "title": "feat(seller): add private Seller Store overview components",
+      "author": "duyxl56785",
+      "state": "MERGED",
+      "head": "93f6a084f94dbcd32726ed451cbb1c69d9da6058",
+      "headRef": "feat/tv2-frontend-seller-store-overview",
+      "base": "aca5dff247ef8eae3ce97c1a73b9474b87e94110",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "lexuanbao258-collab"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-23T00:18:50Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/76#pullrequestreview-5622486170",
+          "commit": {
+            "oid": "93f6a084f94dbcd32726ed451cbb1c69d9da6058"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [],
+      "files": 12,
+      "commits": 2,
+      "comments": 0,
+      "reviewComments": 0
+    },
+    {
+      "PR": 77,
+      "title": "feat(tv3): restore Catalog batch preflight with Unicode and S01 consistency guards",
+      "author": "tranvanchinhbg2006-alt",
+      "state": "MERGED",
+      "head": "cbbdb8667f689eddb75690274636504efc664706",
+      "headRef": "feat/tv3-catalog-preflight-s01-unicode-20261022",
+      "base": "aca5dff247ef8eae3ce97c1a73b9474b87e94110",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [
+        "phamthecuong2022006-alt"
+      ],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "duyxl56785"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-22T17:28:34Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/77#pullrequestreview-5618257780",
+          "commit": {
+            "oid": "cbbdb8667f689eddb75690274636504efc664706"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/39799849322/job/119897118709"
+        }
+      ],
+      "files": 3,
+      "commits": 3,
+      "comments": 3,
+      "reviewComments": 0
+    },
+    {
+      "PR": 78,
+      "title": "test(tv3): restore multi-SKU Inventory journal recovery and replay regressions",
+      "author": "tranvanchinhbg2006-alt",
+      "state": "MERGED",
+      "head": "ac5da331e8cf6128b26ee850f87eef18d99a3317",
+      "headRef": "test/tv3-inventory-recovery-regression-20261022",
+      "base": "aca5dff247ef8eae3ce97c1a73b9474b87e94110",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "duyxl56785"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-22T17:28:23Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/78#pullrequestreview-5618255429",
+          "commit": {
+            "oid": "ac5da331e8cf6128b26ee850f87eef18d99a3317"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/39802869540/job/119908171234"
+        }
+      ],
+      "files": 3,
+      "commits": 3,
+      "comments": 3,
+      "reviewComments": 0
+    },
+    {
+      "PR": 79,
+      "title": "fix(tv3): reject contradictory Seller-to-Store Checkout snapshots before reserve",
+      "author": "tranvanchinhbg2006-alt",
+      "state": "MERGED",
+      "head": "f8a242d5af2fb9095ed707ca551b8c92d8fd9102",
+      "headRef": "fix/tv3-checkout-seller-store-s01-20261022",
+      "base": "aca5dff247ef8eae3ce97c1a73b9474b87e94110",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "phamthecuong2022006-alt"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-23T00:29:55Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/79#pullrequestreview-5622552940",
+          "commit": {
+            "oid": "f8a242d5af2fb9095ed707ca551b8c92d8fd9102"
+          }
+        },
+        {
+          "author": {
+            "login": "duyxl56785"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-22T17:28:16Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/79#pullrequestreview-5618253785",
+          "commit": {
+            "oid": "f8a242d5af2fb9095ed707ca551b8c92d8fd9102"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/39804858479/job/119915230634"
+        }
+      ],
+      "files": 2,
+      "commits": 2,
+      "comments": 2,
+      "reviewComments": 0
+    },
+    {
+      "PR": 80,
+      "title": "feat(tv1-auth): start HS256 JWT and current-account authority foundation",
+      "author": "lexuanbao258-collab",
+      "state": "OPEN",
+      "head": "00c962c037b4191642f2ce857109945be3e35177",
+      "headRef": "feat/tv1-auth-jwt-current-authority-foundation-20261023",
+      "base": "854d922bd7f1c1d7d9c5a6ef3ff2e04e6dca2b9c",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "duyxl56785"
+          },
+          "state": "CHANGES_REQUESTED",
+          "submittedAt": "2026-10-25T13:17:26Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/80#pullrequestreview-5643354815",
+          "commit": {
+            "oid": "dfdc8143c4a86cdfce8eefc9a98e1b07126da41d"
+          }
+        }
+      ],
+      "reviewDecision": "CHANGES_REQUESTED",
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40426346286/job/121932943344"
+        }
+      ],
+      "files": 18,
+      "commits": 23,
+      "comments": 10,
+      "reviewComments": 7
+    },
+    {
+      "PR": 81,
+      "title": "docs(tv5): verify current Order Finance and browser acceptance",
+      "author": "nguyenminhduy090-alt",
+      "state": "MERGED",
+      "head": "45ed89ad69f2a3e920f25e8fbd3939117481a24a",
+      "headRef": "codex/tv5-review-owner-handoff-20261023",
+      "base": "e55f6b893799afe96b56297a86b1884578f4567c",
+      "baseRef": "main",
+      "mergeable": null,
+      "requestedReviewers": [
+        "lexuanbao258-collab",
+        "phamthecuong2022006-alt"
+      ],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "duyxl56785"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-23T18:18:52Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/81#pullrequestreview-5632684048",
+          "commit": {
+            "oid": "45ed89ad69f2a3e920f25e8fbd3939117481a24a"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [],
+      "files": 16,
+      "commits": 4,
+      "comments": 0,
+      "reviewComments": 0
+    },
+    {
+      "PR": 82,
+      "title": "fix(tv5-auth): map lazy-role read failure with unchanged PostgreSQL regression",
+      "author": "nguyenminhduy090-alt",
+      "state": "MERGED",
+      "head": "3338cfd4d995fe286beb4be342681d5685eba5fb",
+      "headRef": "codex/tv5-auth-current-authority-pg-20261023",
+      "base": "f88da6d2f87acfa136c955e8d099b9465c72f807",
+      "baseRef": "feat/tv1-auth-jwt-current-authority-foundation-20261023",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "duyxl56785"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-23T18:28:37Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/82#pullrequestreview-5632811430",
+          "commit": {
+            "oid": "3338cfd4d995fe286beb4be342681d5685eba5fb"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/39888638223/job/120202740186"
+        }
+      ],
+      "files": 7,
+      "commits": 3,
+      "comments": 1,
+      "reviewComments": 0
+    },
+    {
+      "PR": 83,
+      "title": "test(tv2): align SQL candidate regressions with production Product schema",
+      "author": "duyxl56785",
+      "state": "MERGED",
+      "head": "c831edb4d7c610b76e434222d51b115cfb863d81",
+      "headRef": "feat/tv2-product-persistence",
+      "base": "ed85f6290de7f611c82e5c0ad973f98180f04df4",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "lexuanbao258-collab"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-25T13:43:37Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/83#pullrequestreview-5643469786",
+          "commit": {
+            "oid": "c831edb4d7c610b76e434222d51b115cfb863d81"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40197534885/job/121181511230"
+        }
+      ],
+      "files": 3,
+      "commits": 4,
+      "comments": 1,
+      "reviewComments": 3
+    },
+    {
+      "PR": 84,
+      "title": "docs(m01): prepare Product Price/Schema human sign-off",
+      "author": "duyxl56785",
+      "state": "MERGED",
+      "head": "463338e4fc3823b0720e1f840e637e0c5e946148",
+      "headRef": "docs/tv2-m01-price-schema-signoff",
+      "base": "33853a1db219b45ff045e6e81c621275e831007a",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "nguyenminhduy090-alt"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-24T06:24:29Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/84#pullrequestreview-5637148973",
+          "commit": {
+            "oid": "463338e4fc3823b0720e1f840e637e0c5e946148"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [],
+      "files": 2,
+      "commits": 1,
+      "comments": 2,
+      "reviewComments": 0
+    },
+    {
+      "PR": 85,
+      "title": "feat(tv2): prepare guarded Seller Store commands and deny-default HTTP",
+      "author": "duyxl56785",
+      "state": "DRAFT",
+      "head": "20be75527ad62b2e7c4d06d088b16963cd1bfb16",
+      "headRef": "feat/tv2-seller-store-http-read",
+      "base": "bb0b9a2d0d2e909a59653619bce98c77f75e77d2",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [],
+      "reviewDecision": "REVIEW_REQUIRED",
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "failure",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40824114155/job/123283091230"
+        }
+      ],
+      "files": 14,
+      "commits": 6,
+      "comments": 1,
+      "reviewComments": 0
+    },
+    {
+      "PR": 86,
+      "title": "feat(tv3): isolated multi-Store Cart and COD Checkout UI without shared wiring",
+      "author": "tranvanchinhbg2006-alt",
+      "state": "MERGED",
+      "head": "28a8abcd5cf76b298e1e6b817da16337ba322ec6",
+      "headRef": "feat/tv3-isolated-cart-cod-ui-20261023",
+      "base": "33853a1db219b45ff045e6e81c621275e831007a",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "duyxl56785"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-27T16:45:19Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/86#pullrequestreview-5670946149",
+          "commit": {
+            "oid": "28a8abcd5cf76b298e1e6b817da16337ba322ec6"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [],
+      "files": 21,
+      "commits": 36,
+      "comments": 1,
+      "reviewComments": 8
+    },
+    {
+      "PR": 87,
+      "title": "feat(product): implement internal validated image storage",
+      "author": "duyxl56785",
+      "state": "MERGED",
+      "head": "7f2c6b2fc45055635b2fcf7d3b05bba4a854465a",
+      "headRef": "feat/tv2-product-image-storage",
+      "base": "ceee8c8c4699e0b76a180c24365e4068d4c29770",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "nguyenminhduy090-alt"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-27T17:04:29Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/87#pullrequestreview-5671228181",
+          "commit": {
+            "oid": "7f2c6b2fc45055635b2fcf7d3b05bba4a854465a"
+          }
+        },
+        {
+          "author": {
+            "login": "lexuanbao258-collab"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-27T09:09:58Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/87#pullrequestreview-5664616699",
+          "commit": {
+            "oid": "7f2c6b2fc45055635b2fcf7d3b05bba4a854465a"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40470007604/job/122074575516"
+        }
+      ],
+      "files": 6,
+      "commits": 4,
+      "comments": 3,
+      "reviewComments": 0
+    },
+    {
+      "PR": 88,
+      "title": "feat(product): implement production Product persistence with exact VND and SKU constraints",
+      "author": "duyxl56785",
+      "state": "MERGED",
+      "head": "199211beb55656f88c7b33850289e887d1390fbe",
+      "headRef": "feat/tv2-product-production-persistence",
+      "base": "23f583dd7dae164b0a2932d1fe66b2d0eaffdd9d",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "nguyenminhduy090-alt"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-24T18:08:45Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/88#pullrequestreview-5639341936",
+          "commit": {
+            "oid": "199211beb55656f88c7b33850289e887d1390fbe"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40082846659/job/120839766270"
+        }
+      ],
+      "files": 21,
+      "commits": 2,
+      "comments": 1,
+      "reviewComments": 0
+    },
+    {
+      "PR": 89,
+      "title": "feat(product): connect lifecycle operations to production persistence",
+      "author": "duyxl56785",
+      "state": "MERGED",
+      "head": "17f98f4fc96b19f784fe39eeb5fd0c90e49915f6",
+      "headRef": "codex/tv2-product-lifecycle-persistence",
+      "base": "ed85f6290de7f611c82e5c0ad973f98180f04df4",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "nguyenminhduy090-alt"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-26T14:16:27Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/89#pullrequestreview-5653394111",
+          "commit": {
+            "oid": "17f98f4fc96b19f784fe39eeb5fd0c90e49915f6"
+          }
+        },
+        {
+          "author": {
+            "login": "lexuanbao258-collab"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-25T11:11:37Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/89#pullrequestreview-5642873639",
+          "commit": {
+            "oid": "17f98f4fc96b19f784fe39eeb5fd0c90e49915f6"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40182643630/job/121136751572"
+        }
+      ],
+      "files": 6,
+      "commits": 2,
+      "comments": 4,
+      "reviewComments": 0
+    },
+    {
+      "PR": 90,
+      "title": "feat(catalog): add PostgreSQL-backed Product batch lookup",
+      "author": "duyxl56785",
+      "state": "MERGED",
+      "head": "0f9c0c84a310bcfcf86f06592b64aed6690258dd",
+      "headRef": "feat/tv2-catalog-postgres-batch-source",
+      "base": "1833dd4e5baf61683adaea34a54b6bb9a239e43d",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "nguyenminhduy090-alt"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-27T01:05:26Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/90#pullrequestreview-5661077942",
+          "commit": {
+            "oid": "0f9c0c84a310bcfcf86f06592b64aed6690258dd"
+          }
+        },
+        {
+          "author": {
+            "login": "lexuanbao258-collab"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-27T00:33:17Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/90#pullrequestreview-5660887381",
+          "commit": {
+            "oid": "0f9c0c84a310bcfcf86f06592b64aed6690258dd"
+          }
+        },
+        {
+          "author": {
+            "login": "tranvanchinhbg2006-alt"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-25T12:42:46Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/90#pullrequestreview-5643242610",
+          "commit": {
+            "oid": "0f9c0c84a310bcfcf86f06592b64aed6690258dd"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40436485990/job/121966244090"
+        }
+      ],
+      "files": 6,
+      "commits": 5,
+      "comments": 5,
+      "reviewComments": 0
+    },
+    {
+      "PR": 91,
+      "title": "feat(catalog): add PostgreSQL Product candidate search",
+      "author": "duyxl56785",
+      "state": "MERGED",
+      "head": "e19624e47748be2404eab532ad62b809d0262bf7",
+      "headRef": "feat/tv2-catalog-search-postgres",
+      "base": "7d68e11ce3327aa0ac423938ab9d97a174438b78",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "lexuanbao258-collab"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-25T13:43:39Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/91#pullrequestreview-5643470036",
+          "commit": {
+            "oid": "e19624e47748be2404eab532ad62b809d0262bf7"
+          }
+        },
+        {
+          "author": {
+            "login": "nguyenminhduy090-alt"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-26T14:17:16Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/91#pullrequestreview-5653406890",
+          "commit": {
+            "oid": "e19624e47748be2404eab532ad62b809d0262bf7"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40440576174/job/121979687903"
+        }
+      ],
+      "files": 7,
+      "commits": 3,
+      "comments": 2,
+      "reviewComments": 0
+    },
+    {
+      "PR": 92,
+      "title": "docs(tv5): refresh verified Auth parent QA and bootstrap handoff",
+      "author": "nguyenminhduy090-alt",
+      "state": "MERGED",
+      "head": "67a802bd247fe93fe7f9aa944a64abebe8748d9a",
+      "headRef": "codex/tv5-auth-pg-handoff-20261025",
+      "base": "c8ebb98ed77b4e0ec7a8ef9b00839c31523c9ea2",
+      "baseRef": "feat/tv1-auth-jwt-current-authority-foundation-20261023",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "duyxl56785"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-25T13:17:30Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/92#pullrequestreview-5643355055",
+          "commit": {
+            "oid": "67a802bd247fe93fe7f9aa944a64abebe8748d9a"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [],
+      "files": 2,
+      "commits": 2,
+      "comments": 1,
+      "reviewComments": 0
+    },
+    {
+      "PR": 93,
+      "title": "docs(tv5): publish PR backlog QA and owner unblock evidence",
+      "author": "nguyenminhduy090-alt",
+      "state": "MERGED",
+      "head": "310a5d0ff3c5248ef01b55058af24d0a97f997a0",
+      "headRef": "codex/tv5-pr-backlog-20261025",
+      "base": "23f583dd7dae164b0a2932d1fe66b2d0eaffdd9d",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "duyxl56785"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-27T16:35:53Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/93#pullrequestreview-5670813948",
+          "commit": {
+            "oid": "310a5d0ff3c5248ef01b55058af24d0a97f997a0"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [],
+      "files": 74,
+      "commits": 13,
+      "comments": 0,
+      "reviewComments": 0
+    },
+    {
+      "PR": 94,
+      "title": "feat(seller): provide current Store Seller ownership facts",
+      "author": "duyxl56785",
+      "state": "MERGED",
+      "head": "96d59ca320845495dd2ce6acf42d0b10ee0286a6",
+      "headRef": "codex/tv2-seller-store-current-facts",
+      "base": "ed85f6290de7f611c82e5c0ad973f98180f04df4",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "nguyenminhduy090-alt"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-26T14:17:37Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/94#pullrequestreview-5653413107",
+          "commit": {
+            "oid": "96d59ca320845495dd2ce6acf42d0b10ee0286a6"
+          }
+        },
+        {
+          "author": {
+            "login": "lexuanbao258-collab"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-25T07:05:18Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/94#pullrequestreview-5641995437",
+          "commit": {
+            "oid": "96d59ca320845495dd2ce6acf42d0b10ee0286a6"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40122424378/job/120956667721"
+        }
+      ],
+      "files": 4,
+      "commits": 1,
+      "comments": 1,
+      "reviewComments": 0
+    },
+    {
+      "PR": 95,
+      "title": "feat(tv2): add Product management UI with domain validation",
+      "author": "duyxl56785",
+      "state": "OPEN",
+      "head": "5374b51477afeafe2f0a955802939e4c9e385cb1",
+      "headRef": "codex/tv2-product-management-ui",
+      "base": "f888725b9c8cdef31b46d8e0322f5d2d4869468f",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "lexuanbao258-collab"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-25T12:49:55Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/95#pullrequestreview-5643263935",
+          "commit": {
+            "oid": "5374b51477afeafe2f0a955802939e4c9e385cb1"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [],
+      "files": 15,
+      "commits": 4,
+      "comments": 2,
+      "reviewComments": 2
+    },
+    {
+      "PR": 96,
+      "title": "fix(tv1-auth): reject NUL password collision",
+      "author": "lexuanbao258-collab",
+      "state": "MERGED",
+      "head": "c59f34024748f290bd304b64140cf6c0848940b5",
+      "headRef": "fix/tv1-auth-password-nul-20261025",
+      "base": "dfdc8143c4a86cdfce8eefc9a98e1b07126da41d",
+      "baseRef": "feat/tv1-auth-jwt-current-authority-foundation-20261023",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "duyxl56785"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-25T17:37:26Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/96#pullrequestreview-5644376723",
+          "commit": {
+            "oid": "c59f34024748f290bd304b64140cf6c0848940b5"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40207083756/job/121210224296"
+        }
+      ],
+      "files": 3,
+      "commits": 1,
+      "comments": 0,
+      "reviewComments": 0
+    },
+    {
+      "PR": 97,
+      "title": "feat(tv2): prepare guarded Product management JSON handlers",
+      "author": "duyxl56785",
+      "state": "MERGED",
+      "head": "d37617659f6e55a86e7aa39c7c86224fef9f0ef4",
+      "headRef": "codex/tv2-product-http-preparation",
+      "base": "f888725b9c8cdef31b46d8e0322f5d2d4869468f",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [
+        "nguyenminhduy090-alt"
+      ],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "lexuanbao258-collab"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-27T03:22:05Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/97#pullrequestreview-5661852027",
+          "commit": {
+            "oid": "d37617659f6e55a86e7aa39c7c86224fef9f0ef4"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40441476875/job/121982610245"
+        }
+      ],
+      "files": 13,
+      "commits": 4,
+      "comments": 7,
+      "reviewComments": 0
+    },
+    {
+      "PR": 98,
+      "title": "feat(tv4): add fulfillment Store ownership guard",
+      "author": "phamthecuong2022006-alt",
+      "state": "DRAFT",
+      "head": "d53e2a96833e246482c504879cd6d646dca82bf5",
+      "headRef": "feat/tv4-fulfillment-store-guard",
+      "base": "ed85f6290de7f611c82e5c0ad973f98180f04df4",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [],
+      "reviewDecision": "REVIEW_REQUIRED",
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40208896482/job/121215685405"
+        }
+      ],
+      "files": 2,
+      "commits": 1,
+      "comments": 0,
+      "reviewComments": 0
+    },
+    {
+      "PR": 99,
+      "title": "test(tv5): verify two-Store financial rollback and concurrent replay",
+      "author": "nguyenminhduy090-alt",
+      "state": "OPEN",
+      "head": "931feee45ac3f17293a4f200c604010fce63bf39",
+      "headRef": "codex/tv5-finance-durability-qa",
+      "base": "7d68e11ce3327aa0ac423938ab9d97a174438b78",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [
+        "tranvanchinhbg2006-alt",
+        "phamthecuong2022006-alt"
+      ],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "duyxl56785"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-27T16:41:47Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/99#pullrequestreview-5670898290",
+          "commit": {
+            "oid": "931feee45ac3f17293a4f200c604010fce63bf39"
+          }
+        },
+        {
+          "author": {
+            "login": "tranvanchinhbg2006-alt"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-27T01:43:58Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/99#pullrequestreview-5661298914",
+          "commit": {
+            "oid": "446ae44da90832df534b6e37150f26a71f2adf25"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40440808963/job/121980435396"
+        }
+      ],
+      "files": 3,
+      "commits": 3,
+      "comments": 1,
+      "reviewComments": 0
+    },
+    {
+      "PR": 100,
+      "title": "chore(tv5): add read-only PR reviewer audit and regression tests",
+      "author": "nguyenminhduy090-alt",
+      "state": "MERGED",
+      "head": "c25c67879b642b9a3521392dc02e648413ee5eca",
+      "headRef": "codex/tv5-readonly-pr-audit",
+      "base": "ed85f6290de7f611c82e5c0ad973f98180f04df4",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "duyxl56785"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-27T09:50:22Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/100#pullrequestreview-5665122975",
+          "commit": {
+            "oid": "c25c67879b642b9a3521392dc02e648413ee5eca"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [],
+      "files": 4,
+      "commits": 2,
+      "comments": 0,
+      "reviewComments": 0
+    },
+    {
+      "PR": 101,
+      "title": "test(tv1-auth): verify runtime bootstrap and account security gates",
+      "author": "lexuanbao258-collab",
+      "state": "OPEN",
+      "head": "e45cede29435bbce553cb244cb956493cb98c26b",
+      "headRef": "feat/tv1-auth-runtime-p0-20261026",
+      "base": "083355be16c4e3ea442ccd861d5f4b40236a0b12",
+      "baseRef": "feat/tv1-auth-jwt-current-authority-foundation-20261023",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [],
+      "reviewDecision": null,
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40281141939/job/121434492112"
+        }
+      ],
+      "files": 7,
+      "commits": 7,
+      "comments": 2,
+      "reviewComments": 0
+    },
+    {
+      "PR": 102,
+      "title": "feat(tv1-auth): prepare inert transactional account/session core",
+      "author": "lexuanbao258-collab",
+      "state": "OPEN",
+      "head": "36ad517174ef3911bf794ef4ac568647cd9eb4eb",
+      "headRef": "feat/tv1-auth-http-p0-candidate-20261026",
+      "base": "e45cede29435bbce553cb244cb956493cb98c26b",
+      "baseRef": "feat/tv1-auth-runtime-p0-20261026",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "duyxl56785"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-28T10:28:04Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/102#pullrequestreview-5681166198",
+          "commit": {
+            "oid": "36ad517174ef3911bf794ef4ac568647cd9eb4eb"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40432484825/job/121953257251"
+        }
+      ],
+      "files": 20,
+      "commits": 22,
+      "comments": 4,
+      "reviewComments": 8
+    },
+    {
+      "PR": 103,
+      "title": "test(tv5): compose Product lifecycle Catalog and Checkout preflight in PostgreSQL",
+      "author": "nguyenminhduy090-alt",
+      "state": "OPEN",
+      "head": "0d8a203221a07bb0a3a9fa91dc9531d6c6cc16a0",
+      "headRef": "codex/tv5-product-catalog-composition-qa",
+      "base": "bb0b9a2d0d2e909a59653619bce98c77f75e77d2",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [
+        "tranvanchinhbg2006-alt",
+        "duyxl56785"
+      ],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "duyxl56785"
+          },
+          "state": "CHANGES_REQUESTED",
+          "submittedAt": "2026-10-27T07:55:58Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/103#pullrequestreview-5663764170",
+          "commit": {
+            "oid": "6d99953af6ab813f85e52277717152c07d798fb1"
+          }
+        }
+      ],
+      "reviewDecision": "CHANGES_REQUESTED",
+      "openThreads": 1,
+      "CI": [],
+      "files": 5,
+      "commits": 12,
+      "comments": 1,
+      "reviewComments": 2
+    },
+    {
+      "PR": 104,
+      "title": "test(tv5): preserve Product visibility PostgreSQL RED GREEN regression",
+      "author": "nguyenminhduy090-alt",
+      "state": "MERGED",
+      "head": "a0c9d4b4db219e7f5300b25ed5ada18f9ed136af",
+      "headRef": "codex/tv5-product-visibility-diagnostic",
+      "base": "9077bc3bd535d5ae371953c195365fc0736bcd46",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "duyxl56785"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-27T06:50:59Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/104#pullrequestreview-5663251264",
+          "commit": {
+            "oid": "a0c9d4b4db219e7f5300b25ed5ada18f9ed136af"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [],
+      "files": 3,
+      "commits": 3,
+      "comments": 1,
+      "reviewComments": 0
+    },
+    {
+      "PR": 105,
+      "title": "feat(tv1): prepare gated frontend router and API client (Phase C, refs #8)",
+      "author": "lexuanbao258-collab",
+      "state": "OPEN",
+      "head": "09c26c784d82dfc275e4ae8f0ce0b2a458ec4490",
+      "headRef": "feat/tv1-frontend-phase-c",
+      "base": "1833dd4e5baf61683adaea34a54b6bb9a239e43d",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "duyxl56785"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-27T06:53:56Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/105#pullrequestreview-5663275182",
+          "commit": {
+            "oid": "09c26c784d82dfc275e4ae8f0ce0b2a458ec4490"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "shared",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40436160526/job/121965203712"
+        },
+        {
+          "name": "shared",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40436041128/job/121964824445"
+        }
+      ],
+      "files": 11,
+      "commits": 1,
+      "comments": 0,
+      "reviewComments": 0
+    },
+    {
+      "PR": 106,
+      "title": "feat(tv3): map Catalog SKUs to immutable Inventory RESERVE intent (Refs #3 #10 #16)",
+      "author": "tranvanchinhbg2006-alt",
+      "state": "DRAFT",
+      "head": "b7aabdb852192890149b02cfe6a010613065d7e0",
+      "headRef": "feat/tv3-catalog-sku-reserve-intent",
+      "base": "7d68e11ce3327aa0ac423938ab9d97a174438b78",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "duyxl56785"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-27T06:49:18Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/106#pullrequestreview-5663237895",
+          "commit": {
+            "oid": "b7aabdb852192890149b02cfe6a010613065d7e0"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40440166840/job/121978344442"
+        }
+      ],
+      "files": 4,
+      "commits": 3,
+      "comments": 0,
+      "reviewComments": 0
+    },
+    {
+      "PR": 107,
+      "title": "feat(tv3): add customer-scoped PostgreSQL Order History API (Refs #3 #10 #16)",
+      "author": "tranvanchinhbg2006-alt",
+      "state": "DRAFT",
+      "head": "925f04cb947ad272bcbfef95bc068f7a52af8252",
+      "headRef": "feat/tv3-customer-order-history",
+      "base": "bb0b9a2d0d2e909a59653619bce98c77f75e77d2",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [
+        "duyxl56785"
+      ],
+      "effectiveReviews": [],
+      "reviewDecision": "REVIEW_REQUIRED",
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "failure",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40885791254/job/123489019848"
+        }
+      ],
+      "files": 7,
+      "commits": 2,
+      "comments": 0,
+      "reviewComments": 0
+    },
+    {
+      "PR": 108,
+      "title": "feat(tv2): add verified Store-scoped Product owner listing",
+      "author": "duyxl56785",
+      "state": "MERGED",
+      "head": "8d4186ccf4369c9ac27fd19f49e54c9bc1740a6d",
+      "headRef": "codex/tv2-product-owner-list",
+      "base": "ceee8c8c4699e0b76a180c24365e4068d4c29770",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "nguyenminhduy090-alt"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-27T17:04:34Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/108#pullrequestreview-5671229407",
+          "commit": {
+            "oid": "8d4186ccf4369c9ac27fd19f49e54c9bc1740a6d"
+          }
+        },
+        {
+          "author": {
+            "login": "lexuanbao258-collab"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-27T09:10:06Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/108#pullrequestreview-5664618121",
+          "commit": {
+            "oid": "8d4186ccf4369c9ac27fd19f49e54c9bc1740a6d"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40471000664/job/122077831589"
+        }
+      ],
+      "files": 11,
+      "commits": 2,
+      "comments": 2,
+      "reviewComments": 0
+    },
+    {
+      "PR": 109,
+      "title": "feat(tv2): persist owner-scoped Product image reservations",
+      "author": "duyxl56785",
+      "state": "MERGED",
+      "head": "cdea2839a6dfb0dd6b9c3f038f192e3080330db4",
+      "headRef": "codex/tv2-product-image-metadata",
+      "base": "ceee8c8c4699e0b76a180c24365e4068d4c29770",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "nguyenminhduy090-alt"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-27T17:04:40Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/109#pullrequestreview-5671230753",
+          "commit": {
+            "oid": "cdea2839a6dfb0dd6b9c3f038f192e3080330db4"
+          }
+        },
+        {
+          "author": {
+            "login": "lexuanbao258-collab"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-27T09:53:31Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/109#pullrequestreview-5665159969",
+          "commit": {
+            "oid": "cdea2839a6dfb0dd6b9c3f038f192e3080330db4"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40480799161/job/122110306610"
+        }
+      ],
+      "files": 10,
+      "commits": 1,
+      "comments": 1,
+      "reviewComments": 0
+    },
+    {
+      "PR": 110,
+      "title": "feat(tv2): add isolated Seller Admin and Catalog demo UI",
+      "author": "duyxl56785",
+      "state": "OPEN",
+      "head": "96886dddb320bf0abf963cfd629581cbc4a5b22e",
+      "headRef": "codex/tv2-frontend-demo",
+      "base": "ceee8c8c4699e0b76a180c24365e4068d4c29770",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [],
+      "reviewDecision": "REVIEW_REQUIRED",
+      "openThreads": 0,
+      "CI": [],
+      "files": 36,
+      "commits": 9,
+      "comments": 0,
+      "reviewComments": 0
+    },
+    {
+      "PR": 111,
+      "title": "docs: cập nhật README theo tiến độ nhóm và hướng dẫn demo TV2",
+      "author": "duyxl56785",
+      "state": "OPEN",
+      "head": "f1aba533ec5938eb34551387f5222402e1fb5332",
+      "headRef": "docs/readme-project-progress-20261027",
+      "base": "ceee8c8c4699e0b76a180c24365e4068d4c29770",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "lexuanbao258-collab"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-28T02:52:28Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/111#pullrequestreview-5677187164",
+          "commit": {
+            "oid": "f1aba533ec5938eb34551387f5222402e1fb5332"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [],
+      "files": 1,
+      "commits": 2,
+      "comments": 1,
+      "reviewComments": 0
+    },
+    {
+      "PR": 112,
+      "title": "Update README.md",
+      "author": "duyxl56785",
+      "state": "CLOSED",
+      "head": "b5e63dad024cce41f89e00719a82085ab86fdf6e",
+      "headRef": "duyxl56785-patch-1",
+      "base": "ceee8c8c4699e0b76a180c24365e4068d4c29770",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [],
+      "reviewDecision": "REVIEW_REQUIRED",
+      "openThreads": 0,
+      "CI": [],
+      "files": 1,
+      "commits": 1,
+      "comments": 0,
+      "reviewComments": 0
+    },
+    {
+      "PR": 113,
+      "title": "feat(qa): include all-state PR inventory in read-only audit",
+      "author": "nguyenminhduy090-alt",
+      "state": "OPEN",
+      "head": "5235aa395e604ba6eb33fe1b6bf2395f30837935",
+      "headRef": "codex/tv5-pr-inventory-qa",
+      "base": "91e1a6c2cc2e2f08dfb905386ba21e4d34668bf6",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [
+        "duyxl56785"
+      ],
+      "effectiveReviews": [],
+      "reviewDecision": "REVIEW_REQUIRED",
+      "openThreads": 0,
+      "CI": [],
+      "files": 30,
+      "commits": 4,
+      "comments": 0,
+      "reviewComments": 0
+    },
+    {
+      "PR": 114,
+      "title": "feat(tv3): Customer Order History UI with real backend HTTP acceptance (Refs #10 #16)",
+      "author": "tranvanchinhbg2006-alt",
+      "state": "DRAFT",
+      "head": "7c825b51d61fb15f258121918cd2f2f7d2b91913",
+      "headRef": "feat/tv3-order-history-ui-client",
+      "base": "bb0b9a2d0d2e909a59653619bce98c77f75e77d2",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [],
+      "reviewDecision": "REVIEW_REQUIRED",
+      "openThreads": 0,
+      "CI": [],
+      "files": 9,
+      "commits": 4,
+      "comments": 0,
+      "reviewComments": 0
+    },
+    {
+      "PR": 115,
+      "title": "feat(tv5-ui): add read-only Finance COD Settlement and QA workspace",
+      "author": "nguyenminhduy090-alt",
+      "state": "OPEN",
+      "head": "cae695c10f5d0e4f2b0f905516329e5b4be29850",
+      "headRef": "codex/tv5-finance-qa-ui",
+      "base": "91e1a6c2cc2e2f08dfb905386ba21e4d34668bf6",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [
+        "duyxl56785"
+      ],
+      "effectiveReviews": [],
+      "reviewDecision": "REVIEW_REQUIRED",
+      "openThreads": 0,
+      "CI": [],
+      "files": 53,
+      "commits": 5,
+      "comments": 0,
+      "reviewComments": 0
+    },
+    {
+      "PR": 116,
+      "title": "feat(tv2): integrate recoverable Product image lifecycle",
+      "author": "duyxl56785",
+      "state": "DRAFT",
+      "head": "5d9c00864602716e853d7ffbca9742c3347381e6",
+      "headRef": "feat/tv2-product-image-lifecycle",
+      "base": "bb0b9a2d0d2e909a59653619bce98c77f75e77d2",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [],
+      "reviewDecision": "REVIEW_REQUIRED",
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "failure",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40617073623/job/122581956869"
+        }
+      ],
+      "files": 15,
+      "commits": 7,
+      "comments": 1,
+      "reviewComments": 0
+    },
+    {
+      "PR": 117,
+      "title": "test(tv5-qa): audit Finance acceptance evidence and refresh task 6 readiness",
+      "author": "nguyenminhduy090-alt",
+      "state": "OPEN",
+      "head": "a5939ef39a05aa3b66413c4a31307978f1ac1d0f",
+      "headRef": "codex/tv5-finance-acceptance-gates",
+      "base": "bb0b9a2d0d2e909a59653619bce98c77f75e77d2",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [
+        "tranvanchinhbg2006-alt",
+        "duyxl56785",
+        "phamthecuong2022006-alt"
+      ],
+      "effectiveReviews": [],
+      "reviewDecision": "REVIEW_REQUIRED",
+      "openThreads": 0,
+      "CI": [],
+      "files": 42,
+      "commits": 6,
+      "comments": 0,
+      "reviewComments": 0
+    },
+    {
+      "PR": 118,
+      "title": "feat(tv2): persist local transactional Seller status snapshots",
+      "author": "duyxl56785",
+      "state": "DRAFT",
+      "head": "7d5213f3bf58b477fc77e50ba7459d61c2e0242f",
+      "headRef": "codex/tv2-seller-status-outbox",
+      "base": "bb0b9a2d0d2e909a59653619bce98c77f75e77d2",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [],
+      "reviewDecision": "REVIEW_REQUIRED",
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "failure",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40673244143/job/122765069616"
+        }
+      ],
+      "files": 7,
+      "commits": 1,
+      "comments": 0,
+      "reviewComments": 0
+    },
+    {
+      "PR": 119,
+      "title": "fix(ci): configure Docker API in all Gradle test JVMs",
+      "author": "duyxl56785",
+      "state": "DRAFT",
+      "head": "edf0320db41a3026d9e447e8079cc7044a54c909",
+      "headRef": "codex/tv1-ci-testcontainers",
+      "base": "bb0b9a2d0d2e909a59653619bce98c77f75e77d2",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "lexuanbao258-collab"
+          },
+          "state": "APPROVED",
+          "submittedAt": "2026-10-29T05:54:19Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/119#pullrequestreview-5693449848",
+          "commit": {
+            "oid": "edf0320db41a3026d9e447e8079cc7044a54c909"
+          }
+        }
+      ],
+      "reviewDecision": "APPROVED",
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40821482449/job/123274717594"
+        }
+      ],
+      "files": 2,
+      "commits": 1,
+      "comments": 0,
+      "reviewComments": 0
+    },
+    {
+      "PR": 120,
+      "title": "feat(security): extract shared JWT verification and scoped internal pair guards",
+      "author": "duyxl56785",
+      "state": "DRAFT",
+      "head": "120d05e07d79ae2a4564bc7ef235b6b1e5f51488",
+      "headRef": "codex/tv1-service-security-foundation",
+      "base": "36ad517174ef3911bf794ef4ac568647cd9eb4eb",
+      "baseRef": "feat/tv1-auth-http-p0-candidate-20261026",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [],
+      "reviewDecision": null,
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40823547203/job/123281283210"
+        }
+      ],
+      "files": 11,
+      "commits": 2,
+      "comments": 0,
+      "reviewComments": 0
+    },
+    {
+      "PR": 121,
+      "title": "feat(auth): add transactional Seller role sync core without HTTP activation",
+      "author": "duyxl56785",
+      "state": "DRAFT",
+      "head": "4a5aa26f4933f5fd8795179ea41df4015bbd9064",
+      "headRef": "codex/auth-role-sync-core",
+      "base": "120d05e07d79ae2a4564bc7ef235b6b1e5f51488",
+      "baseRef": "codex/tv1-service-security-foundation",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [],
+      "reviewDecision": null,
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40827225218/job/123292929914"
+        }
+      ],
+      "files": 8,
+      "commits": 2,
+      "comments": 0,
+      "reviewComments": 0
+    },
+    {
+      "PR": 122,
+      "title": "feat(auth): add default-off scoped Seller role sync HTTP receiver",
+      "author": "duyxl56785",
+      "state": "DRAFT",
+      "head": "72dd476aea7cd578dd05142a1ac79541f1b8134d",
+      "headRef": "codex/auth-role-sync-http",
+      "base": "4a5aa26f4933f5fd8795179ea41df4015bbd9064",
+      "baseRef": "codex/auth-role-sync-core",
+      "mergeable": true,
+      "requestedReviewers": [
+        "nguyenminhduy090-alt"
+      ],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "lexuanbao258-collab"
+          },
+          "state": "CHANGES_REQUESTED",
+          "submittedAt": "2026-10-29T11:54:29Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/122#pullrequestreview-5697238689",
+          "commit": {
+            "oid": "72dd476aea7cd578dd05142a1ac79541f1b8134d"
+          }
+        }
+      ],
+      "reviewDecision": "CHANGES_REQUESTED",
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40863936694/job/123413795207"
+        }
+      ],
+      "files": 4,
+      "commits": 1,
+      "comments": 1,
+      "reviewComments": 0
+    },
+    {
+      "PR": 123,
+      "title": "feat(auth): add scoped current-account RPC and guarded Seller/Product adapters",
+      "author": "duyxl56785",
+      "state": "DRAFT",
+      "head": "4e7d0beef6d2c2bf9e24ca92d0f4f9f070ea1c87",
+      "headRef": "codex/current-account-rpc",
+      "base": "72dd476aea7cd578dd05142a1ac79541f1b8134d",
+      "baseRef": "codex/auth-role-sync-http",
+      "mergeable": true,
+      "requestedReviewers": [
+        "nguyenminhduy090-alt"
+      ],
+      "effectiveReviews": [],
+      "reviewDecision": null,
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40867457672/job/123425717993"
+        }
+      ],
+      "files": 12,
+      "commits": 1,
+      "comments": 0,
+      "reviewComments": 0
+    },
+    {
+      "PR": 124,
+      "title": "docs(v2): trace F01–F17 requirements to implementation gates",
+      "author": "duyxl56785",
+      "state": "DRAFT",
+      "head": "2f0d7340fc9be3b9567fd39830b6942645a5042a",
+      "headRef": "docs/v2-requirements-traceability-20261029",
+      "base": "bb0b9a2d0d2e909a59653619bce98c77f75e77d2",
+      "baseRef": "main",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [],
+      "reviewDecision": "REVIEW_REQUIRED",
+      "openThreads": 0,
+      "CI": [],
+      "files": 1,
+      "commits": 1,
+      "comments": 0,
+      "reviewComments": 0
+    },
+    {
+      "PR": 125,
+      "title": "feat(seller): provide scoped current Store facts batch HTTP",
+      "author": "duyxl56785",
+      "state": "DRAFT",
+      "head": "a1fb3551a44ccb667355ff9a4951184d0d81708d",
+      "headRef": "codex/store-facts-http",
+      "base": "4e7d0beef6d2c2bf9e24ca92d0f4f9f070ea1c87",
+      "baseRef": "codex/current-account-rpc",
+      "mergeable": true,
+      "requestedReviewers": [
+        "nguyenminhduy090-alt"
+      ],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "lexuanbao258-collab"
+          },
+          "state": "CHANGES_REQUESTED",
+          "submittedAt": "2026-10-29T13:27:19Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/125#pullrequestreview-5698436398",
+          "commit": {
+            "oid": "a1fb3551a44ccb667355ff9a4951184d0d81708d"
+          }
+        }
+      ],
+      "reviewDecision": "CHANGES_REQUESTED",
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40871128913/job/123438154441"
+        }
+      ],
+      "files": 8,
+      "commits": 1,
+      "comments": 1,
+      "reviewComments": 0
+    },
+    {
+      "PR": 126,
+      "title": "feat(product): integrate current Auth and Store authority preflight",
+      "author": "duyxl56785",
+      "state": "DRAFT",
+      "head": "44ed537ea08f74419d5ee4be6c4fd171ad355a73",
+      "headRef": "codex/product-current-authority",
+      "base": "a1fb3551a44ccb667355ff9a4951184d0d81708d",
+      "baseRef": "codex/store-facts-http",
+      "mergeable": true,
+      "requestedReviewers": [
+        "nguyenminhduy090-alt"
+      ],
+      "effectiveReviews": [],
+      "reviewDecision": null,
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40875656407/job/123453681217"
+        }
+      ],
+      "files": 11,
+      "commits": 2,
+      "comments": 1,
+      "reviewComments": 0
+    },
+    {
+      "PR": 127,
+      "title": "feat(seller): deliver committed role snapshots with durable retries",
+      "author": "duyxl56785",
+      "state": "DRAFT",
+      "head": "f73ab60df17f95f56063704170a83da3df9e13ef",
+      "headRef": "codex/seller-role-dispatch",
+      "base": "44ed537ea08f74419d5ee4be6c4fd171ad355a73",
+      "baseRef": "codex/product-current-authority",
+      "mergeable": true,
+      "requestedReviewers": [
+        "nguyenminhduy090-alt"
+      ],
+      "effectiveReviews": [],
+      "reviewDecision": null,
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40880621366/job/123470841812"
+        }
+      ],
+      "files": 15,
+      "commits": 2,
+      "comments": 0,
+      "reviewComments": 0
+    },
+    {
+      "PR": 128,
+      "title": "feat(seller): integrate current-authority own-read HTTP and pair isolation fixes",
+      "author": "duyxl56785",
+      "state": "DRAFT",
+      "head": "e378fcf70d9553d3bd5ae8af8ceb134b22d72425",
+      "headRef": "codex/seller-store-live-http",
+      "base": "f73ab60df17f95f56063704170a83da3df9e13ef",
+      "baseRef": "codex/seller-role-dispatch",
+      "mergeable": true,
+      "requestedReviewers": [
+        "nguyenminhduy090-alt"
+      ],
+      "effectiveReviews": [
+        {
+          "author": {
+            "login": "lexuanbao258-collab"
+          },
+          "state": "CHANGES_REQUESTED",
+          "submittedAt": "2026-10-29T16:52:46Z",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/128#pullrequestreview-5701653635",
+          "commit": {
+            "oid": "28b7ec3cc8b69cc130a59e344566b9eb14233d0a"
+          }
+        }
+      ],
+      "reviewDecision": "CHANGES_REQUESTED",
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40919661506/job/123609124240"
+        }
+      ],
+      "files": 38,
+      "commits": 6,
+      "comments": 1,
+      "reviewComments": 0
+    },
+    {
+      "PR": 129,
+      "title": "fix(product): prevent snapshot preflight from authorizing writes",
+      "author": "duyxl56785",
+      "state": "DRAFT",
+      "head": "a9407426f66b0c842b5bb604d991d86523d2d511",
+      "headRef": "codex/write-freshness",
+      "base": "28b7ec3cc8b69cc130a59e344566b9eb14233d0a",
+      "baseRef": "codex/seller-store-live-http",
+      "mergeable": true,
+      "requestedReviewers": [
+        "nguyenminhduy090-alt"
+      ],
+      "effectiveReviews": [],
+      "reviewDecision": null,
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40914592147/job/123591323607"
+        }
+      ],
+      "files": 5,
+      "commits": 1,
+      "comments": 0,
+      "reviewComments": 0
+    },
+    {
+      "PR": 130,
+      "title": "feat(security): add durable authority reservation components",
+      "author": "duyxl56785",
+      "state": "DRAFT",
+      "head": "1345f70a18f4c44a9097ad17d87b3978fa330dd3",
+      "headRef": "codex/durable-authority-reservation",
+      "base": "e378fcf70d9553d3bd5ae8af8ceb134b22d72425",
+      "baseRef": "codex/seller-store-live-http",
+      "mergeable": true,
+      "requestedReviewers": [
+        "nguyenminhduy090-alt"
+      ],
+      "effectiveReviews": [],
+      "reviewDecision": null,
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40960201258/job/123750669997"
+        }
+      ],
+      "files": 26,
+      "commits": 2,
+      "comments": 0,
+      "reviewComments": 0
+    },
+    {
+      "PR": 131,
+      "title": "feat(security): authenticate reservation RPC and terminal callbacks",
+      "author": "duyxl56785",
+      "state": "DRAFT",
+      "head": "dcdc685c2ba66be6d78549b3562029160d631ff2",
+      "headRef": "codex/authenticated-reservation-rpc",
+      "base": "1345f70a18f4c44a9097ad17d87b3978fa330dd3",
+      "baseRef": "codex/durable-authority-reservation",
+      "mergeable": true,
+      "requestedReviewers": [
+        "nguyenminhduy090-alt"
+      ],
+      "effectiveReviews": [],
+      "reviewDecision": null,
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40986399560/job/123838332153"
+        }
+      ],
+      "files": 18,
+      "commits": 2,
+      "comments": 0,
+      "reviewComments": 0
+    },
+    {
+      "PR": 132,
+      "title": "feat(tv2): add durable authority recovery and revocation reconciliation",
+      "author": "duyxl56785",
+      "state": "DRAFT",
+      "head": "dc10c0c9cfcc8aecf437df9f55978f98b8abaaf5",
+      "headRef": "codex/durable-reservation-recovery",
+      "base": "dcdc685c2ba66be6d78549b3562029160d631ff2",
+      "baseRef": "codex/authenticated-reservation-rpc",
+      "mergeable": true,
+      "requestedReviewers": [
+        "nguyenminhduy090-alt"
+      ],
+      "effectiveReviews": [],
+      "reviewDecision": null,
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40992584218/job/123858240195"
+        }
+      ],
+      "files": 40,
+      "commits": 1,
+      "comments": 1,
+      "reviewComments": 0
+    },
+    {
+      "PR": 133,
+      "title": "fix(tv2): close reservation crash gap with atomic recovery enlistment",
+      "author": "duyxl56785",
+      "state": "DRAFT",
+      "head": "3031523fdf8100c36cc3d9fef8c12748a18ee1ff",
+      "headRef": "codex/reservation-atomic-recovery",
+      "base": "dc10c0c9cfcc8aecf437df9f55978f98b8abaaf5",
+      "baseRef": "codex/durable-reservation-recovery",
+      "mergeable": true,
+      "requestedReviewers": [
+        "nguyenminhduy090-alt"
+      ],
+      "effectiveReviews": [],
+      "reviewDecision": null,
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40996452007/job/123870595435"
+        }
+      ],
+      "files": 7,
+      "commits": 1,
+      "comments": 0,
+      "reviewComments": 0
+    }
+  ],
+  "postCaptureOwnChanges": {
+    "PR115": {
+      "source": "6ab0f3f29b5cb7d8cea14cebe60656cd744b2498",
+      "publication": "ff4d3ce71d1ac95a2d4eea103c28e3ff6c0a2c13"
+    },
+    "PR117": {
+      "source": "9cd635a3a492803f6402f3c388afb56a9481ed9f",
+      "currentBeforeReport": "9bf27cfedbb0bac6e06ac86308bb3d95dbc81104"
+    }
+  }
+}
