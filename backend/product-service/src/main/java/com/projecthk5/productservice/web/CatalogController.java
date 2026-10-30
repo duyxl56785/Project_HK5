@@ -1,5 +1,6 @@
 package com.projecthk5.productservice.web;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.projecthk5.productservice.catalog.CatalogSnapshotSource;
 import com.projecthk5.productservice.category.Category;
 import com.projecthk5.productservice.category.CategoryRepository;
@@ -41,12 +42,14 @@ public class CatalogController {
     private final ImageStorage storage;
     private final DependencyClients dependencies;
     private final CatalogSnapshotSource snapshots;
+    private final CatalogCache cache;
+    private final ObjectMapper json;
     private final String cartToken;
     private final String orderToken;
 
     public CatalogController(EntityManager em, SellerStoreClient stores, CategoryRepository categories, DetailsRepository details,
                              ImageRepository images, ReviewRepository reviews, ImageStorage storage,
-                             DependencyClients dependencies, CatalogSnapshotSource snapshots,
+                             DependencyClients dependencies, CatalogSnapshotSource snapshots, CatalogCache cache, ObjectMapper json,
                              @Value("${CART_PRODUCT_TOKEN:}") String cartToken,
                              @Value("${ORDER_PRODUCT_TOKEN:}") String orderToken) {
         this.em = em;
@@ -58,6 +61,8 @@ public class CatalogController {
         this.storage = storage;
         this.dependencies = dependencies;
         this.snapshots = snapshots;
+        this.cache = cache;
+        this.json = json;
         this.cartToken = cartToken;
         this.orderToken = orderToken;
     }
@@ -82,6 +87,12 @@ public class CatalogController {
                        @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "12") int size) {
         if (page < 0 || size < 1 || size > 60 || (q != null && q.length() > 100))
             throw ApiException.badRequest("VALIDATION_FAILED", "Invalid search parameters");
+        String key = String.join("|", "catalog:search", q, String.valueOf(categoryId), String.valueOf(minPrice), String.valueOf(maxPrice),
+                String.valueOf(storeId), sort, String.valueOf(page), String.valueOf(size));
+        return cache.read(key, json.constructType(Page.class), () -> searchNow(q, categoryId, minPrice, maxPrice, storeId, sort, page, size));
+    }
+
+    private Page searchNow(String q, UUID categoryId, BigDecimal minPrice, BigDecimal maxPrice, UUID storeId, String sort, int page, int size) {
         Map<UUID, SellerStoreClient.Facts> eligible = eligibleStores();
         Set<UUID> storeIds = storeId == null ? eligible.keySet() : eligible.containsKey(storeId) ? Set.of(storeId) : Set.of();
         if (storeIds.isEmpty()) return new Page(List.of(), 0, page, size);
@@ -107,6 +118,10 @@ public class CatalogController {
     @GetMapping("/api/catalog/products/{id}")
     @Transactional(readOnly = true)
     public Detail detail(@PathVariable UUID id) {
+        return cache.read("catalog:product:" + id, json.constructType(Detail.class), () -> detailNow(id));
+    }
+
+    private Detail detailNow(UUID id) {
         ProductEntity p = em.find(ProductEntity.class, id);
         SellerStoreClient.Facts store = p == null ? null : eligibleStores().get(p.getStoreId());
         if (p == null || p.getStatus() != ProductStatus.ACTIVE || store == null)
@@ -161,7 +176,9 @@ public class CatalogController {
     }
 
     private Map<UUID, SellerStoreClient.Facts> eligibleStores() {
-        return stores.publicStores().stream().collect(Collectors.toMap(SellerStoreClient.Facts::storeId, Function.identity()));
+        List<SellerStoreClient.Facts> current = cache.read("catalog:stores",
+                json.getTypeFactory().constructCollectionType(List.class, SellerStoreClient.Facts.class), stores::publicStores);
+        return current.stream().collect(Collectors.toMap(SellerStoreClient.Facts::storeId, Function.identity()));
     }
 
     private Set<UUID> withDescendants(UUID root) {
