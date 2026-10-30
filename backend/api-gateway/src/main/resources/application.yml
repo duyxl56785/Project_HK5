@@ -3,6 +3,56 @@ server:
 spring:
   application:
     name: api-gateway
+  cloud:
+    gateway:
+      default-filters:
+        # Identity comes only from the verified JWT inside each service; never trust client-supplied hints.
+        - RemoveRequestHeader=X-Internal-Token
+        - RemoveRequestHeader=X-Inventory-Internal-Token
+        - RemoveRequestHeader=X-User-Id
+        - RemoveRequestHeader=X-Roles
+        - RemoveRequestHeader=X-Forwarded-User
+        # Bodies are capped at the largest upstream limit (product image batch: 11 MB).
+        - name: RequestSize
+          args:
+            maxSize: 11MB
+        - AddResponseHeader=X-Content-Type-Options, nosniff
+        - AddResponseHeader=Referrer-Policy, no-referrer
+        - AddResponseHeader=X-Frame-Options, DENY
+      globalcors:
+        cors-configurations:
+          '[/api/**]':
+            allowed-origins: ${ALLOWED_ORIGINS:http://localhost:5173}
+            allowed-methods: [GET, HEAD, POST, PUT, PATCH, DELETE, OPTIONS]
+            allowed-headers: [Authorization, Content-Type, X-CSRF-Protection, Idempotency-Key]
+            exposed-headers: [Retry-After, Location]
+            allow-credentials: true
+            max-age: 600
+      routes:
+        - id: auth
+          uri: ${AUTH_URL:http://localhost:8101}
+          predicates: [Path=/api/auth/**]
+        - id: user
+          uri: ${USER_URL:http://localhost:8102}
+          predicates: [Path=/api/users/**]
+        - id: seller
+          uri: ${SELLER_URL:http://localhost:8103}
+          predicates: ["Path=/api/sellers,/api/sellers/**,/api/admin/sellers,/api/admin/sellers/**,/api/stores,/api/stores/**"]
+        - id: product
+          uri: ${PRODUCT_URL:http://localhost:8104}
+          predicates: ["Path=/api/categories,/api/categories/**,/api/catalog/**,/api/seller/products,/api/seller/products/**,/api/admin/products,/api/admin/products/**,/api/admin/reviews,/api/admin/reviews/**,/api/reviews,/api/reviews/**"]
+        - id: cart
+          uri: ${CART_URL:http://localhost:8106}
+          predicates: ["Path=/api/cart,/api/cart/**"]
+        - id: order
+          uri: ${ORDER_URL:http://localhost:8107}
+          predicates: ["Path=/api/orders,/api/orders/**,/api/seller/orders,/api/seller/orders/**,/api/seller/finance,/api/admin/store-orders,/api/admin/store-orders/**,/api/admin/finance,/api/admin/outbox/**"]
+        - id: notification
+          uri: ${NOTIFICATION_URL:http://localhost:8108}
+          predicates: ["Path=/api/notifications,/api/notifications/**"]
+      httpclient:
+        connect-timeout: 3000
+        response-timeout: 30s
 management:
   endpoints:
     web:
