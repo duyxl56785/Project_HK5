@@ -23,3 +23,8 @@ tasks.register('postgresIntegrationTest', Test) {
     useJUnitPlatform { includeTags 'postgres-integration' }
     shouldRunAfter tasks.named('test')
 }
+
+// GitHub Backend readiness has Docker, so the write fence tests run there; local build stays Docker-free.
+if (System.getenv('GITHUB_ACTIONS') == 'true') {
+    tasks.named('check') { dependsOn tasks.named('postgresIntegrationTest') }
+}
