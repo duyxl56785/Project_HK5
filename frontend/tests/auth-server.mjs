@@ -56,7 +56,7 @@ const server = await createServer({ server: { host: '127.0.0.1', port: 5188, str
         res.setHeader('Set-Cookie', `refresh_token=${current.cookie}; HttpOnly; SameSite=Lax; Path=/api/auth; Max-Age=600`);
         return json(200, { accessToken: `fixture-access-${id}`, tokenType: 'Bearer', expiresIn: 900, account: account(current.tokenRoles) });
       }
-      if (['/', '/login', '/register', '/customer', '/seller', '/admin', '/unknown'].includes(path)) req.url = '/tests/index.html';
+      if (['/', '/login', '/register', '/customer', '/seller', '/admin', '/unknown', '/catalog/categories'].includes(path)) req.url = '/tests/index.html';
       next();
     });
   },

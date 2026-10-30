@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState, useSyncExternalStore } 
 import type { FormEvent, ReactNode } from 'react';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter, Link, Navigate, Outlet, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { PublicCategoriesPage } from '../features/catalog/PublicCategoriesPage';
 import { ApiError } from '../shared/apiClient';
 import type { ApiClient, Role } from '../shared/apiClient';
 
@@ -97,7 +98,7 @@ function CredentialsForm({ register = false }: { register?: boolean }) {
   </section>;
 }
 
-function Layout() {
+function Layout({ publicCategoriesEnabled }: { publicCategoriesEnabled: boolean }) {
   const client = useClient();
   const session = useSession();
   const location = useLocation();
@@ -113,7 +114,7 @@ function Layout() {
   return <>
     <a href="#shared-content">Đến nội dung chính</a>
     <nav aria-label="Điều hướng chính">
-      <Link to="/">Trang chủ</Link>{' · '}<Link to="/login">Đăng nhập</Link>{' · '}
+      <Link to="/">Trang chủ</Link>{publicCategoriesEnabled ? <> · <Link to="/catalog/categories">Danh mục</Link></> : null}{' · '}<Link to="/login">Đăng nhập</Link>{' · '}
       <Link to="/register">Đăng ký</Link>{' · '}<Link to="/customer">Customer</Link>{' · '}
       <Link to="/seller">Seller</Link>{' · '}<Link to="/admin">Admin</Link>
     </nav>
@@ -125,9 +126,10 @@ function Layout() {
 }
 
 // Prepared entry point only: production App/main stay unchanged until #102 is approved.
-export function SharedRouter({ client }: { client: ApiClient }) {
-  return <SessionProvider client={client}><BrowserRouter><Routes><Route element={<Layout />}>
+export function SharedRouter({ client, publicCategoriesEnabled = false }: { client: ApiClient; publicCategoriesEnabled?: boolean }) {
+  return <SessionProvider client={client}><BrowserRouter><Routes><Route element={<Layout publicCategoriesEnabled={publicCategoriesEnabled} />}>
     <Route index element={<section><h1>Marketplace</h1><p>Frontend shared — đang chờ duyệt tích hợp.</p></section>} />
+    {publicCategoriesEnabled ? <Route path="catalog/categories" element={<PublicCategoriesPage client={client} />} /> : null}
     <Route path="login" element={<CredentialsForm key="login" />} />
     <Route path="register" element={<CredentialsForm key="register" register />} />
     <Route element={<Guard role="CUSTOMER" />}><Route path="customer" element={<Shell title="Customer" />} /></Route>

@@ -8,7 +8,7 @@
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
-    "test": "node --test src/shared/apiClient.test.mjs",
+    "test": "node --test src/shared/apiClient.test.mjs src/features/catalog/publicCategories.test.mjs src/features/catalog/categoryTree.test.mjs",
     "test:browser": "playwright test"
   },
   "dependencies": {
