@@ -101,14 +101,14 @@ function placeholderPng(hue) {
   const size = 400;
   const channel = (n, light) => {
     const k = (n + hue / 30) % 12;
-    return Math.round(255 * (light - 0.6 * Math.min(light, 1 - light) * Math.max(-1, Math.min(k - 3, 9 - k, 1))));
+    return Math.round(255 * (light - 0.3 * Math.min(light, 1 - light) * Math.max(-1, Math.min(k - 3, 9 - k, 1))));
   };
   const rows = Buffer.alloc((size * 3 + 1) * size);
   for (let y = 0, at = 0; y < size; y += 1) {
     rows[at++] = 0;
     for (let x = 0; x < size; x += 1) {
       const inside = (x - 200) ** 2 + (y - 200) ** 2 < 120 ** 2;
-      const light = inside ? 0.9 : 0.62 + (0.2 * (x + y)) / (2 * size);
+      const light = inside ? 0.94 : 0.76 + (0.12 * (x + y)) / (2 * size);
       for (const n of [0, 8, 4]) rows[at++] = channel(n, light);
     }
   }
