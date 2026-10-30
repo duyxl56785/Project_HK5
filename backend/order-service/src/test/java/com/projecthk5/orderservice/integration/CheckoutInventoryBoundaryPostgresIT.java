@@ -30,6 +30,7 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
@@ -126,6 +127,28 @@ class CheckoutInventoryBoundaryPostgresIT {
         assertEquals("AO-001", sql.queryForObject(
             "select i.sku from order_items i join seller_orders s on s.id=i.seller_order_id join orders o on o.id=s.order_id"
                 + " where o.customer_id=?", String.class, customer));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"{\"code\":\"IDEMPOTENCY_CLAIM_CONFLICT\"}", "{\"code\":\"IDEMPOTENCY_KEY_REUSED\"}",
+        "{\"code\":\"INVENTORY_CONFLICT\"}", "not json"})
+    void conflictThatProvesNothingKeepsTheCartForReconciliation(String body) {
+        inventoryStatus = 409;
+        inventoryBody = body;
+        ResponseStatusException error = assertThrows(ResponseStatusException.class, this::place);
+        assertEquals(UNKNOWN, error.getReason());
+        assertEquals(1, inventoryCalls.get());
+        verify(carts, never()).release(anyString(), anyString());
+        assertAttempt(CheckoutAttempt.State.NEEDS_RECONCILIATION);
+    }
+
+    @Test void insufficientStockIsDefinitiveAndReleasesTheCart() {
+        inventoryStatus = 409;
+        inventoryBody = "{\"code\":\"INSUFFICIENT_STOCK\",\"sku\":\"AO-001\",\"available\":0,\"requested\":2}";
+        InventoryPort.Rejected error = assertThrows(InventoryPort.Rejected.class, this::place);
+        assertEquals("INSUFFICIENT_STOCK", error.code());
+        verify(carts).release("Bearer fixture", key);
+        assertAttempt(CheckoutAttempt.State.FAILED);
     }
 
     private CheckoutResult place() {

@@ -6,6 +6,7 @@ import com.projecthk5.security.InternalTokens;
 import com.projecthk5.security.JwtResourceServer;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,10 @@ import org.springframework.web.server.ResponseStatusException;
 @Component
 public class InventoryHttpAdapter implements InventoryPort {
     private static final ObjectMapper JSON = new ObjectMapper();
+    /** Inventory rolled these back. Any other 4xx may sit on a ledger row, so its outcome stays unknown. */
+    private static final Set<String> NOTHING_MOVED = Set.of("INSUFFICIENT_STOCK", "INSUFFICIENT_RESERVATION",
+            "INVENTORY_ITEM_NOT_FOUND", "QUANTITY_OVERFLOW", "INVALID_REQUEST", "INVALID_OPERATION_ID", "INVALID_SKU",
+            "INVALID_QUANTITY", "DUPLICATE_SKU");
     private final RestClient inventory;
     private final String token;
 
@@ -56,11 +61,12 @@ public class InventoryHttpAdapter implements InventoryPort {
             inventory.post().uri("/api/inventory/operations").header(InternalTokens.HEADER, token)
                     .body(Map.of("operationId", operationId, "type", type, "items", lines))
                     .retrieve().toBodilessEntity();
-        } catch (HttpClientErrorException.Conflict | HttpClientErrorException.NotFound | HttpClientErrorException.BadRequest definitive) {
-            // Inventory applies each operation atomically: a 4xx means nothing moved.
-            String code = code(definitive);
+        } catch (HttpClientErrorException.Conflict | HttpClientErrorException.NotFound | HttpClientErrorException.BadRequest refused) {
+            String code = code(refused);
+            if (!NOTHING_MOVED.contains(code))
+                throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, "Inventory outcome unknown: " + code, refused);
             throw new Rejected(code, "INSUFFICIENT_STOCK".equals(code)
-                    ? "Not enough stock for " + sku(definitive) : "Inventory rejected " + type + ": " + code);
+                    ? "Not enough stock for " + sku(refused) : "Inventory rejected " + type + ": " + code);
         } catch (RestClientException unknown) {
             throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, "Inventory unavailable", unknown);
         }
