@@ -7,8 +7,8 @@ import { resolve } from 'node:path';
 const target = resolve(import.meta.dirname, '../../.env.demo');
 const secret = () => randomBytes(32).toString('base64url');
 const authorityTokens = ['USER', 'SELLER', 'PRODUCT', 'CART', 'ORDER', 'NOTIFICATION'].map((name) => `${name}_AUTHORITY_TOKEN`);
-// Local demo choices so the stack can run end to end. They are not an approved policy:
-// any other environment must take these values from the owner's decision.
+// Approved for local use only by docs/project-report/M01_FINANCE_DECISION.md (MD09).
+// Any other environment needs its own decision.
 const localPolicy = {
   INVENTORY_ORDER_PAIR_ENABLED: 'true',
   HK5_FINANCE_POLICY_APPROVED: 'true',
@@ -40,11 +40,9 @@ const values = {
   ORDER_INVENTORY_TOKEN: secret(),
   ORDER_PRODUCT_TOKEN: secret(),
   ORDER_SELLER_TOKEN: secret(),
-  ORDER_NOTIFICATION_TOKEN: secret(),
   CART_PRODUCT_TOKEN: secret(),
   PRODUCT_INVENTORY_TOKEN: secret(),
   PRODUCT_SELLER_TOKEN: secret(),
-  PRODUCT_ORDER_TOKEN: secret(),
   SELLER_AUTH_TOKEN: secret(),
   SELLER_NOTIFICATION_TOKEN: secret(),
   ...Object.fromEntries(authorityTokens.map((key) => [key, secret()])),
