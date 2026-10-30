@@ -11,6 +11,8 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
     testImplementation 'org.testcontainers:postgresql:1.20.2'
     testImplementation 'org.testcontainers:junit-jupiter:1.20.2'
+    // Test-only cross-service harness for the HTTP Auth-revocation/write-fence race.
+    testImplementation project(':auth-service')
 }
 
 // PostgreSQL 16 integration tests require Docker; never report PASS from unit tests.
