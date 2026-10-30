@@ -15,8 +15,13 @@ run('docker compose --env-file .env.demo -f docker/compose.demo.yml up -d --buil
 
 const gateway = process.env.GATEWAY_URL ?? 'http://localhost:18080';
 const deadline = Date.now() + 240_000;
+// The gateway answers before the services behind it, so each one must reply without a 5xx. Seed needs them all.
+const headers = { Origin: 'http://localhost:5173', 'X-CSRF-Protection': '1', 'Content-Type': 'application/json' };
+const probes = [['/api/auth/login', { method: 'POST', headers, body: '{"email":"probe@hk5.local","password":"not-a-real-password"}' }],
+  ...['/api/categories', '/api/stores', '/api/catalog/products', '/api/cart', '/api/orders', '/api/notifications'].map((path) => [path, { headers }])];
+const answers = ([path, options]) => fetch(gateway + path, options).then((r) => r.status < 500, () => false);
 for (;;) {
-  const ready = await fetch(`${gateway}/api/categories`).then((r) => r.ok, () => false);
+  const ready = (await Promise.all(probes.map(answers))).every(Boolean);
   if (ready) break;
   if (Date.now() > deadline) throw new Error('Stack did not become ready in 4 minutes; see docker compose logs');
   await new Promise((done) => setTimeout(done, 3000));
