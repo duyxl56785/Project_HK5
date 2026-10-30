@@ -72,6 +72,7 @@ input, select, textarea { border: 1px solid #cbd5e1; border-radius: 8px; padding
 .stats dt { color: #64748b; font-size: 13px; }
 .stats dd { margin: 4px 0 0; font-size: 20px; font-weight: 700; }
 @media (max-width: 720px) {
+  .btn, .topbar__inner a, .topbar__inner button { min-height: 44px; display: inline-flex; align-items: center; }
   .catalog, .detail { grid-template-columns: minmax(0, 1fr); }
   .table { display: block; overflow-x: auto; }
 }
