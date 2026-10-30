@@ -88,7 +88,12 @@ public class SellerController {
         String owner = result.application().owner().reference();
         enqueue(SellerOutbox.Kind.ROLE_SYNC, result.id(), Map.of("accountId", owner, "granted", status == SellerStatus.APPROVED));
         enqueue(SellerOutbox.Kind.NOTIFY, result.id(), Map.of("recipient", owner, "type", "SELLER_" + status.name(),
-                "title", "Hồ sơ người bán: " + status.name(),
+                "title", switch (status) {
+                    case APPROVED -> "Hồ sơ người bán đã được duyệt";
+                    case REJECTED -> "Hồ sơ người bán bị từ chối";
+                    case SUSPENDED -> "Tài khoản người bán bị tạm ngừng";
+                    default -> "Hồ sơ người bán đã cập nhật";
+                },
                 "message", result.application().reviewReason() == null ? "Trạng thái hồ sơ người bán đã được cập nhật."
                         : "Lý do: " + result.application().reviewReason(),
                 "link", "/seller"));

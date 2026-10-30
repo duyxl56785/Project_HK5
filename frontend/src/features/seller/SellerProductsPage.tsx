@@ -77,9 +77,9 @@ function Stock({ id, available, reserved }: { readonly id: string; readonly avai
 }
 
 function Images({ id, images }: { readonly id: string; readonly images: SellerProduct['images'] }) {
-  const upload = useAction((files: FileList) => {
+  const upload = useAction((files: File[]) => {
     const form = new FormData();
-    Array.from(files).forEach((file) => form.append('files', file));
+    files.forEach((file) => form.append('files', file));
     return api(`/api/seller/products/${id}/images`, { method: 'POST', form });
   }, ['seller-product']);
   const remove = useAction((imageId: string) => api(`/api/seller/products/${id}/images/${imageId}`, { method: 'DELETE' }), ['seller-product']);
@@ -90,7 +90,12 @@ function Images({ id, images }: { readonly id: string; readonly images: SellerPr
     </div>)}</div>
     <label className="field">Tải ảnh lên (JPEG, PNG, WebP; tối đa 2 MB mỗi ảnh)
       <input type="file" multiple accept="image/jpeg,image/png,image/webp" disabled={upload.isPending}
-        onChange={(e) => { if (e.currentTarget.files?.length) upload.mutate(e.currentTarget.files); e.currentTarget.value = ''; }} /></label>
+        onChange={(e) => {
+          // Copy first: FileList is live and clearing the input empties it.
+          const files = Array.from(e.currentTarget.files ?? []);
+          e.currentTarget.value = '';
+          if (files.length) upload.mutate(files);
+        }} /></label>
     <ErrorNote error={upload.error ?? remove.error} />
   </section>;
 }

@@ -42,7 +42,7 @@ export function CartView({ state, onQuantityChange, onRemove, onRetry, storeName
   return <section className="tv3-cart" aria-label="Giỏ hàng theo cửa hàng">
     <header className="tv3-cart__header">
       <div><h2>Giỏ hàng của bạn</h2></div>
-      <p>{cart.itemCount} sản phẩm · phiên bản {cart.revision}</p>
+      <p>{cart.itemCount} sản phẩm</p>
     </header>
     {cart.claimed && <p className="tv3-cart__warning" role="status">
       Giỏ hàng đang được giữ cho Checkout. Không thể chỉnh sửa cho đến khi được xác nhận.
@@ -53,7 +53,7 @@ export function CartView({ state, onQuantityChange, onRemove, onRetry, storeName
         <ul>{store.lines.map((line) => <li className="tv3-cart__line" key={line.productId}>
           <div>
             <strong>{line.title}</strong>
-                        <small>Đơn giá: {line.unitPriceSnapshot}</small>
+                        <small>Đơn giá: {Number(line.unitPriceSnapshot).toLocaleString('vi-VN')} ₫</small>
           </div>
           <div className="tv3-cart__actions">
             <label htmlFor={'qty-' + line.productId}>Số lượng</label>

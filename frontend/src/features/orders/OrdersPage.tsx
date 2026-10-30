@@ -22,6 +22,11 @@ interface CustomerOrder {
 }
 interface MyReview { readonly orderId: string; readonly productId: string }
 
+/** Refused store orders are never collected, so they leave the amount the customer owes. */
+const payable = (order: CustomerOrder) => order.storeOrders
+  .filter((s) => s.status !== 'CANCELLED' && s.status !== 'REJECTED')
+  .reduce((sum, s) => sum + Number(s.gross), 0);
+
 export function OrdersPage() {
   const orders = useQuery({ queryKey: ['orders'], queryFn: () => api<CustomerOrder[]>('/api/orders?size=50') });
   return <div className="stack">
@@ -29,7 +34,7 @@ export function OrdersPage() {
     <Loaded query={orders} empty={(rows) => rows.length === 0}>{(rows) => <ul className="list">{rows.map((o) => <li key={o.id} className="row row--between">
       <div><Link to={`/orders/${o.id}`}><strong>#{shortId(o.id)}</strong></Link> <small className="muted">{dateTime(o.createdAt)}</small>
         <div className="row row--wrap">{o.storeOrders.map((s) => <span key={s.id}>{s.storeName ?? 'Cửa hàng'} <Badge value={s.status} /></span>)}</div></div>
-      <strong>{money(o.total)}</strong>
+      <strong>{money(payable(o))}</strong>
     </li>)}</ul>}</Loaded>
   </div>;
 }
@@ -82,6 +87,6 @@ export function OrderDetailPage() {
     <p className="muted">Đặt lúc {dateTime(o.createdAt)} · Thanh toán khi nhận hàng (COD)</p>
     {o.shipping && <p>Giao đến: <strong>{o.shipping.name}</strong> · {o.shipping.phone}<br />{o.shipping.address}</p>}
     {o.storeOrders.map((s) => <StoreOrderCard key={s.id} order={s} reviewed={reviewed} />)}
-    <p className="price price--large">Tổng cộng: {money(o.total)}</p>
+    <p className="price price--large">Tổng cộng: {money(payable(o))}</p>
   </div>}</Loaded>;
 }

@@ -40,7 +40,10 @@ function StoreForm({ store }: { readonly store: Store | null }) {
 export function SellerHomePage() {
   const auth = useAuth();
   const seller = useQuery({ queryKey: ['seller', 'me'], queryFn: () => orNull(api<{ seller: Seller }>('/api/sellers/me')) });
-  const store = useQuery({ queryKey: ['seller', 'store'], queryFn: () => orNull(api<Store>('/api/stores/me')), enabled: !!seller.data });
+  // Store routes need the SELLER role, which an applicant does not have yet.
+  const canManage = auth.has('SELLER');
+  const store = useQuery({ queryKey: ['seller', 'store'], queryFn: () => orNull(api<Store>('/api/stores/me')), enabled: !!seller.data && canManage });
+  const myStore = canManage ? store.data : null;
   const register = useAction(() => api('/api/sellers', { method: 'POST', body: {} }), ['seller']);
   const resubmit = useAction((expectedVersion: string) => api('/api/sellers/me/resubmit', { method: 'POST', body: { expectedVersion } }), ['seller']);
   const setOpen = useAction((s: Store) => api(`/api/stores/${s.id}/open`, { method: 'PATCH', body: { open: !s.open, expectedVersion: s.version } }), ['seller']);
@@ -66,13 +69,13 @@ export function SellerHomePage() {
   </div>;
 
   return <div className="stack">
-    {store.data !== undefined && <SellerStoreOverview state={{ status: 'ready', seller: profile, store: store.data }} />}
+    {myStore !== undefined && <SellerStoreOverview state={{ status: 'ready', seller: profile, store: myStore }} />}
     {profile.reviewReason && <p className="note">Lý do từ quản trị viên: {profile.reviewReason}</p>}
     {profile.status === 'REJECTED' && <button type="button" className="btn btn--primary" disabled={resubmit.isPending} onClick={() => resubmit.mutate(profile.version)}>Gửi lại hồ sơ</button>}
     {approved && stale && <p className="note" role="status">Đang cập nhật quyền người bán cho tài khoản…</p>}
-    {approved && store.data !== undefined && <StoreForm key={store.data?.version ?? 'new'} store={store.data} />}
-    {store.data && approved && <div className="row row--wrap">
-      <button type="button" className="btn" disabled={setOpen.isPending} onClick={() => setOpen.mutate(store.data!)}>{store.data.open ? 'Đóng cửa hàng' : 'Mở cửa hàng'}</button>
+    {approved && canManage && myStore !== undefined && <StoreForm key={myStore?.version ?? 'new'} store={myStore} />}
+    {myStore && approved && <div className="row row--wrap">
+      <button type="button" className="btn" disabled={setOpen.isPending} onClick={() => setOpen.mutate(myStore)}>{myStore.open ? 'Đóng cửa hàng' : 'Mở cửa hàng'}</button>
       <Link className="btn" to="/seller/products">Sản phẩm</Link>
       <Link className="btn" to="/seller/orders">Đơn hàng</Link>
       <Link className="btn" to="/seller/finance">Tài chính</Link>
