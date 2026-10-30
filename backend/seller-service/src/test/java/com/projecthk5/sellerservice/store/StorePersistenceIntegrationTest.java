@@ -188,7 +188,7 @@ class StorePersistenceIntegrationTest {
         Flyway current = Flyway.configure()
                 .dataSource(POSTGRES.getJdbcUrl(), POSTGRES.getUsername(), POSTGRES.getPassword())
                 .defaultSchema(schema).schemas(schema).locations("classpath:db/migration").load();
-        assertEquals(1, current.migrate().migrationsExecuted);
+        assertEquals(2, current.migrate().migrationsExecuted);
         current.validate();
         assertEquals(checksum, jdbc.queryForObject("SELECT checksum FROM " + schema
                 + ".flyway_schema_history WHERE version='1'", Integer.class));
@@ -611,18 +611,18 @@ class StorePersistenceIntegrationTest {
     }
 
     @ParameterizedTest
-    @MethodSource("unexposedRoutes")
-    void forgedHeadersCannotReachAnyStoreHttpAdapter(HttpMethod method, String path) throws Exception {
+    @MethodSource("storeRoutes")
+    void forgedCredentialsAreRejectedBeforeAnyStoreHttpAdapter(HttpMethod method, String path) throws Exception {
         var response = http.perform(MockMvcRequestBuilders.request(method, path)
                 .header("X-User-Id", OWNER.reference()).header("X-Roles", "ADMIN,SELLER")
                 .header("Authorization", "Bearer forged-not-a-verified-jwt")
                 .contentType("application/json").content("{\"sellerId\":\"" + SELLER_A + "\"}"))
                 .andReturn().getResponse();
-        assertEquals(404, response.getStatus());
+        assertEquals(401, response.getStatus());
         assertEquals(0, stores.count());
     }
 
-    static Stream<Arguments> unexposedRoutes() {
+    static Stream<Arguments> storeRoutes() {
         return Stream.of(Arguments.of(HttpMethod.POST, "/api/stores"),
                 Arguments.of(HttpMethod.PUT, "/api/stores/" + SELLER_A),
                 Arguments.of(HttpMethod.PATCH, "/api/stores/" + SELLER_A + "/status"),
@@ -709,9 +709,9 @@ class StorePersistenceIntegrationTest {
 
     @TestConfiguration(proxyBeanMethods = false)
     static class Wiring {
-        @Bean FixturePolicy storePolicy(JdbcTemplate jdbc) { return new FixturePolicy(jdbc); }
+        @org.springframework.context.annotation.Primary @Bean FixturePolicy storePolicy(JdbcTemplate jdbc) { return new FixturePolicy(jdbc); }
 
-        @Bean StorePersistenceService storePersistenceService(StoreRepository stores, EntityManager entityManager,
+        @org.springframework.context.annotation.Primary @Bean StorePersistenceService fixtureStorePersistenceService(StoreRepository stores, EntityManager entityManager,
                 FixturePolicy policy) {
             return new StorePersistenceService(stores, entityManager, policy);
         }
