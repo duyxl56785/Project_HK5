@@ -20,14 +20,16 @@ export function useCategories() {
   return useQuery({ queryKey: ['categories'], queryFn: () => api<CategoryDto[]>('/api/categories') });
 }
 
-export function CatalogPage() {
+export function CatalogPage({ store }: { readonly store?: StoreRef }) {
   const [params, setParams] = useSearchParams();
+  const effective = new URLSearchParams(params);
+  if (store) effective.set('storeId', store.id);
   const [term, setTerm] = useState(params.get('q') ?? '');
   const categories = useCategories();
   const page = Number(params.get('page') ?? 0);
   const query = useQuery({
-    queryKey: ['catalog', params.toString()],
-    queryFn: () => api<Page>(`/api/catalog/products?size=${SIZE}&${params.toString()}`),
+    queryKey: ['catalog', effective.toString()],
+    queryFn: () => api<Page>(`/api/catalog/products?size=${SIZE}&${effective.toString()}`),
     placeholderData: keepPreviousData,
   });
 
@@ -64,7 +66,7 @@ export function CatalogPage() {
             <option value="NEWEST">Mới nhất</option><option value="PRICE_ASC">Giá tăng dần</option>
             <option value="PRICE_DESC">Giá giảm dần</option><option value="NAME_ASC">Tên A–Z</option>
           </select></label>
-        {params.get('storeId') && <button type="button" className="btn" onClick={() => update({ storeId: null })}>Bỏ lọc cửa hàng</button>}
+        {!store && params.get('storeId') && <button type="button" className="btn" onClick={() => update({ storeId: null })}>Bỏ lọc cửa hàng</button>}
       </div>
       <Loaded query={query}>{(data) => data.items.length === 0 ? <p className="muted">Không tìm thấy sản phẩm phù hợp.</p> : <>
         <div className="products">{data.items.map((p) => <Link key={p.id} className="product" to={`/products/${p.id}`}>

@@ -8,6 +8,7 @@ import { CartPage } from '../features/cart/CartPage';
 import { useCart } from '../features/cart/cartApi';
 import { CatalogPage } from '../features/catalog/CatalogPage';
 import { ProductPage } from '../features/catalog/ProductPage';
+import { StorePage } from '../features/catalog/StorePage';
 import { CheckoutPage } from '../features/checkout/CheckoutPage';
 import { NotificationBell, NotificationsPage } from '../features/notifications/Notifications';
 import { OrderDetailPage, OrdersPage } from '../features/orders/OrdersPage';
@@ -54,7 +55,9 @@ export function App() {
   return <BrowserRouter><Routes>
     <Route element={<Layout />}>
       <Route index element={<CatalogPage />} />
+      <Route path="products" element={<CatalogPage />} />
       <Route path="products/:id" element={<ProductPage />} />
+      <Route path="stores/:slug" element={<StorePage />} />
       <Route path="login" element={<LoginPage />} />
       <Route path="register" element={<RegisterPage />} />
       <Route path="account" element={guarded(undefined, <AccountPage />)} />

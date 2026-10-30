@@ -52,7 +52,7 @@ export function ProductPage() {
       <div className="stack">
         <h1>{p.name}</h1>
         <p className="price price--large">{money(p.unitPrice)}</p>
-        <p className="muted">Cửa hàng: <Link to={`/?storeId=${p.store.id}`}>{p.store.name}</Link> · Còn {p.available} sản phẩm</p>
+        <p className="muted">Cửa hàng: <Link to={`/stores/${p.store.slug}`}>{p.store.name}</Link> · Còn {p.available} sản phẩm</p>
         <p className="muted">{p.rating.count > 0 ? `${stars(Math.round(p.rating.average))} ${p.rating.average}/5 (${p.rating.count} đánh giá)` : 'Chưa có đánh giá'}</p>
         <Buy product={p} />
         <p className="pre">{p.description}</p>
