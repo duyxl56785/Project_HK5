@@ -63,6 +63,21 @@ Set `TV5_BROWSER_EVIDENCE` to a local ignored directory for screenshots. Test to
 
 TV1 must review before linking into shared navigation/Auth/router/API client. No cross-owner integration is implemented here. FullM01/Finance/COD/settlement policy remains PENDING/BLOCKED independently of Productprice approval. No flags changed, no deployment, no production/E2E acceptance inferred.
 
+### Session invalidation handoff
+
+`FinanceWorkspace` accepts a host-owned `sessionEpoch` number (default 0 for the
+isolated preview). The future authenticated host must change this generation on
+logout/login, actor or effective-authority changes, including when the Store ID
+and adapter object remain unchanged. This is an invalidation signal, not a user
+ID, bearer token, verified permission or backend contract. Never pass a secret.
+
+An epoch change hides the prior result synchronously, aborts the previous request,
+clears detail/filter state by remounting the view, and starts a fresh read. A late
+response from the old epoch cannot populate the new session. Adapter reads and
+server authorization remain the host/server's responsibility; this feature does
+not subscribe to Auth, verify a real session or enable an API. Existing preview
+callers keep the default generation; a production host must explicitly supply it.
+
 ## Acceptance checklist
 
 - [x] Five read-only views, typed adapter, source labels and explicit financial fixtures.
