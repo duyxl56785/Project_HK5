@@ -195,6 +195,36 @@ class HttpSellerRevocationWriteFencePostgresIT {
         assertTrue(outcome.body().contains("AUTH_ACCESS_INVALID"), outcome.body());
     }
 
+    @Test void writeCommittedBeforeRevokeStaysAndTheSameTokenIsThenRefused() throws Exception {
+        productEntered = new CountDownLatch(1);
+        releaseProduct = new CountDownLatch(0);
+        UUID account = auth.getBean(AuthService.class).create("order-" + UUID.randomUUID() + "@test.local", "not-a-real-password",
+                Set.of(Account.Role.CUSTOMER, Account.Role.SELLER)).getId();
+        HttpClient client = HttpClient.newHttpClient();
+        String bearer = token(account);
+        HttpRequest add = HttpRequest.newBuilder(URI.create("http://127.0.0.1:" + cartPort + "/api/cart/items"))
+                .header("Authorization", "Bearer " + bearer)
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString("{\"productId\":\"product-1\",\"quantity\":1}")).build();
+        HttpResponse<String> committed = send(client, add);
+        assertTrue(committed.statusCode() / 100 == 2, committed.body());
+
+        HttpResponse<String> revoke = send(client, HttpRequest.newBuilder(
+                URI.create("http://127.0.0.1:" + authPort + "/internal/accounts/" + account + "/roles/SELLER"))
+                .header("X-Internal-Token", "admin-pair")
+                .header("Content-Type", "application/json")
+                .PUT(HttpRequest.BodyPublishers.ofString("{\"granted\":false,\"revision\":1}")).build());
+        assertEquals(200, revoke.statusCode(), revoke.body());
+
+        HttpResponse<String> stale = send(client, add);
+        assertEquals(401, stale.statusCode(), stale.body());
+        assertTrue(stale.body().contains("AUTH_ACCESS_INVALID"), stale.body());
+        assertEquals(1, cart.getBean(JdbcTemplate.class).queryForObject(
+                "select count(*) from carts where customer_id = ?", Integer.class, account.toString()));
+        assertEquals(0, auth.getBean(JdbcTemplate.class).queryForObject(
+                "select count(*) from write_reservations where account_id = ?", Integer.class, account));
+    }
+
     private static void startProductFixture() throws Exception {
         product = HttpServer.create(new InetSocketAddress("127.0.0.1", 0), 0);
         product.createContext("/internal/catalog/products/product-1", exchange -> {
