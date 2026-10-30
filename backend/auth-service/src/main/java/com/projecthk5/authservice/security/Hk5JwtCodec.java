@@ -55,18 +55,20 @@ public final class Hk5JwtCodec {
     public VerifiedPrincipal verify(String token) {
         var principal = verifier.verify(token);
         return new VerifiedPrincipal(principal.subject(), principal.tokenRoles().stream()
-                .map(Account.Role::valueOf).collect(java.util.stream.Collectors.toUnmodifiableSet()), principal.tokenId());
+                .map(Account.Role::valueOf).collect(java.util.stream.Collectors.toUnmodifiableSet()), principal.tokenId(),principal.expiresAt());
     }
 
     /** Signed roles only; CurrentAccountAuthority still checks current account/grants. */
     public static final class VerifiedPrincipal {
         private final String subject, tokenId;
         private final Set<Account.Role> tokenRoles;
-        private VerifiedPrincipal(String subject, Set<Account.Role> tokenRoles, String tokenId) {
-            this.subject = subject; this.tokenRoles = tokenRoles; this.tokenId = tokenId;
+        private final Instant expiresAt;
+        private VerifiedPrincipal(String subject, Set<Account.Role> tokenRoles, String tokenId, Instant expiresAt) {
+            this.subject = subject; this.tokenRoles = tokenRoles; this.tokenId = tokenId; this.expiresAt=expiresAt;
         }
         public String subject() { return subject; }
         public Set<Account.Role> tokenRoles() { return tokenRoles; }
         public String tokenId() { return tokenId; }
+        public Instant expiresAt() { return expiresAt; }
     }
 }

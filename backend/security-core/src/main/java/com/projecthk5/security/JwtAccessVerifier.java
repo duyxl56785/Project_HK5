@@ -81,7 +81,7 @@ public final class JwtAccessVerifier {
                 if (!(value instanceof String role) || !Set.of("CUSTOMER", "SELLER", "ADMIN").contains(role)
                         || !roles.add(role)) throw invalid();
             }
-            return new VerifiedPrincipal(jwt.getSubject(), Set.copyOf(roles), jwt.getId());
+            return new VerifiedPrincipal(jwt.getSubject(), Set.copyOf(roles), jwt.getId(),exp);
         } catch (ParseException | IllegalArgumentException | ClassCastException | java.time.DateTimeException
                  | ArithmeticException | JwtException error) {
             throw invalid();
@@ -93,11 +93,13 @@ public final class JwtAccessVerifier {
     public static final class VerifiedPrincipal {
         private final String subject, tokenId;
         private final Set<String> tokenRoles;
-        private VerifiedPrincipal(String subject, Set<String> tokenRoles, String tokenId) {
-            this.subject = subject; this.tokenRoles = tokenRoles; this.tokenId = tokenId;
+        private final Instant expiresAt;
+        private VerifiedPrincipal(String subject, Set<String> tokenRoles, String tokenId,Instant expiresAt) {
+            this.subject = subject; this.tokenRoles = tokenRoles; this.tokenId = tokenId;this.expiresAt=expiresAt;
         }
         public String subject() { return subject; }
         public Set<String> tokenRoles() { return tokenRoles; }
         public String tokenId() { return tokenId; }
+        public Instant expiresAt() {return expiresAt;}
     }
 }

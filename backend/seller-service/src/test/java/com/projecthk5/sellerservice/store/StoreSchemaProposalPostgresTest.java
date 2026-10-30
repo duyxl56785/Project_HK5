@@ -81,6 +81,9 @@ class StoreSchemaProposalPostgresTest {
             assertTrue(rows.next());
             assertEquals("7", rows.getString(1));
             assertEquals("V7__pending_revocations.sql", rows.getString(2));
+            assertTrue(rows.next());
+            assertEquals("8", rows.getString(1));
+            assertEquals("V8__seller_mutation_queue.sql", rows.getString(2));
             assertFalse(rows.next());
         }
     }

@@ -19,7 +19,6 @@ public final class SellerRoleRevocationRecovery {
     }
     public SellerRoleSyncService.Result apply(SellerRoleSyncService.Command command) throws Exception {
         requireNoTransaction();
-        if(command.sellerStatus()==SellerRoleSyncService.Status.APPROVED)return service.apply(command);
         String payload=canonical(command);
         String hash=HexFormat.of().formatHex(MessageDigest.getInstance("SHA-256").digest(payload.getBytes(StandardCharsets.UTF_8)));
         var ticket=barrier.enqueueRoleSync(command.eventId(),hash,payload);
@@ -38,7 +37,6 @@ public final class SellerRoleRevocationRecovery {
         SellerRoleSyncService.Command command;
         try {
             command=codec.read(claim.get().ticket().payload());
-            if(command.sellerStatus()==SellerRoleSyncService.Status.APPROVED)throw new IllegalArgumentException();
         } catch(IllegalArgumentException invalid) {
             barrier.reject(claim.get(),"VALIDATION_FAILED");return true;
         }

@@ -48,6 +48,7 @@ class JwtAccessVerifierTest {
         var verified = verifier(now).verify(token(claims(), kid, kid.equals("new") ? current : previous, JWSAlgorithm.HS256));
         assertEquals(" Exact-Opaque-Ä ", verified.subject());
         assertEquals(Set.of("CUSTOMER", "SELLER"), verified.tokenRoles());
+        assertEquals(now.plusSeconds(900),verified.expiresAt());
         assertThrows(UnsupportedOperationException.class, () -> verified.tokenRoles().add("ADMIN"));
     }
 

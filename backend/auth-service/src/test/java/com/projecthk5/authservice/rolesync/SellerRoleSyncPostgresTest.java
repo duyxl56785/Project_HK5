@@ -34,9 +34,9 @@ class SellerRoleSyncPostgresTest {
         var v2 = Flyway.configure().dataSource(url,"auth_migrator",password).target("2").load();
         v2.migrate();
         var v3 = Flyway.configure().dataSource(url,"auth_migrator",password).load();
-        assertEquals(4, v3.migrate().migrationsExecuted);
+        assertEquals(5, v3.migrate().migrationsExecuted);
         v3.validate();
-        assertEquals("6", v3.info().current().getVersion().toString());
+        assertEquals("7", v3.info().current().getVersion().toString());
         admin.execute("GRANT USAGE ON SCHEMA public TO auth_app");
         var ds = new DriverManagerDataSource(url,"auth_app",password);
         jdbc = new JdbcTemplate(ds);
@@ -153,7 +153,7 @@ class SellerRoleSyncPostgresTest {
             host.setServletContext(new org.springframework.mock.web.MockServletContext());
             org.springframework.test.context.support.TestPropertySourceUtils.addInlinedPropertiesToEnvironment(host,
                 "hk5.auth.role-sync.enabled=true", "HK5_SELLER_AUTH_ROLE_SYNC_SECRET="+SellerRoleSyncHttpTest.KEY);
-            host.addBeanFactoryPostProcessor(factory->{ if(factory.containsBeanDefinition("sellerRoleSyncService")) ((org.springframework.beans.factory.support.BeanDefinitionRegistry)factory).removeBeanDefinition("sellerRoleSyncService"); factory.registerSingleton("testedService",service); });
+            host.addBeanFactoryPostProcessor(factory->{ if(factory.containsBeanDefinition("sellerRoleSyncService")) ((org.springframework.beans.factory.support.BeanDefinitionRegistry)factory).removeBeanDefinition("sellerRoleSyncService"); factory.registerSingleton("testedService",service); factory.registerSingleton("testedRecovery",new SellerRoleRevocationRecovery(new com.projecthk5.security.fencing.RevocationBarrier(jdbc.getDataSource()),service)); });
             host.register(SellerRoleSyncHttpTest.Host.class); com.projecthk5.security.PairManifestFixture.install(host.getEnvironment()); host.refresh();
             var mvc=org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup(host)
                 .addFilters(host.getBean("springSecurityFilterChain",jakarta.servlet.Filter.class)).build();
@@ -177,7 +177,7 @@ class SellerRoleSyncPostgresTest {
         String url=pg.getJdbcUrl().replace("/test","/auth_db");
         try(var app=new org.springframework.boot.builder.SpringApplicationBuilder(com.projecthk5.authservice.AuthServiceApplication.class)
                 .initializers(c -> com.projecthk5.security.PairManifestFixture.install(c.getEnvironment())).run("--server.port=0","--spring.datasource.url="+url,"--spring.datasource.username=auth_app",
-                    "--spring.datasource.password="+password,"--hk5.auth.role-sync.enabled=true",
+                    "--spring.datasource.password="+password,"--hk5.auth.role-sync.enabled=true","--hk5.auth.role-sync.revocation-recovery.enabled=true",
                     "--HK5_SELLER_AUTH_ROLE_SYNC_SECRET="+SellerRoleSyncHttpTest.KEY)) {
             assertTrue(org.springframework.aop.support.AopUtils.isAopProxy(app.getBean(SellerRoleSyncService.class)));
             int port=((org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext)app).getWebServer().getPort();
@@ -201,7 +201,7 @@ class SellerRoleSyncPostgresTest {
         String url=pg.getJdbcUrl().replace("/test","/auth_db"),key=SellerRoleSyncHttpTest.KEY,previous="old-test-only-role-sync-credential-0123456789";
         try(var app=(org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext)new org.springframework.boot.builder.SpringApplicationBuilder(com.projecthk5.authservice.AuthServiceApplication.class)
             .initializers(c -> com.projecthk5.security.PairManifestFixture.install(c.getEnvironment())).run("--server.port=0","--spring.datasource.url="+url,"--spring.datasource.username=auth_app","--spring.datasource.password="+password,
-                "--hk5.auth.role-sync.enabled=true","--HK5_SELLER_AUTH_ROLE_SYNC_SECRET="+key)) {
+                "--hk5.auth.role-sync.enabled=true","--hk5.auth.role-sync.revocation-recovery.enabled=true","--HK5_SELLER_AUTH_ROLE_SYNC_SECRET="+key)) {
             var http=java.net.http.HttpClient.newHttpClient();
             for(String foreign:List.of("HK5_SELLER_AUTH_CURRENT_ACCOUNT_","HK5_PRODUCT_AUTH_CURRENT_ACCOUNT_"))
             for(String own:List.of(key,previous))for(String slot:List.of("SECRET","PREVIOUS_SECRET")) {

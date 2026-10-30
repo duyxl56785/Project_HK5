@@ -49,7 +49,7 @@ class ReservationRecoveryPostgresTest {
     }
     @BeforeEach void seed() throws Exception {
         fixture=new ReservationRpcPostgresTest();fixture.seed();
-        ReservationRpcPostgresTest.authDb.execute("TRUNCATE authority_pending_revocations");ReservationRpcPostgresTest.sellerDb.execute("TRUNCATE authority_pending_revocations");
+        ReservationRpcPostgresTest.authDb.execute("TRUNCATE account_mutation_receipts,authority_pending_revocations");ReservationRpcPostgresTest.sellerDb.execute("TRUNCATE seller_mutation_receipts,authority_pending_revocations");
         ReservationRpcPostgresTest.authConfig.put("hk5.auth.reservations.recovery.enabled",true);
         ReservationRpcPostgresTest.sellerConfig.put("hk5.seller.reservations.recovery.enabled",true);
         producerStore=new ProductReservationRecoveryStore(ReservationRpcPostgresTest.worker,Duration.ZERO);

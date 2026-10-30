@@ -75,12 +75,11 @@ public class SellerRoleSyncHttpConfiguration {
     @ConditionalOnProperty(name="hk5.auth.role-sync.enabled", havingValue="true")
     public static final class Receiver {
         static final String VERIFIED=Receiver.class.getName()+".verified";
-        private final SellerRoleSyncService service;
         private final SellerRoleSyncJson codec=new SellerRoleSyncJson();
         private final SellerRoleRevocationRecovery recovery;
-        public Receiver(SellerRoleSyncService service) {this.service=service;this.recovery=null;}
+        public Receiver(SellerRoleSyncService service) {this.recovery=null;}
         @Autowired public Receiver(SellerRoleSyncService service,ObjectProvider<SellerRoleRevocationRecovery> recovery) {
-            this.service=service;this.recovery=recovery.getIfAvailable();
+            this.recovery=recovery.getIfAvailable();
         }
         @PostMapping(value=PATH,consumes="application/json",produces="application/json")
         public ResponseEntity<String> receive(HttpServletRequest request) throws IOException {
@@ -94,8 +93,8 @@ public class SellerRoleSyncHttpConfiguration {
                 command=codec.read(json);
             } catch(IllegalArgumentException | CharacterCodingException invalid) {return reply(400,"VALIDATION_FAILED");}
             try {
-                var result=recovery!=null && command.sellerStatus()!=SellerRoleSyncService.Status.APPROVED
-                    ? recovery.apply(command) : service.apply(command);
+                if(recovery==null)return reply(503,"ROLE_SYNC_UNAVAILABLE");
+                var result=recovery.apply(command);
                 return ResponseEntity.ok().header("Cache-Control","no-store").body(codec.ack(command,result));
             } catch(SellerRoleSyncService.Conflict conflict) {return reply(409,conflict.code());}
             catch(RevocationBarrier.Conflict conflict) {return reply(409,"ROLE_SYNC_IDENTITY_CONFLICT");}

@@ -22,18 +22,22 @@ class SellerRoleSyncHttpTest {
     AnnotationConfigWebApplicationContext context;
     MockMvc mvc;
     static SellerRoleSyncService service;
+    SellerRoleRevocationRecovery recovery;
     @Configuration @EnableWebMvc @EnableWebSecurity
     @Import({SellerRoleSyncHttpConfiguration.class, SellerRoleSyncHttpConfiguration.Receiver.class})
     static class Host {
 
     }
-    void host(boolean enabled, String key) {
+    void host(boolean enabled, String key) throws Exception {host(enabled,key,true);}
+    void host(boolean enabled, String key, boolean recoveryAvailable) throws Exception {
         service = mock(SellerRoleSyncService.class);
+        recovery=mock(SellerRoleRevocationRecovery.class);
+        when(recovery.apply(any())).thenAnswer(invocation->service.apply(invocation.getArgument(0)));
         context = new AnnotationConfigWebApplicationContext();
         context.setServletContext(new MockServletContext());
         TestPropertySourceUtils.addInlinedPropertiesToEnvironment(context,
             "hk5.auth.role-sync.enabled="+enabled, "HK5_SELLER_AUTH_ROLE_SYNC_SECRET="+key);
-        context.addBeanFactoryPostProcessor(factory->{ if(factory.containsBeanDefinition("sellerRoleSyncService")) ((org.springframework.beans.factory.support.BeanDefinitionRegistry)factory).removeBeanDefinition("sellerRoleSyncService"); factory.registerSingleton("testedService",service); });
+        context.addBeanFactoryPostProcessor(factory->{ if(factory.containsBeanDefinition("sellerRoleSyncService")) ((org.springframework.beans.factory.support.BeanDefinitionRegistry)factory).removeBeanDefinition("sellerRoleSyncService"); factory.registerSingleton("testedService",service); if(recoveryAvailable)factory.registerSingleton("testedRecovery",recovery); });
         context.register(Host.class); com.projecthk5.security.PairManifestFixture.install(context.getEnvironment()); context.refresh();
         mvc=MockMvcBuilders.webAppContextSetup(context)
             .addFilters(context.getBean("springSecurityFilterChain", Filter.class)).build();
@@ -77,6 +81,22 @@ class SellerRoleSyncHttpTest {
     @Test void unavailableCredentialSourceFailsClosed() throws Exception {
         host(true,""); mvc.perform(post(PATH).header("X-HK5-Service-Credential",KEY).content(payload()))
             .andExpect(status().isServiceUnavailable()); verifyNoInteractions(service);
+    }
+    @Test void validRequestWithoutRecoveryFailsClosedForEveryStatus() throws Exception {
+        host(true,KEY,false);
+        for(var status:SellerRoleSyncService.Status.values()) {
+            mvc.perform(post(PATH).header("X-HK5-Service-Credential",KEY).contentType("application/json").content(payload().replace("APPROVED",status.name())))
+                .andExpect(status().isServiceUnavailable()).andExpect(jsonPath("$.code").value("ROLE_SYNC_UNAVAILABLE"));
+        }
+        verifyNoInteractions(service);
+    }
+    @Test void everyStatusIncludingApprovalUsesRecovery() throws Exception {
+        host(true,KEY); when(service.apply(any())).thenReturn(SellerRoleSyncService.Result.APPLIED);
+        for(var sellerStatus:SellerRoleSyncService.Status.values()) {
+            mvc.perform(post(PATH).header("X-HK5-Service-Credential",KEY).contentType("application/json").content(payload().replace("APPROVED",sellerStatus.name())))
+                .andExpect(status().isOk());
+            verify(recovery).apply(argThat(command->command.sellerStatus()==sellerStatus));
+        }
     }
     @Test void boundsBodyAndRejectsMalformedUtf8AndDuplicateJson() throws Exception {
         host(true,KEY);

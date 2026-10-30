@@ -8,7 +8,7 @@ import javax.sql.DataSource;
 /** Durable priority barrier; lease expiry coordinates workers and never grants authority. */
 public final class RevocationBarrier {
     public enum State { PENDING, LEASED, APPLIED, REJECTED, BLOCKED }
-    public enum Kind { MANUAL, ROLE_SYNC }
+    public enum Kind { MANUAL, ROLE_SYNC, AUTH_MUTATION, SELLER_MUTATION }
     public record Ticket(UUID requestId,String bindingHash,String payload,State state,int attempts,Kind kind) { }
     public record Claim(Ticket ticket,UUID token) { }
     public static final class Conflict extends IllegalArgumentException {
@@ -19,6 +19,10 @@ public final class RevocationBarrier {
     public Ticket enqueue(UUID id,String hash,String payload) throws SQLException {return enqueue(id,hash,payload,Kind.MANUAL);}
     public Ticket enqueueRoleSync(UUID id,String hash,String payload) throws SQLException {
         return enqueue(id,hash,Objects.requireNonNull(payload),Kind.ROLE_SYNC);
+    }
+    public Ticket enqueueMutation(UUID id,String hash,String payload,Kind kind) throws SQLException {
+        requireMutationKind(kind);
+        return enqueue(id,hash,Objects.requireNonNull(payload),kind);
     }
     private Ticket enqueue(UUID id,String hash,String payload,Kind kind) throws SQLException {
         Objects.requireNonNull(id);
@@ -44,6 +48,13 @@ public final class RevocationBarrier {
     public Optional<Claim> claimRoleSync(Duration lease) throws SQLException {return claim(null,lease,Kind.ROLE_SYNC);}
     public Optional<Claim> claimRoleSync(UUID id,Duration lease) throws SQLException {return claim(id,lease,Kind.ROLE_SYNC);}
     public Optional<Claim> claim(UUID id,Duration lease) throws SQLException {return claim(id,lease,Kind.MANUAL);}
+    public Optional<Claim> claimMutation(Kind kind,Duration lease) throws SQLException {return claimMutation(kind,null,lease);}
+    public Optional<Claim> claimMutation(Kind kind,UUID id,Duration lease) throws SQLException {
+        requireMutationKind(kind);return claim(id,lease,kind);
+    }
+    private static void requireMutationKind(Kind kind) {
+        if(kind!=Kind.AUTH_MUTATION && kind!=Kind.SELLER_MUTATION)throw new IllegalArgumentException("Invalid mutation queue kind");
+    }
     private Optional<Claim> claim(UUID id,Duration lease,Kind kind) throws SQLException {
         if(lease==null || lease.isNegative() || lease.isZero() || lease.compareTo(Duration.ofMinutes(5))>0)throw new IllegalArgumentException("Invalid lease");
         return FenceSql.transaction(source,c->{
