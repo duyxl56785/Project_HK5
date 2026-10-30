@@ -13,15 +13,21 @@ public final class DurableWriteLedger {
             if(epoch<=0 || state!=State.COMMITTED && state!=State.ABORTED)throw new IllegalArgumentException("Nonterminal receipt"); }
     }
     @FunctionalInterface public interface LocalWrite {void apply(Connection connection) throws SQLException;}
+    @FunctionalInterface public interface BeginWork {void apply(Connection connection,Operation operation) throws SQLException;}
     private final DataSource source;
     public DurableWriteLedger(DataSource source) {this.source=Objects.requireNonNull(source);}
 
     public Operation begin(WriteIntent intent) throws SQLException {
+        return begin(intent,(connection,operation)->{});
+    }
+    public Operation begin(WriteIntent intent,BeginWork work) throws SQLException {
+        Objects.requireNonNull(work);
         return FenceSql.transaction(source,c->{
             try(var insert=c.prepareStatement("INSERT INTO authority_write_operations(request_id,binding_hash,state) VALUES(?,?,'PENDING') ON CONFLICT DO NOTHING")) {
                 insert.setObject(1,intent.requestId());insert.setString(2,intent.fingerprint());insert.executeUpdate();
             }
-            var operation=lock(c,intent.requestId());FenceSql.require(operation.bindingHash().equals(intent.fingerprint()));return operation;
+            var operation=lock(c,intent.requestId());FenceSql.require(operation.bindingHash().equals(intent.fingerprint()));
+            work.apply(c,operation);return operation;
         });
     }
     public void recordGrant(UUID request,long epoch,Grant grant) throws SQLException {

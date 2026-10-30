@@ -57,7 +57,7 @@ class ReservationRecoveryPostgresTest {
         worker=new ProductReservationRecoveryWorker(recoveryStore,new DurableWriteLedger(recoverySource),fixture.authClient(),fixture.sellerClient(),Duration.ofSeconds(20),8);
     }
     @AfterAll static void stop(){if(revoker!=null)revoker.close();ReservationRpcPostgresTest.stop();}
-    DurableWriteLedger.Operation begin() throws Exception {var op=ReservationRpcPostgresTest.ledger.begin(fixture.intent);producerStore.enlist(fixture.intent,op.epoch());return op;}
+    DurableWriteLedger.Operation begin() throws Exception {return producerStore.begin(fixture.intent);}
     DurableWriteLedger.Operation admitted() throws Exception {
         var op=begin();var a=fixture.authClient().admit(fixture.intent);ReservationRpcPostgresTest.ledger.recordGrant(fixture.intent.requestId(),op.epoch(),a);
         var s=fixture.sellerClient().admit(fixture.intent);ReservationRpcPostgresTest.ledger.recordGrant(fixture.intent.requestId(),op.epoch(),s);return op;
@@ -74,6 +74,30 @@ class ReservationRecoveryPostgresTest {
         var op=begin();assertTrue(worker.tick());assertClosed();assertFalse(worker.tick());
         assertEquals(DurableWriteLedger.State.ABORTED,ReservationRpcPostgresTest.ledger.terminal(fixture.intent.requestId()).state());
         assertThrows(IllegalStateException.class,()->ReservationRpcPostgresTest.ledger.commit(fixture.intent.requestId(),op.epoch(),c->{throw new AssertionError();}));
+    }
+    @Test void enlistPermissionFailureRollsBackLedgerAndAtomicRetryIsIdempotent() throws Exception {
+        var db=ReservationRpcPostgresTest.productDb;
+        db.execute("REVOKE INSERT ON product_reservation_recovery FROM product_reservation_writer");
+        try {
+            assertEquals("42501",assertThrows(SQLException.class,()->producerStore.begin(fixture.intent)).getSQLState());
+            assertEquals(0,db.queryForObject("SELECT count(*) FROM authority_write_operations WHERE request_id=?",Integer.class,fixture.intent.requestId()));
+            assertTrue(recoveryStore.inspect(fixture.intent.requestId()).isEmpty());
+        } finally {db.execute("GRANT INSERT(request_id,binding_hash,operation_epoch,intent,due_at) ON product_reservation_recovery TO product_reservation_writer");}
+        var first=producerStore.begin(fixture.intent);var retry=producerStore.begin(fixture.intent);
+        assertEquals(first,retry);
+        assertEquals(1,db.queryForObject("SELECT count(*) FROM product_reservation_recovery WHERE request_id=?",Integer.class,fixture.intent.requestId()));
+        assertTrue(worker.tick());assertClosed();
+    }
+    @Test void operatorCanPagePastUnknownLegacyOrphansWithoutMutation() throws Exception {
+        var i=fixture.intent;
+        for(int n=0;n<101;n++)ReservationRpcPostgresTest.ledger.begin(new WriteIntent(UUID.randomUUID(),i.accountId(),i.storeId(),i.tokenId(),i.mode(),i.sellerVersion(),i.storeVersion(),i.productVersion(),i.commandHash()));
+        var operator=new ProductReservationRecoveryStore(operatorSource,Duration.ZERO);
+        var first=operator.orphans();assertEquals(100,first.size());
+        long cursor=first.getLast().operationEpoch();var next=operator.orphans(cursor);
+        assertEquals(1,next.size());assertTrue(next.getFirst().operationEpoch()>cursor);
+        assertTrue(ProductReservationRecoveryOperator.execute(new String[]{"orphans",Long.toString(cursor)},operatorSource,true).contains(next.getFirst().requestId().toString()));
+        assertEquals(101,ReservationRpcPostgresTest.productDb.queryForObject("SELECT count(*) FROM authority_write_operations WHERE state='PENDING'",Integer.class));
+        assertEquals(0,ReservationRpcPostgresTest.productDb.queryForObject("SELECT count(*) FROM product_reservation_recovery",Integer.class));
     }
     @Test void lostHttpAdmissionAckIsRecoveredWithoutRecordingUntrustedReceipt() throws Exception {
         var op=begin();ReservationRpcPostgresTest.admission.mode.set(ReservationRpcPostgresTest.FaultProxy.Mode.HOLD);

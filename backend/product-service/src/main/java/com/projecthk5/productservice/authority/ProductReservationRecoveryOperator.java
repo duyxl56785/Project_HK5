@@ -19,6 +19,11 @@ public final class ProductReservationRecoveryOperator {
     }
     public static String execute(String[] args,DataSource source,boolean enabled) throws Exception {
         if(!enabled)throw new IllegalStateException("Recovery operator is disabled");
+        if(args.length>0 && "orphans".equals(args[0])) {
+            if(args.length>2)throw new IllegalArgumentException("Expected optional operation epoch cursor");
+            long after=args.length==1?0:epoch(args[1]);
+            return new ObjectMapper().writeValueAsString(new ProductReservationRecoveryStore(source,Duration.ZERO).orphans(after));
+        }
         if(args.length<2 || !Set.of("status","cancel","retry","enlist").contains(args[0]))throw new IllegalArgumentException("Unsupported recovery command");
         var store=new ProductReservationRecoveryStore(source,Duration.ZERO);
         if("enlist".equals(args[0])) {

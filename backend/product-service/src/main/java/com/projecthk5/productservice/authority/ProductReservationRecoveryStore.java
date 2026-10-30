@@ -11,24 +11,29 @@ import javax.sql.DataSource;
 public final class ProductReservationRecoveryStore {
     public record Claim(WriteIntent intent,long operationEpoch,UUID token,int attempts) {}
     public record Status(UUID requestId,long operationEpoch,String state,int attempts,String lastCode) {}
+    public record Orphan(UUID requestId,String bindingHash,long operationEpoch,String state) {}
     private final DataSource source;
     private final Duration grace;
     public ProductReservationRecoveryStore(DataSource source,Duration grace) {
         this.source=Objects.requireNonNull(source);this.grace=Objects.requireNonNull(grace);
         if(grace.isNegative() || grace.compareTo(Duration.ofHours(1))>0)throw new IllegalArgumentException("Invalid recovery grace");
     }
+    public DurableWriteLedger.Operation begin(WriteIntent intent) throws SQLException {
+        return new DurableWriteLedger(source).begin(intent,(connection,operation)->enlist(connection,intent,operation.epoch()));
+    }
     public void enlist(WriteIntent intent,long epoch) throws SQLException {
+        transaction(c->{enlist(c,intent,epoch);return null;});
+    }
+    private void enlist(Connection c,WriteIntent intent,long epoch) throws SQLException {
         String wire=ReservationWire.request("lookup",intent.requestId(),intent,null);
-        transaction(c->{
-            try(var q=c.prepareStatement("INSERT INTO product_reservation_recovery(request_id,binding_hash,operation_epoch,intent,due_at) SELECT request_id,binding_hash,epoch,?,clock_timestamp()+(? * interval '1 millisecond') FROM authority_write_operations WHERE request_id=? AND binding_hash=? AND epoch=? ON CONFLICT DO NOTHING")) {
-                q.setString(1,wire);q.setLong(2,grace.toMillis());q.setObject(3,intent.requestId());q.setString(4,intent.fingerprint());q.setLong(5,epoch);q.executeUpdate();
+        try(var q=c.prepareStatement("INSERT INTO product_reservation_recovery(request_id,binding_hash,operation_epoch,intent,due_at) SELECT request_id,binding_hash,epoch,?,clock_timestamp()+(? * interval '1 millisecond') FROM authority_write_operations WHERE request_id=? AND binding_hash=? AND epoch=? ON CONFLICT DO NOTHING")) {
+            q.setString(1,wire);q.setLong(2,grace.toMillis());q.setObject(3,intent.requestId());q.setString(4,intent.fingerprint());q.setLong(5,epoch);q.executeUpdate();
+        }
+        try(var q=c.prepareStatement("SELECT binding_hash,operation_epoch,intent FROM product_reservation_recovery WHERE request_id=?")) {
+            q.setObject(1,intent.requestId());try(var r=q.executeQuery()) {
+                require(r.next() && r.getString(1).equals(intent.fingerprint()) && r.getLong(2)==epoch && r.getString(3).equals(wire));
             }
-            try(var q=c.prepareStatement("SELECT binding_hash,operation_epoch,intent FROM product_reservation_recovery WHERE request_id=?")) {
-                q.setObject(1,intent.requestId());try(var r=q.executeQuery()) {
-                    require(r.next() && r.getString(1).equals(intent.fingerprint()) && r.getLong(2)==epoch && r.getString(3).equals(wire));
-                }
-            }return null;
-        });
+        }
     }
     public Optional<Claim> claim(Duration lease) throws SQLException {
         if(lease.isNegative() || lease.isZero() || lease.compareTo(Duration.ofMinutes(5))>0)throw new IllegalArgumentException("Invalid recovery lease");
@@ -57,6 +62,20 @@ public final class ProductReservationRecoveryStore {
     public Optional<Status> inspect(UUID request) throws SQLException {
         try(var c=source.getConnection();var q=c.prepareStatement("SELECT operation_epoch,state,attempts,last_code FROM product_reservation_recovery WHERE request_id=?")) {
             q.setObject(1,request);try(var r=q.executeQuery()){return r.next()?Optional.of(new Status(request,r.getLong(1),r.getString(2),r.getInt(3),r.getString(4))):Optional.empty();}
+        }
+    }
+    public List<Orphan> orphans() throws SQLException {
+        return orphans(0);
+    }
+    public List<Orphan> orphans(long afterEpoch) throws SQLException {
+        if(afterEpoch<0)throw new IllegalArgumentException("Invalid orphan cursor");
+        try(var c=source.getConnection();var q=c.prepareStatement("SELECT o.request_id,o.binding_hash,o.epoch,o.state FROM authority_write_operations o WHERE o.epoch>? AND NOT EXISTS (SELECT 1 FROM product_reservation_recovery r WHERE r.request_id=o.request_id) ORDER BY o.epoch,o.request_id LIMIT 100")) {
+            q.setLong(1,afterEpoch);
+            try(var rows=q.executeQuery()) {
+            var result=new ArrayList<Orphan>();
+            while(rows.next())result.add(new Orphan(rows.getObject(1,UUID.class),rows.getString(2),rows.getLong(3),rows.getString(4)));
+            return List.copyOf(result);
+            }
         }
     }
     public void requestRetry(UUID request,long expectedEpoch,String actor) throws SQLException {

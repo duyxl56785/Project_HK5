@@ -24,7 +24,7 @@ public final class ProductReservationPorts {
         Objects.requireNonNull(intent);
         var auth=client("HK5_PRODUCT_AUTH_RESERVATION_URL","HK5_PRODUCT_AUTH_CURRENT_ACCOUNT_",Participant.AUTH,()->jwt);
         var seller=client("HK5_PRODUCT_SELLER_RESERVATION_URL","HK5_PRODUCT_SELLER_STORE_FACTS_",Participant.SELLER,null);
-        try {var operation=ledger.begin(intent);recovery.enlist(intent,operation.epoch());}
+        try {recovery.begin(intent);}
         catch(SQLException failure){throw new IllegalStateException("Durable recovery enlistment unavailable",failure);}
         return new DurableWriteCoordinator(ledger,port(intent,Participant.AUTH,auth),port(intent,Participant.SELLER,seller));
     }
