@@ -19,7 +19,7 @@ public class Account {
     private String status;
     @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt;
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "account_role_grants", joinColumns = @JoinColumn(name = "account_id"))
     @Column(name = "role", nullable = false, length = 16)
     @Enumerated(EnumType.STRING)
@@ -48,6 +48,10 @@ public class Account {
     public static String normalizeEmail(String email) {
         return Objects.requireNonNull(email).strip().toLowerCase(Locale.ROOT);
     }
+
+    /** Role grants are idempotent; an account always keeps at least CUSTOMER. */
+    public boolean grant(Role role) { return roles.add(Objects.requireNonNull(role)); }
+    public boolean revoke(Role role) { return role != Role.CUSTOMER && roles.remove(role); }
 
     public UUID getId() { return id; }
     public String getEmail() { return email; }

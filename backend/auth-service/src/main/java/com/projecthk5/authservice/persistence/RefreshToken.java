@@ -36,6 +36,9 @@ public class RefreshToken {
         this.expiresAt = expiresAt;
     }
 
+    public void markUsed(Instant now) { if (usedAt == null) usedAt = now; }
+    public void revoke(Instant now) { if (revokedAt == null) revokedAt = now; }
+
     public UUID getId() { return id; }
     public UUID getFamilyId() { return familyId; }
     public String getTokenHash() { return tokenHash; }

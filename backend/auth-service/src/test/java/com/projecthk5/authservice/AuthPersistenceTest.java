@@ -94,6 +94,13 @@ class AuthPersistenceTest {
 
     private ConfigurableApplicationContext application(boolean migration) {
         var environment = new StandardEnvironment();
+        byte[] signingKey = new byte[32];
+        new java.security.SecureRandom().nextBytes(signingKey);
+        // Auth fails closed without a signing keyring; give the test context a throwaway one.
+        environment.getPropertySources().addFirst(new MapPropertySource("isolated-jwt", Map.of(
+                "JWT_ISSUER_URI", "http://auth.test.invalid", "JWT_AUDIENCE", "smart-ecommerce-api",
+                "JWT_HS256_CURRENT_KID", "test-key-v1",
+                "JWT_HS256_CURRENT_KEY_B64", java.util.Base64.getEncoder().encodeToString(signingKey))));
         environment.getPropertySources().addFirst(new MapPropertySource("isolated-database", Map.of(
                 "spring.datasource.url", jdbcUrl,
                 "spring.datasource.password", appPassword,

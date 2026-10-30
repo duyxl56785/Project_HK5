@@ -1,0 +1,176 @@
+# Full local demo stack. Build jars first: scripts/demo/up.ps1 (or see docs/DEMO.md).
+# Only the Gateway (8080) and PostgreSQL (127.0.0.1:55432, for inspection) are published.
+name: hk5-demo
+
+x-service: &service
+  image: eclipse-temurin:21-jre
+  restart: unless-stopped
+  command: ["java", "-Xmx256m", "-Duser.timezone=UTC", "-jar", "/app/app.jar"]
+  depends_on:
+    postgres:
+      condition: service_healthy
+
+x-jwt: &jwt
+  JWT_ISSUER_URI: ${JWT_ISSUER_URI:?run node scripts/demo/gen-env.mjs}
+  JWT_AUDIENCE: ${JWT_AUDIENCE}
+  JWT_HS256_CURRENT_KID: ${JWT_HS256_CURRENT_KID}
+  JWT_HS256_CURRENT_KEY_B64: ${JWT_HS256_CURRENT_KEY_B64}
+
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: hk5
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?run node scripts/demo/gen-env.mjs}
+      POSTGRES_DB: hk5_demo
+      AUTH_DB_PASSWORD: ${AUTH_DB_PASSWORD}
+      AUTH_MIGRATION_PASSWORD: ${AUTH_MIGRATION_PASSWORD}
+      USER_DB_PASSWORD: ${USER_DB_PASSWORD}
+      USER_MIGRATION_PASSWORD: ${USER_MIGRATION_PASSWORD}
+    ports:
+      - "127.0.0.1:55432:5432"
+    volumes:
+      - pgdemo:/var/lib/postgresql/data
+      - ./demo/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U hk5 -d hk5_demo"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+  auth-service:
+    <<: *service
+    volumes: ["../backend/auth-service/build/libs/auth-service-0.1.0-SNAPSHOT.jar:/app/app.jar:ro"]
+    environment:
+      <<: *jwt
+      SPRING_PROFILES_ACTIVE: migration
+      AUTH_DB_HOST: postgres
+      AUTH_DB_PASSWORD: ${AUTH_DB_PASSWORD}
+      AUTH_MIGRATION_PASSWORD: ${AUTH_MIGRATION_PASSWORD}
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS}
+      SELLER_AUTH_TOKEN: ${SELLER_AUTH_TOKEN}
+      ADMIN_BOOTSTRAP_EMAIL: ${ADMIN_BOOTSTRAP_EMAIL}
+      ADMIN_BOOTSTRAP_PASSWORD: ${ADMIN_BOOTSTRAP_PASSWORD}
+
+  user-service:
+    <<: *service
+    volumes: ["../backend/user-service/build/libs/user-service-0.1.0-SNAPSHOT.jar:/app/app.jar:ro"]
+    environment:
+      <<: *jwt
+      SPRING_PROFILES_ACTIVE: migration
+      USER_DB_HOST: postgres
+      USER_DB_PASSWORD: ${USER_DB_PASSWORD}
+      USER_MIGRATION_PASSWORD: ${USER_MIGRATION_PASSWORD}
+
+  seller-service:
+    <<: *service
+    volumes: ["../backend/seller-service/build/libs/seller-service-0.1.0-SNAPSHOT.jar:/app/app.jar:ro"]
+    environment:
+      <<: *jwt
+      SELLER_DB_URL: jdbc:postgresql://postgres:5432/seller_db
+      SELLER_DB_USERNAME: hk5
+      SELLER_DB_PASSWORD: ${POSTGRES_PASSWORD}
+      AUTH_INTERNAL_URL: http://auth-service:8101
+      SELLER_AUTH_TOKEN: ${SELLER_AUTH_TOKEN}
+      NOTIFICATION_INTERNAL_URL: http://notification-service:8108
+      SELLER_NOTIFICATION_TOKEN: ${SELLER_NOTIFICATION_TOKEN}
+      PRODUCT_SELLER_TOKEN: ${PRODUCT_SELLER_TOKEN}
+      ORDER_SELLER_TOKEN: ${ORDER_SELLER_TOKEN}
+
+  product-service:
+    <<: *service
+    volumes:
+      - "../backend/product-service/build/libs/product-service-0.1.0-SNAPSHOT.jar:/app/app.jar:ro"
+      - productimages:/data/images
+    environment:
+      <<: *jwt
+      PRODUCT_DB_URL: jdbc:postgresql://postgres:5432/product_db
+      PRODUCT_DB_USERNAME: hk5
+      PRODUCT_DB_PASSWORD: ${POSTGRES_PASSWORD}
+      PRODUCT_IMAGE_DIR: /data/images
+      SELLER_INTERNAL_URL: http://seller-service:8103
+      PRODUCT_SELLER_TOKEN: ${PRODUCT_SELLER_TOKEN}
+      INVENTORY_INTERNAL_URL: http://inventory-service:8105
+      PRODUCT_INVENTORY_TOKEN: ${PRODUCT_INVENTORY_TOKEN}
+      ORDER_INTERNAL_URL: http://order-service:8107
+      PRODUCT_ORDER_TOKEN: ${PRODUCT_ORDER_TOKEN}
+      CART_PRODUCT_TOKEN: ${CART_PRODUCT_TOKEN}
+      ORDER_PRODUCT_TOKEN: ${ORDER_PRODUCT_TOKEN}
+
+  inventory-service:
+    <<: *service
+    volumes: ["../backend/inventory-service/build/libs/inventory-service-0.1.0-SNAPSHOT.jar:/app/app.jar:ro"]
+    environment:
+      INVENTORY_DB_URL: jdbc:postgresql://postgres:5432/inventory_db
+      INVENTORY_DB_USERNAME: hk5
+      INVENTORY_DB_PASSWORD: ${POSTGRES_PASSWORD}
+      INVENTORY_INTERNAL_TOKEN: ${PRODUCT_INVENTORY_TOKEN}
+      INVENTORY_ORDER_PAIR_TOKEN: ${ORDER_INVENTORY_TOKEN}
+      INVENTORY_ORDER_PAIR_ENABLED: "true"
+
+  cart-service:
+    <<: *service
+    volumes: ["../backend/cart-service/build/libs/cart-service-0.1.0-SNAPSHOT.jar:/app/app.jar:ro"]
+    environment:
+      <<: *jwt
+      HK5_CART_JDBC_URL: jdbc:postgresql://postgres:5432/cart_db
+      HK5_CART_DB_USER: hk5
+      HK5_CART_DB_PASSWORD: ${POSTGRES_PASSWORD}
+      APP_INTERNAL_CHECKOUT_TOKEN: ${ORDER_CART_TOKEN}
+      PRODUCT_INTERNAL_URL: http://product-service:8104
+      CART_PRODUCT_TOKEN: ${CART_PRODUCT_TOKEN}
+
+  order-service:
+    <<: *service
+    volumes: ["../backend/order-service/build/libs/order-service-0.1.0-SNAPSHOT.jar:/app/app.jar:ro"]
+    environment:
+      <<: *jwt
+      HK5_ORDER_JDBC_URL: jdbc:postgresql://postgres:5432/order_db
+      HK5_ORDER_DB_USER: hk5
+      HK5_ORDER_DB_PASSWORD: ${POSTGRES_PASSWORD}
+      HK5_FINANCE_POLICY_APPROVED: "true"
+      HK5_FINANCE_PLATFORM_RATE: "0.05"
+      HK5_FINANCE_CURRENCY_SCALE: "0"
+      HK5_FINANCE_HOUSE_EXEMPT: "true"
+      APP_CART_INTERNAL_URL: http://cart-service:8106
+      APP_CART_INTERNAL_TOKEN: ${ORDER_CART_TOKEN}
+      PRODUCT_INTERNAL_URL: http://product-service:8104
+      ORDER_PRODUCT_TOKEN: ${ORDER_PRODUCT_TOKEN}
+      INVENTORY_INTERNAL_URL: http://inventory-service:8105
+      ORDER_INVENTORY_TOKEN: ${ORDER_INVENTORY_TOKEN}
+      SELLER_INTERNAL_URL: http://seller-service:8103
+      ORDER_SELLER_TOKEN: ${ORDER_SELLER_TOKEN}
+      NOTIFICATION_INTERNAL_URL: http://notification-service:8108
+      ORDER_NOTIFICATION_TOKEN: ${ORDER_NOTIFICATION_TOKEN}
+      PRODUCT_ORDER_TOKEN: ${PRODUCT_ORDER_TOKEN}
+
+  notification-service:
+    <<: *service
+    volumes: ["../backend/notification-service/build/libs/notification-service-0.1.0-SNAPSHOT.jar:/app/app.jar:ro"]
+    environment:
+      <<: *jwt
+      NOTIFICATION_DB_URL: jdbc:postgresql://postgres:5432/notification_db
+      NOTIFICATION_DB_USERNAME: hk5
+      NOTIFICATION_DB_PASSWORD: ${POSTGRES_PASSWORD}
+      ORDER_NOTIFICATION_TOKEN: ${ORDER_NOTIFICATION_TOKEN}
+      SELLER_NOTIFICATION_TOKEN: ${SELLER_NOTIFICATION_TOKEN}
+
+  api-gateway:
+    <<: *service
+    depends_on: [auth-service]
+    volumes: ["../backend/api-gateway/build/libs/api-gateway-0.1.0-SNAPSHOT.jar:/app/app.jar:ro"]
+    ports:
+      - "127.0.0.1:8080:8080"
+    environment:
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS}
+      AUTH_URL: http://auth-service:8101
+      USER_URL: http://user-service:8102
+      SELLER_URL: http://seller-service:8103
+      PRODUCT_URL: http://product-service:8104
+      CART_URL: http://cart-service:8106
+      ORDER_URL: http://order-service:8107
+      NOTIFICATION_URL: http://notification-service:8108
+
+volumes:
+  pgdemo:
+  productimages:
