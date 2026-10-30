@@ -26,6 +26,10 @@ when every failing case is an environment initialization error. An independent f
 assertion or other test error keeps the run FAIL, even if another suite could not start.
 All original failure counts remain visible; no failing case is converted to PASS.
 
+DOCTYPE rejection is enforced by the XML parser before entity expansion, including
+UTF-16 little/big endian input. Valid UTF-16 JUnit without a DOCTYPE remains usable;
+the byte-size/hash checks still apply to the unchanged original artifact bytes.
+
 ## Current preparation / boundaries
 
 Current main has pure Finance eligibility/ownership guards and Order V1/V2 snapshot/outbox/journal storage. It lacks an approved persisted COD fact/confirmation authority, settlement table/unique atomic settlement, Finance Store query/API and full monetary/House/refund/reconciliation policy. FD01–05 and FIN01/06 prove local Order durability/replay/storage behavior with synthetic inputs/remote mocks; they do not prove live payment or settlement.

@@ -52,11 +52,18 @@ def _reference(value):
     except ValueError:
         return False
 
+class _NoDoctype(ET.TreeBuilder):
+    def doctype(self, name, pubid, system):
+        # Reject before entity expansion, independently of the XML byte encoding.
+        raise ValueError('Unsafe XML')
+
+
 def _xml_cases(data):
     if len(data) > 8 * 1024 * 1024 or b'<!DOCTYPE' in data.upper() or b'<!ENTITY' in data.upper():
         raise ValueError('Unsafe XML')
     counts, environment_failures = Counter(PASS=0, FAIL=0, SKIP=0), 0
-    for case in ET.fromstring(data).iter('testcase'):
+    parser = ET.XMLParser(target=_NoDoctype())
+    for case in ET.fromstring(data, parser=parser).iter('testcase'):
         problem = case.find('failure')
         if problem is None:
             problem = case.find('error')

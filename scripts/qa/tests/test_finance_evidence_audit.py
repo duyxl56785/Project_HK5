@@ -145,6 +145,25 @@ class FinanceEvidenceAuditTest(unittest.TestCase):
             self.xml.write_text(content, encoding='utf-8');self.receipt['rawArtifacts'][1] = self.artifact(self.xml)
             self.assertEqual(self.run_audit()['status'], 'INVALID_EVIDENCE')
 
+    def test_utf16_little_endian_doctype_cannot_bypass_xml_guard(self):
+        self.check_encoded_doctype('utf-16-le')
+
+    def test_utf16_big_endian_doctype_cannot_bypass_xml_guard(self):
+        self.check_encoded_doctype('utf-16-be')
+
+    def check_encoded_doctype(self, encoding):
+        content = '<?xml version="1.0" encoding="UTF-16"?><!DOCTYPE testsuite [<!ENTITY x "expanded">]><testsuite><testcase name="&x;"/></testsuite>'
+        self.xml.write_bytes(content.encode(encoding))
+        self.receipt['counts'] = {'PASS': 1}
+        self.receipt['rawArtifacts'][1] = self.artifact(self.xml)
+        self.assertEqual(self.run_audit()['status'], 'INVALID_EVIDENCE')
+
+    def test_valid_utf16_junit_without_doctype_remains_usable(self):
+        self.xml.write_bytes('<?xml version="1.0" encoding="UTF-16"?><testsuite><testcase name="valid"/></testsuite>'.encode('utf-16'))
+        self.receipt['counts'] = {'PASS': 1}
+        self.receipt['rawArtifacts'][1] = self.artifact(self.xml)
+        self.assertEqual(self.run_audit()['status'], 'VERIFIED_ARTIFACTS')
+
     def test_non_utc_or_backwards_execution_time_is_invalid(self):
         self.receipt['completedUtc'] = '2026-10-26T00:00:00+00:00'
         self.assertEqual(self.run_audit()['status'], 'INVALID_EVIDENCE')
