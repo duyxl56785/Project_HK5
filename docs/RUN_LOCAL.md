@@ -33,6 +33,8 @@ Truy cập `http://localhost:5173`. Chỉ gateway (`127.0.0.1:18080`) được m
 
 `.env.demo` đã được git bỏ qua và chỉ dùng cho máy local.
 
+Năm cờ `INVENTORY_ORDER_PAIR_ENABLED` và `HK5_FINANCE_*` trong file này là lựa chọn tạm để chạy thử trên máy. Chúng không phải chính sách đã duyệt: tỷ lệ 5% và các cờ tài chính, tồn kho ở môi trường khác phải lấy theo quyết định của owner.
+
 ## Luồng nghiệp vụ chính
 
 1. Khách hàng thêm sản phẩm của hai cửa hàng vào giỏ, thanh toán COD. Đơn tách theo từng cửa hàng.

@@ -7,9 +7,19 @@ import { resolve } from 'node:path';
 const target = resolve(import.meta.dirname, '../../.env.demo');
 const secret = () => randomBytes(32).toString('base64url');
 const authorityTokens = ['USER', 'SELLER', 'PRODUCT', 'CART', 'ORDER', 'NOTIFICATION'].map((name) => `${name}_AUTHORITY_TOKEN`);
+// Local demo choices so the stack can run end to end. They are not an approved policy:
+// any other environment must take these values from the owner's decision.
+const localPolicy = {
+  INVENTORY_ORDER_PAIR_ENABLED: 'true',
+  HK5_FINANCE_POLICY_APPROVED: 'true',
+  HK5_FINANCE_PLATFORM_RATE: '0.05',
+  HK5_FINANCE_CURRENCY_SCALE: '0',
+  HK5_FINANCE_HOUSE_EXEMPT: 'true',
+};
 if (existsSync(target) && !process.argv.includes('--force')) {
   const current = readFileSync(target, 'utf8');
   for (const key of authorityTokens) if (!current.includes(`${key}=`)) appendFileSync(target, `${key}=${secret()}\n`);
+  for (const [key, value] of Object.entries(localPolicy)) if (!current.includes(`${key}=`)) appendFileSync(target, `${key}=${value}\n`);
   console.log(`.env.demo already exists, keeping it (pass --force to regenerate and reset the DB volume).`);
   process.exit(0);
 }
@@ -38,6 +48,7 @@ const values = {
   SELLER_AUTH_TOKEN: secret(),
   SELLER_NOTIFICATION_TOKEN: secret(),
   ...Object.fromEntries(authorityTokens.map((key) => [key, secret()])),
+  ...localPolicy,
   ADMIN_BOOTSTRAP_EMAIL: 'admin@hk5.local',
   ADMIN_BOOTSTRAP_PASSWORD: secret().slice(0, 20),
 };

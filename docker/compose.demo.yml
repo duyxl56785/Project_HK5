@@ -110,7 +110,7 @@ services:
       INVENTORY_DB_PASSWORD: ${POSTGRES_PASSWORD}
       INVENTORY_INTERNAL_TOKEN: ${PRODUCT_INVENTORY_TOKEN}
       INVENTORY_ORDER_PAIR_TOKEN: ${ORDER_INVENTORY_TOKEN}
-      INVENTORY_ORDER_PAIR_ENABLED: "true"
+      INVENTORY_ORDER_PAIR_ENABLED: ${INVENTORY_ORDER_PAIR_ENABLED:?run node scripts/demo/gen-env.mjs}
 
   cart-service:
     <<: *service
@@ -134,10 +134,10 @@ services:
       HK5_ORDER_JDBC_URL: jdbc:postgresql://postgres:5432/order_db
       HK5_ORDER_DB_USER: hk5
       HK5_ORDER_DB_PASSWORD: ${POSTGRES_PASSWORD}
-      HK5_FINANCE_POLICY_APPROVED: "true"
-      HK5_FINANCE_PLATFORM_RATE: "0.05"
-      HK5_FINANCE_CURRENCY_SCALE: "0"
-      HK5_FINANCE_HOUSE_EXEMPT: "true"
+      HK5_FINANCE_POLICY_APPROVED: ${HK5_FINANCE_POLICY_APPROVED:?run node scripts/demo/gen-env.mjs}
+      HK5_FINANCE_PLATFORM_RATE: ${HK5_FINANCE_PLATFORM_RATE:?run node scripts/demo/gen-env.mjs}
+      HK5_FINANCE_CURRENCY_SCALE: ${HK5_FINANCE_CURRENCY_SCALE:?run node scripts/demo/gen-env.mjs}
+      HK5_FINANCE_HOUSE_EXEMPT: ${HK5_FINANCE_HOUSE_EXEMPT:?run node scripts/demo/gen-env.mjs}
       AUTH_INTERNAL_URL: http://auth-service:8101
       AUTH_AUTHORITY_TOKEN: ${ORDER_AUTHORITY_TOKEN}
       APP_CART_INTERNAL_URL: http://cart-service:8106
