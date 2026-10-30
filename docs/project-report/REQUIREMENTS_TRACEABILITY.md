@@ -36,6 +36,6 @@ Trạng thái theo PR #135, xác minh ngày 30/10/2026 trên stack Docker thật
 | Redis cache sản phẩm | Cache Catalog công khai 10 giây, dùng lại bản cũ tối đa 5 phút khi phụ thuộc lỗi | Catalog có thể chậm tối đa 10 giây; ghi và snapshot luôn đọc nguồn |
 | Nginx phục vụ frontend | Đã có image Nginx trong Compose, cổng `5173` | Không khác |
 | React Hook Form + Zod | Đã dùng cho các form nhập liệu; ô lý do và số lượng một trường vẫn là input thường | Lỗi hiện dưới từng trường, server vẫn kiểm lại |
-| Playwright | 7 test trên stack thật trong `frontend/e2e`, chưa chạy trong GitHub Actions; không có bộ E2E giả lập API | Chỉ chứng minh luồng đã viết, cần stack local |
+| Playwright | 8 test trên stack thật trong `frontend/e2e`, gồm đơn hai Store; chạy trong `frontend-e2e.yml`; không có bộ E2E giả lập API | Chỉ chứng minh luồng đã viết, chưa phủ reconciliation UNKNOWN |
 | `seller_status_history`, `reviewed_by` | Có bảng lịch sử, Admin xem được. `reviewed_by` nằm ở lịch sử thay vì `seller_profiles` | Không khác về chức năng |
 | Docker secrets | Secret nạp qua Docker secrets, sinh bằng `gen-env.mjs` thay vì `init-dev-secrets.ps1` | `.env.demo` vẫn giữ bản gốc cho seed và smoke |
