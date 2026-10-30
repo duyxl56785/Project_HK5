@@ -61,7 +61,8 @@ async function approvedSeller(email, admin) {
   // The SELLER role reaches the account through Seller's outbox, a moment after approval.
   for (let tries = 0; tries < 40; tries += 1) {
     const fresh = await login(email, env.SEED_PASSWORD);
-    if ((await must('/api/auth/me', { token: fresh })).roles.includes('SELLER')) return fresh;
+    // /me reads current roles but a token keeps those it was minted with, so log in again once the role shows.
+    if ((await must('/api/auth/me', { token: fresh })).roles.includes('SELLER')) return login(email, env.SEED_PASSWORD);
     await new Promise((done) => setTimeout(done, 500));
   }
   throw new Error(`${email} never received the SELLER role`);
