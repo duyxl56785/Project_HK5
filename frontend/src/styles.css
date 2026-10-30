@@ -31,6 +31,7 @@ input, select, textarea { border: 1px solid #cbd5e1; border-radius: 8px; padding
 .muted { color: #64748b; }
 .pre { white-space: pre-wrap; }
 .field { display: flex; flex-direction: column; gap: 4px; font-size: 14px; font-weight: 600; }
+.field__error { color: #b91c1c; font-weight: 400; }
 .field--inline { flex-direction: row; align-items: center; gap: 8px; }
 .field--inline input[type=number] { width: 110px; }
 .check { display: flex; gap: 8px; align-items: center; }

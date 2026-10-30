@@ -16,6 +16,14 @@ export function ErrorNote({ error }: { readonly error: unknown }) {
   return error ? <p className="note note--error" role="alert">{errorText(error)}</p> : null;
 }
 
+export function Field({ label, error, children }: {
+  readonly label: ReactNode; readonly error?: { readonly message?: string }; readonly children: ReactNode;
+}) {
+  return <label className="field">{label}{children}
+    {error?.message && <small className="field__error" role="alert">{error.message}</small>}
+  </label>;
+}
+
 /** One place for the three states every data screen has. */
 export function Loaded<T>({ query, empty, children }: {
   readonly query: { data: T | undefined; isPending: boolean; error: unknown; refetch: () => unknown };

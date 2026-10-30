@@ -1,27 +1,39 @@
 import { useState } from 'react';
-import type { FormEvent } from 'react';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useQuery } from '@tanstack/react-query';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 import { api } from '../../shared/api';
 import { useAuth } from '../../shared/auth';
-import { ErrorNote, Loaded, useAction } from '../../shared/ui';
+import { internationalPhone, optionalText, text } from '../../shared/forms';
+import { ErrorNote, Field, Loaded, useAction } from '../../shared/ui';
 
 interface Profile { readonly userId: string; readonly displayName: string | null; readonly phone: string | null }
 export interface Address {
   readonly id: string; readonly recipientName: string; readonly phone: string;
   readonly line: string; readonly city: string; readonly isDefault: boolean;
 }
-type AddressInput = Omit<Address, 'id'>;
+const profileSchema = z.object({
+  displayName: optionalText('Tên hiển thị', 100),
+  phone: internationalPhone.or(z.literal('')),
+});
+const addressSchema = z.object({
+  recipientName: text('Người nhận', 100), phone: internationalPhone,
+  line: text('Địa chỉ', 255), city: text('Tỉnh/Thành phố', 100), isDefault: z.boolean(),
+});
+type ProfileInput = z.infer<typeof profileSchema>;
+type AddressInput = z.infer<typeof addressSchema>;
 
 const blank: AddressInput = { recipientName: '', phone: '', line: '', city: '', isDefault: false };
 
 function ProfileForm({ profile }: { readonly profile: Profile }) {
-  const [displayName, setDisplayName] = useState(profile.displayName ?? '');
-  const [phone, setPhone] = useState(profile.phone ?? '');
-  const save = useAction(() => api('/api/users/me', { method: 'PATCH', body: { displayName, phone: phone || null } }), ['profile']);
-  return <form className="panel stack" onSubmit={(e) => { e.preventDefault(); save.mutate(undefined); }}>
+  const form = useForm<ProfileInput>({ resolver: zodResolver(profileSchema), defaultValues: { displayName: profile.displayName ?? '', phone: profile.phone ?? '' } });
+  const { errors } = form.formState;
+  const save = useAction(({ displayName, phone }: ProfileInput) => api('/api/users/me', { method: 'PATCH', body: { displayName, phone: phone || null } }), ['profile']);
+  return <form className="panel stack" noValidate onSubmit={form.handleSubmit((value) => save.mutate(value))}>
     <h2>Hồ sơ</h2>
-    <label className="field">Tên hiển thị<input value={displayName} maxLength={100} onChange={(e) => setDisplayName(e.currentTarget.value)} /></label>
-    <label className="field">Số điện thoại (+84…)<input value={phone} pattern="\+[1-9][0-9]{1,14}" onChange={(e) => setPhone(e.currentTarget.value)} /></label>
+    <Field label="Tên hiển thị" error={errors.displayName}><input {...form.register('displayName')} /></Field>
+    <Field label="Số điện thoại (+84…)" error={errors.phone}><input {...form.register('phone')} /></Field>
     <ErrorNote error={save.error} />
     {save.isSuccess && <p className="note" role="status">Đã lưu.</p>}
     <button className="btn btn--primary" disabled={save.isPending}>Lưu hồ sơ</button>
@@ -29,21 +41,19 @@ function ProfileForm({ profile }: { readonly profile: Profile }) {
 }
 
 function AddressForm({ initial, id, onDone }: { readonly initial: AddressInput; readonly id?: string; readonly onDone: () => void }) {
-  const [value, setValue] = useState(initial);
-  const save = useAction(() => api(id ? `/api/users/me/addresses/${id}` : '/api/users/me/addresses',
+  const form = useForm<AddressInput>({
+    resolver: zodResolver(addressSchema),
+    defaultValues: { recipientName: initial.recipientName, phone: initial.phone, line: initial.line, city: initial.city, isDefault: initial.isDefault },
+  });
+  const { errors } = form.formState;
+  const save = useAction((value: AddressInput) => api(id ? `/api/users/me/addresses/${id}` : '/api/users/me/addresses',
     { method: id ? 'PUT' : 'POST', body: value }), ['addresses'], onDone);
-  const field = (key: 'recipientName' | 'phone' | 'line' | 'city', label: string, extra = {}) =>
-    <label className="field">{label}
-      <input required value={value[key]} {...extra} onChange={(e) => { const next = e.currentTarget.value; setValue((v) => ({ ...v, [key]: next })); }} />
-    </label>;
-  function submit(event: FormEvent) { event.preventDefault(); save.mutate(undefined); }
-  return <form className="stack" onSubmit={submit}>
-    {field('recipientName', 'Người nhận', { maxLength: 100 })}
-    {field('phone', 'Số điện thoại (+84…)', { pattern: '\\+[1-9][0-9]{1,14}' })}
-    {field('line', 'Địa chỉ', { maxLength: 255 })}
-    {field('city', 'Tỉnh/Thành phố', { maxLength: 100 })}
-    <label className="check"><input type="checkbox" checked={value.isDefault}
-      onChange={(e) => { const isDefault = e.currentTarget.checked; setValue((v) => ({ ...v, isDefault })); }} /> Đặt làm mặc định</label>
+  return <form className="stack" noValidate onSubmit={form.handleSubmit((value) => save.mutate(value))}>
+    <Field label="Người nhận" error={errors.recipientName}><input {...form.register('recipientName')} /></Field>
+    <Field label="Số điện thoại (+84…)" error={errors.phone}><input {...form.register('phone')} /></Field>
+    <Field label="Địa chỉ" error={errors.line}><input {...form.register('line')} /></Field>
+    <Field label="Tỉnh/Thành phố" error={errors.city}><input {...form.register('city')} /></Field>
+    <label className="check"><input type="checkbox" {...form.register('isDefault')} /> Đặt làm mặc định</label>
     <ErrorNote error={save.error} />
     <div className="row"><button className="btn btn--primary" disabled={save.isPending}>Lưu địa chỉ</button>
       <button type="button" className="btn" onClick={onDone}>Hủy</button></div>
