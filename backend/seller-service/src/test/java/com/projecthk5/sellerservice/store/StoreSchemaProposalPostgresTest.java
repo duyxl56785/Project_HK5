@@ -75,6 +75,9 @@ class StoreSchemaProposalPostgresTest {
             assertTrue(rows.next());
             assertEquals("5", rows.getString(1));
             assertEquals("V5__write_fence_abort.sql", rows.getString(2));
+            assertTrue(rows.next());
+            assertEquals("6", rows.getString(1));
+            assertEquals("V6__seller_status_history.sql", rows.getString(2));
             assertFalse(rows.next());
         }
     }
