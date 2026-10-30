@@ -75,6 +75,12 @@ class StoreSchemaProposalPostgresTest {
             assertTrue(rows.next());
             assertEquals("5", rows.getString(1));
             assertEquals("V5__durable_authority_reservations.sql", rows.getString(2));
+            assertTrue(rows.next());
+            assertEquals("6", rows.getString(1));
+            assertEquals("V6__reservation_closures.sql", rows.getString(2));
+            assertTrue(rows.next());
+            assertEquals("7", rows.getString(1));
+            assertEquals("V7__pending_revocations.sql", rows.getString(2));
             assertFalse(rows.next());
         }
     }

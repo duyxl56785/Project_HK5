@@ -10,6 +10,16 @@ public final class DurableAuthorityReservations {
         public Grant {Objects.requireNonNull(requestId);Objects.requireNonNull(participant);
             if(bindingHash==null || !bindingHash.matches("[0-9a-f]{64}") || epoch<=0)throw new IllegalArgumentException("Invalid grant");}
     }
+    public record ClosureProof(UUID requestId,String bindingHash,long operationEpoch,DurableWriteLedger.State state,Participant participant,Long authorityEpoch) {
+        public ClosureProof {
+            Objects.requireNonNull(requestId);Objects.requireNonNull(participant);Objects.requireNonNull(state);
+            if(bindingHash==null || !bindingHash.matches("[0-9a-f]{64}") || operationEpoch<=0
+                    || (state!=DurableWriteLedger.State.COMMITTED && state!=DurableWriteLedger.State.ABORTED)
+                    || (authorityEpoch!=null && authorityEpoch<=0) || (state==DurableWriteLedger.State.COMMITTED && authorityEpoch==null))
+                throw new IllegalArgumentException("Invalid closure proof");
+        }
+    }
+    @FunctionalInterface public interface ClosureSource {ClosureProof read(UUID requestId) throws Exception;}
     @FunctionalInterface public interface CurrentAuthority {void verify(Connection connection) throws SQLException;}
     @FunctionalInterface public interface TerminalSource {DurableWriteLedger.Receipt read(UUID requestId) throws Exception;}
     private final DataSource source;
@@ -20,11 +30,18 @@ public final class DurableAuthorityReservations {
         Objects.requireNonNull(intent);Objects.requireNonNull(authority);
         return FenceSql.transaction(source,c->{
             lock(c);
+            try(var closed=c.prepareStatement("SELECT 1 FROM authority_reservation_closures WHERE request_id=?")) {
+                closed.setObject(1,intent.requestId());try(var rows=closed.executeQuery()){FenceSql.require(!rows.next());}
+            }
             try(var q=c.prepareStatement("SELECT binding_hash,epoch,state FROM authority_write_reservations WHERE request_id=?")) {
                 q.setObject(1,intent.requestId());try(var rows=q.executeQuery()){if(rows.next()) {
                     FenceSql.require(intent.fingerprint().equals(rows.getString(1)) && "ACTIVE".equals(rows.getString(3)));
                     return new Grant(intent.requestId(),intent.fingerprint(),participant,rows.getLong(2));
                 }}
+            }
+            try(var pending=c.prepareStatement("SELECT EXISTS(SELECT 1 FROM authority_pending_revocations WHERE state IN ('PENDING','LEASED','BLOCKED'))");var rows=pending.executeQuery()) {
+                FenceSql.require(rows.next());
+                if(rows.getBoolean(1))throw new IllegalStateException("FENCE_REVOCATION_PENDING");
             }
             authority.verify(c);
             long epoch;
@@ -67,6 +84,37 @@ public final class DurableAuthorityReservations {
             }
             try(var update=c.prepareStatement("UPDATE authority_write_reservations SET state='RELEASED',terminal_state=? WHERE request_id=? AND state='ACTIVE'")) {
                 update.setString(1,receipt.state().name());update.setObject(2,grant.requestId());FenceSql.require(update.executeUpdate()==1);
+            }
+            return null;
+        });
+    }
+    public void seal(WriteIntent intent,long operationEpoch,ClosureSource terminal) throws Exception {
+        Objects.requireNonNull(intent);Objects.requireNonNull(terminal);FenceSql.require(operationEpoch>0);
+        var proof=Objects.requireNonNull(terminal.read(intent.requestId()));
+        FenceSql.require(proof.requestId().equals(intent.requestId()) && proof.bindingHash().equals(intent.fingerprint())
+                && proof.operationEpoch()==operationEpoch && proof.participant()==participant);
+        FenceSql.transaction(source,c->{
+            lock(c);
+            try(var q=c.prepareStatement("SELECT binding_hash,operation_epoch,terminal_state FROM authority_reservation_closures WHERE request_id=?")) {
+                q.setObject(1,intent.requestId());try(var rows=q.executeQuery()){if(rows.next())
+                    FenceSql.require(intent.fingerprint().equals(rows.getString(1)) && operationEpoch==rows.getLong(2) && proof.state().name().equals(rows.getString(3)));}
+            }
+            boolean found=false;
+            try(var q=c.prepareStatement("SELECT binding_hash,epoch,state,terminal_state FROM authority_write_reservations WHERE request_id=?")) {
+                q.setObject(1,intent.requestId());try(var rows=q.executeQuery()){if(rows.next()) {
+                    found=true;
+                    FenceSql.require(intent.fingerprint().equals(rows.getString(1))
+                            && (proof.authorityEpoch()==null || proof.authorityEpoch()==rows.getLong(2)));
+                    String state=rows.getString(3);
+                    FenceSql.require("ACTIVE".equals(state) || ("RELEASED".equals(state) && proof.state().name().equals(rows.getString(4))));
+                }}
+            }
+            FenceSql.require(found || (proof.state()==DurableWriteLedger.State.ABORTED && proof.authorityEpoch()==null));
+            try(var insert=c.prepareStatement("INSERT INTO authority_reservation_closures(request_id,binding_hash,operation_epoch,terminal_state) VALUES(?,?,?,?) ON CONFLICT(request_id) DO NOTHING")) {
+                insert.setObject(1,intent.requestId());insert.setString(2,intent.fingerprint());insert.setLong(3,operationEpoch);insert.setString(4,proof.state().name());insert.executeUpdate();
+            }
+            if(found)try(var update=c.prepareStatement("UPDATE authority_write_reservations SET state='RELEASED',terminal_state=? WHERE request_id=? AND state='ACTIVE'")) {
+                update.setString(1,proof.state().name());update.setObject(2,intent.requestId());update.executeUpdate();
             }
             return null;
         });

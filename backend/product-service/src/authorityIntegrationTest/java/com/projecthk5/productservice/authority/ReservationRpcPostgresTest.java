@@ -41,7 +41,8 @@ class ReservationRpcPostgresTest {
     static final HttpClient http=HttpClient.newHttpClient();
     String token;WriteIntent intent;
 
-    @BeforeAll static void start() throws Exception {
+    @BeforeAll static void start() throws Exception {start(false);}
+    static void start(boolean recovery) throws Exception {
         pg.start();var root=db(pg.getJdbcUrl(),pg.getUsername());
         for(String role:List.of("auth_migrator","auth_app","seller_migrator","product_migrator","auth_rpc_app","seller_rpc_app","product_receipt_app","product_worker_app"))
             root.execute("CREATE ROLE "+role+" LOGIN PASSWORD '"+password+"'");
@@ -62,7 +63,7 @@ class ReservationRpcPostgresTest {
         productDb.execute("CREATE TABLE rpc_write_probe(id UUID PRIMARY KEY)");productDb.execute("GRANT SELECT,INSERT ON rpc_write_probe TO product_reservation_writer");
         worker=source(url("product"),"product_worker_app");receiptReader=source(url("product"),"product_receipt_app");
         authRuntime=source(url("auth"),"auth_rpc_app");sellerRuntime=source(url("seller"),"seller_rpc_app");ledger=new DurableWriteLedger(worker);
-        defaults();product=bootProduct(true);
+        defaults();productConfig.put("hk5.product.receipts.recovery.enabled",recovery);product=bootProduct(true);
         callback=new FaultProxy(base(product));auth=bootAuth(true);admission=new FaultProxy(base(auth));seller=bootSeller(true);
         workerConfig.put("HK5_PRODUCT_AUTH_RESERVATION_URL",base(auth)+"/internal/auth/write-reservations/product/");
         workerConfig.put("HK5_PRODUCT_SELLER_RESERVATION_URL",base(seller)+"/internal/seller/write-reservations/product/");
@@ -227,13 +228,13 @@ class ReservationRpcPostgresTest {
     }
 
     @Test void missingLowerProductMigrationsAreADeploymentGateNotSilentlyApplied(@org.junit.jupiter.api.io.TempDir Path folder) throws Exception {
-        assertEquals("1,6",productDb.queryForObject("SELECT string_agg(version,',' ORDER BY installed_rank) FROM flyway_schema_history WHERE version IS NOT NULL",String.class));
+        assertEquals("1,6,7",productDb.queryForObject("SELECT string_agg(version,',' ORDER BY installed_rank) FROM flyway_schema_history WHERE version IS NOT NULL",String.class));
         Files.writeString(folder.resolve("V2__unreviewed_lower_version.sql"),"SELECT 1;");
         var migration=Flyway.configure().dataSource(url("product"),"product_migrator",password)
             .locations("filesystem:src/main/resources/db/migration","filesystem:"+folder).outOfOrder(false).load();
         assertFalse(migration.validateWithResult().validationSuccessful);
         assertThrows(org.flywaydb.core.api.FlywayException.class,migration::migrate);
-        assertEquals("1,6",productDb.queryForObject("SELECT string_agg(version,',' ORDER BY installed_rank) FROM flyway_schema_history WHERE version IS NOT NULL",String.class));
+        assertEquals("1,6,7",productDb.queryForObject("SELECT string_agg(version,',' ORDER BY installed_rank) FROM flyway_schema_history WHERE version IS NOT NULL",String.class));
     }
 
     @Test void rotationAndCrossProcessAliasStayIsolated() throws Exception {

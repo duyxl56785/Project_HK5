@@ -34,9 +34,9 @@ class SellerRoleSyncPostgresTest {
         var v2 = Flyway.configure().dataSource(url,"auth_migrator",password).target("2").load();
         v2.migrate();
         var v3 = Flyway.configure().dataSource(url,"auth_migrator",password).load();
-        assertEquals(2, v3.migrate().migrationsExecuted);
+        assertEquals(4, v3.migrate().migrationsExecuted);
         v3.validate();
-        assertEquals("4", v3.info().current().getVersion().toString());
+        assertEquals("6", v3.info().current().getVersion().toString());
         admin.execute("GRANT USAGE ON SCHEMA public TO auth_app");
         var ds = new DriverManagerDataSource(url,"auth_app",password);
         jdbc = new JdbcTemplate(ds);

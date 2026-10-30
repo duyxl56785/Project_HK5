@@ -1,6 +1,9 @@
 package com.projecthk5.authservice.rolesync;
 
 import com.projecthk5.security.InternalPairVerifier;
+import com.projecthk5.security.fencing.RevocationBarrier;
+import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.beans.factory.annotation.Autowired;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import java.io.IOException;
@@ -74,7 +77,11 @@ public class SellerRoleSyncHttpConfiguration {
         static final String VERIFIED=Receiver.class.getName()+".verified";
         private final SellerRoleSyncService service;
         private final SellerRoleSyncJson codec=new SellerRoleSyncJson();
-        public Receiver(SellerRoleSyncService service) {this.service=service;}
+        private final SellerRoleRevocationRecovery recovery;
+        public Receiver(SellerRoleSyncService service) {this.service=service;this.recovery=null;}
+        @Autowired public Receiver(SellerRoleSyncService service,ObjectProvider<SellerRoleRevocationRecovery> recovery) {
+            this.service=service;this.recovery=recovery.getIfAvailable();
+        }
         @PostMapping(value=PATH,consumes="application/json",produces="application/json")
         public ResponseEntity<String> receive(HttpServletRequest request) throws IOException {
             if(!Boolean.TRUE.equals(request.getAttribute(VERIFIED)))return reply(403,"INTERNAL_FORBIDDEN");
@@ -87,10 +94,12 @@ public class SellerRoleSyncHttpConfiguration {
                 command=codec.read(json);
             } catch(IllegalArgumentException | CharacterCodingException invalid) {return reply(400,"VALIDATION_FAILED");}
             try {
-                var result=service.apply(command);
+                var result=recovery!=null && command.sellerStatus()!=SellerRoleSyncService.Status.APPROVED
+                    ? recovery.apply(command) : service.apply(command);
                 return ResponseEntity.ok().header("Cache-Control","no-store").body(codec.ack(command,result));
             } catch(SellerRoleSyncService.Conflict conflict) {return reply(409,conflict.code());}
-            catch(RuntimeException unavailable) {return reply(503,"ROLE_SYNC_UNAVAILABLE");}
+            catch(RevocationBarrier.Conflict conflict) {return reply(409,"ROLE_SYNC_IDENTITY_CONFLICT");}
+            catch(Exception unavailable) {return reply(503,"ROLE_SYNC_UNAVAILABLE");}
         }
         private ResponseEntity<String> reply(int status,String code) {
             return ResponseEntity.status(status).header("Cache-Control","no-store")

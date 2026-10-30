@@ -6,3 +6,5 @@ GRANT SELECT ON authority_fence_clock, authority_write_reservations TO seller_re
 GRANT UPDATE(epoch) ON authority_fence_clock TO seller_reservation_rpc;
 GRANT INSERT(request_id,binding_hash,epoch,state) ON authority_write_reservations TO seller_reservation_rpc;
 GRANT UPDATE(state,terminal_state) ON authority_write_reservations TO seller_reservation_rpc;
+GRANT SELECT,INSERT ON authority_reservation_closures TO seller_reservation_rpc;
+GRANT SELECT(state) ON authority_pending_revocations TO seller_reservation_rpc;

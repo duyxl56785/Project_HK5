@@ -5,3 +5,5 @@ GRANT INSERT(request_id,binding_hash,state) ON authority_write_operations TO pro
 GRANT UPDATE(state) ON authority_write_operations TO product_reservation_writer;
 GRANT INSERT(request_id,participant,authority_epoch) ON authority_write_grants TO product_reservation_writer;
 GRANT USAGE,SELECT ON SEQUENCE authority_write_operations_epoch_seq TO product_reservation_writer;
+GRANT SELECT ON product_reservation_recovery TO product_reservation_writer;
+GRANT INSERT(request_id,binding_hash,operation_epoch,intent,due_at) ON product_reservation_recovery TO product_reservation_writer;

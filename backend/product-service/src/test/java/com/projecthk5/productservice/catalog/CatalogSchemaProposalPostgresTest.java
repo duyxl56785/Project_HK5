@@ -52,7 +52,7 @@ class CatalogSchemaProposalPostgresTest {
         try (Connection connection = connect(); var statement = connection.createStatement();
              var rows = statement.executeQuery("SELECT string_agg(version,',' ORDER BY installed_rank) FROM flyway_schema_history WHERE success AND version IS NOT NULL")) {
             assertTrue(rows.next());
-            assertEquals("1,6", rows.getString(1));
+            assertEquals("1,6,7", rows.getString(1));
         }
     }
 

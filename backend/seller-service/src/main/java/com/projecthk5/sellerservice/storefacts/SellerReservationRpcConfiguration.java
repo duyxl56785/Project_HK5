@@ -36,7 +36,8 @@ public class SellerReservationRpcConfiguration {
         boolean enabled="true".equals(env.getProperty("hk5.seller.reservations.enabled","false"));
         var scopes=Set.of(new InternalPairVerifier.Scope("POST",ROOT+"product/admit","AUTHORITY_RESERVE"),
             new InternalPairVerifier.Scope("POST",ROOT+"product/lookup","AUTHORITY_LOOKUP"),
-            new InternalPairVerifier.Scope("POST",ROOT+"product/release","AUTHORITY_RELEASE"));
+            new InternalPairVerifier.Scope("POST",ROOT+"product/release","AUTHORITY_RELEASE"),
+            new InternalPairVerifier.Scope("POST",ROOT+"product/seal","AUTHORITY_SEAL"));
         var product=verifier(env,"product-service",PREFIX,scopes);
         var pairs=new HashMap<String,InternalPairVerifier>();
         for(var scope:scopes)pairs.put(scope.path(),product);
@@ -48,7 +49,7 @@ public class SellerReservationRpcConfiguration {
             .addFilterBefore((ServletRequest raw,ServletResponse out,FilterChain chain)->{
                 var request=(HttpServletRequest)raw;var response=(HttpServletResponse)out;
                 response.setHeader("Cache-Control","no-store");
-                if(!enabled){error(response,403,"INTERNAL_FORBIDDEN");return;}
+                if(!enabled || (request.getRequestURI().equals(ROOT+"product/seal") && !"true".equals(env.getProperty("hk5.seller.reservations.recovery.enabled","false")))){error(response,403,"INTERNAL_FORBIDDEN");return;}
                 var pair=pairs.get(request.getRequestURI());
                 if(pair==null){error(response,403,"INTERNAL_FORBIDDEN");return;}
                 var values=Collections.list(request.getHeaders("X-HK5-Service-Credential"));
@@ -82,11 +83,14 @@ public class SellerReservationRpcConfiguration {
         private final DataSource source;
         private final DurableAuthorityReservations reservations;
         private final TerminalReceiptClient receipts;
+        private final TerminalClosureClient closures;
         private final ReservationRpcClient auth;
         public Receiver(DataSource source,Environment env) {
             this.source=source;
             reservations=new DurableAuthorityReservations(source,Participant.SELLER);
             // The reverse callback shares this pair secret, with a separate Product endpoint scope.
+            closures=new TerminalClosureClient(URI.create(requiredUri(env,"HK5_SELLER_PRODUCT_TERMINAL_URL").toString()+"/closure"),
+                ()->credential(env,PREFIX),Participant.SELLER);
             receipts=new TerminalReceiptClient(requiredUri(env,"HK5_SELLER_PRODUCT_TERMINAL_URL"),
                 ()->credential(env,PREFIX),Participant.SELLER);
             URI authRoot=requiredUri(env,"HK5_SELLER_AUTH_RESERVATION_URL");
@@ -95,7 +99,7 @@ public class SellerReservationRpcConfiguration {
             auth=new ReservationRpcClient(authRoot,
                 ()->credential(env,"HK5_SELLER_AUTH_CURRENT_ACCOUNT_"),Participant.AUTH,()->null);
         }
-        @PostMapping(value={ROOT+"product/admit",ROOT+"product/lookup",ROOT+"product/release"},consumes="application/json",produces="application/json")
+        @PostMapping(value={ROOT+"product/admit",ROOT+"product/lookup",ROOT+"product/release",ROOT+"product/seal"},consumes="application/json",produces="application/json")
         public ResponseEntity<String> receive(HttpServletRequest request) throws IOException {
             if(!Boolean.TRUE.equals(request.getAttribute(VERIFIED)))return failure(403,"INTERNAL_FORBIDDEN");
             byte[] bytes=request.getInputStream().readNBytes(16385);
@@ -112,6 +116,10 @@ public class SellerReservationRpcConfiguration {
                     if(admission.grant().isEmpty() || !"ACTIVE".equals(admission.state()))return failure(403,"AUTHORITY_DENIED");
                     grant=new SellerWriteReservations(source).admit(wire.intent());
                     return success(ReservationWire.grantReply(wire.nonce(),grant));
+                }
+                if("seal".equals(action)) {
+                    reservations.seal(wire.intent(),wire.epoch(),id->closures.read(wire.intent(),wire.epoch()));
+                    return success(ReservationWire.sealReply(wire.nonce(),wire.intent(),Participant.SELLER,wire.epoch()));
                 }
                 var stored=lookup(wire.intent());
                 if("lookup".equals(action))return success(ReservationWire.lookupReply(wire.nonce(),stored.grant(),stored.state()));

@@ -4,6 +4,7 @@ import com.projecthk5.security.IsolatedPairCredentials;
 import com.projecthk5.security.fencing.*;
 import com.projecthk5.security.fencing.DurableAuthorityReservations.*;
 import java.net.URI;
+import java.sql.SQLException;
 import java.util.*;
 import java.util.function.Supplier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -16,12 +17,15 @@ import org.springframework.stereotype.Component;
 public final class ProductReservationPorts {
     private final DurableWriteLedger ledger;
     private final Environment env;
-    public ProductReservationPorts(DurableWriteLedger ledger,Environment env){this.ledger=Objects.requireNonNull(ledger);this.env=Objects.requireNonNull(env);}
+    private final ProductReservationRecoveryStore recovery;
+    public ProductReservationPorts(DurableWriteLedger ledger,Environment env,ProductReservationRecoveryStore recovery){this.ledger=Objects.requireNonNull(ledger);this.env=Objects.requireNonNull(env);this.recovery=Objects.requireNonNull(recovery);}
 
     public DurableWriteCoordinator coordinatorFor(WriteIntent intent,String jwt) {
         Objects.requireNonNull(intent);
         var auth=client("HK5_PRODUCT_AUTH_RESERVATION_URL","HK5_PRODUCT_AUTH_CURRENT_ACCOUNT_",Participant.AUTH,()->jwt);
         var seller=client("HK5_PRODUCT_SELLER_RESERVATION_URL","HK5_PRODUCT_SELLER_STORE_FACTS_",Participant.SELLER,null);
+        try {var operation=ledger.begin(intent);recovery.enlist(intent,operation.epoch());}
+        catch(SQLException failure){throw new IllegalStateException("Durable recovery enlistment unavailable",failure);}
         return new DurableWriteCoordinator(ledger,port(intent,Participant.AUTH,auth),port(intent,Participant.SELLER,seller));
     }
     private ReservationRpcClient client(String url,String prefix,Participant participant,Supplier<String> bearer) {
