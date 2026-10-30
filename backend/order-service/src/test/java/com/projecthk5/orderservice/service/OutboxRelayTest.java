@@ -7,26 +7,38 @@ import static org.mockito.Mockito.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.projecthk5.orderservice.entity.OutboxEvent;
 import com.projecthk5.orderservice.ports.InventoryPort;
-import com.projecthk5.orderservice.ports.NotificationClient;
 import com.projecthk5.orderservice.ports.StoreDirectory;
 import com.projecthk5.orderservice.repository.OrderRepository;
 import com.projecthk5.orderservice.repository.OutboxEventRepository;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 import org.junit.jupiter.api.Test;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.transaction.support.TransactionTemplate;
 
 class OutboxRelayTest {
     private final ObjectMapper json = new ObjectMapper();
     private final InventoryPort inventory = mock(InventoryPort.class);
-    private final NotificationClient notifications = mock(NotificationClient.class);
+    @SuppressWarnings("unchecked")
+    private final KafkaTemplate<String, String> kafka = mock(KafkaTemplate.class);
     private final StoreDirectory stores = mock(StoreDirectory.class);
     private final OutboxRelay relay = new OutboxRelay(mock(OutboxEventRepository.class), mock(OrderRepository.class),
-            inventory, notifications, stores, json, mock(TransactionTemplate.class));
+            inventory, kafka, stores, json, mock(TransactionTemplate.class));
 
     private OutboxEvent event(String topic, Object payload) throws Exception {
         return new OutboxEvent(topic, UUID.randomUUID(), json.writeValueAsString(payload));
+    }
+
+    private OrderEvents.Notice notice() {
+        return new OrderEvents.Notice(null, "store-1", "ORDER_CANCELLED", "t", "m", "/seller/orders", "k1",
+                "so-1", "order-1", "customer-1", "PLACED", "CANCELLED", "CUSTOMER", null);
+    }
+
+    private void storeExists() {
+        when(stores.facts(Set.of("store-1"))).thenReturn(List.of(
+                new StoreDirectory.Store("store-1", "seller-1", "owner-account", "Shop", "shop", true, true, false)));
     }
 
     private OutboxEvent releaseEvent() throws Exception {
@@ -72,11 +84,43 @@ class OutboxRelayTest {
 
     @Test
     void storeNoticeIsDeliveredToTheCurrentStoreOwner() throws Exception {
-        when(stores.facts(Set.of("store-1"))).thenReturn(List.of(
-                new StoreDirectory.Store("store-1", "seller-1", "owner-account", "Shop", "shop", true, true, false)));
-        OutboxEvent e = event(OrderEvents.NOTIFY, new OrderEvents.Notice(null, "store-1", "ORDER_CANCELLED", "t", "m", "/seller/orders", "k1"));
+        storeExists();
+        when(kafka.send(anyString(), anyString(), anyString())).thenReturn(CompletableFuture.completedFuture(null));
+        OutboxEvent e = event(OrderEvents.NOTIFY, notice());
         relay.deliver(e);
-        verify(notifications).send(new NotificationClient.Message("owner-account", "ORDER_CANCELLED", "t", "m", "/seller/orders", "k1"));
+        var sent = org.mockito.ArgumentCaptor.forClass(String.class);
+        verify(kafka).send(eq(OrderEvents.STATUS_CHANGED), eq("so-1"), sent.capture());
+        var published = json.readTree(sent.getValue());
+        assertEquals("owner-account", published.path("notification").path("recipient").asText());
+        assertEquals("owner-account", published.path("sellerAccountId").asText());
+        assertEquals("CANCELLED", published.path("toStatus").asText());
+        assertEquals("k1", published.path("notification").path("eventKey").asText());
+        assertNotNull(e.getPublishedAt());
+    }
+
+    @Test
+    void brokerOutageKeepsEventsQueuedWithoutSpendingAttempts() throws Exception {
+        storeExists();
+        when(kafka.send(anyString(), anyString(), anyString()))
+                .thenReturn(CompletableFuture.failedFuture(new IllegalStateException("broker down")));
+        OutboxEvent first = event(OrderEvents.NOTIFY, notice());
+        OutboxEvent second = event(OrderEvents.NOTIFY, notice());
+        for (int i = 0; i < OutboxEvent.MAX_ATTEMPTS + 1; i++) relay.deliver(first);
+        relay.deliver(second);
+        assertFalse(first.isDead());
+        assertEquals(0, first.getAttempts());
+        assertNull(first.getPublishedAt());
+        verify(kafka, times(1)).send(anyString(), anyString(), anyString());
+    }
+
+    @Test
+    void inventoryStillFlowsDuringBrokerOutage() throws Exception {
+        storeExists();
+        when(kafka.send(anyString(), anyString(), anyString()))
+                .thenReturn(CompletableFuture.failedFuture(new IllegalStateException("broker down")));
+        relay.deliver(event(OrderEvents.NOTIFY, notice()));
+        OutboxEvent e = releaseEvent();
+        relay.deliver(e);
         assertNotNull(e.getPublishedAt());
     }
 
@@ -85,6 +129,6 @@ class OutboxRelayTest {
         OutboxEvent e = event("mystery.v9", List.of());
         relay.deliver(e);
         assertTrue(e.isDead());
-        verifyNoInteractions(inventory, notifications);
+        verifyNoInteractions(inventory, kafka);
     }
 }

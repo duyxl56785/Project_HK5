@@ -5,6 +5,7 @@ import com.projecthk5.productservice.product.ProductStatus;
 import com.projecthk5.productservice.product.http.ProductManagementResponse;
 import com.projecthk5.productservice.product.persistence.ProductEntity;
 import com.projecthk5.productservice.review.ReviewRules;
+import com.projecthk5.productservice.review.ReviewableItems;
 import com.projecthk5.security.Actor;
 import com.projecthk5.security.ApiException;
 import jakarta.persistence.EntityManager;
@@ -32,15 +33,15 @@ public class ModerationController {
     private final EntityManager em;
     private final SellerStoreClient stores;
     private final ReviewRepository reviews;
-    private final DependencyClients dependencies;
+    private final ReviewableItems reviewable;
 
     public ModerationController(ProductApplicationService application, EntityManager em, SellerStoreClient stores,
-                                ReviewRepository reviews, DependencyClients dependencies) {
+                                ReviewRepository reviews, ReviewableItems reviewable) {
         this.application = application;
         this.em = em;
         this.stores = stores;
         this.reviews = reviews;
-        this.dependencies = dependencies;
+        this.reviewable = reviewable;
     }
 
     public record ModerationRequest(@NotBlank String expectedVersion, @Size(max = 500) String reason) {}
@@ -95,10 +96,9 @@ public class ModerationController {
     @ResponseStatus(HttpStatus.CREATED)
     public ReviewView review(@Valid @RequestBody ReviewRequest req) {
         String buyer = Actor.require("CUSTOMER").id();
-        DependencyClients.Purchase purchase = dependencies.purchase(req.orderId(), req.productId());
+        String purchaser = reviewable.buyer(req.orderId(), req.productId()).orElse(null);
         try {
-            ReviewRules.requireEligible(buyer, new ReviewRules.Purchase(purchase.customerId(), purchase.delivered(),
-                    purchase.containsProduct()), req.rating(), reviews.existsByOrderIdAndProductId(req.orderId(), req.productId()));
+            ReviewRules.requireEligible(buyer, new ReviewRules.Purchase(purchaser == null ? buyer : purchaser, purchaser != null, purchaser != null), req.rating(), reviews.existsByOrderIdAndProductId(req.orderId(), req.productId()));
         } catch (SecurityException notBuyer) {
             throw ApiException.forbidden("Only the buyer may review this purchase");
         } catch (IllegalStateException ineligible) {

@@ -26,14 +26,11 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class NotificationController {
     private final NotificationRepository notifications;
-    private final String orderToken;
     private final String sellerToken;
 
     public NotificationController(NotificationRepository notifications,
-                                  @Value("${ORDER_NOTIFICATION_TOKEN:}") String orderToken,
                                   @Value("${SELLER_NOTIFICATION_TOKEN:}") String sellerToken) {
         this.notifications = notifications;
-        this.orderToken = orderToken;
         this.sellerToken = sellerToken;
     }
 
@@ -46,11 +43,16 @@ public class NotificationController {
         }
     }
 
-    /** Order/Seller pairs only. Redelivery with the same eventKey is accepted without a duplicate row. */
+    /** Seller pair only; Order events arrive through Kafka. */
     @PostMapping("/internal/notifications")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void create(@RequestHeader(value = InternalTokens.HEADER, required = false) String token, @Valid @RequestBody Create req) {
-        if (!InternalTokens.matchesAny(token, orderToken, sellerToken)) InternalTokens.require(orderToken, token);
+        InternalTokens.require(sellerToken, token);
+        store(req);
+    }
+
+    /** Redelivery with the same eventKey is accepted without a duplicate row. */
+    void store(Create req) {
         if (req.eventKey() != null && notifications.existsByEventKey(req.eventKey())) return;
         try {
             notifications.saveAndFlush(new Notification(req.recipient(), req.type(), req.title(), req.message(), req.link(), req.eventKey()));

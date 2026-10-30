@@ -17,6 +17,8 @@ public class OrderEvents {
     public static final String ORDER_PLACED = "order.placed.v1";
     public static final String INVENTORY = "inventory.operation.v1";
     public static final String NOTIFY = "notification.v1";
+    /** Notices become this Kafka topic; NOTIFY only names the outbox row. */
+    public static final String STATUS_CHANGED = "seller-order.status-changed.v1";
 
     private final OutboxEventRepository outbox;
     private final ObjectMapper json;
@@ -28,8 +30,10 @@ public class OrderEvents {
 
     public record Line(String productId, int quantity, String sku) {}
     public record InventoryOperation(String operationId, String type, List<Line> lines) {}
-    /** Exactly one of recipient (account id) or storeId (resolved to the Store owner at delivery). */
-    public record Notice(String recipient, String storeId, String type, String title, String message, String link, String eventKey) {}
+    /** A null recipient means the Store owner, resolved at delivery. productIds only on the delivered notice. */
+    public record Notice(String recipient, String storeId, String type, String title, String message, String link, String eventKey,
+                         String sellerOrderId, String orderId, String customerId, String fromStatus, String toStatus,
+                         String actorRole, List<String> productIds) {}
 
     /** RELEASE on cancel/reject, CONSUME on delivery; the id is fixed per Store order and type. */
     @Transactional(propagation = Propagation.MANDATORY)
@@ -40,15 +44,26 @@ public class OrderEvents {
     }
 
     @Transactional(propagation = Propagation.MANDATORY)
-    public void notifyCustomer(SellerOrder so, String type, String title, String message, String eventSuffix) {
-        write(NOTIFY, so.getId(), new Notice(so.getOrder().getCustomerId(), null, type, title, message,
-                "/orders/" + so.getOrder().getId(), "order-" + so.getId() + "-" + eventSuffix + "-customer"));
+    public void notifyCustomer(SellerOrder so, String type, String title, String message, String eventSuffix,
+                               String fromStatus, String actorRole) {
+        write(NOTIFY, so.getId(), notice(so, so.getOrder().getCustomerId(), type, title, message,
+                "/orders/" + so.getOrder().getId(), "order-" + so.getId() + "-" + eventSuffix + "-customer", fromStatus, actorRole));
     }
 
     @Transactional(propagation = Propagation.MANDATORY)
-    public void notifyStore(SellerOrder so, String type, String title, String message, String eventSuffix) {
-        write(NOTIFY, so.getId(), new Notice(null, so.getStoreId(), type, title, message,
-                "/seller/orders", "order-" + so.getId() + "-" + eventSuffix + "-store"));
+    public void notifyStore(SellerOrder so, String type, String title, String message, String eventSuffix,
+                            String fromStatus, String actorRole) {
+        write(NOTIFY, so.getId(), notice(so, null, type, title, message,
+                "/seller/orders", "order-" + so.getId() + "-" + eventSuffix + "-store", fromStatus, actorRole));
+    }
+
+    private static Notice notice(SellerOrder so, String recipient, String type, String title, String message, String link,
+                                 String eventKey, String fromStatus, String actorRole) {
+        String status = so.getStatus().name();
+        List<String> products = "DELIVERED".equals(status) && !status.equals(fromStatus)
+                ? so.getItems().stream().map(i -> String.valueOf(i.getProductId())).distinct().toList() : null;
+        return new Notice(recipient, so.getStoreId(), type, title, message, link, eventKey, so.getId().toString(),
+                so.getOrder().getId().toString(), so.getOrder().getCustomerId(), fromStatus, status, actorRole, products);
     }
 
     private void write(String topic, UUID aggregate, Object payload) {

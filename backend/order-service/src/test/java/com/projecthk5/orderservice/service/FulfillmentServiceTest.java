@@ -55,7 +55,7 @@ class FulfillmentServiceTest {
     void acceptNotifiesBuyer() {
         service.sellerAction("store-1", so.getId(), "accept", null);
         assertEquals(Status.ACCEPTED, so.getStatus());
-        verify(events).notifyCustomer(eq(so), eq("ORDER_ACCEPTED"), anyString(), anyString(), eq("accepted"));
+        verify(events).notifyCustomer(eq(so), eq("ORDER_ACCEPTED"), anyString(), anyString(), eq("accepted"), eq("PLACED"), eq("SELLER"));
         verify(events, never()).inventory(any(), anyString());
     }
 
@@ -86,7 +86,7 @@ class FulfillmentServiceTest {
         service.customerCancel("customer-1", order.getId(), so.getId(), null);
         assertEquals(Status.CANCELLED, so.getStatus());
         verify(events).inventory(so, "RELEASE");
-        verify(events).notifyStore(eq(so), eq("ORDER_CANCELLED"), anyString(), anyString(), eq("cancelled"));
+        verify(events).notifyStore(eq(so), eq("ORDER_CANCELLED"), anyString(), anyString(), eq("cancelled"), eq("PLACED"), eq("CUSTOMER"));
         assertEquals(HttpStatus.CONFLICT, status(() -> service.customerCancel("customer-1", order.getId(), so.getId(), null)));
     }
 
@@ -101,6 +101,6 @@ class FulfillmentServiceTest {
         service.settle("admin", so.getId());
         assertNotNull(so.getSettledAt());
         assertEquals(HttpStatus.CONFLICT, status(() -> service.settle("admin", so.getId())));
-        verify(events).notifyStore(eq(so), eq("SETTLED"), anyString(), contains("95000"), eq("settled"));
+        verify(events).notifyStore(eq(so), eq("SETTLED"), anyString(), contains("95000"), eq("settled"), anyString(), eq("ADMIN"));
     }
 }

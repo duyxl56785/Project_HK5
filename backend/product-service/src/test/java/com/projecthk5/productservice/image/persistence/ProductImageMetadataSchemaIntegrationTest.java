@@ -62,7 +62,7 @@ class ProductImageMetadataSchemaIntegrationTest {
 
     @Test
     void productionMigrationCreatesReservationTable() {
-        assertEquals("5", flyway.info().current().getVersion().getVersion());
+        assertEquals("6", flyway.info().current().getVersion().getVersion());
         flyway.validate();
         UUID image = insert(1);
         assertEquals(image, jdbc.queryForObject("SELECT id FROM product_image_metadata", UUID.class));
@@ -86,7 +86,7 @@ class ProductImageMetadataSchemaIntegrationTest {
                 .schemas(schema).defaultSchema(schema).load();
         latest.migrate();
         latest.validate();
-        assertEquals("5", latest.info().current().getVersion().getVersion());
+        assertEquals("6", latest.info().current().getVersion().getVersion());
         assertEquals("Preserved category", jdbc.queryForObject("SELECT name FROM " + schema + ".categories WHERE id=?", String.class, CATEGORY));
         assertEquals("Preserved Product", jdbc.queryForObject("SELECT name FROM " + schema + ".products WHERE id=?", String.class, PRODUCT));
         assertEquals(0, jdbc.queryForObject("SELECT count(*) FROM " + schema + ".product_image_metadata", Integer.class));

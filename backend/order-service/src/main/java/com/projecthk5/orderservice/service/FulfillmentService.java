@@ -51,22 +51,23 @@ public class FulfillmentService {
         SellerOrder so = lock(sellerOrderId);
         if (!so.getStoreId().equals(managedStoreId))
             throw ApiException.notFound("ORDER_NOT_FOUND", "Order not found");
+        String from = so.getStatus().name();
         Status next = transition(so, action, reason);
         switch (next) {
             case ACCEPTED -> events.notifyCustomer(so, "ORDER_ACCEPTED", "Đơn hàng đã được xác nhận",
-                    "Cửa hàng đã xác nhận đơn hàng của bạn.", "accepted");
+                    "Cửa hàng đã xác nhận đơn hàng của bạn.", "accepted", from, "SELLER");
             case DISPATCHED -> events.notifyCustomer(so, "ORDER_DISPATCHED", "Đơn hàng đang được giao",
-                    "Đơn hàng đã được giao cho đơn vị vận chuyển. Vui lòng chuẩn bị tiền mặt khi nhận hàng.", "dispatched");
+                    "Đơn hàng đã được giao cho đơn vị vận chuyển. Vui lòng chuẩn bị tiền mặt khi nhận hàng.", "dispatched", from, "SELLER");
             case DELIVERED -> {
                 // Reserved stock leaves Inventory for good once the buyer has the goods.
                 events.inventory(so, "CONSUME");
                 events.notifyCustomer(so, "ORDER_DELIVERED", "Đã giao hàng thành công",
-                        "Đơn hàng đã được giao. Bạn có thể đánh giá sản phẩm.", "delivered");
+                        "Đơn hàng đã được giao. Bạn có thể đánh giá sản phẩm.", "delivered", from, "SELLER");
             }
             case REJECTED -> {
                 events.inventory(so, "RELEASE");
                 events.notifyCustomer(so, "ORDER_REJECTED", "Cửa hàng từ chối đơn hàng",
-                        "Lý do: " + so.getStatusReason(), "rejected");
+                        "Lý do: " + so.getStatusReason(), "rejected", from, "SELLER");
             }
             default -> { }
         }
@@ -79,10 +80,11 @@ public class FulfillmentService {
         SellerOrder so = lock(sellerOrderId);
         if (!so.getOrder().getId().equals(orderId) || !so.getOrder().getCustomerId().equals(customerId))
             throw ApiException.notFound("ORDER_NOT_FOUND", "Order not found");
+        String from = so.getStatus().name();
         transition(so, Action.CANCEL, reason == null || reason.isBlank() ? "Khách hàng hủy đơn" : reason);
         events.inventory(so, "RELEASE");
         events.notifyStore(so, "ORDER_CANCELLED", "Khách hàng đã hủy đơn",
-                "Đơn " + shortId(so) + " đã bị khách hàng hủy.", "cancelled");
+                "Đơn " + shortId(so) + " đã bị khách hàng hủy.", "cancelled", from, "CUSTOMER");
         return so;
     }
 
@@ -95,7 +97,7 @@ public class FulfillmentService {
             throw ApiException.conflict("COD_NOT_COLLECTABLE", invalid.getMessage());
         }
         events.notifyStore(so, "COD_COLLECTED", "Đã thu tiền COD",
-                "Sàn đã nhận tiền COD cho đơn " + shortId(so) + ".", "cod-collected");
+                "Sàn đã nhận tiền COD cho đơn " + shortId(so) + ".", "cod-collected", so.getStatus().name(), "ADMIN");
         return so;
     }
 
@@ -108,7 +110,7 @@ public class FulfillmentService {
             throw ApiException.conflict("SETTLEMENT_NOT_ALLOWED", invalid.getMessage());
         }
         events.notifyStore(so, "SETTLED", "Đã đối soát thanh toán",
-                "Đơn " + shortId(so) + " đã được thanh toán " + so.getSellerNet().toPlainString() + " ₫ (sau phí sàn).", "settled");
+                "Đơn " + shortId(so) + " đã được thanh toán " + so.getSellerNet().toPlainString() + " ₫ (sau phí sàn).", "settled", so.getStatus().name(), "ADMIN");
         return so;
     }
 

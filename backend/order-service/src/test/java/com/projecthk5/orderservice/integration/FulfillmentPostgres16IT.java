@@ -38,7 +38,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 /** Real PostgreSQL 16 + Flyway V3: HTTP role rules, Store scoping, row locks, outbox side effects, COD and finance. */
 @Tag("postgres-integration")
 @Testcontainers
-@SpringBootTest(properties = {"app.outbox.relay-enabled=false", "PRODUCT_ORDER_TOKEN=product-order-test-token"})
+@SpringBootTest(properties = "app.outbox.relay-enabled=false")
 @AutoConfigureMockMvc
 class FulfillmentPostgres16IT {
     @Container static final PostgreSQLContainer<?> PG = new PostgreSQLContainer<>("postgres:16-alpine");
@@ -139,13 +139,6 @@ class FulfillmentPostgres16IT {
         for (String a : new String[]{"accept", "prepare", "ready", "dispatch", "deliver"}) act("owner-1", so1, a, null, 200);
         assertEquals(1, outbox(so1, "\"CONSUME\""));
         assertEquals("DELIVERED", sql.queryForObject("select status from seller_orders where id=?", String.class, so1.getId()));
-
-        mvc.perform(get("/internal/orders/{o}/purchases/{p}", order.getId(), "p1")).andExpect(status().isUnauthorized());
-        mvc.perform(get("/internal/orders/{o}/purchases/{p}", order.getId(), "p1").header("X-Internal-Token", "product-order-test-token"))
-                .andExpect(jsonPath("$.customerId").value(customer))
-                .andExpect(jsonPath("$.delivered").value(true));
-        mvc.perform(get("/internal/orders/{o}/purchases/{p}", order.getId(), "p2").header("X-Internal-Token", "product-order-test-token"))
-                .andExpect(jsonPath("$.delivered").value(false)).andExpect(jsonPath("$.containsProduct").value(true));
 
         mvc.perform(post("/api/admin/store-orders/{id}/settle", so1.getId()).with(as("admin", "ADMIN"))).andExpect(status().isConflict());
         mvc.perform(post("/api/admin/store-orders/{id}/cod-collected", so1.getId()).with(as("admin", "ADMIN")))

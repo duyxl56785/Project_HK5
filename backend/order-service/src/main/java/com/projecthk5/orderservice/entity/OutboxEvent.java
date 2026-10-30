@@ -31,6 +31,8 @@ public class OutboxEvent {
     public String getLastError(){return lastError;}
     public boolean isDead(){return dead;}
     public void published(Instant now){this.publishedAt=now;this.lastError=null;}
+    /** The broker is down: not this event's fault, so it must never run out of attempts. */
+    public void postponed(String error){this.lastError=error==null?null:error.substring(0,Math.min(300,error.length()));}
     /** Transient failures retry later; a definitive or exhausted failure parks the event for operators. */
     public void failed(String error,boolean definitive){
         this.attempts++;
