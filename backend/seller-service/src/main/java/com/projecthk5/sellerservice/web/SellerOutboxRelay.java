@@ -36,7 +36,7 @@ public class SellerOutboxRelay {
         this.notificationToken = notificationToken;
     }
 
-    @Scheduled(fixedDelay = 2000)
+    @Scheduled(fixedDelay = 2000, initialDelayString = "${seller.outbox.relay-initial-delay-ms:0}")
     @Transactional
     public void relay() {
         for (SellerOutbox item : outbox.pending(PageRequest.of(0, 20))) {
