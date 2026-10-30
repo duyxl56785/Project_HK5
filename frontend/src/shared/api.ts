@@ -23,9 +23,14 @@ async function failure(response: Response): Promise<ApiError> {
   return new ApiError(response.status, body?.code ?? 'REQUEST_FAILED', body?.message ?? 'Yêu cầu không thành công');
 }
 
-/** Single-flight: rotation revokes the whole family if one refresh token is sent twice. */
+const postRefresh = () => fetch('/api/auth/refresh', { method: 'POST', headers: CSRF, credentials: 'same-origin' });
+
+/**
+ * Single-flight: rotation revokes the whole family if one refresh token is sent twice.
+ * The Web Lock extends that across tabs, which share the cookie: each reads the rotated one in turn.
+ */
 export function refreshSession(): Promise<Account | null> {
-  refreshing ??= fetch('/api/auth/refresh', { method: 'POST', headers: CSRF, credentials: 'same-origin' })
+  refreshing ??= (navigator.locks ? navigator.locks.request('hk5-auth-refresh', postRefresh) : postRefresh())
     .then(async (response) => {
       if (!response.ok) { accessToken = null; return null; }
       const body = await response.json() as TokenResponse;
