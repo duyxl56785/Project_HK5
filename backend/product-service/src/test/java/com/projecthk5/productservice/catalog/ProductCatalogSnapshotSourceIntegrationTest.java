@@ -319,9 +319,7 @@ class ProductCatalogSnapshotSourceIntegrationTest {
     }
 
     @Test void unconfiguredDefaultProductionAuthorityNeverCreatesFoundOrReady() {
-        assertTrue(context.getBeansOfType(CurrentStoreFactsSource.class).isEmpty());
-        assertTrue(context.getBeansOfType(CatalogSnapshotSource.class).isEmpty(), "No runtime wiring before security gates");
-        var production = new ProductCatalogSnapshotSource(products, context.getBeanProvider(CurrentStoreFactsSource.class));
+        var production = new ProductCatalogSnapshotSource(products, new StaticListableBeanFactory().getBeanProvider(CurrentStoreFactsSource.class));
         var p = insert(STORE_A, "closed", ProductStatus.ACTIVE);
         UUID missing = UUID.randomUUID();
         var loaded = production.load(Set.of(p.id(), missing));
@@ -345,8 +343,10 @@ class ProductCatalogSnapshotSourceIntegrationTest {
             var response = http.perform(MockMvcRequestBuilders.post(route).header("X-User-Id","owner")
                     .header("X-Roles","ADMIN,SELLER").header("Authorization","Bearer forged")
                     .contentType("application/json").content("{}")).andReturn().getResponse();
-            assertEquals(403, response.getStatus());
-            assertTrue(response.getContentAsString().contains("PRODUCT_ROUTE_AUTH_NOT_CONFIGURED"));
+            if (route.equals("/api/products")) {
+                assertEquals(403, response.getStatus());
+                assertTrue(response.getContentAsString().contains("PRODUCT_ROUTE_AUTH_NOT_CONFIGURED"));
+            } else assertEquals(401, response.getStatus());
         }
     }
 

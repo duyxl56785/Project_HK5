@@ -11,7 +11,7 @@ import java.util.UUID;
 public final class ProductExtras {
     private ProductExtras() {}
 
-    @Entity
+    @Entity(name = "Details")
     @Table(name = "product_details")
     public static class Details {
         @Id
@@ -27,7 +27,7 @@ public final class ProductExtras {
         public void setDescription(String description) { this.description = description; }
     }
 
-    @Entity
+    @Entity(name = "Image")
     @Table(name = "product_images")
     public static class Image {
         @Id
@@ -68,7 +68,7 @@ public final class ProductExtras {
         public int getDisplayOrder() { return displayOrder; }
     }
 
-    @Entity
+    @Entity(name = "Review")
     @Table(name = "product_reviews")
     public static class Review {
         @Id
