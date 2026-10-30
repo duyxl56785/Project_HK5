@@ -11,6 +11,8 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
     testImplementation 'org.testcontainers:postgresql:1.20.2'
     testImplementation 'org.testcontainers:junit-jupiter:1.20.2'
+    // Test-only cross-service harness for the HTTP Auth-revocation/write-fence race.
+    testImplementation project(':auth-service')
 }
 
 // PostgreSQL 16 integration tests require Docker; never report PASS from unit tests.
@@ -21,6 +23,8 @@ tasks.register('postgresIntegrationTest', Test) {
     testClassesDirs = sourceSets.test.output.classesDirs
     classpath = sourceSets.test.runtimeClasspath
     useJUnitPlatform { includeTags 'postgres-integration' }
+    // The Auth harness puts Auth's migrations on the classpath too, and Flyway refuses duplicate versions.
+    systemProperty 'spring.flyway.locations', 'filesystem:src/main/resources/db/migration'
     shouldRunAfter tasks.named('test')
 }
 

@@ -3,6 +3,7 @@ package com.projecthk5.orderservice.ports;
 import com.projecthk5.security.InternalTokens;
 import com.projecthk5.security.JwtResourceServer;
 import java.math.BigDecimal;
+import java.util.regex.Pattern;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -14,6 +15,9 @@ import org.springframework.web.server.ResponseStatusException;
 /** Order->Product pair: reads the current authoritative Product/Store snapshot, never a cache. */
 @Component
 public class CatalogHttpAdapter implements CatalogPort {
+    /** Product's listing rule: no NUL or lone surrogate, no blank or control character at either end. */
+    private static final Pattern CANONICAL_SKU =
+            Pattern.compile("[^\\p{Cc}\\p{Z}\\s\\p{Cs}](?:[^\\x00\\p{Cs}]*[^\\p{Cc}\\p{Z}\\s\\p{Cs}])?");
     private final RestClient product;
     private final String token;
 
@@ -43,6 +47,9 @@ public class CatalogHttpAdapter implements CatalogPort {
         }
         if (w == null || w.productId() == null || w.unitPrice() == null)
             throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, "Product catalog returned no snapshot");
+        // Inventory moves stock by this exact SKU, so a bad one is refused here and never repaired.
+        if (w.sku() == null || w.sku().length() > 128 || !CANONICAL_SKU.matcher(w.sku()).matches())
+            throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, "Product catalog returned an unusable SKU");
         return new ProductSnapshot(w.productId(), w.sellerId(), w.storeId(), w.available(), w.sellerApproved(),
                 w.storeOpen(), w.houseStore(), w.unitPrice(), w.sku(), w.name());
     }

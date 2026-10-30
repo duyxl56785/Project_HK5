@@ -56,14 +56,14 @@ public class FulfillmentService {
         switch (next) {
             case ACCEPTED -> events.notifyCustomer(so, "ORDER_ACCEPTED", "Đơn hàng đã được xác nhận",
                     "Cửa hàng đã xác nhận đơn hàng của bạn.", "accepted", from, "SELLER");
-            case DISPATCHED -> events.notifyCustomer(so, "ORDER_DISPATCHED", "Đơn hàng đang được giao",
-                    "Đơn hàng đã được giao cho đơn vị vận chuyển. Vui lòng chuẩn bị tiền mặt khi nhận hàng.", "dispatched", from, "SELLER");
-            case DELIVERED -> {
-                // Reserved stock leaves Inventory for good once the buyer has the goods.
+            case DISPATCHED -> {
+                // Reserved stock leaves Inventory at the handoff; it never waits for delivery or COD.
                 events.inventory(so, "CONSUME");
-                events.notifyCustomer(so, "ORDER_DELIVERED", "Đã giao hàng thành công",
-                        "Đơn hàng đã được giao. Bạn có thể đánh giá sản phẩm.", "delivered", from, "SELLER");
+                events.notifyCustomer(so, "ORDER_DISPATCHED", "Đơn hàng đang được giao",
+                        "Đơn hàng đã được giao cho đơn vị vận chuyển. Vui lòng chuẩn bị tiền mặt khi nhận hàng.", "dispatched", from, "SELLER");
             }
+            case DELIVERED -> events.notifyCustomer(so, "ORDER_DELIVERED", "Đã giao hàng thành công",
+                    "Đơn hàng đã được giao. Bạn có thể đánh giá sản phẩm.", "delivered", from, "SELLER");
             case REJECTED -> {
                 events.inventory(so, "RELEASE");
                 events.notifyCustomer(so, "ORDER_REJECTED", "Cửa hàng từ chối đơn hàng",

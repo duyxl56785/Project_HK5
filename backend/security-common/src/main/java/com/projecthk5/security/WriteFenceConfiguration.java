@@ -5,6 +5,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Map;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -16,7 +17,10 @@ import org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.Ordered;
+import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 /** Auto-configured because some services do not scan this package; the Boot customizer attaches the listener. */
@@ -29,6 +33,20 @@ public class WriteFenceConfiguration {
     @Bean
     WriteFence writeFence(JdbcTemplate jdbc) {
         return new WriteFence(jdbc);
+    }
+
+    @Bean
+    WriteFenceErrors writeFenceErrors() {
+        return new WriteFenceErrors();
+    }
+
+    /** Runs after a service's own advice, so only a service that has no ApiException handler lands here. */
+    @RestControllerAdvice
+    static class WriteFenceErrors {
+        @ExceptionHandler(ApiException.class)
+        public ResponseEntity<Map<String, Object>> refused(ApiException e) {
+            return new ApiErrorAdvice().api(e);
+        }
     }
 
     /** A servlet filter, ahead of Spring Security, because each service has its own route rules. */
