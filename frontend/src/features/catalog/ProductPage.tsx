@@ -21,17 +21,26 @@ function Buy({ product }: { readonly product: Detail }) {
   const location = useLocation();
   const [quantity, setQuantity] = useState(1);
   const add = useAction(() => api('/api/cart/items', { method: 'POST', body: { productId: product.id, quantity } }), ['cart']);
+  const buyNow = useAction(async () => {
+    await api('/api/cart/items', { method: 'POST', body: { productId: product.id, quantity } });
+    navigate('/cart');
+  }, ['cart']);
+  const toLogin = () => navigate(`/login?next=${encodeURIComponent(location.pathname)}`);
+  const blocked = add.isPending || buyNow.isPending || (account !== null && !has('CUSTOMER'));
   if (product.available < 1) return <p className="note note--error">Sản phẩm tạm hết hàng.</p>;
   return <div className="stack">
     <div className="row">
       <label className="field field--inline">Số lượng
         <input type="number" min={1} max={Math.min(1000, product.available)} value={quantity}
           onChange={(e) => setQuantity(Math.max(1, Math.trunc(Number(e.currentTarget.value)) || 1))} /></label>
-      <button type="button" className="btn btn--primary" disabled={add.isPending || (account !== null && !has('CUSTOMER'))}
-        onClick={() => account ? add.mutate(undefined) : navigate(`/login?next=${encodeURIComponent(location.pathname)}`)}>
-        Thêm vào giỏ</button>
     </div>
-    <ErrorNote error={add.error} />
+    <div className="row row--wrap">
+      <button type="button" className="btn btn--soft" disabled={blocked}
+        onClick={() => account ? add.mutate(undefined) : toLogin()}>Thêm vào giỏ hàng</button>
+      <button type="button" className="btn btn--primary" disabled={blocked}
+        onClick={() => account ? buyNow.mutate(undefined) : toLogin()}>Mua ngay</button>
+    </div>
+    <ErrorNote error={add.error ?? buyNow.error} />
     {add.isSuccess && <p className="note" role="status">Đã thêm vào giỏ. <Link to="/cart">Xem giỏ hàng</Link></p>}
   </div>;
 }
@@ -42,7 +51,7 @@ export function ProductPage() {
   const reviews = useQuery({ queryKey: ['product-reviews', id], queryFn: () => api<Review[]>(`/api/catalog/products/${id}/reviews`) });
   const [image, setImage] = useState(0);
   return <Loaded query={product}>{(p) => <div className="stack">
-    <div className="detail">
+    <div className="detail panel">
       <div className="stack">
         {p.images.length > 0 ? <img className="detail__image" src={p.images[image] ?? p.images[0]} alt={p.name} />
           : <div className="product__blank detail__image" aria-hidden="true" />}
@@ -55,9 +64,12 @@ export function ProductPage() {
         <p className="muted">Cửa hàng: <Link to={`/stores/${p.store.slug}`}>{p.store.name}</Link> · Còn {p.available} sản phẩm</p>
         <p className="muted">{p.rating.count > 0 ? `${stars(Math.round(p.rating.average))} ${p.rating.average}/5 (${p.rating.count} đánh giá)` : 'Chưa có đánh giá'}</p>
         <Buy product={p} />
-        <p className="pre">{p.description}</p>
       </div>
     </div>
+    <section className="panel stack">
+      <h2>Mô tả sản phẩm</h2>
+      <p className="pre">{p.description}</p>
+    </section>
     <section className="panel stack">
       <h2>Đánh giá</h2>
       <Loaded query={reviews} empty={(rows) => rows.length === 0}>{(rows) => <ul className="list">{rows.map((r) => <li key={r.id}>

@@ -25,7 +25,7 @@ Trạng thái theo PR #135, xác minh ngày 30/10/2026 trên stack Docker thật
 | F14 | Thông báo trong ứng dụng; outbox; có DLT | PARTIAL | Outbox và retry qua HTTP, hàng chờ lỗi xem ở Admin; chưa dùng Kafka |
 | F15 | Đánh giá đã mua; ẩn/hiện; HIDDEN không tính điểm | PARTIAL | Chạy thật; quyền đánh giá kiểm tra trực tiếp ở Order thay vì qua event |
 | F16 | Doanh thu, phí 5%, đối soát | PASS | E2E: thanh toán 142.500 ₫, tài chính sàn và cửa hàng khớp |
-| F17 | Giao diện sàn, ảnh sản phẩm | PARTIAL | Có catalog, chi tiết, trang cửa hàng; chưa có banner, kệ sản phẩm, gợi ý từ khóa |
+| F17 | Giao diện sàn, ảnh sản phẩm | PARTIAL | Giao diện Soopi: header tìm kiếm có gợi ý từ khóa, banner, ô danh mục, kệ sản phẩm, trang cửa hàng, Mua ngay; seed 24 sản phẩm có ảnh, kiểm 375px. Ảnh seed là ảnh vẽ tạm, còn thiếu Playwright |
 
 ## Khác với thiết kế kiến trúc
 
