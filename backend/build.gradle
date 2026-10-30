@@ -34,5 +34,7 @@ subprojects {
     tasks.withType(Test).configureEach {
         // Apply to every forked test JVM, including Auth and custom PostgreSQL tasks.
         systemProperty 'api.version', providers.gradleProperty('dockerApiVersion').getOrElse('1.44')
+        // Tests have no Auth to ask; CurrentAuthorityFilterTest covers the filter directly.
+        systemProperty 'security.current-authority.enabled', 'false'
     }
 }

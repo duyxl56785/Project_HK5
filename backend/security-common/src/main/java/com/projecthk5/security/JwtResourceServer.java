@@ -6,14 +6,17 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.server.resource.InvalidBearerTokenException;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
+import org.springframework.security.oauth2.server.resource.web.authentication.BearerTokenAuthenticationFilter;
 import org.springframework.web.client.RestClient;
 
 /**
@@ -45,6 +48,7 @@ public class JwtResourceServer {
     /** Applies the shared JWT/session/error policy; callers then add their own route rules. */
     @SuppressWarnings("unchecked")
     public static HttpSecurity configure(HttpSecurity http) throws Exception {
+        requireCurrentAuthority(http);
         return http.csrf(csrf -> csrf.disable())
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .oauth2ResourceServer(oauth -> oauth
@@ -68,7 +72,16 @@ public class JwtResourceServer {
                                 write(response, 403, "AUTH_FORBIDDEN", "Access denied")));
     }
 
-    private static void write(HttpServletResponse response, int status, String code, String message) throws IOException {
+    /** On unless a service opts out; without a URL or token every write fails closed. */
+    public static void requireCurrentAuthority(HttpSecurity http) {
+        Environment env = http.getSharedObject(ApplicationContext.class).getEnvironment();
+        if (env.getProperty("security.current-authority.enabled", Boolean.class, true)) {
+            http.addFilterAfter(new CurrentAuthorityFilter(env.getProperty("AUTH_INTERNAL_URL", "http://localhost:8101"),
+                    env.getProperty("AUTH_AUTHORITY_TOKEN", "")), BearerTokenAuthenticationFilter.class);
+        }
+    }
+
+    static void write(HttpServletResponse response, int status, String code, String message) throws IOException {
         response.setStatus(status);
         response.setContentType("application/json");
         JSON.writeValue(response.getOutputStream(), Map.of("code", code, "message", message));

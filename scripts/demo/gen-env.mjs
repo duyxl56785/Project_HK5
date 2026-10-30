@@ -1,16 +1,19 @@
 // Generates .env.demo (git-ignored) with fresh random secrets for the local demo stack.
 // Usage: node scripts/demo/gen-env.mjs [--force]
 import { randomBytes } from 'node:crypto';
-import { existsSync, writeFileSync } from 'node:fs';
+import { appendFileSync, existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 
 const target = resolve(import.meta.dirname, '../../.env.demo');
+const secret = () => randomBytes(32).toString('base64url');
+const authorityTokens = ['USER', 'SELLER', 'PRODUCT', 'CART', 'ORDER', 'NOTIFICATION'].map((name) => `${name}_AUTHORITY_TOKEN`);
 if (existsSync(target) && !process.argv.includes('--force')) {
+  const current = readFileSync(target, 'utf8');
+  for (const key of authorityTokens) if (!current.includes(`${key}=`)) appendFileSync(target, `${key}=${secret()}\n`);
   console.log(`.env.demo already exists, keeping it (pass --force to regenerate and reset the DB volume).`);
   process.exit(0);
 }
 
-const secret = () => randomBytes(32).toString('base64url');
 const values = {
   POSTGRES_PASSWORD: secret(),
   AUTH_DB_PASSWORD: secret(),
@@ -34,6 +37,7 @@ const values = {
   PRODUCT_ORDER_TOKEN: secret(),
   SELLER_AUTH_TOKEN: secret(),
   SELLER_NOTIFICATION_TOKEN: secret(),
+  ...Object.fromEntries(authorityTokens.map((key) => [key, secret()])),
   ADMIN_BOOTSTRAP_EMAIL: 'admin@hk5.local',
   ADMIN_BOOTSTRAP_PASSWORD: secret().slice(0, 20),
 };
