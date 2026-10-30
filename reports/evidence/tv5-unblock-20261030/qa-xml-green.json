@@ -1,0 +1,28 @@
+{
+  "kind": "DERIVED synthetic QA tool regression, not financial runtime test",
+  "head": "a5939ef39a05aa3b66413c4a31307978f1ac1d0f",
+  "workingTree": "Parser DOCTYPE callback plus3new tests; before commit",
+  "startedUtc": "2026-10-30T03:39:20.301835+00:00",
+  "completedUtc": "2026-10-30T03:39:20.716579+00:00",
+  "command": [
+    "C:\\Users\\Admin\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "scripts/qa/tests",
+    "-v"
+  ],
+  "exitCode": 0,
+  "counts": {
+    "PASS": 53,
+    "FAIL": 0
+  },
+  "rawArtifacts": [
+    {
+      "localPath": ".verification/tv5-unblock-20261030/qa-xml-green.log",
+      "bytes": 9351,
+      "sha256": "9982ec87cf98f6e9bae93e4f8acb82a742a9ba3833afd9c39a89f7995d1dacc3"
+    }
+  ]
+}

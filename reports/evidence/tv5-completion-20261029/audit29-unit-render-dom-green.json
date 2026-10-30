@@ -1,0 +1,31 @@
+{
+  "kind": "DERIVED actual TV5 frontend execution; raw log private byte-preserved",
+  "label": "audit29-unit-render-dom-green",
+  "branch": "codex/tv5-finance-qa-ui",
+  "head": "cae695c10f5d0e4f2b0f905516329e5b4be29850",
+  "base": "91e1a6c",
+  "command": [
+    "C:/Program Files/nodejs/node.exe",
+    "--test",
+    "--test-concurrency=1",
+    "src/features/finance/workspaceModel.test.mjs",
+    "src/features/finance/WorkspaceView.test.mjs",
+    "src/features/finance/Workspace.dom.mjs"
+  ],
+  "startedUtc": "2026-10-29T06:57:43.393901+00:00",
+  "completedUtc": "2026-10-29T06:57:46.392913+00:00",
+  "environment": {
+    "platform": "win32",
+    "node": "v22.23.3"
+  },
+  "exitCode": 0,
+  "counts": {
+    "tests": 46,
+    "pass": 46,
+    "fail": 0,
+    "skipped": 0
+  },
+  "log": ".verification/tv5-ui-20261028/audit29-unit-render-dom-green/runtime.log",
+  "logSHA256": "ea220c73eca0d992716fe22b32eee6d5d802df0225d27cf8ad72c8674a80be86",
+  "scope": "Local isolated UI/fixtures or recorded QA/PR metadata; not production Finance/API/Auth/E2E"
+}

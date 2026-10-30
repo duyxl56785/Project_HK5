@@ -403,3 +403,42 @@ This dated checkpoint supersedes earlier waiting labels only for scopes verified
 - [x] Owner97/d376176 đã có fix;104/a0c9d4b chạy519unit+205PG+8originalQA PASS. Eight-test Java SHA256 giữ nguyên, original4FAIL retained. P2 FIXED_VERIFIED trong privatehandler/PG scope; không còn WAITING_TV2_FIX ở checkpoint hiện tại.
 - [x] Main đã merge91tạif888725;103sync6d99953 chạy461unit+188PG+17QA PASS. Các receipt/source tách riêng; không dùng approval/QA cũ để gán cho source mới.
 - [ ] ProtectedHTTP/currentStore/House/sharedwire/C06/fullM01/Finance/COD/settlement/liveE2E vẫn chờ; không tựApprove/Merge/flags. [Current evidence](../reports/TV5_QA_TDD_PREFLIGHT_2026-10-27.md#checkpoint-cuối--owner-fix-và-search-được-tích-hợp-trong-lúc-bàn-giao).
+
+## TV5-TASKS61-66-20261028 — current source checkpoint
+
+Refs #5/#12/#99/#103/#117. [A–H task/RTM/readiness report](../reports/TV5_TASKS_6_1_TO_6_6_2026-10-28.md), [derived receipts](../reports/evidence/tv5-tasks6-20261028/).
+
+- [x]6.1originalcoreDONEverified79freshunit atmainbb0; no rules rewritten.
+- [x]6.2source931fresh165PASS(128unit+34PG+3FIN),FD01–05retained; TV3/TV4reviewpending, no mergedDONE claim.
+- [x]6.3original8visibilityGREEN andactual97/104mainmerges verified; no protectedHTTP/E2E claim.
+- [x]6.4stale17FAILcorrected: all17PASS ate7 andfinal0d; source-syncedmainbb0full901PASS atf666, final25PASS at0d. No newJava/assertionchanges; oldfixturefixkept.
+- [x]6.5independentauditor19newunitRED/GREEN+refactor48offlinePASS, real165/901/79artifacts verified; FinanceassessmentstillBLOCKED_DEPENDENCY.
+- [x]6.6RTM/results/defect/integration/E2E/reviewer/handofftables andrawhashes updated.
+- [ ]6.2/6.4formalownerreview/acceptance;6.5liveCOD/settlement;6.6fullprojectE2E remainWAITING_REVIEW/BLOCKED/PARTIAL. Issue5/12OPEN/PARTIAL; noflags/merge/businesssignature.
+
+## TV5-COMPLETION-20261029
+
+Refs #5/#12/#18. [Kiểm kê 105 PR, 16 Issue, kết quả test và 5 bảng bàn giao](../reports/TV5_COMPLETION_AUDIT_2026-10-29.md).
+
+- [x] Đọc đủ mọi trạng thái PR/reviews/threads/CI; 5/5 PR mở TV5 giữ reviewer phù hợp, không request trùng hoặc thêm lại reviewer bị gỡ.
+- [x] Sửa công cụ QA tại 120b5de: Docker init không che assertion FAIL độc lập; giữ 2 RED và 50 regression PASS.
+- [x] Independent tests từng HEAD: #119 1486 PASS/3 SKIP; #116 918 PASS; #118 393 PASS; #85 467 PASS; #120 177 PASS/2 SKIP; #121 206 PASS/2 SKIP. Không cộng thành release total.
+- [x] UI #115 cùng cae695c: 46 model/render/DOM + 18 Chrome PASS; typecheck, app build, preview build PASS. Lượt thiếu happy-dom giữ riêng là lỗi môi trường, không nhận là bug UI đã sửa.
+- [ ] Human/owner review, CR/thread TV2 của #103 và nghiệm thu #99/#113/#115/#117 còn chờ; COMMENT không thay APPROVE.
+- [ ] Full M01/COD/settlement/Store queries/security wire và live hai Store E2E BLOCKED/NOT_RUN; Issue #5/#12/#18 chưa DONE. Product price slice #84 giữ riêng.
+- [ ] Project V2 NOT_VERIFIED: token thiếu read:project; API milestones trả danh sách rỗng.
+
+## TV5-UNBLOCK-20261030
+
+Refs #5/#12/#18. [117 PR/16 Issue audit, source fixes, exact-head tests and owner handoff](../reports/TV5_UNBLOCK_ALL_PR_2026-10-30.md).
+
+- [x] Full API pagination across all PR states/reviewers/comments/CI; old #39/#63/#64 MERGED and #60/#62 CLOSED without merge verified, no push/request on closed PRs.
+- [x] QA XML UTF-16 DOCTYPE bypass:2RED→53regressionPASS; code9cd635a pushed117, valid UTF-16 positive control retained.
+- [x] Finance UI same-Store session invalidation: corrected2behaviorRED→48model/render/DOM+18ChromePASS at6ab0f3f; code/evidence pushed115, host/API integration still separate.
+- [x] Stale Product-price PENDING rows explicitly superseded by existing84/88 acceptance; signed packet digest verified, no new policy/signature.
+- [x] TV5 current133 independent1102PASS/2optionalSKIP includes12forced child-JVM crashes and54authorityPG; not deployed Auth/Seller/businessE2E.
+- [x] Current107925f04c +1147c825b5:177backendPASS and8actualHTTP/PG/HappyDOMPASS; JUnit wrapper separate, not Chrome/liveAuth/Gateway.
+- [x] Original DOCX matches archived stacked source byte-for-byte; provenance only, no live report/NFR acceptance.
+- [ ] Owner review/target migration/global credential manifest/all mutation paths, fullM01/COD/Finance/ReviewAPI/live2StoreUAT remain BLOCKED/NOT_RUN; Issue5/12/18 notDONE.
+
+- [x] Late PR134: API/diff/reviews/CI checked, independent1122PASS/2optionalSKIP at9eb3c0d; current inventory118PR. Seller Auth commit proof/production mutation acceptance remains BLOCKED, not inherited PASS from133.

@@ -1,0 +1,23 @@
+{
+  "kind": "DERIVED actual TV5 frontend execution; raw log private byte-preserved",
+  "label": "audit29-build",
+  "branch": "codex/tv5-finance-qa-ui",
+  "head": "cae695c10f5d0e4f2b0f905516329e5b4be29850",
+  "base": "91e1a6c",
+  "command": [
+    "C:/Program Files/nodejs/node.exe",
+    "node_modules/vite/bin/vite.js",
+    "build"
+  ],
+  "startedUtc": "2026-10-29T06:57:01.556280+00:00",
+  "completedUtc": "2026-10-29T06:57:03.644396+00:00",
+  "environment": {
+    "platform": "win32",
+    "node": "v22.23.3"
+  },
+  "exitCode": 0,
+  "counts": {},
+  "log": ".verification/tv5-ui-20261028/audit29-build/runtime.log",
+  "logSHA256": "cf8eee8b3fe857d2f308085e820761a5e5bac8ab0fae31c5dd6ef19a966d262a",
+  "scope": "Local isolated UI/fixtures or recorded QA/PR metadata; not production Finance/API/Auth/E2E"
+}

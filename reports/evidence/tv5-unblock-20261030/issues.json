@@ -1,0 +1,181 @@
+{
+  "kind": "DERIVED checklist metadata, not deduplicated project-task totals",
+  "rows": [
+    {
+      "number": 8,
+      "title": "[W2][TV1] Auth/JWT/Gateway + FE shared tích hợp",
+      "state": "open",
+      "assignees": [
+        "lexuanbao258-collab"
+      ],
+      "comments": 12,
+      "checkedItems": 0,
+      "uncheckedItems": 5
+    },
+    {
+      "number": 2,
+      "title": "[W1][TV2] Triển khai & kiểm thử Seller, Store, Category, Product và kiểm duyệt — Nguyễn Văn Duy",
+      "state": "open",
+      "assignees": [
+        "duyxl56785"
+      ],
+      "comments": 52,
+      "checkedItems": 72,
+      "uncheckedItems": 41
+    },
+    {
+      "number": 18,
+      "title": "[W3][TV5] E2E/UAT toàn hệ thống và QA release",
+      "state": "open",
+      "assignees": [
+        "nguyenminhduy090-alt"
+      ],
+      "comments": 1,
+      "checkedItems": 0,
+      "uncheckedItems": 4
+    },
+    {
+      "number": 12,
+      "title": "[W2][TV5] QA/Contract integration + Review/Finance P1",
+      "state": "open",
+      "assignees": [
+        "nguyenminhduy090-alt"
+      ],
+      "comments": 9,
+      "checkedItems": 43,
+      "uncheckedItems": 32
+    },
+    {
+      "number": 5,
+      "title": "[W1][TV5] Triển khai & kiểm thử Review, Finance, QA và báo cáo 55 trang — Nguyễn Minh Duy",
+      "state": "open",
+      "assignees": [
+        "nguyenminhduy090-alt"
+      ],
+      "comments": 12,
+      "checkedItems": 138,
+      "uncheckedItems": 81
+    },
+    {
+      "number": 1,
+      "title": "[W1][TV1] Triển khai & kiểm thử Docker, Auth, User, Gateway và Frontend chung — Lê Xuân Bảo",
+      "state": "open",
+      "assignees": [
+        "lexuanbao258-collab"
+      ],
+      "comments": 5,
+      "checkedItems": 0,
+      "uncheckedItems": 13
+    },
+    {
+      "number": 10,
+      "title": "[W2][TV3] Cart đa Store + Checkout COD + Order và UI",
+      "state": "open",
+      "assignees": [
+        "tranvanchinhbg2006-alt"
+      ],
+      "comments": 2,
+      "checkedItems": 0,
+      "uncheckedItems": 5
+    },
+    {
+      "number": 15,
+      "title": "[W3][TV2] Nghiệm thu Seller, Store, Product và catalog",
+      "state": "open",
+      "assignees": [
+        "duyxl56785"
+      ],
+      "comments": 0,
+      "checkedItems": 10,
+      "uncheckedItems": 12
+    },
+    {
+      "number": 9,
+      "title": "[W2][TV2] Seller/Store/Category/Product + catalog và UI",
+      "state": "open",
+      "assignees": [
+        "duyxl56785"
+      ],
+      "comments": 0,
+      "checkedItems": 27,
+      "uncheckedItems": 21
+    },
+    {
+      "number": 16,
+      "title": "[W3][TV3] Nghiệm thu Cart, Checkout COD và Order 2 Store",
+      "state": "open",
+      "assignees": [
+        "tranvanchinhbg2006-alt"
+      ],
+      "comments": 1,
+      "checkedItems": 0,
+      "uncheckedItems": 4
+    },
+    {
+      "number": 4,
+      "title": "[W1][TV4] Triển khai & kiểm thử Inventory, Fulfillment, COD và Notification — Phạm Thế Cường",
+      "state": "open",
+      "assignees": [
+        "phamthecuong2022006-alt"
+      ],
+      "comments": 34,
+      "checkedItems": 78,
+      "uncheckedItems": 59
+    },
+    {
+      "number": 3,
+      "title": "[W1][TV3] Triển khai & kiểm thử Cart, Checkout, Order nhiều cửa hàng và idempotency — Trần Văn Chính",
+      "state": "open",
+      "assignees": [
+        "tranvanchinhbg2006-alt"
+      ],
+      "comments": 13,
+      "checkedItems": 14,
+      "uncheckedItems": 11
+    },
+    {
+      "number": 11,
+      "title": "[W2][TV4] Inventory + Fulfillment + COD và UI",
+      "state": "open",
+      "assignees": [
+        "phamthecuong2022006-alt"
+      ],
+      "comments": 4,
+      "checkedItems": 23,
+      "uncheckedItems": 12
+    },
+    {
+      "number": 17,
+      "title": "[W3][TV4] Nghiệm thu Inventory, Fulfillment và COD",
+      "state": "open",
+      "assignees": [
+        "phamthecuong2022006-alt"
+      ],
+      "comments": 1,
+      "checkedItems": 7,
+      "uncheckedItems": 11
+    },
+    {
+      "number": 14,
+      "title": "[W3][TV1] Khởi động sạch, security và tích hợp FE-BE",
+      "state": "open",
+      "assignees": [
+        "lexuanbao258-collab"
+      ],
+      "comments": 0,
+      "checkedItems": 0,
+      "uncheckedItems": 3
+    },
+    {
+      "number": 13,
+      "title": "[W2][TV1] Auth/JWT/Gateway + frontend chung tích hợp",
+      "state": "closed",
+      "assignees": [
+        "lexuanbao258-collab"
+      ],
+      "comments": 0,
+      "checkedItems": 0,
+      "uncheckedItems": 0
+    }
+  ]
+}
