@@ -126,16 +126,6 @@ public class AuthService {
         return account;
     }
 
-    /** Current roles of an ACTIVE account; empty for an unknown, disabled or malformed subject. */
-    @Transactional(readOnly = true)
-    public Optional<Set<Account.Role>> liveRoles(String subject) {
-        try {
-            return accounts.findById(UUID.fromString(subject)).filter(a -> ACTIVE.equals(a.getStatus())).map(Account::getRoles);
-        } catch (IllegalArgumentException malformed) {
-            return Optional.empty();
-        }
-    }
-
     /** Seller status event from a verified internal pair; the row lock serializes concurrent deliveries. */
     @Transactional
     public Account changeSellerRole(UUID accountId, boolean grant, long revision) {

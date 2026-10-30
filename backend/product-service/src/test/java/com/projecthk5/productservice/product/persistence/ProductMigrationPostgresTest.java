@@ -35,7 +35,7 @@ class ProductMigrationPostgresTest {
         }
 
         Flyway current = migration(null);
-        assertEquals(3, current.migrate().migrationsExecuted, "V1 must upgrade through Product V2, image reservation V3 and details V4");
+        assertEquals(4, current.migrate().migrationsExecuted, "V1 must upgrade through Product V2, image reservation V3, details V4 and write fence V5");
         current.validate();
         assertEquals(0, current.migrate().migrationsExecuted, "A second migration run must be a no-op");
 

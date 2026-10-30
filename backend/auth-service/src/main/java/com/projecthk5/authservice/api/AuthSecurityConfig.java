@@ -30,7 +30,8 @@ public class AuthSecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/auth/register", "/api/auth/login",
                                 "/api/auth/refresh", "/api/auth/logout").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/internal/accounts/*/roles/SELLER").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/internal/accounts/*/authority").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/internal/accounts/*/write-reservations").permitAll()
+                        .requestMatchers(HttpMethod.DELETE, "/internal/accounts/write-reservations/*").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/auth/me").authenticated()
                         .anyRequest().denyAll())
                 .build();

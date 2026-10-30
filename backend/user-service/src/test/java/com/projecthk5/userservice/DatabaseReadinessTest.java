@@ -34,6 +34,6 @@ class DatabaseReadinessTest {
                 .cleanDisabled(true).locations("classpath:db/migration").load();
         assertTrue(flyway.validateWithResult().validationSuccessful);
         assertEquals(0, flyway.info().pending().length);
-        assertEquals("1", flyway.info().current().getVersion().getVersion());
+        assertEquals("2", flyway.info().current().getVersion().getVersion());
     }
 }

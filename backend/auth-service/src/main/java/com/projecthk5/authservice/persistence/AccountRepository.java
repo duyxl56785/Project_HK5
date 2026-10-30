@@ -14,6 +14,10 @@ public interface AccountRepository extends JpaRepository<Account, UUID> {
     @Query("select a from Account a where a.id = :id")
     Optional<Account> findLockedById(UUID id);
 
+    @Lock(LockModeType.PESSIMISTIC_READ)
+    @Query("select a from Account a where a.id = :id")
+    Optional<Account> findSharedById(UUID id);
+
     default Optional<Account> findByEmailNormalized(String email) {
         return findByEmail(Account.normalizeEmail(email));
     }
