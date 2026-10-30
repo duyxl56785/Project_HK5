@@ -304,6 +304,17 @@ class CheckoutServiceTest {
         verify(keys).fail(attempt.getId(),false);
         verify(write,never()).savePlaced(any(),any(),anyString());
     }
+
+    @Test void definitiveCartRejectionIsNotMarkedForReconciliation() {
+        CheckoutAttempt attempt=fresh();
+        when(cart.claim(bearer,key,null)).thenThrow(new CartPort.Rejected("Cart revision changed"));
+        CartPort.Rejected rejected=assertThrows(CartPort.Rejected.class,
+            ()->svc.checkout(customer,bearer,key,request));
+        assertEquals("Cart revision changed",rejected.getMessage());
+        verify(keys).fail(attempt.getId(),false);
+        verify(cart,never()).release(anyString(),anyString());
+        verify(inventory,never()).reserve(any(),anyList());
+    }
     @Test void reservationCarriesCatalogSkuAndOrderKeepsShippingAndLabels() {
         CheckoutAttempt attempt=fresh();
         when(cart.claim(bearer,key,null)).thenReturn(new CartPort.CartSnapshot(customer,1,true,List.of(

@@ -117,7 +117,8 @@ public class CheckoutService {
             }
             // A definitive Inventory rejection proves no stock moved, so the Cart claim can be released.
             boolean reserveRejected=reserveRequested && !writeRequested && error instanceof InventoryPort.Rejected;
-            boolean uncertain=(reserveRequested && !reserveRejected) || writeRequested || (claimRequested && !claimConfirmed);
+            boolean uncertain=(reserveRequested && !reserveRejected) || writeRequested
+                || (claimRequested && !claimConfirmed && !(error instanceof CartPort.Rejected));
             if (!uncertain && claimConfirmed && claimOwned) {
                 try { carts.release(bearer,key); }
                 catch (Exception releaseFailure) {
