@@ -91,6 +91,13 @@ public class StoreController {
         return query("where st.id in :ids", request.storeIds());
     }
 
+    @GetMapping("/internal/stores/eligible")
+    @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
+    public List<StoreFacts> eligible(@RequestHeader(value = InternalTokens.HEADER, required = false) String token) {
+        requirePair(token);
+        return visible();
+    }
+
     @GetMapping("/internal/stores/managed/{ownerReference}")
     @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
     public StoreFacts managed(@RequestHeader(value = InternalTokens.HEADER, required = false) String token,
