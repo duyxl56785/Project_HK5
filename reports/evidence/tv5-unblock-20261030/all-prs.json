@@ -1,5 +1,5 @@
 {
-  "kind": "DERIVED full API inventory; not blanket105/117source/runtime approval",
+  "kind": "DERIVED117PR full capture +1newPR134deep API read; not blanket source/runtime approval",
   "capture": {
     "completedAtUtc": "2026-10-30T03:50:28.420813+00:00",
     "PRs": 117,
@@ -4167,6 +4167,36 @@
       "commits": 1,
       "comments": 0,
       "reviewComments": 0
+    },
+    {
+      "PR": 134,
+      "title": "feat(tv2): fence Auth mutations and prepare Seller revocation orchestration",
+      "author": "duyxl56785",
+      "state": "DRAFT",
+      "head": "9eb3c0d7ab090553f1803ced1e1489c629f4a57b",
+      "headRef": "codex/authority-mutation-barriers",
+      "base": "3031523fdf8100c36cc3d9fef8c12748a18ee1ff",
+      "baseRef": "codex/reservation-atomic-recovery",
+      "mergeable": true,
+      "requestedReviewers": [
+        "lexuanbao258-collab",
+        "nguyenminhduy090-alt"
+      ],
+      "effectiveReviews": [],
+      "reviewDecision": null,
+      "openThreads": 0,
+      "CI": [
+        {
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40999218936/job/123879438220"
+        }
+      ],
+      "files": 26,
+      "commits": 1,
+      "comments": 0,
+      "reviewComments": 0
     }
   ],
   "postCaptureOwnChanges": {
@@ -4178,5 +4208,7 @@
       "source": "9cd635a3a492803f6402f3c388afb56a9481ed9f",
       "currentBeforeReport": "9bf27cfedbb0bac6e06ac86308bb3d95dbc81104"
     }
-  }
+  },
+  "supplementalReadAtUtc": "2026-10-30T04:09:10.735671+00:00",
+  "currentListedPRs": 118
 }

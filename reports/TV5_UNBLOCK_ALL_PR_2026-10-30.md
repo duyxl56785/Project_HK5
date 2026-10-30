@@ -3,6 +3,8 @@
 Refs #5/#12/#18. Viewer đã xác minh: `nguyenminhduy090-alt`. Main vẫn `bb0b9a2d0d2e909a59653619bce98c77f75e77d2`.
 Đã đọc API đủ **117 PR: 13 OPEN + 22 DRAFT + 79 MERGED + 3 CLOSED không merge**, 16 Issue. Capture kết thúc `2026-10-30T03:50:28.420813+00:00`; các push TV5 sau capture được ghi riêng. Phân trang đủ file-list/patch, commits, reviews/comments/timeline/threads/checks; không bỏ PR đóng. Có lỗi kết nối IncompleteRead/RemoteDisconnected, đã giảm trang/tiếp tục phần thiếu và kết thúc không thiếu PR nào. Đây là kiểm kê toàn repo; không tuyên bố source/runtime acceptance của117PR.
 
+**Late delta:** PR134 được tạo trong khi xuất bản. Đã đọc đủ HEAD/diff/comments/reviews/CI và chạy lại độc lập, không dùng1102PASS của133 cho134. Tổng kiểm kê cuối **118PR=13OPEN+23DRAFT+79MERGED+3CLOSED**,16Issue; first capture117 được giữ rõ trong metadata.
+
 ## Bảng 1 — Tất cả PR và reviewer
 
 | PR / owner / base→head | Trạng thái | Reviewers / quyết định theo SHA | CI tại HEAD | Thread / mergeability | Việc tiếp theo |
@@ -124,6 +126,7 @@ Refs #5/#12/#18. Viewer đã xác minh: `nguyenminhduy090-alt`. Main vẫn `bb0b
 | [#131](https://github.com/duyxl56785/Project_HK5/pull/131) feat(security): authenticate reservation RPC and terminal callbacks<br>duyxl56785; `codex/durable-authority-reservation@1345f70→codex/authenticated-reservation-rpc@dcdc685` | DRAFT | nguyenminhduy090-alt; chưa formal review | readiness:success | 0 mở; mergeable=True | Có fresh child133 component QA; owner quyết định integration/privileges/migration, không suy PASS ở parent HEAD |
 | [#132](https://github.com/duyxl56785/Project_HK5/pull/132) feat(tv2): add durable authority recovery and revocation reconciliation<br>duyxl56785; `codex/authenticated-reservation-rpc@dcdc685→codex/durable-reservation-recovery@dc10c0c` | DRAFT | nguyenminhduy090-alt; chưa formal review | readiness:success | 0 mở; mergeable=True | Có fresh child133 component QA; owner quyết định integration/privileges/migration, không suy PASS ở parent HEAD |
 | [#133](https://github.com/duyxl56785/Project_HK5/pull/133) fix(tv2): close reservation crash gap with atomic recovery enlistment<br>duyxl56785; `codex/durable-reservation-recovery@dc10c0c→codex/reservation-atomic-recovery@3031523` | DRAFT | nguyenminhduy090-alt; chưa formal review | readiness:success | 0 mở; mergeable=True | Có fresh child133 component QA; owner quyết định integration/privileges/migration, không suy PASS ở parent HEAD |
+| [#134](https://github.com/duyxl56785/Project_HK5/pull/134) feat(tv2): fence Auth mutations and prepare Seller revocation orchestration<br>duyxl56785; `codex/reservation-atomic-recovery@3031523→codex/authority-mutation-barriers@9eb3c0d` | DRAFT | lexuanbao258-collab,nguyenminhduy090-alt; chưa formal review tại capture | readiness:success | 0 mở; mergeable=True | PR mới phát sinh; đã chạy độc lập latest134, Seller commit proof/runtime vẫn BLOCKED |
 
 Ưu tiên người dùng: #39 đã MERGED, head4e4e623 và TV5 formal APPROVED đã có; #63 MERGED3261a64; #64 MERGED06ebfc4. #60/e0a28de và #62/6a79016 CLOSED không merge. Không lặp yêu cầu human review39 hoặc push các PR này. Nội dung tương ứng đã có các PR thay thế trong lịch sử; closed-unmerged không phải runtime main.
 
@@ -200,3 +203,13 @@ The Product producer/recovery JVMs were actually killed/restarted over the same 
 |Live marketplace UAT/report |TV1–TV5 |React→Gateway→services→PG twoStore, realInventory/COD, screenshots/NFR; source DOCX now available in stacked126/133 but not automatically merged into main |
 
 Current acceptance: Issue5/12/18 **OPEN/PARTIAL**. No Approve/Merge/Close, no credentials published, no owner production code edits or flag activation. Root WIP `.vs/` and `reports/tv5-m01-local/` preserved. New code is only QA utility and isolated Finance UI; docs clarify existing signatures, never grant new business authority. Report/table capture and current GitHub publication/read-back are separate artifacts. When only owner decisions/implementation/integration gates remain, continue on new authorized source/evidence rather than inventing work or duplicate PRs.
+
+## PR #134 phát sinh trong lượt — partial mutation-path integration
+
+HEAD `9eb3c0d7ab090553f1803ced1e1489c629f4a57b`, base #133 `3031523`. Đã đọc 26 changed paths/API patch, tập trung AccountMutationCommands, Auth V7, typed RevocationBarrier, SellerMutationQueue/V8, expiry/current-role/version/claim/receipt checks, RoleSync receiver và inventories. Chỉ QA, không sửa code owner.
+
+TV5 đã chạy nguyên four-module build/test tại đúng HEAD: **1122 PASS / 0 FAIL / 2 optional SKIP, exit0**. Core57; Auth169(+2SKIP); Seller297unit+168PG+22RoleSync; Product313unit+38PG+58authority. Các12 process-crash cases cũ vẫn PASS, không cộng chúng lần nữa;1102 của133 là lượt cũ riêng. Xem pr134-execution.json cho lệnh/timestamp/class/cases/raw hashes. Không suy CI GREEN từ local run.
+
+Scope verified: RoleSync mọi status đi qua recovery, thiếu recovery trả503; Auth mutation queue giữ verified signed ADMIN/expiry và recheck current ACTIVE ADMIN, expected target ABA version/status/roles trong same-source transaction; local receipt replay/rollback/priority và Seller local-policy privilege tests. Không thấy finding mới đủ bằng chứng trong phạm vi inert/local component đã kiểm tra. Đây không phải chấp thuận target status/admin business policy hoặc activation.
+
+Seller production mutation vẫn **AUTH_COMMIT_PROOF_UNAVAILABLE**. Fresh current-account RPC không phải commit fence; package-private local transaction engine sử dụng test-only policy. Cần Seller→Auth admission/reservation và authenticated Seller terminal receipt/closure, independent final integrated-head/migration/DB/manifest acceptance. Không coi134 đã hoàn tất toàn bộ mutation paths, Product CRUD, Auth/Seller redeploy hoặc marketplace E2E; Draft/flags OFF và các gate parent vẫn giữ riêng.

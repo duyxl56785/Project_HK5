@@ -1,6 +1,6 @@
 {
   "kind": "DERIVED byte/hash verification only; original logs/XML remain private unchanged",
-  "verifiedAtUtc": "2026-10-30T03:58:46.846853+00:00",
+  "verifiedAtUtc": "2026-10-30T04:09:10.754566+00:00",
   "status": "PASS",
   "artifacts": [
     {
@@ -517,6 +517,391 @@
       "localPath": ".verification/tv5-unblock-20261030/ci133-private.log",
       "bytes": 52485,
       "sha256": "dee37f796241d00949457f63a4e58f8e40413ef6dddfd81895fcaf20c9265ace"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/runtime.log",
+      "bytes": 7879,
+      "sha256": "2534e55a90254d151d7b7c4bdb143a5966d4bfe5459c85260c5e9ca3c31a81f4"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/auth-service/build/test-results/test/TEST-com.projecthk5.authservice.authority.AccountMutationCommandsPostgresTest.xml",
+      "bytes": 5682,
+      "sha256": "f609f295e2a45a5b56eb8c023419903522e2c6705e554a4a75095ff4f2c2b8ed"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/auth-service/build/test-results/test/TEST-com.projecthk5.authservice.authority.CurrentAccountRpcPostgresTest.xml",
+      "bytes": 19954,
+      "sha256": "261ce385684c7f07c22b9d7d0bcbf917d4337bf8cb99a74e85462ddaa774bcd5"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/auth-service/build/test-results/test/TEST-com.projecthk5.authservice.AuthPersistenceTest.xml",
+      "bytes": 38469,
+      "sha256": "341e4c01c8610aacba69d9d6e59dfe03ee1199301f1ca0c254dd7b6c45a3568d"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/auth-service/build/test-results/test/TEST-com.projecthk5.authservice.DatabaseReadinessTest.xml",
+      "bytes": 521,
+      "sha256": "f86301e5e83164f22247ccc6106457f7687af7bf7cfa2cfa0f415035e6ddfc73"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/auth-service/build/test-results/test/TEST-com.projecthk5.authservice.EmailInventoryTest.xml",
+      "bytes": 488,
+      "sha256": "0c2a5cd1e2bf43c714e05419258be9491ab72afcc2b34501d8fa1073c43f7e0c"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/auth-service/build/test-results/test/TEST-com.projecthk5.authservice.EmailNormalizationTest.xml",
+      "bytes": 641,
+      "sha256": "cd74412311913a701e2a1ef057e9b7cd98fb61c75dc2b42bf451db2dfd3a5f8e"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/auth-service/build/test-results/test/TEST-com.projecthk5.authservice.Hs256DependencyTest.xml",
+      "bytes": 483,
+      "sha256": "3bad05a30c034a426a1b59996e896fa33480e4cea7a3c32f54fb8dd4cefedc40"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/auth-service/build/test-results/test/TEST-com.projecthk5.authservice.rolesync.SellerRoleSyncHttpTest.xml",
+      "bytes": 6660,
+      "sha256": "89a33be7c130c5de17d2358284507a2840392a6c3b1fec6bd1419e0f00b7211b"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/auth-service/build/test-results/test/TEST-com.projecthk5.authservice.rolesync.SellerRoleSyncJsonTest.xml",
+      "bytes": 1971,
+      "sha256": "41992551bf164f35f210a322df7a844f6cadf7cbbc691bc7293a1d32741f1d15"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/auth-service/build/test-results/test/TEST-com.projecthk5.authservice.rolesync.SellerRoleSyncPostgresTest.xml",
+      "bytes": 17833,
+      "sha256": "b775db16f11231ce94cd31ff6d6465905e6fbd792e72ddfaf93db741ebfea3a2"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/auth-service/build/test-results/test/TEST-com.projecthk5.authservice.runtime.AuthHttpControllerTest.xml",
+      "bytes": 5229,
+      "sha256": "7d790dcc11a4391185e26b45d1a8231358cd231c615d63ba3fded2f0c8aaff4f"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/auth-service/build/test-results/test/TEST-com.projecthk5.authservice.runtime.AuthHttpGateTest.xml",
+      "bytes": 617,
+      "sha256": "0badcb7db95fa8e282a9181254b8368f22ffe5e497868d6c68e8940669e3655b"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/auth-service/build/test-results/test/TEST-com.projecthk5.authservice.runtime.AuthSessionServiceTest.xml",
+      "bytes": 1651,
+      "sha256": "b837cfa48b2930d4e1bd0126c13bdf066cbbac0f140494095300582c6bb3c840"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/auth-service/build/test-results/test/TEST-com.projecthk5.authservice.runtime.AuthSessionServiceWiringTest.xml",
+      "bytes": 657,
+      "sha256": "750fc1336fe48cf2c8f6fe326050f3e0e3ff5c24a9db0acd0fd0ea103504b934"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/auth-service/build/test-results/test/TEST-com.projecthk5.authservice.security.AuthBootstrapConfigurationTest.xml",
+      "bytes": 1175,
+      "sha256": "5d44dc9658e78ca451042c0336dd2401e984046c32b3afee76ad4767324c672a"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/auth-service/build/test-results/test/TEST-com.projecthk5.authservice.security.AuthBootstrapStartupTest.xml",
+      "bytes": 17195,
+      "sha256": "a7d2b229f961d007de036df03ef5fca00c408429e91a09910ed3a1c64050e1ad"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/auth-service/build/test-results/test/TEST-com.projecthk5.authservice.security.AuthPasswordHasherTest.xml",
+      "bytes": 2101,
+      "sha256": "603b48ee6fd088a0b57ca8e095e76d3ec8043cb95828691d2477783a9eccde52"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/auth-service/build/test-results/test/TEST-com.projecthk5.authservice.security.CurrentAccountAuthorityTest.xml",
+      "bytes": 2185,
+      "sha256": "da2157c82a5bf68cea10beba8e744cdeab9e98c841199fe9a3a862d411db4cc6"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/auth-service/build/test-results/test/TEST-com.projecthk5.authservice.security.Hk5JwtCodecTest.xml",
+      "bytes": 981,
+      "sha256": "21130d3e45350f7855dac5cfcf39f1326782840cf30bccf655146689508e1d7d"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/product-service/build/test-results/authorityIntegrationTest/TEST-com.projecthk5.productservice.authority.DurableReservationPostgresTest.xml",
+      "bytes": 21314,
+      "sha256": "68de3a7129762e9722da80e6bfd24834e603600e499316bd019cd8c5b926a36f"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/product-service/build/test-results/authorityIntegrationTest/TEST-com.projecthk5.productservice.authority.MutationPathFencePostgresTest.xml",
+      "bytes": 33121,
+      "sha256": "b57ef89af3d28bc66ae90879ae0b7d00bf8d65a72590b11211220f5cc4e1b275"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/product-service/build/test-results/authorityIntegrationTest/TEST-com.projecthk5.productservice.authority.ProductAuthorityHttpPostgresTest.xml",
+      "bytes": 18515,
+      "sha256": "f2d2a5796572e59586893f42c37bea6f810369d865d7bde871e3079194303620"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/product-service/build/test-results/authorityIntegrationTest/TEST-com.projecthk5.productservice.authority.ReservationProcessCrashPostgresTest.xml",
+      "bytes": 34968,
+      "sha256": "4aafec62080bd82fc1a43edf4d466c5d4d7beab213a0aa952e0153112f70441e"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/product-service/build/test-results/authorityIntegrationTest/TEST-com.projecthk5.productservice.authority.ReservationRecoveryPostgresTest.xml",
+      "bytes": 40284,
+      "sha256": "c5fa7a4aedfa436b9df0d62f0249940013ffd0a6a3a7777d54bc4a470c1f97d7"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/product-service/build/test-results/authorityIntegrationTest/TEST-com.projecthk5.productservice.authority.ReservationRpcPostgresTest.xml",
+      "bytes": 56297,
+      "sha256": "16fc4e5342caa1aae9a91235a179a3789df3880bd6655dc37a3f8fa95a395c5d"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/product-service/build/test-results/integrationTest/TEST-com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest.xml",
+      "bytes": 7978,
+      "sha256": "5b2dfff4f36cf91d31ae613c149e834f398f3c60d7ec25bdc914fcb28dc8c3fb"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/product-service/build/test-results/integrationTest/TEST-com.projecthk5.productservice.category.CategoryIntegrationTest.xml",
+      "bytes": 10132,
+      "sha256": "a718e602d790011cf0112a96b6aba9daab4b007307de02dc0c411201ed8525ba"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/product-service/build/test-results/test/TEST-com.projecthk5.productservice.authority.ProductCurrentAuthorityTest.xml",
+      "bytes": 1412,
+      "sha256": "bb12a91d3fd65f64a5ae86a306771f9db3f2a24421bb743b1052692fd7f03486"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/product-service/build/test-results/test/TEST-com.projecthk5.productservice.authority.ProductReceiptMediaTypeTest.xml",
+      "bytes": 2105,
+      "sha256": "cf581dc8044f436605901adf5adef7e505f33eb4e6f4bc2be56751fc9b6093ce"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/product-service/build/test-results/test/TEST-com.projecthk5.productservice.authority.ProductReservationRecoveryOperatorTest.xml",
+      "bytes": 537,
+      "sha256": "4233f9fb71169a040f2ec2989356c881b3824195e8a6f5ed6c0c2de1ce83c5b3"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/product-service/build/test-results/test/TEST-com.projecthk5.productservice.authority.ProductReservationRecoveryWorkerTest.xml",
+      "bytes": 1059,
+      "sha256": "9a3fa72541652580596fac3ba8ee9fe43cbaf859212cd7dd4f22b73bfe5ff1ec"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/product-service/build/test-results/test/TEST-com.projecthk5.productservice.catalog.CatalogBatchValidatorTest.xml",
+      "bytes": 7683,
+      "sha256": "7c3a854adec7aae3d2a74c94e66230c97b5dd4d350b84328f49574c6b7f07c87"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/product-service/build/test-results/test/TEST-com.projecthk5.productservice.category.CategoryControllerTest.xml",
+      "bytes": 18219,
+      "sha256": "9ed68a778589f0242d42837c1fe3cdd81b3f5beda80ac044dc70d5a6fc6ac95d"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/product-service/build/test-results/test/TEST-com.projecthk5.productservice.category.CategorySecurityTest.xml",
+      "bytes": 4248,
+      "sha256": "b560988ad7611a8c57f446485364ff76093affc7b939c82929d22196eff3b321"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/product-service/build/test-results/test/TEST-com.projecthk5.productservice.category.CategoryServiceTest.xml",
+      "bytes": 2745,
+      "sha256": "a355f604de5e6f73d62b36bd23ccf661fee00de2fe0a0a2080485d8794470049"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/product-service/build/test-results/test/TEST-com.projecthk5.productservice.image.ProductImageValidatorTest.xml",
+      "bytes": 10116,
+      "sha256": "86b78d3c83f208c82cf04095e72cbe17b9e346f5e2f33b7bef8d52307f508058"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/product-service/build/test-results/test/TEST-com.projecthk5.productservice.product.ProductLifecycleServiceTest.xml",
+      "bytes": 13568,
+      "sha256": "a8881038e67b06949ba0a8b470e8ca0571a653b1198e0bebeec0aec2b2ea404f"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/product-service/build/test-results/test/TEST-com.projecthk5.productservice.product.Week1CatalogFixtureTest.xml",
+      "bytes": 531,
+      "sha256": "03847a8f3699cf67932d8739e6cb89c56773d8e78d2ec9570587b704335601e0"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/product-service/build/test-results/test/TEST-com.projecthk5.productservice.review.ReviewRulesBoundaryTest.xml",
+      "bytes": 2440,
+      "sha256": "0515eb24f42c0a12c1f190489eef549423e2bf1be1918757edca65209c3cc370"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/product-service/build/test-results/test/TEST-com.projecthk5.productservice.review.ReviewRulesTest.xml",
+      "bytes": 2187,
+      "sha256": "b8ffd301c70eba3435fb28d2ce989a9a31d821056b517c6fa29ef1d341581276"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/product-service/build/test-results/test/TEST-com.projecthk5.productservice.security.CurrentAccountProductPolicyTest.xml",
+      "bytes": 534,
+      "sha256": "98183e346c70abbbdefdc404e6f88d7431db99a288d09c13beb1333a7efe99ca"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/product-service/build/test-results/test/TEST-com.projecthk5.productservice.security.ProductServiceSecurityTest.xml",
+      "bytes": 6334,
+      "sha256": "4c95c17e96aaf1d16df3d483fd1b767ee3a747e4c604b95094db9681e163d121"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/security-core/build/test-results/test/TEST-com.projecthk5.security.CurrentAccountClientTest.xml",
+      "bytes": 1219,
+      "sha256": "8cb1f97c598b24d511885be54a29ac459ec47b0c13d5d20db4848c99fc355386"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/security-core/build/test-results/test/TEST-com.projecthk5.security.fencing.ReservationRpcClientTest.xml",
+      "bytes": 900,
+      "sha256": "d1d7146f5b3db95b520e199bc003bac675617213fac1bb004fb729caa23951d1"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/security-core/build/test-results/test/TEST-com.projecthk5.security.fencing.ReservationWireTest.xml",
+      "bytes": 1223,
+      "sha256": "0de62c018d1d52cdbd1f1cc2f82158bcb5ea5b17ef523738fca193b3a6906f4c"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/security-core/build/test-results/test/TEST-com.projecthk5.security.InternalPairVerifierTest.xml",
+      "bytes": 2201,
+      "sha256": "2697c224ce4230ad9711352e4a5aad5ed53856223df7168d1909e13c7023ef8e"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/security-core/build/test-results/test/TEST-com.projecthk5.security.IsolatedPairCredentialsTest.xml",
+      "bytes": 663,
+      "sha256": "e2d9e2f2016b63f9941297cd76947cac4ec3772f9c331ccb29efd91486f9672a"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/security-core/build/test-results/test/TEST-com.projecthk5.security.JwtAccessVerifierTest.xml",
+      "bytes": 2832,
+      "sha256": "43e9baa746d5d945945e1c34707b5ba52576121e5c1050c3e1bb5373786cb78a"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/security-core/build/test-results/test/TEST-com.projecthk5.security.JwtVerifierSettingsTest.xml",
+      "bytes": 473,
+      "sha256": "152c7a248b87a84034dc71950f49e3afb3b6eb0b4ab28eab6394f57e4aced080"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/security-core/build/test-results/test/TEST-com.projecthk5.security.PairCredentialManifestTest.xml",
+      "bytes": 824,
+      "sha256": "5438245d4f3d634a27b7ce6234f1982a7e836fbf6dc90f75dabb3dc8bc339fa9"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/seller-service/build/test-results/integrationTest/TEST-com.projecthk5.sellerservice.http.SellerStoreManagementIntegrationTest.xml",
+      "bytes": 12948,
+      "sha256": "31ab20e9ecda9cb0978b46bf7297e6d2eaab1a1c095d5d7f1956c019bd553e3c"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/seller-service/build/test-results/integrationTest/TEST-com.projecthk5.sellerservice.http.SellerStoreReadIntegrationTest.xml",
+      "bytes": 9671,
+      "sha256": "95e7fb971732bf0d19da8464c26a9eaceb3b1736a80f42429145ea53c347ed69"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/seller-service/build/test-results/integrationTest/TEST-com.projecthk5.sellerservice.mutation.SellerMutationQueuePostgresTest.xml",
+      "bytes": 8757,
+      "sha256": "3b91f87f617905571b1385fec14053e7cd8b59fdf6d0f26d7bc1eb601aaf50bf"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/seller-service/build/test-results/integrationTest/TEST-com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest.xml",
+      "bytes": 18233,
+      "sha256": "b10cbf219539566d72a5eb6739bbb72f2e9df5c32e9b844fa102f6ea13263d16"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/seller-service/build/test-results/integrationTest/TEST-com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest.xml",
+      "bytes": 23488,
+      "sha256": "0d507f0b7ec721179cecb33c3af3bf2a2d641dba5e0dba168203b506c1861886"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/seller-service/build/test-results/integrationTest/TEST-com.projecthk5.sellerservice.store.StoreSchemaProposalPostgresTest.xml",
+      "bytes": 7411,
+      "sha256": "6685e0b4565f8c83b7131b0b8a5f9e3f239951e548c59782d6db4567b0305bab"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/seller-service/build/test-results/integrationTest/TEST-com.projecthk5.sellerservice.storefacts.StoreFactsHttpPostgresTest.xml",
+      "bytes": 62624,
+      "sha256": "ecccc02e6bf15a21bd07f490d08ee4cd873cdeaecb9894278e03cf7e0b40ea24"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/seller-service/build/test-results/roleSyncIntegrationTest/TEST-com.projecthk5.integration.SellerCurrentReadHttpE2ETest.xml",
+      "bytes": 58253,
+      "sha256": "93fcbab6adec18978589a6e547d0af7ea9135196f8f43ed19c389f478cb375dd"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/seller-service/build/test-results/roleSyncIntegrationTest/TEST-com.projecthk5.sellerservice.outbox.SellerRoleDeliveryE2ETest.xml",
+      "bytes": 19242,
+      "sha256": "46061e9c8b65288786417269084b4ee2dd500538aa04b99b2303f290a7ca6cfa"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/seller-service/build/test-results/test/TEST-com.projecthk5.sellerservice.http.CanonicalVersionTest.xml",
+      "bytes": 2877,
+      "sha256": "9ae9982d0aeba6fdab880fa91c43d76cad1e759c270f94818cdcc55479ca64a7"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/seller-service/build/test-results/test/TEST-com.projecthk5.sellerservice.http.SellerHttpReadAuthorityTest.xml",
+      "bytes": 2504,
+      "sha256": "225a747666f4bc9f7569103e1e73e6f9fa088f7e7e222158acac0c38758ed700"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/seller-service/build/test-results/test/TEST-com.projecthk5.sellerservice.http.SellerHttpSecurityTest.xml",
+      "bytes": 4336,
+      "sha256": "13ae7b279211aed2421be53bda65a842c6e5eab66e50ea1b6b680bc7d337a1d6"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/seller-service/build/test-results/test/TEST-com.projecthk5.sellerservice.http.SellerStoreJsonTest.xml",
+      "bytes": 11348,
+      "sha256": "2ad06fcc99f872d654250b60d2011b09f4596ee2a57f030a02ab35805349ff93"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/seller-service/build/test-results/test/TEST-com.projecthk5.sellerservice.http.SellerStoreManagementHandlerTest.xml",
+      "bytes": 4106,
+      "sha256": "70073d82103b2de369e59a30d28874097f8f8ecd59f635b1c5e11a99a6b7f0c2"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/seller-service/build/test-results/test/TEST-com.projecthk5.sellerservice.http.SellerStoreReadHandlerTest.xml",
+      "bytes": 2479,
+      "sha256": "2299af39c61b923eb64af23febad35e24170bd16aecfa2ed4d53dc8341cfd42c"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/seller-service/build/test-results/test/TEST-com.projecthk5.sellerservice.http.SellerStoreResponsesTest.xml",
+      "bytes": 1019,
+      "sha256": "2ce7ff59a5abf5d9edabc58e32e89626bb4d27e6ff31ba4fa041796ad5358d95"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/seller-service/build/test-results/test/TEST-com.projecthk5.sellerservice.security.CurrentAccountSellerPolicyTest.xml",
+      "bytes": 510,
+      "sha256": "5c91c172fc39d552db6739b39df761b5ba5019811f1b468975b6106c974b3e42"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/seller-service/build/test-results/test/TEST-com.projecthk5.sellerservice.seller.domain.SellerApplicationTest.xml",
+      "bytes": 2087,
+      "sha256": "433d852ea0c9cd92749d7fdc8b15bd9467029902c52d72c39e4cd2039430438e"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/seller-service/build/test-results/test/TEST-com.projecthk5.sellerservice.seller.entity.SellerProfileTest.xml",
+      "bytes": 1776,
+      "sha256": "3fdc3479031938e50b7caac59fcdea8cf7f3614cfac11e2162e3850f88397a91"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/seller-service/build/test-results/test/TEST-com.projecthk5.sellerservice.seller.service.SellerInputsTest.xml",
+      "bytes": 1535,
+      "sha256": "a4e374378909aa03accb3ede3dbdaf0046efcf2aa91c9078acbffd5f29204292"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/seller-service/build/test-results/test/TEST-com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest.xml",
+      "bytes": 8678,
+      "sha256": "2f11d8ea9ee6d4cf369349aa89a5c4180f66e7a22beff01e0445b540bd1e0fa4"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/seller-service/build/test-results/test/TEST-com.projecthk5.sellerservice.seller.service.SellerPersistenceServiceTest.xml",
+      "bytes": 2985,
+      "sha256": "26f3021767407071793ab54bb2eca6b943a6ec30d35831769dc9fa9af22b6360"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/seller-service/build/test-results/test/TEST-com.projecthk5.sellerservice.store.StoreEntityTest.xml",
+      "bytes": 954,
+      "sha256": "b2905bd061fff399200ae645f75e8db217f6d550c7b402877db9c12d919703d9"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/seller-service/build/test-results/test/TEST-com.projecthk5.sellerservice.store.StoreInputsServiceTest.xml",
+      "bytes": 655,
+      "sha256": "2d818c05a17278dcbd4b3ac6f923b537bf21ceca07ce7893692a985947388779"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/seller-service/build/test-results/test/TEST-com.projecthk5.sellerservice.store.StoreInputsTest.xml",
+      "bytes": 2941,
+      "sha256": "e0d40729bf9bb420b0e46420bda86a92f7a0c451dc74b21984d2f50f7bb96f43"
+    },
+    {
+      "localPath": ".verification/tv5-unblock-20261030/tests134/backend/seller-service/build/test-results/test/TEST-com.projecthk5.sellerservice.store.StoreLifecycleServiceTest.xml",
+      "bytes": 2900,
+      "sha256": "4aa9e10de05182ac5c413707b6f9b05f2df44fc619806bc1639e5804a48e0e8a"
     }
   ]
 }
