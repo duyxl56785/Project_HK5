@@ -9,7 +9,7 @@ Các yêu cầu nền tảng theo báo cáo:
 - Đối tượng quan trọng: `orders`, `seller_orders`, `inventory_checkout_operations`, `reviewable_items`, `settlements`.
 - Không thay tên topic, field, lỗi/response, ownership hoặc migration trước khi đã đối chiếu code V2 và có review liên quan.
 
-Tạo đề xuất thay đổi trong GitHub Issue; PR phải nêu tính tương thích và test 2 phía. **Chưa có endpoint hay Kafka event nào được triển khai trong scaffold.**
+Tạo đề xuất thay đổi trong GitHub Issue; PR phải nêu tính tương thích và test 2 phía.
 
 ## Contract TV1 v1.0 — quyết định của Technical Lead
 

@@ -6,11 +6,18 @@ x-service: &service
   image: eclipse-temurin:21-jre
   restart: unless-stopped
   command: ["java", "-Xmx256m", "-Duser.timezone=UTC", "-jar", "/app/app.jar"]
-  depends_on:
+  depends_on: &ready
     postgres:
+      condition: service_healthy
+    config-server:
+      condition: service_healthy
+    kafka:
+      condition: service_healthy
+    redis:
       condition: service_healthy
 
 x-jwt: &jwt
+  CONFIG_SERVER_URL: http://config-server:8888
   JWT_ISSUER_URI: ${JWT_ISSUER_URI:?run node scripts/demo/gen-env.mjs}
   JWT_AUDIENCE: ${JWT_AUDIENCE}
   JWT_HS256_CURRENT_KID: ${JWT_HS256_CURRENT_KID}
@@ -35,6 +42,64 @@ services:
       interval: 3s
       timeout: 3s
       retries: 20
+
+  kafka:
+    image: apache/kafka:3.8.1
+    restart: unless-stopped
+    environment:
+      KAFKA_NODE_ID: 1
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_LISTENERS: PLAINTEXT://:9092,CONTROLLER://:9093
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@localhost:9093
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_HEAP_OPTS: -Xmx256m
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/kafka/bin/kafka-broker-api-versions.sh --bootstrap-server 127.0.0.1:9092 >/dev/null"]
+      interval: 5s
+      timeout: 10s
+      retries: 20
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    # Cache only: nothing here needs to survive a restart.
+    command: ["redis-server", "--save", "", "--appendonly", "no", "--maxmemory", "64mb", "--maxmemory-policy", "allkeys-lru"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+  discovery-server:
+    image: eclipse-temurin:21-jre
+    restart: unless-stopped
+    command: ["java", "-Xmx256m", "-jar", "/app/app.jar"]
+    volumes: ["../backend/discovery-server/build/libs/discovery-server-0.1.0-SNAPSHOT.jar:/app/app.jar:ro"]
+    healthcheck:
+      test: ["CMD-SHELL", "bash -c '</dev/tcp/127.0.0.1/8761'"]
+      interval: 3s
+      timeout: 3s
+      retries: 40
+
+  config-server:
+    image: eclipse-temurin:21-jre
+    restart: unless-stopped
+    command: ["java", "-Xmx256m", "-jar", "/app/app.jar"]
+    depends_on:
+      discovery-server:
+        condition: service_healthy
+    volumes: ["../backend/config-server/build/libs/config-server-0.1.0-SNAPSHOT.jar:/app/app.jar:ro"]
+    healthcheck:
+      test: ["CMD-SHELL", "bash -c '</dev/tcp/127.0.0.1/8888'"]
+      interval: 3s
+      timeout: 3s
+      retries: 40
 
   auth-service:
     <<: *service
@@ -96,8 +161,6 @@ services:
       PRODUCT_SELLER_TOKEN: ${PRODUCT_SELLER_TOKEN}
       INVENTORY_INTERNAL_URL: http://inventory-service:8105
       PRODUCT_INVENTORY_TOKEN: ${PRODUCT_INVENTORY_TOKEN}
-      ORDER_INTERNAL_URL: http://order-service:8107
-      PRODUCT_ORDER_TOKEN: ${PRODUCT_ORDER_TOKEN}
       CART_PRODUCT_TOKEN: ${CART_PRODUCT_TOKEN}
       ORDER_PRODUCT_TOKEN: ${ORDER_PRODUCT_TOKEN}
 
@@ -105,6 +168,7 @@ services:
     <<: *service
     volumes: ["../backend/inventory-service/build/libs/inventory-service-0.1.0-SNAPSHOT.jar:/app/app.jar:ro"]
     environment:
+      CONFIG_SERVER_URL: http://config-server:8888
       INVENTORY_DB_URL: jdbc:postgresql://postgres:5432/inventory_db
       INVENTORY_DB_USERNAME: hk5
       INVENTORY_DB_PASSWORD: ${POSTGRES_PASSWORD}
@@ -148,9 +212,6 @@ services:
       ORDER_INVENTORY_TOKEN: ${ORDER_INVENTORY_TOKEN}
       SELLER_INTERNAL_URL: http://seller-service:8103
       ORDER_SELLER_TOKEN: ${ORDER_SELLER_TOKEN}
-      NOTIFICATION_INTERNAL_URL: http://notification-service:8108
-      ORDER_NOTIFICATION_TOKEN: ${ORDER_NOTIFICATION_TOKEN}
-      PRODUCT_ORDER_TOKEN: ${PRODUCT_ORDER_TOKEN}
 
   notification-service:
     <<: *service
@@ -162,24 +223,27 @@ services:
       AUTH_AUTHORITY_TOKEN: ${NOTIFICATION_AUTHORITY_TOKEN}
       NOTIFICATION_DB_USERNAME: hk5
       NOTIFICATION_DB_PASSWORD: ${POSTGRES_PASSWORD}
-      ORDER_NOTIFICATION_TOKEN: ${ORDER_NOTIFICATION_TOKEN}
       SELLER_NOTIFICATION_TOKEN: ${SELLER_NOTIFICATION_TOKEN}
 
   api-gateway:
     <<: *service
-    depends_on: [auth-service]
+    depends_on:
+      <<: *ready
+      auth-service:
+        condition: service_started
     volumes: ["../backend/api-gateway/build/libs/api-gateway-0.1.0-SNAPSHOT.jar:/app/app.jar:ro"]
     ports:
       - "127.0.0.1:18080:8080"
     environment:
+      CONFIG_SERVER_URL: http://config-server:8888
       ALLOWED_ORIGINS: ${ALLOWED_ORIGINS}
-      AUTH_URL: http://auth-service:8101
-      USER_URL: http://user-service:8102
-      SELLER_URL: http://seller-service:8103
-      PRODUCT_URL: http://product-service:8104
-      CART_URL: http://cart-service:8106
-      ORDER_URL: http://order-service:8107
-      NOTIFICATION_URL: http://notification-service:8108
+      AUTH_URL: lb://auth-service
+      USER_URL: lb://user-service
+      SELLER_URL: lb://seller-service
+      PRODUCT_URL: lb://product-service
+      CART_URL: lb://cart-service
+      ORDER_URL: lb://order-service
+      NOTIFICATION_URL: lb://notification-service
 
 volumes:
   pgdemo:

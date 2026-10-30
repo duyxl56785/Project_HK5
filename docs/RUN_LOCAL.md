@@ -20,7 +20,7 @@ npm ci
 npm run dev
 ```
 
-Truy cập `http://localhost:5173`. Chỉ gateway (`127.0.0.1:18080`) được mở ra máy; các service khác và PostgreSQL chỉ nằm trong mạng Docker.
+Truy cập `http://localhost:5173`. Chỉ gateway (`127.0.0.1:18080`) được mở ra máy; các service khác, PostgreSQL, Kafka, Redis, Eureka và Config Server chỉ nằm trong mạng Docker.
 
 ## Tài khoản seed
 
@@ -33,7 +33,7 @@ Truy cập `http://localhost:5173`. Chỉ gateway (`127.0.0.1:18080`) được m
 
 `.env.demo` đã được git bỏ qua và chỉ dùng cho máy local.
 
-Năm cờ `INVENTORY_ORDER_PAIR_ENABLED` và `HK5_FINANCE_*` trong file này là lựa chọn tạm để chạy thử trên máy. Chúng không phải chính sách đã duyệt: tỷ lệ 5% và các cờ tài chính, tồn kho ở môi trường khác phải lấy theo quyết định của owner.
+Năm cờ `INVENTORY_ORDER_PAIR_ENABLED` và `HK5_FINANCE_*` trong file này được duyệt cho môi trường local theo [M01_FINANCE_DECISION.md](project-report/M01_FINANCE_DECISION.md). Môi trường khác cần quyết định riêng.
 
 ## Luồng nghiệp vụ chính
 
@@ -60,4 +60,21 @@ cd backend && ./gradlew test
 cd frontend && npm test
 ```
 
-Test tích hợp `*PostgresIT` cần Docker.
+Test tích hợp `*PostgresIT` và `OrderEventKafkaIT` cần Docker.
+
+Kiểm tra Config, Eureka, Kafka, Redis và các tình huống sự cố trên stack đang chạy (script sẽ tắt và bật lại container):
+
+```bash
+node scripts/demo/smoke-platform.mjs
+```
+
+## Hạ tầng
+
+| Thành phần | Vai trò | Khi thành phần này tắt |
+| --- | --- | --- |
+| Config Server | Cấp cấu hình dùng chung từ `backend/config-server/src/main/resources/config/`; secret vẫn nằm trong biến môi trường | Service đang chạy không ảnh hưởng; service khởi động lại dùng cấu hình cục bộ, không có địa chỉ Kafka/Redis của Docker |
+| Eureka | Gateway định tuyến `lb://`; lời gọi nội bộ chọn instance theo tên service | Gateway và lời gọi nội bộ dùng tên DNS của Docker |
+| Kafka | `order.placed.v1`, `seller-order.status-changed.v1`; bản ghi lỗi sau 3 lần xử lý vào `<topic>.dlt` | Đặt hàng vẫn chạy, sự kiện chờ trong outbox và gửi lại khi Kafka hoạt động |
+| Redis | Cache Catalog công khai: mới 10 giây, giữ tối đa 5 phút | Catalog đọc trực tiếp nguồn |
+
+Catalog công khai có thể chậm tối đa 10 giây sau khi đổi giá, tồn kho hoặc khóa cửa hàng. Giỏ hàng, đặt hàng và mọi thao tác ghi không đọc cache.

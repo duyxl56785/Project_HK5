@@ -22,8 +22,8 @@ Trạng thái theo PR #135, xác minh ngày 30/10/2026 trên stack Docker thật
 | F11 | Người bán xử lý đơn của mình | PASS | E2E; xem đơn cửa hàng khác trả 404 |
 | F12 | Khách theo dõi, hủy đơn chờ; hoàn kho một lần | PASS | Smoke: hủy lần hai 409, tồn kho hoàn đúng một lần qua outbox |
 | F13 | COD chỉ PAID sau DELIVERED; idempotent | PASS | E2E, tài chính khớp |
-| F14 | Thông báo trong ứng dụng; outbox; có DLT | PARTIAL | Outbox và retry qua HTTP, hàng chờ lỗi xem ở Admin; chưa dùng Kafka |
-| F15 | Đánh giá đã mua; ẩn/hiện; HIDDEN không tính điểm | PARTIAL | Chạy thật; quyền đánh giá kiểm tra trực tiếp ở Order thay vì qua event |
+| F14 | Thông báo trong ứng dụng; outbox; có DLT | PASS | Outbox Order đẩy Kafka, Notification tiêu thụ idempotent, bản ghi lỗi vào `.dlt`. `OrderEventKafkaIT` và `smoke-platform.mjs`: Kafka tắt vẫn đặt được đơn, thông báo đến sau khi Kafka bật lại |
+| F15 | Đánh giá đã mua; ẩn/hiện; HIDDEN không tính điểm | PASS | Quyền đánh giá mở từ event DELIVERED trên `seller-order.status-changed.v1`, lưu `reviewable_items`. Smoke: bị từ chối trước khi giao, mở sau khi giao |
 | F16 | Doanh thu, phí 5%, đối soát | PASS | E2E: thanh toán 142.500 ₫, tài chính sàn và cửa hàng khớp |
 | F17 | Giao diện sàn, ảnh sản phẩm | PARTIAL | Giao diện Soopi: header tìm kiếm có gợi ý từ khóa, banner, ô danh mục, kệ sản phẩm, trang cửa hàng, Mua ngay; seed 24 sản phẩm có ảnh, kiểm 375px. Ảnh seed là ảnh vẽ tạm, còn thiếu Playwright |
 
@@ -31,9 +31,9 @@ Trạng thái theo PR #135, xác minh ngày 30/10/2026 trên stack Docker thật
 
 | Thiết kế (§6, §9.3) | Hiện tại | Ảnh hưởng |
 | --- | --- | --- |
-| Kafka cho sự kiện | Outbox gọi HTTP nội bộ, có retry và bản ghi lỗi | Không mất sự kiện khi service đích tắt; không có topic `.dlt` thật |
-| Eureka, Config Server | Có module, stack chạy không dùng; service gọi nhau theo tên Docker | Không ảnh hưởng chức năng |
-| Redis cache sản phẩm | Không dùng | Catalog đọc trực tiếp DB và trạng thái Seller hiện tại |
+| Kafka cho sự kiện | Order dùng Kafka cho hai topic trong §9.3. Sự kiện của Seller và lệnh Inventory vẫn qua outbox HTTP vì báo cáo không định nghĩa topic cho chúng | Không mất sự kiện khi service đích tắt |
+| Eureka, Config Server | Đã dùng trong stack. Eureka lỗi hoặc rỗng thì Gateway và lời gọi nội bộ rơi về DNS Docker | Eureka khởi động lại không gây 503 |
+| Redis cache sản phẩm | Cache Catalog công khai 10 giây, dùng lại bản cũ tối đa 5 phút khi phụ thuộc lỗi | Catalog có thể chậm tối đa 10 giây; ghi và snapshot luôn đọc nguồn |
 | Nginx phục vụ frontend | Vite dev server | Chưa có image frontend |
 | React Hook Form + Zod | Form React thuần | Lỗi hiện theo ràng buộc HTML và thông báo server |
 | Playwright | E2E thủ công trên trình duyệt | Chưa có E2E tự động |
