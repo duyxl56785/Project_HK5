@@ -60,9 +60,14 @@ class FulfillmentServiceTest {
     }
 
     @Test
-    void deliveryConsumesReservedStockExactlyOnce() {
-        for (String a : new String[]{"accept", "prepare", "ready", "dispatch", "deliver"})
+    void dispatchConsumesReservedStockExactlyOnce() {
+        for (String a : new String[]{"accept", "prepare", "ready"})
             service.sellerAction("store-1", so.getId(), a, null);
+        verify(events, never()).inventory(so, "CONSUME");
+        service.sellerAction("store-1", so.getId(), "dispatch", null);
+        assertEquals(Status.DISPATCHED, so.getStatus());
+        verify(events, times(1)).inventory(so, "CONSUME");
+        service.sellerAction("store-1", so.getId(), "deliver", null);
         assertEquals(Status.DELIVERED, so.getStatus());
         verify(events, times(1)).inventory(so, "CONSUME");
         verify(events, never()).inventory(so, "RELEASE");

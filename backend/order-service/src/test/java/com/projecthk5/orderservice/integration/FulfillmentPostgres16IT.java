@@ -136,7 +136,11 @@ class FulfillmentPostgres16IT {
 
     @Test
     void fullCodFlowWritesSideEffectsAndFinance() throws Exception {
-        for (String a : new String[]{"accept", "prepare", "ready", "dispatch", "deliver"}) act("owner-1", so1, a, null, 200);
+        for (String a : new String[]{"accept", "prepare", "ready"}) act("owner-1", so1, a, null, 200);
+        assertEquals(0, outbox(so1, "\"CONSUME\""));
+        act("owner-1", so1, "dispatch", null, 200);
+        assertEquals(1, outbox(so1, "\"CONSUME\""));
+        act("owner-1", so1, "deliver", null, 200);
         assertEquals(1, outbox(so1, "\"CONSUME\""));
         assertEquals("DELIVERED", sql.queryForObject("select status from seller_orders where id=?", String.class, so1.getId()));
 
