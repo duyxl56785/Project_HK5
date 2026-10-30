@@ -2,7 +2,7 @@ server:
   port: 8080
 spring:
   config:
-    import: optional:configserver:${CONFIG_SERVER_URL:http://localhost:8888}
+    import: optional:configserver:${CONFIG_SERVER_URL:http://localhost:8888},optional:configtree:/run/secrets/
   application:
     name: api-gateway
   cloud:

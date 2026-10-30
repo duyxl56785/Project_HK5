@@ -3,8 +3,8 @@
 # the other services own one database each (no cross-database foreign keys).
 set -eu
 psql -v ON_ERROR_STOP=1 -U "$POSTGRES_USER" -d postgres \
-  -v auth_app="$AUTH_DB_PASSWORD" -v auth_mig="$AUTH_MIGRATION_PASSWORD" \
-  -v user_app="$USER_DB_PASSWORD" -v user_mig="$USER_MIGRATION_PASSWORD" <<'SQL'
+  -v auth_app="$(cat /run/secrets/AUTH_DB_PASSWORD)" -v auth_mig="$(cat /run/secrets/AUTH_MIGRATION_PASSWORD)" \
+  -v user_app="$(cat /run/secrets/USER_DB_PASSWORD)" -v user_mig="$(cat /run/secrets/USER_MIGRATION_PASSWORD)" <<'SQL'
 CREATE ROLE auth_migrator LOGIN PASSWORD :'auth_mig';
 CREATE ROLE auth_app LOGIN PASSWORD :'auth_app';
 CREATE DATABASE auth_db OWNER auth_migrator;

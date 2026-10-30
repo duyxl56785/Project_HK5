@@ -1,5 +1,5 @@
 # Full local stack. Start it with: node scripts/demo/up.mjs (see docs/RUN_LOCAL.md).
-# Only the Gateway (127.0.0.1:18080) is published. Inspect data with: docker compose ... exec postgres psql -U hk5 hk5_demo
+# Only the UI (127.0.0.1:5173) and the Gateway (127.0.0.1:18080) are published. Secrets live in docker/secrets, written by gen-env.mjs. Inspect data with: docker compose ... exec postgres psql -U hk5 hk5_demo
 name: hk5-demo
 
 x-service: &service
@@ -21,19 +21,14 @@ x-jwt: &jwt
   JWT_ISSUER_URI: ${JWT_ISSUER_URI:?run node scripts/demo/gen-env.mjs}
   JWT_AUDIENCE: ${JWT_AUDIENCE}
   JWT_HS256_CURRENT_KID: ${JWT_HS256_CURRENT_KID}
-  JWT_HS256_CURRENT_KEY_B64: ${JWT_HS256_CURRENT_KEY_B64}
 
 services:
   postgres:
     image: postgres:16
     environment:
       POSTGRES_USER: hk5
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?run node scripts/demo/gen-env.mjs}
+      POSTGRES_PASSWORD_FILE: /run/secrets/POSTGRES_PASSWORD
       POSTGRES_DB: hk5_demo
-      AUTH_DB_PASSWORD: ${AUTH_DB_PASSWORD}
-      AUTH_MIGRATION_PASSWORD: ${AUTH_MIGRATION_PASSWORD}
-      USER_DB_PASSWORD: ${USER_DB_PASSWORD}
-      USER_MIGRATION_PASSWORD: ${USER_MIGRATION_PASSWORD}
     volumes:
       - pgdemo:/var/lib/postgresql/data
       - ./demo/init:/docker-entrypoint-initdb.d:ro
@@ -42,6 +37,12 @@ services:
       interval: 3s
       timeout: 3s
       retries: 20
+    secrets:
+      - POSTGRES_PASSWORD
+      - AUTH_DB_PASSWORD
+      - AUTH_MIGRATION_PASSWORD
+      - USER_DB_PASSWORD
+      - USER_MIGRATION_PASSWORD
 
   kafka:
     image: apache/kafka:3.8.1
@@ -108,13 +109,15 @@ services:
       <<: *jwt
       SPRING_PROFILES_ACTIVE: migration
       AUTH_DB_HOST: postgres
-      AUTH_DB_PASSWORD: ${AUTH_DB_PASSWORD}
-      AUTH_MIGRATION_PASSWORD: ${AUTH_MIGRATION_PASSWORD}
       ALLOWED_ORIGINS: ${ALLOWED_ORIGINS}
-      SELLER_AUTH_TOKEN: ${SELLER_AUTH_TOKEN}
-      WRITE_FENCE_TARGETS: ${USER_AUTHORITY_TOKEN}@http://user-service:8102,${SELLER_AUTHORITY_TOKEN}@http://seller-service:8103,${PRODUCT_AUTHORITY_TOKEN}@http://product-service:8104,${CART_AUTHORITY_TOKEN}@http://cart-service:8106,${ORDER_AUTHORITY_TOKEN}@http://order-service:8107,${NOTIFICATION_AUTHORITY_TOKEN}@http://notification-service:8108
       ADMIN_BOOTSTRAP_EMAIL: ${ADMIN_BOOTSTRAP_EMAIL}
-      ADMIN_BOOTSTRAP_PASSWORD: ${ADMIN_BOOTSTRAP_PASSWORD}
+    secrets:
+      - AUTH_DB_PASSWORD
+      - AUTH_MIGRATION_PASSWORD
+      - SELLER_AUTH_TOKEN
+      - WRITE_FENCE_TARGETS
+      - ADMIN_BOOTSTRAP_PASSWORD
+      - JWT_HS256_CURRENT_KEY_B64
 
   user-service:
     <<: *service
@@ -124,9 +127,11 @@ services:
       SPRING_PROFILES_ACTIVE: migration
       USER_DB_HOST: postgres
       AUTH_INTERNAL_URL: http://auth-service:8101
-      AUTH_AUTHORITY_TOKEN: ${USER_AUTHORITY_TOKEN}
-      USER_DB_PASSWORD: ${USER_DB_PASSWORD}
-      USER_MIGRATION_PASSWORD: ${USER_MIGRATION_PASSWORD}
+    secrets:
+      - { source: USER_AUTHORITY_TOKEN, target: AUTH_AUTHORITY_TOKEN }
+      - USER_DB_PASSWORD
+      - USER_MIGRATION_PASSWORD
+      - JWT_HS256_CURRENT_KEY_B64
 
   seller-service:
     <<: *service
@@ -135,14 +140,16 @@ services:
       <<: *jwt
       SELLER_DB_URL: jdbc:postgresql://postgres:5432/seller_db
       SELLER_DB_USERNAME: hk5
-      SELLER_DB_PASSWORD: ${POSTGRES_PASSWORD}
       AUTH_INTERNAL_URL: http://auth-service:8101
-      AUTH_AUTHORITY_TOKEN: ${SELLER_AUTHORITY_TOKEN}
-      SELLER_AUTH_TOKEN: ${SELLER_AUTH_TOKEN}
       NOTIFICATION_INTERNAL_URL: http://notification-service:8108
-      SELLER_NOTIFICATION_TOKEN: ${SELLER_NOTIFICATION_TOKEN}
-      PRODUCT_SELLER_TOKEN: ${PRODUCT_SELLER_TOKEN}
-      ORDER_SELLER_TOKEN: ${ORDER_SELLER_TOKEN}
+    secrets:
+      - { source: POSTGRES_PASSWORD, target: SELLER_DB_PASSWORD }
+      - { source: SELLER_AUTHORITY_TOKEN, target: AUTH_AUTHORITY_TOKEN }
+      - SELLER_AUTH_TOKEN
+      - SELLER_NOTIFICATION_TOKEN
+      - PRODUCT_SELLER_TOKEN
+      - ORDER_SELLER_TOKEN
+      - JWT_HS256_CURRENT_KEY_B64
 
   product-service:
     <<: *service
@@ -153,16 +160,18 @@ services:
       <<: *jwt
       PRODUCT_DB_URL: jdbc:postgresql://postgres:5432/product_db
       PRODUCT_DB_USERNAME: hk5
-      PRODUCT_DB_PASSWORD: ${POSTGRES_PASSWORD}
       PRODUCT_IMAGE_DIR: /data/images
       AUTH_INTERNAL_URL: http://auth-service:8101
-      AUTH_AUTHORITY_TOKEN: ${PRODUCT_AUTHORITY_TOKEN}
       SELLER_INTERNAL_URL: http://seller-service:8103
-      PRODUCT_SELLER_TOKEN: ${PRODUCT_SELLER_TOKEN}
       INVENTORY_INTERNAL_URL: http://inventory-service:8105
-      PRODUCT_INVENTORY_TOKEN: ${PRODUCT_INVENTORY_TOKEN}
-      CART_PRODUCT_TOKEN: ${CART_PRODUCT_TOKEN}
-      ORDER_PRODUCT_TOKEN: ${ORDER_PRODUCT_TOKEN}
+    secrets:
+      - { source: POSTGRES_PASSWORD, target: PRODUCT_DB_PASSWORD }
+      - { source: PRODUCT_AUTHORITY_TOKEN, target: AUTH_AUTHORITY_TOKEN }
+      - PRODUCT_SELLER_TOKEN
+      - PRODUCT_INVENTORY_TOKEN
+      - CART_PRODUCT_TOKEN
+      - ORDER_PRODUCT_TOKEN
+      - JWT_HS256_CURRENT_KEY_B64
 
   inventory-service:
     <<: *service
@@ -171,10 +180,11 @@ services:
       CONFIG_SERVER_URL: http://config-server:8888
       INVENTORY_DB_URL: jdbc:postgresql://postgres:5432/inventory_db
       INVENTORY_DB_USERNAME: hk5
-      INVENTORY_DB_PASSWORD: ${POSTGRES_PASSWORD}
-      INVENTORY_INTERNAL_TOKEN: ${PRODUCT_INVENTORY_TOKEN}
-      INVENTORY_ORDER_PAIR_TOKEN: ${ORDER_INVENTORY_TOKEN}
       INVENTORY_ORDER_PAIR_ENABLED: ${INVENTORY_ORDER_PAIR_ENABLED:?run node scripts/demo/gen-env.mjs}
+    secrets:
+      - { source: POSTGRES_PASSWORD, target: INVENTORY_DB_PASSWORD }
+      - { source: PRODUCT_INVENTORY_TOKEN, target: INVENTORY_INTERNAL_TOKEN }
+      - { source: ORDER_INVENTORY_TOKEN, target: INVENTORY_ORDER_PAIR_TOKEN }
 
   cart-service:
     <<: *service
@@ -183,12 +193,14 @@ services:
       <<: *jwt
       HK5_CART_JDBC_URL: jdbc:postgresql://postgres:5432/cart_db
       HK5_CART_DB_USER: hk5
-      HK5_CART_DB_PASSWORD: ${POSTGRES_PASSWORD}
-      APP_INTERNAL_CHECKOUT_TOKEN: ${ORDER_CART_TOKEN}
       AUTH_INTERNAL_URL: http://auth-service:8101
-      AUTH_AUTHORITY_TOKEN: ${CART_AUTHORITY_TOKEN}
       PRODUCT_INTERNAL_URL: http://product-service:8104
-      CART_PRODUCT_TOKEN: ${CART_PRODUCT_TOKEN}
+    secrets:
+      - { source: POSTGRES_PASSWORD, target: HK5_CART_DB_PASSWORD }
+      - { source: ORDER_CART_TOKEN, target: app.internal.checkout-token }
+      - { source: CART_AUTHORITY_TOKEN, target: AUTH_AUTHORITY_TOKEN }
+      - CART_PRODUCT_TOKEN
+      - JWT_HS256_CURRENT_KEY_B64
 
   order-service:
     <<: *service
@@ -197,21 +209,23 @@ services:
       <<: *jwt
       HK5_ORDER_JDBC_URL: jdbc:postgresql://postgres:5432/order_db
       HK5_ORDER_DB_USER: hk5
-      HK5_ORDER_DB_PASSWORD: ${POSTGRES_PASSWORD}
       HK5_FINANCE_POLICY_APPROVED: ${HK5_FINANCE_POLICY_APPROVED:?run node scripts/demo/gen-env.mjs}
       HK5_FINANCE_PLATFORM_RATE: ${HK5_FINANCE_PLATFORM_RATE:?run node scripts/demo/gen-env.mjs}
       HK5_FINANCE_CURRENCY_SCALE: ${HK5_FINANCE_CURRENCY_SCALE:?run node scripts/demo/gen-env.mjs}
       HK5_FINANCE_HOUSE_EXEMPT: ${HK5_FINANCE_HOUSE_EXEMPT:?run node scripts/demo/gen-env.mjs}
       AUTH_INTERNAL_URL: http://auth-service:8101
-      AUTH_AUTHORITY_TOKEN: ${ORDER_AUTHORITY_TOKEN}
       APP_CART_INTERNAL_URL: http://cart-service:8106
-      APP_CART_INTERNAL_TOKEN: ${ORDER_CART_TOKEN}
       PRODUCT_INTERNAL_URL: http://product-service:8104
-      ORDER_PRODUCT_TOKEN: ${ORDER_PRODUCT_TOKEN}
       INVENTORY_INTERNAL_URL: http://inventory-service:8105
-      ORDER_INVENTORY_TOKEN: ${ORDER_INVENTORY_TOKEN}
       SELLER_INTERNAL_URL: http://seller-service:8103
-      ORDER_SELLER_TOKEN: ${ORDER_SELLER_TOKEN}
+    secrets:
+      - { source: POSTGRES_PASSWORD, target: HK5_ORDER_DB_PASSWORD }
+      - { source: ORDER_AUTHORITY_TOKEN, target: AUTH_AUTHORITY_TOKEN }
+      - { source: ORDER_CART_TOKEN, target: app.cart.internal-token }
+      - ORDER_PRODUCT_TOKEN
+      - ORDER_INVENTORY_TOKEN
+      - ORDER_SELLER_TOKEN
+      - JWT_HS256_CURRENT_KEY_B64
 
   notification-service:
     <<: *service
@@ -220,10 +234,12 @@ services:
       <<: *jwt
       NOTIFICATION_DB_URL: jdbc:postgresql://postgres:5432/notification_db
       AUTH_INTERNAL_URL: http://auth-service:8101
-      AUTH_AUTHORITY_TOKEN: ${NOTIFICATION_AUTHORITY_TOKEN}
       NOTIFICATION_DB_USERNAME: hk5
-      NOTIFICATION_DB_PASSWORD: ${POSTGRES_PASSWORD}
-      SELLER_NOTIFICATION_TOKEN: ${SELLER_NOTIFICATION_TOKEN}
+    secrets:
+      - { source: NOTIFICATION_AUTHORITY_TOKEN, target: AUTH_AUTHORITY_TOKEN }
+      - { source: POSTGRES_PASSWORD, target: NOTIFICATION_DB_PASSWORD }
+      - SELLER_NOTIFICATION_TOKEN
+      - JWT_HS256_CURRENT_KEY_B64
 
   api-gateway:
     <<: *service
@@ -244,6 +260,62 @@ services:
       CART_URL: lb://cart-service
       ORDER_URL: lb://order-service
       NOTIFICATION_URL: lb://notification-service
+
+  # Serves the built UI and proxies /api to the Gateway, so the browser stays same-origin.
+  frontend:
+    build: ../frontend
+    restart: unless-stopped
+    depends_on: [api-gateway]
+    ports:
+      - "127.0.0.1:5173:80"
+
+secrets:
+  ADMIN_BOOTSTRAP_PASSWORD:
+    file: ./secrets/ADMIN_BOOTSTRAP_PASSWORD
+  AUTH_DB_PASSWORD:
+    file: ./secrets/AUTH_DB_PASSWORD
+  AUTH_MIGRATION_PASSWORD:
+    file: ./secrets/AUTH_MIGRATION_PASSWORD
+  CART_AUTHORITY_TOKEN:
+    file: ./secrets/CART_AUTHORITY_TOKEN
+  CART_PRODUCT_TOKEN:
+    file: ./secrets/CART_PRODUCT_TOKEN
+  JWT_HS256_CURRENT_KEY_B64:
+    file: ./secrets/JWT_HS256_CURRENT_KEY_B64
+  NOTIFICATION_AUTHORITY_TOKEN:
+    file: ./secrets/NOTIFICATION_AUTHORITY_TOKEN
+  ORDER_AUTHORITY_TOKEN:
+    file: ./secrets/ORDER_AUTHORITY_TOKEN
+  ORDER_CART_TOKEN:
+    file: ./secrets/ORDER_CART_TOKEN
+  ORDER_INVENTORY_TOKEN:
+    file: ./secrets/ORDER_INVENTORY_TOKEN
+  ORDER_PRODUCT_TOKEN:
+    file: ./secrets/ORDER_PRODUCT_TOKEN
+  ORDER_SELLER_TOKEN:
+    file: ./secrets/ORDER_SELLER_TOKEN
+  POSTGRES_PASSWORD:
+    file: ./secrets/POSTGRES_PASSWORD
+  PRODUCT_AUTHORITY_TOKEN:
+    file: ./secrets/PRODUCT_AUTHORITY_TOKEN
+  PRODUCT_INVENTORY_TOKEN:
+    file: ./secrets/PRODUCT_INVENTORY_TOKEN
+  PRODUCT_SELLER_TOKEN:
+    file: ./secrets/PRODUCT_SELLER_TOKEN
+  SELLER_AUTHORITY_TOKEN:
+    file: ./secrets/SELLER_AUTHORITY_TOKEN
+  SELLER_AUTH_TOKEN:
+    file: ./secrets/SELLER_AUTH_TOKEN
+  SELLER_NOTIFICATION_TOKEN:
+    file: ./secrets/SELLER_NOTIFICATION_TOKEN
+  USER_AUTHORITY_TOKEN:
+    file: ./secrets/USER_AUTHORITY_TOKEN
+  USER_DB_PASSWORD:
+    file: ./secrets/USER_DB_PASSWORD
+  USER_MIGRATION_PASSWORD:
+    file: ./secrets/USER_MIGRATION_PASSWORD
+  WRITE_FENCE_TARGETS:
+    file: ./secrets/WRITE_FENCE_TARGETS
 
 volumes:
   pgdemo:
