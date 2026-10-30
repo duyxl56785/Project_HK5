@@ -28,6 +28,18 @@ class FulfillmentTransitionGuardTest {
     }
 
     @Test
+    void rejectsPaddedStoreIdsEvenWhenBothInputsContainTheSameWhitespace() {
+        assertThrows(SecurityException.class, () ->
+                FulfillmentTransitionGuard.requireAllowed(
+                        " store-a", " store-a", SellerOrderLifecycle.Status.PLACED,
+                        SellerOrderLifecycle.Action.ACCEPT, null));
+        assertThrows(SecurityException.class, () ->
+                FulfillmentTransitionGuard.requireAllowed(
+                        "store-a ", "store-a ", SellerOrderLifecycle.Status.PLACED,
+                        SellerOrderLifecycle.Action.ACCEPT, null));
+    }
+
+    @Test
     void rejectsInvalidAndRepeatedDeliveryActions() {
         assertThrows(IllegalStateException.class, () ->
                 FulfillmentTransitionGuard.requireAllowed(

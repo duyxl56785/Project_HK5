@@ -21,10 +21,14 @@ public final class FulfillmentStoreOwnership {
      * @throws SecurityException if either ID is absent/blank or they differ
      */
     public static void requireOwner(String verifiedStoreId, String sellerOrderStoreId) {
-        if (verifiedStoreId == null || verifiedStoreId.isBlank()
-                || sellerOrderStoreId == null || sellerOrderStoreId.isBlank()
+        if (!isCanonicalStoreId(verifiedStoreId)
+                || !isCanonicalStoreId(sellerOrderStoreId)
                 || !verifiedStoreId.equals(sellerOrderStoreId)) {
             throw new SecurityException("Fulfillment access requires Store ownership");
         }
+    }
+
+    private static boolean isCanonicalStoreId(String value) {
+        return value != null && !value.isBlank() && value.equals(value.trim());
     }
 }
