@@ -10,17 +10,19 @@ Từ thư mục gốc của repo:
 node scripts/demo/up.mjs
 ```
 
-Lệnh này tạo `.env.demo` với secret ngẫu nhiên nếu chưa có, build jar, chạy `docker/compose.demo.yml`, chờ gateway sẵn sàng rồi seed dữ liệu qua API công khai. Chạy lại an toàn; thêm `--skip-build` nếu backend không đổi.
+Lệnh này tạo `.env.demo` với secret ngẫu nhiên nếu chưa có, ghi từng secret vào `docker/secrets/`, build jar và image frontend, chạy `docker/compose.demo.yml`, chờ gateway sẵn sàng rồi seed dữ liệu qua API công khai. Chạy lại an toàn; thêm `--skip-build` nếu backend không đổi.
 
-Mở giao diện:
+Truy cập `http://localhost:5173`. Nginx phục vụ bản build của frontend và chuyển `/api` tới gateway. Chỉ Nginx và gateway (`127.0.0.1:18080`) được mở ra máy; các service khác, PostgreSQL, Kafka, Redis, Eureka và Config Server chỉ nằm trong mạng Docker.
+
+Khi sửa giao diện, dừng container `frontend` rồi dùng Vite trên cùng cổng:
 
 ```bash
-cd frontend
-npm ci
-npm run dev
+docker compose --env-file .env.demo -f docker/compose.demo.yml stop frontend
 ```
 
-Truy cập `http://localhost:5173`. Chỉ gateway (`127.0.0.1:18080`) được mở ra máy; các service khác, PostgreSQL, Kafka, Redis, Eureka và Config Server chỉ nằm trong mạng Docker.
+```bash
+cd frontend && npm ci && npm run dev
+```
 
 ## Tài khoản seed
 
@@ -31,7 +33,7 @@ Truy cập `http://localhost:5173`. Chỉ gateway (`127.0.0.1:18080`) được m
 | Người bán 1 (Tiệm Áo Sài Gòn) | `seller1@hk5.local` | `SEED_PASSWORD` |
 | Người bán 2 (Nhà Xinh) | `seller2@hk5.local` | `SEED_PASSWORD` |
 
-`.env.demo` đã được git bỏ qua và chỉ dùng cho máy local.
+`.env.demo` và `docker/secrets/` đã được git bỏ qua và chỉ dùng cho máy local. Compose nạp secret bằng Docker secrets, service đọc từ `/run/secrets` qua `configtree`, nên `docker inspect` không thấy mật khẩu hay token.
 
 Năm cờ `INVENTORY_ORDER_PAIR_ENABLED` và `HK5_FINANCE_*` trong file này được duyệt cho môi trường local theo [M01_FINANCE_DECISION.md](project-report/M01_FINANCE_DECISION.md). Môi trường khác cần quyết định riêng.
 
@@ -61,6 +63,12 @@ cd frontend && npm test
 ```
 
 Test tích hợp `*PostgresIT` và `OrderEventKafkaIT` cần Docker.
+
+E2E trên stack đang chạy (cần `npx playwright install chromium` một lần):
+
+```bash
+cd frontend && npm run e2e
+```
 
 Kiểm tra Config, Eureka, Kafka, Redis và các tình huống sự cố trên stack đang chạy (script sẽ tắt và bật lại container):
 

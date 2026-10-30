@@ -25,7 +25,7 @@ Trạng thái theo PR #135, xác minh ngày 30/10/2026 trên stack Docker thật
 | F14 | Thông báo trong ứng dụng; outbox; có DLT | PASS | Outbox Order đẩy Kafka, Notification tiêu thụ idempotent, bản ghi lỗi vào `.dlt`. `OrderEventKafkaIT` và `smoke-platform.mjs`: Kafka tắt vẫn đặt được đơn, thông báo đến sau khi Kafka bật lại |
 | F15 | Đánh giá đã mua; ẩn/hiện; HIDDEN không tính điểm | PASS | Quyền đánh giá mở từ event DELIVERED trên `seller-order.status-changed.v1`, lưu `reviewable_items`. Smoke: bị từ chối trước khi giao, mở sau khi giao |
 | F16 | Doanh thu, phí 5%, đối soát | PASS | E2E: thanh toán 142.500 ₫, tài chính sàn và cửa hàng khớp |
-| F17 | Giao diện sàn, ảnh sản phẩm | PARTIAL | Giao diện Soopi: header tìm kiếm có gợi ý từ khóa, banner, ô danh mục, kệ sản phẩm, trang cửa hàng, Mua ngay; seed 24 sản phẩm có ảnh, kiểm 375px. Ảnh seed là ảnh vẽ tạm, còn thiếu Playwright |
+| F17 | Giao diện sàn, ảnh sản phẩm | PARTIAL | Giao diện Soopi: header tìm kiếm có gợi ý từ khóa, banner, ô danh mục, kệ sản phẩm, trang cửa hàng, Mua ngay; seed 24 sản phẩm có ảnh, kiểm 375px. Ảnh seed là ảnh vẽ tạm. Playwright chạy trên stack thật |
 
 ## Khác với thiết kế kiến trúc
 
@@ -34,7 +34,8 @@ Trạng thái theo PR #135, xác minh ngày 30/10/2026 trên stack Docker thật
 | Kafka cho sự kiện | Order dùng Kafka cho hai topic trong §9.3. Sự kiện của Seller và lệnh Inventory vẫn qua outbox HTTP vì báo cáo không định nghĩa topic cho chúng | Không mất sự kiện khi service đích tắt |
 | Eureka, Config Server | Đã dùng trong stack. Eureka lỗi hoặc rỗng thì Gateway và lời gọi nội bộ rơi về DNS Docker | Eureka khởi động lại không gây 503 |
 | Redis cache sản phẩm | Cache Catalog công khai 10 giây, dùng lại bản cũ tối đa 5 phút khi phụ thuộc lỗi | Catalog có thể chậm tối đa 10 giây; ghi và snapshot luôn đọc nguồn |
-| Nginx phục vụ frontend | Vite dev server | Chưa có image frontend |
-| React Hook Form + Zod | Form React thuần | Lỗi hiện theo ràng buộc HTML và thông báo server |
-| Playwright | E2E thủ công trên trình duyệt | Chưa có E2E tự động |
-| `seller_status_history`, `reviewed_by` | Chỉ lưu lý do mới nhất | Không xem được lịch sử duyệt |
+| Nginx phục vụ frontend | Đã có image Nginx trong Compose, cổng `5173` | Không khác |
+| React Hook Form + Zod | Đã dùng cho các form nhập liệu; ô lý do và số lượng một trường vẫn là input thường | Lỗi hiện dưới từng trường, server vẫn kiểm lại |
+| Playwright | 7 test trên stack thật trong `frontend/e2e`, chưa chạy trong GitHub Actions; không có bộ E2E giả lập API | Chỉ chứng minh luồng đã viết, cần stack local |
+| `seller_status_history`, `reviewed_by` | Có bảng lịch sử, Admin xem được. `reviewed_by` nằm ở lịch sử thay vì `seller_profiles` | Không khác về chức năng |
+| Docker secrets | Secret nạp qua Docker secrets, sinh bằng `gen-env.mjs` thay vì `init-dev-secrets.ps1` | `.env.demo` vẫn giữ bản gốc cho seed và smoke |
