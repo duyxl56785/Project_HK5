@@ -4,6 +4,7 @@
 import { randomBytes } from 'node:crypto';
 import { appendFileSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+import { deflateSync } from 'node:zlib';
 
 const envFile = resolve(import.meta.dirname, '../../.env.demo');
 const env = Object.fromEntries(readFileSync(envFile, 'utf8').split('\n')
@@ -42,8 +43,9 @@ async function must(path, options) {
 const login = async (email, password) => (await must('/api/auth/login', { method: 'POST', body: { email, password } })).accessToken;
 
 async function account(email) {
-  const created = await call('/api/auth/register', { method: 'POST', body: { email, password: env.SEED_PASSWORD } });
-  if (!created.ok && created.status !== 409) throw new Error(`register ${email} -> ${created.status} ${JSON.stringify(created.json)}`);
+  const known = await call('/api/auth/login', { method: 'POST', body: { email, password: env.SEED_PASSWORD } });
+  if (known.ok) return known.json.accessToken;
+  await must('/api/auth/register', { method: 'POST', body: { email, password: env.SEED_PASSWORD } });
   return login(email, env.SEED_PASSWORD);
 }
 
@@ -76,10 +78,64 @@ async function category(admin, name) {
   return (rows.find((row) => row.name === name) ?? await must('/api/categories', { token: admin, method: 'POST', body: { name, parentId: null } })).id;
 }
 
-async function product(token, admin, categoryId, item) {
+const crc = (bytes) => {
+  let value = ~0;
+  for (const byte of bytes) {
+    value ^= byte;
+    for (let bit = 0; bit < 8; bit += 1) value = value & 1 ? (value >>> 1) ^ 0xedb88320 : value >>> 1;
+  }
+  return ~value >>> 0;
+};
+
+function chunk(type, data) {
+  const body = Buffer.concat([Buffer.from(type), data]);
+  const frame = Buffer.alloc(8 + data.length + 4);
+  frame.writeUInt32BE(data.length);
+  body.copy(frame, 4);
+  frame.writeUInt32BE(crc(body), 8 + data.length);
+  return frame;
+}
+
+// shortcut: placeholder art drawn from the hue, replace with real product photos if the demo needs them.
+function placeholderPng(hue) {
+  const size = 400;
+  const channel = (n, light) => {
+    const k = (n + hue / 30) % 12;
+    return Math.round(255 * (light - 0.6 * Math.min(light, 1 - light) * Math.max(-1, Math.min(k - 3, 9 - k, 1))));
+  };
+  const rows = Buffer.alloc((size * 3 + 1) * size);
+  for (let y = 0, at = 0; y < size; y += 1) {
+    rows[at++] = 0;
+    for (let x = 0; x < size; x += 1) {
+      const inside = (x - 200) ** 2 + (y - 200) ** 2 < 120 ** 2;
+      const light = inside ? 0.9 : 0.62 + (0.2 * (x + y)) / (2 * size);
+      for (const n of [0, 8, 4]) rows[at++] = channel(n, light);
+    }
+  }
+  const header = Buffer.alloc(13);
+  header.writeUInt32BE(size, 0);
+  header.writeUInt32BE(size, 4);
+  header.set([8, 2], 8);
+  return Buffer.concat([Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]), chunk('IHDR', header),
+    chunk('IDAT', deflateSync(rows)), chunk('IEND', Buffer.alloc(0))]);
+}
+
+async function image(token, id, sku, hue) {
+  const { images } = await must(`/api/seller/products/${id}`, { token });
+  if (images.length > 0) return;
+  const form = new FormData();
+  form.append('files', new Blob([placeholderPng(hue)], { type: 'image/png' }), `${sku}.png`);
+  const response = await fetch(`${gateway}/api/seller/products/${id}/images`, {
+    method: 'POST', headers: { Origin: origin, 'X-CSRF-Protection': '1', Authorization: `Bearer ${token}` }, body: form,
+  });
+  if (!response.ok) throw new Error(`upload ${sku} -> ${response.status} ${await response.text()}`);
+}
+
+async function product(token, admin, categoryId, item, hue) {
   const existing = (await must(`/api/seller/products?size=100&term=${encodeURIComponent(item.sku)}`, { token })).products.find((p) => p.sku === item.sku);
-  if (existing) return;
+  if (existing) return image(token, existing.id, item.sku, hue);
   const { product: created } = await must('/api/seller/products', { token, method: 'POST', body: { ...item, categoryId, initialStock: 50 } });
+  await image(token, created.id, item.sku, hue);
   const submitted = await must(`/api/seller/products/${created.id}/submit`, { token, method: 'POST', body: { expectedVersion: created.version } });
   const version = (submitted.product ?? submitted).version;
   await must(`/api/admin/products/${created.id}/approve`, { token: admin, method: 'POST', body: { expectedVersion: version, reason: 'Seed data' } });
@@ -87,18 +143,63 @@ async function product(token, admin, categoryId, item) {
 
 const admin = await login(env.ADMIN_BOOTSTRAP_EMAIL, env.ADMIN_BOOTSTRAP_PASSWORD);
 await account('customer@hk5.local');
-const fashion = await category(admin, 'Thời trang');
-const home = await category(admin, 'Nhà cửa');
 const first = await approvedSeller('seller1@hk5.local', admin);
 const second = await approvedSeller('seller2@hk5.local', admin);
+const third = await approvedSeller('seller3@hk5.local', admin);
 await openStore(first, 'Tiệm Áo Sài Gòn', 'tiem-ao-sai-gon');
 await openStore(second, 'Nhà Xinh', 'nha-xinh');
-const shirt = { sku: 'AO-001', name: 'Áo thun cotton', unitPrice: '150000', description: 'Áo thun cotton 100%, form rộng.' };
-const jeans = { sku: 'QUAN-001', name: 'Quần jean ống đứng', unitPrice: '420000', description: 'Quần jean co giãn nhẹ.' };
-const lamp = { sku: 'DEN-001', name: 'Đèn bàn gỗ', unitPrice: '280000', description: 'Đèn bàn gỗ sồi, bóng LED ấm.' };
-await product(first, admin, fashion, shirt);
-await product(first, admin, fashion, jeans);
-await product(second, admin, home, lamp);
+await openStore(third, 'Góc Tiện Ích', 'goc-tien-ich');
 
-console.log('Seeded customer@hk5.local, seller1@hk5.local, seller2@hk5.local (password: SEED_PASSWORD in .env.demo).');
+const catalog = [
+  ['Thời trang', first, [
+    ['AO-001', 'Áo thun cotton', '150000', 'Áo thun cotton 100%, form rộng.'],
+    ['QUAN-001', 'Quần jean ống đứng', '420000', 'Quần jean co giãn nhẹ.'],
+    ['AO-002', 'Áo sơ mi linen', '320000', 'Áo sơ mi linen thoáng mát, tay dài.'],
+    ['VAY-001', 'Chân váy xếp ly', '260000', 'Chân váy xếp ly dáng dài, lưng thun.'],
+  ]],
+  ['Phụ kiện', first, [
+    ['TUI-001', 'Túi tote canvas', '120000', 'Túi tote canvas dày, có ngăn trong.'],
+    ['NON-001', 'Nón lưỡi trai', '95000', 'Nón kaki, khóa điều chỉnh phía sau.'],
+    ['VI-001', 'Ví da mini', '210000', 'Ví da bò gọn nhẹ, nhiều ngăn thẻ.'],
+  ]],
+  ['Nhà cửa', second, [
+    ['DEN-001', 'Đèn bàn gỗ', '280000', 'Đèn bàn gỗ sồi, bóng LED ấm.'],
+    ['GOI-001', 'Gối tựa sofa', '135000', 'Gối tựa vải bố, vỏ tháo giặt được.'],
+    ['KE-001', 'Kệ gỗ treo tường', '240000', 'Kệ gỗ thông ba tầng, kèm phụ kiện lắp.'],
+  ]],
+  ['Mẹ và bé', second, [
+    ['BE-001', 'Bình sữa thủy tinh', '185000', 'Bình sữa thủy tinh 240ml, núm silicon.'],
+    ['BE-002', 'Khăn sữa cotton', '75000', 'Bộ 10 khăn sữa cotton mềm.'],
+  ]],
+  ['Thực phẩm', second, [
+    ['TP-001', 'Cà phê rang xay', '110000', 'Cà phê rang mộc, gói 250g.'],
+    ['TP-002', 'Hạt điều rang muối', '165000', 'Hạt điều Bình Phước, hũ 500g.'],
+  ]],
+  ['Điện tử', third, [
+    ['DT-001', 'Tai nghe Bluetooth', '390000', 'Tai nghe Bluetooth 5.3, pin 24 giờ.'],
+    ['DT-002', 'Sạc dự phòng 10000mAh', '250000', 'Sạc nhanh 20W, hai cổng ra.'],
+    ['DT-003', 'Chuột không dây', '175000', 'Chuột không dây yên tĩnh, pin AA.'],
+  ]],
+  ['Làm đẹp', third, [
+    ['LD-001', 'Sữa rửa mặt dịu nhẹ', '145000', 'Sữa rửa mặt 150ml cho da nhạy cảm.'],
+    ['LD-002', 'Kem chống nắng SPF50', '230000', 'Kem chống nắng 50ml, không nhờn.'],
+  ]],
+  ['Thể thao', third, [
+    ['TT-001', 'Thảm tập yoga', '220000', 'Thảm TPE dày 6mm, chống trượt.'],
+    ['TT-002', 'Bình nước 1 lít', '130000', 'Bình nước nhựa Tritan, có vạch chia.'],
+  ]],
+  ['Sách', third, [
+    ['SACH-001', 'Sổ tay bìa cứng', '65000', 'Sổ tay A5 200 trang giấy kem.'],
+    ['SACH-002', 'Sách học lập trình', '195000', 'Sách nhập môn lập trình cho người mới.'],
+    ['SACH-003', 'Bút gel 12 màu', '85000', 'Bộ bút gel 12 màu, ngòi 0.5mm.'],
+  ]],
+];
+for (const [index, [name, seller, items]] of catalog.entries()) {
+  const categoryId = await category(admin, name);
+  for (const [sku, label, unitPrice, description] of items) {
+    await product(seller, admin, categoryId, { sku, name: label, unitPrice, description }, index * 40);
+  }
+}
+
+console.log('Seeded customer@hk5.local, seller1@hk5.local, seller2@hk5.local, seller3@hk5.local (password: SEED_PASSWORD in .env.demo).');
 console.log(`Admin: ${env.ADMIN_BOOTSTRAP_EMAIL} (password: ADMIN_BOOTSTRAP_PASSWORD in .env.demo).`);
