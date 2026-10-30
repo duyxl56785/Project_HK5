@@ -9,7 +9,7 @@ npm ci
 npm run dev
 ```
 
-Dev server và `vite preview` chuyển `/api` tới gateway `http://localhost:8080`, nên trình duyệt luôn gọi cùng origin `http://localhost:5173`. Cookie refresh và quy tắc CSRF nhờ vậy hoạt động không cần cấu hình thêm.
+Dev server và `vite preview` chuyển `/api` tới gateway `http://localhost:18080`, nên trình duyệt luôn gọi cùng origin `http://localhost:5173`. Cookie refresh và quy tắc CSRF nhờ vậy hoạt động không cần cấu hình thêm.
 
 Kiểm tra:
 

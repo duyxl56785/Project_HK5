@@ -1,5 +1,5 @@
-# Full local demo stack. Build jars first: scripts/demo/up.ps1 (or see docs/DEMO.md).
-# Only the Gateway (8080) and PostgreSQL (127.0.0.1:55432, for inspection) are published.
+# Full local stack. Start it with: node scripts/demo/up.mjs (see docs/RUN_LOCAL.md).
+# Only the Gateway (127.0.0.1:18080) is published. Inspect data with: docker compose ... exec postgres psql -U hk5 hk5_demo
 name: hk5-demo
 
 x-service: &service
@@ -27,8 +27,6 @@ services:
       AUTH_MIGRATION_PASSWORD: ${AUTH_MIGRATION_PASSWORD}
       USER_DB_PASSWORD: ${USER_DB_PASSWORD}
       USER_MIGRATION_PASSWORD: ${USER_MIGRATION_PASSWORD}
-    ports:
-      - "127.0.0.1:55432:5432"
     volumes:
       - pgdemo:/var/lib/postgresql/data
       - ./demo/init:/docker-entrypoint-initdb.d:ro
@@ -160,7 +158,7 @@ services:
     depends_on: [auth-service]
     volumes: ["../backend/api-gateway/build/libs/api-gateway-0.1.0-SNAPSHOT.jar:/app/app.jar:ro"]
     ports:
-      - "127.0.0.1:8080:8080"
+      - "127.0.0.1:18080:8080"
     environment:
       ALLOWED_ORIGINS: ${ALLOWED_ORIGINS}
       AUTH_URL: http://auth-service:8101
