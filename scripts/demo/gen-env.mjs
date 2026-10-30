@@ -2,7 +2,7 @@
 // and writes each secret to docker/secrets (git-ignored), which Compose mounts as Docker secrets.
 // Usage: node scripts/demo/gen-env.mjs [--force]
 import { randomBytes } from 'node:crypto';
-import { appendFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { appendFileSync, chmodSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 
 const target = resolve(import.meta.dirname, '../../.env.demo');
@@ -25,7 +25,12 @@ function writeSecrets() {
     .map((line) => [line.slice(0, line.indexOf('=')), line.slice(line.indexOf('=') + 1).trim()]));
   const directory = resolve(import.meta.dirname, '../../docker/secrets');
   mkdirSync(directory, { recursive: true });
-  const write = (name, value) => writeFileSync(resolve(directory, name), value, { mode: 0o600 });
+  // Compose mounts these files with their host mode and the Postgres init runs as postgres, so the directory is the guard.
+  chmodSync(directory, 0o700);
+  const write = (name, value) => {
+    writeFileSync(resolve(directory, name), value);
+    chmodSync(resolve(directory, name), 0o644);
+  };
   for (const [name, value] of Object.entries(env)) if (!notSecret.has(name)) write(name, value);
   const fenced = { USER: 'user-service:8102', SELLER: 'seller-service:8103', PRODUCT: 'product-service:8104', CART: 'cart-service:8106', ORDER: 'order-service:8107', NOTIFICATION: 'notification-service:8108' };
   write('WRITE_FENCE_TARGETS', Object.entries(fenced).map(([name, host]) => `${env[`${name}_AUTHORITY_TOKEN`]}@http://${host}`).join(','));
