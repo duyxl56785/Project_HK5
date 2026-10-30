@@ -7,6 +7,8 @@ export interface CartViewProps {
   readonly onQuantityChange?: (productId: string, quantity: number, expectedRevision: string) => void;
   readonly onRemove?: (productId: string, expectedRevision: string) => void;
   readonly onRetry?: () => void;
+  /** Display names by Store id; the id is shown when a name is unknown. */
+  readonly storeNames?: Readonly<Record<string, string>>;
 }
 
 const messages = {
@@ -18,7 +20,7 @@ const messages = {
 } as const;
 
 /** Presentation only. Parent owns trusted Cart API, actor identity and revision control. */
-export function CartView({ state, onQuantityChange, onRemove, onRetry }: CartViewProps) {
+export function CartView({ state, onQuantityChange, onRemove, onRetry, storeNames }: CartViewProps) {
   if (state.status !== 'ready') {
     return <section className="tv3-cart" aria-busy={state.status === 'loading'}>
       <h2>Giỏ hàng</h2>
@@ -39,7 +41,7 @@ export function CartView({ state, onQuantityChange, onRemove, onRetry }: CartVie
 
   return <section className="tv3-cart" aria-label="Giỏ hàng theo cửa hàng">
     <header className="tv3-cart__header">
-      <div><span className="tv3-cart__eyebrow">TV3 · GIỎ HÀNG</span><h2>Giỏ hàng của bạn</h2></div>
+      <div><h2>Giỏ hàng của bạn</h2></div>
       <p>{cart.itemCount} sản phẩm · phiên bản {cart.revision}</p>
     </header>
     {cart.claimed && <p className="tv3-cart__warning" role="status">
@@ -47,12 +49,11 @@ export function CartView({ state, onQuantityChange, onRemove, onRetry }: CartVie
     </p>}
     <div className="tv3-cart__stores">
       {cart.groups.map((store) => <article className="tv3-cart__store" key={store.storeId}>
-        <header><h3>Cửa hàng: {store.storeId}</h3><span>{store.lines.length} sản phẩm</span></header>
+        <header><h3>Cửa hàng: {storeNames?.[store.storeId] ?? store.storeId}</h3><span>{store.lines.length} sản phẩm</span></header>
         <ul>{store.lines.map((line) => <li className="tv3-cart__line" key={line.productId}>
           <div>
             <strong>{line.title}</strong>
-            <small>Mã sản phẩm: {line.productId}</small>
-            <small>Đơn giá: {line.unitPriceSnapshot}</small>
+                        <small>Đơn giá: {line.unitPriceSnapshot}</small>
           </div>
           <div className="tv3-cart__actions">
             <label htmlFor={'qty-' + line.productId}>Số lượng</label>
@@ -73,7 +74,7 @@ export function CartView({ state, onQuantityChange, onRemove, onRetry }: CartVie
     </div>
     <footer className="tv3-cart__total">
       <div><strong>Tổng giá trị sản phẩm</strong><strong>{cart.total}</strong></div>
-      <small>Giá trị hiển thị từ snapshot. Đơn vị tiền tệ, phí và giao hàng cần được backend xác nhận theo M01.</small>
+      <small>Đơn vị: VND. Giá được kiểm tra lại khi đặt hàng.</small>
     </footer>
   </section>;
 }
