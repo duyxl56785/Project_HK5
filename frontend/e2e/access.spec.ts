@@ -86,6 +86,14 @@ test('a signed-in customer is not sent to login while the session is restoring',
   await expect(add).toBeEnabled();
 });
 
+test('a guest page does not ask for a session it never had', async ({ page }) => {
+  let refreshed = false;
+  page.on('request', (request) => { if (request.url().includes('/api/auth/refresh')) refreshed = true; });
+  await page.goto('/products');
+  await expect(page.getByRole('search')).toBeVisible();
+  expect(refreshed).toBe(false);
+});
+
 test('a deep link and a refresh both load the app', async ({ page }) => {
   await page.goto('/products?q=ao');
   await expect(page.getByRole('search')).toBeVisible();
