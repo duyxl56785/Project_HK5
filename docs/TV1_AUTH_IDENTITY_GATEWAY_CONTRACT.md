@@ -219,6 +219,7 @@ Route dùng allowlist method/path cụ thể; không bật discovery locator t�
 | Chính xác các endpoint `/api/auth/*` ở mục 5 | auth-service | register/login/refresh/logout theo cookie/CSRF; chỉ `/me` yêu cầu Bearer |
 | `GET/PATCH /api/users/me` | user-service | Bearer; identity từ sub; không tự mở cả `/api/users/**` |
 | `GET/HEAD /api/categories`, `GET/HEAD /api/categories/{id}` | product-service | Theo read contract PR #7 sau khi PR được merge |
+| `GET /api/categories/all` | product-service | Bearer + ADMIN; trả cả Category `HIDDEN`, read công khai thì không |
 | `POST /api/categories`, `PUT/DELETE /api/categories/{id}` | product-service | Chưa mở ghi cho tới khi TV1/TV2 duyệt ADMIN + JWT integration |
 | Seller/Store/Product/Cart/Order/Inventory/Notification/Review/Finance | Owner nghiệp vụ tương ứng | Chưa chốt path/method/DTO trong tài liệu TV1; deny-default cho tới khi đăng ký route + security review, không đoán prefix/route trùng |
 

@@ -42,6 +42,17 @@ class CategorySecurityTest {
         mvc.perform(head("/api/categories")).andExpect(status().isOk());
     }
 
+    @Test
+    void keepsTheFullListForAdmins() throws Exception {
+        mvc.perform(get("/api/categories/all")).andExpect(status().isUnauthorized());
+        mvc.perform(get("/api/categories/all").with(jwt().authorities(new SimpleGrantedAuthority("ROLE_SELLER"))))
+                .andExpect(status().isForbidden());
+        verifyNoInteractions(service);
+        when(service.listAll()).thenReturn(List.of());
+        mvc.perform(get("/api/categories/all").with(jwt().authorities(new SimpleGrantedAuthority("ROLE_ADMIN"))))
+                .andExpect(status().isOk());
+    }
+
     @ParameterizedTest
     @ValueSource(strings = {"POST", "PUT", "DELETE", "PATCH"})
     void blocksAnonymousWritesBeforeCallingService(String method) throws Exception {
@@ -73,7 +84,7 @@ class CategorySecurityTest {
 
     @Test
     void letsAVerifiedAdminReachTheService() throws Exception {
-        when(service.create(any())).thenReturn(new CategoryResponse(UUID.randomUUID(), "Name", null));
+        when(service.create(any())).thenReturn(new CategoryResponse(UUID.randomUUID(), "Name", null, "slug", CategoryStatus.ACTIVE));
         mvc.perform(post("/api/categories").with(jwt().authorities(new SimpleGrantedAuthority("ROLE_ADMIN")))
                 .contentType(MediaType.APPLICATION_JSON).content("{\"name\":\"Name\"}"))
                 .andExpect(status().isCreated());
