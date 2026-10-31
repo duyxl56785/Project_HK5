@@ -43,8 +43,17 @@ class CategorySecurityTest {
     }
 
     @Test
+    void keepsAHiddenCategoryReadableByIdBecauseProductsStillReferenceIt() throws Exception {
+        UUID id = UUID.randomUUID();
+        when(service.get(id)).thenReturn(new CategoryResponse(id, "Name", null, "slug", CategoryStatus.HIDDEN));
+        mvc.perform(get("/api/categories/" + id)).andExpect(status().isOk())
+                .andExpect(jsonPath("$.status").value("HIDDEN"));
+    }
+
+    @Test
     void keepsTheFullListForAdmins() throws Exception {
         mvc.perform(get("/api/categories/all")).andExpect(status().isUnauthorized());
+        mvc.perform(head("/api/categories/all")).andExpect(status().isUnauthorized());
         mvc.perform(get("/api/categories/all").with(jwt().authorities(new SimpleGrantedAuthority("ROLE_SELLER"))))
                 .andExpect(status().isForbidden());
         verifyNoInteractions(service);
