@@ -12,7 +12,25 @@ let accessToken: string | null = null;
 let refreshing: Promise<Account | null> | null = null;
 let onSessionLost: () => void = () => {};
 
-export function setAccessToken(token: string | null) { accessToken = token; }
+/** The refresh cookie is HttpOnly, so this flag is how a guest's page knows not to call refresh and log a 401. */
+const SESSION_FLAG = 'hk5-session';
+
+export function setAccessToken(token: string | null) {
+  accessToken = token;
+  try {
+    if (token) localStorage.setItem(SESSION_FLAG, '1');
+    else localStorage.removeItem(SESSION_FLAG);
+  } catch { /* Blocked storage only costs the extra refresh below. */ }
+}
+
+export function mayHaveSession() {
+  try {
+    return localStorage.getItem(SESSION_FLAG) !== null;
+  } catch {
+    return true;
+  }
+}
+
 export function setSessionLostHandler(handler: () => void) { onSessionLost = handler; }
 
 /** Mutating auth calls need the CSRF header; the server also checks Origin. */
@@ -32,9 +50,11 @@ const postRefresh = () => fetch('/api/auth/refresh', { method: 'POST', headers: 
 export function refreshSession(): Promise<Account | null> {
   refreshing ??= (navigator.locks ? navigator.locks.request('hk5-auth-refresh', postRefresh) : postRefresh())
     .then(async (response) => {
+      // Only 401 proves the cookie is dead; after a 503 or 403 the next load must try again.
+      if (response.status === 401) setAccessToken(null);
       if (!response.ok) { accessToken = null; return null; }
       const body = await response.json() as TokenResponse;
-      accessToken = body.accessToken;
+      setAccessToken(body.accessToken);
       return body.account;
     })
     .finally(() => { refreshing = null; });

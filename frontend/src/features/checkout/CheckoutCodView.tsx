@@ -10,6 +10,7 @@ const errorText = {
   OUT_OF_STOCK: 'Có sản phẩm không đủ tồn kho. Vui lòng kiểm tra lại giỏ hàng.',
   UNAUTHORIZED: 'Bạn không có quyền đặt đơn hàng này.',
   STORE_UNAVAILABLE: 'Có cửa hàng hoặc sản phẩm chưa sẵn sàng để đặt.',
+  CHECKOUT_PAUSED: 'Sàn đang tạm dừng nhận đơn. Giỏ hàng của bạn vẫn được giữ nguyên.',
 } as const;
 
 type Display = 'idle' | 'sending' | 'unknown' | 'confirmed' | 'rejected';

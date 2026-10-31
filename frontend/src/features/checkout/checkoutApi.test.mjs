@@ -20,11 +20,14 @@ test('network failures and server errors never claim an outcome', () => {
 test('in-progress and reconciliation conflicts stay unknown', () => {
   assert.deepEqual(classify(new ApiError(409, 'REQUEST_REJECTED', 'CHECKOUT_REQUIRES_RECONCILIATION')), { status: 'unknown' });
   assert.deepEqual(classify(new ApiError(409, 'REQUEST_REJECTED', 'CHECKOUT_IN_PROGRESS_RETRY_LATER')), { status: 'unknown' });
+  // The key already has an attempt and it may hold a placed Order, so this is not a rejection.
+  assert.deepEqual(classify(new ApiError(409, 'REQUEST_REJECTED', 'IDEMPOTENCY_PAYLOAD_MISMATCH')), { status: 'unknown' });
 });
 
 test('definite conflicts map to the reason the customer can act on', () => {
   assert.equal(classify(conflict('Not enough stock for SKU-1')).reason, 'OUT_OF_STOCK');
   assert.equal(classify(conflict('Cart revision changed')).reason, 'CART_CHANGED');
   assert.equal(classify(conflict('Store is closed')).reason, 'STORE_UNAVAILABLE');
+  assert.equal(classify(conflict('FINANCE_POLICY_NOT_APPROVED')).reason, 'CHECKOUT_PAUSED');
   assert.equal(classify(new ApiError(401, 'UNAUTHENTICATED', 'Sign in')).reason, 'UNAUTHORIZED');
 });
