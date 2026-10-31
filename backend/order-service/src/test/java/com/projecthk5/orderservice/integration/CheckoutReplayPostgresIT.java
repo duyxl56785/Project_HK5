@@ -82,6 +82,28 @@ class CheckoutReplayPostgresIT {
         verifyNoInteractions(carts, catalog, inventory);
     }
 
+    @Test void successfulSameKeyRejectsChangedShippingBeforeRemoteSideEffects() {
+        String customer = "shipping-" + UUID.randomUUID();
+        String key = "shipping-key-" + UUID.randomUUID();
+        Order.Shipping original = new Order.Shipping("Receiver A", "0901234567", "Address A");
+        UUID id = place(customer, key, original);
+
+        CheckoutResult same = checkout.checkout(customer, "Bearer fixture", key, request, original);
+        assertEquals(id, same.orderId());
+        verify(carts).finalizeCart("Bearer fixture", key);
+        clearInvocations(carts, catalog, inventory);
+
+        Order.Shipping changed = new Order.Shipping("Receiver A", "0901234567", "Address B");
+        ResponseStatusException conflict = assertThrows(ResponseStatusException.class,
+            () -> checkout.checkout(customer, "Bearer fixture", key, request, changed));
+        assertEquals(HttpStatus.CONFLICT, conflict.getStatusCode());
+        assertEquals("IDEMPOTENCY_PAYLOAD_MISMATCH", conflict.getReason());
+        verifyNoInteractions(carts, catalog, inventory);
+        assertEquals(1, sql.queryForObject("select count(*) from orders where customer_id=?",
+            Integer.class, customer));
+        assertEquals(original, orders.findByIdAndCustomerId(id, customer).orElseThrow().getShipping());
+    }
+
     @Test void inconsistentAttemptCannotReadOrFinalizeAnotherCustomersOrder() {
         UUID foreign = place("foreign-" + UUID.randomUUID(), "foreign-key");
         String customer = "own-" + UUID.randomUUID();
@@ -123,8 +145,13 @@ class CheckoutReplayPostgresIT {
     }
 
     private UUID place(String customer, String key) {
+        return place(customer, key, null);
+    }
+
+    private UUID place(String customer, String key, Order.Shipping shipping) {
         CheckoutAttempt attempt = keys.begin(customer, key, RequestFingerprint.compute(request)).attempt();
         Order order = new Order(attempt.getId(), customer);
+        order.ship(shipping);
         SellerOrder first = new SellerOrder(order, "seller1", "store1", new BigDecimal("20000"), new BigDecimal("1000"));
         SellerOrder second = new SellerOrder(order, "seller2", "store2", new BigDecimal("15000"), BigDecimal.ZERO);
         first.getItems().add(new OrderItem(first, "p1", 2, new BigDecimal("10000"), new BigDecimal("20000")));
