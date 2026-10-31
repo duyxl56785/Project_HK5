@@ -18,4 +18,5 @@ public interface InventoryOperationRepository extends JpaRepository<InventoryOpe
     int claimOperationId(@Param("operationId") String operationId,
                          @Param("operationType") String operationType,
                          @Param("requestHash") String requestHash);
+
 }

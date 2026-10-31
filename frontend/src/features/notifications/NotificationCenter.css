@@ -1,0 +1,15 @@
+.tv4-notifications { color: #243042; }
+.tv4-notifications header { margin-bottom: 20px; }
+.tv4-notifications__eyebrow { color: #0f766e; font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+.tv4-notifications h2 { margin: 8px 0; font-size: clamp(24px, 3vw, 34px); }
+.tv4-notifications p { color: #64748b; line-height: 1.6; }
+.tv4-notifications__list { display: grid; gap: 12px; padding: 0; margin: 0; list-style: none; }
+.tv4-notifications__item, .tv4-notifications__notice { border: 1px solid #e2e8f0; border-radius: 12px; padding: 18px; background: #fff; }
+.tv4-notifications__item--unread { border-left: 4px solid #0f766e; padding-left: 15px; }
+.tv4-notifications__item-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
+.tv4-notifications__item h3, .tv4-notifications__notice h3 { margin: 0; font-size: 16px; }
+.tv4-notifications time { color: #64748b; font-size: 12px; white-space: nowrap; }
+.tv4-notifications__item p { margin: 8px 0 14px; }
+.tv4-notifications button { border: 0; border-radius: 8px; padding: 8px 12px; color: #fff; background: #b64f2c; cursor: pointer; font: inherit; }
+.tv4-notifications button:disabled { cursor: wait; opacity: .6; }
+@media (max-width: 520px) { .tv4-notifications__item-head { align-items: start; flex-direction: column; gap: 4px; } }
