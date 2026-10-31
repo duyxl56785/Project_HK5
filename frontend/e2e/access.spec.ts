@@ -106,6 +106,26 @@ test('a signed-in customer is not sent to login while the session is restoring',
   await expect(add).toBeEnabled();
 });
 
+test('a page chunk that fails to load offers a reload instead of a blank app', async ({ page }) => {
+  await page.goto('/login');
+  await page.route('**/assets/CatalogPage-*', (route) => route.abort());
+  await page.getByRole('search').getByRole('button').click();
+  await expect(page.getByRole('alert')).toContainText('Không tải được trang này');
+  await expect(page.getByRole('button', { name: 'Tải lại' })).toBeVisible();
+  await expect(page.getByRole('search')).toBeVisible();
+});
+
+test('the home banner holds its slide while the pointer is on it', async ({ page }) => {
+  await page.goto('/');
+  const banner = page.getByRole('region', { name: 'Giới thiệu Soopi' });
+  const title = await banner.getByRole('heading').textContent();
+  await banner.hover();
+  await page.waitForTimeout(5500);
+  await expect(banner.getByRole('heading')).toHaveText(title!);
+  await page.mouse.move(0, 0);
+  await expect(banner.getByRole('heading')).not.toHaveText(title!, { timeout: 7000 });
+});
+
 test('a deep link and a refresh both load the app', async ({ page }) => {
   await page.goto('/products?q=ao');
   await expect(page.getByRole('search')).toBeVisible();
