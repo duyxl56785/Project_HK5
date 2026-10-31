@@ -1,0 +1,147 @@
+{
+  "kind": "DERIVED independent targeted review107",
+  "head": "b155f799eaea8e49837d5d2970a78b369d7c0924",
+  "base": "f888725b9c8cdef31b46d8e0322f5d2d4869468f",
+  "command": [
+    "D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-all-pr-tdd-20261027\\review107\\backend\\gradlew.bat",
+    "-p",
+    "backend",
+    ":order-service:test",
+    "--tests",
+    "*OrderHistoryServiceTest",
+    ":order-service:postgresIntegrationTest",
+    "--tests",
+    "*OrderHistoryPostgresIT",
+    "--rerun-tasks",
+    "--no-daemon",
+    "--console=plain"
+  ],
+  "startedUtc": "2026-10-27T17:07:10.451537+00:00",
+  "completedUtc": "2026-10-27T17:07:44.629874+00:00",
+  "exitCode": 0,
+  "counts": {
+    "PASS": 17
+  },
+  "cases": [
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.OrderHistoryServiceTest",
+      "name": "nonCustomerCannotReachStorage()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.OrderHistoryServiceTest",
+      "name": "missingIdentityIsRejectedBeforeStorage()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.OrderHistoryServiceTest",
+      "name": "missingAndForeignOrderHaveTheSameNotFoundResponse()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.OrderHistoryServiceTest",
+      "name": "controllerUsesVerifiedSubjectExactly()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.OrderHistoryServiceTest",
+      "name": "[1] page=-1, size=20",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.OrderHistoryServiceTest",
+      "name": "[2] page=0, size=0",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.OrderHistoryServiceTest",
+      "name": "[3] page=0, size=-1",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.OrderHistoryServiceTest",
+      "name": "[4] page=0, size=101",
+      "result": "PASS"
+    },
+    {
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.orderservice.integration.OrderHistoryPostgresIT",
+      "name": "realSecurityRejectsAbsentInvalidExpiredAndNonCustomerTokens()",
+      "result": "PASS"
+    },
+    {
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.orderservice.integration.OrderHistoryPostgresIT",
+      "name": "emptyHistoryAndInvalidPaginationAreHandled()",
+      "result": "PASS"
+    },
+    {
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.orderservice.integration.OrderHistoryPostgresIT",
+      "name": "paginationUsesOrderRowsAndStableNewestFirstTieBreaker()",
+      "result": "PASS"
+    },
+    {
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.orderservice.integration.OrderHistoryPostgresIT",
+      "name": "queryCountIsBoundedIndependentOfPageSizeOrChildCount()",
+      "result": "PASS"
+    },
+    {
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.orderservice.integration.OrderHistoryPostgresIT",
+      "name": "foreignAndMissingOrderAreIndistinguishable404()",
+      "result": "PASS"
+    },
+    {
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.orderservice.integration.OrderHistoryPostgresIT",
+      "name": "storeWithNoItemsIsNotDroppedOrReturnedAsANullProduct()",
+      "result": "PASS"
+    },
+    {
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.orderservice.integration.OrderHistoryPostgresIT",
+      "name": "customerReadsRealStoredOrderAndTwoStoreItemsOverHttp()",
+      "result": "PASS"
+    },
+    {
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.orderservice.integration.OrderHistoryPostgresIT",
+      "name": "decimalSnapshotsAreLosslessStringsEvenAboveJavascriptIntegerPrecision()",
+      "result": "PASS"
+    },
+    {
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.orderservice.integration.OrderHistoryPostgresIT",
+      "name": "listIsScopedToJwtSubjectEvenWithForgedCustomerQueryParameter()",
+      "result": "PASS"
+    }
+  ],
+  "rawArtifacts": [
+    {
+      "localPath": ".verification/tv5-all-pr-tdd-20261027/review107-run/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.OrderHistoryPostgresIT.xml",
+      "bytes": 12470,
+      "sha256": "808a1ac2783797f73a418c949e45622caab95be0e65f9f8251a65e49122420d6"
+    },
+    {
+      "localPath": ".verification/tv5-all-pr-tdd-20261027/review107-run/runtime.log",
+      "bytes": 2425,
+      "sha256": "ce9393ed07776a04453e10ace89564f7b18d883a6e45307266c95e76201c7d33"
+    },
+    {
+      "localPath": ".verification/tv5-all-pr-tdd-20261027/review107-run/test/TEST-com.projecthk5.orderservice.service.OrderHistoryServiceTest.xml",
+      "bytes": 1971,
+      "sha256": "520678bdd9fefd54f85ba245bbeede7d5e9d35c2fe02689a74cef799df1e3c5b"
+    }
+  ],
+  "boundary": "Actual local random-port HTTP/resource-server JWT verification and PG. Test-signed ephemeral tokens; not live Auth issuance/current roles/Gateway or Checkout/Finance acceptance."
+}

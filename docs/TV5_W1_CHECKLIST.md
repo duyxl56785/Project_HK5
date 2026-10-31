@@ -291,3 +291,14 @@ This dated checkpoint supersedes earlier waiting labels only for scopes verified
 - [x] Owner97/d376176 đã có fix;104/a0c9d4b chạy519unit+205PG+8originalQA PASS. Eight-test Java SHA256 giữ nguyên, original4FAIL retained. P2 FIXED_VERIFIED trong privatehandler/PG scope; không còn WAITING_TV2_FIX ở checkpoint hiện tại.
 - [x] Main đã merge91tạif888725;103sync6d99953 chạy461unit+188PG+17QA PASS. Các receipt/source tách riêng; không dùng approval/QA cũ để gán cho source mới.
 - [ ] ProtectedHTTP/currentStore/House/sharedwire/C06/fullM01/Finance/COD/settlement/liveE2E vẫn chờ; không tựApprove/Merge/flags. [Current evidence](../reports/TV5_QA_TDD_PREFLIGHT_2026-10-27.md#checkpoint-cuối--owner-fix-và-search-được-tích-hợp-trong-lúc-bàn-giao).
+
+## TV5-ALL-PR-TDD-20261028 — scoped evidence checkpoint
+
+Refs #5/#12. [All PR/reviewer/TDD matrix](../reports/TV5_ALL_PR_QA_AUDIT_2026-10-28.md), [derived receipts and raw hashes](../reports/evidence/tv5-all-pr-20261028/).
+
+- [x] QA103 current Store fixture/V01 compatibility fixed and pushed at e7d8948:519unit+205PG+17composition+8originalvisibility=749PASS,0FAIL/SKIP; original RED retained separately.
+- [x] CLI optional all-state pagination at445deec:3newcases,32offlinePASS after actualRED/GREEN/refactor;97PR inventory18OPEN(4Draft)/76MERGED/3CLOSED observed.
+- [x] Scoped authorized formal approvals87/7f2c6b2,108/8d4186c,109/cdea283 confirmed; fresh54/49/86PASS runs are separate snapshots.
+- [x]107 source/HTTP-PG17PASS;110fixture213DOM+46Chrome and buildsPASS;111tree/PRlinksPASS. These are separate scopes, not live integrated E2E.
+- [ ]103 owner-thread/formal review closure;110/111 human review;113owner review remain WAITING_REVIEW.
+- [ ]Real authority/House/sharedwire/freshness/COD/settlement/Finance production acceptance remains separately gated. M01 full policy PENDING; no flags enabled; Issue5/12 OPEN/PARTIAL.
