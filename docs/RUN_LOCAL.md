@@ -76,6 +76,30 @@ Kiểm tra Config, Eureka, Kafka, Redis và các tình huống sự cố trên s
 node scripts/demo/smoke-platform.mjs
 ```
 
+## Giới hạn của bản demo
+
+Bản này chỉ dùng cho demo cô lập trên máy local với tài khoản và dữ liệu giả. Chưa được duyệt cho môi trường khác.
+
+**Khóa tài khoản không thu hồi ngay mọi quyền.**
+
+- Khóa chặn ngay refresh, đăng nhập và phép ghi có Bearer token dưới `/api/**`.
+- Access token đã phát vẫn đọc được tới khi hết hạn, tối đa 900 giây cộng 60 giây lệch đồng hồ. `GET`, `HEAD`, `OPTIONS` không hỏi Auth. Việc này gồm cả dữ liệu riêng tư như Finance, Admin, Order, Notification.
+- Mở khóa không hồi sinh refresh token cũ, nhưng access token cũ chưa hết hạn lại ghi được, vì Auth chỉ so trạng thái và role, không so thời điểm phát token. `anAccessTokenFromBeforeALockIsRefusedWhileLockedAndWorksAgainAfterUnlock` ghi lại hành vi này.
+- Khóa tài khoản không khóa cửa hàng, nên sản phẩm của Seller bị khóa vẫn hiển thị.
+
+**Phạm vi đã kiểm thử cho phép ghi đang chạy khi thu hồi quyền.**
+
+| Service | Bằng chứng |
+| --- | --- |
+| Cart | HTTP thật với Auth thật |
+| Order, Product | HTTP thật với PostgreSQL, Auth là stub |
+| Seller | Smoke trên stack |
+| User, Notification | NOT_RUN |
+
+Chưa chứng minh được request đổi thread, chạy async hoặc nhiều transaction. Chưa kiểm thử xử lý khi `closeAll` timeout hoặc trả 503. Bảng `write_fence_abort` chưa được dọn.
+
+**Trước khi dùng ngoài local cần:** owner chốt chính sách đọc dữ liệu nhạy cảm và kiểm tra thời điểm phát token; HTTPS, ranh giới cookie, CORS và proxy; kho secret khi chạy và rotation theo từng cặp service; không dùng lại key, token trong `.env.demo`; `HK5_FINANCE_POLICY_APPROVED`, `INVENTORY_ORDER_PAIR_ENABLED` giữ mặc định tắt cho tới khi owner quyết định triển khai. Quyết định M01 ở [M01_FINANCE_DECISION.md](project-report/M01_FINANCE_DECISION.md) chỉ áp dụng cho demo local.
+
 ## Hạ tầng
 
 | Thành phần | Vai trò | Khi thành phần này tắt |
