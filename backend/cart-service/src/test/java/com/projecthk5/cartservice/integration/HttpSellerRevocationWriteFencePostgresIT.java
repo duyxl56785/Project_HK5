@@ -10,6 +10,7 @@ import com.projecthk5.authservice.AuthServiceApplication;
 import com.projecthk5.authservice.persistence.Account;
 import com.projecthk5.authservice.service.AuthService;
 import com.projecthk5.cartservice.CartServiceApplication;
+import com.projecthk5.security.ApiException;
 import com.projecthk5.security.CurrentAuthorityFilter;
 import com.sun.net.httpserver.HttpServer;
 import java.net.InetSocketAddress;
@@ -225,6 +226,57 @@ class HttpSellerRevocationWriteFencePostgresIT {
                 "select count(*) from write_reservations where account_id = ?", Integer.class, account));
     }
 
+    @Test void disablingAnAccountStopsItsWriteInFlightAndEndsItsSessions() throws Exception {
+        productEntered = new CountDownLatch(1);
+        releaseProduct = new CountDownLatch(1);
+        AuthService service = auth.getBean(AuthService.class);
+        String email = "lock-" + UUID.randomUUID() + "@test.local";
+        UUID account = service.create(email, "not-a-real-password", Set.of(Account.Role.CUSTOMER)).getId();
+        UUID admin = service.create("admin-" + UUID.randomUUID() + "@test.local", "not-a-real-password",
+                Set.of(Account.Role.ADMIN, Account.Role.CUSTOMER)).getId();
+        String refresh = service.login(email, "not-a-real-password").refreshToken();
+        HttpClient client = HttpClient.newHttpClient();
+        String bearer = token(account, "CUSTOMER"), adminBearer = token(admin, "ADMIN", "CUSTOMER");
+        CompletableFuture<HttpResponse<String>> write = CompletableFuture.supplyAsync(() -> send(client,
+                HttpRequest.newBuilder(URI.create("http://127.0.0.1:" + cartPort + "/api/cart/items"))
+                        .header("Authorization", "Bearer " + bearer)
+                        .header("Content-Type", "application/json")
+                        .POST(HttpRequest.BodyPublishers.ofString("{\"productId\":\"product-1\",\"quantity\":1}")).build()));
+        assertTrue(productEntered.await(10, TimeUnit.SECONDS), "Cart request never reached the live transaction");
+
+        assertEquals(403, adminAction(client, bearer, account, "disable").statusCode());
+        assertEquals(409, adminAction(client, adminBearer, admin, "disable").statusCode());
+        HttpResponse<String> disabled = adminAction(client, adminBearer, account, "disable");
+        assertEquals(200, disabled.statusCode(), disabled.body());
+        assertTrue(disabled.body().contains("\"status\":\"DISABLED\""), disabled.body());
+
+        releaseProduct.countDown();
+        HttpResponse<String> outcome = write.get(15, TimeUnit.SECONDS);
+        assertEquals(401, outcome.statusCode(), outcome.body());
+        assertTrue(outcome.body().contains("AUTH_ACCESS_INVALID"), outcome.body());
+        assertEquals(0, cart.getBean(JdbcTemplate.class).queryForObject(
+                "select count(*) from carts where customer_id = ?", Integer.class, account.toString()));
+        assertEquals(0, auth.getBean(JdbcTemplate.class).queryForObject(
+                "select count(*) from write_reservations where account_id = ?", Integer.class, account));
+        assertThrows(ApiException.class, () -> service.login(email, "not-a-real-password"));
+
+        assertEquals(200, adminAction(client, adminBearer, account, "enable").statusCode());
+        assertTrue(service.refresh(refresh).rejected(), "A session from before the lock must stay dead");
+        assertEquals(email, service.login(email, "not-a-real-password").account().getEmail());
+        HttpResponse<String> found = send(client, HttpRequest.newBuilder(URI.create(
+                "http://127.0.0.1:" + authPort + "/api/admin/accounts?term=" + email))
+                .header("Authorization", "Bearer " + adminBearer).GET().build());
+        assertEquals(200, found.statusCode(), found.body());
+        assertTrue(found.body().contains("\"status\":\"ACTIVE\""), found.body());
+    }
+
+    private static HttpResponse<String> adminAction(HttpClient client, String bearer, UUID account, String action) {
+        return send(client, HttpRequest.newBuilder(URI.create(
+                "http://127.0.0.1:" + authPort + "/api/admin/accounts/" + account + "/" + action))
+                .header("Authorization", "Bearer " + bearer)
+                .POST(HttpRequest.BodyPublishers.noBody()).build());
+    }
+
     private static void startProductFixture() throws Exception {
         product = HttpServer.create(new InetSocketAddress("127.0.0.1", 0), 0);
         product.createContext("/internal/catalog/products/product-1", exchange -> {
@@ -288,10 +340,14 @@ class HttpSellerRevocationWriteFencePostgresIT {
     }
 
     private static String token(UUID subject) throws Exception {
+        return token(subject, "CUSTOMER", "SELLER");
+    }
+
+    private static String token(UUID subject, String... roles) throws Exception {
         Date issued = new Date();
         SignedJWT jwt = new SignedJWT(new JWSHeader.Builder(JWSAlgorithm.HS256).type(JOSEObjectType.JWT).keyID("tv5").build(),
                 new JWTClaimsSet.Builder().issuer(ISSUER).audience(AUDIENCE).subject(subject.toString())
-                        .jwtID(UUID.randomUUID().toString()).claim("roles", List.of("CUSTOMER", "SELLER"))
+                        .jwtID(UUID.randomUUID().toString()).claim("roles", List.of(roles))
                         .issueTime(issued).notBeforeTime(issued).expirationTime(Date.from(Instant.now().plusSeconds(120))).build());
         jwt.sign(new MACSigner(KEY));
         return jwt.serialize();

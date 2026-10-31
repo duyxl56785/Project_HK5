@@ -33,6 +33,7 @@ public class AuthSecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/internal/accounts/*/write-reservations").permitAll()
                         .requestMatchers(HttpMethod.DELETE, "/internal/accounts/write-reservations/*").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/auth/me").authenticated()
+                        .requestMatchers("/api/admin/accounts/**").hasRole("ADMIN")
                         .anyRequest().denyAll())
                 .build();
     }

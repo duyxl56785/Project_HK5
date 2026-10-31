@@ -62,6 +62,8 @@ public class Account {
         if (granted) grant(Role.SELLER); else revoke(Role.SELLER);
     }
 
+    public void changeStatus(String status) { this.status = Objects.requireNonNull(status); }
+
     public UUID getId() { return id; }
     public String getEmail() { return email; }
     public String getPasswordHash() { return passwordHash; }

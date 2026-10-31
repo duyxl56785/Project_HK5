@@ -6,7 +6,7 @@ import { api } from '../shared/api';
 import { useAuth, Guard } from '../shared/auth';
 import { AccountPage } from '../features/account/AccountPage';
 import { LoginPage, RegisterPage } from '../features/account/AuthPages';
-import { AdminCategoriesPage, AdminFinancePage, AdminOrdersPage, AdminProductsPage, AdminReviewsPage, AdminSellersPage } from '../features/admin/AdminPages';
+import { AdminAccountsPage, AdminCategoriesPage, AdminFinancePage, AdminOrdersPage, AdminProductsPage, AdminReviewsPage, AdminSellersPage } from '../features/admin/AdminPages';
 import { CartPage } from '../features/cart/CartPage';
 import { useCart } from '../features/cart/cartApi';
 import { CatalogPage } from '../features/catalog/CatalogPage';
@@ -69,7 +69,7 @@ function Layout() {
         {has('ADMIN') && <>
           <NavLink to="/admin/sellers">Người bán</NavLink><NavLink to="/admin/products">Sản phẩm</NavLink>
           <NavLink to="/admin/categories">Danh mục</NavLink><NavLink to="/admin/reviews">Đánh giá</NavLink>
-          <NavLink to="/admin/orders">COD</NavLink><NavLink to="/admin/finance">Tài chính</NavLink>
+          <NavLink to="/admin/accounts">Tài khoản</NavLink><NavLink to="/admin/orders">COD</NavLink><NavLink to="/admin/finance">Tài chính</NavLink>
         </>}
         <span className="grow" />
         {account ? <>
@@ -121,6 +121,7 @@ export function App() {
       <Route path="admin/products" element={guarded('ADMIN', <AdminProductsPage />)} />
       <Route path="admin/categories" element={guarded('ADMIN', <AdminCategoriesPage />)} />
       <Route path="admin/reviews" element={guarded('ADMIN', <AdminReviewsPage />)} />
+      <Route path="admin/accounts" element={guarded('ADMIN', <AdminAccountsPage />)} />
       <Route path="admin/orders" element={guarded('ADMIN', <AdminOrdersPage />)} />
       <Route path="admin/finance" element={guarded('ADMIN', <AdminFinancePage />)} />
       <Route path="*" element={<p>Không tìm thấy trang. <Link to="/">Về trang chủ</Link></p>} />

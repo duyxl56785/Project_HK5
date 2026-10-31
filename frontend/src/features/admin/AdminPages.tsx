@@ -138,6 +138,32 @@ export function AdminReviewsPage() {
   </div>;
 }
 
+interface AccountRow {
+  readonly id: string; readonly email: string; readonly roles: readonly string[]; readonly status: string; readonly createdAt: string;
+}
+
+export function AdminAccountsPage() {
+  const [term, setTerm] = useState('');
+  const list = useQuery({ queryKey: ['admin-accounts', term], queryFn: () => api<AccountRow[]>(`/api/admin/accounts?term=${encodeURIComponent(term)}`) });
+  const act = useAction(({ id, action }: { id: string; action: string }) => api(`/api/admin/accounts/${id}/${action}`, { method: 'POST' }), ['admin-accounts']);
+  const lock = (row: AccountRow) => {
+    if (window.confirm(`Khóa ${row.email}? Mọi phiên đăng nhập của tài khoản này sẽ kết thúc.`)) act.mutate({ id: row.id, action: 'disable' });
+  };
+  return <div className="stack">
+    <h1>Tài khoản</h1>
+    <input aria-label="Tìm theo email" placeholder="Tìm theo email" maxLength={254} value={term} onChange={(e) => setTerm(e.target.value)} />
+    <ErrorNote error={act.error} />
+    <Loaded query={list} empty={(rows) => rows.length === 0}>{(rows) => <table className="table">
+      <thead><tr><th>Email</th><th>Vai trò</th><th>Trạng thái</th><th>Tạo lúc</th><th>Thao tác</th></tr></thead>
+      <tbody>{rows.map((r) => <tr key={r.id} className={r.status === 'ACTIVE' ? '' : 'muted'}>
+        <td>{r.email}</td><td>{r.roles.join(', ')}</td><td>{r.status === 'ACTIVE' ? 'Hoạt động' : 'Đã khóa'}</td><td>{dateTime(r.createdAt)}</td>
+        <td>{!r.roles.includes('ADMIN') && (r.status === 'ACTIVE'
+          ? <button type="button" className="btn" disabled={act.isPending} onClick={() => lock(r)}>Khóa</button>
+          : <button type="button" className="btn" disabled={act.isPending} onClick={() => act.mutate({ id: r.id, action: 'enable' })}>Mở khóa</button>)}</td>
+      </tr>)}</tbody></table>}</Loaded>
+  </div>;
+}
+
 export function AdminOrdersPage() {
   const [cod, setCod] = useState('');
   const list = useQuery({ queryKey: ['admin-orders', cod], queryFn: () => api<StoreOrder[]>(`/api/admin/store-orders${cod && `?cod=${cod}`}`) });
