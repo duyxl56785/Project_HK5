@@ -26,6 +26,8 @@ test('a guest is sent to login and returned to the page', async ({ page }) => {
 test('a wrong password shows the server error', async ({ page }) => {
   await logIn(page, accounts.customer).catch(() => undefined);
   await page.getByRole('button', { name: 'Đăng xuất' }).click();
+  // Leaving before logout finishes would restore the session and redirect away from /login.
+  await page.getByRole('link', { name: 'Đăng nhập', exact: true }).waitFor();
   await page.goto('/login');
   await page.getByLabel('Email').fill(accounts.customer.email);
   await page.getByLabel('Mật khẩu').fill('wrong-password-123');

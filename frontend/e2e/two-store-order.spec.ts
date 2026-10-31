@@ -8,7 +8,8 @@ const stock = async (request: APIRequestContext, id: string): Promise<number> =>
 test('one customer order splits into two store orders and reserves stock in both', async ({ browser }) => {
   const customer = await sessionFor(browser, accounts.customer);
   const catalog = await (await customer.request.get('/api/catalog/products?size=50')).json();
-  const from = (store: string) => catalog.items.find((item: { store: { name: string } }) => item.store.name === store);
+  // Catalog stock is cached for 10 seconds, so avoid the product order-journey has just bought.
+  const from = (store: string) => catalog.items.findLast((item: { store: { name: string } }) => item.store.name === store);
   const first = from('Tiệm Áo Sài Gòn');
   const second = from('Nhà Xinh');
   expect(first && second).toBeTruthy();
