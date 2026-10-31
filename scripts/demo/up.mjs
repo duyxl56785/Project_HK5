@@ -1,12 +1,12 @@
 // Builds the backend jars, starts the local stack and seeds it.
-// Usage: node scripts/demo/up.mjs [--skip-build] [--no-seed]
+// Usage: node scripts/demo/up.mjs [--skip-build] [--no-seed] [--approved-local-policy]
 import { execSync } from 'node:child_process';
 import { resolve } from 'node:path';
 
 const root = resolve(import.meta.dirname, '../..');
 const run = (command, cwd = root) => execSync(command, { cwd, stdio: 'inherit' });
 
-run('node scripts/demo/gen-env.mjs');
+run(`node scripts/demo/gen-env.mjs${process.argv.includes('--approved-local-policy') ? ' --approved-local-policy' : ''}`);
 if (!process.argv.includes('--skip-build')) {
   run(`${process.platform === 'win32' ? '.\\gradlew.bat' : './gradlew'} bootJar -q`, resolve(root, 'backend'));
 }

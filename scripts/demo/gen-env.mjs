@@ -1,6 +1,6 @@
 // Generates .env.demo (git-ignored) with fresh random secrets for the local demo stack,
 // and writes each secret to docker/secrets (git-ignored), which Compose mounts as Docker secrets.
-// Usage: node scripts/demo/gen-env.mjs [--force]
+// Usage: node scripts/demo/gen-env.mjs [--force] [--approved-local-policy]
 import { randomBytes } from 'node:crypto';
 import { appendFileSync, chmodSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
@@ -8,11 +8,12 @@ import { resolve } from 'node:path';
 const target = resolve(import.meta.dirname, '../../.env.demo');
 const secret = () => randomBytes(32).toString('base64url');
 const authorityTokens = ['USER', 'SELLER', 'PRODUCT', 'CART', 'ORDER', 'NOTIFICATION'].map((name) => `${name}_AUTHORITY_TOKEN`);
-// Approved for local use only by docs/project-report/M01_FINANCE_DECISION.md (MD09).
-// Any other environment needs its own decision.
+// Off unless the caller opts in. MD09 in docs/project-report/M01_FINANCE_DECISION.md covers local use only,
+// and the Inventory pair stays off until its owners approve it. Any other environment needs its own decision.
+const approvedPolicy = process.argv.includes('--approved-local-policy');
+const gates = ['INVENTORY_ORDER_PAIR_ENABLED', 'HK5_FINANCE_POLICY_APPROVED'];
 const localPolicy = {
-  INVENTORY_ORDER_PAIR_ENABLED: 'true',
-  HK5_FINANCE_POLICY_APPROVED: 'true',
+  ...Object.fromEntries(gates.map((key) => [key, String(approvedPolicy)])),
   HK5_FINANCE_PLATFORM_RATE: '0.05',
   HK5_FINANCE_CURRENCY_SCALE: '0',
   HK5_FINANCE_HOUSE_EXEMPT: 'true',
@@ -37,7 +38,11 @@ function writeSecrets() {
 }
 
 if (existsSync(target) && !process.argv.includes('--force')) {
-  const current = readFileSync(target, 'utf8');
+  let current = readFileSync(target, 'utf8');
+  if (approvedPolicy) {
+    for (const key of gates) current = current.replace(new RegExp(`^${key}=.*$`, 'm'), `${key}=true`);
+    writeFileSync(target, current, { mode: 0o600 });
+  }
   for (const key of authorityTokens) if (!current.includes(`${key}=`)) appendFileSync(target, `${key}=${secret()}\n`);
   for (const [key, value] of Object.entries(localPolicy)) if (!current.includes(`${key}=`)) appendFileSync(target, `${key}=${value}\n`);
   writeSecrets();

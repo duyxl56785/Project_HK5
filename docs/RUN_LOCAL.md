@@ -7,7 +7,7 @@ Cần Docker Desktop đang chạy, JDK 21 và Node.js 22 trở lên.
 Từ thư mục gốc của repo:
 
 ```bash
-node scripts/demo/up.mjs
+node scripts/demo/up.mjs --approved-local-policy
 ```
 
 Lệnh này tạo `.env.demo` với secret ngẫu nhiên nếu chưa có, ghi từng secret vào `docker/secrets/`, build jar và image frontend, chạy `docker/compose.demo.yml`, chờ gateway sẵn sàng rồi seed dữ liệu qua API công khai. Chạy lại an toàn; thêm `--skip-build` nếu backend không đổi.
@@ -35,7 +35,7 @@ cd frontend && npm ci && npm run dev
 
 `.env.demo` và `docker/secrets/` đã được git bỏ qua và chỉ dùng cho máy local. Compose nạp secret bằng Docker secrets, service đọc từ `/run/secrets` qua `configtree`, nên `docker inspect` không thấy mật khẩu hay token.
 
-Năm cờ `INVENTORY_ORDER_PAIR_ENABLED` và `HK5_FINANCE_*` trong file này được duyệt cho môi trường local theo [M01_FINANCE_DECISION.md](project-report/M01_FINANCE_DECISION.md). Môi trường khác cần quyết định riêng.
+`INVENTORY_ORDER_PAIR_ENABLED` và `HK5_FINANCE_POLICY_APPROVED` mặc định là `false`. Không có `--approved-local-policy` thì stack vẫn chạy, seed và xem hàng được, nhưng Checkout bị từ chối. Cờ này chỉ dành cho demo local theo MD09 ở [M01_FINANCE_DECISION.md](project-report/M01_FINANCE_DECISION.md); Inventory pair vẫn chờ các owner duyệt. Môi trường khác cần quyết định riêng. `.env.demo` đã có sẵn giữ nguyên giá trị cũ, trừ khi chạy lại với cờ này.
 
 ## Luồng nghiệp vụ chính
 

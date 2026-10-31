@@ -36,7 +36,7 @@ jobs:
         with:
           node-version: '22'
       - name: Start the stack from fresh volumes and seed it
-        run: node scripts/demo/up.mjs
+        run: node scripts/demo/up.mjs --approved-local-policy
       - name: Install Playwright
         working-directory: frontend
         run: |
