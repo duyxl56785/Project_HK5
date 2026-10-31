@@ -67,7 +67,7 @@ class CategoryServiceTest {
         when(repository.findAll(Sort.by("name", "id"))).thenReturn(List.of(child, root));
         when(repository.findById(child.getId())).thenReturn(Optional.of(child));
         assertEquals(root.getId(), service.list().get(0).parentId());
-        assertEquals(new CategoryResponse(child.getId(), "Child", root.getId()), service.get(child.getId()));
+        assertEquals(new CategoryResponse(child.getId(), "Child", root.getId(), "child", CategoryStatus.ACTIVE), service.get(child.getId()));
         verifyNoInteractions(hierarchyLock);
     }
 
@@ -188,7 +188,7 @@ class CategoryServiceTest {
     }
 
     private Category category(String name, Category parent) {
-        Category category = new Category(name, parent);
+        Category category = new Category(name, CategoryService.slugOf(name), parent);
         ReflectionTestUtils.setField(category, "id", UUID.randomUUID());
         return category;
     }

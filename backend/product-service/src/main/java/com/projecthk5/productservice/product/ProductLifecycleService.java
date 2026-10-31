@@ -20,6 +20,7 @@ public class ProductLifecycleService {
                                  BigDecimal price, String currency) {
         managedStore(actor, storeId);
         requireCategory(categoryId);
+        requireOpenCategory(categoryId);
         return new ProductListing(UUID.randomUUID(), storeId, categoryId, sku, name, price, currency, ProductStatus.DRAFT, null);
     }
 
@@ -28,6 +29,9 @@ public class ProductLifecycleService {
         managedStore(actor, current.storeId());
         requireState(current, ProductStatus.DRAFT, ProductStatus.REJECTED, ProductStatus.INACTIVE);
         requireCategory(categoryId);
+        if (!categoryId.equals(current.categoryId())) {
+            requireOpenCategory(categoryId);
+        }
         return new ProductListing(current.id(), current.storeId(), categoryId, current.sku(), name, price, currency,
                 current.status(), current.reviewReason());
     }
@@ -119,6 +123,12 @@ public class ProductLifecycleService {
         }
         if (!categories.existsById(id)) {
             throw new ProductRuleException(ProductRuleException.Code.CATEGORY_NOT_FOUND, "Category does not exist");
+        }
+    }
+
+    private void requireOpenCategory(UUID id) {
+        if (categories.isHiddenInChain(id)) {
+            throw new ProductRuleException(ProductRuleException.Code.CATEGORY_NOT_FOUND, "Category is not available");
         }
     }
 

@@ -6,7 +6,7 @@ import { z } from 'zod';
 import { api } from '../../shared/api';
 import { text } from '../../shared/forms';
 import { Badge, dateTime, ErrorNote, Loaded, money, shortId, StatusFilter, useAction } from '../../shared/ui';
-import { useCategories } from '../catalog/CatalogPage';
+import type { CategoryDto, CategoryStatus } from '../catalog/categoryTypes';
 import { TotalsGrid } from '../finance/FinanceTable';
 import type { StoreSummary, Totals } from '../finance/FinanceTable';
 import type { StoreOrder } from '../orders/OrdersPage';
@@ -109,11 +109,11 @@ const categorySchema = z.object({ name: text('Tên danh mục', 255), parentId: 
 type CategoryInput = z.infer<typeof categorySchema>;
 
 export function AdminCategoriesPage() {
-  const categories = useCategories();
+  const categories = useQuery({ queryKey: ['categories', 'all'], queryFn: () => api<CategoryDto[]>('/api/categories/all') });
   const form = useForm<CategoryInput>({ resolver: zodResolver(categorySchema), defaultValues: { name: '', parentId: '' } });
   const create = useAction(({ name, parentId }: CategoryInput) => api('/api/categories', { method: 'POST', body: { name, parentId: parentId || null } }), ['categories'], () => form.resetField('name'));
-  const rename = useAction(({ id, next, parent }: { id: string; next: string; parent: string | null }) =>
-    api(`/api/categories/${id}`, { method: 'PUT', body: { name: next, parentId: parent } }), ['categories']);
+  const rename = useAction(({ id, next, parent, status }: { id: string; next: string; parent: string | null; status?: CategoryStatus }) =>
+    api(`/api/categories/${id}`, { method: 'PUT', body: { name: next, parentId: parent, status } }), ['categories']);
   const remove = useAction((id: string) => api(`/api/categories/${id}`, { method: 'DELETE' }), ['categories']);
   const nameOf = (id: string | null) => categories.data?.find((c) => c.id === id)?.name ?? '—';
   return <div className="stack">
@@ -128,13 +128,17 @@ export function AdminCategoriesPage() {
     </form>
     <ErrorNote error={create.error ?? rename.error ?? remove.error} />
     <Loaded query={categories} empty={(rows) => rows.length === 0}>{(rows) => <table className="table">
-      <thead><tr><th>Tên</th><th>Danh mục cha</th><th>Thao tác</th></tr></thead>
-      <tbody>{rows.map((c) => <tr key={c.id}>
+      <thead><tr><th>Tên</th><th>Slug</th><th>Danh mục cha</th><th>Trạng thái</th><th>Thao tác</th></tr></thead>
+      <tbody>{rows.map((c) => <tr key={c.id} className={c.status === 'HIDDEN' ? 'muted' : ''}>
         <td><input aria-label={`Tên ${c.name}`} defaultValue={c.name} maxLength={255} onBlur={(e) => {
           const next = e.currentTarget.value.trim();
           if (next && next !== c.name) rename.mutate({ id: c.id, next, parent: c.parentId });
         }} /></td>
+        <td>{c.slug}</td>
         <td>{nameOf(c.parentId)}</td>
+        <td><select aria-label={`Trạng thái ${c.name}`} value={c.status} disabled={rename.isPending}
+          onChange={(e) => rename.mutate({ id: c.id, next: c.name, parent: c.parentId, status: e.currentTarget.value as CategoryStatus })}>
+          <option value="ACTIVE">Đang hiện</option><option value="HIDDEN">Đã ẩn</option></select></td>
         <td><button type="button" className="btn" disabled={remove.isPending} onClick={() => remove.mutate(c.id)}>Xóa</button></td>
       </tr>)}</tbody></table>}</Loaded>
   </div>;
