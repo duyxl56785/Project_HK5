@@ -56,6 +56,13 @@ public class CheckoutService {
         if (attempt.getState()==CheckoutAttempt.State.SUCCEEDED) {
             Order placed=orders.findByIdAndCustomerId(attempt.getOrderId(), customerId)
                 .orElseThrow(() -> new IllegalStateException("Placed order needs reconciliation"));
+            // A legacy idempotency fingerprint covers Cart revision/items but not the
+            // separately supplied shipping address. Never replay a committed order
+            // as a successful response to the same key with different shipping.
+            // Compare persisted, controller-normalized facts without altering
+            // historical fingerprints or re-running any external side effects.
+            if (!Objects.equals(placed.getShipping(), shipping))
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "IDEMPOTENCY_PAYLOAD_MISMATCH");
             try { carts.finalizeCart(bearer,key); } catch (Exception ignored) {
                 // Committed outcome is authoritative; leave cart cleanup for reconciliation.
             }
