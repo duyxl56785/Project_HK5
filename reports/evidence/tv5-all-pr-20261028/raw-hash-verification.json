@@ -1,0 +1,280 @@
+{
+  "kind": "DERIVED local byte-integrity check; raw logs/XML withheld from publication",
+  "verifiedAtUtc": "2026-10-27T17:21:45.043895+00:00",
+  "status": "PASS",
+  "artifacts": [
+    {
+      "path": ".verification/tv5-preflight-composition-20261027/qa-scope-red-engine/runtime.log",
+      "sha256": "db201ce263d244ce086d4bcedaa4c8856882955d1a3d30534070c938f3d34cc7"
+    },
+    {
+      "path": ".verification/tv5-preflight-composition-20261027/qa-scope-red-engine/tv5ProductCatalogComposition/TEST-com.projecthk5.tv5integration.ProductCatalogCheckoutPreflightPostgresTest.xml",
+      "sha256": "cd2ad896d3a711fc130601fda9afbacd2e1b9d94c49a4864e23d10357d7fc4d0"
+    },
+    {
+      "path": ".verification/tv5-preflight-composition-20261027/qa-scope-red-engine/tv5ProductCatalogComposition/TEST-com.projecthk5.tv5integration.ProductCatalogCompositionPostgresTest.xml",
+      "sha256": "7692a5b976454e564cf3efc4b9d3f178b717dc242703be09ba8bb00f9c97488a"
+    },
+    {
+      "path": ".verification/tv5-preflight-composition-20261027/qa-scope-port-fixed/runtime.log",
+      "sha256": "2fb1a9b0aab69b49cc87639fdfa100fdb5a0268a227a84df75436193a8a3be96"
+    },
+    {
+      "path": ".verification/tv5-preflight-composition-20261027/qa-scope-port-fixed/tv5ProductCatalogComposition/TEST-com.projecthk5.tv5integration.ProductCatalogCheckoutPreflightPostgresTest.xml",
+      "sha256": "2c32448a96793816b6c32f14125d30239c91dc8d0015009d1269027ca63b9084"
+    },
+    {
+      "path": ".verification/tv5-preflight-composition-20261027/qa-scope-port-fixed/tv5ProductCatalogComposition/TEST-com.projecthk5.tv5integration.ProductCatalogCompositionPostgresTest.xml",
+      "sha256": "a4342b15f1d7831c0173010b0fb7a23efb1364b2e7fdf4f129cca76d2c9692cd"
+    },
+    {
+      "path": ".verification/tv5-preflight-composition-20261027/qa-scope-green/runtime.log",
+      "sha256": "5b83fb1c9f6f1eec30ff545ddc97ebf48491e4e30de8f6dff1d28ad28ddb8271"
+    },
+    {
+      "path": ".verification/tv5-preflight-composition-20261027/qa-scope-green/tv5ProductCatalogComposition/TEST-com.projecthk5.tv5integration.ProductCatalogCheckoutPreflightPostgresTest.xml",
+      "sha256": "e30ca820b9950a48106dd6fa8cd24e8f55782728cbcfbb5482906f9b64b71ba0"
+    },
+    {
+      "path": ".verification/tv5-preflight-composition-20261027/qa-scope-green/tv5ProductCatalogComposition/TEST-com.projecthk5.tv5integration.ProductCatalogCompositionPostgresTest.xml",
+      "sha256": "34382091ed7a18f17da3f5ffab8a835fdda176e0d0070c8101f506f5c1b0718a"
+    },
+    {
+      "path": ".verification/tv5-preflight-composition-20261027/qa-scope-regression/integrationTest/TEST-com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest.xml",
+      "sha256": "9e66fd29dd43c4c39d5c7fc6450831aa13c358fba6bf25eb4bd2859025200b7c"
+    },
+    {
+      "path": ".verification/tv5-preflight-composition-20261027/qa-scope-regression/integrationTest/TEST-com.projecthk5.productservice.catalog.ProductCatalogSearchIntegrationTest.xml",
+      "sha256": "238894a79e172a9fb8e297e4a7d716e633094183d46f4a2445477d3ee5f41fb7"
+    },
+    {
+      "path": ".verification/tv5-preflight-composition-20261027/qa-scope-regression/integrationTest/TEST-com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceIntegrationTest.xml",
+      "sha256": "b335a6a93b5e27fcf7f98fb28650495e7fdb8b8e0b674c5b8d340972cb41e050"
+    },
+    {
+      "path": ".verification/tv5-preflight-composition-20261027/qa-scope-regression/integrationTest/TEST-com.projecthk5.productservice.category.CategoryIntegrationTest.xml",
+      "sha256": "b782e670496a4ae8c72e6b16daaf3407212c04adce16aad99ba7cefa5ef23a91"
+    },
+    {
+      "path": ".verification/tv5-preflight-composition-20261027/qa-scope-regression/integrationTest/TEST-com.projecthk5.productservice.product.http.ProductManagementHandlerIntegrationTest.xml",
+      "sha256": "a4beef06c1ed68f81328f6cdacc8cc40e62f71f52c3f66f3effc6d21f477f36c"
+    },
+    {
+      "path": ".verification/tv5-preflight-composition-20261027/qa-scope-regression/integrationTest/TEST-com.projecthk5.productservice.product.persistence.ProductMigrationPostgresTest.xml",
+      "sha256": "e80515a9273aa2331694eb918a342d698d12cb9c3a07a88b79bb16592426c9c8"
+    },
+    {
+      "path": ".verification/tv5-preflight-composition-20261027/qa-scope-regression/integrationTest/TEST-com.projecthk5.productservice.product.persistence.ProductPersistenceIntegrationTest.xml",
+      "sha256": "79d68245b529b58fee11fc0c3b0ca5f7f927824c68bba7f8ab3cb5d84b5d44dc"
+    },
+    {
+      "path": ".verification/tv5-preflight-composition-20261027/qa-scope-regression/integrationTest/TEST-com.projecthk5.productservice.product.ProductApplicationServiceIntegrationTest.xml",
+      "sha256": "65667bd0b1be8154148cab56011b7b5427612dfaf1f8df3e924fef508162e629"
+    },
+    {
+      "path": ".verification/tv5-preflight-composition-20261027/qa-scope-regression/runtime.log",
+      "sha256": "d511d1097e908d17031c00e775f703b7bb1312d864fa9fa233c843703138e3d3"
+    },
+    {
+      "path": ".verification/tv5-preflight-composition-20261027/qa-scope-regression/test/TEST-com.projecthk5.productservice.catalog.CatalogBatchValidatorTest.xml",
+      "sha256": "446d78e07e4a7dcd298b687f15c952426edf61a1f6a8f6909244cc700ae6f743"
+    },
+    {
+      "path": ".verification/tv5-preflight-composition-20261027/qa-scope-regression/test/TEST-com.projecthk5.productservice.catalog.CatalogSearchQueryTest.xml",
+      "sha256": "336507279f1bd129520099db30d5891a76f0b97d30f22ad09b3408aa2da3b25a"
+    },
+    {
+      "path": ".verification/tv5-preflight-composition-20261027/qa-scope-regression/test/TEST-com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceTest.xml",
+      "sha256": "9bcad9f322b53691d8d0a1a87793c1fc1b417565b3202185d46592b9df2d4d7a"
+    },
+    {
+      "path": ".verification/tv5-preflight-composition-20261027/qa-scope-regression/test/TEST-com.projecthk5.productservice.category.CategoryControllerTest.xml",
+      "sha256": "64ac196516a90cf2204eb53c41b08d865f5452755708f8cfb9b75b4626654191"
+    },
+    {
+      "path": ".verification/tv5-preflight-composition-20261027/qa-scope-regression/test/TEST-com.projecthk5.productservice.category.CategorySecurityTest.xml",
+      "sha256": "abc002a2b383462af8d875d58bae3361201bc862f49b457272daf4e516235f3d"
+    },
+    {
+      "path": ".verification/tv5-preflight-composition-20261027/qa-scope-regression/test/TEST-com.projecthk5.productservice.category.CategoryServiceTest.xml",
+      "sha256": "414f6f54115d0b842a82fd53178b52c8fa12593239b494ee06a247765132896c"
+    },
+    {
+      "path": ".verification/tv5-preflight-composition-20261027/qa-scope-regression/test/TEST-com.projecthk5.productservice.image.ProductImageValidatorTest.xml",
+      "sha256": "c36ef7e5d5b3b66377eab51d3524adfc1b50ff72f041b25ac9ffbc501d29fcff"
+    },
+    {
+      "path": ".verification/tv5-preflight-composition-20261027/qa-scope-regression/test/TEST-com.projecthk5.productservice.product.http.ProductManagementHandlerTest.xml",
+      "sha256": "6bca7f60e2073ad398166fba1c5267049d4d6199d52a8df83359cf16789e70fa"
+    },
+    {
+      "path": ".verification/tv5-preflight-composition-20261027/qa-scope-regression/test/TEST-com.projecthk5.productservice.product.http.ProductManagementJsonTest.xml",
+      "sha256": "7f062aefacce961bd8690ec302b9d9ed6b0e7eb17d27998459b88c27859b4933"
+    },
+    {
+      "path": ".verification/tv5-preflight-composition-20261027/qa-scope-regression/test/TEST-com.projecthk5.productservice.product.persistence.ProductEntityTest.xml",
+      "sha256": "2b52395659e68441a66fe54ef229bbf7c187542bc09821a9e5e908781069d58e"
+    },
+    {
+      "path": ".verification/tv5-preflight-composition-20261027/qa-scope-regression/test/TEST-com.projecthk5.productservice.product.persistence.ProductPersistenceAdapterTest.xml",
+      "sha256": "f97b32da8c1e2248fd52bb9e825558b666b31cc1514530192484cba7ef26d400"
+    },
+    {
+      "path": ".verification/tv5-preflight-composition-20261027/qa-scope-regression/test/TEST-com.projecthk5.productservice.product.ProductApplicationServiceTest.xml",
+      "sha256": "a977d7e1e85b670e14ec57874efea4c1911e1b10a6fc1be816fe7075bd0157d5"
+    },
+    {
+      "path": ".verification/tv5-preflight-composition-20261027/qa-scope-regression/test/TEST-com.projecthk5.productservice.product.ProductLifecycleServiceTest.xml",
+      "sha256": "a582e2000d407182e9b0f3484b06d5ad30aa7d4152cf34d5640aaa3c2cae66ac"
+    },
+    {
+      "path": ".verification/tv5-preflight-composition-20261027/qa-scope-regression/test/TEST-com.projecthk5.productservice.product.ProductListingValidationTest.xml",
+      "sha256": "3d65d368f6a438bd52a7c83b706f247ad51d79bbb272bee1e7765d8795e0c2f1"
+    },
+    {
+      "path": ".verification/tv5-preflight-composition-20261027/qa-scope-regression/test/TEST-com.projecthk5.productservice.product.ProductPriceTest.xml",
+      "sha256": "7bd898bd3860ad213abda6874a875bd47aa6b108c4a69f534d79823381036893"
+    },
+    {
+      "path": ".verification/tv5-preflight-composition-20261027/qa-scope-regression/test/TEST-com.projecthk5.productservice.product.Week1CatalogFixtureTest.xml",
+      "sha256": "0be19ca4b6cb9cab9beda6a5298e94851a38cebd6351423fbb3b2b1cc62458dc"
+    },
+    {
+      "path": ".verification/tv5-preflight-composition-20261027/qa-scope-regression/test/TEST-com.projecthk5.productservice.review.ReviewRulesBoundaryTest.xml",
+      "sha256": "d4359738a5381de1b839dbba8cca8c383eac44bd951b1885f2bd630b4768bf01"
+    },
+    {
+      "path": ".verification/tv5-preflight-composition-20261027/qa-scope-regression/test/TEST-com.projecthk5.productservice.review.ReviewRulesTest.xml",
+      "sha256": "037f1e8f3a36547fa4400bf71e8799c58870f77230fb5e3c2a6c0a2903b4697d"
+    },
+    {
+      "path": ".verification/tv5-preflight-composition-20261027/qa-scope-regression/test/TEST-com.projecthk5.productservice.security.ProductServiceSecurityTest.xml",
+      "sha256": "df673aeb747fe23075065416ca0c1d302fd7af40b33c4e913bcff4ebcef72421"
+    },
+    {
+      "path": ".verification/tv5-preflight-composition-20261027/qa-scope-regression/tv5ProductCatalogComposition/TEST-com.projecthk5.tv5integration.ProductCatalogCheckoutPreflightPostgresTest.xml",
+      "sha256": "f1ff31ce239a5ee7113cc05ee798f6f90c1481bb7d62426a5a5a59eef7c5fc14"
+    },
+    {
+      "path": ".verification/tv5-preflight-composition-20261027/qa-scope-regression/tv5ProductCatalogComposition/TEST-com.projecthk5.tv5integration.ProductCatalogCompositionPostgresTest.xml",
+      "sha256": "8d45e6a059a58908391c5a2916f6062408aa99862f64a6ae20c8610aa666c712"
+    },
+    {
+      "path": ".verification/tv5-preflight-composition-20261027/qa-scope-regression/tv5ProductVisibility/TEST-com.projecthk5.productservice.product.http.ProductOwnerVisibilityPostgresDiagnosticTest.xml",
+      "sha256": "d5d972fecfe21763a7ea267b43cebd69036f99cc98585906e755a419e530b8a5"
+    },
+    {
+      "path": ".verification/tv5-all-pr-tdd-20261027/cli-inventory-red/runtime.log",
+      "sha256": "8fd7309afbe17c840c4abf8b88ada3113dd797bcbb3b3d9dcfef25a1b575f7e8"
+    },
+    {
+      "path": ".verification/tv5-all-pr-tdd-20261027/cli-inventory-green/runtime.log",
+      "sha256": "b930c8a39dc9671f628b710f2afb0ef5f8ed9db0b7a965ddc32897691617f79c"
+    },
+    {
+      "path": ".verification/tv5-all-pr-tdd-20261027/cli-inventory-refactor/runtime.log",
+      "sha256": "0c7bf4610a492f3adf475d3e1fd90f36f4e245025e3dfccdb108dfbc99bb02f6"
+    },
+    {
+      "path": ".verification/tv5-all-pr-tdd-20261027/cli-inventory-committed/runtime.log",
+      "sha256": "0b485507665610b48a875187b1d07aea0e3ed7999aca170248d427a809faa2bd"
+    },
+    {
+      "path": ".verification/tv5-all-pr-tdd-20261027/review87-run/runtime.log",
+      "sha256": "b4da20393d41771d582a1a98a4f1c7f50c87d291a402b7ff19339b865c237b22"
+    },
+    {
+      "path": ".verification/tv5-all-pr-tdd-20261027/review87-run/test/TEST-com.projecthk5.productservice.image.LocalFileSystemImageStorageTest.xml",
+      "sha256": "519a64980322b0e6c239ee443a74fa07bde7aabb12c64e4aa62e1498b1420217"
+    },
+    {
+      "path": ".verification/tv5-all-pr-tdd-20261027/review87-run/test/TEST-com.projecthk5.productservice.security.ProductServiceSecurityTest.xml",
+      "sha256": "264b890cc776e292e1859fa4b942745012b75f4db779a6e30d46fb3f3c76d3b0"
+    },
+    {
+      "path": ".verification/tv5-all-pr-tdd-20261027/review108-run/integrationTest/TEST-com.projecthk5.productservice.product.ProductOwnerListIntegrationTest.xml",
+      "sha256": "9b7a3c866f48e70d0e8a1a1f0eb46ef9b1d5c519895966392e59c0292ffe5678"
+    },
+    {
+      "path": ".verification/tv5-all-pr-tdd-20261027/review108-run/runtime.log",
+      "sha256": "3527aa0733da2e82517bdb2c5f47229babd3d5c234edf1593235d6732ef07c43"
+    },
+    {
+      "path": ".verification/tv5-all-pr-tdd-20261027/review108-run/test/TEST-com.projecthk5.productservice.product.ProductOwnerListTest.xml",
+      "sha256": "4fd8873b873930b171a46c9095ab6fea70bfec2ce3b94b18a37fdf92e06f4c1b"
+    },
+    {
+      "path": ".verification/tv5-all-pr-tdd-20261027/review108-run/tv5ProductVisibility/TEST-com.projecthk5.productservice.product.http.ProductOwnerVisibilityPostgresDiagnosticTest.xml",
+      "sha256": "8a4309f601575d690af25faa9540902e307212d32090d7a36cac3aab326e5e68"
+    },
+    {
+      "path": ".verification/tv5-all-pr-tdd-20261027/review109-run/integrationTest/TEST-com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest.xml",
+      "sha256": "8d800438903ab7cc54c7c23da403fdbf052c54863534ffc8403a1a0b7d5973e3"
+    },
+    {
+      "path": ".verification/tv5-all-pr-tdd-20261027/review109-run/integrationTest/TEST-com.projecthk5.productservice.image.ProductImageMetadataServiceIntegrationTest.xml",
+      "sha256": "c72ed842205355492c4d9ba98f597abe12f43e78c60c5fe34392b49e3e385b0c"
+    },
+    {
+      "path": ".verification/tv5-all-pr-tdd-20261027/review109-run/integrationTest/TEST-com.projecthk5.productservice.product.persistence.ProductMigrationPostgresTest.xml",
+      "sha256": "3968df4e36a023fefbe4e4e27f227390ecee6c7b3d68f9db6b838b62c5bc3545"
+    },
+    {
+      "path": ".verification/tv5-all-pr-tdd-20261027/review109-run/runtime.log",
+      "sha256": "aa4b2934d6a3a31f2c837a59fbdac3ce8daa3045da59648188d3baefe7f0110d"
+    },
+    {
+      "path": ".verification/tv5-all-pr-tdd-20261027/review109-run/test/TEST-com.projecthk5.productservice.image.ProductImageMetadataServiceTest.xml",
+      "sha256": "47c9ddc4a81d96ea4794201dd5bca7b58c9a96b773f63b87c8bafc2e75c8bb19"
+    },
+    {
+      "path": ".verification/tv5-all-pr-tdd-20261027/review109-run/tv5ProductVisibility/TEST-com.projecthk5.productservice.product.http.ProductOwnerVisibilityPostgresDiagnosticTest.xml",
+      "sha256": "da030bb6001be6470fd2be2fed2812247f7a5fd1608209c7979fdd2a287ff212"
+    },
+    {
+      "path": ".verification/tv5-all-pr-tdd-20261027/review107-run/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.OrderHistoryPostgresIT.xml",
+      "sha256": "808a1ac2783797f73a418c949e45622caab95be0e65f9f8251a65e49122420d6"
+    },
+    {
+      "path": ".verification/tv5-all-pr-tdd-20261027/review107-run/runtime.log",
+      "sha256": "ce9393ed07776a04453e10ace89564f7b18d883a6e45307266c95e76201c7d33"
+    },
+    {
+      "path": ".verification/tv5-all-pr-tdd-20261027/review107-run/test/TEST-com.projecthk5.orderservice.service.OrderHistoryServiceTest.xml",
+      "sha256": "520678bdd9fefd54f85ba245bbeede7d5e9d35c2fe02689a74cef799df1e3c5b"
+    },
+    {
+      "path": ".verification/tv5-all-pr-tdd-20261027/review110-run/build.log",
+      "sha256": "65c953c80392c1d1aa3f671e60df14c8ca6364cab59dea40adb5fabea0e98c78"
+    },
+    {
+      "path": ".verification/tv5-all-pr-tdd-20261027/review110-run/demo-build.log",
+      "sha256": "dcc74cfb807c4af8f49497e81e42d2afc4b64c9827f65c233bbd7cf251146a2d"
+    },
+    {
+      "path": ".verification/tv5-all-pr-tdd-20261027/review110-run/demo-ssr-model.log",
+      "sha256": "bd8edcacac88380347827b1097046f5344ac0b9465656089ee1682b321df271c"
+    },
+    {
+      "path": ".verification/tv5-all-pr-tdd-20261027/review110-run/dependencies.log",
+      "sha256": "30f367587c8fdadc696e09282a33b1f1c2d3f40d0775c2cb4ad04a1da4800f22"
+    },
+    {
+      "path": ".verification/tv5-all-pr-tdd-20261027/review110-run/typecheck.log",
+      "sha256": "8f64752c6a0e5c82820880600d7ab0365666f0d89c2fd8572944c694257792a5"
+    },
+    {
+      "path": ".verification/tv5-all-pr-tdd-20261027/review110-complete/browser.log",
+      "sha256": "1a6b3c669cca9313a27dbb063485b5d273cbd99b1f65e78ede0c7a7d278ba017"
+    },
+    {
+      "path": ".verification/tv5-all-pr-tdd-20261027/review110-complete/dom-dependency.log",
+      "sha256": "44d2e9f06ebb84c4b0303da91c19e43a4485e0765ce177ecb271664268116241"
+    },
+    {
+      "path": ".verification/tv5-all-pr-tdd-20261027/review110-complete/unit-dom.log",
+      "sha256": "90563f7610b9eb0c44a54306a49dcdc79c2a49fa7a8007e25c3d67be7d06e1dc"
+    }
+  ],
+  "publicationBoundary": "Only derived receipts/public GitHub metadata published. No raw credentials/log/XML; raw local paths and SHA256 remain traceable."
+}

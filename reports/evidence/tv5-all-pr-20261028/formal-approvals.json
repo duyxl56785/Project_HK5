@@ -1,0 +1,41 @@
+[
+  {
+    "PR": 87,
+    "head": "7f2c6b2fc45055635b2fcf7d3b05bba4a854465a",
+    "reviewId": 5671228181,
+    "state": "APPROVED",
+    "reviewer": "nguyenminhduy090-alt",
+    "url": "https://github.com/duyxl56785/Project_HK5/pull/87#pullrequestreview-5671228181",
+    "submittedAt": "2026-10-27T17:04:29Z",
+    "scope": "Internal validated filesystem ImageStorage only. Private root/ancestor ACLs are mandatory; Windows NIO is not race-proof against same-account local attackers. Not metadata/file binding, public URLs or operational storage approval.",
+    "PRstateAfter": "open",
+    "mergedAfter": false,
+    "authorization": "Direct human reply authorizes scoped APPROVED for these three exact heads"
+  },
+  {
+    "PR": 108,
+    "head": "8d4186ccf4369c9ac27fd19f49e54c9bc1740a6d",
+    "reviewId": 5671229407,
+    "state": "APPROVED",
+    "reviewer": "nguyenminhduy090-alt",
+    "url": "https://github.com/duyxl56785/Project_HK5/pull/108#pullrequestreview-5671229407",
+    "submittedAt": "2026-10-27T17:04:34Z",
+    "scope": "Internal verified-policy Store-scoped Product owner list with SQL scope/count/rows snapshot only. Not protected HTTP, a real current-account/Store adapter or approved final wire pagination.",
+    "PRstateAfter": "open",
+    "mergedAfter": false,
+    "authorization": "Direct human reply authorizes scoped APPROVED for these three exact heads"
+  },
+  {
+    "PR": 109,
+    "head": "cdea2839a6dfb0dd6b9c3f038f192e3080330db4",
+    "reviewId": 5671230753,
+    "state": "APPROVED",
+    "reviewer": "nguyenminhduy090-alt",
+    "url": "https://github.com/duyxl56785/Project_HK5/pull/109#pullrequestreview-5671230753",
+    "submittedAt": "2026-10-27T17:04:40Z",
+    "scope": "Owner-scoped PostgreSQL image metadata reservations and additive V3 only. Not file upload/storage/publication/cleanup, Product deletion or production migration rollout acceptance.",
+    "PRstateAfter": "open",
+    "mergedAfter": false,
+    "authorization": "Direct human reply authorizes scoped APPROVED for these three exact heads"
+  }
+]

@@ -286,6 +286,42 @@ class CollectorTest(unittest.TestCase):
 
 
 class OutputTest(unittest.TestCase):
+    def test_all_state_inventory_counts_draft_subset_and_never_reads_closed_reviews(self):
+        opened = pr(1); opened['title'] = 'Open source'; opened['draft'] = True
+        merged = pr(2); merged.update(state='closed', merged_at='2026-10-27T00:00:00Z', title='Merged source')
+        closed = pr(3); closed.update(state='closed', merged_at=None, draft=True, title='Closed draft', body='private raw body')
+        api = FakeGitHub([opened, merged, closed])
+        snapshot = audit.Collector(api, REPO).snapshot(workers=1, include_closed=True)
+        self.assertEqual({'total': 3, 'open': 1, 'draftOpen': 1, 'merged': 1, 'closedUnmerged': 1}, snapshot['inventoryCounts'])
+        self.assertEqual(['OPEN', 'MERGED', 'CLOSED'], [p['classification'] for p in snapshot['inventory']])
+        self.assertEqual([1], [p['number'] for p in snapshot['PRs']])
+        self.assertEqual('Open source', snapshot['PRs'][0]['title'])
+        self.assertNotIn('private raw body', json.dumps(snapshot))
+        self.assertTrue(all(payload['variables']['number'] == 1 for path, payload in api.calls if path == 'graphql'))
+
+    def test_all_state_inventory_keeps_the_second_rest_page(self):
+        api = FakeGitHub([pr(101)])
+        closed = []
+        for n in range(1, 101):
+            item = pr(n); item.update(state='closed', merged_at='2026-10-26T00:00:00Z', title=f'Merged{n}')
+            closed.append(item)
+        api.rest_pages[('/repos/owner/repo/pulls', 1)] = closed
+        api.rest_pages[('/repos/owner/repo/pulls', 2)] = [pr(101)]
+        snapshot = audit.Collector(api, REPO).snapshot(workers=1, include_closed=True)
+        self.assertEqual(101, snapshot['inventoryCounts']['total'])
+        self.assertEqual(100, snapshot['inventoryCounts']['merged'])
+        self.assertEqual(101, len(snapshot['inventory']))
+        self.assertEqual([101], [p['number'] for p in snapshot['PRs']])
+
+    def test_all_state_markdown_includes_closed_metadata_and_escapes_titles(self):
+        closed = pr(2); closed.update(state='closed', merged_at=None, title='closed|title\nnext')
+        snapshot = audit.Collector(FakeGitHub([pr(1), closed]), REPO).snapshot(workers=1, include_closed=True)
+        rendered = audit.markdown(snapshot)
+        self.assertIn('All PR inventory', rendered)
+        self.assertIn('closed\\|title next', rendered)
+        self.assertIn('CLOSED', rendered)
+        self.assertNotIn('closed|title\nnext', rendered)
+
     def test_truncated_http_response_returns_exit_two_without_partial_publication(self):
         client = audit.GitHub("private-token-value", Mock(return_value=TruncatedResponse()))
         with workspace_temp() as folder:

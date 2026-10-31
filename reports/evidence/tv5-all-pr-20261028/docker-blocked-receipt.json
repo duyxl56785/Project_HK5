@@ -1,0 +1,9 @@
+{
+  "status": "BLOCKED_DOCKER",
+  "sourceHead": "75bd05a0540a78afda80eb2d5ecf551385c47779",
+  "exitCode": 1,
+  "initializationErrors": 2,
+  "businessAssertionsExecuted": 0,
+  "rawReceipt": ".verification\\tv5-preflight-composition-20261027\\qa-scope-red\\summary.json",
+  "classification": "Environment, not production/harness assertion RED; preserve before retry"
+}

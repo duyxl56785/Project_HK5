@@ -1,0 +1,373 @@
+{
+  "kind": "DERIVED independent targeted PR review evidence; raw private byte-preserved",
+  "PR": 87,
+  "head": "7f2c6b2fc45055635b2fcf7d3b05bba4a854465a",
+  "base": "ceee8c8c4699e0b76a180c24365e4068d4c29770",
+  "branch": "detached PR candidate",
+  "command": [
+    "D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-all-pr-tdd-20261027\\review87\\backend\\gradlew.bat",
+    "-p",
+    "backend",
+    ":product-service:test",
+    "--tests",
+    "*LocalFileSystemImageStorageTest",
+    "--tests",
+    "*ProductServiceSecurityTest",
+    "--rerun-tasks",
+    "--no-daemon",
+    "--console=plain"
+  ],
+  "startedUtc": "2026-10-27T16:55:43.289096+00:00",
+  "completedUtc": "2026-10-27T16:56:04.052013+00:00",
+  "exitCode": 0,
+  "counts": {
+    "test": {
+      "PASS": 54
+    }
+  },
+  "cases": [
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "rootReplacementAfterConstructionIsRejected()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "requiresExplicitExistingDirectoryInsteadOfCreatingDefaultOrParentPaths()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "unsupportedAtomicMoveFallsBackWithoutReplaceExisting()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "publishFailureCleansWrittenTemporaryBytesAndReservedDirectory()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "rejectsRedirectedRootAndAncestorWithoutReadingOrWritingOutside()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "missingObjectHasSanitizedErrorAndNoSideEffect()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "rejectsKeyDirectoryRedirectAndDoesNotRemoveItsOutsideTargetOnCollision()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "writeFailureCleansReservedDirectoryAndSanitizesFilesystemException()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "atomicPublishExposesNoPartialObjectAndLeavesNoTemporaryFile()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "nullImageDoesNotReserveStorageSpace()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "[1] name=sample.jpg",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "[2] name=sample.png",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "[3] name=sample.webp",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "ignoresClientFilenameAndDoesNotReopenValidatedInput()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "rejectsOversizedOrNonRegularStoredContentWithoutUnboundedRead()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "concurrentAdaptersWriteUniqueCompleteObjects()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "[1] key=null",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "[2] key=",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "[3] key=../outside",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "[4] key=..",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "[5] key=.",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "[6] key=/etc/passwd",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "[7] key=C:\\private\\image",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "[8] key=\\\\server\\share",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "[9] key=%2e%2e%2fsecret",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "[10] key=f1736435-4321-4123-9123-001122334455/../secret",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "[11] key=F1736435-4321-4123-9123-001122334455",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "[12] key=f1736435-4321-4123-9123-001122334455.png",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "[13] key= key ",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "[14] key=x?y",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.LocalFileSystemImageStorageTest",
+      "name": "duplicateServerKeyNeverOverwritesOrDeletesPublishedImage()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "rejectsUnverifiedBearerAndForgedIdentityHeaders()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "deniesHealthMutations()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "rejectsUnmatchedPathsToo()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "[1] method=GET",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "[2] method=HEAD",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "blocksEvenAMockedAdminWithoutAnExplicitRoutePolicy()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "[1] method=GET, path=/api/products/probe",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "[2] method=POST, path=/api/products/probe",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "[3] method=PUT, path=/api/products/probe",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "[4] method=PATCH, path=/api/products/probe",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "[5] method=DELETE, path=/api/products/probe",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "[6] method=HEAD, path=/api/reviews/probe",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "[7] method=GET, path=/api/reviews/probe",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "[8] method=GET, path=/internal/products/probe",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "[9] method=GET, path=/api/categories-unprotected",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "[10] method=POST, path=/api/products/probe/images",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "[11] method=GET, path=/api/product-images/probe",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "[12] method=DELETE, path=/api/products/probe/images/probe",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "[1] credential=missing",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "[2] credential=bearer",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "[3] credential=headers",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "[4] credential=mock-admin",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.security.ProductServiceSecurityTest",
+      "name": "[5] credential=internal-token",
+      "result": "PASS"
+    }
+  ],
+  "rawArtifacts": [
+    {
+      "localPath": ".verification/tv5-all-pr-tdd-20261027/review87-run/runtime.log",
+      "bytes": 1274,
+      "sha256": "b4da20393d41771d582a1a98a4f1c7f50c87d291a402b7ff19339b865c237b22"
+    },
+    {
+      "localPath": ".verification/tv5-all-pr-tdd-20261027/review87-run/test/TEST-com.projecthk5.productservice.image.LocalFileSystemImageStorageTest.xml",
+      "bytes": 5653,
+      "sha256": "519a64980322b0e6c239ee443a74fa07bde7aabb12c64e4aa62e1498b1420217"
+    },
+    {
+      "localPath": ".verification/tv5-all-pr-tdd-20261027/review87-run/test/TEST-com.projecthk5.productservice.security.ProductServiceSecurityTest.xml",
+      "bytes": 6808,
+      "sha256": "264b890cc776e292e1859fa4b942745012b75f4db779a6e30d46fb3f3c76d3b0"
+    }
+  ],
+  "excludedStaleXml": [],
+  "boundary": "Focused source/local filesystem or realPG/private policy fixtures only. No public HTTP/current Auth/Store/House/storage deployment or Finance approval. Unchanged TV5 original8 supplied externally on108/109."
+}

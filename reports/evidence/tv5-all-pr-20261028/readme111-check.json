@@ -1,0 +1,36 @@
+{
+  "kind": "DERIVED docs111 source/link review",
+  "head": "42b2d2a",
+  "checkedAtUtc": "2026-10-27T17:14:19.215854+00:00",
+  "status": "PASS",
+  "localGitTreeTargets": [
+    "docs/ARCHITECTURE.md",
+    "docs/OWNERSHIP.md",
+    "CONTRIBUTING.md",
+    "docs/DEVELOPMENT.md",
+    "docker/README.md"
+  ],
+  "PRReferencesVerified": [
+    7,
+    29,
+    52,
+    74,
+    76,
+    87,
+    88,
+    89,
+    90,
+    91,
+    94,
+    95,
+    97,
+    102,
+    105,
+    106,
+    108,
+    109,
+    110
+  ],
+  "runtime": "NOT_RUN docs only; owner-reported213/46demo results independently matched at110/96886dd in separate run",
+  "scope": "README explicitly differentiates implemented source, unmerged demo, fixture counts, design UC16 and unresolved API/E2E/Finance gates; no business approval inferred"
+}
