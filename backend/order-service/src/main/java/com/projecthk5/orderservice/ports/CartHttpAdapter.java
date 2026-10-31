@@ -4,6 +4,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestClientException;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
@@ -29,6 +30,8 @@ public class CartHttpAdapter implements CartPort {
             .header("Authorization",bearer).header("X-Internal-Token",secret)
             .body(claimBody(key,revision))
             .retrieve().body(CartSnapshot.class);
+        } catch (HttpClientErrorException.Conflict refused) {
+            throw new CartPort.Rejected("Cart changed or is reserved by another checkout");
         } catch (RestClientException ex) { throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE,"Cart claim unavailable",ex); }
     }
     private Map<String,Object> claimBody(String key,Long revision) {

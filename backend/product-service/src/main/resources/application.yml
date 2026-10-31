@@ -1,6 +1,8 @@
 server:
   port: 8104
 spring:
+  config:
+    import: optional:configserver:${CONFIG_SERVER_URL:http://localhost:8888}
   application:
     name: product-service
   datasource:
@@ -11,8 +13,19 @@ spring:
     open-in-view: false
     hibernate:
       ddl-auto: validate
+  data:
+    redis:
+      timeout: 500ms
+      connect-timeout: 500ms
+  kafka:
+    consumer:
+      auto-offset-reset: earliest
   flyway:
     enabled: true
+  servlet:
+    multipart:
+      max-file-size: 2MB
+      max-request-size: 11MB
 management:
   endpoints:
     web:

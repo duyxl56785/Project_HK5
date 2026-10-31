@@ -1,6 +1,8 @@
 server:
   port: 8101
 spring:
+  config:
+    import: optional:configserver:${CONFIG_SERVER_URL:http://localhost:8888}
   application:
     name: auth-service
   datasource:
@@ -19,6 +21,10 @@ spring:
     clean-disabled: true
     baseline-on-migrate: false
     locations: classpath:db/migration
+# Auth is the authority itself; its own routes read the account directly.
+security:
+  current-authority:
+    enabled: false
 management:
   endpoints:
     web:

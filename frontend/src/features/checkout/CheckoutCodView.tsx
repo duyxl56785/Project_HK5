@@ -14,7 +14,7 @@ const errorText = {
 
 type Display = 'idle' | 'sending' | 'unknown' | 'confirmed' | 'rejected';
 
-export function CheckoutCodView({ state, onConfirm, trustedSessionScope }: CheckoutCodViewProps) {
+export function CheckoutCodView({ state, onConfirm, trustedSessionScope, storeNames }: CheckoutCodViewProps) {
   // Keep the result of every submitted key for this mounted host lifetime.
   // Unmounting/replacing a visible Cart scope must NOT make the same key retryable.
   const attempts = useRef(new Map<string, ReturnType<typeof createCheckoutOnce>>());
@@ -58,7 +58,7 @@ export function CheckoutCodView({ state, onConfirm, trustedSessionScope }: Check
     ]),
   ]);
   const existingGate = attempts.current.get(state.idempotencyKey);
-  return <CheckoutCodReady key={scope} cart={cart} request={request} checkoutKey={state.idempotencyKey}
+  return <CheckoutCodReady key={scope} cart={cart} storeNames={storeNames} request={request} checkoutKey={state.idempotencyKey}
     onConfirm={onConfirm} gateStatus={existingGate?.status ?? 'idle'}
     sendWithGate={async run => {
       let gate = attempts.current.get(state.idempotencyKey);
@@ -74,6 +74,7 @@ type AttemptResult = 'confirmed' | 'unknown' | 'rejected';
 type AttemptOutcome = AttemptResult | 'blocked';
 type CheckoutCodReadyProps = {
   readonly cart: NonNullable<ReturnType<typeof projectCart>>;
+  readonly storeNames?: CheckoutCodViewProps['storeNames'];
   readonly request: ReturnType<typeof prepareCheckout>;
   readonly checkoutKey: string;
   readonly onConfirm?: CheckoutCodViewProps['onConfirm'];
@@ -81,7 +82,7 @@ type CheckoutCodReadyProps = {
   readonly sendWithGate: (run: () => Promise<AttemptResult>) => Promise<AttemptOutcome>;
 };
 
-function CheckoutCodReady({ cart, request, checkoutKey, onConfirm, gateStatus, sendWithGate }: CheckoutCodReadyProps) {
+function CheckoutCodReady({ cart, storeNames, request, checkoutKey, onConfirm, gateStatus, sendWithGate }: CheckoutCodReadyProps) {
   const mounted = useRef(false);
   const [display, setDisplay] = useState<Display>('idle');
   const [orderId, setOrderId] = useState<string | null>(null);
@@ -118,13 +119,13 @@ function CheckoutCodReady({ cart, request, checkoutKey, onConfirm, gateStatus, s
   }
 
   return <section className="tv3-checkout" aria-label="Xác nhận đơn COD">
-    <header><span className="tv3-checkout__eyebrow">TV3 · COD</span>
+    <header>
       <h2>Thanh toán khi nhận hàng</h2>
       <p>Chỉ thanh toán khi nhận hàng. Không tích hợp cổng thanh toán trực tuyến.</p>
     </header>
     <div className="tv3-checkout__stores">
       {cart.groups.map((store) => <article key={store.storeId}>
-        <h3>Cửa hàng: {store.storeId}</h3>
+        <h3>Cửa hàng: {storeNames?.[store.storeId] ?? store.storeId}</h3>
         <ul>{store.lines.map((line) => <li key={line.productId}>
           <span>{line.title} × {line.quantity}</span><strong>{line.lineSubtotal}</strong>
         </li>)}</ul>
@@ -132,12 +133,11 @@ function CheckoutCodReady({ cart, request, checkoutKey, onConfirm, gateStatus, s
       </article>)}
     </div>
     <div className="tv3-checkout__summary">
-      <span>Tổng tiền sản phẩm theo snapshot</span><strong>{cart.total}</strong>
-      <small>Đơn vị tiền tệ/phí/giao hàng chưa được quyết định tại giao diện; cần xác nhận từ backend/M01.</small>
+      <span>Tổng tiền thanh toán khi nhận hàng</span><strong>{cart.total}</strong>
+      <small>Đơn vị: VND. Tổng tiền chính thức do hệ thống xác nhận khi tạo đơn.</small>
     </div>
     {cart.claimed && <p role="alert">Giỏ đang được Checkout khác giữ. Không gửi lặp.</p>}
     {!canonicalCheckoutKey(checkoutKey) && <p role="alert">Thiếu mã yêu cầu đặt hàng hợp lệ.</p>}
-    {!onConfirm && <p role="status">Chưa nối bộ xử lý đặt hàng đã xác thực. Chế độ xem trước chỉ hiển thị dữ liệu.</p>}
     {gateStatus !== 'idle' && display === 'idle' && <p role="alert">Mã yêu cầu đã được dùng ở lần Checkout trước. Không gửi lại hoặc đổi mã để thử lại; cần đối soát trạng thái.</p>}
     {display === 'unknown' && <p role="alert">Kết quả chưa xác định. Giữ nguyên Idempotency-Key; đối soát đơn trước khi thao tác tiếp.</p>}
     {display === 'rejected' && <p role="alert">{reason ? errorText[reason] : 'Đơn hàng bị từ chối.'}</p>}

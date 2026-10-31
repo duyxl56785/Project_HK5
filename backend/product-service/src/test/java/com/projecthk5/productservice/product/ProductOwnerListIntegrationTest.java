@@ -215,7 +215,7 @@ class ProductOwnerListIntegrationTest {
                 status==ProductStatus.REJECTED||status==ProductStatus.SUSPENDED?"private reason":null);return persistence.create(listing).listing();
     }
     @TestConfiguration static class Fixture {
-        @Bean FixturePolicy policy() {return new FixturePolicy();}
+        @org.springframework.context.annotation.Primary @Bean FixturePolicy policy() {return new FixturePolicy();}
         @Bean Inspector inspector() {return new Inspector();}
         @Bean HibernatePropertiesCustomizer inspection(Inspector inspector) {return p->p.put("hibernate.session_factory.statement_inspector",inspector);}
     }

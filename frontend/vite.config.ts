@@ -4,5 +4,7 @@ import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  server: { port: 5173 },
+  // The browser stays same-origin so the refresh cookie and CSRF rules work unchanged.
+  server: { port: 5173, proxy: { '/api': { target: 'http://localhost:18080', changeOrigin: true } } },
+  preview: { port: 5173, proxy: { '/api': { target: 'http://localhost:18080', changeOrigin: true } } },
 });

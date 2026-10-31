@@ -36,7 +36,6 @@ export function SellerStoreOverview({ state }: SellerStoreOverviewProps) {
           <h3 id={`${id}-seller`}>Người bán</h3>
           <span className={`tv2-seller-overview__badge tv2-seller-overview__badge--${status.tone}`}>{status.label}</span>
           <p>{status.detail}</p>
-          <dl><div><dt>Phiên bản hồ sơ</dt><dd><code>{data.seller.version}</code></dd></div></dl>
         </article>
         <article className="tv2-seller-overview__card" aria-labelledby={`${id}-store`}>
           <span className="tv2-seller-overview__eyebrow">Thông tin cửa hàng</span>
@@ -47,7 +46,6 @@ export function SellerStoreOverview({ state }: SellerStoreOverviewProps) {
             </span>
             <dl>
               <div><dt>Định danh đường dẫn (slug)</dt><dd><code>{data.store.slug}</code></dd></div>
-              <div><dt>Phiên bản cửa hàng</dt><dd><code>{data.store.version}</code></dd></div>
             </dl>
             <p className="tv2-seller-overview__note">Trạng thái mở cửa không thay thế việc xét duyệt hồ sơ người bán.</p>
           </> : <p>Chưa ghi nhận cửa hàng gắn với hồ sơ của bạn.</p>}

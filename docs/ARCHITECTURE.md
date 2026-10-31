@@ -27,7 +27,7 @@ flowchart TB
     KAFKA --> PRODUCT
 ```
 
-Tất cả service sở hữu database riêng về mặt logic; **không tạo foreign key xuyên database**. `order-service` phối hợp `cart`, `product`, `seller` và `inventory` qua HTTP nội bộ, trạng thái đơn được bù trừ theo Saga. Sự kiện nghiệp vụ qua transactional outbox/Kafka (chưa được triển khai trong scaffold).
+Tất cả service sở hữu database riêng về mặt logic; **không tạo foreign key xuyên database**. `order-service` phối hợp `cart`, `product`, `seller` và `inventory` qua HTTP nội bộ, trạng thái đơn được bù trừ theo Saga. Sự kiện nghiệp vụ của Order qua transactional outbox/Kafka; xem [RUN_LOCAL.md](RUN_LOCAL.md#hạ-tầng).
 
 ## Vùng dùng chung cần review
 

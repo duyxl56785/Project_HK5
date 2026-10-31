@@ -16,6 +16,7 @@ import java.util.List;
 public class ResourceSecurityConfig {
     @Bean
     SecurityFilterChain apiSecurity(HttpSecurity http) throws Exception {
+        com.projecthk5.security.JwtResourceServer.requireCurrentAuthority(http);
         return http.csrf(csrf -> csrf.disable())
             .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth

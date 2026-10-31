@@ -1,8 +1,23 @@
 server:
   port: 8108
 spring:
+  config:
+    import: optional:configserver:${CONFIG_SERVER_URL:http://localhost:8888}
   application:
     name: notification-service
+  datasource:
+    url: ${NOTIFICATION_DB_URL:jdbc:postgresql://localhost:5432/notification_db}
+    username: ${NOTIFICATION_DB_USERNAME:hk5}
+    password: ${NOTIFICATION_DB_PASSWORD:}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+  kafka:
+    consumer:
+      auto-offset-reset: earliest
+  flyway:
+    enabled: true
 management:
   endpoints:
     web:

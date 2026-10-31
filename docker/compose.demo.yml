@@ -1,0 +1,250 @@
+# Full local stack. Start it with: node scripts/demo/up.mjs (see docs/RUN_LOCAL.md).
+# Only the Gateway (127.0.0.1:18080) is published. Inspect data with: docker compose ... exec postgres psql -U hk5 hk5_demo
+name: hk5-demo
+
+x-service: &service
+  image: eclipse-temurin:21-jre
+  restart: unless-stopped
+  command: ["java", "-Xmx256m", "-Duser.timezone=UTC", "-jar", "/app/app.jar"]
+  depends_on: &ready
+    postgres:
+      condition: service_healthy
+    config-server:
+      condition: service_healthy
+    kafka:
+      condition: service_healthy
+    redis:
+      condition: service_healthy
+
+x-jwt: &jwt
+  CONFIG_SERVER_URL: http://config-server:8888
+  JWT_ISSUER_URI: ${JWT_ISSUER_URI:?run node scripts/demo/gen-env.mjs}
+  JWT_AUDIENCE: ${JWT_AUDIENCE}
+  JWT_HS256_CURRENT_KID: ${JWT_HS256_CURRENT_KID}
+  JWT_HS256_CURRENT_KEY_B64: ${JWT_HS256_CURRENT_KEY_B64}
+
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: hk5
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?run node scripts/demo/gen-env.mjs}
+      POSTGRES_DB: hk5_demo
+      AUTH_DB_PASSWORD: ${AUTH_DB_PASSWORD}
+      AUTH_MIGRATION_PASSWORD: ${AUTH_MIGRATION_PASSWORD}
+      USER_DB_PASSWORD: ${USER_DB_PASSWORD}
+      USER_MIGRATION_PASSWORD: ${USER_MIGRATION_PASSWORD}
+    volumes:
+      - pgdemo:/var/lib/postgresql/data
+      - ./demo/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U hk5 -d hk5_demo"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+  kafka:
+    image: apache/kafka:3.8.1
+    restart: unless-stopped
+    environment:
+      KAFKA_NODE_ID: 1
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_LISTENERS: PLAINTEXT://:9092,CONTROLLER://:9093
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@localhost:9093
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_HEAP_OPTS: -Xmx256m
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/kafka/bin/kafka-broker-api-versions.sh --bootstrap-server 127.0.0.1:9092 >/dev/null"]
+      interval: 5s
+      timeout: 10s
+      retries: 20
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    # Cache only: nothing here needs to survive a restart.
+    command: ["redis-server", "--save", "", "--appendonly", "no", "--maxmemory", "64mb", "--maxmemory-policy", "allkeys-lru"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+  discovery-server:
+    image: eclipse-temurin:21-jre
+    restart: unless-stopped
+    command: ["java", "-Xmx256m", "-jar", "/app/app.jar"]
+    volumes: ["../backend/discovery-server/build/libs/discovery-server-0.1.0-SNAPSHOT.jar:/app/app.jar:ro"]
+    healthcheck:
+      test: ["CMD-SHELL", "bash -c '</dev/tcp/127.0.0.1/8761'"]
+      interval: 3s
+      timeout: 3s
+      retries: 40
+
+  config-server:
+    image: eclipse-temurin:21-jre
+    restart: unless-stopped
+    command: ["java", "-Xmx256m", "-jar", "/app/app.jar"]
+    depends_on:
+      discovery-server:
+        condition: service_healthy
+    volumes: ["../backend/config-server/build/libs/config-server-0.1.0-SNAPSHOT.jar:/app/app.jar:ro"]
+    healthcheck:
+      test: ["CMD-SHELL", "bash -c '</dev/tcp/127.0.0.1/8888'"]
+      interval: 3s
+      timeout: 3s
+      retries: 40
+
+  auth-service:
+    <<: *service
+    volumes: ["../backend/auth-service/build/libs/auth-service-0.1.0-SNAPSHOT.jar:/app/app.jar:ro"]
+    environment:
+      <<: *jwt
+      SPRING_PROFILES_ACTIVE: migration
+      AUTH_DB_HOST: postgres
+      AUTH_DB_PASSWORD: ${AUTH_DB_PASSWORD}
+      AUTH_MIGRATION_PASSWORD: ${AUTH_MIGRATION_PASSWORD}
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS}
+      SELLER_AUTH_TOKEN: ${SELLER_AUTH_TOKEN}
+      WRITE_FENCE_TARGETS: ${USER_AUTHORITY_TOKEN}@http://user-service:8102,${SELLER_AUTHORITY_TOKEN}@http://seller-service:8103,${PRODUCT_AUTHORITY_TOKEN}@http://product-service:8104,${CART_AUTHORITY_TOKEN}@http://cart-service:8106,${ORDER_AUTHORITY_TOKEN}@http://order-service:8107,${NOTIFICATION_AUTHORITY_TOKEN}@http://notification-service:8108
+      ADMIN_BOOTSTRAP_EMAIL: ${ADMIN_BOOTSTRAP_EMAIL}
+      ADMIN_BOOTSTRAP_PASSWORD: ${ADMIN_BOOTSTRAP_PASSWORD}
+
+  user-service:
+    <<: *service
+    volumes: ["../backend/user-service/build/libs/user-service-0.1.0-SNAPSHOT.jar:/app/app.jar:ro"]
+    environment:
+      <<: *jwt
+      SPRING_PROFILES_ACTIVE: migration
+      USER_DB_HOST: postgres
+      AUTH_INTERNAL_URL: http://auth-service:8101
+      AUTH_AUTHORITY_TOKEN: ${USER_AUTHORITY_TOKEN}
+      USER_DB_PASSWORD: ${USER_DB_PASSWORD}
+      USER_MIGRATION_PASSWORD: ${USER_MIGRATION_PASSWORD}
+
+  seller-service:
+    <<: *service
+    volumes: ["../backend/seller-service/build/libs/seller-service-0.1.0-SNAPSHOT.jar:/app/app.jar:ro"]
+    environment:
+      <<: *jwt
+      SELLER_DB_URL: jdbc:postgresql://postgres:5432/seller_db
+      SELLER_DB_USERNAME: hk5
+      SELLER_DB_PASSWORD: ${POSTGRES_PASSWORD}
+      AUTH_INTERNAL_URL: http://auth-service:8101
+      AUTH_AUTHORITY_TOKEN: ${SELLER_AUTHORITY_TOKEN}
+      SELLER_AUTH_TOKEN: ${SELLER_AUTH_TOKEN}
+      NOTIFICATION_INTERNAL_URL: http://notification-service:8108
+      SELLER_NOTIFICATION_TOKEN: ${SELLER_NOTIFICATION_TOKEN}
+      PRODUCT_SELLER_TOKEN: ${PRODUCT_SELLER_TOKEN}
+      ORDER_SELLER_TOKEN: ${ORDER_SELLER_TOKEN}
+
+  product-service:
+    <<: *service
+    volumes:
+      - "../backend/product-service/build/libs/product-service-0.1.0-SNAPSHOT.jar:/app/app.jar:ro"
+      - productimages:/data/images
+    environment:
+      <<: *jwt
+      PRODUCT_DB_URL: jdbc:postgresql://postgres:5432/product_db
+      PRODUCT_DB_USERNAME: hk5
+      PRODUCT_DB_PASSWORD: ${POSTGRES_PASSWORD}
+      PRODUCT_IMAGE_DIR: /data/images
+      AUTH_INTERNAL_URL: http://auth-service:8101
+      AUTH_AUTHORITY_TOKEN: ${PRODUCT_AUTHORITY_TOKEN}
+      SELLER_INTERNAL_URL: http://seller-service:8103
+      PRODUCT_SELLER_TOKEN: ${PRODUCT_SELLER_TOKEN}
+      INVENTORY_INTERNAL_URL: http://inventory-service:8105
+      PRODUCT_INVENTORY_TOKEN: ${PRODUCT_INVENTORY_TOKEN}
+      CART_PRODUCT_TOKEN: ${CART_PRODUCT_TOKEN}
+      ORDER_PRODUCT_TOKEN: ${ORDER_PRODUCT_TOKEN}
+
+  inventory-service:
+    <<: *service
+    volumes: ["../backend/inventory-service/build/libs/inventory-service-0.1.0-SNAPSHOT.jar:/app/app.jar:ro"]
+    environment:
+      CONFIG_SERVER_URL: http://config-server:8888
+      INVENTORY_DB_URL: jdbc:postgresql://postgres:5432/inventory_db
+      INVENTORY_DB_USERNAME: hk5
+      INVENTORY_DB_PASSWORD: ${POSTGRES_PASSWORD}
+      INVENTORY_INTERNAL_TOKEN: ${PRODUCT_INVENTORY_TOKEN}
+      INVENTORY_ORDER_PAIR_TOKEN: ${ORDER_INVENTORY_TOKEN}
+      INVENTORY_ORDER_PAIR_ENABLED: ${INVENTORY_ORDER_PAIR_ENABLED:?run node scripts/demo/gen-env.mjs}
+
+  cart-service:
+    <<: *service
+    volumes: ["../backend/cart-service/build/libs/cart-service-0.1.0-SNAPSHOT.jar:/app/app.jar:ro"]
+    environment:
+      <<: *jwt
+      HK5_CART_JDBC_URL: jdbc:postgresql://postgres:5432/cart_db
+      HK5_CART_DB_USER: hk5
+      HK5_CART_DB_PASSWORD: ${POSTGRES_PASSWORD}
+      APP_INTERNAL_CHECKOUT_TOKEN: ${ORDER_CART_TOKEN}
+      AUTH_INTERNAL_URL: http://auth-service:8101
+      AUTH_AUTHORITY_TOKEN: ${CART_AUTHORITY_TOKEN}
+      PRODUCT_INTERNAL_URL: http://product-service:8104
+      CART_PRODUCT_TOKEN: ${CART_PRODUCT_TOKEN}
+
+  order-service:
+    <<: *service
+    volumes: ["../backend/order-service/build/libs/order-service-0.1.0-SNAPSHOT.jar:/app/app.jar:ro"]
+    environment:
+      <<: *jwt
+      HK5_ORDER_JDBC_URL: jdbc:postgresql://postgres:5432/order_db
+      HK5_ORDER_DB_USER: hk5
+      HK5_ORDER_DB_PASSWORD: ${POSTGRES_PASSWORD}
+      HK5_FINANCE_POLICY_APPROVED: ${HK5_FINANCE_POLICY_APPROVED:?run node scripts/demo/gen-env.mjs}
+      HK5_FINANCE_PLATFORM_RATE: ${HK5_FINANCE_PLATFORM_RATE:?run node scripts/demo/gen-env.mjs}
+      HK5_FINANCE_CURRENCY_SCALE: ${HK5_FINANCE_CURRENCY_SCALE:?run node scripts/demo/gen-env.mjs}
+      HK5_FINANCE_HOUSE_EXEMPT: ${HK5_FINANCE_HOUSE_EXEMPT:?run node scripts/demo/gen-env.mjs}
+      AUTH_INTERNAL_URL: http://auth-service:8101
+      AUTH_AUTHORITY_TOKEN: ${ORDER_AUTHORITY_TOKEN}
+      APP_CART_INTERNAL_URL: http://cart-service:8106
+      APP_CART_INTERNAL_TOKEN: ${ORDER_CART_TOKEN}
+      PRODUCT_INTERNAL_URL: http://product-service:8104
+      ORDER_PRODUCT_TOKEN: ${ORDER_PRODUCT_TOKEN}
+      INVENTORY_INTERNAL_URL: http://inventory-service:8105
+      ORDER_INVENTORY_TOKEN: ${ORDER_INVENTORY_TOKEN}
+      SELLER_INTERNAL_URL: http://seller-service:8103
+      ORDER_SELLER_TOKEN: ${ORDER_SELLER_TOKEN}
+
+  notification-service:
+    <<: *service
+    volumes: ["../backend/notification-service/build/libs/notification-service-0.1.0-SNAPSHOT.jar:/app/app.jar:ro"]
+    environment:
+      <<: *jwt
+      NOTIFICATION_DB_URL: jdbc:postgresql://postgres:5432/notification_db
+      AUTH_INTERNAL_URL: http://auth-service:8101
+      AUTH_AUTHORITY_TOKEN: ${NOTIFICATION_AUTHORITY_TOKEN}
+      NOTIFICATION_DB_USERNAME: hk5
+      NOTIFICATION_DB_PASSWORD: ${POSTGRES_PASSWORD}
+      SELLER_NOTIFICATION_TOKEN: ${SELLER_NOTIFICATION_TOKEN}
+
+  api-gateway:
+    <<: *service
+    depends_on:
+      <<: *ready
+      auth-service:
+        condition: service_started
+    volumes: ["../backend/api-gateway/build/libs/api-gateway-0.1.0-SNAPSHOT.jar:/app/app.jar:ro"]
+    ports:
+      - "127.0.0.1:18080:8080"
+    environment:
+      CONFIG_SERVER_URL: http://config-server:8888
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS}
+      AUTH_URL: lb://auth-service
+      USER_URL: lb://user-service
+      SELLER_URL: lb://seller-service
+      PRODUCT_URL: lb://product-service
+      CART_URL: lb://cart-service
+      ORDER_URL: lb://order-service
+      NOTIFICATION_URL: lb://notification-service
+
+volumes:
+  pgdemo:
+  productimages:

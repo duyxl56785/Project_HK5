@@ -1,6 +1,8 @@
 server:
   port: 8106
 spring:
+  config:
+    import: optional:configserver:${CONFIG_SERVER_URL:http://localhost:8888}
   application:
     name: cart-service
   datasource:
