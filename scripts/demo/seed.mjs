@@ -4,7 +4,6 @@
 import { randomBytes } from 'node:crypto';
 import { appendFileSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { deflateSync } from 'node:zlib';
 
 const envFile = resolve(import.meta.dirname, '../../.env.demo');
 const env = Object.fromEntries(readFileSync(envFile, 'utf8').split('\n')
@@ -79,64 +78,22 @@ async function category(admin, name) {
   return (rows.find((row) => row.name === name) ?? await must('/api/categories', { token: admin, method: 'POST', body: { name, parentId: null } })).id;
 }
 
-const crc = (bytes) => {
-  let value = ~0;
-  for (const byte of bytes) {
-    value ^= byte;
-    for (let bit = 0; bit < 8; bit += 1) value = value & 1 ? (value >>> 1) ^ 0xedb88320 : value >>> 1;
-  }
-  return ~value >>> 0;
-};
-
-function chunk(type, data) {
-  const body = Buffer.concat([Buffer.from(type), data]);
-  const frame = Buffer.alloc(8 + data.length + 4);
-  frame.writeUInt32BE(data.length);
-  body.copy(frame, 4);
-  frame.writeUInt32BE(crc(body), 8 + data.length);
-  return frame;
-}
-
-// shortcut: placeholder art drawn from the hue, replace with real product photos if the demo needs them.
-function placeholderPng(hue) {
-  const size = 400;
-  const channel = (n, light) => {
-    const k = (n + hue / 30) % 12;
-    return Math.round(255 * (light - 0.3 * Math.min(light, 1 - light) * Math.max(-1, Math.min(k - 3, 9 - k, 1))));
-  };
-  const rows = Buffer.alloc((size * 3 + 1) * size);
-  for (let y = 0, at = 0; y < size; y += 1) {
-    rows[at++] = 0;
-    for (let x = 0; x < size; x += 1) {
-      const inside = (x - 200) ** 2 + (y - 200) ** 2 < 120 ** 2;
-      const light = inside ? 0.94 : 0.76 + (0.12 * (x + y)) / (2 * size);
-      for (const n of [0, 8, 4]) rows[at++] = channel(n, light);
-    }
-  }
-  const header = Buffer.alloc(13);
-  header.writeUInt32BE(size, 0);
-  header.writeUInt32BE(size, 4);
-  header.set([8, 2], 8);
-  return Buffer.concat([Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]), chunk('IHDR', header),
-    chunk('IDAT', deflateSync(rows)), chunk('IEND', Buffer.alloc(0))]);
-}
-
-async function image(token, id, sku, hue) {
+async function image(token, id, sku) {
   const { images } = await must(`/api/seller/products/${id}`, { token });
   if (images.length > 0) return;
   const form = new FormData();
-  form.append('files', new Blob([placeholderPng(hue)], { type: 'image/png' }), `${sku}.png`);
+  form.append('files', new Blob([readFileSync(resolve(import.meta.dirname, 'images', `${sku}.jpg`))], { type: 'image/jpeg' }), `${sku}.jpg`);
   const response = await fetch(`${gateway}/api/seller/products/${id}/images`, {
     method: 'POST', headers: { Origin: origin, 'X-CSRF-Protection': '1', Authorization: `Bearer ${token}` }, body: form,
   });
   if (!response.ok) throw new Error(`upload ${sku} -> ${response.status} ${await response.text()}`);
 }
 
-async function product(token, admin, categoryId, item, hue) {
+async function product(token, admin, categoryId, item) {
   const existing = (await must(`/api/seller/products?size=100&term=${encodeURIComponent(item.sku)}`, { token })).products.find((p) => p.sku === item.sku);
-  if (existing) return image(token, existing.id, item.sku, hue);
+  if (existing) return image(token, existing.id, item.sku);
   const { product: created } = await must('/api/seller/products', { token, method: 'POST', body: { ...item, categoryId, initialStock: 50 } });
-  await image(token, created.id, item.sku, hue);
+  await image(token, created.id, item.sku);
   const submitted = await must(`/api/seller/products/${created.id}/submit`, { token, method: 'POST', body: { expectedVersion: created.version } });
   const version = (submitted.product ?? submitted).version;
   await must(`/api/admin/products/${created.id}/approve`, { token: admin, method: 'POST', body: { expectedVersion: version, reason: 'Seed data' } });
@@ -195,10 +152,10 @@ const catalog = [
     ['SACH-003', 'Bút gel 12 màu', '85000', 'Bộ bút gel 12 màu, ngòi 0.5mm.'],
   ]],
 ];
-for (const [index, [name, seller, items]] of catalog.entries()) {
+for (const [name, seller, items] of catalog) {
   const categoryId = await category(admin, name);
   for (const [sku, label, unitPrice, description] of items) {
-    await product(seller, admin, categoryId, { sku, name: label, unitPrice, description }, index * 40);
+    await product(seller, admin, categoryId, { sku, name: label, unitPrice, description });
   }
 }
 
