@@ -1,7 +1,10 @@
 import { useState } from 'react';
-import type { FormEvent } from 'react';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useQuery } from '@tanstack/react-query';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 import { api } from '../../shared/api';
+import { text } from '../../shared/forms';
 import { Badge, dateTime, ErrorNote, Loaded, money, shortId, StatusFilter, useAction } from '../../shared/ui';
 import { useCategories } from '../catalog/CatalogPage';
 import { TotalsGrid } from '../finance/FinanceTable';
@@ -30,6 +33,23 @@ interface SellerRow {
   readonly contact: { readonly representativeName: string | null; readonly phone: string | null; readonly pickupAddress: string | null };
   readonly store: { readonly name: string } | null;
 }
+interface HistoryRow {
+  readonly fromStatus: string | null; readonly toStatus: string; readonly reason: string | null;
+  readonly reviewedBy: string | null; readonly at: string;
+}
+
+function SellerHistory({ id }: { readonly id: string }) {
+  const [open, setOpen] = useState(false);
+  const rows = useQuery({ queryKey: ['admin-sellers', id, 'history'], enabled: open, queryFn: () => api<HistoryRow[]>(`/api/admin/sellers/${id}/history`) });
+  return <>
+    <button type="button" className="link" aria-expanded={open} onClick={() => setOpen(!open)}>Lịch sử</button>
+    {open && <Loaded query={rows} empty={(data) => data.length === 0}>{(data) => <ol className="list">{data.map((h) =>
+      <li key={`${h.toStatus}-${h.at}`}><small className="muted">{dateTime(h.at)}</small> {h.fromStatus && <><Badge value={h.fromStatus} /> → </>}<Badge value={h.toStatus} />
+        {h.reason && <small className="muted"> {h.reason}</small>}
+        <br /><small className="muted">{h.reviewedBy ? `Admin ${h.reviewedBy}` : 'Người bán gửi hồ sơ'}</small></li>)}</ol>}</Loaded>}
+  </>;
+}
+
 const SELLER_ACTIONS: Record<string, { action: string; label: string }[]> = {
   PENDING_REVIEW: [{ action: 'approve', label: 'Duyệt' }, { action: 'reject', label: 'Từ chối' }],
   APPROVED: [{ action: 'suspend', label: 'Tạm ngừng' }],
@@ -54,7 +74,7 @@ export function AdminSellersPage() {
         <td>{row.store?.name ?? '—'}</td>
         <td><Badge value={row.status} />{row.reviewReason && <small className="muted"> {row.reviewReason}</small>}</td>
         <td><Moderate actions={SELLER_ACTIONS[row.status] ?? []} needsReason={['reject', 'suspend']} busy={moderate.isPending}
-          run={(action, reason) => moderate.mutate({ row, action, reason })} /></td>
+          run={(action, reason) => moderate.mutate({ row, action, reason })} /><SellerHistory id={row.id} /></td>
       </tr>)}</tbody></table>}</Loaded>
   </div>;
 }
@@ -85,24 +105,26 @@ export function AdminProductsPage() {
   </div>;
 }
 
+const categorySchema = z.object({ name: text('Tên danh mục', 255), parentId: z.string() });
+type CategoryInput = z.infer<typeof categorySchema>;
+
 export function AdminCategoriesPage() {
   const categories = useCategories();
-  const [name, setName] = useState('');
-  const [parentId, setParentId] = useState('');
-  const create = useAction(() => api('/api/categories', { method: 'POST', body: { name, parentId: parentId || null } }), ['categories'], () => setName(''));
+  const form = useForm<CategoryInput>({ resolver: zodResolver(categorySchema), defaultValues: { name: '', parentId: '' } });
+  const create = useAction(({ name, parentId }: CategoryInput) => api('/api/categories', { method: 'POST', body: { name, parentId: parentId || null } }), ['categories'], () => form.resetField('name'));
   const rename = useAction(({ id, next, parent }: { id: string; next: string; parent: string | null }) =>
     api(`/api/categories/${id}`, { method: 'PUT', body: { name: next, parentId: parent } }), ['categories']);
   const remove = useAction((id: string) => api(`/api/categories/${id}`, { method: 'DELETE' }), ['categories']);
-  function submit(event: FormEvent) { event.preventDefault(); create.mutate(undefined); }
   const nameOf = (id: string | null) => categories.data?.find((c) => c.id === id)?.name ?? '—';
   return <div className="stack">
     <h1>Danh mục</h1>
-    <form className="panel row row--wrap" onSubmit={submit}>
-      <input aria-label="Tên danh mục" className="grow" required maxLength={255} placeholder="Tên danh mục" value={name} onChange={(e) => setName(e.currentTarget.value)} />
-      <select aria-label="Danh mục cha" value={parentId} onChange={(e) => setParentId(e.currentTarget.value)}>
+    <form className="panel row row--wrap" noValidate onSubmit={form.handleSubmit((value) => create.mutate(value))}>
+      <input aria-label="Tên danh mục" className="grow" placeholder="Tên danh mục" {...form.register('name')} />
+      <select aria-label="Danh mục cha" {...form.register('parentId')}>
         <option value="">Danh mục gốc</option>
         {categories.data?.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}</select>
       <button className="btn btn--primary" disabled={create.isPending}>Thêm</button>
+      {form.formState.errors.name && <small className="field__error" role="alert">{form.formState.errors.name.message}</small>}
     </form>
     <ErrorNote error={create.error ?? rename.error ?? remove.error} />
     <Loaded query={categories} empty={(rows) => rows.length === 0}>{(rows) => <table className="table">

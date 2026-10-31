@@ -1,9 +1,12 @@
 import { useState } from 'react';
-import type { FormEvent } from 'react';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useQuery } from '@tanstack/react-query';
+import { useForm } from 'react-hook-form';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import type { z } from 'zod';
 import { api } from '../../shared/api';
-import { Badge, ErrorNote, Loaded, money, StatusFilter, useAction } from '../../shared/ui';
+import { productSchema } from '../../shared/forms';
+import { Badge, ErrorNote, Field, Loaded, money, StatusFilter, useAction } from '../../shared/ui';
 import { useCategories } from '../catalog/CatalogPage';
 
 export interface Product {
@@ -14,6 +17,7 @@ interface SellerProduct {
   readonly product: Product; readonly description: string; readonly available: number | null; readonly reserved: number | null;
   readonly images: readonly { readonly id: string; readonly url: string }[];
 }
+type ProductInput = z.infer<typeof productSchema>;
 const STATUSES = ['DRAFT', 'PENDING_REVIEW', 'ACTIVE', 'REJECTED', 'SUSPENDED', 'INACTIVE'];
 
 export function SellerProductsPage() {
@@ -37,27 +41,28 @@ function ProductForm({ current }: { readonly current?: SellerProduct }) {
   const navigate = useNavigate();
   const categories = useCategories();
   const p = current?.product;
-  const [categoryId, setCategoryId] = useState(p?.categoryId ?? '');
-  const [sku, setSku] = useState(p?.sku ?? '');
-  const [name, setName] = useState(p?.name ?? '');
-  const [unitPrice, setUnitPrice] = useState(p?.unitPrice ?? '');
-  const [description, setDescription] = useState(current?.description ?? '');
-  const [initialStock, setInitialStock] = useState('0');
-  const save = useAction(() => p
+  const form = useForm<ProductInput>({
+    resolver: zodResolver(productSchema),
+    defaultValues: {
+      categoryId: p?.categoryId ?? '', sku: p?.sku ?? '', name: p?.name ?? '', unitPrice: p?.unitPrice ?? '',
+      description: current?.description ?? '', initialStock: '0',
+    },
+  });
+  const { errors } = form.formState;
+  const save = useAction(({ categoryId, sku, name, unitPrice, description, initialStock }: ProductInput) => p
     ? api<SellerProduct>(`/api/seller/products/${p.id}`, { method: 'PUT', body: { categoryId, name, unitPrice, description, expectedVersion: p.version } })
     : api<SellerProduct>('/api/seller/products', { method: 'POST', body: { categoryId, sku, name, unitPrice, description, initialStock: Number(initialStock) } }),
   ['seller-products'], (saved) => { if (!p) navigate(`/seller/products/${saved.product.id}`, { replace: true }); });
-  function submit(event: FormEvent) { event.preventDefault(); save.mutate(undefined); }
-  return <form className="panel stack" onSubmit={submit}>
+  return <form className="panel stack" noValidate onSubmit={form.handleSubmit((value) => save.mutate(value))}>
     <h2>Thông tin sản phẩm</h2>
-    <label className="field">Danh mục<select required value={categoryId} onChange={(e) => setCategoryId(e.currentTarget.value)}>
+    <Field label="Danh mục" error={errors.categoryId}><select {...form.register('categoryId')}>
       <option value="">Chọn danh mục…</option>
-      {categories.data?.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}</select></label>
-    <label className="field">SKU<input required maxLength={128} disabled={!!p} value={sku} onChange={(e) => setSku(e.currentTarget.value)} /></label>
-    <label className="field">Tên sản phẩm<input required maxLength={255} value={name} onChange={(e) => setName(e.currentTarget.value)} /></label>
-    <label className="field">Giá (VND)<input required type="number" min={0} step={1} value={unitPrice} onChange={(e) => setUnitPrice(e.currentTarget.value)} /></label>
-    <label className="field">Mô tả<textarea rows={5} maxLength={5000} value={description} onChange={(e) => setDescription(e.currentTarget.value)} /></label>
-    {!p && <label className="field">Tồn kho ban đầu<input type="number" min={0} max={1000000} value={initialStock} onChange={(e) => setInitialStock(e.currentTarget.value)} /></label>}
+      {categories.data?.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}</select></Field>
+    <Field label="SKU" error={errors.sku}><input readOnly={!!p} {...form.register('sku')} /></Field>
+    <Field label="Tên sản phẩm" error={errors.name}><input {...form.register('name')} /></Field>
+    <Field label="Giá (VND)" error={errors.unitPrice}><input inputMode="numeric" {...form.register('unitPrice')} /></Field>
+    <Field label="Mô tả" error={errors.description}><textarea rows={5} {...form.register('description')} /></Field>
+    {!p && <Field label="Tồn kho ban đầu" error={errors.initialStock}><input inputMode="numeric" {...form.register('initialStock')} /></Field>}
     <ErrorNote error={save.error} />
     {p && save.isSuccess && <p className="note" role="status">Đã lưu.</p>}
     <button className="btn btn--primary" disabled={save.isPending}>Lưu</button>

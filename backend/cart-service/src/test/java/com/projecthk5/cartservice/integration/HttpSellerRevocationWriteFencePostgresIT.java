@@ -270,6 +270,33 @@ class HttpSellerRevocationWriteFencePostgresIT {
         assertTrue(found.body().contains("\"status\":\"ACTIVE\""), found.body());
     }
 
+    /** Pins a known limit: Auth compares status and roles, not when the token was issued. */
+    @Test void anAccessTokenFromBeforeALockIsRefusedWhileLockedAndWorksAgainAfterUnlock() throws Exception {
+        productEntered = new CountDownLatch(1);
+        releaseProduct = new CountDownLatch(0);
+        AuthService service = auth.getBean(AuthService.class);
+        UUID account = service.create("unlock-" + UUID.randomUUID() + "@test.local", "not-a-real-password",
+                Set.of(Account.Role.CUSTOMER)).getId();
+        UUID admin = service.create("admin-" + UUID.randomUUID() + "@test.local", "not-a-real-password",
+                Set.of(Account.Role.ADMIN, Account.Role.CUSTOMER)).getId();
+        HttpClient client = HttpClient.newHttpClient();
+        String bearer = token(account, "CUSTOMER"), adminBearer = token(admin, "ADMIN", "CUSTOMER");
+        HttpRequest add = HttpRequest.newBuilder(URI.create("http://127.0.0.1:" + cartPort + "/api/cart/items"))
+                .header("Authorization", "Bearer " + bearer)
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString("{\"productId\":\"product-1\",\"quantity\":1}")).build();
+
+        assertEquals(200, adminAction(client, adminBearer, account, "disable").statusCode());
+        HttpResponse<String> locked = send(client, add);
+        assertEquals(401, locked.statusCode(), locked.body());
+        assertTrue(locked.body().contains("AUTH_ACCESS_INVALID"), locked.body());
+
+        assertEquals(200, adminAction(client, adminBearer, account, "enable").statusCode());
+        // shortcut: the old token writes again until it expires (900s + skew), add an issued-after check before production.
+        HttpResponse<String> unlocked = send(client, add);
+        assertTrue(unlocked.statusCode() / 100 == 2, unlocked.body());
+    }
+
     private static HttpResponse<String> adminAction(HttpClient client, String bearer, UUID account, String action) {
         return send(client, HttpRequest.newBuilder(URI.create(
                 "http://127.0.0.1:" + authPort + "/api/admin/accounts/" + account + "/" + action))

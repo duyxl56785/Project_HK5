@@ -1,16 +1,23 @@
-import { useEffect, useState } from 'react';
-import type { FormEvent } from 'react';
+import { useEffect } from 'react';
+import type { ChangeEvent } from 'react';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useQuery } from '@tanstack/react-query';
+import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import type { z } from 'zod';
 import { api, ApiError } from '../../shared/api';
 import { useAuth } from '../../shared/auth';
-import { ErrorNote, useAction } from '../../shared/ui';
+import { contactSchema, storeSchema } from '../../shared/forms';
+import { ErrorNote, Field, useAction } from '../../shared/ui';
 import { SellerStoreOverview } from './SellerStoreOverview';
 import type { SellerStatus } from './sellerStoreTypes';
 
 interface Seller { readonly id: string; readonly version: string; readonly status: SellerStatus; readonly reviewReason: string | null }
 interface Contact { readonly representativeName: string | null; readonly phone: string | null; readonly pickupAddress: string | null }
 interface Store { readonly id: string; readonly sellerId: string; readonly name: string; readonly slug: string; readonly open: boolean; readonly version: string }
+
+type ContactInput = z.infer<typeof contactSchema>;
+type StoreInput = z.infer<typeof storeSchema>;
 
 const orNull = <T,>(run: Promise<T>) => run.catch((error: unknown) => {
   if (error instanceof ApiError && error.status === 404) return null;
@@ -22,33 +29,34 @@ export const slugify = (name: string) => name.normalize('NFD').replace(/[̀-ͯ]/
 
 function ContactForm({ contact, submitLabel, pending, onSubmit }: {
   readonly contact?: Contact; readonly submitLabel: string; readonly pending: boolean;
-  readonly onSubmit: (contact: Contact) => void;
+  readonly onSubmit: (contact: ContactInput) => void;
 }) {
-  const [representativeName, setName] = useState(contact?.representativeName ?? '');
-  const [phone, setPhone] = useState(contact?.phone ?? '');
-  const [pickupAddress, setAddress] = useState(contact?.pickupAddress ?? '');
-  function submit(event: FormEvent) { event.preventDefault(); onSubmit({ representativeName, phone, pickupAddress }); }
-  return <form className="stack" onSubmit={submit}>
-    <label className="field">Tên người đại diện<input required maxLength={100} value={representativeName} onChange={(e) => setName(e.currentTarget.value)} /></label>
-    <label className="field">Số điện thoại<input required type="tel" pattern="\+?[0-9]{8,15}" title="8–15 chữ số, có thể bắt đầu bằng dấu +" value={phone} onChange={(e) => setPhone(e.currentTarget.value)} /></label>
-    <label className="field">Địa chỉ lấy hàng<input required maxLength={255} value={pickupAddress} onChange={(e) => setAddress(e.currentTarget.value)} /></label>
+  const form = useForm<ContactInput>({
+    resolver: zodResolver(contactSchema),
+    defaultValues: { representativeName: contact?.representativeName ?? '', phone: contact?.phone ?? '', pickupAddress: contact?.pickupAddress ?? '' },
+  });
+  const { errors } = form.formState;
+  return <form className="stack" noValidate onSubmit={form.handleSubmit(onSubmit)}>
+    <Field label="Tên người đại diện" error={errors.representativeName}><input {...form.register('representativeName')} /></Field>
+    <Field label="Số điện thoại" error={errors.phone}><input type="tel" {...form.register('phone')} /></Field>
+    <Field label="Địa chỉ lấy hàng" error={errors.pickupAddress}><input {...form.register('pickupAddress')} /></Field>
     <button className="btn btn--primary" disabled={pending}>{submitLabel}</button>
   </form>;
 }
 
 function StoreForm({ store }: { readonly store: Store | null }) {
-  const [name, setName] = useState(store?.name ?? '');
-  const [slug, setSlug] = useState(store?.slug ?? '');
-  const save = useAction(() => api(store ? `/api/stores/${store.id}` : '/api/stores', {
+  const form = useForm<StoreInput>({ resolver: zodResolver(storeSchema), defaultValues: { name: store?.name ?? '', slug: store?.slug ?? '' } });
+  const { errors } = form.formState;
+  const save = useAction((value: StoreInput) => api(store ? `/api/stores/${store.id}` : '/api/stores', {
     method: store ? 'PUT' : 'POST',
-    body: store ? { name, slug, expectedVersion: store.version } : { name, slug },
+    body: store ? { ...value, expectedVersion: store.version } : value,
   }), ['seller']);
-  function submit(event: FormEvent) { event.preventDefault(); save.mutate(undefined); }
-  return <form className="panel stack" onSubmit={submit}>
+  return <form className="panel stack" noValidate onSubmit={form.handleSubmit((value) => save.mutate(value))}>
     <h2>{store ? 'Thông tin cửa hàng' : 'Tạo cửa hàng'}</h2>
-    <label className="field">Tên cửa hàng<input required maxLength={255} value={name}
-      onChange={(e) => { const next = e.currentTarget.value; setName(next); if (!store) setSlug(slugify(next)); }} /></label>
-    <label className="field">Đường dẫn<input required maxLength={128} pattern="[a-z0-9]+(-[a-z0-9]+)*" value={slug} onChange={(e) => setSlug(e.currentTarget.value)} /></label>
+    <Field label="Tên cửa hàng" error={errors.name}><input {...form.register('name', {
+      onChange: (e: ChangeEvent<HTMLInputElement>) => { if (!store) form.setValue('slug', slugify(e.target.value)); },
+    })} /></Field>
+    <Field label="Đường dẫn" error={errors.slug}><input {...form.register('slug')} /></Field>
     <ErrorNote error={save.error} />
     <button className="btn btn--primary" disabled={save.isPending}>Lưu cửa hàng</button>
   </form>;
@@ -61,8 +69,8 @@ export function SellerHomePage() {
   const canManage = auth.has('SELLER');
   const store = useQuery({ queryKey: ['seller', 'store'], queryFn: () => orNull(api<Store>('/api/stores/me')), enabled: !!seller.data && canManage });
   const myStore = canManage ? store.data : null;
-  const register = useAction((contact: Contact) => api('/api/sellers', { method: 'POST', body: contact }), ['seller']);
-  const resubmit = useAction((body: Contact & { expectedVersion: string }) => api('/api/sellers/me/resubmit', { method: 'POST', body }), ['seller']);
+  const register = useAction((contact: ContactInput) => api('/api/sellers', { method: 'POST', body: contact }), ['seller']);
+  const resubmit = useAction((body: ContactInput & { expectedVersion: string }) => api('/api/sellers/me/resubmit', { method: 'POST', body }), ['seller']);
   const setOpen = useAction((s: Store) => api(`/api/stores/${s.id}/open`, { method: 'PATCH', body: { open: !s.open, expectedVersion: s.version } }), ['seller']);
 
   const profile = seller.data?.seller;

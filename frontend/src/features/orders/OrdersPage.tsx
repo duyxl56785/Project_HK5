@@ -1,7 +1,11 @@
 import { useState } from 'react';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useQuery } from '@tanstack/react-query';
+import { useForm } from 'react-hook-form';
 import { Link, useParams } from 'react-router-dom';
+import { z } from 'zod';
 import { api } from '../../shared/api';
+import { optionalText } from '../../shared/forms';
 import { Badge, dateTime, ErrorNote, Loaded, money, shortId, useAction } from '../../shared/ui';
 
 export interface OrderItem {
@@ -20,6 +24,8 @@ interface CustomerOrder {
   readonly id: string; readonly status: string; readonly total: number; readonly createdAt: string;
   readonly shipping: Shipping | null; readonly storeOrders: readonly StoreOrder[];
 }
+const reviewSchema = z.object({ rating: z.number().int().min(1).max(5), comment: optionalText('Nhận xét', 2000) });
+type ReviewInput = z.infer<typeof reviewSchema>;
 interface MyReview { readonly orderId: string; readonly productId: string }
 
 /** Refused store orders are never collected, so they leave the amount the customer owes. */
@@ -40,15 +46,16 @@ export function OrdersPage() {
 }
 
 function ReviewForm({ orderId, productId }: { readonly orderId: string; readonly productId: string }) {
-  const [rating, setRating] = useState(5);
-  const [comment, setComment] = useState('');
-  const send = useAction(() => api('/api/reviews', { method: 'POST', body: { orderId, productId, rating, comment } }), ['my-reviews', 'product-reviews', 'product']);
-  return <form className="row row--wrap" onSubmit={(e) => { e.preventDefault(); send.mutate(undefined); }}>
+  const form = useForm<ReviewInput>({ resolver: zodResolver(reviewSchema), defaultValues: { rating: 5, comment: '' } });
+  const { errors } = form.formState;
+  const send = useAction((value: ReviewInput) => api('/api/reviews', { method: 'POST', body: { orderId, productId, ...value } }), ['my-reviews', 'product-reviews', 'product']);
+  return <form className="row row--wrap" noValidate onSubmit={form.handleSubmit((value) => send.mutate(value))}>
     <label className="field field--inline">Đánh giá
-      <select value={rating} onChange={(e) => setRating(Number(e.currentTarget.value))}>
+      <select {...form.register('rating', { valueAsNumber: true })}>
         {[5, 4, 3, 2, 1].map((n) => <option key={n} value={n}>{n} sao</option>)}</select></label>
-    <input aria-label="Nhận xét" className="grow" placeholder="Nhận xét của bạn" maxLength={2000} value={comment} onChange={(e) => setComment(e.currentTarget.value)} />
+    <input aria-label="Nhận xét" className="grow" placeholder="Nhận xét của bạn" {...form.register('comment')} />
     <button className="btn" disabled={send.isPending}>Gửi</button>
+    {errors.comment && <small className="field__error" role="alert">{errors.comment.message}</small>}
     <ErrorNote error={send.error} />
   </form>;
 }

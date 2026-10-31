@@ -1,14 +1,17 @@
 import { useEffect, useMemo, useState } from 'react';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { api } from '../../shared/api';
+import { shippingSchema } from '../../shared/forms';
+import { Field } from '../../shared/ui';
 import type { Address } from '../account/AccountPage';
 import { useCart } from '../cart/cartApi';
 import { CheckoutCodView } from './CheckoutCodView';
 import { checkoutKey, forgetCheckoutKey, placeOrder } from './checkoutApi';
 import type { Shipping } from './checkoutApi';
 
-const validShipping = (s: Shipping) => s.name.trim() !== '' && /^\+?[0-9 .-]{8,20}$/.test(s.phone.trim()) && s.address.trim() !== '';
 const fromAddress = (a: Address): Shipping => ({ name: a.recipientName, phone: a.phone, address: `${a.line}, ${a.city}` });
 
 export function CheckoutPage() {
@@ -16,13 +19,15 @@ export function CheckoutPage() {
   const client = useQueryClient();
   const navigate = useNavigate();
   const addresses = useQuery({ queryKey: ['addresses'], queryFn: () => api<Address[]>('/api/users/me/addresses') });
-  const [shipping, setShipping] = useState<Shipping>({ name: '', phone: '', address: '' });
+  const form = useForm<Shipping>({ resolver: zodResolver(shippingSchema), mode: 'onTouched', defaultValues: { name: '', phone: '', address: '' } });
+  const { errors } = form.formState;
+  const shipping = shippingSchema.safeParse(form.watch());
   const [chosen, setChosen] = useState(false);
 
   useEffect(() => {
     const saved = addresses.data?.find((a) => a.isDefault) ?? addresses.data?.[0];
-    if (saved && !chosen) setShipping(fromAddress(saved));
-  }, [addresses.data, chosen]);
+    if (saved && !chosen) form.reset(fromAddress(saved));
+  }, [addresses.data, chosen, form]);
 
   const revision = cart.data?.snapshot.revision;
   const key = useMemo(() => revision === undefined ? '' : checkoutKey(revision), [revision]);
@@ -32,7 +37,7 @@ export function CheckoutPage() {
   const { snapshot, storeNames } = cart.data;
   if (snapshot.items.length === 0) return <CheckoutCodView state={{ status: 'empty' }} />;
 
-  const edit = (field: keyof Shipping, value: string) => { setChosen(true); setShipping((s) => ({ ...s, [field]: value })); };
+  const edited = { onChange: () => setChosen(true) };
 
   return <div className="stack">
     <section className="panel stack">
@@ -40,19 +45,19 @@ export function CheckoutPage() {
       {(addresses.data?.length ?? 0) > 0 && <label className="field">Địa chỉ đã lưu
         <select defaultValue="" onChange={(e) => {
           const picked = addresses.data?.find((a) => a.id === e.currentTarget.value);
-          if (picked) { setChosen(true); setShipping(fromAddress(picked)); }
+          if (picked) { setChosen(true); form.reset(fromAddress(picked)); }
         }}>
           <option value="">Chọn địa chỉ…</option>
           {addresses.data?.map((a) => <option key={a.id} value={a.id}>{a.recipientName} — {a.line}, {a.city}</option>)}
         </select></label>}
-      <label className="field">Người nhận<input required maxLength={120} value={shipping.name} onChange={(e) => edit('name', e.currentTarget.value)} /></label>
-      <label className="field">Số điện thoại<input required maxLength={20} value={shipping.phone} onChange={(e) => edit('phone', e.currentTarget.value)} /></label>
-      <label className="field">Địa chỉ<input required maxLength={500} value={shipping.address} onChange={(e) => edit('address', e.currentTarget.value)} /></label>
-      {!validShipping(shipping) && <p className="muted" role="status">Nhập đủ người nhận, số điện thoại và địa chỉ để đặt hàng.</p>}
+      <Field label="Người nhận" error={errors.name}><input {...form.register('name', edited)} /></Field>
+      <Field label="Số điện thoại" error={errors.phone}><input {...form.register('phone', edited)} /></Field>
+      <Field label="Địa chỉ" error={errors.address}><input {...form.register('address', edited)} /></Field>
+      {!shipping.success && <p className="muted" role="status">Nhập đủ người nhận, số điện thoại và địa chỉ để đặt hàng.</p>}
     </section>
     <CheckoutCodView state={{ status: 'ready', cart: snapshot, idempotencyKey: key }} storeNames={storeNames}
-      onConfirm={validShipping(shipping) ? async (request) => {
-        const result = await placeOrder(request, shipping);
+      onConfirm={shipping.success ? async (request) => {
+        const result = await placeOrder(request, shipping.data);
         if (result.status === 'confirmed') {
           forgetCheckoutKey(snapshot.revision);
           await client.invalidateQueries({ queryKey: ['cart'] });
