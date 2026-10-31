@@ -116,12 +116,16 @@ export function SellerProductPage() {
     <Link to="/seller/products">← Sản phẩm</Link>
     <div className="row row--between"><h1>{data.product.name}</h1><Badge value={data.product.status} /></div>
     <div className="row row--wrap">
-      {['DRAFT', 'REJECTED', 'INACTIVE'].includes(data.product.status) && <button type="button" className="btn btn--primary" disabled={lifecycle.isPending}
+      {['DRAFT', 'REJECTED'].includes(data.product.status) && <button type="button" className="btn btn--primary" disabled={lifecycle.isPending}
         onClick={() => lifecycle.mutate({ action: 'submit', version: data.product.version })}>Gửi duyệt</button>}
+      {data.product.status === 'INACTIVE' && <button type="button" className="btn btn--primary" disabled={lifecycle.isPending}
+        onClick={() => lifecycle.mutate({ action: 'activate', version: data.product.version })}>Bán lại</button>}
       {data.product.status === 'ACTIVE' && <button type="button" className="btn" disabled={lifecycle.isPending}
         onClick={() => lifecycle.mutate({ action: 'deactivate', version: data.product.version })}>Ngừng bán</button>}
     </div>
     <ErrorNote error={lifecycle.error} />
+    {data.product.status === 'ACTIVE' && <p className="muted">Đổi giá áp dụng ngay. Đổi tên, danh mục hoặc mô tả sẽ đưa sản phẩm về chờ duyệt. Muốn đổi ảnh, hãy ngừng bán trước.</p>}
+    {data.product.status === 'INACTIVE' && <p className="muted">Đổi giá vẫn bán lại được ngay. Đổi tên, danh mục, mô tả hoặc ảnh thì phải gửi duyệt lại.</p>}
     <ProductForm key={data.product.version} current={data} />
     <Stock key={`stock-${data.available}`} id={data.product.id} available={data.available} reserved={data.reserved} />
     <Images id={data.product.id} images={data.images} />

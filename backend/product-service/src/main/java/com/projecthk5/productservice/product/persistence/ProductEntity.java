@@ -75,6 +75,11 @@ public class ProductEntity {
         reviewReason = listing.reviewReason();
     }
 
+    /** New images on an INACTIVE Product are unreviewed content, so activation must not be able to skip review. */
+    public void backToDraftIfInactive() {
+        if (status == ProductStatus.INACTIVE) status = ProductStatus.DRAFT;
+    }
+
     public ProductListing toDomain() {
         return new ProductListing(id, storeId, categoryId, inventorySku, name, unitPrice, currency, status, reviewReason);
     }

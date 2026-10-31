@@ -143,6 +143,7 @@ public class ProductImageMetadataService {
     }
 
     private void changed(ProductEntity product) {
+        product.backToDraftIfInactive();
         // Invalidate stale Product edit/submit snapshots as well as concurrent image commands.
         entityManager.lock(product, LockModeType.PESSIMISTIC_FORCE_INCREMENT);
         entityManager.flush();

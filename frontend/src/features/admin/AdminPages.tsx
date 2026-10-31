@@ -83,6 +83,7 @@ interface ProductRow { readonly product: Product; readonly storeName: string; re
 const PRODUCT_ACTIONS: Record<string, { action: string; label: string }[]> = {
   PENDING_REVIEW: [{ action: 'approve', label: 'Duyệt' }, { action: 'reject', label: 'Từ chối' }],
   ACTIVE: [{ action: 'suspend', label: 'Đình chỉ' }],
+  SUSPENDED: [{ action: 'unsuspend', label: 'Mở lại' }],
 };
 
 export function AdminProductsPage() {

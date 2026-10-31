@@ -39,13 +39,16 @@ const SLIDES = [
 
 function Banner() {
   const [index, setIndex] = useState(0);
+  const [paused, setPaused] = useState(false);
   useEffect(() => {
-    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (paused || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const timer = setInterval(() => setIndex((n) => (n + 1) % SLIDES.length), 5000);
     return () => clearInterval(timer);
-  }, []);
+  }, [paused]);
   const slide = SLIDES[index];
-  return <section className={`banner banner--${index}`} aria-label="Giới thiệu Soopi">
+  return <section className={`banner banner--${index}`} aria-label="Giới thiệu Soopi"
+    onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}
+    onFocus={() => setPaused(true)} onBlur={() => setPaused(false)}>
     <Icon path={slide.icon} size={230} className="banner__art" />
     <h1>{slide.title}</h1>
     <p>{slide.text}</p>
