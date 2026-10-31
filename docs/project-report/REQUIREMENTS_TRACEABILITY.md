@@ -39,3 +39,42 @@ Trạng thái theo PR #135, xác minh ngày 30/10/2026 trên stack Docker thật
 | Playwright | 10 test trên stack thật trong `frontend/e2e`, gồm đơn hai Store; chạy trong `frontend-e2e.yml`; không có bộ E2E giả lập API | Chỉ chứng minh luồng đã viết, chưa phủ reconciliation UNKNOWN |
 | `seller_status_history`, `reviewed_by` | Có bảng lịch sử, Admin xem được. `reviewed_by` nằm ở lịch sử thay vì `seller_profiles` | Không khác về chức năng |
 | Docker secrets | Secret nạp qua Docker secrets, sinh bằng `gen-env.mjs` thay vì `init-dev-secrets.ps1` | `.env.demo` vẫn giữ bản gốc cho seed và smoke |
+
+## Khoảng trống so với báo cáo, đối chiếu 01/11/2026
+
+Đối chiếu main `5280ac7` với §3.3, §3.4, §7.2, §9.1, §10 của báo cáo. Bảng trạng thái ở trên giữ nguyên; các mục dưới đây là phần báo cáo mô tả nhưng main chưa làm hoặc làm khác.
+
+| Mục báo cáo | Hiện tại | Kiểm chứng | Owner |
+| --- | --- | --- | --- |
+| §3.4 người bán bị khóa vẫn giao tiếp đơn đã xác nhận, đơn chờ xác nhận chỉ được từ chối | Sau khi khóa, mọi thao tác đơn trả 403; đơn ACCEPTED kẹt tới khi mở khóa, Admin không xử lý thay được | Chạy thật | TV4, TV2 |
+| §3.4 overallStatus có PROCESSING, COMPLETED | Đơn tổng chỉ có PLACED, CANCELLED; đơn đã giao và đối soát vẫn là PLACED | Chạy thật | TV3 |
+| §3.4 sửa sản phẩm đang bán: nội dung quay về chờ duyệt, giá áp dụng ngay | Chỉ sửa được ở DRAFT, REJECTED, INACTIVE; phải ngừng bán rồi gửi duyệt lại, kể cả khi chỉ đổi giá | Đọc mã | TV2 |
+| §9.1 `/unsuspend`, `/activate` cho sản phẩm | Không có; sản phẩm SUSPENDED không có đường quay lại | Đọc mã | TV2 |
+| §3.2 F13, F17 Admin xử lý đơn và gắn ảnh house store | Có phí 0% cho house store, nhưng seed không tạo house store, không có API Admin tương ứng | Đọc mã | TV2, TV4 |
+| §3.4 đặt hàng lỗi phải liệt kê từng món | Trả một thông báo cho món lỗi đầu tiên | Chạy thật | TV3 |
+| UC-17 ẩn đánh giá có lý do | API và giao diện không nhận lý do | Đọc mã | TV5 |
+| §9.1, §10.2 xóa cả giỏ có xác nhận | Chỉ xóa từng món | Đọc mã | TV3 |
+| §10.3 mỗi trang tải lười; §10.2 banner dừng khi rê chuột | Tải một bundle; banner chỉ dừng theo `prefers-reduced-motion` | Đọc mã | TV2 |
+| §9.1 đường dẫn API | Khác tên ở nhiều nhóm: `/api/catalog/products`, `/api/cart`, `/api/inventory`, `/api/admin/store-orders`, hành động `accept/prepare/ready/dispatch`. Không thiếu chức năng; báo cáo cần sửa theo mã | Đọc mã | TV5 |
+| §7.2 bảng `settlements` | Đối soát lưu ngay trên `seller_orders`; đối soát đồng thời vẫn chỉ ghi một lần | Chạy thật | Không cần sửa mã |
+
+## Chạy thử UAT, 01/11/2026
+
+Chạy thử bằng API qua Gateway trên clone sạch main `5280ac7`, hai gate bật cục bộ, DB mới, script thủ công ngoài repo. Đây là bằng chứng thử, không thay UAT chính thức #18.
+
+**54 PASS, 5 FAIL trong lượt chính.** Sau khi xét từng FAIL: 2 FAIL là hai dòng đầu bảng trên, 1 FAIL là dòng overallStatus, 1 FAIL do #138 chưa merge, 1 FAIL do script đọc sai số đơn (`size=100` không trả danh sách) nên kiểm tra số đơn sau replay được chạy lại riêng.
+
+| Tình huống | Kết quả |
+| --- | --- |
+| 1 giỏ 2 Store tạo 1 đơn, 2 đơn con; replay cùng key cùng đơn, kho trừ một lần | PASS |
+| 5 request đồng thời cùng key | 1 đơn, 4 lần 409; số đơn tăng đúng 1 (chạy lại riêng) |
+| 5 khách tranh 3 hàng tồn | 3 thắng, 2 nhận 409 `Not enough stock`, tồn cuối 0, không 5xx |
+| Hủy, từ chối hoàn kho | Hoàn đúng một lần; hủy lần hai 409; từ chối thiếu lý do bị chặn; hủy sau khi nhận đơn 409 |
+| Vượt quyền | Seller khác 404, khách vào đơn seller 403, seller gọi COD 403 |
+| Sai thứ tự | `deliver` từ PLACED 409, COD trước khi giao 409, đối soát trước COD 409 |
+| 4 request COD, 4 request đối soát đồng thời | Mỗi loại đúng 1 thành công, còn lại 409, không 5xx |
+| Phí sàn | 5% của gross, `sellerNet = gross - fee` |
+| Đánh giá | Người lạ bị chặn, người mua đánh giá sau khi giao, lần hai 409, đánh giá ẩn không công khai |
+| Người bán bị khóa | Sản phẩm rời Catalog, giỏ không nhận thêm, không nhận đơn mới; mở khóa xong xử lý đơn tiếp được |
+
+Chưa phân loại: log order-service có 11 dòng `ERROR` trong lượt này; stack đã dọn trước khi đọc nội dung. Chưa chạy: tải lớn, UI thủ công cho từng tình huống.

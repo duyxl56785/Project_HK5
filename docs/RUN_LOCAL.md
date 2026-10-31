@@ -2,6 +2,8 @@
 
 Cần Docker Desktop đang chạy, JDK 21 và Node.js 22 trở lên.
 
+Trên Windows, clone ở đường dẫn ngắn hoặc bật `git config --global core.longpaths true`: một số file trong `reports/evidence/` có tên dài, clone vào thư mục quá sâu sẽ lỗi `Filename too long`.
+
 ## Khởi động
 
 Từ thư mục gốc của repo:
