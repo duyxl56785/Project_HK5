@@ -7,7 +7,7 @@ Cần Docker Desktop đang chạy, JDK 21 và Node.js 22 trở lên.
 Từ thư mục gốc của repo:
 
 ```bash
-node scripts/demo/up.mjs --approved-local-policy
+node scripts/demo/up.mjs --approved-inventory-pair --approved-finance-policy
 ```
 
 Lệnh này tạo `.env.demo` với secret ngẫu nhiên nếu chưa có, ghi từng secret vào `docker/secrets/`, build jar và image frontend, chạy `docker/compose.demo.yml`, chờ gateway sẵn sàng rồi seed dữ liệu qua API công khai. Chạy lại an toàn; thêm `--skip-build` nếu backend không đổi.
@@ -35,7 +35,14 @@ cd frontend && npm ci && npm run dev
 
 `.env.demo` và `docker/secrets/` đã được git bỏ qua và chỉ dùng cho máy local. Compose nạp secret bằng Docker secrets, service đọc từ `/run/secrets` qua `configtree`, nên `docker inspect` không thấy mật khẩu hay token.
 
-`INVENTORY_ORDER_PAIR_ENABLED` và `HK5_FINANCE_POLICY_APPROVED` mặc định là `false`. Không có `--approved-local-policy` thì stack vẫn chạy, seed và xem hàng được, nhưng Checkout bị từ chối. Cờ này chỉ dành cho demo local theo MD09 ở [M01_FINANCE_DECISION.md](project-report/M01_FINANCE_DECISION.md); Inventory pair vẫn chờ các owner duyệt. Môi trường khác cần quyết định riêng. `.env.demo` đã có sẵn giữ nguyên giá trị cũ, trừ khi chạy lại với cờ này.
+`INVENTORY_ORDER_PAIR_ENABLED` và `HK5_FINANCE_POLICY_APPROVED` mặc định là `false`. Không có hai cờ dưới đây thì stack vẫn chạy, seed và xem hàng được, nhưng Checkout bị từ chối. Mỗi lần chạy, `gen-env.mjs` đặt lại từng cổng theo cờ của lần đó, nên `.env.demo` cũ đang `true` sẽ về `false` nếu không truyền cờ.
+
+| Cờ | Cổng | Tình trạng phê duyệt |
+| --- | --- | --- |
+| `--approved-finance-policy` | `HK5_FINANCE_POLICY_APPROVED` | MD09 ở [M01_FINANCE_DECISION.md](project-report/M01_FINANCE_DECISION.md), chỉ cho demo local. Chờ TV4, TV5 ký |
+| `--approved-inventory-pair` | `INVENTORY_ORDER_PAIR_ENABLED` | Chưa có. Chờ TV1, TV3 duyệt ủy quyền pair và delegated provenance |
+
+Cờ chỉ là thao tác bật cho demo local với dữ liệu giả, không phải bằng chứng owner đã duyệt. Kết quả CI chạy với cả hai cờ chỉ chứng minh đường opt-in của demo local, không chứng minh môi trường khác. Đường mặc định tắt được kiểm ở `scripts/demo/gen-env.test.mjs`. Môi trường khác cần quyết định riêng.
 
 ## Luồng nghiệp vụ chính
 

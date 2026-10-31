@@ -35,8 +35,10 @@ jobs:
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: '22'
-      - name: Start the stack from fresh volumes and seed it
-        run: node scripts/demo/up.mjs --approved-local-policy
+      - name: Generated env keeps both gates off unless opted in
+        run: node --test scripts/demo/gen-env.test.mjs
+      - name: Start the stack from fresh volumes and seed it, local demo opt-in only
+        run: node scripts/demo/up.mjs --approved-inventory-pair --approved-finance-policy
       - name: Install Playwright
         working-directory: frontend
         run: |
