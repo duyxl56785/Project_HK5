@@ -40,6 +40,12 @@ public class ProductApplicationService {
                 (domain, current) -> domain.edit(actor, current, categoryId, name, price, currency));
     }
 
+    public StoredProduct edit(String actor, UUID id, long expectedVersion, UUID categoryId, String name,
+                              BigDecimal price, String currency, boolean descriptionChanged) {
+        return change(actor, id, expectedVersion, true,
+                (domain, current) -> domain.edit(actor, current, categoryId, name, price, currency, descriptionChanged));
+    }
+
     public StoredProduct submit(String actor, UUID id, long expectedVersion) {
         return change(actor, id, expectedVersion, true, (domain, current) -> domain.submit(actor, current));
     }
@@ -54,6 +60,14 @@ public class ProductApplicationService {
 
     public StoredProduct suspend(String actor, UUID id, long expectedVersion, String reason) {
         return change(actor, id, expectedVersion, false, (domain, current) -> domain.suspend(actor, current, reason));
+    }
+
+    public StoredProduct unsuspend(String actor, UUID id, long expectedVersion) {
+        return change(actor, id, expectedVersion, false, (domain, current) -> domain.unsuspend(actor, current));
+    }
+
+    public StoredProduct activate(String actor, UUID id, long expectedVersion) {
+        return change(actor, id, expectedVersion, true, (domain, current) -> domain.activate(actor, current));
     }
 
     public StoredProduct deactivate(String actor, UUID id, long expectedVersion) {

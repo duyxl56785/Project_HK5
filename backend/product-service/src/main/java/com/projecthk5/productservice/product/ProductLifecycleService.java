@@ -26,14 +26,32 @@ public class ProductLifecycleService {
 
     public ProductListing edit(String actor, ProductListing current, UUID categoryId, String name,
                                BigDecimal price, String currency) {
+        return edit(actor, current, categoryId, name, price, currency, false);
+    }
+
+    /**
+     * A price change applies at once; a content change on a Product buyers can see goes back through review.
+     * The description lives outside the listing, so the caller reports whether it changed.
+     */
+    public ProductListing edit(String actor, ProductListing current, UUID categoryId, String name,
+                               BigDecimal price, String currency, boolean descriptionChanged) {
         managedStore(actor, current.storeId());
-        requireState(current, ProductStatus.DRAFT, ProductStatus.REJECTED, ProductStatus.INACTIVE);
+        requireState(current, ProductStatus.DRAFT, ProductStatus.REJECTED, ProductStatus.INACTIVE, ProductStatus.ACTIVE);
         requireCategory(categoryId);
         if (!categoryId.equals(current.categoryId())) {
             requireOpenCategory(categoryId);
         }
-        return new ProductListing(current.id(), current.storeId(), categoryId, current.sku(), name, price, currency,
-                current.status(), current.reviewReason());
+        ProductListing edited = new ProductListing(current.id(), current.storeId(), categoryId, current.sku(), name, price,
+                currency, current.status(), current.reviewReason());
+        if (!descriptionChanged && edited.name().equals(current.name()) && categoryId.equals(current.categoryId())) {
+            return edited;
+        }
+        return switch (current.status()) {
+            case ACTIVE -> edited.withState(ProductStatus.PENDING_REVIEW, null);
+            // Activation skips review, so an INACTIVE listing must keep exactly the approved content.
+            case INACTIVE -> edited.withState(ProductStatus.DRAFT, null);
+            default -> edited;
+        };
     }
 
     public ProductListing submit(String actor, ProductListing current) {
@@ -66,6 +84,20 @@ public class ProductLifecycleService {
         managedStore(actor, current.storeId());
         requireState(current, ProductStatus.ACTIVE);
         return current.withState(ProductStatus.INACTIVE, null);
+    }
+
+    public ProductListing activate(String actor, ProductListing current) {
+        managedStore(actor, current.storeId());
+        requireState(current, ProductStatus.INACTIVE);
+        requireCategory(current.categoryId());
+        return current.withState(ProductStatus.ACTIVE, null);
+    }
+
+    public ProductListing unsuspend(String actor, ProductListing current) {
+        moderatedStore(actor, current.storeId());
+        requireState(current, ProductStatus.SUSPENDED);
+        requireCategory(current.categoryId());
+        return current.withState(ProductStatus.ACTIVE, null);
     }
 
     public ProductListing managementView(String actor, ProductListing current) {

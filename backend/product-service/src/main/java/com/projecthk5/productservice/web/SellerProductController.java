@@ -95,8 +95,10 @@ public class SellerProductController {
     @PutMapping("/{id}")
     @Transactional
     public SellerProduct edit(@PathVariable UUID id, @Valid @RequestBody EditRequest req) {
+        boolean descriptionChanged = req.description() != null && !req.description().strip().equals(
+                details.findById(id).map(ProductExtras.Details::getDescription).orElse(""));
         StoredProduct edited = application.edit(Actor.current().id(), id, version(req.expectedVersion()), req.categoryId(),
-                req.name(), req.unitPrice(), "VND");
+                req.name(), req.unitPrice(), "VND", descriptionChanged);
         if (req.description() != null) {
             details.findById(id).ifPresentOrElse(d -> d.setDescription(req.description().strip()),
                     () -> details.save(new ProductExtras.Details(id, req.description().strip())));
@@ -107,6 +109,11 @@ public class SellerProductController {
     @PostMapping("/{id}/submit")
     public SellerProduct submit(@PathVariable UUID id, @Valid @RequestBody VersionRequest req) {
         return view(ProductManagementResponse.from(application.submit(Actor.current().id(), id, version(req.expectedVersion()))));
+    }
+
+    @PostMapping("/{id}/activate")
+    public SellerProduct activate(@PathVariable UUID id, @Valid @RequestBody VersionRequest req) {
+        return view(ProductManagementResponse.from(application.activate(Actor.current().id(), id, version(req.expectedVersion()))));
     }
 
     @PostMapping("/{id}/deactivate")

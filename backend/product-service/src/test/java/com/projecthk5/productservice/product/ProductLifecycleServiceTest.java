@@ -29,6 +29,43 @@ class ProductLifecycleServiceTest {
         service = new ProductLifecycleService(policy, categories);
     }
 
+    @Test void priceChangeOnASellingProductAppliesAtOnce() {
+        ProductListing active = listing(ProductStatus.ACTIVE);
+        BigDecimal price = active.unitPrice().add(BigDecimal.ONE);
+        ProductListing edited = service.edit("owner", active, categoryId, active.name(), price, "VND");
+        assertEquals(ProductStatus.ACTIVE, edited.status());
+        assertEquals(price, edited.unitPrice());
+    }
+
+    @Test void contentChangeOnASellingProductGoesBackToReview() {
+        ProductListing active = listing(ProductStatus.ACTIVE);
+        UUID otherCategory = UUID.randomUUID();
+        when(categories.existsById(otherCategory)).thenReturn(true);
+        for (ProductListing edited : java.util.List.of(
+                service.edit("owner", active, categoryId, "Renamed", active.unitPrice(), "VND"),
+                service.edit("owner", active, otherCategory, active.name(), active.unitPrice(), "VND"),
+                service.edit("owner", active, categoryId, active.name(), active.unitPrice(), "VND", true))) {
+            assertEquals(ProductStatus.PENDING_REVIEW, edited.status());
+        }
+    }
+
+    @Test void contentChangeOnAnInactiveProductCannotBeActivatedWithoutReview() {
+        ProductListing inactive = listing(ProductStatus.INACTIVE);
+        ProductListing priced = service.edit("owner", inactive, categoryId, inactive.name(), BigDecimal.TEN, "VND");
+        assertEquals(ProductStatus.ACTIVE, service.activate("owner", priced).status());
+        ProductListing renamed = service.edit("owner", inactive, categoryId, "Renamed", BigDecimal.TEN, "VND");
+        assertEquals(ProductStatus.DRAFT, renamed.status());
+        assertEquals(ProductRuleException.Code.INVALID_STATE,
+                assertThrows(ProductRuleException.class, () -> service.activate("owner", renamed)).getCode());
+    }
+
+    @Test void unsuspendRestoresSaleAndClearsTheReason() {
+        ProductListing back = service.unsuspend("admin", service.suspend("admin", listing(ProductStatus.ACTIVE), "Sai mô tả"));
+        assertEquals(ProductStatus.ACTIVE, back.status());
+        assertNull(back.reviewReason());
+        assertThrows(ProductRuleException.class, () -> service.unsuspend("owner", listing(ProductStatus.SUSPENDED)));
+    }
+
     @Test void hiddenCategoryTakesNoNewProductsButKeepsTheOnesItHas() {
         ProductListing draft = service.create("owner", storeId, categoryId, "Sku-A", "Product", new BigDecimal("12.00000"), "VND");
         UUID hiddenId = UUID.randomUUID();
@@ -70,7 +107,7 @@ class ProductLifecycleServiceTest {
 
     static Stream<Arguments> transitions() {
         return Arrays.stream(ProductStatus.values()).flatMap(state ->
-                Stream.of("edit", "submit", "approve", "reject", "suspend", "deactivate")
+                Stream.of("edit", "submit", "approve", "reject", "suspend", "deactivate", "activate", "unsuspend")
                         .map(action -> Arguments.of(state, action)));
     }
 
@@ -80,7 +117,10 @@ class ProductLifecycleServiceTest {
         ProductListing product = listing(state);
         boolean editable = state == ProductStatus.DRAFT || state == ProductStatus.REJECTED || state == ProductStatus.INACTIVE;
         boolean allowed = switch (action) {
-            case "edit", "submit" -> editable;
+            case "edit" -> editable || state == ProductStatus.ACTIVE;
+            case "submit" -> editable;
+            case "activate" -> state == ProductStatus.INACTIVE;
+            case "unsuspend" -> state == ProductStatus.SUSPENDED;
             case "approve", "reject" -> state == ProductStatus.PENDING_REVIEW;
             case "suspend", "deactivate" -> state == ProductStatus.ACTIVE;
             default -> false;
@@ -98,6 +138,8 @@ class ProductLifecycleServiceTest {
         return switch (action) {
             case "edit" -> service.edit("owner", product, categoryId, "Changed", BigDecimal.TEN, "VND");
             case "submit" -> service.submit("owner", product);
+            case "activate" -> service.activate("owner", product);
+            case "unsuspend" -> service.unsuspend("admin", product);
             case "approve" -> service.approve("admin", product);
             case "reject" -> service.reject("admin", product, "reason");
             case "suspend" -> service.suspend("admin", product, "reason");

@@ -336,7 +336,9 @@ class ProductImageMetadataServiceIntegrationTest {
         jdbc.update("UPDATE products SET status=?,review_reason=? WHERE id=?", status,
                 status.equals("REJECTED") ? "Fix image" : null, PRODUCT_A);
         assertEquals("PENDING_STORAGE", images.reserve(OWNER_A, PRODUCT_A, 0, UUID.randomUUID(), image(1)).state());
-        assertEquals(status, jdbc.queryForObject("SELECT status FROM products WHERE id=?", String.class, PRODUCT_A));
+        // Activation skips review, so new images on an INACTIVE Product must send it back through submit.
+        assertEquals(status.equals("INACTIVE") ? "DRAFT" : status,
+                jdbc.queryForObject("SELECT status FROM products WHERE id=?", String.class, PRODUCT_A));
     }
 
     @Test void cachedProductIsRefreshedBeforeVersionAndLifecycleChecks() throws Exception {
