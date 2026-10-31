@@ -28,9 +28,9 @@ export function WorkspaceView({ state, scope, initialView = 'finance', onRetry }
       <div className="tv5-sidebar-label">KHÔNG GIAN TV5</div>
       <nav aria-label="Điều hướng TV5">{visible.map(v => <button type="button" key={v.id} aria-current={active.id === v.id ? 'page' : undefined} onClick={() => setView(v.id)}><span aria-hidden="true">{v.icon}</span>{v.label}{active.id === v.id && <i aria-hidden="true" />}</button>)}</nav>
       <div className="tv5-sidebar-bottom"><span className="tv5-sidebar-label">TRẠNG THÁI TÍCH HỢP</span><p><span className="tv5-dot" /> Chỉ đọc · API chưa kết nối</p><small>Finance policy đang chờ phê duyệt. Không có thao tác thanh toán.</small></div>
-      <div className="tv5-profile"><span aria-hidden="true">ND</span><div>Nguyễn Minh Duy<small>TV5 · Finance / QA</small></div></div>
+      <div className="tv5-profile"><span aria-hidden="true">◉</span><div>Phiên làm việc hiện tại<small>Finance / QA · phạm vi do host cung cấp</small></div></div>
     </aside>
-    <div className="tv5-main"><header className="tv5-topbar"><span>Workspace <span aria-hidden="true">/</span> <strong>{active.label}</strong></span><div><span className="tv5-readonly">◉ Read-only</span><span className="tv5-avatar" aria-hidden="true">ND</span></div></header>
+    <div className="tv5-main"><header className="tv5-topbar"><span>Workspace <span aria-hidden="true">/</span> <strong>{active.label}</strong></span><div><span className="tv5-readonly">◉ Read-only</span><span className="tv5-avatar" aria-hidden="true">◉</span></div></header>
       <main id={id} tabIndex={-1} className="tv5-content"><div className="tv5-page-heading"><div><span className="tv5-eyebrow">SMART E-COMMERCE · TV5</span><h1>{active.title}</h1><p>{active.note}</p></div><StatusBadge value="BLOCKED" label="POLICY GATED" /></div>
         {effective.status !== 'ready' ? <StatePanel status={effective.status} onRetry={onRetry} />
           : active.id === 'qa' && scope.kind === 'admin' ? <QADashboard runs={effective.data.qaRuns} />

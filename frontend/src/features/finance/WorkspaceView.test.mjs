@@ -10,7 +10,7 @@ before(async () => {
 });
 after(async () => { await server?.close(); });
 const row = (id, storeId) => ({ id, orderId: `order-${id}`, storeId, store: `Store ${storeId}`, seller: `Seller ${storeId}`, amount: '9007199254740993', currency: 'VND',
-  delivery: 'DELIVERED', cod: 'PAID', verification: 'UNVERIFIED', paymentEvidence: null, commission: null, sellerNet: null,
+  delivery: 'DELIVERED', cod: 'COLLECTED', verification: 'UNVERIFIED', paymentEvidence: null, commission: null, sellerNet: null,
   settlement: null, createdAt: '2026-10-27T00:00:00Z', updatedAt: '2026-10-27T01:00:00Z' });
 const data = { source: 'DEMO', asOf: '2026-10-28T00:00:00Z', transactions: [row('public-A', 'A'), row('FOREIGN_SECRET', 'B')], qaRuns: [], audit: { status: 'blocked', rows: [], asOf: null } };
 const render = (state, props = {}) => renderToStaticMarkup(createElement(WorkspaceView, { state, scope: { kind: 'admin' }, ...props }));

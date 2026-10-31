@@ -16,13 +16,13 @@ Open `/src/features/finance/preview/index.html` on that Vite server. This is the
 npm run typecheck
 npm run build
 node node_modules/vite/bin/vite.js build --config src/features/finance/vite.finance.config.ts
-node --test src/features/finance/workspaceModel.test.mjs src/features/finance/WorkspaceView.test.mjs
+npm test
 ```
 
-DOM/browser tests follow the repository Node/Vite convention; there is no configured Vitest/RTL or lint command. Lint is NOT_RUN (no repository linter), not mislabeled TypeScript PASS. Tests can use optional transient `happy-dom`/`playwright` without changing package.json/lockfile; alternatively set `TV5_DOM_MODULE`/`TV5_BROWSER_MODULE` to existing module paths. Browser suite uses installed Chrome, disposable contexts and localhost only.
+DOM/browser tests follow the repository Node/Vite convention; there is no configured Vitest/RTL or lint command. Lint is NOT_RUN (no repository linter), not mislabeled TypeScript PASS. `happy-dom` is a declared development dependency so `npm test` includes the DOM suite after a clean install. Browser tests still require an explicitly available Playwright/Chrome installation and use disposable contexts and localhost only.
 
 ```sh
-node --test src/features/finance/Workspace.dom.mjs
+npm test
 node --test --test-concurrency=1 src/features/finance/Workspace.browser.mjs
 ```
 
@@ -33,7 +33,7 @@ Set `TV5_BROWSER_EVIDENCE` to a local ignored directory for screenshots. Test to
 | Screen | Scope / behavior | Module |
 |---|---|---|
 | Finance | observed amounts, COD evidence totals, count, time chart, status distribution; search/Store/status/UTC date/pagination/details | TransactionViews.tsx |
-| COD | separate delivery, PAID/UNPAID/unknown payment observation and evidence verification; read-only detail | TransactionViews.tsx |
+| COD | separate delivery, PENDING/COLLECTED/VOID/unknown payment observation and evidence verification; read-only detail | TransactionViews.tsx |
 | Settlement | supplied record ID, amount, nullable commission/net, timestamps, blocker; no calculation or writes | TransactionViews.tsx |
 | QA | one selected receipt/head, exact case-level PASS/FAIL/SKIP/NOT_RUN/BLOCKED; module/type/branch/SHA/search filters, detail/evidence | EvidenceViews.tsx |
 | PR/reviewers | sanitized CLI snapshot, actual review heads, stale-head warning, CI/unknown mergeability, requests/threads/next-action, filters | EvidenceViews.tsx |

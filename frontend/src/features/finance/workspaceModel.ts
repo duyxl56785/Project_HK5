@@ -24,9 +24,10 @@ export function scopeTransactions(rows: readonly Transaction[], scope: Scope): r
 }
 export function financeSummary(rows: readonly Transaction[]) {
   const amounts = (predicate: (r: Transaction) => boolean) => sumAmounts(rows.filter(predicate).map(r => r.currency === 'VND' ? r.amount : null));
-  const verified = (r: Transaction) => r.cod === 'PAID' && r.verification === 'VERIFIED' && !!r.paymentEvidence;
+  // Mirrors SellerOrder.CodStatus.  Evidence remains a UI projection, not a settlement decision.
+  const verified = (r: Transaction) => r.cod === 'COLLECTED' && r.verification === 'VERIFIED' && !!r.paymentEvidence;
   return { total: amounts(() => true), count: rows.length, verifiedCod: amounts(verified),
-    unverifiedCod: amounts(r => r.cod === 'PAID' && !verified(r)), settlements: rows.filter(r => r.settlement?.state === 'RECORDED').length,
+    unverifiedCod: amounts(r => r.cod === 'COLLECTED' && !verified(r)), settlements: rows.filter(r => r.settlement?.state === 'RECORDED').length,
     errors: rows.filter(r => r.settlement?.state === 'BLOCKED').length };
 }
 function dateBound(value: string | undefined): number | null {

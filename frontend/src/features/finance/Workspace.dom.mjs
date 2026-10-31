@@ -16,7 +16,7 @@ before(async () => {
 beforeEach(() => { container = window.document.createElement('div'); window.document.body.append(container); root = createRoot(container); });
 afterEach(async () => { await act(async () => { root.unmount(); }); container.remove(); });
 after(async () => { await server?.close(); await window?.happyDOM.abort(); });
-const tx = store => ({ id: `PRIVATE-${store}`, orderId: 'DEMO-ORDER', storeId: store, store, seller: `Seller ${store}`, amount: '100', currency: 'VND', delivery: 'DELIVERED', cod: 'UNPAID', verification: 'UNKNOWN', paymentEvidence: null, commission: null, sellerNet: null, settlement: null, createdAt: '2026-10-27T00:00:00Z', updatedAt: '2026-10-27T00:00:00Z' });
+const tx = store => ({ id: `PRIVATE-${store}`, orderId: 'DEMO-ORDER', storeId: store, store, seller: `Seller ${store}`, amount: '100', currency: 'VND', delivery: 'DELIVERED', cod: 'PENDING', verification: 'UNKNOWN', paymentEvidence: null, commission: null, sellerNet: null, settlement: null, createdAt: '2026-10-27T00:00:00Z', updatedAt: '2026-10-27T00:00:00Z' });
 const ready = store => ({ status: 'ready', data: { source: 'DEMO', asOf: '2026-10-27T00:00:00Z', transactions: [tx(store)], qaRuns: [], audit: { status: 'blocked', rows: [], asOf: null } } });
 const mount = (adapter, scope, sessionEpoch = 0) => act(async () => { root.render(createElement(FinanceWorkspace, { adapter, scope, sessionEpoch })); await Promise.resolve(); });
 

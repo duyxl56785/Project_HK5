@@ -11,7 +11,7 @@ export const demoTransactions: readonly Transaction[] = Array.from({ length: 12 
     storeId: a ? 'store-a' : 'store-b', store: a ? 'Mộc Studio' : 'Sách & Chuyện', seller: a ? 'Demo Seller A' : 'Demo Seller B',
     amount: ['1250000', '890000', '375000', '2400000', '569000', '180000'][i % 6], currency: 'VND',
     delivery: i % 4 === 0 ? 'DISPATCHED' : i % 4 === 3 ? 'CANCELLED' : 'DELIVERED',
-    cod: i % 4 === 0 ? 'UNPAID' : i % 4 === 3 ? null : 'PAID',
+    cod: i % 5 === 0 ? 'PENDING' : i % 5 === 1 ? 'VOID' : i % 5 === 4 ? null : 'COLLECTED',
     verification: i % 4 === 1 ? 'VERIFIED' : i % 4 === 3 ? 'UNKNOWN' : 'UNVERIFIED',
     paymentEvidence: i % 4 === 1 ? `DEMO-EVIDENCE-${i}` : null,
     commission: null, sellerNet: null, // No fee/House/rounding rule silently chosen.

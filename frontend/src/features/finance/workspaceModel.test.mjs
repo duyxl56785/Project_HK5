@@ -27,7 +27,7 @@ test('sum is exact across scales and never uses Number for money', () => {
   assert.equal(model.sumAmounts(['10', null]), null);
 });
 const tx = (id, storeId = 'A') => ({ id, orderId: `order-${id}`, storeId, store: `Store ${storeId}`, seller: `Seller ${storeId}`,
-  amount: '100', currency: 'VND', delivery: 'DELIVERED', cod: 'PAID', verification: 'UNVERIFIED', paymentEvidence: null,
+  amount: '100', currency: 'VND', delivery: 'DELIVERED', cod: 'COLLECTED', verification: 'UNVERIFIED', paymentEvidence: null,
   settlement: null, commission: null, sellerNet: null, createdAt: '2026-10-27T10:00:00Z', updatedAt: '2026-10-27T11:00:00Z' });
 test('Store scope strips foreign rows before summaries, filters or details', () => {
   const raw = Object.freeze([tx('one'), tx('secret', 'B')]);
@@ -40,16 +40,23 @@ test('missing/denied Store scope never falls back to admin data', () => {
   assert.deepEqual(model.scopeTransactions([tx('secret')], { kind: 'denied' }), []);
   assert.deepEqual(model.scopeTransactions([tx('secret')], { kind: 'store', storeId: '' }), []);
 });
-test('summary does not count PAID as verified without an evidence reference', () => {
+test('summary does not count COLLECTED as verified without an evidence reference', () => {
   const rows = [tx('one'), { ...tx('two'), verification: 'VERIFIED', paymentEvidence: null },
     { ...tx('three'), verification: 'VERIFIED', paymentEvidence: 'fixture-evidence-3' }];
   assert.equal(model.financeSummary(rows).verifiedCod, '100');
   assert.equal(model.financeSummary(rows).unverifiedCod, '200');
   assert.equal(model.financeSummary(rows).settlements, 0);
 });
+test('PENDING and VOID COD facts never enter collected-evidence totals', () => {
+  const rows = [{ ...tx('collected'), verification: 'VERIFIED', paymentEvidence: 'fixture-evidence' },
+    { ...tx('pending'), cod: 'PENDING', verification: 'VERIFIED', paymentEvidence: 'fixture-evidence' },
+    { ...tx('void'), cod: 'VOID', verification: 'VERIFIED', paymentEvidence: 'fixture-evidence' }];
+  assert.equal(model.financeSummary(rows).verifiedCod, '100');
+  assert.equal(model.financeSummary(rows).unverifiedCod, '0');
+});
 test('filter combines literal search, Store, status and inclusive UTC dates', () => {
   const rows = [tx('one'), tx('two', 'B'), { ...tx('old'), createdAt: '2026-10-26T23:59:59Z' }];
-  assert.deepEqual(model.filterTransactions(rows, { search: 'ORDER-ONE', storeId: 'A', status: 'PAID', from: '2026-10-27', to: '2026-10-27' }).map(x => x.id), ['one']);
+  assert.deepEqual(model.filterTransactions(rows, { search: 'ORDER-ONE', storeId: 'A', status: 'COLLECTED', from: '2026-10-27', to: '2026-10-27' }).map(x => x.id), ['one']);
   assert.deepEqual(model.filterTransactions(rows, { from: 'invalid' }), []);
   assert.deepEqual(model.filterTransactions(rows, { from: '2026-10-28', to: '2026-10-27' }), []);
 });

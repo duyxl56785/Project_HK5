@@ -3,9 +3,9 @@ import type { ReactNode } from 'react';
 import { safeEvidenceUrl } from './workspaceModel';
 
 export function StatusBadge({ value, label }: { value: string; label?: string }) {
-  const tone = ['PASS', 'PAID', 'VERIFIED', 'APPROVED', 'SUCCESS', 'DELIVERED', 'RECORDED'].includes(value) ? 'good'
+  const tone = ['PASS', 'COLLECTED', 'VERIFIED', 'APPROVED', 'SUCCESS', 'DELIVERED', 'RECORDED'].includes(value) ? 'good'
     : ['FAIL', 'FAILED', 'CHANGES_REQUESTED', 'error'].includes(value) ? 'bad'
-    : ['BLOCKED', 'UNVERIFIED', 'REVIEW_REQUIRED', 'PENDING', 'UNPAID'].includes(value) ? 'warn' : 'neutral';
+    : ['BLOCKED', 'UNVERIFIED', 'REVIEW_REQUIRED', 'PENDING'].includes(value) ? 'warn' : 'neutral';
   return <span className={`tv5-badge tv5-badge--${tone}`}><span aria-hidden="true" className="tv5-dot" />{label ?? value}</span>;
 }
 export function DashboardStatCard({ label, value, note, accent = false }: { label: string; value: ReactNode; note: string; accent?: boolean }) {

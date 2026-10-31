@@ -8,7 +8,7 @@ export function FinanceSummary({ rows }: { rows: readonly Transaction[] }) {
   return <div className="tv5-stats">
     <DashboardStatCard label="Giá trị đơn quan sát" value={formatVnd(s.total, 'VND')} note="Snapshot DEMO · không phải doanh thu" accent />
     <DashboardStatCard label="COD có evidence mẫu" value={formatVnd(s.verifiedCod, 'VND')} note="Không xác nhận COD production" />
-    <DashboardStatCard label="COD cần đối chiếu" value={formatVnd(s.unverifiedCod, 'VND')} note="PAID nhưng chưa đủ evidence mẫu" />
+    <DashboardStatCard label="COD cần đối chiếu" value={formatVnd(s.unverifiedCod, 'VND')} note="COLLECTED nhưng chưa đủ evidence mẫu" />
     <DashboardStatCard label="SellerOrder" value={s.count} note={`${s.settlements} bản ghi settlement · ${s.errors} bị chặn`} />
   </div>;
 }
@@ -17,7 +17,7 @@ function FinanceCharts({ rows }: { rows: readonly Transaction[] }) {
   const totals = days.map(day => sumAmounts(rows.filter(r => r.createdAt.startsWith(day)).map(r => r.currency === 'VND' ? r.amount : null)));
   const units = (s: string | null) => { if (!s) return 0n; const [w, f = ''] = s.split('.'); return BigInt(w + f.padEnd(6, '0')); };
   const maximum = totals.reduce((max, v) => units(v) > max ? units(v) : max, 1n);
-  const cod = ['PAID', 'UNPAID', 'UNKNOWN'].map(status => ({ status, count: rows.filter(r => (r.cod ?? 'UNKNOWN') === status).length }));
+  const cod = ['PENDING', 'COLLECTED', 'VOID', 'UNKNOWN'].map(status => ({ status, count: rows.filter(r => (r.cod ?? 'UNKNOWN') === status).length }));
   const settlement = ['RECORDED', 'BLOCKED', 'UNAVAILABLE'].map(status => ({ status, count: rows.filter(r => (r.settlement?.state ?? 'UNAVAILABLE') === status).length }));
   return <div className="tv5-chart-grid">
     <section className="tv5-card"><div className="tv5-card-heading"><h2>Giá trị theo ngày</h2><small>DEMO · VND · UTC</small></div>
@@ -44,12 +44,12 @@ export function TransactionViews({ view, rows }: { view: Extract<View, 'finance'
     <FinanceSummary rows={filtered} />
     {view === 'finance' && filtered.some(r => r.commission === null || r.sellerNet === null) && <SnapshotNote text="Một số bản ghi: Chưa có snapshot commission / seller_net. Giao diện không tự tính phí hoặc suy ra doanh thu khi policy chưa được phê duyệt." />}
     {view === 'finance' && <FinanceCharts rows={filtered} />}
-    {view !== 'finance' && <SnapshotNote text={view === 'cod' ? 'PAID là fact trong fixture; VERIFIED là nhãn evidence của view. Authority xác nhận COD thật chưa tích hợp. UNKNOWN thể hiện thiếu dữ liệu, không phải enum nghiệp vụ mới.' : 'Commission và seller_net chỉ hiển thị snapshot được cung cấp; không tự tính phí. RECORDED/BLOCKED là nhãn view mẫu, không phải contract settlement đã duyệt. M01 Finance production vẫn PENDING.'} />}
+    {view !== 'finance' && <SnapshotNote text={view === 'cod' ? 'PENDING/COLLECTED/VOID phản chiếu SellerOrder.CodStatus; VERIFIED là nhãn evidence của view. Authority xác nhận COD thật chưa tích hợp. UNKNOWN thể hiện thiếu dữ liệu, không phải enum nghiệp vụ mới.' : 'Commission và seller_net chỉ hiển thị snapshot được cung cấp; không tự tính phí. RECORDED/BLOCKED là nhãn view mẫu, không phải contract settlement đã duyệt. M01 Finance production vẫn PENDING.'} />}
     <section className="tv5-card tv5-table-card"><div className="tv5-card-heading"><div><h2>{title}</h2><small>Tìm kiếm và bộ lọc chỉ tác động dữ liệu đang xem.</small></div><span className="tv5-count">{list.length} bản ghi</span></div>
       <FilterBar>
         <label className="tv5-search">Tìm giao dịch<input type="search" placeholder="Order, SellerOrder, Store…" value={search} onChange={e => { setSearch(e.target.value); setPage(1); }} /></label>
         <label>Store<select aria-label="Store" value={storeId} onChange={e => { setStoreId(e.target.value); setPage(1); }}><option value="">Tất cả trong phạm vi</option>{stores.map(([id, name]) => <option key={id} value={id}>{name}</option>)}</select></label>
-        <label>Trạng thái<select aria-label="Trạng thái" value={status} onChange={e => { setStatus(e.target.value); setPage(1); }}><option value="">Tất cả trạng thái</option>{(view === 'settlement' ? ['RECORDED', 'BLOCKED'] : ['PAID', 'UNPAID', 'UNVERIFIED', 'UNKNOWN', 'DELIVERED', 'DISPATCHED', 'CANCELLED']).map(s => <option key={s}>{s}</option>)}</select></label>
+        <label>Trạng thái<select aria-label="Trạng thái" value={status} onChange={e => { setStatus(e.target.value); setPage(1); }}><option value="">Tất cả trạng thái</option>{(view === 'settlement' ? ['RECORDED', 'BLOCKED'] : ['PENDING', 'COLLECTED', 'VOID', 'UNVERIFIED', 'UNKNOWN', 'DELIVERED', 'DISPATCHED', 'CANCELLED']).map(s => <option key={s}>{s}</option>)}</select></label>
         <label>Từ ngày UTC<input type="date" value={from} onChange={e => { setFrom(e.target.value); setPage(1); }} /></label>
         <label>Đến ngày UTC<input type="date" value={to} min={from || undefined} onChange={e => { setTo(e.target.value); setPage(1); }} /></label>
         <button className="tv5-button tv5-button--quiet" type="button" onClick={clear}>Xóa bộ lọc</button>

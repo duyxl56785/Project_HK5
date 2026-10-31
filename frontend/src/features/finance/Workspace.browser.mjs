@@ -45,7 +45,7 @@ test('literal search and clearing reset the page and restore twelve rows', async
 test('Store/status/date intersection and reversed date validation work', async () => {
   await ready(); await page.getByLabel('Store', { exact: true }).selectOption('store-b');
   assert.doesNotMatch(await page.locator('tbody').innerText(), /Mộc Studio/);
-  await page.getByLabel('Trạng thái', { exact: true }).selectOption('PAID');
+  await page.getByLabel('Trạng thái', { exact: true }).selectOption('COLLECTED');
   assert.equal(await stat('SellerOrder').innerText(), '3');
   await page.getByLabel('Từ ngày UTC').fill('2026-10-27'); await page.getByLabel('Đến ngày UTC').fill('2026-10-22');
   await page.getByRole('alert').waitFor(); assert.equal(await rows().count(), 0);

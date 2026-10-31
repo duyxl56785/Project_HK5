@@ -7,9 +7,10 @@ export interface SettlementRecord {
   id: string; state: 'RECORDED' | 'BLOCKED'; // presentation labels, no backend enum asserted
   createdAt: string; settledAt: string | null; reason: string | null;
 }
+export type CodStatus = 'PENDING' | 'COLLECTED' | 'VOID';
 export interface Transaction {
   id: string; orderId: string; storeId: string; store: string; seller: string;
-  amount: string; currency: string; delivery: Delivery; cod: 'PAID' | 'UNPAID' | null;
+  amount: string; currency: string; delivery: Delivery; cod: CodStatus | null;
   verification: 'VERIFIED' | 'UNVERIFIED' | 'UNKNOWN'; paymentEvidence: string | null;
   commission: string | null; sellerNet: string | null; settlement: SettlementRecord | null;
   createdAt: string; updatedAt: string;
