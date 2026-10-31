@@ -70,6 +70,20 @@ test('an admin locks an account, ending its session, and unlocks it', async ({ b
   await logIn(page, account);
 });
 
+test('a signed-in customer is not sent to login while the session is restoring', async ({ browser }) => {
+  const customer = await sessionFor(browser, accounts.customer);
+  const { items } = await (await customer.request.get('/api/catalog/products?size=1')).json();
+  await customer.route('**/api/auth/refresh', async (route) => {
+    await new Promise((done) => setTimeout(done, 1500));
+    await route.continue();
+  });
+  await customer.goto(`/products/${items[0].id}`);
+  const add = customer.getByRole('button', { name: 'Thêm vào giỏ hàng' });
+  await expect(add).toBeVisible();
+  await expect(add).toBeDisabled();
+  await expect(add).toBeEnabled();
+});
+
 test('a deep link and a refresh both load the app', async ({ page }) => {
   await page.goto('/products?q=ao');
   await expect(page.getByRole('search')).toBeVisible();

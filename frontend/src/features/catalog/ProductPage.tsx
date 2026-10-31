@@ -16,7 +16,7 @@ interface Review { readonly id: string; readonly rating: number; readonly commen
 const stars = (n: number) => '★'.repeat(n) + '☆'.repeat(5 - n);
 
 function Buy({ product }: { readonly product: Detail }) {
-  const { account, has } = useAuth();
+  const { account, ready, has } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const [quantity, setQuantity] = useState(1);
@@ -26,7 +26,7 @@ function Buy({ product }: { readonly product: Detail }) {
     navigate('/cart');
   }, ['cart']);
   const toLogin = () => navigate(`/login?next=${encodeURIComponent(location.pathname)}`);
-  const blocked = add.isPending || buyNow.isPending || (account !== null && !has('CUSTOMER'));
+  const blocked = !ready || add.isPending || buyNow.isPending || (account !== null && !has('CUSTOMER'));
   if (product.available < 1) return <p className="note note--error">Sản phẩm tạm hết hàng.</p>;
   return <div className="stack">
     <div className="row">
