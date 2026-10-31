@@ -1,0 +1,32 @@
+import org.gradle.api.tasks.testing.Test
+
+def qaRoot = gradle.startParameter.projectProperties['tv5CompositionSources']
+if (!qaRoot || !new File(qaRoot).isDirectory()) {
+    throw new GradleException('Set -Ptv5CompositionSources to the absolute TV5 tests/integration directory')
+}
+gradle.projectsEvaluated {
+    def product = gradle.rootProject.project(':product-service')
+    def order = gradle.rootProject.project(':order-service')
+    def qa = product.sourceSets.create('tv5ProductCatalogComposition')
+    qa.java.setSrcDirs([qaRoot])
+    qa.resources.setSrcDirs([new File(qaRoot, 'fixtures')])
+    qa.compileClasspath += product.sourceSets.main.output
+    qa.runtimeClasspath += product.sourceSets.main.output
+    // Only Order classes: its application.yml/Flyway resources must not enter Product's context.
+    qa.compileClasspath += order.sourceSets.main.output.classesDirs
+    qa.runtimeClasspath += order.sourceSets.main.output.classesDirs
+    product.tasks.named(qa.compileJavaTaskName) { dependsOn order.tasks.named('classes') }
+    product.configurations.tv5ProductCatalogCompositionImplementation.extendsFrom(product.configurations.testImplementation)
+    product.configurations.tv5ProductCatalogCompositionRuntimeOnly.extendsFrom(product.configurations.testRuntimeOnly)
+    product.tasks.register('tv5ProductCatalogComposition', Test) {
+        group = 'verification'
+        description = 'TV5 actual Product lifecycle to Catalog PostgreSQL composition; fixture authority, no live E2E'
+        testClassesDirs = qa.output.classesDirs
+        classpath = qa.runtimeClasspath
+        useJUnitPlatform { includeTags 'postgres-integration' }
+        systemProperty 'api.version', '1.44'
+        systemProperty 'user.timezone', 'UTC'
+        systemProperty 'tv5.order.migrations', new File(order.projectDir, 'src/main/resources/db/migration').absolutePath
+        testLogging { events 'passed', 'failed', 'skipped' }
+    }
+}
