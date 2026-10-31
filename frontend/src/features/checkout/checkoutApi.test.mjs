@@ -26,5 +26,6 @@ test('definite conflicts map to the reason the customer can act on', () => {
   assert.equal(classify(conflict('Not enough stock for SKU-1')).reason, 'OUT_OF_STOCK');
   assert.equal(classify(conflict('Cart revision changed')).reason, 'CART_CHANGED');
   assert.equal(classify(conflict('Store is closed')).reason, 'STORE_UNAVAILABLE');
+  assert.equal(classify(conflict('FINANCE_POLICY_NOT_APPROVED')).reason, 'CHECKOUT_PAUSED');
   assert.equal(classify(new ApiError(401, 'UNAUTHENTICATED', 'Sign in')).reason, 'UNAUTHORIZED');
 });
