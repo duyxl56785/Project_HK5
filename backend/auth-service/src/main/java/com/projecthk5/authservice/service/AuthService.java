@@ -16,6 +16,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.Base64;
 import java.util.HexFormat;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
@@ -29,6 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class AuthService {
     public static final String ACTIVE = "ACTIVE";
+    public static final String DISABLED = "DISABLED";
     static final Duration FAMILY_TTL = Duration.ofDays(7);
     private static final SecureRandom RANDOM = new SecureRandom();
     // PBKDF2 hashes the full password (no 72-byte bcrypt truncation), satisfying the 128-character rule.
@@ -129,10 +131,38 @@ public class AuthService {
     /** Seller status event from a verified internal pair; the row lock serializes concurrent deliveries. */
     @Transactional
     public Account changeSellerRole(UUID accountId, boolean grant, long revision) {
-        Account account = accounts.findLockedById(accountId)
-                .orElseThrow(() -> ApiException.notFound("AUTH_ACCOUNT_NOT_FOUND", "Account not found"));
+        Account account = locked(accountId);
         account.applySellerRole(grant, revision);
         return accounts.saveAndFlush(account);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Account> search(String term) {
+        return accounts.findTop50ByEmailContainingOrderByEmailAsc(Account.normalizeEmail(term));
+    }
+
+    /** Ends every session now, so unlocking later never revives one. The caller then closes writes in flight. */
+    @Transactional
+    public Account disable(UUID accountId) {
+        Account account = locked(accountId);
+        // Keeps the platform from losing its last administrator.
+        if (account.getRoles().contains(Account.Role.ADMIN))
+            throw ApiException.conflict("AUTH_ACCOUNT_PROTECTED", "An ADMIN account cannot be disabled");
+        account.changeStatus(DISABLED);
+        families.revokeAll(accountId, Instant.now());
+        return accounts.saveAndFlush(account);
+    }
+
+    @Transactional
+    public Account enable(UUID accountId) {
+        Account account = locked(accountId);
+        account.changeStatus(ACTIVE);
+        return accounts.saveAndFlush(account);
+    }
+
+    private Account locked(UUID accountId) {
+        return accounts.findLockedById(accountId)
+                .orElseThrow(() -> ApiException.notFound("AUTH_ACCOUNT_NOT_FOUND", "Account not found"));
     }
 
     private Session session(Account account, RefreshFamily family, UUID parentId, Instant now) {

@@ -1,6 +1,7 @@
 package com.projecthk5.authservice.persistence;
 
 import jakarta.persistence.LockModeType;
+import java.time.Instant;
 import java.util.Optional;
 import java.util.UUID;
 import org.springframework.data.jpa.repository.*;
@@ -19,4 +20,9 @@ public interface RefreshFamilyRepository extends JpaRepository<RefreshFamily, UU
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("select f from RefreshFamily f where f.id = :id")
     Optional<RefreshFamily> lockById(@Param("id") UUID id);
+
+    @Transactional(propagation = Propagation.MANDATORY)
+    @Modifying
+    @Query("update RefreshFamily f set f.revokedAt = :now where f.accountId = :accountId and f.revokedAt is null")
+    int revokeAll(@Param("accountId") UUID accountId, @Param("now") Instant now);
 }

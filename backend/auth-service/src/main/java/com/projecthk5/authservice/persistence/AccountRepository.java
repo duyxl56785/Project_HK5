@@ -1,6 +1,7 @@
 package com.projecthk5.authservice.persistence;
 
 import jakarta.persistence.LockModeType;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -9,6 +10,8 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface AccountRepository extends JpaRepository<Account, UUID> {
     Optional<Account> findByEmail(String normalizedEmail);
+
+    List<Account> findTop50ByEmailContainingOrderByEmailAsc(String term);
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("select a from Account a where a.id = :id")

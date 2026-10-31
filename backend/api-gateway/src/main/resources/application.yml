@@ -33,7 +33,7 @@ spring:
       routes:
         - id: auth
           uri: ${AUTH_URL:http://localhost:8101}
-          predicates: [Path=/api/auth/**]
+          predicates: ["Path=/api/auth/**,/api/admin/accounts,/api/admin/accounts/**"]
         - id: user
           uri: ${USER_URL:http://localhost:8102}
           predicates: [Path=/api/users/**]
