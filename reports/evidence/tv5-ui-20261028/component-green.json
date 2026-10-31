@@ -1,0 +1,71 @@
+{
+  "kind": "DERIVED actual TV5 frontend execution; raw log private byte-preserved",
+  "label": "component-green",
+  "branch": "codex/tv5-finance-qa-ui",
+  "head": "fab892f9d5bc1ef1281659d34123bc67eb8884a5",
+  "base": "91e1a6c",
+  "command": [
+    "C:/Program Files/nodejs/node.exe",
+    "--test",
+    "src/features/finance/WorkspaceView.test.mjs"
+  ],
+  "startedUtc": "2026-10-28T01:14:47.678320+00:00",
+  "completedUtc": "2026-10-28T01:14:49.386112+00:00",
+  "environment": {
+    "platform": "win32",
+    "node": "v22.23.3"
+  },
+  "exitCode": 1,
+  "counts": {
+    "tests": 11,
+    "pass": 10,
+    "fail": 1,
+    "skipped": 0
+  },
+  "log": ".verification/tv5-ui-20261028/component-green/runtime.log",
+  "logSHA256": "856cde505b712289eb688ece048af02e3ccdc5e4f046e1f5fa3291e75b81125a",
+  "sourceManifest": [
+    {
+      "path": "frontend/src/features/finance/components.tsx",
+      "sha256": "1d5252b3bf6db8d408f8c06074868272e7c0d32183322c2616fee409afbbd31a"
+    },
+    {
+      "path": "frontend/src/features/finance/EvidenceViews.tsx",
+      "sha256": "3b842fb0287f40aa65086fc96507894f2282d82ecfb3d6448e3274194badbf58"
+    },
+    {
+      "path": "frontend/src/features/finance/README.md",
+      "sha256": "25ae91ebcd163387b3db82e67832a1b026bbbfaa18348f4292357898d5d97c6f"
+    },
+    {
+      "path": "frontend/src/features/finance/TransactionViews.tsx",
+      "sha256": "9adf93d7d0a15dbe6990374973a284f22b8d398494061a0365a6c9afa8ea12e8"
+    },
+    {
+      "path": "frontend/src/features/finance/workspace.css",
+      "sha256": "7a6283df6dedccfbdbc0b34ef693b363da10f8099dd88b08f290f0e47a2208aa"
+    },
+    {
+      "path": "frontend/src/features/finance/workspaceModel.test.mjs",
+      "sha256": "73382b59269a58b0bdf701a0d9e1bceecc7183204293733ad118507becbb7300"
+    },
+    {
+      "path": "frontend/src/features/finance/workspaceModel.ts",
+      "sha256": "7dbfa45a3a278b1d9b989bb09e0b96fcc93bbc3bc2b41b4b5968e08a2b91b305"
+    },
+    {
+      "path": "frontend/src/features/finance/workspaceTypes.ts",
+      "sha256": "109ba940d08024cd4d82b9b720790da40927a9b4e27587bbad4895cef91005c6"
+    },
+    {
+      "path": "frontend/src/features/finance/WorkspaceView.test.mjs",
+      "sha256": "340523f47e542dc815f05cab5118e4e7029dc4832586119530cf13db2d11d830"
+    },
+    {
+      "path": "frontend/src/features/finance/WorkspaceView.tsx",
+      "sha256": "e4bd7c8f29fee0792839ef2736aaf00dfda45f6275c53273d9647ed37d15644b"
+    }
+  ],
+  "scope": "Local isolated UI/fixtures or recorded QA/PR metadata; not production Finance/API/Auth/E2E",
+  "sourceAttribution": "See head + per-file sourceManifest. Pre-commit candidate receipts are not falsely described as exact committed-source runs. Final acceptance runs pin9d62365; later documentation-only publication preserves UI source blobs."
+}

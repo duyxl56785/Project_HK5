@@ -1,0 +1,15 @@
+{
+  "kind": "DERIVED explicit projection of published QA receipts and read-only CLI public metadata",
+  "qaSource": "https://github.com/duyxl56785/Project_HK5/blob/e22365e9c0da5c2adf8906ef1bbf1f19539e6f06/reports/evidence/tv5-all-pr-20261028/qa-scope-regression.json",
+  "qaCases": 749,
+  "cliSource": "https://github.com/duyxl56785/Project_HK5/blob/e22365e9c0da5c2adf8906ef1bbf1f19539e6f06/reports/evidence/tv5-all-pr-20261028/cli-committed.json",
+  "cliCases": 32,
+  "qaRunsNeverSummed": true,
+  "financialRecords": "SYNTHETIC DEMO ONLY, no actual COD/settlement authority",
+  "prSnapshotAt": "2026-10-28T01:16:23.926791+00:00",
+  "prRows": 20,
+  "privateSourceHashes": {
+    "qaReceiptSHA256": "d4856e9b43390843f91f32051314280075f92eb3387986cf37952c5235ada089",
+    "prSnapshotSHA256": "45c271ee013d26cdb770c7b10e59487c076a39cc9adcff6e19aed9ca4e892378"
+  }
+}
