@@ -50,7 +50,9 @@ const postRefresh = () => fetch('/api/auth/refresh', { method: 'POST', headers: 
 export function refreshSession(): Promise<Account | null> {
   refreshing ??= (navigator.locks ? navigator.locks.request('hk5-auth-refresh', postRefresh) : postRefresh())
     .then(async (response) => {
-      if (!response.ok) { setAccessToken(null); return null; }
+      // Only 401 proves the cookie is dead; after a 503 or 403 the next load must try again.
+      if (response.status === 401) setAccessToken(null);
+      if (!response.ok) { accessToken = null; return null; }
       const body = await response.json() as TokenResponse;
       setAccessToken(body.accessToken);
       return body.account;

@@ -94,6 +94,16 @@ test('a guest page does not ask for a session it never had', async ({ page }) =>
   expect(refreshed).toBe(false);
 });
 
+test('a refresh outage does not end the session on the next load', async ({ browser }) => {
+  const customer = await sessionFor(browser, accounts.customer);
+  await customer.route('**/api/auth/refresh', (route) => route.fulfill({ status: 503 }));
+  await customer.goto('/products');
+  await expect(customer.getByRole('link', { name: 'Đăng nhập', exact: true })).toBeVisible();
+  await customer.unroute('**/api/auth/refresh');
+  await customer.reload();
+  await expect(customer.getByRole('button', { name: 'Đăng xuất' })).toBeVisible();
+});
+
 test('a deep link and a refresh both load the app', async ({ page }) => {
   await page.goto('/products?q=ao');
   await expect(page.getByRole('search')).toBeVisible();

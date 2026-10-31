@@ -42,6 +42,15 @@ test('a failed refresh clears the flag and a successful one keeps it', async () 
   assert.equal(mayHaveSession(), true);
 });
 
+for (const status of [503, 403, 500]) {
+  test(`a ${status} refresh proves nothing about the cookie, so the next load tries again`, async () => {
+    setAccessToken('token');
+    refreshAnswers(new Response(null, { status }));
+    assert.equal(await refreshSession(), null);
+    assert.equal(mayHaveSession(), true);
+  });
+}
+
 test('blocked storage falls back to trying a refresh', () => {
   globalThis.localStorage = { getItem() { throw new Error('blocked'); }, setItem() { throw new Error('blocked'); }, removeItem() { throw new Error('blocked'); } };
   assert.doesNotThrow(() => setAccessToken('token'));
