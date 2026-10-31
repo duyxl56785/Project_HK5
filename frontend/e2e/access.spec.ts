@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { accounts, logIn, unique } from './support';
+import { accounts, logIn, sessionFor, unique } from './support';
 
 test('forms validate in the browser before calling the API', async ({ page }) => {
   await page.goto('/register');
@@ -39,6 +39,35 @@ test('a customer cannot open seller or admin pages', async ({ page }) => {
     await page.goto(path);
     await expect(page.getByText('Tài khoản của bạn không có quyền truy cập trang này.')).toBeVisible();
   }
+});
+
+test('an admin locks an account, ending its session, and unlocks it', async ({ browser, page }) => {
+  const account = { email: `e2e-${unique()}@hk5.local`, password: accounts.customer.password };
+  await page.goto('/register');
+  await page.getByLabel('Email').fill(account.email);
+  await page.getByLabel('Mật khẩu').fill(account.password);
+  await page.getByRole('button', { name: 'Đăng ký' }).click();
+  await page.getByRole('button', { name: 'Đăng xuất' }).waitFor();
+
+  const admin = await sessionFor(browser, accounts.admin);
+  await admin.goto('/admin/accounts');
+  await admin.getByLabel('Tìm theo email').fill(account.email);
+  const row = admin.getByRole('row', { name: account.email });
+  admin.once('dialog', (dialog) => void dialog.accept());
+  await row.getByRole('button', { name: 'Khóa', exact: true }).click();
+  await expect(row.getByText('Đã khóa')).toBeVisible();
+
+  await page.reload();
+  await expect(page.getByRole('link', { name: 'Đăng nhập', exact: true })).toBeVisible();
+  await page.goto('/login');
+  await page.getByLabel('Email').fill(account.email);
+  await page.getByLabel('Mật khẩu').fill(account.password);
+  await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
+  await expect(page.getByRole('alert')).toBeVisible();
+
+  await row.getByRole('button', { name: 'Mở khóa' }).click();
+  await expect(row.getByText('Hoạt động')).toBeVisible();
+  await logIn(page, account);
 });
 
 test('a deep link and a refresh both load the app', async ({ page }) => {
