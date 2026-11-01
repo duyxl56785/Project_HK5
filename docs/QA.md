@@ -415,6 +415,16 @@ Refs #5/#12. [All PR/reviewer/TDD matrix](../reports/TV5_ALL_PR_QA_AUDIT_2026-10
 - [ ]103 owner-thread/formal review closure;110/111 human review;113owner review remain WAITING_REVIEW.
 - [ ]Real authority/House/sharedwire/freshness/COD/settlement/Finance production acceptance remains separately gated. M01 full policy PENDING; no flags enabled; Issue5/12 OPEN/PARTIAL.
 
+## TV5-FRONTEND-20261028 — isolated read-only UI (explicit user task)
+
+Refs #5/#12/#115. [Acceptance and A–G report](../reports/TV5_FRONTEND_ACCEPTANCE_2026-10-28.md), [derived receipts/raw hashes](../reports/evidence/tv5-ui-20261028/).
+
+- [x] Finance/COD/Settlement read-only DEMO UI; QA/PR recorded-source views, filters/pagination/details and shared feature components implemented on a separate TV5 branch.
+- [x] At 9d62365: 46 model/render/DOM + 18 Chrome = 64 new frontend PASS, 0 FAIL/SKIP; 85 existing feature regression at 6c74f05 is separate, not a release sum.
+- [x] Typecheck/app build/feature preview build and actual responsive/keyboard/screenshot checks; 4 RED→GREEN traces retained. Three additional canonical money cases immediately PASS, not fake RED.
+- [ ] Lint NOT_RUN: no configured repository linter. Protected Finance HTTP/live E2E/API integration remains NOT_RUN/BLOCKED; no production backend/Auth/shared-router edits.
+- [ ] TV1/TV2 review, owner routing/current authority, full M01/Finance/COD/settlement policy/read contracts pending. Explicit frontend task does not close week 1/full F15/F16 gates; Issues #5/#12 remain PARTIAL.
+
 ## TV5-TASKS61-66-20261028 — current source checkpoint
 
 Refs #5/#12/#99/#103/#117. [A–H task/RTM/readiness report](../reports/TV5_TASKS_6_1_TO_6_6_2026-10-28.md), [derived receipts](../reports/evidence/tv5-tasks6-20261028/).
