@@ -1,6 +1,6 @@
 // Checks a suspension on the running stack through the Gateway with real Auth tokens: the role sync, a token issued
-// before and after it, what a suspended Seller may still do, a write caught in flight by the suspension, and a Seller
-// suspended by the build before V7. Suspends seller2, then reinstates it; holds row locks and restarts seller-service.
+// before and after it, what a suspended Seller may still do, and a write caught in flight by the suspension.
+// Suspends seller2, then reinstates it; holds row locks but changes no data outside the API.
 // Usage: node scripts/demo/smoke-suspended-seller.mjs
 import { execSync, spawn } from 'node:child_process';
 import { randomUUID } from 'node:crypto';
@@ -135,13 +135,16 @@ async function stopInFlight(name, database, select, write, unchanged) {
   await row.held;
   const pending = write();
   await wait(1500);
-  check(`${name}: suspend while the write waits`, (await suspend()).status, 200);
-  check(`${name}: role sync done first`, await roleSynced(), true);
-  await row.release();
-  check(`${name}: write stopped`, (await pending).status, 401);
-  check(`${name}: nothing committed`, unchanged(), true);
-  check(`${name}: reinstate`, (await setStatus('reinstate')).status, 200);
-  await roleSynced();
+  try {
+    check(`${name}: suspend while the write waits`, (await suspend()).status, 200);
+    check(`${name}: role sync done first`, await roleSynced(), true);
+    await row.release();
+    check(`${name}: write stopped`, (await pending).status, 401);
+    check(`${name}: nothing committed`, unchanged(), true);
+  } finally {
+    check(`${name}: reinstate`, (await setStatus('reinstate')).status, 200);
+    await roleSynced();
+  }
 }
 
 const racer = await login('seller2@hk5.local');
@@ -175,20 +178,6 @@ const closedStore = (await call('/api/stores/me', { token: await login('seller2@
 check('Store: reopen', (await call(`/api/stores/${freshStore.id}/open`, {
   token: await login('seller2@hk5.local'), method: 'PATCH', body: { open: true, expectedVersion: closedStore.version },
 })).status, 200);
-
-// Recreates what the build before V7 left: suspended at Seller, role already gone at Auth, V7 still to run.
-const stranded = await place();
-const owner = JSON.parse(Buffer.from(racer.split('.')[1], 'base64url')).sub;
-check('upgrade: suspend', (await suspend()).status, 200);
-await roleSynced();
-sql('auth_db', `delete from account_role_grants where account_id = '${owner}' and role = 'SELLER'`);
-sql('seller_db', `delete from flyway_schema_history where script = 'V7__resend_suspended_seller_role.sql'`);
-check('upgrade: role gone before V7', roles(await login('seller2@hk5.local')).includes('SELLER'), false);
-execSync(`docker restart ${project}-seller-service-1`);
-check('upgrade: Auth gets the role back from V7', await until(async () =>
-  roles(await login('seller2@hk5.local')).includes('SELLER'), 120_000), true);
-check('upgrade: can reject a pending order again', (await act(await login('seller2@hk5.local'), stranded.id, 'reject', 'Smoke')).status, 200);
-check('upgrade: reinstate', (await setStatus('reinstate')).status, 200);
 
 console.log(`FAILS=${fails}`);
 process.exit(fails ? 1 : 0);

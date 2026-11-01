@@ -36,7 +36,7 @@ jobs:
         with:
           node-version: '22'
       - name: Generated env keeps both gates off unless opted in
-        run: node --test scripts/demo/gen-env.test.mjs
+        run: node --test scripts/demo/gen-env.test.mjs scripts/demo/disposable.test.mjs
       - name: Start the stack from fresh volumes and seed it, local demo opt-in only
         run: node scripts/demo/up.mjs --approved-inventory-pair --approved-finance-policy
       - name: Install Playwright
@@ -51,6 +51,10 @@ jobs:
         run: node scripts/demo/smoke-suspended-seller.mjs
       - name: Token, access, proxy and restart checks
         run: node scripts/demo/smoke-review.mjs
+      - name: Stop the demo stack so the rehearsal can use its ports
+        run: docker compose --env-file .env.demo -f docker/compose.demo.yml down -v
+      - name: V7 upgrade on its own disposable stack
+        run: node scripts/demo/rehearse-v7-upgrade.mjs --skip-build
       - name: Service logs
         if: failure()
         run: docker compose --env-file .env.demo -f docker/compose.demo.yml logs --no-color --tail=80
