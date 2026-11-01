@@ -54,7 +54,7 @@ jobs:
       - name: Stop the demo stack so the rehearsal can use its ports
         run: docker compose --env-file .env.demo -f docker/compose.demo.yml down -v
       - name: V7 upgrade on its own disposable stack
-        run: node scripts/demo/rehearse-v7-upgrade.mjs --skip-build
+        run: node scripts/demo/rehearse-v7-upgrade.mjs
       - name: Service logs
         if: failure()
         run: docker compose --env-file .env.demo -f docker/compose.demo.yml logs --no-color --tail=80

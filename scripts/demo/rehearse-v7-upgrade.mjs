@@ -1,16 +1,37 @@
 // Replays V7 against real Auth for a Seller suspended by the build before it. This deletes rows, so it starts its own
-// stack and removes it with its volumes whatever happens; it refuses any other project. Stop other demo stacks first:
-// they use the same ports. Usage: node scripts/demo/rehearse-v7-upgrade.mjs [--skip-build]
+// stack from a temporary worktree of HEAD, with its own .env.demo and secrets, and removes both whatever happens; it
+// refuses any other project. Stop other demo stacks first: they use the same ports.
+// Usage: node scripts/demo/rehearse-v7-upgrade.mjs
 import { execSync } from 'node:child_process';
-import { readFileSync } from 'node:fs';
-import { resolve } from 'node:path';
+import { createHash } from 'node:crypto';
+import { existsSync, mkdtempSync, readdirSync, readFileSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join, resolve } from 'node:path';
 import { newProject, requireDisposable } from './disposable.mjs';
 
-const root = resolve(import.meta.dirname, '../..');
+const checkout = resolve(import.meta.dirname, '../..');
 const project = process.env.COMPOSE_PROJECT_NAME ?? newProject();
-const sh = (command, stdio = 'pipe') =>
-  execSync(command, { cwd: root, stdio, env: { ...process.env, COMPOSE_PROJECT_NAME: project } })?.toString().trim();
-requireDisposable(project, sh(`docker ps -aq --filter label=com.docker.compose.project=${project}`).split('\n').filter(Boolean));
+const parent = mkdtempSync(join(tmpdir(), `${project}-`));
+const root = join(parent, 'repo');
+const sh = (command, stdio = 'pipe', cwd = root) =>
+  execSync(command, { cwd, stdio, env: { ...process.env, COMPOSE_PROJECT_NAME: project } })?.toString().trim();
+try {
+  requireDisposable(project, sh(`docker ps -aq --filter label=com.docker.compose.project=${project}`, 'pipe', checkout).split('\n').filter(Boolean));
+} catch (refused) {
+  rmSync(parent, { recursive: true });
+  throw refused;
+}
+
+/** Everything a demo stack in this checkout depends on and the rehearsal must leave alone. */
+function sharedConfig() {
+  const secrets = join(checkout, 'docker/secrets');
+  const files = [join(checkout, '.env.demo'), ...(existsSync(secrets) ? readdirSync(secrets).sort().map((name) => join(secrets, name)) : [])];
+  const hash = createHash('sha256');
+  for (const file of files.filter(existsSync)) hash.update(file).update(readFileSync(file));
+  return hash.digest('hex');
+}
+const configBefore = sharedConfig();
+sh(`git worktree add --detach "${root}" HEAD`, 'pipe', checkout);
 
 const gateway = process.env.GATEWAY_URL ?? 'http://localhost:18080';
 const wait = (ms) => new Promise((done) => setTimeout(done, ms));
@@ -22,7 +43,7 @@ function check(name, actual, expected) {
 }
 
 try {
-  sh(`node scripts/demo/up.mjs --approved-inventory-pair --approved-finance-policy${process.argv.includes('--skip-build') ? ' --skip-build' : ''}`, 'inherit');
+  sh('node scripts/demo/up.mjs --approved-inventory-pair --approved-finance-policy', 'inherit');
   const env = Object.fromEntries(readFileSync(resolve(root, '.env.demo'), 'utf8').split('\n')
     .filter((line) => line.includes('=') && !line.startsWith('#'))
     .map((line) => [line.slice(0, line.indexOf('=')), line.slice(line.indexOf('=') + 1).trim()]));
@@ -68,8 +89,14 @@ try {
   check('Auth gets the role back from V7', restored, true);
   check('order list open again', (await call('/api/seller/orders', { token: await seller2() })).status, 200);
 } finally {
-  sh('docker compose --env-file .env.demo -f docker/compose.demo.yml down -v', 'inherit');
+  try {
+    if (existsSync(join(root, '.env.demo'))) sh('docker compose --env-file .env.demo -f docker/compose.demo.yml down -v', 'inherit');
+  } finally {
+    sh(`git worktree remove --force "${root}"`, 'pipe', checkout);
+    rmSync(parent, { recursive: true, force: true });
+  }
 }
 
+check('shared demo config unchanged', sharedConfig(), configBefore);
 console.log(`FAILS=${fails}`);
 process.exit(fails ? 1 : 0);
