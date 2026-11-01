@@ -60,6 +60,15 @@ class ReviewRulesTest {
     }
 
     @Test
+    void hidingNeedsAReasonOfAtMost500Characters() {
+        assertEquals("Spam", ReviewRules.hideReason("  Spam "));
+        assertEquals(500, ReviewRules.hideReason("x".repeat(500)).length());
+        assertThrows(IllegalArgumentException.class, () -> ReviewRules.hideReason(null));
+        assertThrows(IllegalArgumentException.class, () -> ReviewRules.hideReason("   "));
+        assertThrows(IllegalArgumentException.class, () -> ReviewRules.hideReason("x".repeat(501)));
+    }
+
+    @Test
     void adminCanHideUnhideAndRepeatWithoutChangingStars() {
         var original = new ReviewRules.Rating(5, false);
         var hidden = ReviewRules.moderate(original, true, () -> { });

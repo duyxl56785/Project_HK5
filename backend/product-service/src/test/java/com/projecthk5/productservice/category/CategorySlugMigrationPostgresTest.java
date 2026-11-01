@@ -65,7 +65,7 @@ class CategorySlugMigrationPostgresTest {
             insert(connection, numbered, "So 2");
         }
 
-        assertEquals(1, flyway("latest").migrate().migrationsExecuted);
+        assertEquals(1, flyway("7").migrate().migrationsExecuted);
 
         try (Connection connection = DriverManager.getConnection(POSTGRES.getJdbcUrl(), POSTGRES.getUsername(), POSTGRES.getPassword())) {
             assertEquals(CategoryService.slugOf(tones), slug(connection, accented));
@@ -80,6 +80,6 @@ class CategorySlugMigrationPostgresTest {
             assertEquals("so-2", slug(connection, numbered));
             assertEquals("so-3", slug(connection, newer));
         }
-        flyway("latest").validate();
+        flyway("7").validate();
     }
 }
