@@ -50,7 +50,7 @@ Trạng thái theo PR #135, xác minh ngày 30/10/2026 trên stack Docker thật
 | §3.4 overallStatus có PROCESSING, COMPLETED | Đơn tổng chỉ có PLACED, CANCELLED; đơn đã giao và đối soát vẫn là PLACED | Chạy thật | TV3 |
 | §3.4 sửa sản phẩm đang bán: nội dung quay về chờ duyệt, giá áp dụng ngay | Chỉ sửa được ở DRAFT, REJECTED, INACTIVE; phải ngừng bán rồi gửi duyệt lại, kể cả khi chỉ đổi giá | Đọc mã | TV2 |
 | §9.1 `/unsuspend`, `/activate` cho sản phẩm | Không có; sản phẩm SUSPENDED không có đường quay lại | Đọc mã | TV2 |
-| §3.2 F13, F17 Admin xử lý đơn và gắn ảnh house store | Có phí 0% cho house store, nhưng seed không tạo house store, không có API Admin tương ứng | Đọc mã | TV2, TV4 |
+| §3.2 F13, F17 Admin xử lý đơn và gắn ảnh house store | Có phí 0% cho house store, nhưng seed không tạo house store, không có API Admin tương ứng. Không làm trong bản nộp theo MD11 ở [M01_FINANCE_DECISION.md](M01_FINANCE_DECISION.md); báo cáo cần ghi là ngoài phạm vi | Đọc mã | TV2 |
 | §3.4 đặt hàng lỗi phải liệt kê từng món | Trả một thông báo cho món lỗi đầu tiên | Chạy thật | TV3 |
 | UC-17 ẩn đánh giá có lý do | API và giao diện không nhận lý do | Đọc mã | TV5 |
 | §9.1, §10.2 xóa cả giỏ có xác nhận | Chỉ xóa từng món | Đọc mã | TV3 |

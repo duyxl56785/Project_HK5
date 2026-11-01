@@ -22,3 +22,11 @@ Mỗi lựa chọn dưới đây là phương án đã có sẵn trong gói M01 
 | MD10 | Báo cáo gồm doanh thu người bán, phí sàn và tổng tiền đã đối soát, tính từ dữ liệu DELIVERED và đã thu COD trong Order. Mốc thời gian theo UTC như dữ liệu lưu trữ. Không có điều chỉnh hoàn tiền. |
 
 Các lựa chọn này được chốt cùng lúc, cùng một phiên bản. Muốn đổi phải ghi quyết định mới, không sửa âm thầm.
+
+## Bổ sung 01/11/2026
+
+| ID | Quyết định |
+| --- | --- |
+| MD11 | Bản nộp không vận hành cửa hàng của sàn. Mọi cửa hàng hiện có thu phí 5% vì `StoreController` luôn trả `houseStore=false`. Luật 0% ở MD04 giữ trong `FinanceRules` nhưng chưa có cửa hàng nào dùng. Không thêm API Admin xử lý đơn thay người bán hay gắn ảnh riêng cho cửa hàng của sàn. |
+
+MD11 làm rõ phạm vi của MD04, không đổi cách tính phí hay dữ liệu đã có. Người quyết định: `duyxl56785`.
