@@ -21,7 +21,7 @@ export interface StoreOrder {
   readonly settledAt: string | null; readonly shipping: Shipping | null; readonly items: readonly OrderItem[];
 }
 interface CustomerOrder {
-  readonly id: string; readonly status: string; readonly total: number; readonly createdAt: string;
+  readonly id: string; readonly status: string; readonly overallStatus: string; readonly total: number; readonly createdAt: string;
   readonly shipping: Shipping | null; readonly storeOrders: readonly StoreOrder[];
 }
 const reviewSchema = z.object({ rating: z.number().int().min(1).max(5), comment: optionalText('Nhận xét', 2000) });
@@ -38,7 +38,7 @@ export function OrdersPage() {
   return <div className="stack">
     <h1>Đơn hàng của tôi</h1>
     <Loaded query={orders} empty={(rows) => rows.length === 0}>{(rows) => <ul className="list">{rows.map((o) => <li key={o.id} className="row row--between">
-      <div><Link to={`/orders/${o.id}`}><strong>#{shortId(o.id)}</strong></Link> <small className="muted">{dateTime(o.createdAt)}</small>
+      <div><Link to={`/orders/${o.id}`}><strong>#{shortId(o.id)}</strong></Link> <Badge value={o.overallStatus} /> <small className="muted">{dateTime(o.createdAt)}</small>
         <div className="row row--wrap">{o.storeOrders.map((s) => <span key={s.id}>{s.storeName ?? 'Cửa hàng'} <Badge value={s.status} /></span>)}</div></div>
       <strong>{money(payable(o))}</strong>
     </li>)}</ul>}</Loaded>
@@ -90,7 +90,7 @@ export function OrderDetailPage() {
   const reviewed = new Set(mine.data?.map((r) => `${r.orderId}:${r.productId}`));
   return <Loaded query={order}>{(o) => <div className="stack">
     <Link to="/orders">← Đơn hàng của tôi</Link>
-    <h1>Đơn #{shortId(o.id)}</h1>
+    <div className="row row--between"><h1>Đơn #{shortId(o.id)}</h1><Badge value={o.overallStatus} /></div>
     <p className="muted">Đặt lúc {dateTime(o.createdAt)} · Thanh toán khi nhận hàng (COD)</p>
     {o.shipping && <p>Giao đến: <strong>{o.shipping.name}</strong> · {o.shipping.phone}<br />{o.shipping.address}</p>}
     {o.storeOrders.map((s) => <StoreOrderCard key={s.id} order={s} reviewed={reviewed} />)}

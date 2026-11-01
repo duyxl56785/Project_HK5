@@ -55,6 +55,7 @@ const labels: Record<string, string> = {
   PLACED: 'Chờ xác nhận', ACCEPTED: 'Đã xác nhận', PREPARING: 'Đang chuẩn bị', READY_FOR_HANDOFF: 'Sẵn sàng bàn giao',
   DISPATCHED: 'Đang giao', DELIVERED: 'Đã giao', CANCELLED: 'Đã hủy', REJECTED: 'Bị từ chối',
   PENDING: 'Chờ thu', COLLECTED: 'Đã thu', VOID: 'Không thu',
+  PROCESSING: 'Đang xử lý', COMPLETED: 'Hoàn tất',
   PENDING_REVIEW: 'Chờ duyệt', APPROVED: 'Đã duyệt', SUSPENDED: 'Tạm ngừng', DRAFT: 'Bản nháp', ACTIVE: 'Đang bán',
   INACTIVE: 'Ngừng bán', ARCHIVED: 'Lưu trữ',
 };

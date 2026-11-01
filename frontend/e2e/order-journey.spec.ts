@@ -19,6 +19,7 @@ test('an order goes from checkout to delivery, review, COD and payout', async ({
     await customer.getByLabel('Địa chỉ', { exact: true }).fill('1 Lê Lợi, Quận 1');
     await customer.getByRole('button', { name: /đặt hàng/i }).click();
     await expect(customer).toHaveURL(/\/orders\/[0-9a-f-]{36}$/);
+    await expect(customer.getByRole('main').getByText('Đang xử lý')).toBeVisible();
   });
   const code = customer.url().split('/').pop()!.slice(0, 8).toUpperCase();
 
@@ -45,6 +46,7 @@ test('an order goes from checkout to delivery, review, COD and payout', async ({
       await customer.getByRole('button', { name: 'Gửi' }).first().click();
       await expect(customer.getByText('Đã đánh giá').first()).toBeVisible({ timeout: 2000 });
     }).toPass({ timeout: 30_000 });
+    await expect(customer.getByRole('main').getByText('Hoàn tất')).toBeVisible();
   });
 
   await test.step('admin collects COD and pays the seller', async () => {

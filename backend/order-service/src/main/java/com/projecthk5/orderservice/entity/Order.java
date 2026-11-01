@@ -1,5 +1,6 @@
 package com.projecthk5.orderservice.entity;
 
+import com.projecthk5.orderservice.fulfillment.SellerOrderLifecycle;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -20,6 +21,7 @@ public class Order {
     @OneToMany(mappedBy="order",cascade=CascadeType.ALL,orphanRemoval=true)
     private List<SellerOrder> sellerOrders=new ArrayList<>();
     public enum Status { PLACED, CANCELLED }
+    public enum OverallStatus { PROCESSING, COMPLETED, CANCELLED }
     public record Shipping(String name,String phone,String address) {}
     protected Order() {}
     public Order(UUID id,String customerId) {this.id=id;this.customerId=customerId;this.status=Status.PLACED;this.total=BigDecimal.ZERO;this.createdAt=Instant.now();}
@@ -35,6 +37,13 @@ public class Order {
     public void ship(Shipping shipping){
         if (shipping==null) return;
         this.shippingName=shipping.name();this.shippingPhone=shipping.phone();this.shippingAddress=shipping.address();
+    }
+    /** Derived from the Store orders: every one ended and at least one delivered completes the Order. */
+    public OverallStatus overallStatus(){
+        if (!sellerOrders.isEmpty() && sellerOrders.stream().allMatch(SellerOrder::isClosed)) return OverallStatus.CANCELLED;
+        if (!sellerOrders.isEmpty() && sellerOrders.stream().allMatch(so -> so.isClosed()
+                || so.getStatus()==SellerOrderLifecycle.Status.DELIVERED)) return OverallStatus.COMPLETED;
+        return OverallStatus.PROCESSING;
     }
     /** The customer-visible Order closes once every Store order is cancelled or rejected. */
     public void refreshStatus(){
