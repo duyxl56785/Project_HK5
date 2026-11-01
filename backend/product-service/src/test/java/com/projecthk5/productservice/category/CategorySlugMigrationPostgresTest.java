@@ -49,6 +49,8 @@ class CategorySlugMigrationPostgresTest {
         flyway("6").migrate();
         UUID accented = UUID.randomUUID(), decomposed = UUID.randomUUID(), upper = UUID.randomUUID();
         UUID symbols = UUID.randomUUID(), first = UUID.randomUUID(), second = UUID.randomUUID();
+        UUID older = UUID.fromString("00000000-0000-0000-0000-000000000001"), newer = UUID.fromString("11111111-0000-0000-0000-000000000001");
+        UUID idSuffixed = UUID.randomUUID(), numbered = UUID.randomUUID();
         String tones = "Mẹ và bé - Đồ chơi";
         try (Connection connection = DriverManager.getConnection(POSTGRES.getJdbcUrl(), POSTGRES.getUsername(), POSTGRES.getPassword())) {
             insert(connection, accented, tones);
@@ -57,6 +59,10 @@ class CategorySlugMigrationPostgresTest {
             insert(connection, symbols, "***");
             insert(connection, first, "Sách");
             insert(connection, second, "sách");
+            insert(connection, older, "Sổ");
+            insert(connection, newer, "Sổ");
+            insert(connection, idSuffixed, "So 11111111");
+            insert(connection, numbered, "So 2");
         }
 
         assertEquals(1, flyway("latest").migrate().migrationsExecuted);
@@ -69,6 +75,10 @@ class CategorySlugMigrationPostgresTest {
             String a = slug(connection, first), b = slug(connection, second);
             assertNotEquals(a, b);
             assertTrue(a.startsWith("sach") && b.startsWith("sach"));
+            assertEquals("so", slug(connection, older));
+            assertEquals("so-11111111", slug(connection, idSuffixed));
+            assertEquals("so-2", slug(connection, numbered));
+            assertEquals("so-3", slug(connection, newer));
         }
         flyway("latest").validate();
     }
