@@ -27,6 +27,10 @@ public class ApiErrorHandler {
     public ResponseEntity<Map<String,String>> handleValidation(MethodArgumentNotValidException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("code", "VALIDATION_FAILED", "message", "Invalid request"));
     }
+    @ExceptionHandler(com.projecthk5.orderservice.service.CheckoutItemsRejected.class)
+    public ResponseEntity<Map<String,Object>> handleItems(com.projecthk5.orderservice.service.CheckoutItemsRejected e) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(Map.of("code", "CHECKOUT_ITEMS_REJECTED", "message", e.getMessage(), "items", e.items()));
+    }
     @ExceptionHandler(IllegalStateException.class)
     public ResponseEntity<Map<String,String>> handleBusiness(IllegalStateException e) {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(Map.of("code", "BUSINESS_CONFLICT", "message", e.getMessage() == null ? "Conflict" : e.getMessage()));

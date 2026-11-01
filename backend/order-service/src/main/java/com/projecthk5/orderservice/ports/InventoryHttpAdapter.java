@@ -65,8 +65,10 @@ public class InventoryHttpAdapter implements InventoryPort {
             String code = code(refused);
             if (!NOTHING_MOVED.contains(code))
                 throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, "Inventory outcome unknown: " + code, refused);
+            String sku = sku(refused);
             throw new Rejected(code, "INSUFFICIENT_STOCK".equals(code)
-                    ? "Not enough stock for " + sku(refused) : "Inventory rejected " + type + ": " + code);
+                    ? "Not enough stock for " + sku : "Inventory rejected " + type + ": " + code,
+                    items.stream().filter(i -> sku.equals(i.sku())).map(Reservation::productId).findFirst().orElse(null));
         } catch (RestClientException unknown) {
             throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, "Inventory unavailable", unknown);
         }

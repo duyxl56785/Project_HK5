@@ -10,6 +10,7 @@ export function classify(error: unknown): CheckoutResponse {
   if (error.status !== 409) return { status: 'unknown' };
   if (['CHECKOUT_REQUIRES_RECONCILIATION', 'CHECKOUT_IN_PROGRESS_RETRY_LATER', 'IDEMPOTENCY_PAYLOAD_MISMATCH'].includes(error.message)) return { status: 'unknown' };
   if (error.message === 'FINANCE_POLICY_NOT_APPROVED') return { status: 'rejected', reason: 'CHECKOUT_PAUSED' };
+  if (error.code === 'CHECKOUT_ITEMS_REJECTED') return { status: 'rejected', reason: 'ITEMS_REJECTED', items: error.items ?? [] };
   // shortcut: Order reports these as one BUSINESS_CONFLICT code, so the wording decides; give each its own code to drop this.
   const text = error.message.toLowerCase();
   if (text.includes('stock')) return { status: 'rejected', reason: 'OUT_OF_STOCK' };

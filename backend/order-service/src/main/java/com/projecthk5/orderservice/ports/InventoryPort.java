@@ -17,7 +17,11 @@ public interface InventoryPort {
     /** Inventory answered with a definitive non-commit (e.g. insufficient stock): nothing moved. */
     final class Rejected extends IllegalStateException {
         private final String code;
-        public Rejected(String code, String message) { super(message); this.code = code; }
+        private final String productId;
+        public Rejected(String code, String message) { this(code, message, null); }
+        public Rejected(String code, String message, String productId) { super(message); this.code = code; this.productId = productId; }
         public String code() { return code; }
+        /** The line Inventory named, when it named one. */
+        public String productId() { return productId; }
     }
 }

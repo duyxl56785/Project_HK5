@@ -140,6 +140,9 @@ public class CheckoutService {
             if (uncertain)
                 throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE,
                     "CHECKOUT_OUTCOME_UNKNOWN_RECONCILIATION_REQUIRED",error);
+            // shortcut: Inventory stops at the first short SKU, so one line is named; report all of them there to list every line.
+            if (error instanceof InventoryPort.Rejected rejected && rejected.productId()!=null)
+                throw new CheckoutItemsRejected(List.of(new CheckoutItemsRejected.Item(rejected.productId(),CheckoutItemsRejected.Reason.OUT_OF_STOCK)));
             throw error;
         }
     }
@@ -150,15 +153,20 @@ public class CheckoutService {
         // S01: authoritative Catalog facts cannot assign the same Seller to two
         // Stores within one checkout. Reject the whole batch before Inventory.
         Map<String,String> storeForSeller=new HashMap<>();
+        List<CheckoutItemsRejected.Item> refused=new ArrayList<>();
         for (CartPort.Item item:items) {
-            CatalogPort.ProductSnapshot product=catalog.verify(item.productId());
-            if (!product.available() || !product.sellerApproved() || !product.storeOpen())
-                throw new IllegalStateException("Product, seller or store not available");
-            if (!product.productId().equals(item.productId()) || !product.storeId().equals(item.storeId())
-                    || !product.sellerId().equals(item.sellerId()))
-                throw new IllegalStateException("Catalog changed since cart creation");
-            if (item.unitPriceSnapshot()==null || product.unitPrice().compareTo(item.unitPriceSnapshot())!=0)
-                throw new IllegalStateException("Product price changed since adding to cart");
+            CatalogPort.ProductSnapshot product;
+            // CatalogHttpAdapter throws IllegalStateException only for a definite "gone"; an outage stays a 503.
+            try { product=catalog.verify(item.productId()); }
+            catch (IllegalStateException gone) {
+                refused.add(new CheckoutItemsRejected.Item(item.productId(),CheckoutItemsRejected.Reason.PRODUCT_UNAVAILABLE));
+                continue;
+            }
+            CheckoutItemsRejected.Reason problem=problem(item,product);
+            if (problem!=null) {
+                refused.add(new CheckoutItemsRejected.Item(item.productId(),problem));
+                continue;
+            }
             String previouslyVerifiedStore=storeForSeller.putIfAbsent(product.sellerId(),product.storeId());
             if (previouslyVerifiedStore!=null && !previouslyVerifiedStore.equals(product.storeId()))
                 throw new IllegalStateException("Catalog assigned one Seller to multiple Stores");
@@ -170,6 +178,7 @@ public class CheckoutService {
             grouped.computeIfAbsent(product.storeId(),ignore -> new ArrayList<>())
                 .add(new Prepared(product,item.quantity(),amount));
         }
+        if (!refused.isEmpty()) throw new CheckoutItemsRejected(refused);
         for (var entry:grouped.entrySet()) {
             List<Prepared> lines=entry.getValue();
             Prepared first=lines.get(0);
@@ -192,6 +201,15 @@ public class CheckoutService {
         // aggregate does not. The caller has not set reserveRequested yet.
         OrderAmountStorageBounds.requireExactNonnegative(order.getTotal());
         return order;
+    }
+    private static CheckoutItemsRejected.Reason problem(CartPort.Item item,CatalogPort.ProductSnapshot product) {
+        if (!product.available()) return CheckoutItemsRejected.Reason.PRODUCT_UNAVAILABLE;
+        if (!product.sellerApproved() || !product.storeOpen()) return CheckoutItemsRejected.Reason.STORE_UNAVAILABLE;
+        if (!product.productId().equals(item.productId()) || !product.storeId().equals(item.storeId())
+                || !product.sellerId().equals(item.sellerId())) return CheckoutItemsRejected.Reason.CATALOG_CHANGED;
+        if (item.unitPriceSnapshot()==null || product.unitPrice().compareTo(item.unitPriceSnapshot())!=0)
+            return CheckoutItemsRejected.Reason.PRICE_CHANGED;
+        return null;
     }
     private record Prepared(CatalogPort.ProductSnapshot product,int quantity,BigDecimal total){}
     private String eventPayload(Order order) {

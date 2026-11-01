@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { projectCart } from '../cart/cartModel.ts';
 import { canonicalCheckoutKey, createCheckoutOnce, prepareCheckout } from './checkoutModel.ts';
-import type { CheckoutCodViewProps, CheckoutResponse } from './checkoutTypes.ts';
+import type { CheckoutCodViewProps, CheckoutResponse, RefusedItem } from './checkoutTypes.ts';
 import './CheckoutCodView.css';
 
 const errorText = {
@@ -11,7 +11,16 @@ const errorText = {
   UNAUTHORIZED: 'Bạn không có quyền đặt đơn hàng này.',
   STORE_UNAVAILABLE: 'Có cửa hàng hoặc sản phẩm chưa sẵn sàng để đặt.',
   CHECKOUT_PAUSED: 'Sàn đang tạm dừng nhận đơn. Giỏ hàng của bạn vẫn được giữ nguyên.',
+  ITEMS_REJECTED: 'Chưa đặt được đơn nào. Giỏ hàng của bạn vẫn được giữ nguyên; các món sau cần xem lại:',
 } as const;
+
+const refusedText: Readonly<Record<string, string>> = {
+  PRODUCT_UNAVAILABLE: 'đã ngừng bán',
+  STORE_UNAVAILABLE: 'cửa hàng đang đóng hoặc tạm khóa',
+  CATALOG_CHANGED: 'thông tin sản phẩm đã đổi',
+  PRICE_CHANGED: 'giá đã đổi',
+  OUT_OF_STOCK: 'không đủ hàng',
+};
 
 type Display = 'idle' | 'sending' | 'unknown' | 'confirmed' | 'rejected';
 
@@ -88,6 +97,7 @@ function CheckoutCodReady({ cart, storeNames, request, checkoutKey, onConfirm, g
   const [display, setDisplay] = useState<Display>('idle');
   const [orderId, setOrderId] = useState<string | null>(null);
   const [reason, setReason] = useState<keyof typeof errorText | null>(null);
+  const [refused, setRefused] = useState<readonly RefusedItem[]>([]);
   useEffect(() => {
     mounted.current = true;
     return () => { mounted.current = false; };
@@ -98,6 +108,7 @@ function CheckoutCodReady({ cart, storeNames, request, checkoutKey, onConfirm, g
     setDisplay('sending');
     let confirmedOrder: string | null = null;
     let rejectedReason: keyof typeof errorText | null = null;
+    let refusedItems: readonly RefusedItem[] = [];
     const outcome = await sendWithGate(async () => {
       const response: CheckoutResponse = await onConfirm(request);
       if (response?.status === 'confirmed'
@@ -107,6 +118,7 @@ function CheckoutCodReady({ cart, storeNames, request, checkoutKey, onConfirm, g
       }
       if (response?.status === 'rejected' && Object.hasOwn(errorText, response.reason)) {
         rejectedReason = response.reason;
+        refusedItems = response.items ?? [];
         return 'rejected';
       }
       return 'unknown';
@@ -115,7 +127,7 @@ function CheckoutCodReady({ cart, storeNames, request, checkoutKey, onConfirm, g
     // Late success/rejection must not mutate another scope or show its Order ID.
     if (!mounted.current) return;
     if (outcome === 'confirmed' && confirmedOrder) setOrderId(confirmedOrder);
-    if (outcome === 'rejected' && rejectedReason) setReason(rejectedReason);
+    if (outcome === 'rejected' && rejectedReason) { setReason(rejectedReason); setRefused(refusedItems); }
     if (outcome !== 'blocked') setDisplay(outcome);
   }
 
@@ -141,7 +153,12 @@ function CheckoutCodReady({ cart, storeNames, request, checkoutKey, onConfirm, g
     {!canonicalCheckoutKey(checkoutKey) && <p role="alert">Thiếu mã yêu cầu đặt hàng hợp lệ.</p>}
     {gateStatus !== 'idle' && display === 'idle' && <p role="alert">Mã yêu cầu đã được dùng ở lần Checkout trước. Không gửi lại hoặc đổi mã để thử lại; cần đối soát trạng thái.</p>}
     {display === 'unknown' && <p role="alert">Kết quả chưa xác định. Giữ nguyên Idempotency-Key; đối soát đơn trước khi thao tác tiếp.</p>}
-    {display === 'rejected' && <p role="alert">{reason ? errorText[reason] : 'Đơn hàng bị từ chối.'}</p>}
+    {display === 'rejected' && <div role="alert">
+      <p>{reason ? errorText[reason] : 'Đơn hàng bị từ chối.'}</p>
+      {refused.length > 0 && <ul>{refused.map((item) => <li key={item.productId}>
+        {cart.groups.flatMap((store) => store.lines).find((line) => line.productId === item.productId)?.title ?? 'Sản phẩm'}: {refusedText[item.reason] ?? 'không đặt được'}
+      </li>)}</ul>}
+    </div>}
     {display === 'confirmed' && orderId && <p role="status">Backend đã xác nhận đơn hàng: {orderId}</p>}
     <button type="button" disabled={!request || !onConfirm || gateStatus !== 'idle' || display !== 'idle'}
       onClick={() => { void submit(); }}>

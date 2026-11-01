@@ -145,8 +145,8 @@ class CheckoutInventoryBoundaryPostgresIT {
     @Test void insufficientStockIsDefinitiveAndReleasesTheCart() {
         inventoryStatus = 409;
         inventoryBody = "{\"code\":\"INSUFFICIENT_STOCK\",\"sku\":\"AO-001\",\"available\":0,\"requested\":2}";
-        InventoryPort.Rejected error = assertThrows(InventoryPort.Rejected.class, this::place);
-        assertEquals("INSUFFICIENT_STOCK", error.code());
+        CheckoutItemsRejected error = assertThrows(CheckoutItemsRejected.class, this::place);
+        assertEquals(CheckoutItemsRejected.Reason.OUT_OF_STOCK, error.items().get(0).reason());
         verify(carts).release("Bearer fixture", key);
         assertAttempt(CheckoutAttempt.State.FAILED);
     }

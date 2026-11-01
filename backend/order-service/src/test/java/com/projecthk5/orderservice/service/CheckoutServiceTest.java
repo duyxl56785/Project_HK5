@@ -98,6 +98,33 @@ class CheckoutServiceTest {
         verify(cart).release(bearer,key);
         verify(keys).fail(attempt.getId(),false);
     }
+    @Test void everyRefusedLineIsListedBeforeStockIsTouched() {
+        CheckoutAttempt attempt=fresh();catalogAndCart();
+        when(catalog.verify("p1")).thenReturn(new CatalogPort.ProductSnapshot("p1","seller1","store1",true,true,true,false,new BigDecimal("12000")));
+        when(catalog.verify("p2")).thenReturn(new CatalogPort.ProductSnapshot("p2","seller2","store2",true,true,false,true,new BigDecimal("15000")));
+        CheckoutItemsRejected refused=assertThrows(CheckoutItemsRejected.class,()->svc.checkout(customer,bearer,key,request));
+        assertEquals(List.of(new CheckoutItemsRejected.Item("p1",CheckoutItemsRejected.Reason.PRICE_CHANGED),
+            new CheckoutItemsRejected.Item("p2",CheckoutItemsRejected.Reason.STORE_UNAVAILABLE)),refused.items());
+        verify(inventory,never()).reserve(any(),anyList());
+        verify(cart).release(bearer,key);
+        verify(keys).fail(attempt.getId(),false);
+    }
+    @Test void productGoneFromCatalogIsListedWithTheOtherLines() {
+        fresh();catalogAndCart();
+        when(catalog.verify("p1")).thenThrow(new IllegalStateException("Product no longer exists"));
+        when(catalog.verify("p2")).thenReturn(new CatalogPort.ProductSnapshot("p2","seller2","store2",false,true,true,true,new BigDecimal("15000")));
+        CheckoutItemsRejected refused=assertThrows(CheckoutItemsRejected.class,()->svc.checkout(customer,bearer,key,request));
+        assertEquals(List.of(new CheckoutItemsRejected.Item("p1",CheckoutItemsRejected.Reason.PRODUCT_UNAVAILABLE),
+            new CheckoutItemsRejected.Item("p2",CheckoutItemsRejected.Reason.PRODUCT_UNAVAILABLE)),refused.items());
+    }
+    @Test void shortStockNamesTheLineAndReleasesTheCart() {
+        CheckoutAttempt attempt=fresh();catalogAndCart();
+        doThrow(new InventoryPort.Rejected("INSUFFICIENT_STOCK","Not enough stock for SKU-2","p2")).when(inventory).reserve(any(),anyList());
+        CheckoutItemsRejected refused=assertThrows(CheckoutItemsRejected.class,()->svc.checkout(customer,bearer,key,request));
+        assertEquals(List.of(new CheckoutItemsRejected.Item("p2",CheckoutItemsRejected.Reason.OUT_OF_STOCK)),refused.items());
+        verify(cart).release(bearer,key);
+        verify(keys).fail(attempt.getId(),false);
+    }
     @Test void malformedClaimedCartNullLineReleasesClaimWithoutExternalSideEffects() {
         CheckoutAttempt attempt=fresh();
         List<CartPort.Item> malformed = new ArrayList<>();
