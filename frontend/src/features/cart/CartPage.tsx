@@ -9,6 +9,7 @@ export function CartPage() {
   const change = useAction(({ productId, quantity }: { productId: string; quantity: number }) =>
     api(`/api/cart/items/${productId}`, { method: 'PATCH', body: { quantity } }), ['cart']);
   const remove = useAction((productId: string) => api(`/api/cart/items/${productId}`, { method: 'DELETE' }), ['cart']);
+  const clear = useAction(() => api('/api/cart', { method: 'DELETE' }), ['cart']);
 
   if (cart.isPending) return <CartView state={{ status: 'loading' }} />;
   if (cart.error) return <CartView onRetry={() => void cart.refetch()}
@@ -17,8 +18,9 @@ export function CartPage() {
   return <div className="stack">
     <CartView state={{ status: 'ready', snapshot }} storeNames={storeNames}
       onQuantityChange={(productId, quantity) => change.mutate({ productId, quantity })}
-      onRemove={(productId) => remove.mutate(productId)} />
-    <ErrorNote error={change.error ?? remove.error} />
+      onRemove={(productId) => remove.mutate(productId)}
+      onClear={() => { if (window.confirm('Xóa toàn bộ sản phẩm trong giỏ hàng?')) clear.mutate(undefined); }} />
+    <ErrorNote error={change.error ?? remove.error ?? clear.error} />
     {snapshot.items.length > 0 && !snapshot.claimed && <Link className="btn btn--primary" to="/checkout">Tiến hành đặt hàng</Link>}
     {snapshot.items.length === 0 && <Link to="/">Tiếp tục mua sắm</Link>}
   </div>;

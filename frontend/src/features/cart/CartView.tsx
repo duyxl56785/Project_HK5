@@ -6,6 +6,7 @@ export interface CartViewProps {
   readonly state: CartUiState;
   readonly onQuantityChange?: (productId: string, quantity: number, expectedRevision: string) => void;
   readonly onRemove?: (productId: string, expectedRevision: string) => void;
+  readonly onClear?: () => void;
   readonly onRetry?: () => void;
   /** Display names by Store id; the id is shown when a name is unknown. */
   readonly storeNames?: Readonly<Record<string, string>>;
@@ -20,7 +21,7 @@ const messages = {
 } as const;
 
 /** Presentation only. Parent owns trusted Cart API, actor identity and revision control. */
-export function CartView({ state, onQuantityChange, onRemove, onRetry, storeNames }: CartViewProps) {
+export function CartView({ state, onQuantityChange, onRemove, onClear, onRetry, storeNames }: CartViewProps) {
   if (state.status !== 'ready') {
     return <section className="tv3-cart" aria-busy={state.status === 'loading'}>
       <h2>Giỏ hàng</h2>
@@ -43,6 +44,7 @@ export function CartView({ state, onQuantityChange, onRemove, onRetry, storeName
     <header className="tv3-cart__header">
       <div><h2>Giỏ hàng của bạn</h2></div>
       <p>{cart.itemCount} sản phẩm</p>
+      {onClear && !cart.claimed && <button type="button" onClick={onClear}>Xóa giỏ hàng</button>}
     </header>
     {cart.claimed && <p className="tv3-cart__warning" role="status">
       Giỏ hàng đang được giữ cho Checkout. Không thể chỉnh sửa cho đến khi được xác nhận.

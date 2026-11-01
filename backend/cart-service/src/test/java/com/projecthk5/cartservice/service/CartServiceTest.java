@@ -27,6 +27,24 @@ class CartServiceTest {
         assertEquals(5,service.update("customer-a","product-1",5).items().get(0).quantity());
         assertTrue(service.remove("customer-a","product-1").items().isEmpty());
     }
+    @Test void clearEmptiesTheCartButNotOneHeldByCheckout() {
+        Cart cart=new Cart("customer-a");
+        when(repo.findByCustomerId("customer-a")).thenReturn(Optional.of(cart));
+        when(repo.findForUpdate("customer-a")).thenReturn(Optional.of(cart));
+        when(repo.saveAndFlush(cart)).thenReturn(cart);
+        when(catalog.resolve("p")).thenReturn(new CartCatalogPort.ProductSnapshot("p","s","seller",true,new java.math.BigDecimal("10000")));
+        service.add("customer-a",new AddItem("p",1));
+        service.claim("customer-a","request-1",null);
+        assertThrows(IllegalStateException.class, () -> service.clear("customer-a"));
+        assertEquals(1,cart.getItems().size());
+        service.release("customer-a","request-1");
+        assertTrue(service.clear("customer-a").items().isEmpty());
+    }
+    @Test void clearWithoutACartIsAnEmptyCart() {
+        when(repo.findForUpdate("customer-a")).thenReturn(Optional.empty());
+        assertTrue(service.clear("customer-a").items().isEmpty());
+        verify(repo,never()).saveAndFlush(any());
+    }
     @Test void claimedCartRejectsWriteAndReleaseWorks() {
         Cart cart=new Cart("customer-a");
         when(repo.findByCustomerId("customer-a")).thenReturn(Optional.of(cart));

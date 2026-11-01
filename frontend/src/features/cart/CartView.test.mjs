@@ -32,6 +32,11 @@ test('Cart claim prevents edit and remove even when callbacks were passed', () =
   assert.match(html, /Giỏ hàng đang được giữ/);
   assert.match(html, /disabled=""/);
 });
+test('clearing is offered only when the Cart can be edited', () => {
+  assert.match(view({ status: 'ready', snapshot }, { onClear() {} }), /Xóa giỏ hàng/);
+  assert.doesNotMatch(view({ status: 'ready', snapshot }, {}), /Xóa giỏ hàng/);
+  assert.doesNotMatch(view({ status: 'ready', snapshot: { ...snapshot, claimed: true } }, { onClear() {} }), /Xóa giỏ hàng/);
+});
 test('unconfigured actions are disabled rather than pretending to call backend', () => {
   const html = view({ status: 'ready', snapshot });
   assert.match(html, /disabled=""/);
