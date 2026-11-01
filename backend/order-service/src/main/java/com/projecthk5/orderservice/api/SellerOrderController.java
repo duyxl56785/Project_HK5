@@ -57,7 +57,9 @@ public class SellerOrderController {
     @Transactional
     public OrderViews.StoreOrder act(@PathVariable UUID id, @PathVariable String action,
                                      @Valid @RequestBody(required = false) ActionRequest body) {
-        SellerOrder so = fulfillment.sellerAction(myStore(), id, action, body == null ? null : body.reason());
+        StoreDirectory.Store store = stores.managedBy(Actor.require("SELLER").id());
+        requireAllowed(store.sellerApproved(), action);
+        SellerOrder so = fulfillment.sellerAction(store.storeId(), id, action, body == null ? null : body.reason());
         return views.stores(List.of(so)).get(0);
     }
 
@@ -66,6 +68,13 @@ public class SellerOrderController {
     public FinanceReport.StoreSummary myFinance() {
         StoreDirectory.Store store = stores.managedBy(Actor.require("SELLER").id());
         return finance.forStore(store.storeId(), store.name());
+    }
+
+    /** A suspended Seller finishes accepted orders and may decline pending ones, but takes on nothing new. */
+    static void requireAllowed(boolean sellerApproved, String action) {
+        if (!sellerApproved && "accept".equals(action)) {
+            throw ApiException.forbidden("Người bán đang bị tạm ngừng nên không thể nhận đơn mới");
+        }
     }
 
     private String myStore() {
