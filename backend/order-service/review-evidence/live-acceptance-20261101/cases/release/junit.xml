@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuites name="" tests="1" failures="0" skipped="0" errors="0" time="6.839028">
+  <testsuite name="lifecycle.live.spec.ts" timestamp="2026-11-01T14:54:30.885Z" tests="1" failures="0" skipped="0" time="6.044" errors="0">
+    <testcase name="real HTTP: customer cancellation and Seller rejection each release exact held lines once" classname="lifecycle.live.spec.ts" time="6.044" />
+  </testsuite>
+</testsuites>

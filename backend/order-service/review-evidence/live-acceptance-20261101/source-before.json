@@ -1,0 +1,16 @@
+{
+  "application_head": "bf8eb3a027c72ad9fde81d0aa5dabc4e73bebacf",
+  "origin_main": "72a12d7536d2644a0f2fbae6dd9e07928162cb1d",
+  "original_acceptance_source": "ecdb03c3b5180d2c055b99a673bb93ee0ee221cc",
+  "original_files": {
+    "frontend/src/features/checkout/acceptance/README.md": "296d10cec070e90bbf3ce659781fca68ab203cf815c0bda464f881f0c121f8bd",
+    "frontend/src/features/checkout/acceptance/lifecycle.live.spec.ts": "932c20c391bab934b5796000d866ee1033aba9dea5a411c7c6a32946ed9d78c8",
+    "frontend/src/features/checkout/acceptance/live-support.ts": "608a82db6e37672fa93d6bd58d586a7723ee184bdc3e7b4d626d6a664852b887",
+    "frontend/src/features/checkout/acceptance/live.config.ts": "bdb4584b110519063300f05541e8cd05e8faecfd58111a07af3e6d16e9bcae5a",
+    "frontend/src/features/checkout/acceptance/two-store.live.spec.ts": "160bd43c1cec36ad97aa0940c2ce027abfbff4f09ea1199f7601adf58ebd42d7",
+    "frontend/src/features/checkout/acceptance/unknown.live.spec.ts": "74d189676ec1b6c0d62c123ba9db564e4bb6e94b3988a9028f8596ee9dbe56f3"
+  },
+  "runtime_paths_identical_to_approved_593ac8d": true,
+  "github_review": "https://github.com/duyxl56785/Project_HK5/pull/145#pullrequestreview-5728410521",
+  "review_readback": "GitHub HTML 200, TV2 COMMENT; API 403"
+}

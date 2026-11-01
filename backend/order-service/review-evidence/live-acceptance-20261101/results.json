@@ -1,0 +1,196 @@
+{
+  "application_head": "bf8eb3a027c72ad9fde81d0aa5dabc4e73bebacf",
+  "main_included": "72a12d7536d2644a0f2fbae6dd9e07928162cb1d",
+  "acceptance_original_source": "ecdb03c3b5180d2c055b99a673bb93ee0ee221cc",
+  "acceptance_ts_files_byte_identical_to_original": true,
+  "docker_project": "tv3-live-145-20261101",
+  "stack_start_exit": 0,
+  "live_postgresql": "PostgreSQL 16.15 (Debian 16.15-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+  "browser": "system Chromium 154.0.8037.57, Playwright, real browser; not HappyDOM",
+  "acceptance": {
+    "pass": 3,
+    "fail": 0,
+    "blocked_not_run": 2,
+    "executed": 3,
+    "skipped": 0,
+    "cases": [
+      {
+        "case": "two-store",
+        "status": "PASS",
+        "executed": 1,
+        "exit_code": 0,
+        "order_id": "b0c34d99-98ac-4aed-9830-0e4a9bd1f0da",
+        "seller_order_ids": [
+          "18c3424b-c46e-42c6-bb42-de939e34a4e9",
+          "be73c125-c372-4831-aab5-f291d971ea6c"
+        ],
+        "new_inventory_operations": [
+          {
+            "operation_id": "order-b0c34d99-98ac-4aed-9830-0e4a9bd1f0da-reserve",
+            "operation_type": "RESERVE",
+            "request_hash": "c285b59ec68fafc0186812ec71934a59d6b6919a1d0edec828a42df430005de0"
+          }
+        ],
+        "stock": [
+          {
+            "sku": "VI-001",
+            "available_before": 50,
+            "available_after": 48,
+            "reserved_before": 0,
+            "reserved_after": 2,
+            "available_delta": -2,
+            "reserved_delta": 2
+          },
+          {
+            "sku": "BE-001",
+            "available_before": 50,
+            "available_after": 48,
+            "reserved_before": 0,
+            "reserved_after": 2,
+            "available_delta": -2,
+            "reserved_delta": 2
+          }
+        ],
+        "playwright_stats": {
+          "startTime": "2026-11-01T14:53:25.951Z",
+          "duration": 5936.51,
+          "expected": 1,
+          "skipped": 0,
+          "unexpected": 0,
+          "flaky": 0
+        }
+      },
+      {
+        "case": "release",
+        "status": "PASS",
+        "executed": 1,
+        "exit_code": 0,
+        "order_id": "cf77f2cf-863d-40ea-b849-7403a2d588dd",
+        "seller_order_ids": [
+          "27789a6f-8c45-4111-97c8-404923e4a16e",
+          "46e0d5a6-b041-4e0e-bb48-069c4a25ea79"
+        ],
+        "new_inventory_operations": [
+          {
+            "operation_id": "order-cf77f2cf-863d-40ea-b849-7403a2d588dd-reserve",
+            "operation_type": "RESERVE",
+            "request_hash": "c285b59ec68fafc0186812ec71934a59d6b6919a1d0edec828a42df430005de0"
+          },
+          {
+            "operation_id": "seller-order-27789a6f-8c45-4111-97c8-404923e4a16e-release",
+            "operation_type": "RELEASE",
+            "request_hash": "03ea83c13988b4359a8fe9e7174f3bf15d4ee635ae778234230158d9a1c58b03"
+          },
+          {
+            "operation_id": "seller-order-46e0d5a6-b041-4e0e-bb48-069c4a25ea79-release",
+            "operation_type": "RELEASE",
+            "request_hash": "cbeea8bc5f28c9e6e565a00a1fa3939e04ff976cf7ce3cf6c02f9eb82182cbef"
+          }
+        ],
+        "stock": [
+          {
+            "sku": "VI-001",
+            "available_before": 48,
+            "available_after": 48,
+            "reserved_before": 2,
+            "reserved_after": 2,
+            "available_delta": 0,
+            "reserved_delta": 0
+          },
+          {
+            "sku": "BE-001",
+            "available_before": 48,
+            "available_after": 48,
+            "reserved_before": 2,
+            "reserved_after": 2,
+            "available_delta": 0,
+            "reserved_delta": 0
+          }
+        ],
+        "playwright_stats": {
+          "startTime": "2026-11-01T14:54:30.831Z",
+          "duration": 6839.028,
+          "expected": 1,
+          "skipped": 0,
+          "unexpected": 0,
+          "flaky": 0
+        }
+      },
+      {
+        "case": "consume",
+        "status": "PASS",
+        "executed": 1,
+        "exit_code": 0,
+        "order_id": "cc4c3284-02ac-428e-af8c-e0d1b59afe7b",
+        "seller_order_ids": [
+          "0b3b75e8-c679-4156-b21b-a9bded7a47ff",
+          "28a70a47-e9e6-4fd7-b8c9-ed64acc3eb00"
+        ],
+        "new_inventory_operations": [
+          {
+            "operation_id": "order-cc4c3284-02ac-428e-af8c-e0d1b59afe7b-reserve",
+            "operation_type": "RESERVE",
+            "request_hash": "c285b59ec68fafc0186812ec71934a59d6b6919a1d0edec828a42df430005de0"
+          },
+          {
+            "operation_id": "seller-order-28a70a47-e9e6-4fd7-b8c9-ed64acc3eb00-consume",
+            "operation_type": "CONSUME",
+            "request_hash": "95787773b907ee8f7ad0125ed342d2996889a2bf3f943456ca9920b2f11816f6"
+          }
+        ],
+        "stock": [
+          {
+            "sku": "VI-001",
+            "available_before": 48,
+            "available_after": 46,
+            "reserved_before": 2,
+            "reserved_after": 4,
+            "available_delta": -2,
+            "reserved_delta": 2
+          },
+          {
+            "sku": "BE-001",
+            "available_before": 48,
+            "available_after": 46,
+            "reserved_before": 2,
+            "reserved_after": 2,
+            "available_delta": -2,
+            "reserved_delta": 0
+          }
+        ],
+        "playwright_stats": {
+          "startTime": "2026-11-01T14:55:45.691Z",
+          "duration": 5192.737999999999,
+          "expected": 1,
+          "skipped": 0,
+          "unexpected": 0,
+          "flaky": 0
+        }
+      }
+    ],
+    "unknown": {
+      "claimConflict": {
+        "state": "NOT_RUN",
+        "executed": 0,
+        "reason": "No TV4/TV5-approved real fault fixture, original operation identity, active fault receipt and evidence SHA256 supplied"
+      },
+      "timeout": {
+        "state": "NOT_RUN",
+        "executed": 0,
+        "reason": "No TV4/TV5-approved timeout/lost-response fixture, operation identity, active fault receipt and evidence SHA256 supplied"
+      }
+    }
+  },
+  "regression": {
+    "pass": 329,
+    "fail": 0,
+    "skip": 0,
+    "exit_code": 0
+  },
+  "typecheck": {
+    "status": "PASS",
+    "exit_code": 0
+  },
+  "frozen_facts_readonly": "All three successful orders retain matching root/child/item IDs, exact money, shipping, fingerprint and outbox payload; hash valid. Only boolean shipping comparison exported.",
+  "scope": "Isolated approved local DEMO only. No production recovery, Finance policy, Auth revoke race, deployment or complete Checkout acceptance approval. No #144 review or action."
+}

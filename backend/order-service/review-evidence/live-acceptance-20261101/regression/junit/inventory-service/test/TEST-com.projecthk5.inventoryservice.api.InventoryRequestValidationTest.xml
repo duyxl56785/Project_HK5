@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuite name="com.projecthk5.inventoryservice.api.InventoryRequestValidationTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-11-01T14:45:38" time="0.169">
+  <testcase name="initializeSkuAccepts128CharactersAndRejects129()" classname="com.projecthk5.inventoryservice.api.InventoryRequestValidationTest" time="0.126" />
+  <testcase name="operationIdAndSkuAccept128CharactersAndReject129()" classname="com.projecthk5.inventoryservice.api.InventoryRequestValidationTest" time="0.029" />
+  <testcase name="invalidArgumentAndOverflowUseBadRequestErrorCodes()" classname="com.projecthk5.inventoryservice.api.InventoryRequestValidationTest" time="0.01" />
+</testsuite>

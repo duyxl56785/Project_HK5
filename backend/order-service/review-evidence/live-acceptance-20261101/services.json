@@ -1,0 +1,178 @@
+{
+  "project": "tv3-live-145-20261101",
+  "worktree": "/workspace/tv3-pr145-live-acceptance",
+  "application_head": "bf8eb3a027c72ad9fde81d0aa5dabc4e73bebacf",
+  "services": [
+    {
+      "service": "postgres",
+      "container_id": "901e0a9f0c11a8d225271d61ff3f97e289d858c2a1e770dfbce2f78b671a6339",
+      "status": "running",
+      "health": "healthy",
+      "image_id": "sha256:066167ff39c2a612402ce99b734ea1cff92a9d1f2ac52f697a5f0384f0d88d6b",
+      "published_ports": {
+        "5432/tcp": null
+      },
+      "demo_gate_flags": {}
+    },
+    {
+      "service": "kafka",
+      "container_id": "0449f385c21b8266a67565990aa3fcbb2ecc011554bf7224fd188d3e42daac06",
+      "status": "running",
+      "health": "healthy",
+      "image_id": "sha256:1756e53f57e1c70531e632b1405b0a820dabdf449c9abeed911cb1c436b0c074",
+      "published_ports": {
+        "9092/tcp": null
+      },
+      "demo_gate_flags": {}
+    },
+    {
+      "service": "redis",
+      "container_id": "01cf706ad553adf2e702831f0aa6667845dca62da89c0e0665d44c0a7d629784",
+      "status": "running",
+      "health": "healthy",
+      "image_id": "sha256:98c6ca8f397f86e469be752c3e7ed5eb8b17f2479840cb69a2e413037038e9f4",
+      "published_ports": {
+        "6379/tcp": null
+      },
+      "demo_gate_flags": {}
+    },
+    {
+      "service": "discovery-server",
+      "container_id": "d188d2230d2bac354e61cee8e89d065eb2f835023c49f13f0d8940bf61ef98bb",
+      "status": "running",
+      "health": "healthy",
+      "image_id": "sha256:3cfdbb0f75d10b24e237c078910bd0340cb75828e1c91e2a0b770a8408dae0ad",
+      "published_ports": {},
+      "demo_gate_flags": {},
+      "mounted_jar_sha256": "f51b4408c536a0a89995d8bdbc9c4dc44e14a6666abd90cb44b25906db126fab"
+    },
+    {
+      "service": "config-server",
+      "container_id": "e6776a5f3d887b4aea554b12682dfd2e056e9c0032cdccc1052f88e3d02d05bb",
+      "status": "running",
+      "health": "healthy",
+      "image_id": "sha256:3cfdbb0f75d10b24e237c078910bd0340cb75828e1c91e2a0b770a8408dae0ad",
+      "published_ports": {},
+      "demo_gate_flags": {},
+      "mounted_jar_sha256": "ec1c6b11b47d05152423be446e80719d5f20213b6b14af37299090e22e2ad6c5"
+    },
+    {
+      "service": "auth-service",
+      "container_id": "2e0b2ea95f321c9b193bb929d0780b38cbac09ee4021ef605ad36412c9336384",
+      "status": "running",
+      "health": null,
+      "image_id": "sha256:3cfdbb0f75d10b24e237c078910bd0340cb75828e1c91e2a0b770a8408dae0ad",
+      "published_ports": {},
+      "demo_gate_flags": {},
+      "mounted_jar_sha256": "167d60dae11f1d410f3c8834b9735f5806f4b84714625093f3f50d18410ae91b"
+    },
+    {
+      "service": "user-service",
+      "container_id": "1a3a1296a823c0e06474b7c7e3b4a18fc00726624494a51a2988537dc62862d1",
+      "status": "running",
+      "health": null,
+      "image_id": "sha256:3cfdbb0f75d10b24e237c078910bd0340cb75828e1c91e2a0b770a8408dae0ad",
+      "published_ports": {},
+      "demo_gate_flags": {},
+      "mounted_jar_sha256": "bf602db27aeaeff3f03fb41c6858c503561cd72067c1c9389eade58112948434"
+    },
+    {
+      "service": "seller-service",
+      "container_id": "f3c0cb252886407e567129082e441945d44fe66672929dcd862dec9183eaef97",
+      "status": "running",
+      "health": null,
+      "image_id": "sha256:3cfdbb0f75d10b24e237c078910bd0340cb75828e1c91e2a0b770a8408dae0ad",
+      "published_ports": {},
+      "demo_gate_flags": {},
+      "mounted_jar_sha256": "a6b61c0287b675531f1f27c8bde0bfad46ef5c54dfee101b41566414b2b81c0e"
+    },
+    {
+      "service": "product-service",
+      "container_id": "4047a1a0d7bdd329e0f44d3556730bd7e043f6c7a3dafc1794a150079b89c35a",
+      "status": "running",
+      "health": null,
+      "image_id": "sha256:3cfdbb0f75d10b24e237c078910bd0340cb75828e1c91e2a0b770a8408dae0ad",
+      "published_ports": {},
+      "demo_gate_flags": {},
+      "mounted_jar_sha256": "a5ef1884dc30ef5a1cd42e407645dd7303f22ad6d5e4fe4c103dc84436e1eda9"
+    },
+    {
+      "service": "inventory-service",
+      "container_id": "9cda52963ecd18504da4c209c26ca282b95289e51427321186c2299a45159bc3",
+      "status": "running",
+      "health": null,
+      "image_id": "sha256:3cfdbb0f75d10b24e237c078910bd0340cb75828e1c91e2a0b770a8408dae0ad",
+      "published_ports": {},
+      "demo_gate_flags": {
+        "INVENTORY_ORDER_PAIR_ENABLED": "true"
+      },
+      "mounted_jar_sha256": "b7e226b81ad5cee8e423d76b4b972ab86f2600c4d895f8dfee96e9c1a086f50b"
+    },
+    {
+      "service": "cart-service",
+      "container_id": "4b2be6b3d544fc236a35e7e1e775423bc543b1741fac6d86e1adbe5eb6c9b237",
+      "status": "running",
+      "health": null,
+      "image_id": "sha256:3cfdbb0f75d10b24e237c078910bd0340cb75828e1c91e2a0b770a8408dae0ad",
+      "published_ports": {},
+      "demo_gate_flags": {},
+      "mounted_jar_sha256": "5c61fba609e4711b497121dded53e4ce7387bb4641da59074b7a36770fc6c904"
+    },
+    {
+      "service": "order-service",
+      "container_id": "6d75e90cb0cac0f527a299031c3f155689141fe5abe394b3dab6c6f89955b443",
+      "status": "running",
+      "health": null,
+      "image_id": "sha256:3cfdbb0f75d10b24e237c078910bd0340cb75828e1c91e2a0b770a8408dae0ad",
+      "published_ports": {},
+      "demo_gate_flags": {
+        "HK5_FINANCE_POLICY_APPROVED": "true"
+      },
+      "mounted_jar_sha256": "384c862ff598beb07077f00eab3d86bd50bdc421e02cdb6e1df04d5ab0cd8210"
+    },
+    {
+      "service": "notification-service",
+      "container_id": "0555708af2b89779f6505008362664d37ea1c07e80117cd54c6e82576333e1e3",
+      "status": "running",
+      "health": null,
+      "image_id": "sha256:3cfdbb0f75d10b24e237c078910bd0340cb75828e1c91e2a0b770a8408dae0ad",
+      "published_ports": {},
+      "demo_gate_flags": {},
+      "mounted_jar_sha256": "cbfdd8c441da5f3eff9b8a4236e4da86dcf56470a692d4f5875f5ce0224853c4"
+    },
+    {
+      "service": "api-gateway",
+      "container_id": "052d27081082421f43ef3f4fb9e610e12d33073c3396914ad9f97fb66fa356e2",
+      "status": "running",
+      "health": null,
+      "image_id": "sha256:3cfdbb0f75d10b24e237c078910bd0340cb75828e1c91e2a0b770a8408dae0ad",
+      "published_ports": {
+        "8080/tcp": [
+          {
+            "HostIp": "127.0.0.1",
+            "HostPort": "18080"
+          }
+        ]
+      },
+      "demo_gate_flags": {},
+      "mounted_jar_sha256": "1a3b7f3b32166646e9c3a1f02601ea8ee32f39489e012d7bfeed9fbc4bb894eb"
+    },
+    {
+      "service": "frontend",
+      "container_id": "9a5e375f1a8b88fe8d74e438b96868501f63ca1d8ca14c53fb3ac3424fa376e5",
+      "status": "running",
+      "health": null,
+      "image_id": "sha256:1e7426c6891f8b5e79ec6b55a2ce888ae70e1222250e8f79a3215c2edc04ca3d",
+      "published_ports": {
+        "80/tcp": [
+          {
+            "HostIp": "127.0.0.1",
+            "HostPort": "5173"
+          }
+        ]
+      },
+      "demo_gate_flags": {}
+    }
+  ],
+  "note": "Containers without a Compose healthcheck are reported running, not labelled healthy; successful real business/API/browser cases establish the tested service paths."
+}

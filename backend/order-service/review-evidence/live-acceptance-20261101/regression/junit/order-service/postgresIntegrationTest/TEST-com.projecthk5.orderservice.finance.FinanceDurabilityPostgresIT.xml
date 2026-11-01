@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuite name="com.projecthk5.orderservice.finance.FinanceDurabilityPostgresIT" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-01T14:46:08" time="2.367">
+  <testcase name="conflictingReplayCannotMutateTheFinancialAggregateWhileAValidReplayCompletes()" classname="com.projecthk5.orderservice.finance.FinanceDurabilityPostgresIT" time="1.823" />
+  <testcase name="identicalIdempotencyKeysAcrossCustomersReplayOnlyTheirOwnTwoStoreFinancialAggregate()" classname="com.projecthk5.orderservice.finance.FinanceDurabilityPostgresIT" time="0.164" />
+  <testcase name="outerRollbackRevertsAlreadyFlushedTwoStoreMoneyOutboxAndSuccessfulAttemptTogether()" classname="com.projecthk5.orderservice.finance.FinanceDurabilityPostgresIT" time="0.082" />
+  <testcase name="concurrentSuccessfulReplaysKeepEveryStoredMoneySnapshotWhileFinancePolicyIsClosed()" classname="com.projecthk5.orderservice.finance.FinanceDurabilityPostgresIT" time="0.136" />
+  <testcase name="postgresOutboxFaultAfterTwoStoreFlushRollsBackEveryMoneyRowAndAllowsCleanLocalRetry()" classname="com.projecthk5.orderservice.finance.FinanceDurabilityPostgresIT" time="0.137" />
+</testsuite>

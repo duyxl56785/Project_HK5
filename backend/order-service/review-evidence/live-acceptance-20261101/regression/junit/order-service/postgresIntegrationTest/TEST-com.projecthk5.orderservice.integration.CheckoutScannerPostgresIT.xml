@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuite name="com.projecthk5.orderservice.integration.CheckoutScannerPostgresIT" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-11-01T14:46:49" time="0.174">
+  <testcase name="[1] competing=scanner" classname="com.projecthk5.orderservice.integration.CheckoutScannerPostgresIT" time="0.096" />
+  <testcase name="[2] competing=failure-handler" classname="com.projecthk5.orderservice.integration.CheckoutScannerPostgresIT" time="0.03" />
+  <testcase name="scanFlagsOnlyStaleProcessingAndIsRepeatable()" classname="com.projecthk5.orderservice.integration.CheckoutScannerPostgresIT" time="0.014" />
+  <testcase name="scannerWinningBeforeWriterKeepsOrderAndOutboxRolledBack()" classname="com.projecthk5.orderservice.integration.CheckoutScannerPostgresIT" time="0.03" />
+</testsuite>

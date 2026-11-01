@@ -1,0 +1,577 @@
+{
+  "application_head": "bf8eb3a027c72ad9fde81d0aa5dabc4e73bebacf",
+  "acceptance_source": "ecdb03c3b5180d2c055b99a673bb93ee0ee221cc",
+  "copied_source_hashes": {
+    "frontend/src/features/checkout/acceptance/README.md": "296d10cec070e90bbf3ce659781fca68ab203cf815c0bda464f881f0c121f8bd",
+    "frontend/src/features/checkout/acceptance/lifecycle.live.spec.ts": "932c20c391bab934b5796000d866ee1033aba9dea5a411c7c6a32946ed9d78c8",
+    "frontend/src/features/checkout/acceptance/live-support.ts": "608a82db6e37672fa93d6bd58d586a7723ee184bdc3e7b4d626d6a664852b887",
+    "frontend/src/features/checkout/acceptance/live.config.ts": "bdb4584b110519063300f05541e8cd05e8faecfd58111a07af3e6d16e9bcae5a",
+    "frontend/src/features/checkout/acceptance/two-store.live.spec.ts": "160bd43c1cec36ad97aa0940c2ce027abfbff4f09ea1199f7601adf58ebd42d7",
+    "frontend/src/features/checkout/acceptance/unknown.live.spec.ts": "74d189676ec1b6c0d62c123ba9db564e4bb6e94b3988a9028f8596ee9dbe56f3"
+  },
+  "raw_to_published": [
+    {
+      "file": "cases/two-store/console.log",
+      "raw_sha256": "4f599150d003e9352ea7346316f8c3f299dfe179ff833e7ea8ad70107a83fd61",
+      "published_sha256": "4f599150d003e9352ea7346316f8c3f299dfe179ff833e7ea8ad70107a83fd61",
+      "transform": "sanitized runtime credentials/JWT values; actual outcome preserved"
+    },
+    {
+      "file": "cases/two-store/results.json",
+      "raw_sha256": "b9be26bc4d45543e3232df4e6a6fb3e0e16f33f6e50ee47b26fdd072512aaf1b",
+      "published_sha256": "b9be26bc4d45543e3232df4e6a6fb3e0e16f33f6e50ee47b26fdd072512aaf1b",
+      "transform": "sanitized runtime credentials/JWT values; actual outcome preserved"
+    },
+    {
+      "file": "cases/two-store/command.json",
+      "raw_sha256": "8475571fc343dbcc0833dd9ae06ef995a2160146c7ec5f81433fa40891840a3e",
+      "published_sha256": "8475571fc343dbcc0833dd9ae06ef995a2160146c7ec5f81433fa40891840a3e",
+      "transform": "sanitized runtime credentials/JWT values; actual outcome preserved"
+    },
+    {
+      "file": "cases/two-store/junit.xml",
+      "raw_sha256": "76fb42010895a9422bdca359eb89db8ac2e9d74ccf0847264a415bb60f62e0ee",
+      "published_sha256": "3b72e3d9b560ea7a1d5547ff108a7663f017ba3fb5224a625644716513c52569",
+      "transform": "XML outcome projection: no properties/system-out/err/hostname/attachments/full stack"
+    },
+    {
+      "file": "cases/two-store/before/order_db.json",
+      "raw_sha256": "4a582162385ffb01dd0e02d0ed25bd4be33e797ff3cb38973eb94ad313c82a75",
+      "published_sha256": "4a582162385ffb01dd0e02d0ed25bd4be33e797ff3cb38973eb94ad313c82a75",
+      "transform": "byte-identical copy"
+    },
+    {
+      "file": "cases/two-store/before/inventory_db.json",
+      "raw_sha256": "12a213db5e32440156b561cb7fd610cddae89e595d30abc3a16dbf6cbe5f504f",
+      "published_sha256": "12a213db5e32440156b561cb7fd610cddae89e595d30abc3a16dbf6cbe5f504f",
+      "transform": "byte-identical copy"
+    },
+    {
+      "file": "cases/two-store/before/PRIVACY.txt",
+      "raw_sha256": "3c4dc7721c814b1d2d154445ccfab2527d57936a828734a9a44982e7e0d5195f",
+      "published_sha256": "3c4dc7721c814b1d2d154445ccfab2527d57936a828734a9a44982e7e0d5195f",
+      "transform": "byte-identical copy"
+    },
+    {
+      "file": "cases/two-store/after/order_db.json",
+      "raw_sha256": "a36617101b318da9ffae84caf2d63806cc7e965ca6925bc0e80d9e632eadda8d",
+      "published_sha256": "a36617101b318da9ffae84caf2d63806cc7e965ca6925bc0e80d9e632eadda8d",
+      "transform": "byte-identical copy"
+    },
+    {
+      "file": "cases/two-store/after/inventory_db.json",
+      "raw_sha256": "5553c44f32183df1fe6a14a6889c674a40bb845b0e44c66b7146fa7d10296a10",
+      "published_sha256": "5553c44f32183df1fe6a14a6889c674a40bb845b0e44c66b7146fa7d10296a10",
+      "transform": "byte-identical copy"
+    },
+    {
+      "file": "cases/two-store/after/PRIVACY.txt",
+      "raw_sha256": "3c4dc7721c814b1d2d154445ccfab2527d57936a828734a9a44982e7e0d5195f",
+      "published_sha256": "3c4dc7721c814b1d2d154445ccfab2527d57936a828734a9a44982e7e0d5195f",
+      "transform": "byte-identical copy"
+    },
+    {
+      "file": "cases/release/console.log",
+      "raw_sha256": "f6eed8e54a8355caf6e325fb6a115730de477d4a1841fe5e8e1dba048bf6b73b",
+      "published_sha256": "f6eed8e54a8355caf6e325fb6a115730de477d4a1841fe5e8e1dba048bf6b73b",
+      "transform": "sanitized runtime credentials/JWT values; actual outcome preserved"
+    },
+    {
+      "file": "cases/release/results.json",
+      "raw_sha256": "694ac3acf6e9fedb2a0e894b16b453c101d3e112a89c9a1ec215938512d576ab",
+      "published_sha256": "694ac3acf6e9fedb2a0e894b16b453c101d3e112a89c9a1ec215938512d576ab",
+      "transform": "sanitized runtime credentials/JWT values; actual outcome preserved"
+    },
+    {
+      "file": "cases/release/command.json",
+      "raw_sha256": "2bb0b3bb2852bc18dc6a97e642f62153a8e2fd793665956165921fe47a2f8de6",
+      "published_sha256": "2bb0b3bb2852bc18dc6a97e642f62153a8e2fd793665956165921fe47a2f8de6",
+      "transform": "sanitized runtime credentials/JWT values; actual outcome preserved"
+    },
+    {
+      "file": "cases/release/junit.xml",
+      "raw_sha256": "26c9fa4987090ee150be0b8a0e9f7bd9adda79ee8573978b311f297c1b706c1e",
+      "published_sha256": "d9263e858660b22caf74a073e38b49b6f4a7099cda0ac6f4021a588b69eb1047",
+      "transform": "XML outcome projection: no properties/system-out/err/hostname/attachments/full stack"
+    },
+    {
+      "file": "cases/release/before/order_db.json",
+      "raw_sha256": "a36617101b318da9ffae84caf2d63806cc7e965ca6925bc0e80d9e632eadda8d",
+      "published_sha256": "a36617101b318da9ffae84caf2d63806cc7e965ca6925bc0e80d9e632eadda8d",
+      "transform": "byte-identical copy"
+    },
+    {
+      "file": "cases/release/before/inventory_db.json",
+      "raw_sha256": "5553c44f32183df1fe6a14a6889c674a40bb845b0e44c66b7146fa7d10296a10",
+      "published_sha256": "5553c44f32183df1fe6a14a6889c674a40bb845b0e44c66b7146fa7d10296a10",
+      "transform": "byte-identical copy"
+    },
+    {
+      "file": "cases/release/before/PRIVACY.txt",
+      "raw_sha256": "3c4dc7721c814b1d2d154445ccfab2527d57936a828734a9a44982e7e0d5195f",
+      "published_sha256": "3c4dc7721c814b1d2d154445ccfab2527d57936a828734a9a44982e7e0d5195f",
+      "transform": "byte-identical copy"
+    },
+    {
+      "file": "cases/release/after/order_db.json",
+      "raw_sha256": "130ab017f7d99aa0abc0eaaf9d7596607f11cc31f6925c4f171bcdfc0a59918b",
+      "published_sha256": "130ab017f7d99aa0abc0eaaf9d7596607f11cc31f6925c4f171bcdfc0a59918b",
+      "transform": "byte-identical copy"
+    },
+    {
+      "file": "cases/release/after/inventory_db.json",
+      "raw_sha256": "03abc01fadb447b4a2c06cbb9c6baaf9f52ce20e3810b621fa2f5b01b8f9bd46",
+      "published_sha256": "03abc01fadb447b4a2c06cbb9c6baaf9f52ce20e3810b621fa2f5b01b8f9bd46",
+      "transform": "byte-identical copy"
+    },
+    {
+      "file": "cases/release/after/PRIVACY.txt",
+      "raw_sha256": "3c4dc7721c814b1d2d154445ccfab2527d57936a828734a9a44982e7e0d5195f",
+      "published_sha256": "3c4dc7721c814b1d2d154445ccfab2527d57936a828734a9a44982e7e0d5195f",
+      "transform": "byte-identical copy"
+    },
+    {
+      "file": "cases/consume/console.log",
+      "raw_sha256": "c25671e6987063769c4a13ade61741f8796a5fec2e8b6cb2278a39d1dd7251c0",
+      "published_sha256": "c25671e6987063769c4a13ade61741f8796a5fec2e8b6cb2278a39d1dd7251c0",
+      "transform": "sanitized runtime credentials/JWT values; actual outcome preserved"
+    },
+    {
+      "file": "cases/consume/results.json",
+      "raw_sha256": "4e30aaa8b7221961711c4df972584b0ae444de1a7a57580ac1c3a603dfc8ad41",
+      "published_sha256": "4e30aaa8b7221961711c4df972584b0ae444de1a7a57580ac1c3a603dfc8ad41",
+      "transform": "sanitized runtime credentials/JWT values; actual outcome preserved"
+    },
+    {
+      "file": "cases/consume/command.json",
+      "raw_sha256": "ba3240e7611d98b2f3b550408273940067028aa9e8b26a9f2c25924deea36230",
+      "published_sha256": "ba3240e7611d98b2f3b550408273940067028aa9e8b26a9f2c25924deea36230",
+      "transform": "sanitized runtime credentials/JWT values; actual outcome preserved"
+    },
+    {
+      "file": "cases/consume/junit.xml",
+      "raw_sha256": "c1f29afeae9f6607dd082e31ec98b3c6d9a9f49b1515017b5095f547d6ad96dd",
+      "published_sha256": "fd85c9f32141d5ba8c4cfbb5d9ac5e020a3c4bd5d95df21eaf9e9b63b1e45752",
+      "transform": "XML outcome projection: no properties/system-out/err/hostname/attachments/full stack"
+    },
+    {
+      "file": "cases/consume/before/order_db.json",
+      "raw_sha256": "130ab017f7d99aa0abc0eaaf9d7596607f11cc31f6925c4f171bcdfc0a59918b",
+      "published_sha256": "130ab017f7d99aa0abc0eaaf9d7596607f11cc31f6925c4f171bcdfc0a59918b",
+      "transform": "byte-identical copy"
+    },
+    {
+      "file": "cases/consume/before/inventory_db.json",
+      "raw_sha256": "03abc01fadb447b4a2c06cbb9c6baaf9f52ce20e3810b621fa2f5b01b8f9bd46",
+      "published_sha256": "03abc01fadb447b4a2c06cbb9c6baaf9f52ce20e3810b621fa2f5b01b8f9bd46",
+      "transform": "byte-identical copy"
+    },
+    {
+      "file": "cases/consume/before/PRIVACY.txt",
+      "raw_sha256": "3c4dc7721c814b1d2d154445ccfab2527d57936a828734a9a44982e7e0d5195f",
+      "published_sha256": "3c4dc7721c814b1d2d154445ccfab2527d57936a828734a9a44982e7e0d5195f",
+      "transform": "byte-identical copy"
+    },
+    {
+      "file": "cases/consume/after/order_db.json",
+      "raw_sha256": "8eb75a791d703528cb50e0fc420a07549187f6c3b7dfa3172e9db9dc3c08128a",
+      "published_sha256": "8eb75a791d703528cb50e0fc420a07549187f6c3b7dfa3172e9db9dc3c08128a",
+      "transform": "byte-identical copy"
+    },
+    {
+      "file": "cases/consume/after/inventory_db.json",
+      "raw_sha256": "c864c582af6d7f6465d2ad4b99e63cd98c9c7bb99d5deb3595b6727a4e8a6bba",
+      "published_sha256": "c864c582af6d7f6465d2ad4b99e63cd98c9c7bb99d5deb3595b6727a4e8a6bba",
+      "transform": "byte-identical copy"
+    },
+    {
+      "file": "cases/consume/after/PRIVACY.txt",
+      "raw_sha256": "3c4dc7721c814b1d2d154445ccfab2527d57936a828734a9a44982e7e0d5195f",
+      "published_sha256": "3c4dc7721c814b1d2d154445ccfab2527d57936a828734a9a44982e7e0d5195f",
+      "transform": "byte-identical copy"
+    },
+    {
+      "file": "fixtures.public.json",
+      "raw_sha256": "3b383c407b25edf4dc3c92d77770af85b8fc9de73234966097f4eae3f59e4421",
+      "published_sha256": "3b383c407b25edf4dc3c92d77770af85b8fc9de73234966097f4eae3f59e4421",
+      "transform": "byte-identical copy"
+    },
+    {
+      "file": "fault-prerequisites.json",
+      "raw_sha256": "786032cf66b08f43866d471d24a246e27b1c7cc79398b00f88359de8815f70c5",
+      "published_sha256": "786032cf66b08f43866d471d24a246e27b1c7cc79398b00f88359de8815f70c5",
+      "transform": "byte-identical copy"
+    },
+    {
+      "file": "frozen-facts-readonly.json",
+      "raw_sha256": "e6e23a7cad21f8ab2fab239f48b7cbd33dd81319c0124a778d6cd89e204d4dbf",
+      "published_sha256": "e6e23a7cad21f8ab2fab239f48b7cbd33dd81319c0124a778d6cd89e204d4dbf",
+      "transform": "byte-identical copy"
+    },
+    {
+      "file": "source-before.json",
+      "raw_sha256": "e5a9c9b12812b3fd30d85c57d69ee95361c2e9d91b3ca8ce4e2173be20684e2f",
+      "published_sha256": "e5a9c9b12812b3fd30d85c57d69ee95361c2e9d91b3ca8ce4e2173be20684e2f",
+      "transform": "byte-identical copy"
+    },
+    {
+      "file": "frontend-image.json",
+      "raw_sha256": "c2917420fe8a9ee2bea5b780fb35b4ed0a6d5a76cacd6126803e5eef518c8c56",
+      "published_sha256": "c2917420fe8a9ee2bea5b780fb35b4ed0a6d5a76cacd6126803e5eef518c8c56",
+      "transform": "byte-identical copy"
+    },
+    {
+      "file": "built-jars.json",
+      "raw_sha256": "91aa44798c6f31f3779ed74b3692c916f0d992e34629c9a4c24812280e991e4c",
+      "published_sha256": "91aa44798c6f31f3779ed74b3692c916f0d992e34629c9a4c24812280e991e4c",
+      "transform": "byte-identical copy"
+    },
+    {
+      "file": "prior-stack-preserved.json",
+      "raw_sha256": "5c1872d8cbddb615f20fb4c8a19729dfcdca72bde7bd8cd338dff7a7fdfe78e3",
+      "published_sha256": "5c1872d8cbddb615f20fb4c8a19729dfcdca72bde7bd8cd338dff7a7fdfe78e3",
+      "transform": "byte-identical copy"
+    },
+    {
+      "file": "discovery.log",
+      "raw_sha256": "25d6f4c2b8c84b3407c9b46c4b51b5464c49757558a61a3f624d2e076abd22b9",
+      "published_sha256": "25d6f4c2b8c84b3407c9b46c4b51b5464c49757558a61a3f624d2e076abd22b9",
+      "transform": "byte-identical copy"
+    },
+    {
+      "file": "typecheck.log",
+      "raw_sha256": "65c2e0c46abb8dc0e34cef894508edfb7274a9f85bc18ea7ce55e689ace338a7",
+      "published_sha256": "65c2e0c46abb8dc0e34cef894508edfb7274a9f85bc18ea7ce55e689ace338a7",
+      "transform": "byte-identical copy"
+    },
+    {
+      "file": "up.log",
+      "raw_sha256": "d6dc50af79e5cd5fe26d597d829229904c8ce14134885027859b9666014b2ec1",
+      "published_sha256": "d6dc50af79e5cd5fe26d597d829229904c8ce14134885027859b9666014b2ec1",
+      "transform": "byte-identical copy"
+    },
+    {
+      "file": "snapshots/initial/order_db.json",
+      "raw_sha256": "4a582162385ffb01dd0e02d0ed25bd4be33e797ff3cb38973eb94ad313c82a75",
+      "published_sha256": "4a582162385ffb01dd0e02d0ed25bd4be33e797ff3cb38973eb94ad313c82a75",
+      "transform": "byte-identical copy"
+    },
+    {
+      "file": "snapshots/initial/inventory_db.json",
+      "raw_sha256": "12a213db5e32440156b561cb7fd610cddae89e595d30abc3a16dbf6cbe5f504f",
+      "published_sha256": "12a213db5e32440156b561cb7fd610cddae89e595d30abc3a16dbf6cbe5f504f",
+      "transform": "byte-identical copy"
+    },
+    {
+      "file": "snapshots/initial/PRIVACY.txt",
+      "raw_sha256": "3c4dc7721c814b1d2d154445ccfab2527d57936a828734a9a44982e7e0d5195f",
+      "published_sha256": "3c4dc7721c814b1d2d154445ccfab2527d57936a828734a9a44982e7e0d5195f",
+      "transform": "byte-identical copy"
+    },
+    {
+      "file": "snapshots/final/order_db.json",
+      "raw_sha256": "d4c1a61007a26d37093ed582cb7aa5a73bd820db29afea08a28b9fdf438cafc5",
+      "published_sha256": "d4c1a61007a26d37093ed582cb7aa5a73bd820db29afea08a28b9fdf438cafc5",
+      "transform": "byte-identical copy"
+    },
+    {
+      "file": "snapshots/final/inventory_db.json",
+      "raw_sha256": "c864c582af6d7f6465d2ad4b99e63cd98c9c7bb99d5deb3595b6727a4e8a6bba",
+      "published_sha256": "c864c582af6d7f6465d2ad4b99e63cd98c9c7bb99d5deb3595b6727a4e8a6bba",
+      "transform": "byte-identical copy"
+    },
+    {
+      "file": "snapshots/final/PRIVACY.txt",
+      "raw_sha256": "3c4dc7721c814b1d2d154445ccfab2527d57936a828734a9a44982e7e0d5195f",
+      "published_sha256": "3c4dc7721c814b1d2d154445ccfab2527d57936a828734a9a44982e7e0d5195f",
+      "transform": "byte-identical copy"
+    },
+    {
+      "file": "regression/junit/order-service/test/TEST-com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest.xml",
+      "raw_sha256": "53b1c586e821eac3ea335934a9fc2a5fd2741cd541bb849839647f67cda227ad",
+      "published_sha256": "2e1a36a62ff91ab8346dc3b0a0f17349cc8fb75554a0f156aee0e9bd048e6e8e",
+      "transform": "XML outcome projection: no properties/system-out/err/hostname/attachments/full stack"
+    },
+    {
+      "file": "regression/junit/order-service/test/TEST-com.projecthk5.orderservice.domain.CheckoutRulesTest.xml",
+      "raw_sha256": "2f4faa9762af1c6cfb75e4d2bf474a52db30c3a990c1292ba3444bca38370b1f",
+      "published_sha256": "812bf9792db4bd0be883c33c70b02f6f2cde6d89f14cd20cc08c5c80012fb2e5",
+      "transform": "XML outcome projection: no properties/system-out/err/hostname/attachments/full stack"
+    },
+    {
+      "file": "regression/junit/order-service/test/TEST-com.projecthk5.orderservice.domain.InventoryOperationIntentTest.xml",
+      "raw_sha256": "580afab2839de07afb111483391995207a663c1d903f97e5741e5fb95c941f81",
+      "published_sha256": "3b6e4c8af417881943058cd3b8acc9c58aa8f066f9a95ad0c7619a587c805ef7",
+      "transform": "XML outcome projection: no properties/system-out/err/hostname/attachments/full stack"
+    },
+    {
+      "file": "regression/junit/order-service/test/TEST-com.projecthk5.orderservice.domain.OrderAmountStorageBoundsTest.xml",
+      "raw_sha256": "fe6f4c8591b8f3c4fb6be7348fd296791e947bfa94b3966e564e027cb7e3352c",
+      "published_sha256": "5a794eeaa2a5e8b7303569e545f47a647d2690b08b46ce56968fd058c88138ac",
+      "transform": "XML outcome projection: no properties/system-out/err/hostname/attachments/full stack"
+    },
+    {
+      "file": "regression/junit/order-service/test/TEST-com.projecthk5.orderservice.entity.SellerOrderTest.xml",
+      "raw_sha256": "0be07cf439a662368dbe05ed17f7a560ad73863ac0d087b17cbd3d00d87c7d7a",
+      "published_sha256": "1ba3b8df395835349b53da88edaec8d4781349085563ce0c8ebd4b787592698d",
+      "transform": "XML outcome projection: no properties/system-out/err/hostname/attachments/full stack"
+    },
+    {
+      "file": "regression/junit/order-service/test/TEST-com.projecthk5.orderservice.finance.FinanceCheckoutPreflightTest.xml",
+      "raw_sha256": "b97191046f00c36b3d37e3b2f0690739689383b17ab826bebe2684bf47e7bb92",
+      "published_sha256": "f1eb85f04d8ada74076351f0ef065ad859b23b83150dcfa021e88392d1c4b4ef",
+      "transform": "XML outcome projection: no properties/system-out/err/hostname/attachments/full stack"
+    },
+    {
+      "file": "regression/junit/order-service/test/TEST-com.projecthk5.orderservice.finance.FinanceConsumerParityTest.xml",
+      "raw_sha256": "e4ca1648bb5b1a23fe7be5827bc258a5de7c20bcae3f129a1615bb1a2d3e0a85",
+      "published_sha256": "f8a5f082e1fdfe2fa3ae3e528950d82d3fa9fc10588f056f73af00f14c844089",
+      "transform": "XML outcome projection: no properties/system-out/err/hostname/attachments/full stack"
+    },
+    {
+      "file": "regression/junit/order-service/test/TEST-com.projecthk5.orderservice.finance.FinancePolicyConfigurationTest.xml",
+      "raw_sha256": "58a72c748cc730a7204a8c8d08346d59302c773d9823caf61c74ad37dc8ecefa",
+      "published_sha256": "47a1866051e30b7d8642728f235540434e22344d6f75c812fe47aa6d5f714a46",
+      "transform": "XML outcome projection: no properties/system-out/err/hostname/attachments/full stack"
+    },
+    {
+      "file": "regression/junit/order-service/test/TEST-com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest.xml",
+      "raw_sha256": "fe8b983c864e39c39955fadc436bd6de688b323c31d97f8c21863ba23863c13d",
+      "published_sha256": "725b504906522328b7d8a7a596da3fdec7bf8c0dda16299cce588bd1d2263cdc",
+      "transform": "XML outcome projection: no properties/system-out/err/hostname/attachments/full stack"
+    },
+    {
+      "file": "regression/junit/order-service/test/TEST-com.projecthk5.orderservice.finance.FinanceRulesTest.xml",
+      "raw_sha256": "9f6c79de3d494dbf70263195f9b86428193cdce28ec22866ae2fec79cba9f82b",
+      "published_sha256": "ce6312ae0e8d06cd78f428e174314b062939a35e19f92555f5950d25e0341266",
+      "transform": "XML outcome projection: no properties/system-out/err/hostname/attachments/full stack"
+    },
+    {
+      "file": "regression/junit/order-service/test/TEST-com.projecthk5.orderservice.fulfillment.SellerOrderLifecycleTest.xml",
+      "raw_sha256": "b886ee633ca4e0bae3a4a54e4c69d5af5be79dcf19f023c8175874c9fac7f41f",
+      "published_sha256": "1681aca0a78004df11ecec396d024afee79381ab7dfb22b5475378ec680eab65",
+      "transform": "XML outcome projection: no properties/system-out/err/hostname/attachments/full stack"
+    },
+    {
+      "file": "regression/junit/order-service/test/TEST-com.projecthk5.orderservice.security.ContractJwtDecoderTest.xml",
+      "raw_sha256": "3a562330041f8e1bb407543d3723222df470d2fb51b269cbf9dad15ccd2abf92",
+      "published_sha256": "592e3665ae0b9c8061b4aa93774bc4a24390b79028ca39ff1a5f1ff792181713",
+      "transform": "XML outcome projection: no properties/system-out/err/hostname/attachments/full stack"
+    },
+    {
+      "file": "regression/junit/order-service/test/TEST-com.projecthk5.orderservice.security.JwtEnvironmentConfigurationTest.xml",
+      "raw_sha256": "458af98cbe213859c789f76e346405de9f8b7d521f08287a34aa049ec64bb694",
+      "published_sha256": "32d92bae2fe9662efbd39e5f9e01e6dd92249e3c2ed65315c66fa937dd87fc81",
+      "transform": "XML outcome projection: no properties/system-out/err/hostname/attachments/full stack"
+    },
+    {
+      "file": "regression/junit/order-service/test/TEST-com.projecthk5.orderservice.service.CheckoutServiceTest.xml",
+      "raw_sha256": "62d7063d8ee2cd3f6b42507d63e96d902769d69ee8a1cf4fe6fa7b67edc73cbf",
+      "published_sha256": "fbbcbb6860df3e2890470b15ff00c04828c023ecc719bbcc9770bf20b2e88199",
+      "transform": "XML outcome projection: no properties/system-out/err/hostname/attachments/full stack"
+    },
+    {
+      "file": "regression/junit/order-service/test/TEST-com.projecthk5.orderservice.service.FinanceReportTest.xml",
+      "raw_sha256": "fa0adb1d31460f2ef6879a76d91ae97e301413cc209299c5ff74d68c7c565fa9",
+      "published_sha256": "9d025f11b0664b7c81c0f00fe0747b477748770573f2f1cdb593f6cebf1b41a1",
+      "transform": "XML outcome projection: no properties/system-out/err/hostname/attachments/full stack"
+    },
+    {
+      "file": "regression/junit/order-service/test/TEST-com.projecthk5.orderservice.service.FulfillmentServiceTest.xml",
+      "raw_sha256": "521268fa7d907cda2dd2183483ac1c1bc81c05fe420bda69259e7d3733129d69",
+      "published_sha256": "b4f97de2446616feeff3cc19c0c045d1f46f068b374e829c0860f8640d270d95",
+      "transform": "XML outcome projection: no properties/system-out/err/hostname/attachments/full stack"
+    },
+    {
+      "file": "regression/junit/order-service/test/TEST-com.projecthk5.orderservice.service.IdempotencyCoordinatorTest.xml",
+      "raw_sha256": "ad07b57092b2f3ca93d53103dcb0266766152b2f019ee6da78f785f995255718",
+      "published_sha256": "f5822c91aedb08728e9b563144beedc0fb25c09976cc8f79aff57cdc4fd09177",
+      "transform": "XML outcome projection: no properties/system-out/err/hostname/attachments/full stack"
+    },
+    {
+      "file": "regression/junit/order-service/test/TEST-com.projecthk5.orderservice.service.InventoryOperationCallerTest.xml",
+      "raw_sha256": "d9cdbde094dea7d8359bd7e61bf0bfcbc9a60f07813490bcc1ce18b53bff5c58",
+      "published_sha256": "77ed879317836539ad33286dfce2825f2fa5de5d53c59bd94a47dfa69f1b0b67",
+      "transform": "XML outcome projection: no properties/system-out/err/hostname/attachments/full stack"
+    },
+    {
+      "file": "regression/junit/order-service/test/TEST-com.projecthk5.orderservice.service.OutboxRelayTest.xml",
+      "raw_sha256": "3096c57a797cf397a14484b8abe30255f3cd933d3073687bdaa4ca5c54cc7538",
+      "published_sha256": "2714da0353cd8d9ed83d812933785d39170e73d56157c07f10b0926e0045ffd9",
+      "transform": "XML outcome projection: no properties/system-out/err/hostname/attachments/full stack"
+    },
+    {
+      "file": "regression/junit/order-service/postgresIntegrationTest/TEST-com.projecthk5.orderservice.finance.FinanceDurabilityPostgresIT.xml",
+      "raw_sha256": "4478f136cce63a59a363ac6245d53d4db7c7dad43af687604d5e87c8cf0d61eb",
+      "published_sha256": "0c71d1a2d865200d868a5bffc66fb339acca906f00c8868d755d412bf2d63964",
+      "transform": "XML outcome projection: no properties/system-out/err/hostname/attachments/full stack"
+    },
+    {
+      "file": "regression/junit/order-service/postgresIntegrationTest/TEST-com.projecthk5.orderservice.finance.FinanceSnapshotPostgresIT.xml",
+      "raw_sha256": "f23f7022c00871f23c76d5faf0c0fc7a9e277e8045d7e567710c0e065587c8af",
+      "published_sha256": "0898008c51f540bfd9780ff3edcc11e7a79bae6008f878bd566a5548b9ba2a1b",
+      "transform": "XML outcome projection: no properties/system-out/err/hostname/attachments/full stack"
+    },
+    {
+      "file": "regression/junit/order-service/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.CheckoutDraftPostgresIT.xml",
+      "raw_sha256": "58524aaf1c3f5bcbb22cf71db9b6ac5a277cf5f2e1efeda63fa1c6e9a5f8d085",
+      "published_sha256": "7d0e9bbe74aee56e146249d8b8eef44b11de095b9db2aa946d9b7c3eba312662",
+      "transform": "XML outcome projection: no properties/system-out/err/hostname/attachments/full stack"
+    },
+    {
+      "file": "regression/junit/order-service/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.CheckoutInventoryBoundaryPostgresIT.xml",
+      "raw_sha256": "e056915e51bff5e7a11809268cdc3a3aab9f1a572584e2fcdf59312a248173f9",
+      "published_sha256": "f92159f08452baa62402090e817a554b6f46eb8365b9b3d00dd2c2020d066558",
+      "transform": "XML outcome projection: no properties/system-out/err/hostname/attachments/full stack"
+    },
+    {
+      "file": "regression/junit/order-service/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT.xml",
+      "raw_sha256": "ee715226b48f7ab16b1ff32e73db311bf547103c5096a6fdf232f5634011f899",
+      "published_sha256": "cd4de484aab06282663c8d7bc55ed8d0209e6485da9f5eecc7483a688cc41bea",
+      "transform": "XML outcome projection: no properties/system-out/err/hostname/attachments/full stack"
+    },
+    {
+      "file": "regression/junit/order-service/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.CheckoutReplayPostgresIT.xml",
+      "raw_sha256": "e8a4c189412556a7d883a63a510e9bf8012e22227bee20a403b895b01e82d187",
+      "published_sha256": "1ced509627093f25b0dc6c398065ec98a66ef9a76fe82d013a109411a7f6e22e",
+      "transform": "XML outcome projection: no properties/system-out/err/hostname/attachments/full stack"
+    },
+    {
+      "file": "regression/junit/order-service/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.CheckoutScannerPostgresIT.xml",
+      "raw_sha256": "cfa21a23ac391624a9c87114980bc8774512e560a85bcf705199de64af41f0ae",
+      "published_sha256": "a666381f3711fdb2ecbdc77c73a04eb815e7dba74b7ff1e47100c66756271bfb",
+      "transform": "XML outcome projection: no properties/system-out/err/hostname/attachments/full stack"
+    },
+    {
+      "file": "regression/junit/order-service/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.FulfillmentPostgres16IT.xml",
+      "raw_sha256": "140bb6369ba7f52947846f446fffaf62d596ad0a64468b1cd993b735fe6de5b2",
+      "published_sha256": "225578ec1a2fd77b120f30ca30d20fb83c08c84bcf63ff9d888d759d4536fbed",
+      "transform": "XML outcome projection: no properties/system-out/err/hostname/attachments/full stack"
+    },
+    {
+      "file": "regression/junit/order-service/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.InventoryOperationJournalPostgres16IT.xml",
+      "raw_sha256": "9adefa27795e8ccc3e23630933d4a53efedde277fa535aac4c749aff33bb9df4",
+      "published_sha256": "b18af66db81a31f1282e6396717e1ee442b3e65da7da0d80ac13415d3499514a",
+      "transform": "XML outcome projection: no properties/system-out/err/hostname/attachments/full stack"
+    },
+    {
+      "file": "regression/junit/order-service/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.OrderPostgres16IT.xml",
+      "raw_sha256": "48bab925a12dc7422f8ba6a38ff920474331bca449bc869667ee88b20c51edb4",
+      "published_sha256": "eb5b8ce6d72c77c98262ccccac28e1a8258f2fcd1533433bd64e35b30c8cd743",
+      "transform": "XML outcome projection: no properties/system-out/err/hostname/attachments/full stack"
+    },
+    {
+      "file": "regression/junit/order-service/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.SellerWriteFencePostgresIT.xml",
+      "raw_sha256": "202529b510ba3cb540b14cf7e9cc7575297af733a4e3fe674b73819c96cec28b",
+      "published_sha256": "7631e88e75e9b3b26d6084375f7ea0e07d57adb8c5be5ebf78af59f79aa16777",
+      "transform": "XML outcome projection: no properties/system-out/err/hostname/attachments/full stack"
+    },
+    {
+      "file": "regression/junit/cart-service/test/TEST-com.projecthk5.cartservice.security.ContractJwtDecoderTest.xml",
+      "raw_sha256": "a58d176e6c3aafce6dff618437e849b940204913ba44804e1635f7015522307e",
+      "published_sha256": "aaa0a76edbc64bf241d09b1dfa4c933339a78f08f47af3bb19b8a4307c3602d6",
+      "transform": "XML outcome projection: no properties/system-out/err/hostname/attachments/full stack"
+    },
+    {
+      "file": "regression/junit/cart-service/test/TEST-com.projecthk5.cartservice.service.CartServiceTest.xml",
+      "raw_sha256": "da9aac5999b7a4ad93e2a4272a1aee6e5cbf9b4cd22e51825e5c31099ec8c733",
+      "published_sha256": "a561c14d8c7657c32746a2a39d679408a394730703016c3734e3fbaad7807897",
+      "transform": "XML outcome projection: no properties/system-out/err/hostname/attachments/full stack"
+    },
+    {
+      "file": "regression/junit/cart-service/postgresIntegrationTest/TEST-com.projecthk5.cartservice.integration.CartPostgres16IT.xml",
+      "raw_sha256": "942d67c34b173b9c9e545d39de5c2c1ed4fbc5312ff11bbb153bf28d854dd5da",
+      "published_sha256": "9a6f7bc4d56fe4f54b69698cc6a348273d6d22924a599385e210b2fee567b40b",
+      "transform": "XML outcome projection: no properties/system-out/err/hostname/attachments/full stack"
+    },
+    {
+      "file": "regression/junit/cart-service/postgresIntegrationTest/TEST-com.projecthk5.cartservice.integration.HttpSellerRevocationWriteFencePostgresIT.xml",
+      "raw_sha256": "164d71db95db2f4369b82e313a5e9a92aaa1a30cc5de494b6141ae9c3e7e61e6",
+      "published_sha256": "1a616eb5273cf8f3f3d5f57af9e820a6c640a80431b67b8479736338c90ea752",
+      "transform": "XML outcome projection: no properties/system-out/err/hostname/attachments/full stack"
+    },
+    {
+      "file": "regression/junit/cart-service/postgresIntegrationTest/TEST-com.projecthk5.cartservice.integration.WriteFencePostgres16IT.xml",
+      "raw_sha256": "1b5ab209544a691a3ed6b308019dbba5ecbb5399457fe4b0a7e17c40c8a5decd",
+      "published_sha256": "e8b7529d42de207404862125478ea914a75ba27639dafc85bf8826f95eb5ea36",
+      "transform": "XML outcome projection: no properties/system-out/err/hostname/attachments/full stack"
+    },
+    {
+      "file": "regression/junit/inventory-service/test/TEST-com.projecthk5.inventoryservice.api.InventoryRequestValidationTest.xml",
+      "raw_sha256": "8b450938f59620cbab231e4089084ec79941580ac09352ce454b2a3a6acb4ed0",
+      "published_sha256": "9f2afd47cbe835982f7745751a94e9cee28b3da7eea11c416933ac694c22e335",
+      "transform": "XML outcome projection: no properties/system-out/err/hostname/attachments/full stack"
+    },
+    {
+      "file": "regression/junit/inventory-service/test/TEST-com.projecthk5.inventoryservice.model.InventoryItemTest.xml",
+      "raw_sha256": "59dbadcac51ed0846c12334e7dffd546f75c2895a80d4e19b11b6c65778d4821",
+      "published_sha256": "e5c040aecfd8529788bee10fd4b8a492fccb26254dc308a3a2df7cac0814e059",
+      "transform": "XML outcome projection: no properties/system-out/err/hostname/attachments/full stack"
+    },
+    {
+      "file": "regression/junit/inventory-service/test/TEST-com.projecthk5.inventoryservice.security.InventoryInternalTokenFilterTest.xml",
+      "raw_sha256": "2a42994239b1120999ee10a42ed7add16e290df896b27f268d5d15385e2eb25c",
+      "published_sha256": "7f6e7671805299fec28e20cdde0d444ec4b162abbc23ea9cd294e13afa57ff4e",
+      "transform": "XML outcome projection: no properties/system-out/err/hostname/attachments/full stack"
+    },
+    {
+      "file": "regression/junit/inventory-service/test/TEST-com.projecthk5.inventoryservice.security.InventoryOrderPairGateTest.xml",
+      "raw_sha256": "eedf1ed2f6d9136dbcf36a38f8bdbbd2d093f23ff62b281c3972c0fc217ab12a",
+      "published_sha256": "a6e97b65d044b673f5735bd7e29b982cb82cbb9efd49a5078c656c9d07363b56",
+      "transform": "XML outcome projection: no properties/system-out/err/hostname/attachments/full stack"
+    },
+    {
+      "file": "regression/junit/inventory-service/test/TEST-com.projecthk5.inventoryservice.service.InventoryOperationServiceTest.xml",
+      "raw_sha256": "2658f4e7110388e19402248901cfd9ec1f1efe1619fd3cc2d2c31fb2d8d8ace9",
+      "published_sha256": "779c5b0066e86a6d1a1a4027b45d1b4ae075e86ac198efb819d1f218ecc54cf6",
+      "transform": "XML outcome projection: no properties/system-out/err/hostname/attachments/full stack"
+    },
+    {
+      "file": "regression/junit/inventory-service/postgresIntegrationTest/TEST-com.projecthk5.inventoryservice.InventoryPostgresIntegrationTest.xml",
+      "raw_sha256": "fad50f61c82f1eb505eb8ceae901c8ec0b0e000e2ddda3a746156d4e1668848c",
+      "published_sha256": "8b89cb841e5612b3cd3eb07e642ee9a50dd38e96e076a0dc462f724b5521056c",
+      "transform": "XML outcome projection: no properties/system-out/err/hostname/attachments/full stack"
+    },
+    {
+      "file": "regression/junit/inventory-service/postgresIntegrationTest/TEST-com.projecthk5.inventoryservice.integration.InventoryInitializePostgresIT.xml",
+      "raw_sha256": "691c655734ec5e14148d1b17d7d95a2a4b5cbbdf4a61dea36f21ddb02daf3434",
+      "published_sha256": "fd74eb77d869e5da9719096a416040bc159d982c7fdb4e74104190a1c2d84a86",
+      "transform": "XML outcome projection: no properties/system-out/err/hostname/attachments/full stack"
+    },
+    {
+      "file": "regression/junit/inventory-service/postgresIntegrationTest/TEST-com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT.xml",
+      "raw_sha256": "4b8146131a9864e0868ba9372b0d0a89384e647b5ca889c6682d0a4b6fe14926",
+      "published_sha256": "dd1f7d1d7938212c1baf464544e4dacc86e811bd2de06fc08e404a97c51187ff",
+      "transform": "XML outcome projection: no properties/system-out/err/hostname/attachments/full stack"
+    },
+    {
+      "file": "regression/junit/inventory-service/postgresIntegrationTest/TEST-com.projecthk5.inventoryservice.integration.InventorySchemaPostgresIT.xml",
+      "raw_sha256": "da783441c839803df12541483dadce0342107756b0d482713eee903ab123fa23",
+      "published_sha256": "92a3ad9c090989c3fe1fbd109fe1692d6bcb1189afb04ed2513cf87617ca6ebe",
+      "transform": "XML outcome projection: no properties/system-out/err/hostname/attachments/full stack"
+    },
+    {
+      "file": "regression/backend.log",
+      "raw_sha256": "37223408e432e1ad34719767d18ef8886dfc9a9506344d244183343ade9fb1a8",
+      "published_sha256": "37223408e432e1ad34719767d18ef8886dfc9a9506344d244183343ade9fb1a8",
+      "transform": "byte-identical copy"
+    }
+  ],
+  "runtime_adaptation": "External config supplies system Chromium, reporters/output paths only; original five TypeScript files and assertions unchanged. Backend built from application HEAD; frontend prebuilt from byte-identical tracked frontend tree. BuildKit CA workaround and no-build reuse are documented; no source/runtime gate outside own demo changed.",
+  "excluded": [
+    ".env.demo and docker/secrets",
+    "private logs/JSON/XML and Playwright error contexts",
+    "tokens/passwords",
+    "shipping name/phone/address and raw draft/outbox payloads",
+    "database dumps",
+    "node_modules and binaries"
+  ],
+  "current_acceptance_ts_hashes": {
+    "frontend/src/features/checkout/acceptance/lifecycle.live.spec.ts": "932c20c391bab934b5796000d866ee1033aba9dea5a411c7c6a32946ed9d78c8",
+    "frontend/src/features/checkout/acceptance/live-support.ts": "608a82db6e37672fa93d6bd58d586a7723ee184bdc3e7b4d626d6a664852b887",
+    "frontend/src/features/checkout/acceptance/live.config.ts": "bdb4584b110519063300f05541e8cd05e8faecfd58111a07af3e6d16e9bcae5a",
+    "frontend/src/features/checkout/acceptance/two-store.live.spec.ts": "160bd43c1cec36ad97aa0940c2ce027abfbff4f09ea1199f7601adf58ebd42d7",
+    "frontend/src/features/checkout/acceptance/unknown.live.spec.ts": "74d189676ec1b6c0d62c123ba9db564e4bb6e94b3988a9028f8596ee9dbe56f3"
+  },
+  "readme_note": "Copied README alone updated with current execution status; original five TypeScript files/assertions are unchanged."
+}

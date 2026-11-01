@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuite name="com.projecthk5.orderservice.integration.CheckoutReplayPostgresIT" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-11-01T14:46:44" time="0.418">
+  <testcase name="committedOutcomeReadAfterLostCommitResponseReturnsCompleteResultWithoutCompensation()" classname="com.projecthk5.orderservice.integration.CheckoutReplayPostgresIT" time="0.135" />
+  <testcase name="[1] changed=Shipping[name=Receiver B, phone=0901234567, address=Address A]" classname="com.projecthk5.orderservice.integration.CheckoutReplayPostgresIT" time="0.036" />
+  <testcase name="[2] changed=Shipping[name=Receiver A, phone=0907654321, address=Address A]" classname="com.projecthk5.orderservice.integration.CheckoutReplayPostgresIT" time="0.042" />
+  <testcase name="[3] changed=Shipping[name=Receiver A, phone=0901234567, address=Address B]" classname="com.projecthk5.orderservice.integration.CheckoutReplayPostgresIT" time="0.04" />
+  <testcase name="[4] changed=null" classname="com.projecthk5.orderservice.integration.CheckoutReplayPostgresIT" time="0.034" />
+  <testcase name="committedOrderReplaysTwiceOutsideTransactionWithoutAnotherOrderOrReservation()" classname="com.projecthk5.orderservice.integration.CheckoutReplayPostgresIT" time="0.03" />
+  <testcase name="inconsistentAttemptCannotReadOrFinalizeAnotherCustomersOrder()" classname="com.projecthk5.orderservice.integration.CheckoutReplayPostgresIT" time="0.028" />
+  <testcase name="changedPayloadStillRejectsSuccessfulKeyWithoutCallingOtherServices()" classname="com.projecthk5.orderservice.integration.CheckoutReplayPostgresIT" time="0.058" />
+</testsuite>

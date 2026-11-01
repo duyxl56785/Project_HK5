@@ -1,0 +1,8 @@
+
+Running 1 test using 1 worker
+
+  ✓  1 [tv4-lifecycle] › src/features/checkout/acceptance/lifecycle.live.spec.ts:7:1 › real HTTP: customer cancellation and Seller rejection each release exact held lines once (6.0s)
+
+  1 passed (6.8s)
+(node:422322) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
