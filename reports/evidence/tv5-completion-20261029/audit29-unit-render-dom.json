@@ -1,0 +1,32 @@
+{
+  "kind": "DERIVED actual TV5 frontend execution; raw log private byte-preserved",
+  "label": "audit29-unit-render-dom",
+  "branch": "codex/tv5-finance-qa-ui",
+  "head": "cae695c10f5d0e4f2b0f905516329e5b4be29850",
+  "base": "91e1a6c",
+  "command": [
+    "C:/Program Files/nodejs/node.exe",
+    "--test",
+    "--test-concurrency=1",
+    "src/features/finance/workspaceModel.test.mjs",
+    "src/features/finance/WorkspaceView.test.mjs",
+    "src/features/finance/Workspace.dom.mjs"
+  ],
+  "startedUtc": "2026-10-29T06:55:56.817348+00:00",
+  "completedUtc": "2026-10-29T06:56:03.376351+00:00",
+  "environment": {
+    "platform": "win32",
+    "node": "v22.23.3"
+  },
+  "exitCode": 1,
+  "counts": {
+    "tests": 46,
+    "pass": 40,
+    "fail": 6,
+    "skipped": 0
+  },
+  "log": ".verification/tv5-ui-20261028/audit29-unit-render-dom/runtime.log",
+  "logSHA256": "97bd68c8aaf60247f3bcf98aa0be432a80cbcfa4496968aca59e47078a9a2f99",
+  "scope": "Local isolated UI/fixtures or recorded QA/PR metadata; not production Finance/API/Auth/E2E",
+  "interpretation": "BLOCKED_ENVIRONMENT:40 model/render PASS,6 DOM hook errors ERR_MODULE_NOT_FOUND happy-dom; not a UI assertion defect. Fixed tooling path/dependency only, no UI source changes; next run46PASS."
+}

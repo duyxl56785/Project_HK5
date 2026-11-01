@@ -1,0 +1,16 @@
+{
+  "kind": "DERIVED binary identity only, not report content/runtime acceptance",
+  "files": [
+    {
+      "source": "user-provided",
+      "bytes": 838422,
+      "sha256": "f8712b8bb93ba11d84c43502c32795411a63336631d240b186499df80b3e6671"
+    },
+    {
+      "source": "stacked-PR-source",
+      "bytes": 838422,
+      "sha256": "f8712b8bb93ba11d84c43502c32795411a63336631d240b186499df80b3e6671"
+    }
+  ],
+  "sameBytes": true
+}

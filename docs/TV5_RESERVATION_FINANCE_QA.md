@@ -1,4 +1,17 @@
-> **Current23/10checkpoint:** [63PR/allreviewers/currentQA and ownerhuman decisions](../reports/TV5_REVIEW_ACCEPTANCE_2026-10-23.md). Prior22/10snapshots below retain history;69oldCRsuperseded,68/70/73/75MERGED. M01PENDING,FinanceproductionBLOCKED.
+> **Current clarification — 30/10/2026:** The 22–23/10 tables below are historical.
+> Their Product-price signature/persistence PENDING entries were superseded by the
+> [canonical 25/10 acceptance receipt](TV5_FINANCE_CONTRACT_SIGNOFF.md#verified-product-price-slice-acceptance--25102026).
+> MD01, MD02 and Product-unit MD03 already have the scoped human business receipt
+> [#84](https://github.com/duyxl56785/Project_HK5/pull/84#issuecomment-6364386964),
+> [Level A design review](https://github.com/duyxl56785/Project_HK5/pull/84#pullrequestreview-5637148973)
+> and [Level B internal persistence review](https://github.com/duyxl56785/Project_HK5/pull/88#pullrequestreview-5639341936);
+> #84/#88 are MERGED. Do not request those signatures again or block the approved
+> Product price scope on unrelated MD04–MD10. Quantity/aggregate caps, full Finance,
+> House/commission/rounding/COD/refund/settlement and runtime authorization remain
+> separate PENDING/BLOCKED gates. This clarification records existing decisions;
+> it adds no signature, business policy, implementation permission or flag change.
+
+> **Historical 23/10 checkpoint:** [63PR/allreviewers/currentQA and ownerhuman decisions](../reports/TV5_REVIEW_ACCEPTANCE_2026-10-23.md). Prior22/10snapshots below retain history;69oldCRsuperseded,68/70/73/75MERGED. M01PENDING,FinanceproductionBLOCKED.
 
 # TV5 — reservation / Finance QA handoff, 22/10/2026 R2
 
