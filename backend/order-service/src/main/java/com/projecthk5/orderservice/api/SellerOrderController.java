@@ -40,33 +40,35 @@ public class SellerOrderController {
     @GetMapping("/orders")
     @Transactional(readOnly = true)
     public List<OrderViews.StoreOrder> list(@RequestParam(required = false) SellerOrderLifecycle.Status status) {
-        String storeId = myStore();
-        return views.stores(sellerOrders.findForStore(storeId, status, PageRequest.of(0, 200)));
+        StoreDirectory.Store store = myStore();
+        return views.stores(sellerOrders.findForStore(store.storeId(), status, PageRequest.of(0, 200))).stream()
+                .map(order -> forSeller(store, order)).toList();
     }
 
     @GetMapping("/orders/{id}")
     @Transactional(readOnly = true)
     public OrderViews.StoreOrder one(@PathVariable UUID id) {
-        String storeId = myStore();
-        SellerOrder so = sellerOrders.findById(id).filter(s -> s.getStoreId().equals(storeId))
+        StoreDirectory.Store store = myStore();
+        SellerOrder so = sellerOrders.findById(id).filter(s -> s.getStoreId().equals(store.storeId()))
                 .orElseThrow(() -> ApiException.notFound("ORDER_NOT_FOUND", "Order not found"));
-        return views.stores(List.of(so)).get(0);
+        return forSeller(store, views.stores(List.of(so)).get(0));
     }
 
     @PostMapping("/orders/{id}/{action}")
     @Transactional
     public OrderViews.StoreOrder act(@PathVariable UUID id, @PathVariable String action,
                                      @Valid @RequestBody(required = false) ActionRequest body) {
-        StoreDirectory.Store store = stores.managedBy(Actor.require("SELLER").id());
+        StoreDirectory.Store store = myStore();
         requireAllowed(store.sellerApproved(), action);
         SellerOrder so = fulfillment.sellerAction(store.storeId(), id, action, body == null ? null : body.reason());
-        return views.stores(List.of(so)).get(0);
+        return forSeller(store, views.stores(List.of(so)).get(0));
     }
 
     @GetMapping("/finance")
     @Transactional(readOnly = true)
     public FinanceReport.StoreSummary myFinance() {
-        StoreDirectory.Store store = stores.managedBy(Actor.require("SELLER").id());
+        StoreDirectory.Store store = myStore();
+        if (!store.sellerApproved()) throw ApiException.forbidden("Người bán đang bị tạm ngừng nên không thể xem tài chính");
         return finance.forStore(store.storeId(), store.name());
     }
 
@@ -77,7 +79,11 @@ public class SellerOrderController {
         }
     }
 
-    private String myStore() {
-        return stores.managedBy(Actor.require("SELLER").id()).storeId();
+    private static OrderViews.StoreOrder forSeller(StoreDirectory.Store store, OrderViews.StoreOrder order) {
+        return store.sellerApproved() ? order : order.withoutFinance();
+    }
+
+    private StoreDirectory.Store myStore() {
+        return stores.managedBy(Actor.require("SELLER").id());
     }
 }

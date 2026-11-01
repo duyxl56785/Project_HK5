@@ -113,7 +113,7 @@ Sau approval Auth cấp SELLER nhưng giữ CUSTOMER; token cũ thiếu SELLER c
 
 Inventory tối thiểu của thao tác nhạy cảm: mọi ADMIN mutation/moderation, role grant/revoke, ghi COD/settlement và đọc dữ liệu Finance có bảo vệ, Seller Store/Product/fulfillment writes. Owner bổ sung operation-specific checks khi triển khai; không coi verify chữ ký là đã hoàn tất các kiểm tra này. JWT role chỉ có thể thu hẹp quyền: thiếu required role vẫn 403 dù nguồn live đã grant, cần refresh để lấy token mới.
 
-Suspended Seller không có thao tác ghi quản lý Store/Product. Ngoại lệ duy nhất là fulfillment theo báo cáo §3.4: không nhận đơn mới (`accept` trả 403), vẫn từ chối được đơn chờ xác nhận và xử lý tiếp đơn đã nhận. Thông tin chỉ đọc hoặc system compensation thuộc TV2/TV3/TV4, chưa được cấp ngoại lệ ngầm.
+Suspended Seller không có thao tác ghi quản lý Store/Product. Ngoại lệ duy nhất là fulfillment theo báo cáo §3.4: không nhận đơn mới (`accept` trả 403), vẫn từ chối được đơn chờ xác nhận và xử lý tiếp đơn đã nhận. Ngoại lệ này không gồm Finance: `GET /api/seller/finance` trả 403 khi Seller bị khóa, 503 khi không đọc được dữ kiện Seller, và đơn trả về cho Seller bị khóa chỉ giữ `gross` để thu COD, bỏ `platformFee`, `sellerNet`, `codStatus`, `codCollectedAt`, `settledAt`. Thông tin chỉ đọc khác hoặc system compensation thuộc TV2/TV3/TV4, chưa được cấp ngoại lệ ngầm.
 
 ## 5. HTTP API TV1 — OD-04 DECIDED
 

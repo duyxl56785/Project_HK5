@@ -25,7 +25,7 @@ function Row({ order }: { readonly order: StoreOrder }) {
     {order.shipping && <p>{order.shipping.name} · {order.shipping.phone}<br />{order.shipping.address}</p>}
     <ul className="list">{order.items.map((i) => <li key={i.productId} className="row row--between">
       <span>{i.name ?? i.sku} × {i.quantity}</span><span>{money(i.lineTotal)}</span></li>)}</ul>
-    <p>Tổng COD: <strong>{money(order.gross)}</strong> · Phí sàn {money(order.platformFee)} · Thực nhận {money(order.sellerNet)}</p>
+    <p>Tổng COD: <strong>{money(order.gross)}</strong>{order.sellerNet !== null && <> · Phí sàn {money(order.platformFee)} · Thực nhận {money(order.sellerNet)}</>}</p>
     {order.statusReason && <p className="muted">Lý do: {order.statusReason}</p>}
     <div className="row row--wrap">
       {next && <button type="button" className="btn btn--primary" disabled={act.isPending} onClick={() => act.mutate(next.action)}>{next.label}</button>}
