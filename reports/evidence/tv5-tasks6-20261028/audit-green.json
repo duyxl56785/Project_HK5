@@ -1,0 +1,20 @@
+{
+  "kind": "DERIVED synthetic-unit TDD, not Finance runtime",
+  "head": "bb0b9a2",
+  "command": [
+    "C:\\Users\\Admin\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "scripts/qa/tests",
+    "-p",
+    "test_finance_evidence_audit.py",
+    "-v"
+  ],
+  "startedUtc": "2026-10-28T01:54:32.220062+00:00",
+  "completedUtc": "2026-10-28T01:54:32.693952+00:00",
+  "exitCode": 0,
+  "logSHA256": "c044ed6f95bb6d71f66c303009633bdbb80e31f1ada32c129325ac9484a55676",
+  "interpretation": "Synthetic auditor/offline CLI verification, not payment or settlement runtime execution."
+}

@@ -1,0 +1,412 @@
+{
+  "kind": "DERIVED local integrity check; raw logs/XML retained privately",
+  "verifiedAtUtc": "2026-10-28T02:19:39.136957+00:00",
+  "status": "PASS",
+  "artifacts": [
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/current-head-103/product-service/tv5ProductCatalogComposition/TEST-com.projecthk5.tv5integration.ProductCatalogCheckoutPreflightPostgresTest.xml",
+      "sha256": "8bdad08724f8260174f907e43345d2c77becfa3987c0732e69d5fbb7c5cfb6d9",
+      "bytes": 20802
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/current-head-103/product-service/tv5ProductCatalogComposition/TEST-com.projecthk5.tv5integration.ProductCatalogCompositionPostgresTest.xml",
+      "sha256": "4710d5559b4d7abb468ad36b36681480280b8ce3e26030a6214a83e35a9ec668",
+      "bytes": 7200
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/current-head-103/product-service/tv5ProductVisibility/TEST-com.projecthk5.productservice.product.http.ProductOwnerVisibilityPostgresDiagnosticTest.xml",
+      "sha256": "ba26c22de8748c60c4c93f4b272faace301e26d126e6245664be7d3969d9a1d2",
+      "bytes": 10164
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/current-head-103/runtime.log",
+      "sha256": "df2838d12fd732b44780c525a9cf757af50ffc71d830fca5981d70d0e5b249da",
+      "bytes": 7364
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/current-head-99/order-service/fin06Regression/TEST-com.projecthk5.orderservice.finance.CheckoutMoneyPreflightRegressionTest.xml",
+      "sha256": "e55c944b9ffa56fa00b1ce72ec14a184d763f2a3e2aff05eddefb45a96c04ec1",
+      "bytes": 9415
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/current-head-99/order-service/postgresIntegrationTest/TEST-com.projecthk5.orderservice.finance.FinanceDurabilityPostgresIT.xml",
+      "sha256": "edadaa94f11850f6ee13f02883afc18c68d59ffc2a4cb6cf5e5d841214109773",
+      "bytes": 10196
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/current-head-99/order-service/postgresIntegrationTest/TEST-com.projecthk5.orderservice.finance.FinanceSnapshotPostgresIT.xml",
+      "sha256": "f5ed68a448e5a81334d73d589ef181ee81b2a84ed97fff2bd2657f7c6eeaab9b",
+      "bytes": 7708
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/current-head-99/order-service/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.CheckoutReplayPostgresIT.xml",
+      "sha256": "d474ac2878759fa2f7dde13559054c8d6067b50e4a899b99fb2663fb9d11bab8",
+      "bytes": 7015
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/current-head-99/order-service/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.CheckoutScannerPostgresIT.xml",
+      "sha256": "57265df67e874f8983b40309677a5578fb780ec80ec47e93fa742ff74c7a50b8",
+      "bytes": 6885
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/current-head-99/order-service/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.InventoryOperationJournalPostgres16IT.xml",
+      "sha256": "217eefad545a2b9f7b3965f433570f6d56aa000880aebf2c7eed9de9033c5ee4",
+      "bytes": 8748
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/current-head-99/order-service/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.OrderPostgres16IT.xml",
+      "sha256": "ac766c95dc601db82db443483117f28cf363139bdf51cc3e6b45ea099ab5bf6f",
+      "bytes": 7479
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/current-head-99/order-service/test/TEST-com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest.xml",
+      "sha256": "bfab3083fbb24a0dca4a4809ab64d913bf16e95003c1645206a92c17cb6a07f5",
+      "bytes": 3143
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/current-head-99/order-service/test/TEST-com.projecthk5.orderservice.domain.CheckoutRulesTest.xml",
+      "sha256": "d6d78f87d6de821f42117be0f086b21406c16e782304a8260a1d5c6ccfbf054a",
+      "bytes": 1254
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/current-head-99/order-service/test/TEST-com.projecthk5.orderservice.domain.InventoryOperationIntentTest.xml",
+      "sha256": "d380f5049d7d7ccbafe1182f728aacc11a052c851b7c3ed3b80a903b000a6be1",
+      "bytes": 1307
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/current-head-99/order-service/test/TEST-com.projecthk5.orderservice.domain.OrderAmountStorageBoundsTest.xml",
+      "sha256": "51250c0636c7d30ba2c2ba3cf91ad946c403c2f7f0663af3db8a2fd47e1bdf30",
+      "bytes": 1243
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/current-head-99/order-service/test/TEST-com.projecthk5.orderservice.finance.FinanceCheckoutPreflightTest.xml",
+      "sha256": "4623d99bb9a70ba8488e6d28f7e2201c86ef9a93015a7612110759651fcb62df",
+      "bytes": 1553
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/current-head-99/order-service/test/TEST-com.projecthk5.orderservice.finance.FinanceConsumerParityTest.xml",
+      "sha256": "b20984377fa75540b52e315949d36819f45e3f65c09714aa0296c1f0b33d2fca",
+      "bytes": 1460
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/current-head-99/order-service/test/TEST-com.projecthk5.orderservice.finance.FinancePolicyConfigurationTest.xml",
+      "sha256": "ed376489b59a1f3865379c7dc755dae0529b6eb9f932560b15b00572a7a0ccc4",
+      "bytes": 2599
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/current-head-99/order-service/test/TEST-com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest.xml",
+      "sha256": "b0fd663ff99688caf4dc7c071ec82ac4f27fc5054d4a3e20523ca8abbe96fb88",
+      "bytes": 2864
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/current-head-99/order-service/test/TEST-com.projecthk5.orderservice.finance.FinanceRulesTest.xml",
+      "sha256": "f341baa406ef9d4dda779f1b415b3ead50b0fcc9c023f5e1a6e39111520d313c",
+      "bytes": 2508
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/current-head-99/order-service/test/TEST-com.projecthk5.orderservice.fulfillment.SellerOrderLifecycleTest.xml",
+      "sha256": "6319b8f33968dfc4575a7388f7860718495e48a84b468672371d5a2622234500",
+      "bytes": 1390
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/current-head-99/order-service/test/TEST-com.projecthk5.orderservice.security.ContractJwtDecoderTest.xml",
+      "sha256": "2fe1f64afb8bb96c674dfc885e2bbf0d97f9ce98f0eeedaddeba375cb294f5f2",
+      "bytes": 791
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/current-head-99/order-service/test/TEST-com.projecthk5.orderservice.security.JwtEnvironmentConfigurationTest.xml",
+      "sha256": "e6178506aba17306a02422752bd4d44cdb75de35fed5c75ced4384492fdf0ff8",
+      "bytes": 1616
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/current-head-99/order-service/test/TEST-com.projecthk5.orderservice.service.CheckoutServiceTest.xml",
+      "sha256": "d844236d498add5325770d78ae945b348b6da34d8d4fbcea2b587a5caa36c003",
+      "bytes": 3414
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/current-head-99/order-service/test/TEST-com.projecthk5.orderservice.service.IdempotencyCoordinatorTest.xml",
+      "sha256": "d8883da32ca7cab2432376b0ebe7bc4929a526eea45cdda376a3f86660e472da",
+      "bytes": 644
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/current-head-99/order-service/test/TEST-com.projecthk5.orderservice.service.InventoryOperationCallerTest.xml",
+      "sha256": "7e0cc2ea51f4f64207dbb4b67d15e13283015876ca4ba2420a4437e28a125302",
+      "bytes": 2411
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/current-head-99/runtime.log",
+      "sha256": "27fad21c95917dee35fdcfc789db76a9807f2d3fde733b1a21e2663bd57a6722",
+      "bytes": 6192
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/current-main-rules/order-service/test/TEST-com.projecthk5.orderservice.finance.FinanceCheckoutPreflightTest.xml",
+      "sha256": "5bb0d48d4a1559bd8b5f288c5ef325cd0a178cc71e679d043621483b4ad8c3cd",
+      "bytes": 1553
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/current-main-rules/order-service/test/TEST-com.projecthk5.orderservice.finance.FinanceConsumerParityTest.xml",
+      "sha256": "23258839b2314e52d3431feffcc1b5fb21fcf5e45cee16c7decce7e0589a1127",
+      "bytes": 1463
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/current-main-rules/order-service/test/TEST-com.projecthk5.orderservice.finance.FinancePolicyConfigurationTest.xml",
+      "sha256": "e192c2d6717fd8b3474c7c5b91543602a8949875b9c344323d5bf53cc07ff3f6",
+      "bytes": 2598
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/current-main-rules/order-service/test/TEST-com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest.xml",
+      "sha256": "7aa6f1b345776b7a1d1cbaf8ee5b855c192eac760347e17ad7211ca1da1fc4e3",
+      "bytes": 2875
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/current-main-rules/order-service/test/TEST-com.projecthk5.orderservice.finance.FinanceRulesTest.xml",
+      "sha256": "9894b0ddf0b1978f3b4ad9bb6bdc1872d6c4ec58ca917cf5b008d99f4979ec2d",
+      "bytes": 2510
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/current-main-rules/product-service/test/TEST-com.projecthk5.productservice.review.ReviewRulesBoundaryTest.xml",
+      "sha256": "5e5715252c24843c165a416c9a905a6147532a7aff4b576f59c0d766b1cac0b8",
+      "bytes": 2464
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/current-main-rules/product-service/test/TEST-com.projecthk5.productservice.review.ReviewRulesTest.xml",
+      "sha256": "5b6bf37cfa4e893456301d38288c8c2995b88ce1757c877119f7709ee759676d",
+      "bytes": 2204
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/current-main-rules/runtime.log",
+      "sha256": "e8dbb2f35fe289a09624abfd53ad5ea64a5118d19e3c0135e5802a85f2eb440b",
+      "bytes": 1897
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/main-synchronized-103/product-service/integrationTest/TEST-com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest.xml",
+      "sha256": "7be587f26ddd6f4439b08d587289cb9ef774c301b1a7d86b6d46d25c7f7efbb5",
+      "bytes": 10038
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/main-synchronized-103/product-service/integrationTest/TEST-com.projecthk5.productservice.catalog.ProductCatalogSearchIntegrationTest.xml",
+      "sha256": "66924cb887a8887362c7965934ea6505ad0fb538a5b25673de6a09b010ee9779",
+      "bytes": 228628
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/main-synchronized-103/product-service/integrationTest/TEST-com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceIntegrationTest.xml",
+      "sha256": "6ea198c9a054c8e3d8da45622e77ccb2b73e8d59957be2e601e77654a9cc3380",
+      "bytes": 230642
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/main-synchronized-103/product-service/integrationTest/TEST-com.projecthk5.productservice.category.CategoryIntegrationTest.xml",
+      "sha256": "4bfbbcc11c4896a258419e4c81a69aad98429234755b2c68c8cb8587de15ce1a",
+      "bytes": 9702
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/main-synchronized-103/product-service/integrationTest/TEST-com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest.xml",
+      "sha256": "fad37e0ee62712855644cd31481ee2348bd4b23ce4ec0a3e31cbe6d9c368ad6f",
+      "bytes": 16132
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/main-synchronized-103/product-service/integrationTest/TEST-com.projecthk5.productservice.image.ProductImageMetadataServiceIntegrationTest.xml",
+      "sha256": "0f6e45ef1b26c2cd205104901cdbe4bd4ceabfc0b184d61fbf82c5f5cce6bfed",
+      "bytes": 13030
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/main-synchronized-103/product-service/integrationTest/TEST-com.projecthk5.productservice.product.http.ProductManagementHandlerIntegrationTest.xml",
+      "sha256": "3c36d7dc0126336e39e75c758220fdd6ae4ecf56759c4110a79eb1a041c5917c",
+      "bytes": 10007
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/main-synchronized-103/product-service/integrationTest/TEST-com.projecthk5.productservice.product.persistence.ProductMigrationPostgresTest.xml",
+      "sha256": "15bbc856d20153a31714d0cc49d9cd621e349c2cd603cea9935b6d229fac4111",
+      "bytes": 4530
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/main-synchronized-103/product-service/integrationTest/TEST-com.projecthk5.productservice.product.persistence.ProductPersistenceIntegrationTest.xml",
+      "sha256": "5ec6e5e25d2c798bfe7324da7c219cb6d359eb1f052dd6c9039082e5dd2bfeaa",
+      "bytes": 17743
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/main-synchronized-103/product-service/integrationTest/TEST-com.projecthk5.productservice.product.ProductApplicationServiceIntegrationTest.xml",
+      "sha256": "9055450eebcd31bc49fdfafafefc4bef9cd436c9cfbce0751a2dc1bed6eeb29a",
+      "bytes": 13297
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/main-synchronized-103/product-service/integrationTest/TEST-com.projecthk5.productservice.product.ProductOwnerListIntegrationTest.xml",
+      "sha256": "090be9f489ac650e13ba7296ae119b817b5619bd25fdb416ba3521f4d86ab7d5",
+      "bytes": 230402
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/main-synchronized-103/product-service/test/TEST-com.projecthk5.productservice.catalog.CatalogBatchValidatorTest.xml",
+      "sha256": "1322a96ec4db84fac5ae3e0783ca1333f89ec8a6a7724e7c253b6e74f530348a",
+      "bytes": 8405
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/main-synchronized-103/product-service/test/TEST-com.projecthk5.productservice.catalog.CatalogSearchQueryTest.xml",
+      "sha256": "2dee123f539599428a85f08105aecb95946cbddce5d8b5008fae69ac549d7957",
+      "bytes": 1783
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/main-synchronized-103/product-service/test/TEST-com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceTest.xml",
+      "sha256": "ee6028ad20d71de34e799a18aefd27b3449e5f0bd0348a916dd4024d91be7d29",
+      "bytes": 1798
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/main-synchronized-103/product-service/test/TEST-com.projecthk5.productservice.category.CategoryControllerTest.xml",
+      "sha256": "95668aec88fda89f4c3ef3a89f1e83696e8ec1bec5c074f27f2c36a47fe4f60e",
+      "bytes": 18345
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/main-synchronized-103/product-service/test/TEST-com.projecthk5.productservice.category.CategorySecurityTest.xml",
+      "sha256": "890846f292b5e66b0436f3c9411ef3dcf4ebbe4403852a6f814045cc5647779b",
+      "bytes": 4259
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/main-synchronized-103/product-service/test/TEST-com.projecthk5.productservice.category.CategoryServiceTest.xml",
+      "sha256": "3eeb0ef2c53306fd8ff56176358730d49f8221d95c628b112a584cd5d1eb405c",
+      "bytes": 2746
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/main-synchronized-103/product-service/test/TEST-com.projecthk5.productservice.image.LocalFileSystemImageStorageTest.xml",
+      "sha256": "e682e1d913eb8fb1588f7cdde7a1a55492e391f5ef518a3d99c7c4a77018cf5d",
+      "bytes": 5127
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/main-synchronized-103/product-service/test/TEST-com.projecthk5.productservice.image.ProductImageMetadataServiceTest.xml",
+      "sha256": "595278bc62210756aee48d696d1316ab164ec3e9c1677202f56383f962712011",
+      "bytes": 1719
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/main-synchronized-103/product-service/test/TEST-com.projecthk5.productservice.image.ProductImageValidatorTest.xml",
+      "sha256": "f3ad24580804f38dfa9f262d1b0a245f290638ae8b361429b6f6a315e6229ee3",
+      "bytes": 10140
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/main-synchronized-103/product-service/test/TEST-com.projecthk5.productservice.product.http.ProductManagementHandlerTest.xml",
+      "sha256": "3f1fe86a6dbdbe15af41094dfea3c4c79c5334cc65ed8bac77f4ed681a6abe40",
+      "bytes": 1398
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/main-synchronized-103/product-service/test/TEST-com.projecthk5.productservice.product.http.ProductManagementJsonTest.xml",
+      "sha256": "0a0b111945f127f0dad66ec8ba16688100fcc1e63715b04d9377db6f859278c4",
+      "bytes": 6356
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/main-synchronized-103/product-service/test/TEST-com.projecthk5.productservice.product.persistence.ProductEntityTest.xml",
+      "sha256": "f3826de47d6851fb8e7c3e66e98bbf46b5034351719d801a36df593f7f782d6b",
+      "bytes": 1107
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/main-synchronized-103/product-service/test/TEST-com.projecthk5.productservice.product.persistence.ProductPersistenceAdapterTest.xml",
+      "sha256": "f70f1e71669698442375b2bd925128bbfac34eb1146b6400223dcc215a5e64a7",
+      "bytes": 7486
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/main-synchronized-103/product-service/test/TEST-com.projecthk5.productservice.product.ProductApplicationServiceTest.xml",
+      "sha256": "84a3bed9fa1af66df9c2fedcfe855a594cbb74a834032387e4ed965e2abd3143",
+      "bytes": 2274
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/main-synchronized-103/product-service/test/TEST-com.projecthk5.productservice.product.ProductLifecycleServiceTest.xml",
+      "sha256": "e8590da278f00e2a790b485e75a3ae2c61df14afa349169dcf8e88d650946a3c",
+      "bytes": 14409
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/main-synchronized-103/product-service/test/TEST-com.projecthk5.productservice.product.ProductListingValidationTest.xml",
+      "sha256": "9ad8040ceb9ea55071e55e2186de1495d10e0c87a2883cdbbf99a894320ef170",
+      "bytes": 5551
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/main-synchronized-103/product-service/test/TEST-com.projecthk5.productservice.product.ProductOwnerListTest.xml",
+      "sha256": "c33c02cbabb93d350d96014f0a38810313bd875ef5ce04d3cec0da9b2b642ca1",
+      "bytes": 1738
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/main-synchronized-103/product-service/test/TEST-com.projecthk5.productservice.product.ProductPriceTest.xml",
+      "sha256": "8fd8fb37edb02ee720b5d71d0866aa2bfe3cd7cbd612ff68524358ba3a53f654",
+      "bytes": 5749
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/main-synchronized-103/product-service/test/TEST-com.projecthk5.productservice.product.Week1CatalogFixtureTest.xml",
+      "sha256": "efbc9ec2b17d9a02cc53cfb64672092e808288316493df9d838346b49f7e2cd2",
+      "bytes": 531
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/main-synchronized-103/product-service/test/TEST-com.projecthk5.productservice.review.ReviewRulesBoundaryTest.xml",
+      "sha256": "1df775870cf656d472216c9606385a06f50cac24e5776e9d12fcfcfd188d5594",
+      "bytes": 2446
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/main-synchronized-103/product-service/test/TEST-com.projecthk5.productservice.review.ReviewRulesTest.xml",
+      "sha256": "52405c9443197327936af185bb0de3f149af1c81a1ff011900ff54b55b4d37a6",
+      "bytes": 2193
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/main-synchronized-103/product-service/test/TEST-com.projecthk5.productservice.security.ProductServiceSecurityTest.xml",
+      "sha256": "92aef1bbe05cd70001b836faec63b1e6414bdd387e2add87f5c73f1767299a09",
+      "bytes": 6838
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/main-synchronized-103/product-service/tv5ProductCatalogComposition/TEST-com.projecthk5.tv5integration.ProductCatalogCheckoutPreflightPostgresTest.xml",
+      "sha256": "a2493c776bcf1e350021e32c5ba9b13f674bcf8eddf2ecf7f78b77a27f3b9369",
+      "bytes": 21003
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/main-synchronized-103/product-service/tv5ProductCatalogComposition/TEST-com.projecthk5.tv5integration.ProductCatalogCompositionPostgresTest.xml",
+      "sha256": "0c2bb91171925a6b9a792e199172db9a79a968ac2cc79ee90827853ff578f60c",
+      "bytes": 7398
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/main-synchronized-103/product-service/tv5ProductVisibility/TEST-com.projecthk5.productservice.product.http.ProductOwnerVisibilityPostgresDiagnosticTest.xml",
+      "sha256": "1b6e6e54578b04c7b72c8ab7786701f872e79bc92c05417d9bd05c616e5f1c59",
+      "bytes": 10392
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/main-synchronized-103/runtime.log",
+      "sha256": "b05bd4215ac2662ce841dee48a7bb15b69603b987db8cab7507216375537503f",
+      "bytes": 12557
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/final-head-103/product-service/tv5ProductCatalogComposition/TEST-com.projecthk5.tv5integration.ProductCatalogCheckoutPreflightPostgresTest.xml",
+      "sha256": "36b90b0cdabbc4e70edda9e4865938740e839ff5b6935ce2f14ca62be645c13e",
+      "bytes": 20927
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/final-head-103/product-service/tv5ProductCatalogComposition/TEST-com.projecthk5.tv5integration.ProductCatalogCompositionPostgresTest.xml",
+      "sha256": "a5097651c7342f4e9ef56d3775f8031f9dda26aad58dfcb6808989afc9ee5e6c",
+      "bytes": 7366
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/final-head-103/product-service/tv5ProductVisibility/TEST-com.projecthk5.productservice.product.http.ProductOwnerVisibilityPostgresDiagnosticTest.xml",
+      "sha256": "235a6d4dc301a33faf4c54886debf359b0dd36b37df8e93fc4aa065f9cca2eb5",
+      "bytes": 10391
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/final-head-103/runtime.log",
+      "sha256": "c57be63203af70e24b08395cc89b0d52d065b70e7ed5ba55eb0f251c8e24260c",
+      "bytes": 7361
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/audit-red/runtime.log",
+      "sha256": "dca691fc6e1603b641f42b977c2bb066312eb2e9ddd1846a06734ced1c2cdcdd",
+      "bytes": 75125
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/audit-red-authorized/runtime.log",
+      "sha256": "f3c376c6171006d3dd4e5c068fc61302376983fe938067c565045397b6553809",
+      "bytes": 29167
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/audit-green/runtime.log",
+      "sha256": "c044ed6f95bb6d71f66c303009633bdbb80e31f1ada32c129325ac9484a55676",
+      "bytes": 3261
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/audit-refactor-regression/runtime.log",
+      "sha256": "82a48f2450cf9597d44f8460f4a6ddb1ccccae8081cd75f9836c7e80392a81b1",
+      "bytes": 8424
+    },
+    {
+      "localPath": ".verification/tv5-tasks61-66-20261028/audit-committed/runtime.log",
+      "sha256": "f66b190a01ef9edb8cb71a09f3ee813413dc8d7c15a195a7ca66cd1c6cec8479",
+      "bytes": 8424
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "kind": "DERIVED synthetic QA-tool unit regression, not business/runtime evidence",
+  "head": "120b5dec02071e4343c4ab207211085f5a25199c",
+  "startedUtc": "2026-10-29T06:59:16.327373+00:00",
+  "completedUtc": "2026-10-29T06:59:16.974816+00:00",
+  "command": [
+    "C:\\Users\\Admin\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "scripts/qa/tests",
+    "-v"
+  ],
+  "exitCode": 0,
+  "counts": {
+    "PASS": 50,
+    "FAIL": 0
+  },
+  "rawArtifacts": [
+    {
+      "localPath": ".verification/tv5-completion-20261029/auditor-committed.log",
+      "sha256": "57edc73e85d6b7ddabe07b6549fa2c93d6711d4cb808c5335d262872a8f0831c",
+      "bytes": 8832
+    }
+  ],
+  "redEvidence": {
+    "localPath": ".verification/tv5-completion-20261029/auditor-red.log",
+    "sha256": "f5aabc690f0bec9f7e71ac3fc9e5cd2f5c4bab738a030a09fd61cfd05aaf71a9",
+    "counts": {
+      "PASS": 19,
+      "FAIL": 2
+    },
+    "interpretation": "Two new assertions actually fail before fix; prior 19 pass. Original bytes preserved."
+  }
+}
