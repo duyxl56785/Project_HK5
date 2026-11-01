@@ -7,15 +7,18 @@ Refs #5, #18. Đây là **rehearsal local**, không phải kết quả UAT cuố
 - Chỉ chạy cùng `docker/compose.demo.yml` với overlay này và project name bắt đầu `hk5-uat-`.
 - Hai volume được đặt tên rõ theo project: `<project>-pgdemo` và `<project>-productimages`; không dùng `pgdev`, `redisdev`, `pgdemo` hay `productimages` của project khác.
 - Gateway và frontend chỉ bind `127.0.0.1`; các service/DB/Kafka/Redis không publish host port. Không có cổng nào bind `0.0.0.0` hoặc địa chỉ Internet.
-- `gen-env.mjs` được gọi **không có** `--approved-inventory-pair` hay `--approved-finance-policy`. Script xác minh cả hai flag là `false` trước khi start.
-- Secret là ngẫu nhiên, nằm trong `.env.demo`/`docker/secrets` bị Git ignore của worktree UAT. Không dùng credential production, không in secret/token.
-- `Stop-IsolatedUat.ps1` chỉ chấp nhận tên `hk5-uat-*` và chỉ dọn container/network/two volumes thuộc đúng project. Không dùng prune, reset hay thao tác volume dự án khác.
+- Mỗi lượt sinh `.env` và thư mục secret ngẫu nhiên dưới `%TEMP%\Project_HK5_UAT\<project>`; script **không gọi** `gen-env.mjs` và không đọc/ghi `.env.demo` hoặc `docker/secrets` của checkout. Hash manifest hai vị trí shared được đối chiếu trước/sau để fail-closed nếu chúng thay đổi.
+- Cả `INVENTORY_ORDER_PAIR_ENABLED=false` và `HK5_FINANCE_POLICY_APPROVED=false` được sinh và kiểm tra trước khi start; script không nhận cờ bật chúng.
+- `Stop-IsolatedUat.ps1` chỉ chấp nhận tên `hk5-uat-*`, kiểm tra nhãn Docker Compose của đúng hai volume trước khi dọn container/network/volume thuộc project. Không dùng prune, reset hay thao tác volume dự án khác.
 
 ## Thực thi rehearsal
 
 ```powershell
 # Từ root của worktree UAT riêng; build là cần thiết nếu JAR chưa có.
 .\scripts\qa\uat\Smoke-IsolatedUat.ps1 -Build
+
+# Regression âm: chỉ sinh/kiểm tra config, rồi xác minh .env.demo/docker/secrets chung không đổi.
+.\scripts\qa\uat\Start-IsolatedUat.ps1 -ConfigOnly
 
 # Sau khi lưu evidence cục bộ cần thiết, dọn đúng project được script in ra.
 .\scripts\qa\uat\Stop-IsolatedUat.ps1 -ProjectName hk5-uat-tv5-YYYYMMDDHHMMSS

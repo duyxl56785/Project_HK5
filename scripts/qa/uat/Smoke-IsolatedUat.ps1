@@ -18,9 +18,11 @@ if ($LASTEXITCODE -ne 0) { throw 'The isolated UAT smoke start or seed failed.' 
 $env:HK5_UAT_PROJECT = $ProjectName
 $env:HK5_UAT_GATEWAY_PORT = "$GatewayPort"
 $env:HK5_UAT_FRONTEND_PORT = "$FrontendPort"
+$runtimeRoot = Join-Path ([IO.Path]::GetTempPath()) (Join-Path 'Project_HK5_UAT' $ProjectName)
+$env:HK5_UAT_SECRETS_DIR = (Join-Path $runtimeRoot 'secrets').Replace('\', '/')
 Push-Location $root
 try {
-    $compose = @('--env-file', '.env.demo', '--project-name', $ProjectName, '-f', 'docker/compose.demo.yml', '-f', $overlayCompose)
+    $compose = @('--env-file', (Join-Path $runtimeRoot '.env'), '--project-name', $ProjectName, '-f', 'docker/compose.demo.yml', '-f', $overlayCompose)
     $postgres = (& docker compose @compose ps -q postgres).Trim()
     if ([string]::IsNullOrWhiteSpace($postgres)) { throw 'No PostgreSQL container was found in the isolated project.' }
 
@@ -40,5 +42,6 @@ try {
     Write-Output "PASS isolated infrastructure, database bootstrap/Flyway history, and fake two-Store seed for project $ProjectName."
     Write-Output 'NOT_UAT_FINAL: Finance and Inventory pair gates remain OFF; no checkout/COD/settlement acceptance was exercised.'
 } finally {
+    Remove-Item Env:HK5_UAT_SECRETS_DIR -ErrorAction SilentlyContinue
     Pop-Location
 }
