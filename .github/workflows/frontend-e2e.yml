@@ -47,6 +47,8 @@ jobs:
       - name: Playwright on the live stack
         working-directory: frontend
         run: npm run e2e
+      - name: Suspended Seller checks through the Gateway
+        run: node scripts/demo/smoke-suspended-seller.mjs
       - name: Token, access, proxy and restart checks
         run: node scripts/demo/smoke-review.mjs
       - name: Service logs
