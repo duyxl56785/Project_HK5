@@ -15,8 +15,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Order-owned T1/T2 Inventory journal, deliberately separate from CheckoutService
- * until Product SKU, actor/system authorization and lifecycle contracts are signed.
+ * Order-owned T1/T2 Inventory journal. Storage operations do not grant recovery
+ * authority or supply a resolution protocol for UNKNOWN.
  * All write methods use REQUIRES_NEW so T1 is committed before a transport call,
  * and T2 is committed only after a matching verified provider response.
  */
@@ -71,16 +71,23 @@ public class InventoryOperationJournal {
 
     /**
      * Atomic claim and durable send-generation fencing token. The operation ID,
-     * type and canonical payload stay unchanged across retries, but each attempt
+     * type and canonical payload stay unchanged across permitted sends, but each attempt
      * receives a new integer generation. Null means another worker claimed it
      * or it has already completed. Prevent overflow rather than reusing a token.
      */
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public Integer claimForSend(String operationId) {
+        // Compatibility entry point shares exactly the same quarantine policy.
+        return claimPendingForSend(operationId);
+    }
+
+    /** All dispatchers require committed PENDING. No API in this journal reopens UNKNOWN. */
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public Integer claimPendingForSend(String operationId) {
         List<Integer> claimed = db.query(
                 "update inventory_operation_journal set state='IN_FLIGHT',"
                         + "send_attempts=send_attempts+1,last_error_code=null,updated_at=now() "
-                        + "where operation_id=? and state in ('PENDING','UNKNOWN') "
+                        + "where operation_id=? and state='PENDING' "
                         + "and send_attempts < 2147483647 returning send_attempts",
                 (rs, row) -> rs.getInt(1), operationId);
         return claimed.isEmpty() ? null : claimed.get(0);

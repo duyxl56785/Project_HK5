@@ -59,6 +59,7 @@ class CheckoutInventoryBoundaryPostgresIT {
         r.add("app.security.current-key-b64", () -> "MDEyMzQ1Njc4OWFiY2RlZjAxMjM0NTY3ODlhYmNkZWY=");
     }
     private static HttpServer peer;
+    private static final ObjectMapper WIRE = new ObjectMapper();
     private static volatile String catalogBody;
     private static volatile int inventoryStatus;
     private static volatile String inventoryBody;
@@ -70,6 +71,7 @@ class CheckoutInventoryBoundaryPostgresIT {
     @Autowired CheckoutAttemptRepository attempts;
     @Autowired ObjectMapper json;
     @Autowired JdbcTemplate sql;
+    @Autowired InventoryOperationJournal journal;
 
     private final CartPort carts = mock(CartPort.class);
     private final CheckoutRequest request = new CheckoutRequest(List.of(new ExpectedItem("p1", 2)), null);
@@ -82,7 +84,16 @@ class CheckoutInventoryBoundaryPostgresIT {
         peer.createContext("/internal/catalog/products/", exchange -> reply(exchange, 200, catalogBody));
         peer.createContext("/api/inventory/operations", exchange -> {
             inventoryCalls.incrementAndGet();
-            reply(exchange, inventoryStatus, inventoryBody);
+            var request = WIRE.readTree(exchange.getRequestBody());
+            String body = inventoryBody;
+            if (inventoryStatus == 200 && "{}".equals(body)) {
+                var items = new java.util.ArrayList<Map<String, Object>>();
+                request.path("items").forEach(i -> items.add(Map.of("sku", i.path("sku").asText(),
+                    "availableQuantity", 100, "reservedQuantity", i.path("quantity").asLong(), "updatedAt", "2026-10-31T00:00:00Z")));
+                body = WIRE.writeValueAsString(Map.of("operationId", request.path("operationId").asText(),
+                    "type", request.path("type").asText(), "replayed", false, "items", items));
+            }
+            reply(exchange, inventoryStatus, body);
         });
         peer.start();
     }
@@ -102,7 +113,7 @@ class CheckoutInventoryBoundaryPostgresIT {
             new CartPort.Item("p1", "store1", "seller1", 2, new BigDecimal("10000")))));
         String url = "http://127.0.0.1:" + peer.getAddress().getPort();
         // Explicit fixture arithmetic does not enable or approve the production Finance policy.
-        checkout = new CheckoutService(carts, new CatalogHttpAdapter(url, "pair"), new InventoryHttpAdapter(url, "pair"),
+        checkout = new CheckoutService(carts, new CatalogHttpAdapter(url, "pair"), new InventoryHttpAdapter(url, "pair", journal),
             keys, writer, orders, json, new MoneyRules(true, "0.05", "0", "true"));
     }
 

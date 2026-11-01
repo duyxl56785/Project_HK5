@@ -24,7 +24,7 @@ class InventoryOperationCallerTest {
 
     @Test void successConfirmsOnlyExactMatchingResponseAndPersistedRequest() {
         when(journal.load(intent.operationId())).thenReturn(state(InventoryOperationJournal.State.PENDING));
-        when(journal.claimForSend(intent.operationId())).thenReturn(1);
+        when(journal.claimPendingForSend(intent.operationId())).thenReturn(1);
         when(transport.send(any())).thenReturn(
             new InventoryOperationTransport.Reply(intent.operationId(), "RESERVE", false, List.of("sku-a", "sku-b")));
         assertEquals(InventoryOperationCaller.Outcome.CONFIRMED, caller.dispatchOnce(intent.operationId()));
@@ -38,24 +38,25 @@ class InventoryOperationCallerTest {
         verify(journal, never()).unknown(anyString(),anyInt(),anyString());
     }
 
-    @Test void retryAfterUnknownUsesSamePersistedIdTypeAndCanonicalLines() {
+    @Test void unknownRemainsQuarantinedWithoutAnotherSend() {
         when(journal.load(intent.operationId())).thenReturn(
             state(InventoryOperationJournal.State.PENDING),state(InventoryOperationJournal.State.UNKNOWN));
-        when(journal.claimForSend(intent.operationId())).thenReturn(1,2);
+        when(journal.claimPendingForSend(intent.operationId())).thenReturn(1);
         when(transport.send(any())).thenThrow(new InventoryOperationTransport.UnknownOutcome("timeout"))
             .thenReturn(new InventoryOperationTransport.Reply(intent.operationId(),"RESERVE",true,List.of("sku-b","sku-a")));
         assertEquals(InventoryOperationCaller.Outcome.UNKNOWN,caller.dispatchOnce(intent.operationId()));
-        assertEquals(InventoryOperationCaller.Outcome.CONFIRMED,caller.dispatchOnce(intent.operationId()));
+        assertEquals(InventoryOperationCaller.Outcome.UNKNOWN,caller.dispatchOnce(intent.operationId()));
         ArgumentCaptor<InventoryOperationWire.Request> cap=ArgumentCaptor.forClass(InventoryOperationWire.Request.class);
-        verify(transport,times(2)).send(cap.capture());
-        assertEquals(cap.getAllValues().get(0),cap.getAllValues().get(1));
+        verify(transport,times(1)).send(cap.capture());
+        assertEquals(intent.operationId(),cap.getValue().operationId());
+        verify(journal,times(1)).claimPendingForSend(intent.operationId());
         verify(journal).unknown(intent.operationId(),1,"TRANSPORT_OUTCOME_UNKNOWN");
-        verify(journal).confirm(intent.operationId(),2);
+        verify(journal,never()).confirm(anyString(),anyInt());
     }
 
     @Test void disabledTransportIsProvablyNotSentAndRemainsPending() {
         when(journal.load(intent.operationId())).thenReturn(state(InventoryOperationJournal.State.PENDING));
-        when(journal.claimForSend(intent.operationId())).thenReturn(1);
+        when(journal.claimPendingForSend(intent.operationId())).thenReturn(1);
         when(transport.send(any())).thenThrow(new InventoryOperationTransport.NotSent("disabled"));
         assertEquals(InventoryOperationCaller.Outcome.BLOCKED, caller.dispatchOnce(intent.operationId()));
         verify(journal).notSent(intent.operationId(),1,"CALLER_DISABLED");
@@ -64,7 +65,7 @@ class InventoryOperationCallerTest {
 
     @Test void mismatchedOrDuplicateProviderResponseIsUnknownNotSuccess() {
         when(journal.load(intent.operationId())).thenReturn(state(InventoryOperationJournal.State.PENDING));
-        when(journal.claimForSend(intent.operationId())).thenReturn(1);
+        when(journal.claimPendingForSend(intent.operationId())).thenReturn(1);
         when(transport.send(any())).thenReturn(
             new InventoryOperationTransport.Reply(intent.operationId(),"RESERVE",false,List.of("sku-a","sku-a")));
         assertEquals(InventoryOperationCaller.Outcome.UNKNOWN,caller.dispatchOnce(intent.operationId()));
@@ -74,7 +75,7 @@ class InventoryOperationCallerTest {
 
     @Test void knownDefinitiveAtomicRejectionMustNotBeRetried() {
         when(journal.load(intent.operationId())).thenReturn(state(InventoryOperationJournal.State.PENDING));
-        when(journal.claimForSend(intent.operationId())).thenReturn(1);
+        when(journal.claimPendingForSend(intent.operationId())).thenReturn(1);
         when(transport.send(any())).thenThrow(new InventoryOperationTransport.DefinitiveFailure("INSUFFICIENT_STOCK"));
         assertEquals(InventoryOperationCaller.Outcome.REJECTED,caller.dispatchOnce(intent.operationId()));
         verify(journal).reject(intent.operationId(),1,"INSUFFICIENT_STOCK");
@@ -90,9 +91,9 @@ class InventoryOperationCallerTest {
     }
 
 
-    @Test void staleReplyCannotReportConfirmedAfterRetryWasReclaimed() {
-        when(journal.load(intent.operationId())).thenReturn(state(InventoryOperationJournal.State.UNKNOWN));
-        when(journal.claimForSend(intent.operationId())).thenReturn(1);
+    @Test void staleReplyCannotReportConfirmedAfterItsClaimWasLost() {
+        when(journal.load(intent.operationId())).thenReturn(state(InventoryOperationJournal.State.PENDING));
+        when(journal.claimPendingForSend(intent.operationId())).thenReturn(1);
         when(transport.send(any())).thenReturn(new InventoryOperationTransport.Reply(
                 intent.operationId(),"RESERVE",false,List.of("sku-a","sku-b")));
         doThrow(new IllegalStateException("Stale or conflicting Inventory journal transition"))
@@ -103,8 +104,8 @@ class InventoryOperationCallerTest {
     }
 
     @Test void staleTimeoutCannotOverwriteNewerAttemptState() {
-        when(journal.load(intent.operationId())).thenReturn(state(InventoryOperationJournal.State.UNKNOWN));
-        when(journal.claimForSend(intent.operationId())).thenReturn(2);
+        when(journal.load(intent.operationId())).thenReturn(state(InventoryOperationJournal.State.PENDING));
+        when(journal.claimPendingForSend(intent.operationId())).thenReturn(2);
         when(transport.send(any())).thenThrow(new InventoryOperationTransport.UnknownOutcome("old timeout"));
         doThrow(new IllegalStateException("Stale or conflicting Inventory journal transition"))
                 .when(journal).unknown(intent.operationId(),2,"TRANSPORT_OUTCOME_UNKNOWN");
@@ -112,7 +113,7 @@ class InventoryOperationCallerTest {
         verify(journal,never()).confirm(anyString(),anyInt());
     }
 
-    @Test void multiSkuTimeoutAndRetryKeepExactlySameRequestAndNoImplicitRelease() {
+    @Test void multiSkuTimeoutPreservesRequestAndQuarantinesFurtherDispatch() {
         var multiple = InventoryOperationIntent.prepare(UUID.randomUUID(), "reserve-three-skus",
                 InventoryOperationIntent.Type.RESERVE, List.of(
                         new Line("SKU-Z", 3L),
@@ -123,18 +124,18 @@ class InventoryOperationCallerTest {
                         InventoryOperationJournal.State.PENDING, 0, null),
                 new InventoryOperationJournal.Snapshot(multiple,
                         InventoryOperationJournal.State.UNKNOWN, 1, "TRANSPORT_OUTCOME_UNKNOWN"));
-        when(journal.claimForSend(multiple.operationId())).thenReturn(1, 2);
+        when(journal.claimPendingForSend(multiple.operationId())).thenReturn(1);
         when(transport.send(any())).thenThrow(new InventoryOperationTransport.UnknownOutcome("timeout"))
                 .thenReturn(new InventoryOperationTransport.Reply(multiple.operationId(),
                         "RESERVE", true, List.of("SKU-M", "SKU-Z", "SKU-A")));
         assertEquals(InventoryOperationCaller.Outcome.UNKNOWN,
                 caller.dispatchOnce(multiple.operationId()));
-        assertEquals(InventoryOperationCaller.Outcome.CONFIRMED,
+        assertEquals(InventoryOperationCaller.Outcome.UNKNOWN,
                 caller.dispatchOnce(multiple.operationId()));
         ArgumentCaptor<InventoryOperationWire.Request> payload =
                 ArgumentCaptor.forClass(InventoryOperationWire.Request.class);
-        verify(transport, times(2)).send(payload.capture());
-        assertEquals(payload.getAllValues().get(0), payload.getAllValues().get(1));
+        verify(transport, times(1)).send(payload.capture());
+        verify(journal,times(1)).claimPendingForSend(multiple.operationId());
         assertEquals("reserve-three-skus", payload.getValue().operationId());
         assertEquals("RESERVE", payload.getValue().type());
         assertEquals(List.of(
@@ -142,7 +143,7 @@ class InventoryOperationCallerTest {
                 new InventoryOperationWire.Item("SKU-M", 17L),
                 new InventoryOperationWire.Item("SKU-Z", 3L)), payload.getValue().items());
         verify(journal).unknown(multiple.operationId(), 1, "TRANSPORT_OUTCOME_UNKNOWN");
-        verify(journal).confirm(multiple.operationId(), 2);
+        verify(journal,never()).confirm(anyString(),anyInt());
         verify(journal, never()).prepare(any());
         verify(journal, never()).notSent(anyString(), anyInt(), anyString());
         verify(journal, never()).reject(anyString(), anyInt(), anyString());
@@ -155,7 +156,7 @@ class InventoryOperationCallerTest {
         when(journal.load(multiple.operationId())).thenReturn(
                 new InventoryOperationJournal.Snapshot(multiple,
                         InventoryOperationJournal.State.PENDING, 0, null));
-        when(journal.claimForSend(multiple.operationId())).thenReturn(1);
+        when(journal.claimPendingForSend(multiple.operationId())).thenReturn(1);
         when(transport.send(any())).thenReturn(new InventoryOperationTransport.Reply(
                 multiple.operationId(), "RESERVE", false, List.of("SKU-A", "SKU-B", "SKU-D")));
         assertEquals(InventoryOperationCaller.Outcome.UNKNOWN,
@@ -175,7 +176,7 @@ class InventoryOperationCallerTest {
         when(journal.load(release.operationId())).thenReturn(
                 new InventoryOperationJournal.Snapshot(release,
                         InventoryOperationJournal.State.PENDING, 0, null));
-        when(journal.claimForSend(release.operationId())).thenReturn(1);
+        when(journal.claimPendingForSend(release.operationId())).thenReturn(1);
         when(transport.send(any())).thenThrow(new InventoryOperationTransport.NotSent("pair disabled"));
 
         assertEquals(InventoryOperationCaller.Outcome.BLOCKED, caller.dispatchOnce(release.operationId()));
