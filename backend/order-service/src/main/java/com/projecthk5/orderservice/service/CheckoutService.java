@@ -33,6 +33,10 @@ public class CheckoutService {
     }
 
     public CheckoutResult checkout(String customerId, String bearer, String key, CheckoutRequest req) {
+        return checkout(customerId, bearer, key, req, null);
+    }
+
+    public CheckoutResult checkout(String customerId, String bearer, String key, CheckoutRequest req, Order.Shipping shipping) {
         if (key == null || key.isBlank() || key.length()>128 || !key.equals(key.trim()))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Idempotency-Key required (1-128 characters)");
         if (req == null)
@@ -52,6 +56,13 @@ public class CheckoutService {
         if (attempt.getState()==CheckoutAttempt.State.SUCCEEDED) {
             Order placed=orders.findByIdAndCustomerId(attempt.getOrderId(), customerId)
                 .orElseThrow(() -> new IllegalStateException("Placed order needs reconciliation"));
+            // A legacy idempotency fingerprint covers Cart revision/items but not the
+            // separately supplied shipping address. Never replay a committed order
+            // as a successful response to the same key with different shipping.
+            // Compare persisted, controller-normalized facts without altering
+            // historical fingerprints or re-running any external side effects.
+            if (!Objects.equals(placed.getShipping(), shipping))
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "IDEMPOTENCY_PAYLOAD_MISMATCH");
             try { carts.finalizeCart(bearer,key); } catch (Exception ignored) {
                 // Committed outcome is authoritative; leave cart cleanup for reconciliation.
             }
@@ -79,8 +90,11 @@ public class CheckoutService {
             if (!customerId.equals(cart.customerId())) throw new IllegalStateException("Cart customer mismatch");
             CheckoutRules.requireSameItems(req.expectedItems(),cart.items());
             Order order=prepareOrder(orderId,customerId,cart.items());
-            List<InventoryPort.Reservation> reservation=cart.items().stream()
-                 .map(i -> new InventoryPort.Reservation(i.productId(),i.quantity())).toList();
+            order.ship(shipping);
+            // Reserve exactly the verified lines, including the immutable SKU from Catalog.
+            List<InventoryPort.Reservation> reservation=order.getSellerOrders().stream()
+                 .flatMap(so -> so.getItems().stream())
+                 .map(i -> new InventoryPort.Reservation(i.getProductId(),i.getQuantity(),i.getSku())).toList();
             // Serialize the deterministic Order facts before external Inventory side
             // effects. A local serialization failure is known-safe and can release
             // the confirmed Cart claim without inventing an UNKNOWN reservation.
@@ -108,7 +122,10 @@ public class CheckoutService {
                     error.addSuppressed(readFailure);
                 }
             }
-            boolean uncertain=reserveRequested || writeRequested || (claimRequested && !claimConfirmed);
+            // A definitive Inventory rejection proves no stock moved, so the Cart claim can be released.
+            boolean reserveRejected=reserveRequested && !writeRequested && error instanceof InventoryPort.Rejected;
+            boolean uncertain=(reserveRequested && !reserveRejected) || writeRequested
+                || (claimRequested && !claimConfirmed && !(error instanceof CartPort.Rejected));
             if (!uncertain && claimConfirmed && claimOwned) {
                 try { carts.release(bearer,key); }
                 catch (Exception releaseFailure) {
@@ -168,7 +185,7 @@ public class CheckoutService {
             OrderAmountStorageBounds.requireExactNonnegative(gross.subtract(fee));
             SellerOrder so=new SellerOrder(order,first.product.sellerId(),entry.getKey(),gross,fee);
             lines.forEach(line -> so.getItems().add(new OrderItem(so,line.product.productId(),
-                line.quantity,line.product.unitPrice(),line.total)));
+                line.quantity,line.product.unitPrice(),line.total,line.product.sku(),line.product.name())));
             order.addSellerOrder(so);
         }
         // Two Store subtotals may fit NUMERIC(19,2) individually while the parent

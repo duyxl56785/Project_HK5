@@ -1,0 +1,19 @@
+{
+  "kind": "DERIVED feature TDD RED",
+  "source": "mainc7b plus three new tests; old CLI unchanged",
+  "command": [
+    "C:/Users/Admin/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "scripts/qa/tests",
+    "-v"
+  ],
+  "startedUtc": "2026-10-27T16:46:05.530956+00:00",
+  "completedUtc": "2026-10-27T16:46:05.928032+00:00",
+  "exitCode": 1,
+  "logPath": ".verification/tv5-all-pr-tdd-20261027/cli-inventory-red/runtime.log",
+  "logSHA256": "8fd7309afbe17c840c4abf8b88ada3113dd797bcbb3b3d9dcfef25a1b575f7e8",
+  "testManifestSHA256": "613c380bba271aaacaa0172d31cec24337ddb2936865809339d53ae92b8a4dbe"
+}

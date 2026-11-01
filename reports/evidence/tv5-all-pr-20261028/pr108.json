@@ -1,0 +1,359 @@
+{
+  "kind": "DERIVED independent targeted PR review evidence; raw private byte-preserved",
+  "PR": 108,
+  "head": "8d4186ccf4369c9ac27fd19f49e54c9bc1740a6d",
+  "base": "ceee8c8c4699e0b76a180c24365e4068d4c29770",
+  "branch": "detached PR candidate",
+  "command": [
+    "D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-all-pr-tdd-20261027\\review108\\backend\\gradlew.bat",
+    "-p",
+    "backend",
+    "--init-script",
+    "D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-product-six-tasks-20261027\\source90\\tests\\security\\product-visibility.init.gradle",
+    "-Ptv5VisibilitySources=D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-product-six-tasks-20261027\\source90\\tests\\security\\product-visibility",
+    ":product-service:test",
+    "--tests",
+    "*ProductOwnerListTest",
+    ":product-service:integrationTest",
+    "--tests",
+    "*ProductOwnerListIntegrationTest",
+    ":product-service:tv5ProductVisibility",
+    "--rerun-tasks",
+    "--no-daemon",
+    "--console=plain"
+  ],
+  "startedUtc": "2026-10-27T16:56:04.526166+00:00",
+  "completedUtc": "2026-10-27T16:56:45.390124+00:00",
+  "exitCode": 0,
+  "counts": {
+    "test": {
+      "PASS": 10
+    },
+    "integrationTest": {
+      "PASS": 31
+    },
+    "tv5ProductVisibility": {
+      "PASS": 8
+    }
+  },
+  "cases": [
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductOwnerListTest",
+      "name": "criteriaBoundOffsetAndRejectInvalidTextWithoutRewritingIdentity()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductOwnerListTest",
+      "name": "invalidActorsCannotReachAuthorityOrResources()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductOwnerListTest",
+      "name": "missingAndAmbiguousPoliciesRejectBeforeResourceAccess()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductOwnerListTest",
+      "name": "[1] mode=null-scope",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductOwnerListTest",
+      "name": "[2] mode=null-facts",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductOwnerListTest",
+      "name": "[3] mode=wrong-scope",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductOwnerListTest",
+      "name": "[4] mode=other-owner",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductOwnerListTest",
+      "name": "[5] mode=closed",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductOwnerListTest",
+      "name": "[6] mode=unapproved",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.product.ProductOwnerListTest",
+      "name": "verifiedScopeAndCriteriaReachPersistenceInOrder()",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductOwnerListIntegrationTest",
+      "name": "[1] mode=unavailable",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductOwnerListIntegrationTest",
+      "name": "[2] mode=denied",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductOwnerListIntegrationTest",
+      "name": "[3] mode=null-scope",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductOwnerListIntegrationTest",
+      "name": "[4] mode=null-facts",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductOwnerListIntegrationTest",
+      "name": "[5] mode=wrong-scope",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductOwnerListIntegrationTest",
+      "name": "[6] mode=other-owner",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductOwnerListIntegrationTest",
+      "name": "[7] mode=closed",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductOwnerListIntegrationTest",
+      "name": "[8] mode=unapproved",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductOwnerListIntegrationTest",
+      "name": "serializableReadOnlyAmbientSnapshotIsAccepted()",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductOwnerListIntegrationTest",
+      "name": "[1] term=%",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductOwnerListIntegrationTest",
+      "name": "[2] term=_",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductOwnerListIntegrationTest",
+      "name": "[3] term=\\",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductOwnerListIntegrationTest",
+      "name": "[4] term=%' OR 1=1 --",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductOwnerListIntegrationTest",
+      "name": "[5] term=x'); DROP TABLE products; --",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductOwnerListIntegrationTest",
+      "name": "[6] term=áO đỎ",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductOwnerListIntegrationTest",
+      "name": "[7] term=Sku-é-🚀",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductOwnerListIntegrationTest",
+      "name": "[8] term=é",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductOwnerListIntegrationTest",
+      "name": "preparedHandlerListsAllSixStatesOnlyInsideEachActorsCurrentStore()",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductOwnerListIntegrationTest",
+      "name": "maximumPageUsesOnlyCountAndScalarRowsWithoutNPlusOne()",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductOwnerListIntegrationTest",
+      "name": "defaultApplicationAuthorityAndInvalidCriteriaExecuteNoProductSql()",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductOwnerListIntegrationTest",
+      "name": "actualCountLockTimeoutReturnsUnavailableWithoutPartialPage()",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductOwnerListIntegrationTest",
+      "name": "authorityIsRecheckedOnEveryListAfterStoreCloses()",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductOwnerListIntegrationTest",
+      "name": "absentHandlerAuthorityAndNullCriteriaCannotReachSql()",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductOwnerListIntegrationTest",
+      "name": "[1] mode=default",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductOwnerListIntegrationTest",
+      "name": "[2] mode=read-committed",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductOwnerListIntegrationTest",
+      "name": "nameThenUuidOrderingHasStableBoundariesAndCorrectEmptyTotals()",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductOwnerListIntegrationTest",
+      "name": "exactScalarFieldsCanonicalMoneyLongVersionAndNoPrivateFields()",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductOwnerListIntegrationTest",
+      "name": "[1] mutation=delete",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductOwnerListIntegrationTest",
+      "name": "[2] mutation=status",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductOwnerListIntegrationTest",
+      "name": "[3] mutation=name",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.ProductOwnerListIntegrationTest",
+      "name": "[4] mutation=price",
+      "result": "PASS"
+    },
+    {
+      "task": "tv5ProductVisibility",
+      "class": "com.projecthk5.productservice.product.http.ProductOwnerVisibilityPostgresDiagnosticTest",
+      "name": "[1] mode=denied",
+      "result": "PASS"
+    },
+    {
+      "task": "tv5ProductVisibility",
+      "class": "com.projecthk5.productservice.product.http.ProductOwnerVisibilityPostgresDiagnosticTest",
+      "name": "[2] mode=unavailable",
+      "result": "PASS"
+    },
+    {
+      "task": "tv5ProductVisibility",
+      "class": "com.projecthk5.productservice.product.http.ProductOwnerVisibilityPostgresDiagnosticTest",
+      "name": "[1] operation=read",
+      "result": "PASS"
+    },
+    {
+      "task": "tv5ProductVisibility",
+      "class": "com.projecthk5.productservice.product.http.ProductOwnerVisibilityPostgresDiagnosticTest",
+      "name": "[2] operation=edit",
+      "result": "PASS"
+    },
+    {
+      "task": "tv5ProductVisibility",
+      "class": "com.projecthk5.productservice.product.http.ProductOwnerVisibilityPostgresDiagnosticTest",
+      "name": "[3] operation=submit",
+      "result": "PASS"
+    },
+    {
+      "task": "tv5ProductVisibility",
+      "class": "com.projecthk5.productservice.product.http.ProductOwnerVisibilityPostgresDiagnosticTest",
+      "name": "[4] operation=deactivate",
+      "result": "PASS"
+    },
+    {
+      "task": "tv5ProductVisibility",
+      "class": "com.projecthk5.productservice.product.http.ProductOwnerVisibilityPostgresDiagnosticTest",
+      "name": "sameStoreReadAndVersionConflictRemainDistinctControls()",
+      "result": "PASS"
+    },
+    {
+      "task": "tv5ProductVisibility",
+      "class": "com.projecthk5.productservice.product.http.ProductOwnerVisibilityPostgresDiagnosticTest",
+      "name": "selfModerationStillReturns403InsteadOfGlobal404Remapping()",
+      "result": "PASS"
+    }
+  ],
+  "rawArtifacts": [
+    {
+      "localPath": ".verification/tv5-all-pr-tdd-20261027/review108-run/integrationTest/TEST-com.projecthk5.productservice.product.ProductOwnerListIntegrationTest.xml",
+      "bytes": 226902,
+      "sha256": "9b7a3c866f48e70d0e8a1a1f0eb46ef9b1d5c519895966392e59c0292ffe5678"
+    },
+    {
+      "localPath": ".verification/tv5-all-pr-tdd-20261027/review108-run/runtime.log",
+      "bytes": 4149,
+      "sha256": "3527aa0733da2e82517bdb2c5f47229babd3d5c234edf1593235d6732ef07c43"
+    },
+    {
+      "localPath": ".verification/tv5-all-pr-tdd-20261027/review108-run/test/TEST-com.projecthk5.productservice.product.ProductOwnerListTest.xml",
+      "bytes": 2268,
+      "sha256": "4fd8873b873930b171a46c9095ab6fea70bfec2ce3b94b18a37fdf92e06f4c1b"
+    },
+    {
+      "localPath": ".verification/tv5-all-pr-tdd-20261027/review108-run/tv5ProductVisibility/TEST-com.projecthk5.productservice.product.http.ProductOwnerVisibilityPostgresDiagnosticTest.xml",
+      "bytes": 10184,
+      "sha256": "8a4309f601575d690af25faa9540902e307212d32090d7a36cac3aab326e5e68"
+    }
+  ],
+  "excludedStaleXml": [],
+  "boundary": "Focused source/local filesystem or realPG/private policy fixtures only. No public HTTP/current Auth/Store/House/storage deployment or Finance approval. Unchanged TV5 original8 supplied externally on108/109."
+}

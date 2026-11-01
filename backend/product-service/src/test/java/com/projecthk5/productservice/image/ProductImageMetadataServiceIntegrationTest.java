@@ -477,7 +477,7 @@ class ProductImageMetadataServiceIntegrationTest {
     }
 
     @TestConfiguration static class AuthorityFixture {
-        @Bean FixturePolicy imagePolicy() { return new FixturePolicy(); }
+        @org.springframework.context.annotation.Primary @Bean FixturePolicy imagePolicy() { return new FixturePolicy(); }
     }
     static final class FixturePolicy implements ProductAccessPolicy {
         volatile String mode;

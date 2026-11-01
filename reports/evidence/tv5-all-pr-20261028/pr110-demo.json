@@ -1,0 +1,78 @@
+{
+  "kind": "DERIVED independent demo-only unit/DOM/Chrome review",
+  "head": "96886dddb320bf0abf963cfd629581cbc4a5b22e",
+  "steps": [
+    {
+      "step": "dom-dependency",
+      "command": [
+        "C:/Program Files/nodejs/npm.cmd",
+        "install",
+        "--ignore-scripts",
+        "--no-save",
+        "--package-lock=false",
+        "--no-audit",
+        "--no-fund",
+        "happy-dom"
+      ],
+      "startedUtc": "2026-10-27T17:10:01.466554+00:00",
+      "completedUtc": "2026-10-27T17:10:08.117904+00:00",
+      "exitCode": 0
+    },
+    {
+      "step": "unit-dom",
+      "command": [
+        "C:/Program Files/nodejs/node.exe",
+        "--test",
+        "--test-concurrency=1",
+        "src\\demo\\AdminSellerPages.test.mjs",
+        "src\\demo\\DemoApp.test.mjs",
+        "src\\demo\\DemoImagePicker.test.mjs",
+        "src\\demo\\demoModel.test.mjs",
+        "src\\features\\catalog\\CategoryBrowser.dom.mjs",
+        "src\\features\\catalog\\CategoryBrowser.test.mjs",
+        "src\\features\\catalog\\categoryTree.test.mjs",
+        "src\\features\\product\\ProductManagement.dom.mjs",
+        "src\\features\\product\\ProductManagementPage.test.mjs",
+        "src\\features\\product\\productManagementModel.test.mjs",
+        "src\\features\\seller\\SellerStoreOverview.test.mjs",
+        "src\\features\\seller\\sellerStoreModel.test.mjs"
+      ],
+      "startedUtc": "2026-10-27T17:10:08.117904+00:00",
+      "completedUtc": "2026-10-27T17:10:18.144610+00:00",
+      "exitCode": 0
+    },
+    {
+      "step": "browser",
+      "command": [
+        "C:/Program Files/nodejs/node.exe",
+        "--test",
+        "--test-concurrency=1",
+        "src/features/catalog/CategoryBrowser.browser.mjs",
+        "src/features/seller/SellerStoreOverview.browser.mjs",
+        "src/features/product/ProductManagement.browser.mjs",
+        "src/demo/Demo.browser.mjs"
+      ],
+      "startedUtc": "2026-10-27T17:10:18.144610+00:00",
+      "completedUtc": "2026-10-27T17:10:40.181147+00:00",
+      "exitCode": 0
+    }
+  ],
+  "rawArtifacts": [
+    {
+      "localPath": ".verification/tv5-all-pr-tdd-20261027/review110-complete/browser.log",
+      "bytes": 9050,
+      "sha256": "1a6b3c669cca9313a27dbb063485b5d273cbd99b1f65e78ede0c7a7d278ba017"
+    },
+    {
+      "localPath": ".verification/tv5-all-pr-tdd-20261027/review110-complete/dom-dependency.log",
+      "bytes": 24,
+      "sha256": "44d2e9f06ebb84c4b0303da91c19e43a4485e0765ce177ecb271664268116241"
+    },
+    {
+      "localPath": ".verification/tv5-all-pr-tdd-20261027/review110-complete/unit-dom.log",
+      "bytes": 41431,
+      "sha256": "90563f7610b9eb0c44a54306a49dcdc79c2a49fa7a8007e25c3d67be7d06e1dc"
+    }
+  ],
+  "boundary": "Local demo fixture/browser workflows, no real Auth/API/database/Checkout E2E or production permissions; no tracked owner source edits."
+}

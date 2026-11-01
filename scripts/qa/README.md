@@ -6,6 +6,7 @@ adding another notification bot. There was no tracked PR-audit CLI in the inspec
 
 ```powershell
 python scripts/qa/pr_review_audit.py --repo duyxl56785/Project_HK5
+python scripts/qa/pr_review_audit.py --repo duyxl56785/Project_HK5 --include-closed
 python -m unittest discover -s scripts/qa/tests -v
 ```
 
@@ -33,6 +34,16 @@ nonadvancing cursor, wrong CI head or page-limit overflow produces an incomplete
 Other successfully observed PRs are retained and the Markdown report identifies incomplete records.
 `--workers` accepts1–4; it does not spawn coding agents or run tests of the PRs.
 
+`--include-closed` adds a paginated inventory of every PR, including merged and closed-unmerged
+sources. JSON schemaVersion2 adds `inventory` and `inventoryCounts`; the default OPEN-only schema1
+is retained. Counts are disjoint OPEN + MERGED + CLOSED-unmerged, with DRAFT counted only as an
+OPEN subset. PR numbers share a sequence with Issues, so the highest PR number is not the PR count.
+The inventory keeps number/title/author/state/head/base/ref/close/merge metadata only. Detailed
+review/thread/CI collection still runs only for OPEN PRs; this flag never implies source review or
+runtime acceptance of closed/merged code and never fetches their raw review bodies. Markdown
+shows the inventory separately and escapes titles/refs. Output overwrite and credential protections
+are unchanged. Existing dependency links for closed work still need human/owner contract review.
+
 ## Limits
 
 The report is metadata QA, **not** source review, runtime PASS, a full deployment dependency graph or
@@ -47,11 +58,17 @@ before committing a snapshot; credentials and private raw runtime logs never bel
 
 ## Regression coverage
 
-27 offline tests exercise pagination, source changes, closed/retargeted PRs, incomplete GraphQL,
+32 offline tests exercise pagination, source changes, closed/retargeted PRs, incomplete GraphQL,
 old effective review attribution, wrong-head CI, latest external status, no-check/pending/skipped
 classification, same-name fork dependency, GET/query-only transport, credential/error/redirect
 safety, Markdown escaping, existing evidence and concurrent output protection. These are fake API
 fixtures and temporary local files, **not GitHub or application integration tests**.
+
+The32 include the earlier27, two HTTP-truncation regressions merged by #100, and three all-state
+inventory cases: classification/DRAFT subset/privacy/no closed deep reads, a second REST page and
+escaped closed titles. Inventory TDD first produced29PASS/3ERROR because the capability did not
+exist; after implementation and projection-helper refactor all32pass. Keep source-bound run
+receipts distinct; do not relabel historical source results as tests on a newer commit.
 
 The first development run had22PASS/2file-I/O errors because the managed Windows default temporary
 directory was unwritable. The test harness now uses a verified directory inside this checkout;

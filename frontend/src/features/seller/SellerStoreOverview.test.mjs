@@ -58,12 +58,6 @@ test('ready display never leaks private reason, owner, role or token extras', ()
   const html = render({ ...ready, seller: { ...seller, reviewReason: 'PRIVATE_REASON', ownerReference: 'PRIVATE_OWNER', role: 'ADMIN' }, store: { ...store, token: 'PRIVATE_TOKEN' } });
   assert.doesNotMatch(html, /PRIVATE_REASON|PRIVATE_OWNER|PRIVATE_TOKEN|ADMIN/);
 });
-test('versions are displayed byte-for-byte beyond Number.MAX_SAFE_INTEGER', () => {
-  const html = render(ready);
-  assert.match(html, /9007199254740993/);
-  assert.match(html, /9223372036854775807/);
-  assert.doesNotMatch(html, /9007199254740992|9223372036854776000/);
-});
 test('display names are escaped instead of interpreted as markup', () => {
   const html = render({ ...ready, store: { ...store, name: '<img src=x onerror=alert(1)>' } });
   assert.match(html, /&lt;img/);

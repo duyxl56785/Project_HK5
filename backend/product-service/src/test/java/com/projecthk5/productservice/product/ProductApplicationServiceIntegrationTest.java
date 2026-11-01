@@ -316,7 +316,7 @@ class ProductApplicationServiceIntegrationTest {
     }
 
     @TestConfiguration static class AuthorityFixture {
-        @Bean FixturePolicy policy() { return new FixturePolicy(); }
+        @org.springframework.context.annotation.Primary @Bean FixturePolicy policy() { return new FixturePolicy(); }
     }
 
     static class FixturePolicy implements ProductAccessPolicy {

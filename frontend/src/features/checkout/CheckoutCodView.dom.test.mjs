@@ -1,6 +1,5 @@
-// Real React DOM regression using a transient local happy-dom install.
-// Run from frontend after: npm.cmd install --no-save --no-package-lock happy-dom
-// node --test --test-concurrency=1 src/features/checkout/CheckoutCodView.dom.test.mjs
+// Real React DOM regression on happy-dom.
+// Run from frontend with: npm test
 // Do not treat this fixture-only test as an authenticated backend or browser E2E.
 import assert from 'node:assert/strict';
 import { before, after, test } from 'node:test';

@@ -33,6 +33,7 @@ class ProductServiceSecurityTest {
     @Autowired private MockMvc mvc;
     @Autowired private ProbeController probe;
     @MockBean private CategoryService categoryService;
+    @MockBean private org.springframework.security.oauth2.jwt.JwtDecoder jwtDecoder;
 
     @BeforeEach
     void resetProbe() {

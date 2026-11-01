@@ -57,7 +57,7 @@ docs/
 .github/
 ```
 
-`backend` có bộ khởi tạo Spring Boot từng module, chưa có API/security/nghiệp vụ. Auth/User đã có cấu hình database riêng và dependency persistence cho [PHASE B readiness](docs/TV1_TECHNICAL_READINESS.md), chưa có entity/migration. `frontend` là shell React; trang demo chưa phải chức năng thật. `docker/compose.dev.yml` dành cho hạ tầng local; xem [runbook](docker/README.md) trước khi khởi động/provision, đặc biệt với volume cũ.
+Chạy toàn bộ hệ thống trên máy: xem [docs/RUN_LOCAL.md](docs/RUN_LOCAL.md). Đối chiếu yêu cầu F01–F17 với mã nguồn: xem [REQUIREMENTS_TRACEABILITY.md](docs/project-report/REQUIREMENTS_TRACEABILITY.md).
 
 ## Quy ước nghiệm thu
 

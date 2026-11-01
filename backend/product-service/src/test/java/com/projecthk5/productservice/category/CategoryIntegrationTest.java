@@ -160,12 +160,12 @@ class CategoryIntegrationTest {
                 .andExpect(jsonPath("$.id").value(root.id().toString()));
         mvc.perform(post("/api/categories").contentType(MediaType.APPLICATION_JSON)
                 .content("{\"name\":\"Forbidden\"}"))
-                .andExpect(status().isForbidden())
-                .andExpect(jsonPath("$.code").value("CATEGORY_WRITE_AUTH_NOT_CONFIGURED"));
+                .andExpect(status().isUnauthorized())
+                .andExpect(jsonPath("$.code").value("AUTH_ACCESS_REQUIRED"));
         mvc.perform(put("/api/categories/{id}", root.id()).contentType(MediaType.APPLICATION_JSON)
                 .content("{\"name\":\"Forbidden\"}"))
-                .andExpect(status().isForbidden());
-        mvc.perform(delete("/api/categories/{id}", root.id())).andExpect(status().isForbidden());
+                .andExpect(status().isUnauthorized());
+        mvc.perform(delete("/api/categories/{id}", root.id())).andExpect(status().isUnauthorized());
         assertEquals(root, service.get(root.id()));
         assertEquals(1, service.list().size());
     }

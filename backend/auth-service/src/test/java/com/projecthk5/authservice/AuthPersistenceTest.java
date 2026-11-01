@@ -81,19 +81,26 @@ class AuthPersistenceTest {
             }
         }
         flyway = migrationFlyway().load();
-        assertEquals(1, flyway.migrate().migrationsExecuted);
+        assertEquals(3, flyway.migrate().migrationsExecuted);
         context = application(true);
         assertTrue(context.getEnvironment().getProperty("spring.flyway.enabled", Boolean.class));
         for (var entry : existing.entrySet()) {
             assertEquals(entry.getValue(), repo(AccountRepository.class).findById(entry.getKey()).orElseThrow().getEmail());
         }
-        assertEquals(List.of("1", "2"), Arrays.stream(flyway.info().applied())
+        assertEquals(List.of("1", "2", "3", "4"), Arrays.stream(flyway.info().applied())
                 .map(info -> info.getVersion().getVersion()).toList());
         System.out.println("V1_TO_V2_UPGRADE: 5 ASCII/Unicode account IDs/emails preserved; V1 checksum validated");
     }
 
     private ConfigurableApplicationContext application(boolean migration) {
         var environment = new StandardEnvironment();
+        byte[] signingKey = new byte[32];
+        new java.security.SecureRandom().nextBytes(signingKey);
+        // Auth fails closed without a signing keyring; give the test context a throwaway one.
+        environment.getPropertySources().addFirst(new MapPropertySource("isolated-jwt", Map.of(
+                "JWT_ISSUER_URI", "http://auth.test.invalid", "JWT_AUDIENCE", "smart-ecommerce-api",
+                "JWT_HS256_CURRENT_KID", "test-key-v1",
+                "JWT_HS256_CURRENT_KEY_B64", java.util.Base64.getEncoder().encodeToString(signingKey))));
         environment.getPropertySources().addFirst(new MapPropertySource("isolated-database", Map.of(
                 "spring.datasource.url", jdbcUrl,
                 "spring.datasource.password", appPassword,
@@ -122,7 +129,7 @@ class AuthPersistenceTest {
         assertTrue(flyway.validateWithResult().validationSuccessful);
         assertEquals(0, flyway.migrate().migrationsExecuted);
         assertEquals(0, flyway.info().pending().length);
-        assertEquals("2", flyway.info().current().getVersion().getVersion());
+        assertEquals("4", flyway.info().current().getVersion().getVersion());
         assertEquals("validate", context.getEnvironment().getProperty("spring.jpa.hibernate.ddl-auto"));
         try (var c = appConnection(); var s = c.createStatement();
              var r = s.executeQuery("SELECT current_user,current_database(),current_setting('TimeZone')")) {
@@ -298,7 +305,7 @@ class AuthPersistenceTest {
         assertEquals("23514", ((SQLException) cause).getSQLState());
         assertTrue(legacy.validateWithResult().validationSuccessful);
         assertEquals("1", upgrade.info().current().getVersion().getVersion());
-        assertEquals(1, upgrade.info().pending().length);
+        assertEquals(3, upgrade.info().pending().length);
         Map<UUID, String> after = new HashMap<>();
         try (var c = DriverManager.getConnection(jdbcUrl, "auth_migrator", migrationPassword)) {
             c.setSchema(schema);
