@@ -5,11 +5,16 @@ import { api } from '../../shared/api';
 import { Loaded } from '../../shared/ui';
 import { ProductCard, useCategories } from './CatalogPage';
 import type { Page, StoreRef } from './CatalogPage';
+import aoSoMi from '../../assets/banner/AO-002.jpg';
+import nonLuoiTrai from '../../assets/banner/NON-001.jpg';
+import quanJean from '../../assets/banner/QUAN-001.jpg';
+import sach from '../../assets/banner/SACH-002.jpg';
+import caPhe from '../../assets/banner/TP-001.jpg';
+import tuiTote from '../../assets/banner/TUI-001.jpg';
 
 const ICONS = {
   bag: 'M6 8h12l1.5 13h-15zM9 8a3 3 0 0 1 6 0',
   wallet: 'M3 7h16a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zM3 7l13-3v3M16 13.5h2',
-  store: 'M4 10v10h16V10M3 10l2-6h14l2 6a3 3 0 0 1-6 0 3 3 0 0 1-6 0 3 3 0 0 1-6 0M9.5 20v-5h5v5',
   track: 'M3 6h11v11H3zM14 10h4l3 3v4h-7M7 19.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM17 19.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4z',
 };
 
@@ -26,15 +31,15 @@ const CATEGORY_ICONS: Record<string, string> = {
   'Sách': 'M4 19.5V5a2 2 0 0 1 2-2h14v18H6a2 2 0 0 1-2-1.5zM4 19.5a2 2 0 0 1 2-2h14',
 };
 
-function Icon({ path, size = 26, className }: { readonly path: string; readonly size?: number; readonly className?: string }) {
-  return <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={size > 40 ? 0.9 : 1.7}
+function Icon({ path }: { readonly path: string }) {
+  return <svg width={26} height={26} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.7}
     strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={path} /></svg>;
 }
 
 const SLIDES = [
-  { title: 'Một giỏ hàng, nhiều cửa hàng', text: 'Chọn hàng từ nhiều người bán và đặt trong một lần.', to: '/products', action: 'Mua sắm ngay', icon: ICONS.bag },
-  { title: 'Trả tiền khi nhận hàng', text: 'Thanh toán COD, theo dõi từng đơn của từng cửa hàng.', to: '/products', action: 'Khám phá sản phẩm', icon: ICONS.wallet },
-  { title: 'Mở cửa hàng trên Soopi', text: 'Gửi hồ sơ, được duyệt là có thể đăng bán.', to: '/seller', action: 'Đăng ký bán hàng', icon: ICONS.store },
+  { title: 'Một giỏ hàng, nhiều cửa hàng', text: 'Chọn hàng từ nhiều người bán và đặt trong một lần.', to: '/products', action: 'Mua sắm ngay', photos: [quanJean, caPhe, aoSoMi] },
+  { title: 'Trả tiền khi nhận hàng', text: 'Thanh toán COD, theo dõi từng đơn của từng cửa hàng.', to: '/products', action: 'Khám phá sản phẩm', photos: [tuiTote, nonLuoiTrai, sach] },
+  { title: 'Mở cửa hàng trên Soopi', text: 'Gửi hồ sơ, được duyệt là có thể đăng bán.', to: '/seller', action: 'Đăng ký bán hàng', photos: [nonLuoiTrai, caPhe, quanJean] },
 ];
 
 function Banner() {
@@ -49,7 +54,7 @@ function Banner() {
   return <section className={`banner banner--${index}`} aria-label="Giới thiệu Soopi"
     onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}
     onFocus={() => setPaused(true)} onBlur={() => setPaused(false)}>
-    <Icon path={slide.icon} size={230} className="banner__art" />
+    <div className="banner__art">{slide.photos.map((photo) => <img key={photo} src={photo} alt="" />)}</div>
     <h1>{slide.title}</h1>
     <p>{slide.text}</p>
     <Link className="btn banner__action" to={slide.to}>{slide.action}</Link>
