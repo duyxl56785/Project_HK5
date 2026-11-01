@@ -86,6 +86,13 @@ public class ProductLifecycleService {
         return current.withState(ProductStatus.INACTIVE, null);
     }
 
+    /** Images are reviewed content: an approved set stays frozen, and a new set on an INACTIVE Product needs review again. */
+    public ProductListing changeImages(String actor, ProductListing current) {
+        managedStore(actor, current.storeId());
+        requireState(current, ProductStatus.DRAFT, ProductStatus.REJECTED, ProductStatus.INACTIVE);
+        return current.status() == ProductStatus.INACTIVE ? current.withState(ProductStatus.DRAFT, null) : current;
+    }
+
     public ProductListing activate(String actor, ProductListing current) {
         managedStore(actor, current.storeId());
         requireState(current, ProductStatus.INACTIVE);

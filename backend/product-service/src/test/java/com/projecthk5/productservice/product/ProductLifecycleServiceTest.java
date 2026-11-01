@@ -59,6 +59,12 @@ class ProductLifecycleServiceTest {
                 assertThrows(ProductRuleException.class, () -> service.activate("owner", renamed)).getCode());
     }
 
+    @Test void imageChangeOnAnInactiveProductCannotBeActivatedWithoutReview() {
+        ProductListing changed = service.changeImages("owner", listing(ProductStatus.INACTIVE));
+        assertEquals(ProductStatus.DRAFT, changed.status());
+        assertThrows(ProductRuleException.class, () -> service.activate("owner", changed));
+    }
+
     @Test void unsuspendRestoresSaleAndClearsTheReason() {
         ProductListing back = service.unsuspend("admin", service.suspend("admin", listing(ProductStatus.ACTIVE), "Sai mô tả"));
         assertEquals(ProductStatus.ACTIVE, back.status());
@@ -107,7 +113,7 @@ class ProductLifecycleServiceTest {
 
     static Stream<Arguments> transitions() {
         return Arrays.stream(ProductStatus.values()).flatMap(state ->
-                Stream.of("edit", "submit", "approve", "reject", "suspend", "deactivate", "activate", "unsuspend")
+                Stream.of("edit", "submit", "approve", "reject", "suspend", "deactivate", "activate", "unsuspend", "changeImages")
                         .map(action -> Arguments.of(state, action)));
     }
 
@@ -118,7 +124,7 @@ class ProductLifecycleServiceTest {
         boolean editable = state == ProductStatus.DRAFT || state == ProductStatus.REJECTED || state == ProductStatus.INACTIVE;
         boolean allowed = switch (action) {
             case "edit" -> editable || state == ProductStatus.ACTIVE;
-            case "submit" -> editable;
+            case "submit", "changeImages" -> editable;
             case "activate" -> state == ProductStatus.INACTIVE;
             case "unsuspend" -> state == ProductStatus.SUSPENDED;
             case "approve", "reject" -> state == ProductStatus.PENDING_REVIEW;
@@ -139,6 +145,7 @@ class ProductLifecycleServiceTest {
             case "edit" -> service.edit("owner", product, categoryId, "Changed", BigDecimal.TEN, "VND");
             case "submit" -> service.submit("owner", product);
             case "activate" -> service.activate("owner", product);
+            case "changeImages" -> service.changeImages("owner", product);
             case "unsuspend" -> service.unsuspend("admin", product);
             case "approve" -> service.approve("admin", product);
             case "reject" -> service.reject("admin", product, "reason");

@@ -130,29 +130,32 @@ public class SellerProductController {
 
     @PostMapping(value = "/{id}/images", consumes = "multipart/form-data")
     @Transactional
-    public SellerProduct upload(@PathVariable UUID id, @RequestParam("files") List<MultipartFile> files) throws IOException {
-        ProductManagementResponse product = handler.findById(id);
+    public SellerProduct upload(@PathVariable UUID id, @RequestParam String expectedVersion,
+                                @RequestParam("files") List<MultipartFile> files) throws IOException {
+        handler.findById(id); // ownership check first
         List<ProductExtras.Image> existing = images.findByProductIdOrderByDisplayOrder(id);
         List<ProductImageValidator.ImageInput> inputs = new ArrayList<>();
         for (MultipartFile f : files) inputs.add(new ProductImageValidator.ImageInput(f.getOriginalFilename(), f.getContentType(), f.getInputStream()));
         var validated = validator.validateBatch(inputs, existing.size());
+        StoredProduct changed = application.changeImages(Actor.current().id(), id, version(expectedVersion));
         for (var image : validated) {
             int slot = firstFreeSlot(id);
             var stored = storage.store(image);
             images.saveAndFlush(new ProductExtras.Image(id, stored.key(), image.format().contentType(),
                     stored.width(), stored.height(), stored.size(), slot));
         }
-        return view(product);
+        return view(ProductManagementResponse.from(changed));
     }
 
     @DeleteMapping("/{id}/images/{imageId}")
     @Transactional
-    public SellerProduct deleteImage(@PathVariable UUID id, @PathVariable UUID imageId) {
-        ProductManagementResponse product = handler.findById(id);
+    public SellerProduct deleteImage(@PathVariable UUID id, @PathVariable UUID imageId, @RequestParam String expectedVersion) {
+        handler.findById(id); // ownership check first
         ProductExtras.Image image = images.findById(imageId).filter(i -> i.getProductId().equals(id))
                 .orElseThrow(() -> ApiException.notFound("IMAGE_NOT_FOUND", "Image not found"));
+        StoredProduct changed = application.changeImages(Actor.current().id(), id, version(expectedVersion));
         images.delete(image);
-        return view(product);
+        return view(ProductManagementResponse.from(changed));
     }
 
     private int firstFreeSlot(UUID productId) {
