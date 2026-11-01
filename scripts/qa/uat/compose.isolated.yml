@@ -1,0 +1,20 @@
+# Overlay only for TV5's disposable, local UAT rehearsal.
+# Run with docker/compose.demo.yml and a project name beginning hk5-uat-.
+# The base stack keeps services on its private Docker network; only UI/Gateway bind to loopback here.
+name: ${HK5_UAT_PROJECT:?Set HK5_UAT_PROJECT to an hk5-uat-* name}
+
+services:
+  api-gateway:
+    ports: !override
+      - "127.0.0.1:${HK5_UAT_GATEWAY_PORT:?Set HK5_UAT_GATEWAY_PORT}:8080"
+
+  frontend:
+    ports: !override
+      - "127.0.0.1:${HK5_UAT_FRONTEND_PORT:?Set HK5_UAT_FRONTEND_PORT}:80"
+
+volumes:
+  # Explicit names make it possible to inspect and remove only the disposable UAT resources.
+  pgdemo:
+    name: ${HK5_UAT_PROJECT}-pgdemo
+  productimages:
+    name: ${HK5_UAT_PROJECT}-productimages
