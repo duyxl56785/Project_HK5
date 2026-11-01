@@ -10,6 +10,7 @@ import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
 import com.projecthk5.productservice.product.ProductAccessPolicy;
 import com.projecthk5.productservice.product.ProductApplicationService;
+import com.projecthk5.productservice.product.ProductRuleException;
 import com.sun.net.httpserver.HttpServer;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -21,11 +22,13 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.Instant;
 import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Stream;
 import javax.imageio.ImageIO;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Tag;
@@ -56,11 +59,13 @@ class SellerProductImageGateIntegrationTest {
     private static final String KEY = "0123456789abcdef0123456789abcdef";
     private static final String ISSUER = "https://images.example.invalid", AUDIENCE = "images-api", OWNER = "image-owner";
     private static final String BOUNDARY = "image-gate-boundary";
-    private static final UUID STORE = UUID.randomUUID(), SELLER = UUID.randomUUID();
+    private static final String RIVAL = "rival-owner";
+    private static final UUID STORE = UUID.randomUUID(), RIVAL_STORE = UUID.randomUUID(), SELLER = UUID.randomUUID();
     private static final HttpServer INVENTORY = inventory();
+    private static final Path FILES = temporaryDirectory();
+    private static volatile boolean inventoryDown;
 
-    @DynamicPropertySource static void properties(DynamicPropertyRegistry r) throws Exception {
-        String images = Files.createTempDirectory("product-images").toString();
+    @DynamicPropertySource static void properties(DynamicPropertyRegistry r) {
         r.add("spring.datasource.url", PG::getJdbcUrl);
         r.add("spring.datasource.username", PG::getUsername);
         r.add("spring.datasource.password", PG::getPassword);
@@ -68,7 +73,7 @@ class SellerProductImageGateIntegrationTest {
         r.add("JWT_AUDIENCE", () -> AUDIENCE);
         r.add("JWT_HS256_CURRENT_KID", () -> "images");
         r.add("JWT_HS256_CURRENT_KEY_B64", () -> Base64.getEncoder().encodeToString(KEY.getBytes(StandardCharsets.UTF_8)));
-        r.add("PRODUCT_IMAGE_DIR", () -> images);
+        r.add("PRODUCT_IMAGE_DIR", FILES::toString);
         r.add("INVENTORY_INTERNAL_URL", () -> "http://127.0.0.1:" + INVENTORY.getAddress().getPort());
     }
 
@@ -77,13 +82,26 @@ class SellerProductImageGateIntegrationTest {
     @Autowired JdbcTemplate sql;
 
     private final HttpClient client = HttpClient.newHttpClient();
+    private String actor = OWNER, role = "SELLER";
 
-    /** No contexts: every balance lookup is a 404, which the Seller view reads as no Inventory row. */
+    /** A 404 reads as no Inventory row; a 500 fails the Seller view after the upload has stored its file. */
     private static HttpServer inventory() {
         try {
             HttpServer server = HttpServer.create(new InetSocketAddress("127.0.0.1", 0), 0);
+            server.createContext("/", exchange -> {
+                exchange.sendResponseHeaders(inventoryDown ? 500 : 404, -1);
+                exchange.close();
+            });
             server.start();
             return server;
+        } catch (java.io.IOException failed) {
+            throw new IllegalStateException(failed);
+        }
+    }
+
+    private static Path temporaryDirectory() {
+        try {
+            return Files.createTempDirectory("product-images").toRealPath();
         } catch (java.io.IOException failed) {
             throw new IllegalStateException(failed);
         }
@@ -97,8 +115,13 @@ class SellerProductImageGateIntegrationTest {
         @Primary @Bean ProductAccessPolicy policy() {
             return new ProductAccessPolicy() {
                 private final StoreAccess access = new StoreAccess(STORE, SELLER, OWNER, true, true, false);
-                @Override public UUID currentManagementStore(String actor) { return STORE; }
-                @Override public StoreAccess requireSellerManagement(String actor, UUID storeId) { return access; }
+                @Override public UUID currentManagementStore(String actor) { return OWNER.equals(actor) ? STORE : RIVAL_STORE; }
+                @Override public StoreAccess requireSellerManagement(String actor, UUID storeId) {
+                    if (!storeId.equals(currentManagementStore(actor))) {
+                        throw new ProductRuleException(ProductRuleException.Code.ACCESS_DENIED, "Not this Seller's Store");
+                    }
+                    return new StoreAccess(storeId, SELLER, actor, true, true, false);
+                }
                 @Override public StoreAccess requireModeration(String actor, UUID storeId) { return access; }
                 @Override public StoreAccess readStore(UUID storeId) { return access; }
             };
@@ -155,6 +178,66 @@ class SellerProductImageGateIntegrationTest {
         assertEquals(409, upload(product, version).statusCode());
         assertEquals(409, delete(product, image(product), version).statusCode());
         assertEquals(1, images(product));
+    }
+
+    @Test void anotherSellerCannotChangeImages() throws Exception {
+        UUID product = product();
+        assertEquals(200, upload(product, version(product)).statusCode());
+        UUID image = image(product);
+        long version = version(product), stored = storedFiles();
+
+        actor = RIVAL;
+        assertEquals(404, upload(product, version).statusCode());
+        assertEquals(404, delete(product, image, version).statusCode());
+        role = "CUSTOMER";
+        assertEquals(403, upload(product, version).statusCode());
+        assertEquals(403, delete(product, image, version).statusCode());
+
+        assertEquals(1, images(product));
+        assertEquals(version, version(product));
+        assertEquals("DRAFT", status(product));
+        assertEquals(stored, storedFiles());
+    }
+
+    @Test void refusedUploadStoresNoFile() throws Exception {
+        UUID product = product();
+        status(product, "ACTIVE");
+        long stored = storedFiles();
+        assertEquals(409, upload(product, version(product)).statusCode());
+        assertEquals(stored, storedFiles());
+    }
+
+    @Test void failureAfterTheFileIsStoredRollsBackAndRemovesIt() throws Exception {
+        UUID product = product();
+        status(product, "INACTIVE");
+        long version = version(product), stored = storedFiles();
+        inventoryDown = true;
+        try {
+            assertEquals(503, upload(product, version).statusCode());
+        } finally {
+            inventoryDown = false;
+        }
+        assertEquals(0, images(product));
+        assertEquals("INACTIVE", status(product));
+        assertEquals(version, version(product));
+        assertEquals(stored, storedFiles());
+    }
+
+    @Test void deletedImageLosesItsFileOnlyOnceDeleted() throws Exception {
+        UUID product = product();
+        assertEquals(200, upload(product, version(product)).statusCode());
+        UUID image = image(product);
+        long stored = storedFiles();
+        inventoryDown = true;
+        try {
+            assertEquals(503, delete(product, image, version(product)).statusCode());
+        } finally {
+            inventoryDown = false;
+        }
+        assertEquals(1, images(product));
+        assertEquals(stored, storedFiles());
+        assertEquals(200, delete(product, image, version(product)).statusCode());
+        assertEquals(stored - 1, storedFiles());
     }
 
     @Test void imageChangesRequireAnExpectedVersion() throws Exception {
@@ -221,6 +304,12 @@ class SellerProductImageGateIntegrationTest {
         return sql.queryForObject("SELECT count(*) FROM product_images WHERE product_id=?", Integer.class, product);
     }
 
+    private static long storedFiles() throws Exception {
+        try (Stream<Path> files = Files.list(FILES)) {
+            return files.count();
+        }
+    }
+
     private UUID image(UUID product) {
         return sql.queryForObject("SELECT id FROM product_images WHERE product_id=?", UUID.class, product);
     }
@@ -228,8 +317,8 @@ class SellerProductImageGateIntegrationTest {
     private String token() throws Exception {
         Date issued = new Date();
         SignedJWT jwt = new SignedJWT(new JWSHeader.Builder(JWSAlgorithm.HS256).type(JOSEObjectType.JWT).keyID("images").build(),
-            new JWTClaimsSet.Builder().issuer(ISSUER).audience(AUDIENCE).subject(OWNER).jwtID(UUID.randomUUID().toString())
-                .claim("roles", List.of("SELLER")).issueTime(issued).notBeforeTime(issued)
+            new JWTClaimsSet.Builder().issuer(ISSUER).audience(AUDIENCE).subject(actor).jwtID(UUID.randomUUID().toString())
+                .claim("roles", List.of(role)).issueTime(issued).notBeforeTime(issued)
                 .expirationTime(Date.from(Instant.now().plusSeconds(120))).build());
         jwt.sign(new MACSigner(KEY.getBytes(StandardCharsets.UTF_8)));
         return jwt.serialize();

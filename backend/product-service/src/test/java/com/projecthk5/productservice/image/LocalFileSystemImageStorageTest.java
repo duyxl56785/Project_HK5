@@ -39,6 +39,19 @@ class LocalFileSystemImageStorageTest {
         }
     }
 
+    @Test
+    void deleteRemovesOnlyThatImageAndAnAbsentKeyIsAlreadyDone() throws Exception {
+        var root = Files.createDirectory(sandbox.resolve("store"));
+        var storage = new LocalFileSystemImageStorage(root);
+        var kept = storage.store(image("sample.png"));
+        var removed = storage.store(image("sample.png"));
+        storage.delete(removed.key());
+        storage.delete(removed.key());
+        assertCode(NOT_FOUND, () -> storage.read(removed.key()));
+        assertEquals(1, entries(root));
+        assertArrayEquals(fixture("sample.png"), storage.read(kept.key()));
+    }
+
     @ParameterizedTest
     @ValueSource(strings = {"sample.jpg", "sample.png", "sample.webp"})
     void storesValidatedBytesAndReadsThemAfterAdapterRestart(String name) throws Exception {
@@ -90,6 +103,7 @@ class LocalFileSystemImageStorageTest {
         var root = Files.createDirectory(sandbox.resolve("store"));
         var storage = new LocalFileSystemImageStorage(root);
         assertCode(INVALID_KEY, () -> storage.read(key));
+        assertCode(INVALID_KEY, () -> storage.delete(key));
         assertEquals(0, entries(root));
     }
 

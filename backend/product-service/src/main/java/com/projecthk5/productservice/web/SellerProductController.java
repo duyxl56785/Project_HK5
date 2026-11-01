@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.UUID;
 import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionSynchronization;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -141,6 +143,7 @@ public class SellerProductController {
         for (var image : validated) {
             int slot = firstFreeSlot(id);
             var stored = storage.store(image);
+            removeFileOn(TransactionSynchronization.STATUS_ROLLED_BACK, stored.key());
             images.saveAndFlush(new ProductExtras.Image(id, stored.key(), image.format().contentType(),
                     stored.width(), stored.height(), stored.size(), slot));
         }
@@ -155,7 +158,20 @@ public class SellerProductController {
                 .orElseThrow(() -> ApiException.notFound("IMAGE_NOT_FOUND", "Image not found"));
         StoredProduct changed = application.changeImages(Actor.current().id(), id, version(expectedVersion));
         images.delete(image);
+        removeFileOn(TransactionSynchronization.STATUS_COMMITTED, image.getStorageKey());
         return view(ProductManagementResponse.from(changed));
+    }
+
+    /**
+     * Files sit outside the transaction, so they follow its outcome. An unknown outcome keeps the file: a stray file beats a
+     * broken image. Spring logs a failed delete. shortcut: a crash before this runs leaves an orphan, sweep the directory if that matters.
+     */
+    private void removeFileOn(int outcome, String key) {
+        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+            @Override public void afterCompletion(int status) {
+                if (status == outcome) storage.delete(key);
+            }
+        });
     }
 
     private int firstFreeSlot(UUID productId) {
