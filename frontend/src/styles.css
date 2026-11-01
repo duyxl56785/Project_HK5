@@ -268,6 +268,8 @@ input[readonly] { background: var(--brand-50); color: var(--muted); }
   .btn, .topbar__strip a, .topbar__strip button { min-height: 44px; display: inline-flex; align-items: center; }
   .catalog, .detail, .perks { grid-template-columns: minmax(0, 1fr); }
   .topbar { position: static; }
+  .topbar__strip { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
+  .topbar__strip > * { flex: none; }
   .topbar__main { flex-wrap: wrap; gap: 8px 12px; }
   .search { order: 3; flex-basis: 100%; }
   .cartlink { margin-left: auto; }

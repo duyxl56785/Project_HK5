@@ -8,7 +8,8 @@ export function classify(error: unknown): CheckoutResponse {
   if (!(error instanceof ApiError)) return { status: 'unknown' };
   if (error.status === 401 || error.status === 403) return { status: 'rejected', reason: 'UNAUTHORIZED' };
   if (error.status !== 409) return { status: 'unknown' };
-  if (error.message === 'CHECKOUT_REQUIRES_RECONCILIATION' || error.message === 'CHECKOUT_IN_PROGRESS_RETRY_LATER') return { status: 'unknown' };
+  if (['CHECKOUT_REQUIRES_RECONCILIATION', 'CHECKOUT_IN_PROGRESS_RETRY_LATER', 'IDEMPOTENCY_PAYLOAD_MISMATCH'].includes(error.message)) return { status: 'unknown' };
+  if (error.message === 'FINANCE_POLICY_NOT_APPROVED') return { status: 'rejected', reason: 'CHECKOUT_PAUSED' };
   // shortcut: Order reports these as one BUSINESS_CONFLICT code, so the wording decides; give each its own code to drop this.
   const text = error.message.toLowerCase();
   if (text.includes('stock')) return { status: 'rejected', reason: 'OUT_OF_STOCK' };
