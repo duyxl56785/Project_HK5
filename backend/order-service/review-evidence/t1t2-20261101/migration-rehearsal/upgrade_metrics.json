@@ -1,0 +1,27 @@
+{
+  "flyway_result" : {
+    "timestamp" : [ 2026, 11, 1, 6, 36, 57, 311615292 ],
+    "operation" : "migrate",
+    "exception" : null,
+    "licenseFailed" : false,
+    "initialSchemaVersion" : "4",
+    "targetSchemaVersion" : "5",
+    "schemaName" : "public",
+    "migrations" : [ {
+      "category" : "Versioned",
+      "version" : "5",
+      "description" : "checkout order drafts",
+      "type" : "SQL",
+      "filepath" : "/workspace/review-evidence/tv3-v5-rehearsal-20261101/source_migrations/V5__checkout_order_drafts.sql",
+      "executionTime" : 5
+    } ],
+    "migrationsExecuted" : 1,
+    "success" : true,
+    "flywayVersion" : "10.10.0",
+    "database" : "tv3_v5_rehearsal",
+    "warnings" : [ ],
+    "totalMigrationTime" : 5
+  },
+  "upgrade_wall_ms" : 47,
+  "bootstrap_and_seed_ms" : 2599
+}

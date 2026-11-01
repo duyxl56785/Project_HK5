@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuite name="com.projecthk5.orderservice.domain.InventoryOperationIntentTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-11-01T10:37:39" time="0.016">
+  <testcase name="journalRehydrateRequiresIdenticalFingerprint()" classname="com.projecthk5.orderservice.domain.InventoryOperationIntentTest" time="0.001" />
+  <testcase name="invalidExternalInventoryIdentifiersFailClosed()" classname="com.projecthk5.orderservice.domain.InventoryOperationIntentTest" time="0.001" />
+  <testcase name="unicodeBoundaryPaddedSkuFailsClosedWithoutChangingExactIdentity()" classname="com.projecthk5.orderservice.domain.InventoryOperationIntentTest" time="0.0" />
+  <testcase name="requestHashIsCanonicalButOperationIdIsSeparate()" classname="com.projecthk5.orderservice.domain.InventoryOperationIntentTest" time="0.009" />
+  <testcase name="lineSetCannotBeMutatedOrHaveDuplicates()" classname="com.projecthk5.orderservice.domain.InventoryOperationIntentTest" time="0.001" />
+  <testcase name="changedTypeOrQuantityIsNotAValidReplay()" classname="com.projecthk5.orderservice.domain.InventoryOperationIntentTest" time="0.001" />
+</testsuite>

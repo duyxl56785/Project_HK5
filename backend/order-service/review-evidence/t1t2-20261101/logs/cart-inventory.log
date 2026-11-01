@@ -1,0 +1,74 @@
+Picked up JAVA_TOOL_OPTIONS:  -Duser.timezone=UTC -Djavax.net.ssl.trustStore=/etc/ssl/certs/java/cacerts -Dhttps.proxyHost=proxy -Dhttps.proxyPort=8080 -Dhttp.proxyHost=proxy -Dhttp.proxyPort=8080 -Dhttp.nonProxyHosts=localhost|127.*
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.10/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :auth-service:processResources
+> Task :cart-service:processResources
+> Task :cart-service:processTestResources NO-SOURCE
+> Task :security-common:compileJava
+> Task :inventory-service:compileJava
+> Task :security-common:processResources
+> Task :security-common:classes
+> Task :inventory-service:processResources
+> Task :inventory-service:classes
+> Task :security-common:jar
+
+> Task :cart-service:compileJava
+Note: /workspace/tv3-t1t2-main-integration/backend/cart-service/src/main/java/com/projecthk5/cartservice/security/ResourceSecurityConfig.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+
+> Task :cart-service:classes
+> Task :auth-service:compileJava
+> Task :auth-service:classes
+> Task :auth-service:jar
+
+> Task :inventory-service:compileTestJava
+Note: /workspace/tv3-t1t2-main-integration/backend/inventory-service/src/test/java/com/projecthk5/inventoryservice/service/InventoryOperationServiceTest.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+
+> Task :inventory-service:processTestResources NO-SOURCE
+> Task :inventory-service:testClasses
+> Task :cart-service:compileTestJava
+> Task :cart-service:testClasses
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+
+> Task :inventory-service:test
+Picked up JAVA_TOOL_OPTIONS:  -Duser.timezone=UTC -Djavax.net.ssl.trustStore=/etc/ssl/certs/java/cacerts -Dhttps.proxyHost=proxy -Dhttps.proxyPort=8080 -Dhttp.proxyHost=proxy -Dhttp.proxyPort=8080 -Dhttp.nonProxyHosts=localhost|127.*
+
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+
+> Task :cart-service:test
+Picked up JAVA_TOOL_OPTIONS:  -Duser.timezone=UTC -Djavax.net.ssl.trustStore=/etc/ssl/certs/java/cacerts -Dhttps.proxyHost=proxy -Dhttps.proxyPort=8080 -Dhttp.proxyHost=proxy -Dhttp.proxyPort=8080 -Dhttp.nonProxyHosts=localhost|127.*
+
+> Task :inventory-service:postgresIntegrationTest
+Picked up JAVA_TOOL_OPTIONS:  -Duser.timezone=UTC -Djavax.net.ssl.trustStore=/etc/ssl/certs/java/cacerts -Dhttps.proxyHost=proxy -Dhttps.proxyPort=8080 -Dhttp.proxyHost=proxy -Dhttp.proxyPort=8080 -Dhttp.nonProxyHosts=localhost|127.*
+
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+
+> Task :cart-service:postgresIntegrationTest
+Picked up JAVA_TOOL_OPTIONS:  -Duser.timezone=UTC -Djavax.net.ssl.trustStore=/etc/ssl/certs/java/cacerts -Dhttps.proxyHost=proxy -Dhttps.proxyPort=8080 -Dhttp.proxyHost=proxy -Dhttp.proxyPort=8080 -Dhttp.nonProxyHosts=localhost|127.*
+
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+2026-11-01T10:41:35.648Z  INFO 297043 --- [inventory-service] [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-11-01T10:41:35.658Z  INFO 297043 --- [inventory-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-11-01T10:41:35.661Z  INFO 297043 --- [inventory-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-11-01T10:41:35.666Z  INFO 297043 --- [inventory-service] [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-11-01T10:41:35.666Z  INFO 297043 --- [inventory-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown initiated...
+2026-11-01T10:41:35.672Z  INFO 297043 --- [inventory-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown completed.
+2026-11-01T10:41:35.675Z  INFO 297043 --- [inventory-service] [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-11-01T10:41:35.676Z  INFO 297043 --- [inventory-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown initiated...
+2026-11-01T10:41:35.681Z  INFO 297043 --- [inventory-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown completed.
+2026-11-01T10:41:40.677Z  INFO 297067 --- [cart-service] [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-11-01T10:41:40.677Z  INFO 297067 --- [cart-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-11-01T10:41:40.679Z  INFO 297067 --- [cart-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-11-01T10:41:40.682Z  INFO 297067 --- [cart-service] [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-11-01T10:41:40.683Z  INFO 297067 --- [cart-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Shutdown initiated...
+2026-11-01T10:41:40.684Z  INFO 297067 --- [cart-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Shutdown completed.
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.10/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 42s
+16 actionable tasks: 16 executed

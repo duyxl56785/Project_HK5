@@ -1,0 +1,7 @@
+{
+  "status": "PASS",
+  "method": "Allowlist XML metadata/outcome; regex scan for private keys/GitHub token/JWT/header/email/dump data plus manual review of selected files",
+  "files": 63,
+  "findings": [],
+  "limits": "Pattern scan is supplementary; raw XML output and DB dumps intentionally excluded. Test source uses existing synthetic fixture credentials, no production credentials introduced."
+}

@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuite name="com.projecthk5.orderservice.integration.InventoryOperationJournalPostgres16IT" tests="14" skipped="0" failures="0" errors="0" timestamp="2026-11-01T10:38:40" time="0.187">
+  <testcase name="completedOrUnknownAttemptCannotReuseOldGeneration()" classname="com.projecthk5.orderservice.integration.InventoryOperationJournalPostgres16IT" time="0.033" />
+  <testcase name="multiSkuUnknownIntentRejectsSameIdDifferentTypeOrCheckoutAttempt()" classname="com.projecthk5.orderservice.integration.InventoryOperationJournalPostgres16IT" time="0.014" />
+  <testcase name="crashedInFlightIsUnknownAndNeverAutomaticallyCompensated()" classname="com.projecthk5.orderservice.integration.InventoryOperationJournalPostgres16IT" time="0.011" />
+  <testcase name="t2ConfirmedOutcomeSurvivesCallerTransactionRollback()" classname="com.projecthk5.orderservice.integration.InventoryOperationJournalPostgres16IT" time="0.01" />
+  <testcase name="flywayT1PersistsImmutableCanonicalPayloadAndSeparateT2Outcome()" classname="com.projecthk5.orderservice.integration.InventoryOperationJournalPostgres16IT" time="0.019" />
+  <testcase name="unknownMultiSkuReservePreservesStableIdAndNeverCreatesImplicitRelease()" classname="com.projecthk5.orderservice.integration.InventoryOperationJournalPostgres16IT" time="0.012" />
+  <testcase name="t1JournalCommitSurvivesRollbackOfAlreadyCommittedAttemptCaller()" classname="com.projecthk5.orderservice.integration.InventoryOperationJournalPostgres16IT" time="0.007" />
+  <testcase name="lateT2AfterCrashScannerMustNotOverwriteUnknown()" classname="com.projecthk5.orderservice.integration.InventoryOperationJournalPostgres16IT" time="0.008" />
+  <testcase name="rejectedAttemptCannotBeClaimedAgain()" classname="com.projecthk5.orderservice.integration.InventoryOperationJournalPostgres16IT" time="0.01" />
+  <testcase name="multiSkuReleaseCandidateRetainsExactLongQuantitiesAndIndependentOperationId()" classname="com.projecthk5.orderservice.integration.InventoryOperationJournalPostgres16IT" time="0.013" />
+  <testcase name="differentPayloadOnSameOperationIdIsRejectedWithoutMutation()" classname="com.projecthk5.orderservice.integration.InventoryOperationJournalPostgres16IT" time="0.006" />
+  <testcase name="staleGenerationCannotMutateALaterSendAfterPositiveNotSent()" classname="com.projecthk5.orderservice.integration.InventoryOperationJournalPostgres16IT" time="0.014" />
+  <testcase name="twoWorkersClaimOneJournalRowOnlyOnce()" classname="com.projecthk5.orderservice.integration.InventoryOperationJournalPostgres16IT" time="0.008" />
+  <testcase name="twoWorkersCannotReclaimUnknownMultiSkuOperation()" classname="com.projecthk5.orderservice.integration.InventoryOperationJournalPostgres16IT" time="0.011" />
+</testsuite>

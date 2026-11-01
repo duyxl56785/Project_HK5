@@ -1,0 +1,455 @@
+{
+  "base": "faffda5207b87dd362ce1ce402c5501ab3233a1f",
+  "candidate": "dfe903230c0d2c41ac59b412fd0f249b9f951da2",
+  "candidate_tree": "e7a45238a336f1ad52b5e61471302864df2f86e8",
+  "tested_tree": "0b4a376956f13bb623c3b5c2dc190786142825d7",
+  "all_16_order_files_identical_to_candidate": true,
+  "frontend_identical_to_main": true,
+  "v1_v4_identical_to_main": [
+    "backend/order-service/src/main/resources/db/migration/V1__checkout_baseline.sql",
+    "backend/order-service/src/main/resources/db/migration/V2__inventory_operation_journal.sql",
+    "backend/order-service/src/main/resources/db/migration/V3__fulfillment_cod_shipping_outbox.sql",
+    "backend/order-service/src/main/resources/db/migration/V4__write_fence_abort.sql"
+  ],
+  "files": {
+    "backend/order-service/src/main/java/com/projecthk5/orderservice/domain/CheckoutDraft.java": "52cc8941bd04800929302f6d849aa389d5f7ea49fe3aa7fe303f6f963675eedb",
+    "backend/order-service/src/main/java/com/projecthk5/orderservice/ports/InventoryHttpAdapter.java": "c1cb7059bae3ed039e2484459f2ecd582755779d2566e6eb83679af82af04e5d",
+    "backend/order-service/src/main/java/com/projecthk5/orderservice/service/CheckoutDraftJournal.java": "d9a14505459c8e39d25409a18efef1bfc4883c9da31b31d59eefc762615e3f59",
+    "backend/order-service/src/main/java/com/projecthk5/orderservice/service/CheckoutService.java": "dc382c8e5a9299e24a395d678d0f1a227882a4d2b89fa1e232d2f86504ffa860",
+    "backend/order-service/src/main/java/com/projecthk5/orderservice/service/InventoryOperationCaller.java": "740777eb1ea8d34ed85b7fd15cbf90ebf04d11933e972fbc6332fbaddaaef2d5",
+    "backend/order-service/src/main/java/com/projecthk5/orderservice/service/InventoryOperationJournal.java": "6e37cde35c50ebccc64feff598a80b19d28361e148895f18273be2006ff3ce77",
+    "backend/order-service/src/main/java/com/projecthk5/orderservice/service/OrderWriteService.java": "93a05ee95e7fa6831dbbe766659e68f23136f994db3459e4cbdbc890aee6575c",
+    "backend/order-service/src/main/resources/db/migration/V5__checkout_order_drafts.sql": "accf738954d56913a892769a31cafb1f43d220fd9b14e8549de7b9ce6c5ab536",
+    "backend/order-service/src/test/java/com/projecthk5/orderservice/integration/CheckoutDraftCrashProcess.java": "d6532767fbad986eb865a96b91a0546a7f344df0e7c7d565ceafb84f6c17e253",
+    "backend/order-service/src/test/java/com/projecthk5/orderservice/integration/CheckoutDraftPostgresIT.java": "748c9c6156ecbf71215f9c60824f1888ab63f5b44c9040ae96017aa5d457909f",
+    "backend/order-service/src/test/java/com/projecthk5/orderservice/integration/CheckoutInventoryBoundaryPostgresIT.java": "642249d0bf0c670acb3f92f7354d32d0cbf7753f44466696d4851065ee52c7b6",
+    "backend/order-service/src/test/java/com/projecthk5/orderservice/integration/CheckoutInventoryJournalPostgresIT.java": "b8b5be22e906128c53f5c203459f629b71ae02c68fdf0afae93e08ee2c639429",
+    "backend/order-service/src/test/java/com/projecthk5/orderservice/integration/CheckoutReplayPostgresIT.java": "c16ab107a8659f8c69563338f281d76881772a1dcf3993f95aab0b1b486b0312",
+    "backend/order-service/src/test/java/com/projecthk5/orderservice/integration/InventoryOperationJournalPostgres16IT.java": "257ccba5c1da3e88c1197af49108a427fbc1cebf1c9251442876b7ad46d22250",
+    "backend/order-service/src/test/java/com/projecthk5/orderservice/service/CheckoutServiceTest.java": "8afd8287fa7c9e0aed0fbe1bd84217836e39729f5f91f4d31365e6ae21fe9f09",
+    "backend/order-service/src/test/java/com/projecthk5/orderservice/service/InventoryOperationCallerTest.java": "0b92154e440c7550c312390a60fa5f51e5809896b595f4d0bc15e03b1563bf2e"
+  },
+  "source_commit": "f2529ffb8036898d9eee847917912128689d8f43",
+  "raw_to_published": [
+    {
+      "published": "junit/order-service/test/TEST-com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest.xml",
+      "raw_source": "/workspace/tv3-t1t2-main-integration/backend/order-service/build/test-results/test/TEST-com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest.xml",
+      "raw_sha256": "2fca35691561fa41f8f22b106a09f71926439729ac6cb9c36a3329e241028fc0",
+      "published_sha256": "088df5619a5619467006d43ffa85b1fbf2033c5fe0bbfbc6ce451dda9911c901",
+      "transform": "allowlist suite/testcase metadata and outcome; remove properties/system-out/system-err/stack traces/hostname"
+    },
+    {
+      "published": "junit/order-service/test/TEST-com.projecthk5.orderservice.domain.CheckoutRulesTest.xml",
+      "raw_source": "/workspace/tv3-t1t2-main-integration/backend/order-service/build/test-results/test/TEST-com.projecthk5.orderservice.domain.CheckoutRulesTest.xml",
+      "raw_sha256": "eb92a27ce349077dad42395e863af595ed692537e193bac6ecf3c49c257d0a3e",
+      "published_sha256": "1aeecd6305388ce6e216b424ca7a1617c1e896858d32c4bdffb815c1d38625f9",
+      "transform": "allowlist suite/testcase metadata and outcome; remove properties/system-out/system-err/stack traces/hostname"
+    },
+    {
+      "published": "junit/order-service/test/TEST-com.projecthk5.orderservice.domain.InventoryOperationIntentTest.xml",
+      "raw_source": "/workspace/tv3-t1t2-main-integration/backend/order-service/build/test-results/test/TEST-com.projecthk5.orderservice.domain.InventoryOperationIntentTest.xml",
+      "raw_sha256": "c7756cb89e61ba756885f0f162071098f71540ca2903b150dfcf7451ee2cf27d",
+      "published_sha256": "0dc63721375b3aeacd3a6d6ae8f8bb0f3dc81599d7116046fcf1ca5a957e1bcd",
+      "transform": "allowlist suite/testcase metadata and outcome; remove properties/system-out/system-err/stack traces/hostname"
+    },
+    {
+      "published": "junit/order-service/test/TEST-com.projecthk5.orderservice.domain.OrderAmountStorageBoundsTest.xml",
+      "raw_source": "/workspace/tv3-t1t2-main-integration/backend/order-service/build/test-results/test/TEST-com.projecthk5.orderservice.domain.OrderAmountStorageBoundsTest.xml",
+      "raw_sha256": "84616b48fc3a7f8f4d708a2bcb5ef3fbafca67d3fd0b461131d35410031cc4b5",
+      "published_sha256": "fb1b74bd0ef1ef6e597e9a334df54e55a4abf76169e81e549f14fb61300b6365",
+      "transform": "allowlist suite/testcase metadata and outcome; remove properties/system-out/system-err/stack traces/hostname"
+    },
+    {
+      "published": "junit/order-service/test/TEST-com.projecthk5.orderservice.entity.SellerOrderTest.xml",
+      "raw_source": "/workspace/tv3-t1t2-main-integration/backend/order-service/build/test-results/test/TEST-com.projecthk5.orderservice.entity.SellerOrderTest.xml",
+      "raw_sha256": "f4ec6783219133a341d099071dac83f550b1231f1ed7066c7efdb80d256a02bf",
+      "published_sha256": "84fb7103fee0f52702b5f8c9a33533a63c5135c0a2ad8ce7392587773a009494",
+      "transform": "allowlist suite/testcase metadata and outcome; remove properties/system-out/system-err/stack traces/hostname"
+    },
+    {
+      "published": "junit/order-service/test/TEST-com.projecthk5.orderservice.finance.FinanceCheckoutPreflightTest.xml",
+      "raw_source": "/workspace/tv3-t1t2-main-integration/backend/order-service/build/test-results/test/TEST-com.projecthk5.orderservice.finance.FinanceCheckoutPreflightTest.xml",
+      "raw_sha256": "c8384c627a39e3ce166dcf94a8f1f917b1ca107854341474d0365a08bead08ab",
+      "published_sha256": "3f712ea70b82605f236376ae0a20ef19089d14d7d6275936435d64048160b099",
+      "transform": "allowlist suite/testcase metadata and outcome; remove properties/system-out/system-err/stack traces/hostname"
+    },
+    {
+      "published": "junit/order-service/test/TEST-com.projecthk5.orderservice.finance.FinanceConsumerParityTest.xml",
+      "raw_source": "/workspace/tv3-t1t2-main-integration/backend/order-service/build/test-results/test/TEST-com.projecthk5.orderservice.finance.FinanceConsumerParityTest.xml",
+      "raw_sha256": "78c86eedc300cfcd93188570b3acb7dcc9e3faf5e5aaa7808da38ba46a6c3921",
+      "published_sha256": "a01c1b8edfaa04193a32cdd1b9cf4e56f33bf4a8bc3cd3a138d3e65b295816b4",
+      "transform": "allowlist suite/testcase metadata and outcome; remove properties/system-out/system-err/stack traces/hostname"
+    },
+    {
+      "published": "junit/order-service/test/TEST-com.projecthk5.orderservice.finance.FinancePolicyConfigurationTest.xml",
+      "raw_source": "/workspace/tv3-t1t2-main-integration/backend/order-service/build/test-results/test/TEST-com.projecthk5.orderservice.finance.FinancePolicyConfigurationTest.xml",
+      "raw_sha256": "3f4c4daa57303d2518ccc36adf143a8f1e2725f19dfe67ff6f8c70a9f5b863d7",
+      "published_sha256": "97ccf720828c3128dce225032e595f6e8582d6254e1b5d7b416743faf52dd94c",
+      "transform": "allowlist suite/testcase metadata and outcome; remove properties/system-out/system-err/stack traces/hostname"
+    },
+    {
+      "published": "junit/order-service/test/TEST-com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest.xml",
+      "raw_source": "/workspace/tv3-t1t2-main-integration/backend/order-service/build/test-results/test/TEST-com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest.xml",
+      "raw_sha256": "c1bc11bde56b62611107e49bda3c7443d556ce14d3d51b35df1b436a2e0c92d6",
+      "published_sha256": "93853e36ab87d6fcc49d4f218d1419e9d9bfee735d111f78032160c84dc4cd25",
+      "transform": "allowlist suite/testcase metadata and outcome; remove properties/system-out/system-err/stack traces/hostname"
+    },
+    {
+      "published": "junit/order-service/test/TEST-com.projecthk5.orderservice.finance.FinanceRulesTest.xml",
+      "raw_source": "/workspace/tv3-t1t2-main-integration/backend/order-service/build/test-results/test/TEST-com.projecthk5.orderservice.finance.FinanceRulesTest.xml",
+      "raw_sha256": "c2a4a2dc19334208f2bf37b291af84f1c36c854708be3b97db6a07d8ba008d30",
+      "published_sha256": "f44cf9786ea397e1f0f09987c6ac0cc7640fdec0996711dad3e4311f30c5c382",
+      "transform": "allowlist suite/testcase metadata and outcome; remove properties/system-out/system-err/stack traces/hostname"
+    },
+    {
+      "published": "junit/order-service/test/TEST-com.projecthk5.orderservice.fulfillment.SellerOrderLifecycleTest.xml",
+      "raw_source": "/workspace/tv3-t1t2-main-integration/backend/order-service/build/test-results/test/TEST-com.projecthk5.orderservice.fulfillment.SellerOrderLifecycleTest.xml",
+      "raw_sha256": "0645d258f711ff6f1a70332d67cc5707f5e31f5ed77cfd1c928a5fbe7df209a8",
+      "published_sha256": "65135cb11e5f87724dd9f8b3a8bd12172078800c973370dc19061cd3c5b02f1d",
+      "transform": "allowlist suite/testcase metadata and outcome; remove properties/system-out/system-err/stack traces/hostname"
+    },
+    {
+      "published": "junit/order-service/test/TEST-com.projecthk5.orderservice.security.ContractJwtDecoderTest.xml",
+      "raw_source": "/workspace/tv3-t1t2-main-integration/backend/order-service/build/test-results/test/TEST-com.projecthk5.orderservice.security.ContractJwtDecoderTest.xml",
+      "raw_sha256": "9564f52c298f41b206bae24babc02ae81bb0af7032dc879a6a084d7236ea844a",
+      "published_sha256": "fe6d293c78945371457498cb194c9a7f172c6fd0deb0f5256de0c9599841cd40",
+      "transform": "allowlist suite/testcase metadata and outcome; remove properties/system-out/system-err/stack traces/hostname"
+    },
+    {
+      "published": "junit/order-service/test/TEST-com.projecthk5.orderservice.security.JwtEnvironmentConfigurationTest.xml",
+      "raw_source": "/workspace/tv3-t1t2-main-integration/backend/order-service/build/test-results/test/TEST-com.projecthk5.orderservice.security.JwtEnvironmentConfigurationTest.xml",
+      "raw_sha256": "cfdd60b4d94dca3d10da450041a0aaf63d664f8995c35e37304c215f91b97b9a",
+      "published_sha256": "22de66876d8d57fa152e4dde34d8cf6af24becefbd32584f5671b3c0fa77145b",
+      "transform": "allowlist suite/testcase metadata and outcome; remove properties/system-out/system-err/stack traces/hostname"
+    },
+    {
+      "published": "junit/order-service/test/TEST-com.projecthk5.orderservice.service.CheckoutServiceTest.xml",
+      "raw_source": "/workspace/tv3-t1t2-main-integration/backend/order-service/build/test-results/test/TEST-com.projecthk5.orderservice.service.CheckoutServiceTest.xml",
+      "raw_sha256": "58e9577ad2c16e80fe05370f5a0fcd826314c50c43b38d6c052094d04e1c0afa",
+      "published_sha256": "696e3105781a4976e2143168ce723a8da1b54aa69024ab58c127497757a5e0d2",
+      "transform": "allowlist suite/testcase metadata and outcome; remove properties/system-out/system-err/stack traces/hostname"
+    },
+    {
+      "published": "junit/order-service/test/TEST-com.projecthk5.orderservice.service.FinanceReportTest.xml",
+      "raw_source": "/workspace/tv3-t1t2-main-integration/backend/order-service/build/test-results/test/TEST-com.projecthk5.orderservice.service.FinanceReportTest.xml",
+      "raw_sha256": "823705f25114a6a5bb38a87b40c2870b5358b163cb370005cc6426b196e8baf5",
+      "published_sha256": "eb4ed751374f4be0f866403b33afa98e388302ed434588250806a9c6424c6bd2",
+      "transform": "allowlist suite/testcase metadata and outcome; remove properties/system-out/system-err/stack traces/hostname"
+    },
+    {
+      "published": "junit/order-service/test/TEST-com.projecthk5.orderservice.service.FulfillmentServiceTest.xml",
+      "raw_source": "/workspace/tv3-t1t2-main-integration/backend/order-service/build/test-results/test/TEST-com.projecthk5.orderservice.service.FulfillmentServiceTest.xml",
+      "raw_sha256": "9c994a69d68b3a0ab2aabe35456482cfc61685b9b65e2e8c9fb1f38710d9ebcf",
+      "published_sha256": "5b06b9b0bf321893204a619841832c46916b843af7258cbe071f810fbb90188c",
+      "transform": "allowlist suite/testcase metadata and outcome; remove properties/system-out/system-err/stack traces/hostname"
+    },
+    {
+      "published": "junit/order-service/test/TEST-com.projecthk5.orderservice.service.IdempotencyCoordinatorTest.xml",
+      "raw_source": "/workspace/tv3-t1t2-main-integration/backend/order-service/build/test-results/test/TEST-com.projecthk5.orderservice.service.IdempotencyCoordinatorTest.xml",
+      "raw_sha256": "917f96f737436bb48b5f9ebc977399785702c1881cf44523b50ed421dbb9d1a5",
+      "published_sha256": "32d5d29d638d8f32cbef8c477e74816e767f8c2ef77b420d5655ca8b5a546088",
+      "transform": "allowlist suite/testcase metadata and outcome; remove properties/system-out/system-err/stack traces/hostname"
+    },
+    {
+      "published": "junit/order-service/test/TEST-com.projecthk5.orderservice.service.InventoryOperationCallerTest.xml",
+      "raw_source": "/workspace/tv3-t1t2-main-integration/backend/order-service/build/test-results/test/TEST-com.projecthk5.orderservice.service.InventoryOperationCallerTest.xml",
+      "raw_sha256": "de06a62d28b7fdb4ad68fc2bbef5f0a305f9d8cdeadc4ca8269a0438357fe7a5",
+      "published_sha256": "341d324063e3d530dd6ed76220ad20c6e728ec3599febc06045b07601d09c934",
+      "transform": "allowlist suite/testcase metadata and outcome; remove properties/system-out/system-err/stack traces/hostname"
+    },
+    {
+      "published": "junit/order-service/test/TEST-com.projecthk5.orderservice.service.OutboxRelayTest.xml",
+      "raw_source": "/workspace/tv3-t1t2-main-integration/backend/order-service/build/test-results/test/TEST-com.projecthk5.orderservice.service.OutboxRelayTest.xml",
+      "raw_sha256": "1ade12f6481701d048889665cf39172477e6bb88ecc40557aa26918fd4da8c1e",
+      "published_sha256": "59f3c955705262675c6011cd0061005f5616f0ddf3416d35b61883d43d5da1b3",
+      "transform": "allowlist suite/testcase metadata and outcome; remove properties/system-out/system-err/stack traces/hostname"
+    },
+    {
+      "published": "junit/order-service/postgresIntegrationTest/TEST-com.projecthk5.orderservice.finance.FinanceDurabilityPostgresIT.xml",
+      "raw_source": "/workspace/tv3-t1t2-main-integration/backend/order-service/build/test-results/postgresIntegrationTest/TEST-com.projecthk5.orderservice.finance.FinanceDurabilityPostgresIT.xml",
+      "raw_sha256": "b9d68cac4c3b8d355f06ee989f88400ede5aecd04706ea9e528fae26ecd3d0ad",
+      "published_sha256": "a5292040369b193bea861cd28db5102e1286b5c966761238424f7d2e4793f3b5",
+      "transform": "allowlist suite/testcase metadata and outcome; remove properties/system-out/system-err/stack traces/hostname"
+    },
+    {
+      "published": "junit/order-service/postgresIntegrationTest/TEST-com.projecthk5.orderservice.finance.FinanceSnapshotPostgresIT.xml",
+      "raw_source": "/workspace/tv3-t1t2-main-integration/backend/order-service/build/test-results/postgresIntegrationTest/TEST-com.projecthk5.orderservice.finance.FinanceSnapshotPostgresIT.xml",
+      "raw_sha256": "e76864c5b9163bb5736ab2c3708501ec676152148416d09a2e3b3bc5e8fbb302",
+      "published_sha256": "a24a1f868601cb10c75c96d969887335aafa437a19e3fd61488567a0b6d912de",
+      "transform": "allowlist suite/testcase metadata and outcome; remove properties/system-out/system-err/stack traces/hostname"
+    },
+    {
+      "published": "junit/order-service/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.CheckoutDraftPostgresIT.xml",
+      "raw_source": "/workspace/tv3-t1t2-main-integration/backend/order-service/build/test-results/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.CheckoutDraftPostgresIT.xml",
+      "raw_sha256": "9baac6ff415c0eb952727abb0b0f11577b809508d0bd2781b98f2f90398ec6c7",
+      "published_sha256": "2384f49567fd7e17336b6d0dfd18311c6f3e1500b6ae6635b539b17a00b38d9b",
+      "transform": "allowlist suite/testcase metadata and outcome; remove properties/system-out/system-err/stack traces/hostname"
+    },
+    {
+      "published": "junit/order-service/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.CheckoutInventoryBoundaryPostgresIT.xml",
+      "raw_source": "/workspace/tv3-t1t2-main-integration/backend/order-service/build/test-results/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.CheckoutInventoryBoundaryPostgresIT.xml",
+      "raw_sha256": "f269d455c884937aa3b7127235a9a8377ec60c23f62b505a615e809e2b49407e",
+      "published_sha256": "5428b24377c97122ff537439a3eb50e83c4df1901e5914c1901d7295bd2e8b79",
+      "transform": "allowlist suite/testcase metadata and outcome; remove properties/system-out/system-err/stack traces/hostname"
+    },
+    {
+      "published": "junit/order-service/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT.xml",
+      "raw_source": "/workspace/tv3-t1t2-main-integration/backend/order-service/build/test-results/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT.xml",
+      "raw_sha256": "41868a1fb0c55d372bc64e4db288afe6bf97d39195d128fc8dc45d7091d70e1e",
+      "published_sha256": "4645bc8c797cbe63a654f1abf60f44e9a10b93f451b4031ee2e736121514330f",
+      "transform": "allowlist suite/testcase metadata and outcome; remove properties/system-out/system-err/stack traces/hostname"
+    },
+    {
+      "published": "junit/order-service/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.CheckoutReplayPostgresIT.xml",
+      "raw_source": "/workspace/tv3-t1t2-main-integration/backend/order-service/build/test-results/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.CheckoutReplayPostgresIT.xml",
+      "raw_sha256": "404b20af1c72e90d306e29a4907634df0b35c4ce055871e7a20ec55889416d1e",
+      "published_sha256": "65ecc1aa5783c8f7a929bf7e306d148c304e75fc6fdc13d4ebedf146092fea06",
+      "transform": "allowlist suite/testcase metadata and outcome; remove properties/system-out/system-err/stack traces/hostname"
+    },
+    {
+      "published": "junit/order-service/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.CheckoutScannerPostgresIT.xml",
+      "raw_source": "/workspace/tv3-t1t2-main-integration/backend/order-service/build/test-results/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.CheckoutScannerPostgresIT.xml",
+      "raw_sha256": "7e9540f4b0b147adc2b80298fa1296c4b36581b9302cfd9fb071db23f905caea",
+      "published_sha256": "e96baf357ba0dbfe0be9f637fa1a51962911f035fdd95fe686d14c5aea4b153d",
+      "transform": "allowlist suite/testcase metadata and outcome; remove properties/system-out/system-err/stack traces/hostname"
+    },
+    {
+      "published": "junit/order-service/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.FulfillmentPostgres16IT.xml",
+      "raw_source": "/workspace/tv3-t1t2-main-integration/backend/order-service/build/test-results/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.FulfillmentPostgres16IT.xml",
+      "raw_sha256": "bbd0f40f76b6e417e1dbc1dd64976b034efd771ce28cd1cc8bcd492dd6b06e53",
+      "published_sha256": "86d269d693052c510c406e77a13902aea0439afc636f2d04b1ea520735227360",
+      "transform": "allowlist suite/testcase metadata and outcome; remove properties/system-out/system-err/stack traces/hostname"
+    },
+    {
+      "published": "junit/order-service/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.InventoryOperationJournalPostgres16IT.xml",
+      "raw_source": "/workspace/tv3-t1t2-main-integration/backend/order-service/build/test-results/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.InventoryOperationJournalPostgres16IT.xml",
+      "raw_sha256": "36d5ab7d6143d8795ad6d561b553dbaaad38250107db2705c5838454f4fdc337",
+      "published_sha256": "20a81e027499cbfdad0cd05d49da8fd1b86da84fc68f03587c4227e6cf08363b",
+      "transform": "allowlist suite/testcase metadata and outcome; remove properties/system-out/system-err/stack traces/hostname"
+    },
+    {
+      "published": "junit/order-service/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.OrderPostgres16IT.xml",
+      "raw_source": "/workspace/tv3-t1t2-main-integration/backend/order-service/build/test-results/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.OrderPostgres16IT.xml",
+      "raw_sha256": "d6521a2aa9cf4b52fb0099fca8cca114570ae6336fef9955bae2840fdc040478",
+      "published_sha256": "95ec90d1527b847cbc6743aab4b7d3fb7db280cb5ad7a9251f0d517b8cff0807",
+      "transform": "allowlist suite/testcase metadata and outcome; remove properties/system-out/system-err/stack traces/hostname"
+    },
+    {
+      "published": "junit/order-service/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.SellerWriteFencePostgresIT.xml",
+      "raw_source": "/workspace/tv3-t1t2-main-integration/backend/order-service/build/test-results/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.SellerWriteFencePostgresIT.xml",
+      "raw_sha256": "79bb7038f023841a7a2cf03e64ed926fdfa5441735d7856915d0575178b17a89",
+      "published_sha256": "eb6be45e0242c7f107c7f3ef1522f66e4497b65a0c54f938aa1eb542d37be248",
+      "transform": "allowlist suite/testcase metadata and outcome; remove properties/system-out/system-err/stack traces/hostname"
+    },
+    {
+      "published": "junit/cart-service/test/TEST-com.projecthk5.cartservice.security.ContractJwtDecoderTest.xml",
+      "raw_source": "/workspace/tv3-t1t2-main-integration/backend/cart-service/build/test-results/test/TEST-com.projecthk5.cartservice.security.ContractJwtDecoderTest.xml",
+      "raw_sha256": "a27652eb6e58cd7e9a1a66086de5606addcb78e9663de76457069e0d0be283a3",
+      "published_sha256": "b07bb3a0272e99f12da9bb30241109b4f3ce7d606272a8a990efa49cd14c44e8",
+      "transform": "allowlist suite/testcase metadata and outcome; remove properties/system-out/system-err/stack traces/hostname"
+    },
+    {
+      "published": "junit/cart-service/test/TEST-com.projecthk5.cartservice.service.CartServiceTest.xml",
+      "raw_source": "/workspace/tv3-t1t2-main-integration/backend/cart-service/build/test-results/test/TEST-com.projecthk5.cartservice.service.CartServiceTest.xml",
+      "raw_sha256": "6647c547d6b13df000c1cfacd8de56c5bda0e23d2e5aff5d030b430f4a8d54b5",
+      "published_sha256": "5df30a83019c11bc06387eee00980bc157860b7549f7510532639d33aa9b2309",
+      "transform": "allowlist suite/testcase metadata and outcome; remove properties/system-out/system-err/stack traces/hostname"
+    },
+    {
+      "published": "junit/cart-service/postgresIntegrationTest/TEST-com.projecthk5.cartservice.integration.CartPostgres16IT.xml",
+      "raw_source": "/workspace/tv3-t1t2-main-integration/backend/cart-service/build/test-results/postgresIntegrationTest/TEST-com.projecthk5.cartservice.integration.CartPostgres16IT.xml",
+      "raw_sha256": "1dc1fb97138cc9133c3d2bf8423f15d428e224ed494e35443b8470bfee610119",
+      "published_sha256": "de0991f6726cac35a5bfa42928b94f8a4a339c0eb20cea423bce665d97433ed5",
+      "transform": "allowlist suite/testcase metadata and outcome; remove properties/system-out/system-err/stack traces/hostname"
+    },
+    {
+      "published": "junit/cart-service/postgresIntegrationTest/TEST-com.projecthk5.cartservice.integration.HttpSellerRevocationWriteFencePostgresIT.xml",
+      "raw_source": "/workspace/tv3-t1t2-main-integration/backend/cart-service/build/test-results/postgresIntegrationTest/TEST-com.projecthk5.cartservice.integration.HttpSellerRevocationWriteFencePostgresIT.xml",
+      "raw_sha256": "803ee8336ec814dd8958c39e75483eeabbdca581f0954a779ea7f888dc24d388",
+      "published_sha256": "87895f59c74ba54eb18091996498a3a15efde459d506562a255926c2546bc609",
+      "transform": "allowlist suite/testcase metadata and outcome; remove properties/system-out/system-err/stack traces/hostname"
+    },
+    {
+      "published": "junit/cart-service/postgresIntegrationTest/TEST-com.projecthk5.cartservice.integration.WriteFencePostgres16IT.xml",
+      "raw_source": "/workspace/tv3-t1t2-main-integration/backend/cart-service/build/test-results/postgresIntegrationTest/TEST-com.projecthk5.cartservice.integration.WriteFencePostgres16IT.xml",
+      "raw_sha256": "78fc24c4773e1590632243d205a46fb9efd772348232b782bc4e0ca4d767d13a",
+      "published_sha256": "7ff60afb9a01317f9bb97cc5976cd583f27b69ff3431e5230d0fa2d6be84a21a",
+      "transform": "allowlist suite/testcase metadata and outcome; remove properties/system-out/system-err/stack traces/hostname"
+    },
+    {
+      "published": "junit/inventory-service/test/TEST-com.projecthk5.inventoryservice.api.InventoryRequestValidationTest.xml",
+      "raw_source": "/workspace/tv3-t1t2-main-integration/backend/inventory-service/build/test-results/test/TEST-com.projecthk5.inventoryservice.api.InventoryRequestValidationTest.xml",
+      "raw_sha256": "5b05d7d53b1fd78452104c8f39c11d55121c8a76b036cd737d0ccc2e5e95a9be",
+      "published_sha256": "8c744652f32e54d2e146de6ae21d035059a244b5fccf85ab2f278a571d6634e5",
+      "transform": "allowlist suite/testcase metadata and outcome; remove properties/system-out/system-err/stack traces/hostname"
+    },
+    {
+      "published": "junit/inventory-service/test/TEST-com.projecthk5.inventoryservice.model.InventoryItemTest.xml",
+      "raw_source": "/workspace/tv3-t1t2-main-integration/backend/inventory-service/build/test-results/test/TEST-com.projecthk5.inventoryservice.model.InventoryItemTest.xml",
+      "raw_sha256": "dd1eca793c7cde0dd1e1517d6a09cf7e5f6247419eebbce5a404c8ab3a50cd03",
+      "published_sha256": "bc5c3a7be50a11d1f5dd88f76063bbf521dea85046537efd35497680982e44a4",
+      "transform": "allowlist suite/testcase metadata and outcome; remove properties/system-out/system-err/stack traces/hostname"
+    },
+    {
+      "published": "junit/inventory-service/test/TEST-com.projecthk5.inventoryservice.security.InventoryInternalTokenFilterTest.xml",
+      "raw_source": "/workspace/tv3-t1t2-main-integration/backend/inventory-service/build/test-results/test/TEST-com.projecthk5.inventoryservice.security.InventoryInternalTokenFilterTest.xml",
+      "raw_sha256": "f237d4fa8c1ad80d750ef1905b314ce02a125ebdb5a454e3e1c2db4eacf0486e",
+      "published_sha256": "f82c6331aa9a8e64b81208a2b00068c88b48c279de9bb993cfecb91f72479e40",
+      "transform": "allowlist suite/testcase metadata and outcome; remove properties/system-out/system-err/stack traces/hostname"
+    },
+    {
+      "published": "junit/inventory-service/test/TEST-com.projecthk5.inventoryservice.security.InventoryOrderPairGateTest.xml",
+      "raw_source": "/workspace/tv3-t1t2-main-integration/backend/inventory-service/build/test-results/test/TEST-com.projecthk5.inventoryservice.security.InventoryOrderPairGateTest.xml",
+      "raw_sha256": "1749f645e1c54c89c4e7e7c6cf5a73e6e00c1037702d1fcad36a2ce6e1f2377b",
+      "published_sha256": "5999b30b60a0432b036622bac08fece2e341a67ac8290a5f37dc14806572aac6",
+      "transform": "allowlist suite/testcase metadata and outcome; remove properties/system-out/system-err/stack traces/hostname"
+    },
+    {
+      "published": "junit/inventory-service/test/TEST-com.projecthk5.inventoryservice.service.InventoryOperationServiceTest.xml",
+      "raw_source": "/workspace/tv3-t1t2-main-integration/backend/inventory-service/build/test-results/test/TEST-com.projecthk5.inventoryservice.service.InventoryOperationServiceTest.xml",
+      "raw_sha256": "e6450b2092347d158610bcec03100adb8379cdc87b6fe92be3c96507deb6c0a6",
+      "published_sha256": "195163c137402d95ccf0682fca5abc1e579def05a2c950077cec7c8acc308d6c",
+      "transform": "allowlist suite/testcase metadata and outcome; remove properties/system-out/system-err/stack traces/hostname"
+    },
+    {
+      "published": "junit/inventory-service/postgresIntegrationTest/TEST-com.projecthk5.inventoryservice.InventoryPostgresIntegrationTest.xml",
+      "raw_source": "/workspace/tv3-t1t2-main-integration/backend/inventory-service/build/test-results/postgresIntegrationTest/TEST-com.projecthk5.inventoryservice.InventoryPostgresIntegrationTest.xml",
+      "raw_sha256": "f46e4b82111cd6d7291aae5bb8a64a62a6732b809864843d72d62dc7567e206a",
+      "published_sha256": "c87b1d893f6f1b891dfa71d19dfddefdad6ccfc17c555e1f714eb87c5ae68279",
+      "transform": "allowlist suite/testcase metadata and outcome; remove properties/system-out/system-err/stack traces/hostname"
+    },
+    {
+      "published": "junit/inventory-service/postgresIntegrationTest/TEST-com.projecthk5.inventoryservice.integration.InventoryInitializePostgresIT.xml",
+      "raw_source": "/workspace/tv3-t1t2-main-integration/backend/inventory-service/build/test-results/postgresIntegrationTest/TEST-com.projecthk5.inventoryservice.integration.InventoryInitializePostgresIT.xml",
+      "raw_sha256": "267de722c58a23775460a8043e6bc683b6c2825ae60e6c5d571e6bdf0cb009ab",
+      "published_sha256": "0a6db9a291c997eaeb9cde350f809271717301c9b4a281a965508996c4db8fc0",
+      "transform": "allowlist suite/testcase metadata and outcome; remove properties/system-out/system-err/stack traces/hostname"
+    },
+    {
+      "published": "junit/inventory-service/postgresIntegrationTest/TEST-com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT.xml",
+      "raw_source": "/workspace/tv3-t1t2-main-integration/backend/inventory-service/build/test-results/postgresIntegrationTest/TEST-com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT.xml",
+      "raw_sha256": "932edb535c8f0e9fe54ff1aba04d8533102a8933cbd5545efc847df1a2965be0",
+      "published_sha256": "6795bdbbd4fe1e0ddfba0d9a3e424e019bd32a467ada4969ff70f232fa88efc0",
+      "transform": "allowlist suite/testcase metadata and outcome; remove properties/system-out/system-err/stack traces/hostname"
+    },
+    {
+      "published": "junit/inventory-service/postgresIntegrationTest/TEST-com.projecthk5.inventoryservice.integration.InventorySchemaPostgresIT.xml",
+      "raw_source": "/workspace/tv3-t1t2-main-integration/backend/inventory-service/build/test-results/postgresIntegrationTest/TEST-com.projecthk5.inventoryservice.integration.InventorySchemaPostgresIT.xml",
+      "raw_sha256": "d669a40213fb93a710aead8d680b39f337b28c0832f217423c9b15a95b71a4f5",
+      "published_sha256": "827b2a2a7b6c7d40fcd311fd62e12f3e07984b8c1ed0074181228d85cd17562a",
+      "transform": "allowlist suite/testcase metadata and outcome; remove properties/system-out/system-err/stack traces/hostname"
+    },
+    {
+      "published": "logs/order.log",
+      "raw_source": "/workspace/review-evidence/tv3-t1t2-publish-20261101/order.log",
+      "raw_sha256": "204350f8994af6307c47d8a6cee3b0d2f34c30d1aecb920fc01ad580e26f71fe",
+      "published_sha256": "204350f8994af6307c47d8a6cee3b0d2f34c30d1aecb920fc01ad580e26f71fe",
+      "transform": "line redaction; 0 line(s) withheld; raw remains local"
+    },
+    {
+      "published": "logs/cart-inventory.log",
+      "raw_source": "/workspace/review-evidence/tv3-t1t2-publish-20261101/cart-inventory.log",
+      "raw_sha256": "53f2fc595496a7a36654d1e95ddabcc44cd49b9eb357aee169336b6c6ddacd98",
+      "published_sha256": "53f2fc595496a7a36654d1e95ddabcc44cd49b9eb357aee169336b6c6ddacd98",
+      "transform": "line redaction; 0 line(s) withheld; raw remains local"
+    },
+    {
+      "published": "historical-red/junit/TEST-com.projecthk5.orderservice.integration.CheckoutDraftPostgresIT.xml",
+      "raw_source": "/workspace/review-evidence/tv3-p1-p2-fix/red-xml/TEST-com.projecthk5.orderservice.integration.CheckoutDraftPostgresIT.xml",
+      "raw_sha256": "1fa808c7d711bd568a737627b07222dc102c1a65e68a9a0d751d6019fcb7a929",
+      "published_sha256": "7551eb33bfaf21ab6b7bb8c33241ebb004fb09f25f5ec3c0271eea558d5c08ef",
+      "transform": "allowlist suite/testcase metadata and outcome; remove properties/system-out/system-err/stack traces/hostname"
+    },
+    {
+      "published": "historical-red/junit/TEST-com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT.xml",
+      "raw_source": "/workspace/review-evidence/tv3-p1-p2-fix/red-xml/TEST-com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT.xml",
+      "raw_sha256": "bc589561fa078e64f51ca2a53cbbfbfa0ca39e977b67f2c9201c8f3a14d11e37",
+      "published_sha256": "046ac787975efcd8ff3ed5623be71cf5d6da1b6cd48ab78b93543118a0ca3361",
+      "transform": "allowlist suite/testcase metadata and outcome; remove properties/system-out/system-err/stack traces/hostname"
+    },
+    {
+      "published": "historical-red/results.json",
+      "raw_source": "/workspace/review-evidence/tv3-p1-p2-fix/results.json",
+      "raw_sha256": "14b40265cb5c36efb01a9030031c7e7a5b6d1fd72b8433db6ea10e3cb3a157c3",
+      "published_sha256": "6b7228b640a1944502c5e747d44cb4ef62c170689d36536665015c2e2ad5f325",
+      "transform": "JSON selection"
+    },
+    {
+      "published": "historical-red/red.log",
+      "raw_source": "/workspace/review-evidence/tv3-p1-p2-fix/red.log",
+      "raw_sha256": "c7a69e6e0b67d79289a7189608a42b080d1f045aa86d28878c536937eac24521",
+      "published_sha256": "c7a69e6e0b67d79289a7189608a42b080d1f045aa86d28878c536937eac24521",
+      "transform": "line redaction; 0 line(s) withheld; raw remains local"
+    },
+    {
+      "published": "migration-rehearsal/REPORT.md",
+      "raw_source": "/workspace/review-evidence/tv3-v5-rehearsal-20261101/REPORT.md",
+      "raw_sha256": "4944c40baf38c108a3aae1cdfa00137d5fd4012a7032d3421c429348860beae4",
+      "published_sha256": "4944c40baf38c108a3aae1cdfa00137d5fd4012a7032d3421c429348860beae4",
+      "transform": "none"
+    },
+    {
+      "published": "migration-rehearsal/checks.json",
+      "raw_source": "/workspace/review-evidence/tv3-v5-rehearsal-20261101/checks.json",
+      "raw_sha256": "ca533ab72bc810579bab44af1614cf3ba9a021eb7e052516d9ad517d5d44ee60",
+      "published_sha256": "ca533ab72bc810579bab44af1614cf3ba9a021eb7e052516d9ad517d5d44ee60",
+      "transform": "none"
+    },
+    {
+      "published": "migration-rehearsal/upgrade_metrics.json",
+      "raw_source": "/workspace/review-evidence/tv3-v5-rehearsal-20261101/upgrade_metrics.json",
+      "raw_sha256": "88331335cf72cdc0e9c8229caa75d2ab24806a21cedd3c16e4f02ea468767405",
+      "published_sha256": "88331335cf72cdc0e9c8229caa75d2ab24806a21cedd3c16e4f02ea468767405",
+      "transform": "none"
+    },
+    {
+      "published": "migration-rehearsal/lock_observations.json",
+      "raw_source": "/workspace/review-evidence/tv3-v5-rehearsal-20261101/lock_observations.json",
+      "raw_sha256": "367e7fe6499f3c48344493c3b99ec78990f964bc033453b4b2266953b9843e4a",
+      "published_sha256": "367e7fe6499f3c48344493c3b99ec78990f964bc033453b4b2266953b9843e4a",
+      "transform": "none"
+    },
+    {
+      "published": "migration-rehearsal/run.json",
+      "raw_source": "/workspace/review-evidence/tv3-v5-rehearsal-20261101/run.json",
+      "raw_sha256": "a80da8366e53b536c5ba781131f9332c577052f3776f65a7b5e33db40ee32eba",
+      "published_sha256": "a80da8366e53b536c5ba781131f9332c577052f3776f65a7b5e33db40ee32eba",
+      "transform": "none"
+    },
+    {
+      "published": "migration-rehearsal/snapshot-verification.json",
+      "raw_source": "/workspace/review-evidence/tv3-v5-rehearsal-20261101/snapshot-verification.json",
+      "raw_sha256": "aac5d5e8f9ca4908587bbb1c995ba7cb99fc8afbb5d2626c6e7d40bbc082a0cf",
+      "published_sha256": "aac5d5e8f9ca4908587bbb1c995ba7cb99fc8afbb5d2626c6e7d40bbc082a0cf",
+      "transform": "none"
+    },
+    {
+      "published": "migration-rehearsal/source.json",
+      "raw_source": "/workspace/review-evidence/tv3-v5-rehearsal-20261101/source.json",
+      "raw_sha256": "67c33578b2b5330525c234433518f861d2c518e1a20a03dfeb61c0f7eb54da58",
+      "published_sha256": "67c33578b2b5330525c234433518f861d2c518e1a20a03dfeb61c0f7eb54da58",
+      "transform": "none"
+    },
+    {
+      "published": "migration-rehearsal/rehearsal.log",
+      "raw_source": "/workspace/review-evidence/tv3-v5-rehearsal-20261101/rehearsal.log",
+      "raw_sha256": "de81106bf23f34e7dbb96f1b5f110b34f21c9677172c21b25195ef2e520cc89f",
+      "published_sha256": "de81106bf23f34e7dbb96f1b5f110b34f21c9677172c21b25195ef2e520cc89f",
+      "transform": "line redaction; 0 line(s) withheld; raw remains local"
+    },
+    {
+      "published": "migration-rehearsal/ORIGINAL_SHA256SUMS.txt",
+      "raw_source": "/workspace/review-evidence/tv3-v5-rehearsal-20261101/SHA256SUMS",
+      "raw_sha256": "a56f988270fd6fe34f8d22e299f0a92e1da150ba04cab445bc5c1011b87459f5",
+      "published_sha256": "a56f988270fd6fe34f8d22e299f0a92e1da150ba04cab445bc5c1011b87459f5",
+      "transform": "none"
+    }
+  ],
+  "not_published": [
+    "DB dumps/row snapshots",
+    "application credentials or JWTs",
+    "XML system-out/err and properties",
+    "build binaries"
+  ],
+  "historical_raw_evidence_preserved_in_place": true
+}

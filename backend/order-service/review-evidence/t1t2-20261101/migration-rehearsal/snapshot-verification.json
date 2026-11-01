@@ -1,0 +1,15 @@
+{
+  "method": "Read-only comparison of saved JDBC snapshots and git show HEAD; no database mutation",
+  "checks": {
+    "legacy_columns_unchanged": "PASS",
+    "legacy_constraints_unchanged": "PASS",
+    "legacy_indexes_unchanged": "PASS",
+    "legacy_grants_unchanged": "PASS",
+    "schema_grants_unchanged": "PASS",
+    "default_privileges_unchanged": "PASS",
+    "source_migrations_match_head_and_preserved_hashes": "PASS",
+    "legacy_data_exact_before_and_after_upgrade": "PASS",
+    "original_legacy_rows_unchanged_after_regression": "PASS",
+    "no_legacy_draft_backfill": "PASS"
+  }
+}

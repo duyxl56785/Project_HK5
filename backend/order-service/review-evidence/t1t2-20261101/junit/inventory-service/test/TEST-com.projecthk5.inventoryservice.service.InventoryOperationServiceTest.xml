@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuite name="com.projecthk5.inventoryservice.service.InventoryOperationServiceTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-11-01T10:41:13" time="1.22">
+  <testcase name="replayWithSameIdAndPayloadDoesNotApplyStockTwice()" classname="com.projecthk5.inventoryservice.service.InventoryOperationServiceTest" time="1.167" />
+  <testcase name="insufficientStockDoesNotChangeBalance()" classname="com.projecthk5.inventoryservice.service.InventoryOperationServiceTest" time="0.006" />
+  <testcase name="operationIdCannotBeReusedForDifferentPayload()" classname="com.projecthk5.inventoryservice.service.InventoryOperationServiceTest" time="0.003" />
+  <testcase name="successfulMultiSkuReserveChangesAllRequestedBalances()" classname="com.projecthk5.inventoryservice.service.InventoryOperationServiceTest" time="0.021" />
+  <testcase name="concurrentClaimWithSamePayloadIsTreatedAsReplay()" classname="com.projecthk5.inventoryservice.service.InventoryOperationServiceTest" time="0.006" />
+  <testcase name="delimiterContainingSkuCannotCollideWithMultipleItems()" classname="com.projecthk5.inventoryservice.service.InventoryOperationServiceTest" time="0.011" />
+</testsuite>

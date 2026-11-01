@@ -1,0 +1,73 @@
+Picked up JAVA_TOOL_OPTIONS:  -Duser.timezone=UTC -Djavax.net.ssl.trustStore=/etc/ssl/certs/java/cacerts -Dhttps.proxyHost=proxy -Dhttps.proxyPort=8080 -Dhttp.proxyHost=proxy -Dhttp.proxyPort=8080 -Dhttp.nonProxyHosts=localhost|127.*
+PASS target_is_owned_disposable_database
+06:36:54.873 [main] INFO org.flywaydb.core.FlywayExecutor -- Database: jdbc:postgresql://127.0.0.1:32770/tv3_v5_rehearsal (PostgreSQL 16.6)
+06:36:54.912 [main] INFO org.flywaydb.core.internal.schemahistory.JdbcTableSchemaHistory -- Schema history table "public"."flyway_schema_history" does not exist yet
+06:36:54.915 [main] INFO org.flywaydb.core.internal.command.DbValidate -- Successfully validated 5 migrations (execution time 00:00.016s)
+06:36:54.932 [main] INFO org.flywaydb.core.internal.schemahistory.JdbcTableSchemaHistory -- Creating Schema History table "public"."flyway_schema_history" ...
+06:36:55.012 [main] INFO org.flywaydb.core.internal.command.DbMigrate -- Current version of schema "public": << Empty Schema >>
+06:36:55.026 [main] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema "public" to version "1 - checkout baseline"
+06:36:55.063 [main] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema "public" to version "2 - inventory operation journal"
+06:36:55.084 [main] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema "public" to version "3 - fulfillment cod shipping outbox"
+06:36:55.112 [main] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema "public" to version "4 - write fence abort"
+06:36:55.124 [main] INFO org.flywaydb.core.internal.command.DbMigrate -- Successfully applied 4 migrations to schema "public", now at version v4 (execution time 00:00.047s)
+PASS bootstrap_real_v1_v4_migrations
+PASS legacy_fixture_fingerprints_and_reserve_quantities_match_order_items
+06:36:55.253 [main] INFO org.flywaydb.core.FlywayExecutor -- Database: jdbc:postgresql://127.0.0.1:32770/tv3_v5_rehearsal (PostgreSQL 16.6)
+06:36:55.263 [main] INFO org.flywaydb.core.internal.command.DbValidate -- Successfully validated 5 migrations (execution time 00:00.006s)
+PASS v1_v4_checksums_valid
+06:36:55.603 [pool-1-thread-1] INFO org.flywaydb.core.FlywayExecutor -- Database: jdbc:postgresql://127.0.0.1:32770/tv3_v5_rehearsal (PostgreSQL 16.6)
+06:36:55.612 [pool-1-thread-1] INFO org.flywaydb.core.internal.command.DbValidate -- Successfully validated 5 migrations (execution time 00:00.004s)
+06:36:55.629 [pool-1-thread-1] INFO org.flywaydb.core.internal.command.DbMigrate -- Current version of schema "public": 4
+06:36:55.632 [pool-1-thread-1] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema "public" to version "5 - checkout order drafts"
+06:36:57.145 [pool-1-thread-1] ERROR org.flywaydb.core.internal.command.DbMigrate -- Migration of schema "public" to version "5 - checkout order drafts" failed! Changes successfully rolled back.
+PASS controlled_private_db_lock_timeout_observed
+PASS failed_v5_ddl_rolled_back_without_repair
+PASS lock_probe_preserves_all_v1_v4_rows
+06:36:57.220 [main] INFO org.flywaydb.core.FlywayExecutor -- Database: jdbc:postgresql://127.0.0.1:32770/tv3_v5_rehearsal (PostgreSQL 16.6)
+06:36:57.260 [main] INFO org.flywaydb.core.FlywayExecutor -- Database: jdbc:postgresql://127.0.0.1:32770/tv3_v5_rehearsal (PostgreSQL 16.6)
+06:36:57.269 [main] INFO org.flywaydb.core.internal.command.DbValidate -- Successfully validated 5 migrations (execution time 00:00.004s)
+PASS applied_v1_v4_checksums_valid_after_transactional_lock_failure
+06:36:57.293 [main] INFO org.flywaydb.core.FlywayExecutor -- Database: jdbc:postgresql://127.0.0.1:32770/tv3_v5_rehearsal (PostgreSQL 16.6)
+06:36:57.300 [main] INFO org.flywaydb.core.internal.command.DbValidate -- Successfully validated 5 migrations (execution time 00:00.004s)
+06:36:57.313 [main] INFO org.flywaydb.core.internal.command.DbMigrate -- Current version of schema "public": 4
+06:36:57.315 [main] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema "public" to version "5 - checkout order drafts"
+06:36:57.324 [main] INFO org.flywaydb.core.internal.command.DbMigrate -- Successfully applied 1 migration to schema "public", now at version v5 (execution time 00:00.005s)
+PASS upgrade_applies_exactly_one_v5
+06:36:57.349 [main] INFO org.flywaydb.core.FlywayExecutor -- Database: jdbc:postgresql://127.0.0.1:32770/tv3_v5_rehearsal (PostgreSQL 16.6)
+06:36:57.357 [main] INFO org.flywaydb.core.internal.command.DbValidate -- Successfully validated 5 migrations (execution time 00:00.005s)
+PASS v1_v5_checksum_validation
+PASS upgrade_preserves_all_legacy_rows_and_money
+PASS flyway_v1_v4_history_checksums_unchanged
+PASS v5_empty_no_legacy_backfill
+PASS v5_has_no_implicit_runtime_grant
+PASS runtime_without_v5_grant_is_denied
+PASS runtime_cannot_create_schema_objects
+06:36:58.036 [main] INFO org.hibernate.jpa.internal.util.LogHelper -- HHH000204: Processing PersistenceUnitInfo [name: default]
+06:36:58.090 [main] INFO org.hibernate.Version -- HHH000412: Hibernate ORM core version 6.5.3.Final
+06:36:58.136 [main] INFO org.hibernate.cache.internal.RegionFactoryInitiator -- HHH000026: Second-level cache disabled
+06:36:58.445 [main] INFO org.springframework.orm.jpa.persistenceunit.SpringPersistenceUnitInfo -- No LoadTimeWeaver setup: ignoring JPA class transformer
+06:36:58.730 [main] INFO org.hibernate.validator.internal.util.Version -- HV000001: Hibernate Validator 8.0.1.Final
+06:36:59.301 [main] INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator -- HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+06:36:59.338 [main] INFO org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean -- Initialized JPA EntityManagerFactory for persistence unit 'default'
+06:36:59.560 [main] INFO org.springframework.data.jpa.repository.query.QueryEnhancerFactory -- Hibernate is in classpath; If applicable, HQL parser will be used.
+PASS hibernate_validates_actual_candidate_entities
+PASS customer_owned_order_and_two_store_repositories_read_legacy_data
+PASS finance_cod_settlement_rules_and_real_db_rollback
+PASS new_draft_committed_visible_on_independent_connection
+PASS draft_reload_preserves_all_frozen_facts
+PASS required_order_writer_rollback_retains_committed_draft
+PASS upgraded_db_unknown_remains_quarantined_through_all_claims
+PASS old_unknown_is_not_backfilled_or_reopened
+PASS v5_orphan_fk_rejected
+PASS v5_duplicate_attempt_rejected
+PASS v5_unsupported_version_rejected
+PASS v5_invalid_json_rejected
+PASS v5_json_array_rejected
+PASS v5_bad_checksum_shape_rejected
+PASS v5_fk_blocks_parent_purge
+PASS fixture_runtime_grant_forbids_draft_update
+PASS fixture_auditor_is_read_only
+PASS legacy_customer_key_uniqueness_survives_v5
+06:37:00.617 [main] INFO org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean -- Closing JPA EntityManagerFactory for persistence unit 'default'
+PASS all_original_rows_money_outbox_and_inventory_states_unchanged_after_regression
+REHEARSAL_COMPLETE checks=35 passed=35 failures=0
