@@ -1,0 +1,19 @@
+{
+  "kind": "DERIVED exact-commit offline QA tools regression",
+  "head": "679269549e7e9eec677f2a1cf82ef6ffda9f1f55",
+  "command": [
+    "C:\\Users\\Admin\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "scripts/qa/tests",
+    "-v"
+  ],
+  "startedUtc": "2026-10-28T02:06:24.438705+00:00",
+  "completedUtc": "2026-10-28T02:06:25.367961+00:00",
+  "exitCode": 0,
+  "PASS": 48,
+  "logSHA256": "f66b190a01ef9edb8cb71a09f3ee813413dc8d7c15a195a7ca66cd1c6cec8479",
+  "interpretation": "Synthetic auditor/offline CLI verification, not payment or settlement runtime execution."
+}

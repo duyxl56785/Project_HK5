@@ -1,0 +1,12 @@
+{
+  "note": "QA artifact manifest only. PENDING gates are intentional; Product price approval is not full Finance policy. No receipts or runtime proof are invented.",
+  "gates": {
+    "finance_policy": {"state": "PENDING", "reference": null},
+    "cod_source_and_authority": {"state": "PENDING", "reference": null},
+    "settlement_contract": {"state": "PENDING", "reference": null},
+    "reconciliation_contract": {"state": "PENDING", "reference": null},
+    "store_authorization": {"state": "PENDING", "reference": null},
+    "runtime_environment": {"state": "PENDING", "reference": null}
+  },
+  "runs": []
+}
