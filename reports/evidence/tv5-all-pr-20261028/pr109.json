@@ -1,0 +1,595 @@
+{
+  "kind": "DERIVED independent targeted PR review evidence; raw private byte-preserved",
+  "PR": 109,
+  "head": "cdea2839a6dfb0dd6b9c3f038f192e3080330db4",
+  "base": "ceee8c8c4699e0b76a180c24365e4068d4c29770",
+  "branch": "detached PR candidate",
+  "command": [
+    "D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-all-pr-tdd-20261027\\review109\\backend\\gradlew.bat",
+    "-p",
+    "backend",
+    "--init-script",
+    "D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-product-six-tasks-20261027\\source90\\tests\\security\\product-visibility.init.gradle",
+    "-Ptv5VisibilitySources=D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-product-six-tasks-20261027\\source90\\tests\\security\\product-visibility",
+    ":product-service:test",
+    "--tests",
+    "*ProductImageMetadataServiceTest",
+    ":product-service:integrationTest",
+    "--tests",
+    "*ProductImageMetadataServiceIntegrationTest",
+    "--tests",
+    "*ProductImageMetadataSchemaIntegrationTest",
+    "--tests",
+    "*ProductMigrationPostgresTest",
+    ":product-service:tv5ProductVisibility",
+    "--rerun-tasks",
+    "--no-daemon",
+    "--console=plain"
+  ],
+  "startedUtc": "2026-10-27T16:56:45.844214+00:00",
+  "completedUtc": "2026-10-27T16:57:31.843876+00:00",
+  "exitCode": 0,
+  "counts": {
+    "test": {
+      "PASS": 10
+    },
+    "integrationTest": {
+      "PASS": 68
+    },
+    "tv5ProductVisibility": {
+      "PASS": 8
+    }
+  },
+  "cases": [
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageMetadataServiceTest",
+      "name": "[1] mode=absent",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageMetadataServiceTest",
+      "name": "[2] mode=ambiguous",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageMetadataServiceTest",
+      "name": "[3] mode=default",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageMetadataServiceTest",
+      "name": "[4] mode=null-scope",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageMetadataServiceTest",
+      "name": "[5] mode=null-facts",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageMetadataServiceTest",
+      "name": "[6] mode=wrong-store",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageMetadataServiceTest",
+      "name": "[7] mode=wrong-owner",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageMetadataServiceTest",
+      "name": "[8] mode=closed",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageMetadataServiceTest",
+      "name": "[9] mode=unapproved",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.productservice.image.ProductImageMetadataServiceTest",
+      "name": "invalidActorDoesNotReachAuthorityOrDatabase()",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest",
+      "name": "upgradeFromCategoryV1PreservesDataAndValidatesAllProductionMigrations()",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest",
+      "name": "operationAndPendingContentHaveIndependentUniqueConstraints()",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest",
+      "name": "foreignKeyRestrictsMissingProductAndProductDeletion()",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest",
+      "name": "productionMigrationCreatesReservationTable()",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest",
+      "name": "[1] changes=size_bytes=0",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest",
+      "name": "[2] changes=size_bytes=2097153",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest",
+      "name": "[3] changes=width=0",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest",
+      "name": "[4] changes=height=8193",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest",
+      "name": "[5] changes=width=8192,height=8192",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest",
+      "name": "[6] changes=media_type='image/gif'",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest",
+      "name": "[7] changes=content_sha256='NOT-A-HASH'",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest",
+      "name": "[8] changes=version=-1",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest",
+      "name": "directSqlCannotCreateSixthPendingImageOrReuseSlot()",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest",
+      "name": "[1] column=id",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest",
+      "name": "[2] column=product_id",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest",
+      "name": "[3] column=operation_id",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest",
+      "name": "[1] changes=display_order=NULL",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest",
+      "name": "[2] changes=state='CANCELLED',display_order=NULL",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest",
+      "name": "[3] changes=cancelled_at=created_at",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest",
+      "name": "[1] key=../object.png",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest",
+      "name": "[2] key=/private/absolute.png",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest",
+      "name": "[3] key=known-object",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest",
+      "name": "cancellationReleasesSlotAndContentButRetainsOperationTombstone()",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest",
+      "name": "[1] column=content_sha256",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest",
+      "name": "[2] column=media_type",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest",
+      "name": "[3] column=size_bytes",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest",
+      "name": "[4] column=width",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest",
+      "name": "[5] column=height",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest",
+      "name": "[6] column=created_at",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest",
+      "name": "cancellationIsTerminalAndCannotReassignDisplayOrder()",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.ProductImageMetadataServiceIntegrationTest",
+      "name": "cachedProductIsRefreshedBeforeVersionAndLifecycleChecks()",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.ProductImageMetadataServiceIntegrationTest",
+      "name": "staleImageVersionCannotCancelEvenWithCurrentProductVersion()",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.ProductImageMetadataServiceIntegrationTest",
+      "name": "cancellingPreservesIdempotencyTombstoneAndAllowsReuploadInTheReleasedSlot()",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.ProductImageMetadataServiceIntegrationTest",
+      "name": "reservationIsDurableCanonicalMetadataNotAnUploadedImage()",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.ProductImageMetadataServiceIntegrationTest",
+      "name": "staleProductVersionCannotReserveOrCancel()",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.ProductImageMetadataServiceIntegrationTest",
+      "name": "[1] status=DRAFT",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.ProductImageMetadataServiceIntegrationTest",
+      "name": "[2] status=REJECTED",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.ProductImageMetadataServiceIntegrationTest",
+      "name": "[3] status=INACTIVE",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.ProductImageMetadataServiceIntegrationTest",
+      "name": "concurrentReservationsAtFourCannotExceedFiveOrOverwriteEachOther()",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.ProductImageMetadataServiceIntegrationTest",
+      "name": "[1] command=reserve",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.ProductImageMetadataServiceIntegrationTest",
+      "name": "[2] command=cancel",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.ProductImageMetadataServiceIntegrationTest",
+      "name": "[3] command=list",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.ProductImageMetadataServiceIntegrationTest",
+      "name": "[1] status=ACTIVE",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.ProductImageMetadataServiceIntegrationTest",
+      "name": "[2] status=PENDING_REVIEW",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.ProductImageMetadataServiceIntegrationTest",
+      "name": "[3] status=SUSPENDED",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.ProductImageMetadataServiceIntegrationTest",
+      "name": "cancellingRollsBackAtomicallyWithOuterTransaction()",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.ProductImageMetadataServiceIntegrationTest",
+      "name": "[1] mode=unapproved",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.ProductImageMetadataServiceIntegrationTest",
+      "name": "[2] mode=closed",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.ProductImageMetadataServiceIntegrationTest",
+      "name": "[3] mode=wrong-owner",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.ProductImageMetadataServiceIntegrationTest",
+      "name": "[4] mode=denied",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.ProductImageMetadataServiceIntegrationTest",
+      "name": "requiredOuterRollbackRevertsMetadataAndProductVersionTogether()",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.ProductImageMetadataServiceIntegrationTest",
+      "name": "metadataMutationInvalidatesAStaleProductLifecycleSnapshot()",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.ProductImageMetadataServiceIntegrationTest",
+      "name": "concurrentRetryOfTheSameOperationCreatesExactlyOneReservation()",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.ProductImageMetadataServiceIntegrationTest",
+      "name": "operationCannotBeReusedForDifferentContent()",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.ProductImageMetadataServiceIntegrationTest",
+      "name": "exactRetryWithAnOldProductVersionReturnsTheSameReservation()",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.ProductImageMetadataServiceIntegrationTest",
+      "name": "failedReservationRollsBackEarlierWritesInTheRequiredCallerTransaction()",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.ProductImageMetadataServiceIntegrationTest",
+      "name": "cancellingAnImageInAnotherProductDoesNotDiscloseOrChangeIt()",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.ProductImageMetadataServiceIntegrationTest",
+      "name": "publicRecordCannotExposeStorageKeysOrOfferAStorageBindingCapability()",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.ProductImageMetadataServiceIntegrationTest",
+      "name": "fiveSlotsAreOrderedAndTheSixthImageDoesNotMutateProductOrMetadata()",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.ProductImageMetadataServiceIntegrationTest",
+      "name": "cachedCancelledMetadataCannotReappearInListOrConsumeAReleasedSlot()",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.ProductImageMetadataServiceIntegrationTest",
+      "name": "invalidCommandsCannotCreateMetadataOrAdvanceProductVersion()",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.ProductImageMetadataServiceIntegrationTest",
+      "name": "operationIdentityIsScopedToProductAndCannotMoveAnExistingImage()",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.ProductImageMetadataServiceIntegrationTest",
+      "name": "[1] mode=unavailable",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.ProductImageMetadataServiceIntegrationTest",
+      "name": "[2] mode=missing",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.ProductImageMetadataServiceIntegrationTest",
+      "name": "[3] mode=wrong-store",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.ProductImageMetadataServiceIntegrationTest",
+      "name": "[4] mode=no-scope",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.image.ProductImageMetadataServiceIntegrationTest",
+      "name": "duplicateContentWithDifferentOperationsIsRejectedWithoutUsingAnotherSlot()",
+      "result": "PASS"
+    },
+    {
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.product.persistence.ProductMigrationPostgresTest",
+      "name": "T01_upgradeCategoryV1PreservesChecksumAndDataThenValidatesAndRerunsWithoutChanges()",
+      "result": "PASS"
+    },
+    {
+      "task": "tv5ProductVisibility",
+      "class": "com.projecthk5.productservice.product.http.ProductOwnerVisibilityPostgresDiagnosticTest",
+      "name": "[1] mode=denied",
+      "result": "PASS"
+    },
+    {
+      "task": "tv5ProductVisibility",
+      "class": "com.projecthk5.productservice.product.http.ProductOwnerVisibilityPostgresDiagnosticTest",
+      "name": "[2] mode=unavailable",
+      "result": "PASS"
+    },
+    {
+      "task": "tv5ProductVisibility",
+      "class": "com.projecthk5.productservice.product.http.ProductOwnerVisibilityPostgresDiagnosticTest",
+      "name": "[1] operation=read",
+      "result": "PASS"
+    },
+    {
+      "task": "tv5ProductVisibility",
+      "class": "com.projecthk5.productservice.product.http.ProductOwnerVisibilityPostgresDiagnosticTest",
+      "name": "[2] operation=edit",
+      "result": "PASS"
+    },
+    {
+      "task": "tv5ProductVisibility",
+      "class": "com.projecthk5.productservice.product.http.ProductOwnerVisibilityPostgresDiagnosticTest",
+      "name": "[3] operation=submit",
+      "result": "PASS"
+    },
+    {
+      "task": "tv5ProductVisibility",
+      "class": "com.projecthk5.productservice.product.http.ProductOwnerVisibilityPostgresDiagnosticTest",
+      "name": "[4] operation=deactivate",
+      "result": "PASS"
+    },
+    {
+      "task": "tv5ProductVisibility",
+      "class": "com.projecthk5.productservice.product.http.ProductOwnerVisibilityPostgresDiagnosticTest",
+      "name": "sameStoreReadAndVersionConflictRemainDistinctControls()",
+      "result": "PASS"
+    },
+    {
+      "task": "tv5ProductVisibility",
+      "class": "com.projecthk5.productservice.product.http.ProductOwnerVisibilityPostgresDiagnosticTest",
+      "name": "selfModerationStillReturns403InsteadOfGlobal404Remapping()",
+      "result": "PASS"
+    }
+  ],
+  "rawArtifacts": [
+    {
+      "localPath": ".verification/tv5-all-pr-tdd-20261027/review109-run/integrationTest/TEST-com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest.xml",
+      "bytes": 16127,
+      "sha256": "8d800438903ab7cc54c7c23da403fdbf052c54863534ffc8403a1a0b7d5973e3"
+    },
+    {
+      "localPath": ".verification/tv5-all-pr-tdd-20261027/review109-run/integrationTest/TEST-com.projecthk5.productservice.image.ProductImageMetadataServiceIntegrationTest.xml",
+      "bytes": 15578,
+      "sha256": "c72ed842205355492c4d9ba98f597abe12f43e78c60c5fe34392b49e3e385b0c"
+    },
+    {
+      "localPath": ".verification/tv5-all-pr-tdd-20261027/review109-run/integrationTest/TEST-com.projecthk5.productservice.product.persistence.ProductMigrationPostgresTest.xml",
+      "bytes": 4530,
+      "sha256": "3968df4e36a023fefbe4e4e27f227390ecee6c7b3d68f9db6b838b62c5bc3545"
+    },
+    {
+      "localPath": ".verification/tv5-all-pr-tdd-20261027/review109-run/runtime.log",
+      "bytes": 4648,
+      "sha256": "aa4b2934d6a3a31f2c837a59fbdac3ce8daa3045da59648188d3baefe7f0110d"
+    },
+    {
+      "localPath": ".verification/tv5-all-pr-tdd-20261027/review109-run/test/TEST-com.projecthk5.productservice.image.ProductImageMetadataServiceTest.xml",
+      "bytes": 2246,
+      "sha256": "47c9ddc4a81d96ea4794201dd5bca7b58c9a96b773f63b87c8bafc2e75c8bb19"
+    },
+    {
+      "localPath": ".verification/tv5-all-pr-tdd-20261027/review109-run/tv5ProductVisibility/TEST-com.projecthk5.productservice.product.http.ProductOwnerVisibilityPostgresDiagnosticTest.xml",
+      "bytes": 10380,
+      "sha256": "da030bb6001be6470fd2be2fed2812247f7a5fd1608209c7979fdd2a287ff212"
+    }
+  ],
+  "excludedStaleXml": [],
+  "boundary": "Focused source/local filesystem or realPG/private policy fixtures only. No public HTTP/current Auth/Store/House/storage deployment or Finance approval. Unchanged TV5 original8 supplied externally on108/109."
+}

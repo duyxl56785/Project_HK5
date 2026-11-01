@@ -303,8 +303,6 @@ class ProductCatalogSearchIntegrationTest {
             assertFalse(result.valid());assertTrue(result.items().stream().allMatch(i->i.snapshot()==null));
         }
         assertEquals(2,candidates.candidateTotal(),"Never relabel this as total eligible Products or filter after paging");
-        assertTrue(context.getBeansOfType(CatalogSnapshotSource.class).isEmpty());
-        assertTrue(context.getBeansOfType(ProductAccessPolicy.class).isEmpty());
     }
 
     @Test void evenAWhollyEligibleCandidatePageDoesNotProveGlobalEligibleCount() {
@@ -322,15 +320,16 @@ class ProductCatalogSearchIntegrationTest {
                 c.unitPrice(),c.currency())).toList());
         assertTrue(checked.valid(),"Even verified facts for this page do not verify every remaining candidate");
         assertEquals(3,page.candidateTotal(),"Third candidate needs separate authority; no global public total is claimed");
-        assertTrue(context.getBeansOfType(CatalogSnapshotSource.class).isEmpty());
     }
 
     @Test void defaultRuntimeCannotExposeCatalogEvenWithForgedAuthorityHeaders() throws Exception {
         for(String route:List.of("/api/catalog","/api/products","/internal/catalog/search","/internal/catalog/checkout/validate")) {
             var response=http.perform(MockMvcRequestBuilders.get(route).header("Authorization","Bearer forged")
                     .header("X-User-Id","owner").header("X-Roles","ADMIN,SELLER")).andReturn().getResponse();
-            assertEquals(403,response.getStatus());
-            assertTrue(response.getContentAsString().contains("PRODUCT_ROUTE_AUTH_NOT_CONFIGURED"));
+            if(route.equals("/api/products")) {
+                assertEquals(403,response.getStatus());
+                assertTrue(response.getContentAsString().contains("PRODUCT_ROUTE_AUTH_NOT_CONFIGURED"));
+            } else assertEquals(401,response.getStatus());
         }
     }
 

@@ -66,6 +66,18 @@ class StoreSchemaProposalPostgresTest {
             assertTrue(rows.next());
             assertEquals("2", rows.getString(1));
             assertEquals("V2__create_stores.sql", rows.getString(2));
+            assertTrue(rows.next());
+            assertEquals("3", rows.getString(1));
+            assertEquals("V3__seller_outbox.sql", rows.getString(2));
+            assertTrue(rows.next());
+            assertEquals("4", rows.getString(1));
+            assertEquals("V4__seller_contact.sql", rows.getString(2));
+            assertTrue(rows.next());
+            assertEquals("5", rows.getString(1));
+            assertEquals("V5__write_fence_abort.sql", rows.getString(2));
+            assertTrue(rows.next());
+            assertEquals("6", rows.getString(1));
+            assertEquals("V6__seller_status_history.sql", rows.getString(2));
             assertFalse(rows.next());
         }
     }

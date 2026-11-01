@@ -1,0 +1,17 @@
+{
+  "kind": "DERIVED feature TDD GREEN",
+  "command": [
+    "C:/Users/Admin/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "scripts/qa/tests",
+    "-v"
+  ],
+  "startedUtc": "2026-10-27T16:47:06.887527+00:00",
+  "completedUtc": "2026-10-27T16:47:07.157632+00:00",
+  "exitCode": 0,
+  "logPath": ".verification/tv5-all-pr-tdd-20261027/cli-inventory-green/runtime.log",
+  "logSHA256": "b930c8a39dc9671f628b710f2afb0ef5f8ed9db0b7a965ddc32897691617f79c"
+}

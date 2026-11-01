@@ -383,7 +383,7 @@ class SellerPersistenceIntegrationTest {
     @TestConfiguration(proxyBeanMethods = false)
     static class Wiring {
         @Bean FixturePolicy policy() { return new FixturePolicy(); }
-        @Bean SellerPersistenceService persistenceService(SellerProfileRepository repository, FixturePolicy policy) {
+        @org.springframework.context.annotation.Primary @Bean SellerPersistenceService persistenceService(SellerProfileRepository repository, FixturePolicy policy) {
             return new SellerPersistenceService(repository, policy);
         }
     }

@@ -366,12 +366,23 @@ This dated checkpoint supersedes earlier waiting labels only for scopes verified
 - [x] Main đã merge91tạif888725;103sync6d99953 chạy461unit+188PG+17QA PASS. Các receipt/source tách riêng; không dùng approval/QA cũ để gán cho source mới.
 - [ ] ProtectedHTTP/currentStore/House/sharedwire/C06/fullM01/Finance/COD/settlement/liveE2E vẫn chờ; không tựApprove/Merge/flags. [Current evidence](../reports/TV5_QA_TDD_PREFLIGHT_2026-10-27.md#checkpoint-cuối--owner-fix-và-search-được-tích-hợp-trong-lúc-bàn-giao).
 
+## TV5-ALL-PR-TDD-20261028 — scoped evidence checkpoint
+
+Refs #5/#12. [All PR/reviewer/TDD matrix](../reports/TV5_ALL_PR_QA_AUDIT_2026-10-28.md), [derived receipts and raw hashes](../reports/evidence/tv5-all-pr-20261028/).
+
+- [x] QA103 current Store fixture/V01 compatibility fixed and pushed at e7d8948:519unit+205PG+17composition+8originalvisibility=749PASS,0FAIL/SKIP; original RED retained separately.
+- [x] CLI optional all-state pagination at445deec:3newcases,32offlinePASS after actualRED/GREEN/refactor;97PR inventory18OPEN(4Draft)/76MERGED/3CLOSED observed.
+- [x] Scoped authorized formal approvals87/7f2c6b2,108/8d4186c,109/cdea283 confirmed; fresh54/49/86PASS runs are separate snapshots.
+- [x]107 source/HTTP-PG17PASS;110fixture213DOM+46Chrome and buildsPASS;111tree/PRlinksPASS. These are separate scopes, not live integrated E2E.
+- [ ]103 owner-thread/formal review closure;110/111 human review;113owner review remain WAITING_REVIEW.
+- [ ]Real authority/House/sharedwire/freshness/COD/settlement/Finance production acceptance remains separately gated. M01 full policy PENDING; no flags enabled; Issue5/12 OPEN/PARTIAL.
+
 ## TV5-FRONTEND-20261028 — isolated read-only UI (explicit user task)
 
 Refs #5/#12/#115. [Acceptance and A–G report](../reports/TV5_FRONTEND_ACCEPTANCE_2026-10-28.md), [derived receipts/raw hashes](../reports/evidence/tv5-ui-20261028/).
 
-- [x]Finance/COD/Settlement read-only DEMO UI; QA/PR recorded-source views, filters/pagination/details and shared feature components implemented on separateTV5 branch.
-- [x]Exact9d62365:46model/render/DOM+18Chrome=64new frontendPASS,0FAIL/SKIP;85existing feature regression at6c74f05 is separate, not a release sum.
-- [x]Typecheck/appbuild/featurepreviewbuild and actual responsive/keyboard/screenshot checks;4RED→GREEN traces retained.3additional canonical money cases immediatelyPASS, not fakeRED.
-- [ ]Lint NOT_RUN: no configured repository linter. Protected Finance HTTP/liveE2E/API integration remainsNOT_RUN/BLOCKED; no production backend/Auth/shared-router edits.
-- [ ]TV1/TV2 review, owner routing/current authority, fullM01/Finance/COD/settlement policy/read contracts pending. Explicit frontend task does not close week1/fullF15/F16 gates; Issue5/12remainPARTIAL.
+- [x] Finance/COD/Settlement read-only DEMO UI; QA/PR recorded-source views, filters/pagination/details and shared feature components implemented on a separate TV5 branch.
+- [x] At 9d62365: 46 model/render/DOM + 18 Chrome = 64 new frontend PASS, 0 FAIL/SKIP; 85 existing feature regression at 6c74f05 is separate, not a release sum.
+- [x] Typecheck/app build/feature preview build and actual responsive/keyboard/screenshot checks; 4 RED→GREEN traces retained. Three additional canonical money cases immediately PASS, not fake RED.
+- [ ] Lint NOT_RUN: no configured repository linter. Protected Finance HTTP/live E2E/API integration remains NOT_RUN/BLOCKED; no production backend/Auth/shared-router edits.
+- [ ] TV1/TV2 review, owner routing/current authority, full M01/Finance/COD/settlement policy/read contracts pending. Explicit frontend task does not close week 1/full F15/F16 gates; Issues #5/#12 remain PARTIAL.

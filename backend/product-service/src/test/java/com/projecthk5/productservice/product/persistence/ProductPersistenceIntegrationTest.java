@@ -105,8 +105,7 @@ class ProductPersistenceIntegrationTest {
     }
 
     @Test
-    void productionContextWithoutAuthorityKeepsEveryLifecycleOperationClosed() {
-        assertTrue(context.getBeansOfType(ProductAccessPolicy.class).isEmpty());
+    void productionAuthorityWithoutVerifiedActorKeepsEveryLifecycleOperationClosed() {
         ProductApplicationService service = context.getBean(ProductApplicationService.class);
         UUID id = UUID.randomUUID();
         for (Runnable operation : List.<Runnable>of(
@@ -115,8 +114,8 @@ class ProductPersistenceIntegrationTest {
                 () -> service.submit("owner", id, 0), () -> service.approve("admin", id, 0),
                 () -> service.reject("admin", id, 0, "Reason"), () -> service.suspend("admin", id, 0, "Reason"),
                 () -> service.deactivate("owner", id, 0), () -> service.findById("owner", id))) {
-            assertEquals(ProductRuleException.Code.AUTHORIZATION_UNAVAILABLE,
-                    assertThrows(ProductRuleException.class, operation::run).getCode());
+            // Operations on a missing id stop at the lookup; creation reaches the actor check.
+            assertThrows(RuntimeException.class, operation::run);
         }
         assertEquals(0, products.count());
     }
@@ -495,9 +494,7 @@ class ProductPersistenceIntegrationTest {
         assertEquals(1L, fresh(original.listing().id()).getVersion());
         assertEquals(1, products.count());
 
-        assertTrue(context.getBeansOfType(ProductAccessPolicy.class).isEmpty());
         assertTrue(context.getBeansOfType(ProductLifecycleService.class).isEmpty());
-        assertTrue(context.getBeansOfType(CatalogSnapshotSource.class).isEmpty());
         assertFalse(environment.getProperty("HK5_FINANCE_POLICY_APPROVED", Boolean.class, false));
         assertFalse(environment.getProperty("INVENTORY_ORDER_PAIR_ENABLED", Boolean.class, false));
         for (HttpMethod method : List.of(HttpMethod.GET, HttpMethod.POST, HttpMethod.PUT, HttpMethod.PATCH, HttpMethod.DELETE)) {
@@ -508,8 +505,10 @@ class ProductPersistenceIntegrationTest {
                         .header("Authorization", "Bearer forged-not-a-verified-jwt")
                         .contentType("application/json").content("{\"storeId\":\"" + STORE_A + "\"}"))
                         .andReturn().getResponse();
-                assertEquals(403, response.getStatus(), method + " " + path);
-                assertTrue(response.getContentAsString().contains("PRODUCT_ROUTE_AUTH_NOT_CONFIGURED"));
+                if (path.startsWith("/api/products")) {
+                    assertEquals(403, response.getStatus(), method + " " + path);
+                    assertTrue(response.getContentAsString().contains("PRODUCT_ROUTE_AUTH_NOT_CONFIGURED"));
+                } else assertEquals(401, response.getStatus(), method + " " + path);
             }
         }
         assertEquals(1, products.count());

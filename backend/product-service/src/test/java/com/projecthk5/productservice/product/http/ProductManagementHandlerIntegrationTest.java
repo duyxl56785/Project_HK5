@@ -174,9 +174,7 @@ class ProductManagementHandlerIntegrationTest {
         assertEquals("1", handler(OWNER).findById(product.id()).version());
     }
 
-    @Test void preparationRegistersNoAuthorityHandlerOrHttpRoute() throws Exception {
-        assertTrue(context.getBeansOfType(ProductManagementAuthority.class).isEmpty());
-        assertTrue(context.getBeansOfType(ProductManagementHandler.class).isEmpty());
+    @Test void legacyProductRouteStaysClosedBehindSellerApi() throws Exception {
         mvc.perform(post("/api/products").contentType("application/json").content(createPayload(STORE, "route")))
                 .andExpect(status().isForbidden());
         assertEquals(0, jdbc.queryForObject("SELECT count(*) FROM products", Integer.class));
@@ -212,7 +210,7 @@ class ProductManagementHandlerIntegrationTest {
         }
     }
     @TestConfiguration static class AuthorityFixture {
-        @Bean FixturePolicy productPolicy() { return new FixturePolicy(); }
+        @org.springframework.context.annotation.Primary @Bean FixturePolicy productPolicy() { return new FixturePolicy(); }
     }
     static class FixturePolicy implements ProductAccessPolicy {
         volatile CyclicBarrier barrier;

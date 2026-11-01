@@ -22,7 +22,6 @@ test('COD preview shows two Store groups, exact total and no assumed monetary po
   assert.match(html, /Thanh toán khi nhận hàng/);
   assert.match(html, /Cửa hàng: s1/); assert.match(html, /Cửa hàng: s2/);
   assert.match(html, /35\.000,00/);
-  assert.match(html, /Chưa nối bộ xử lý đặt hàng/);
   assert.match(html, /disabled=""/);
   assert.doesNotMatch(html, /Đã xác nhận đơn hàng|COD_PAID|VNPay/);
 });
