@@ -42,7 +42,7 @@ cd frontend && npm ci && npm run dev
 | Cờ | Cổng | Tình trạng phê duyệt |
 | --- | --- | --- |
 | `--approved-finance-policy` | `HK5_FINANCE_POLICY_APPROVED` | MD09 ở [M01_FINANCE_DECISION.md](project-report/M01_FINANCE_DECISION.md), chỉ cho demo local. Chờ TV4, TV5 ký |
-| `--approved-inventory-pair` | `INVENTORY_ORDER_PAIR_ENABLED` | Chưa có. Chờ TV1, TV3 duyệt ủy quyền pair và delegated provenance |
+| `--approved-inventory-pair` | `INVENTORY_ORDER_PAIR_ENABLED` | MD09 ở [M01_FINANCE_DECISION.md](project-report/M01_FINANCE_DECISION.md), chỉ cho demo local. TV2 đã nhận phần việc TV1. Chờ TV3 duyệt ủy quyền pair và delegated provenance |
 
 Cờ chỉ là thao tác bật cho demo local với dữ liệu giả, không phải bằng chứng owner đã duyệt. Kết quả CI chạy với cả hai cờ chỉ chứng minh đường opt-in của demo local, không chứng minh môi trường khác. Đường mặc định tắt được kiểm ở `scripts/demo/gen-env.test.mjs`. Môi trường khác cần quyết định riêng.
 
