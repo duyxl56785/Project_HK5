@@ -82,6 +82,7 @@ public class CheckoutService {
         UUID orderId=attempt.getId();
         boolean claimRequested=false, claimConfirmed=false, claimOwned=false;
         boolean reserveRequested=false, writeRequested=false;
+        List<InventoryPort.Reservation> reservation=List.of();
         try {
             claimRequested=true;
             CartPort.CartSnapshot cart=carts.claim(bearer,key,req.expectedRevision());
@@ -97,7 +98,7 @@ public class CheckoutService {
             Order order=prepared.order();
             order.ship(shipping);
             // Reserve exactly the verified lines, including the immutable SKU from Catalog.
-            List<InventoryPort.Reservation> reservation=order.getSellerOrders().stream()
+            reservation=order.getSellerOrders().stream()
                  .flatMap(so -> so.getItems().stream())
                  .map(i -> new InventoryPort.Reservation(i.getProductId(),i.getQuantity(),i.getSku())).toList();
             // Serialize the deterministic Order facts before external Inventory side
@@ -149,6 +150,14 @@ public class CheckoutService {
             if (uncertain)
                 throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE,
                     "CHECKOUT_OUTCOME_UNKNOWN_RECONCILIATION_REQUIRED",error);
+            // shortcut: Inventory stops at the first short SKU, so one line is named; report all of them there to list every line.
+            if (error instanceof InventoryPort.Rejected rejected && "INSUFFICIENT_STOCK".equals(rejected.code())) {
+                // Frozen Catalog-verified Order lines; adapter binds their exact SKU/quantity tuple to immutable T1.
+                // No association is accepted from a replay request or an Inventory-supplied Product ID.
+                var matches=reservation.stream().filter(line -> line.sku()!=null && line.sku().equals(rejected.sku())).toList();
+                if (matches.size()==1)
+                    throw new CheckoutItemsRejected(List.of(new CheckoutItemsRejected.Item(matches.get(0).productId(),CheckoutItemsRejected.Reason.OUT_OF_STOCK)));
+            }
             throw error;
         }
     }
@@ -160,15 +169,20 @@ public class CheckoutService {
         // S01: authoritative Catalog facts cannot assign the same Seller to two
         // Stores within one checkout. Reject the whole batch before Inventory.
         Map<String,String> storeForSeller=new HashMap<>();
+        List<CheckoutItemsRejected.Item> refused=new ArrayList<>();
         for (CartPort.Item item:items) {
-            CatalogPort.ProductSnapshot product=catalog.verify(item.productId());
-            if (!product.available() || !product.sellerApproved() || !product.storeOpen())
-                throw new IllegalStateException("Product, seller or store not available");
-            if (!product.productId().equals(item.productId()) || !product.storeId().equals(item.storeId())
-                    || !product.sellerId().equals(item.sellerId()))
-                throw new IllegalStateException("Catalog changed since cart creation");
-            if (item.unitPriceSnapshot()==null || product.unitPrice().compareTo(item.unitPriceSnapshot())!=0)
-                throw new IllegalStateException("Product price changed since adding to cart");
+            CatalogPort.ProductSnapshot product;
+            // CatalogHttpAdapter throws IllegalStateException only for a definite "gone"; an outage stays a 503.
+            try { product=catalog.verify(item.productId()); }
+            catch (IllegalStateException gone) {
+                refused.add(new CheckoutItemsRejected.Item(item.productId(),CheckoutItemsRejected.Reason.PRODUCT_UNAVAILABLE));
+                continue;
+            }
+            CheckoutItemsRejected.Reason problem=problem(item,product);
+            if (problem!=null) {
+                refused.add(new CheckoutItemsRejected.Item(item.productId(),problem));
+                continue;
+            }
             String previouslyVerifiedStore=storeForSeller.putIfAbsent(product.sellerId(),product.storeId());
             if (previouslyVerifiedStore!=null && !previouslyVerifiedStore.equals(product.storeId()))
                 throw new IllegalStateException("Catalog assigned one Seller to multiple Stores");
@@ -180,6 +194,7 @@ public class CheckoutService {
             grouped.computeIfAbsent(product.storeId(),ignore -> new ArrayList<>())
                 .add(new Prepared(product,item.quantity(),amount));
         }
+        if (!refused.isEmpty()) throw new CheckoutItemsRejected(refused);
         for (var entry:grouped.entrySet()) {
             List<Prepared> lines=entry.getValue();
             Prepared first=lines.get(0);
@@ -203,6 +218,15 @@ public class CheckoutService {
         // aggregate does not. The caller has not set reserveRequested yet.
         OrderAmountStorageBounds.requireExactNonnegative(order.getTotal());
         return new PreparedOrder(order,Map.copyOf(houseStores));
+    }
+    private static CheckoutItemsRejected.Reason problem(CartPort.Item item,CatalogPort.ProductSnapshot product) {
+        if (!product.available()) return CheckoutItemsRejected.Reason.PRODUCT_UNAVAILABLE;
+        if (!product.sellerApproved() || !product.storeOpen()) return CheckoutItemsRejected.Reason.STORE_UNAVAILABLE;
+        if (!product.productId().equals(item.productId()) || !product.storeId().equals(item.storeId())
+                || !product.sellerId().equals(item.sellerId())) return CheckoutItemsRejected.Reason.CATALOG_CHANGED;
+        if (item.unitPriceSnapshot()==null || product.unitPrice().compareTo(item.unitPriceSnapshot())!=0)
+            return CheckoutItemsRejected.Reason.PRICE_CHANGED;
+        return null;
     }
     private record PreparedOrder(Order order,Map<String,Boolean> houseStores){}
     private record Prepared(CatalogPort.ProductSnapshot product,int quantity,BigDecimal total){}

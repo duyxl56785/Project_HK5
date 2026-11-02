@@ -13,6 +13,7 @@ public class CartController {
     private final CartService service;
     public CartController(CartService service) { this.service=service; }
     @GetMapping public CartView get(JwtAuthenticationToken jwt) { return service.view(CustomerIdentity.customerId(jwt)); }
+    @DeleteMapping public CartView clear(JwtAuthenticationToken jwt) { return service.clear(CustomerIdentity.customerId(jwt)); }
     @PostMapping("/items") public CartView add(JwtAuthenticationToken jwt,@Valid @RequestBody AddItem body) {return service.add(CustomerIdentity.customerId(jwt), body);}
     @PatchMapping("/items/{productId}") public CartView change(JwtAuthenticationToken jwt,@PathVariable String productId,@Valid @RequestBody UpdateItem body) {return service.update(CustomerIdentity.customerId(jwt),productId,body.quantity());}
     @DeleteMapping("/items/{productId}") public CartView remove(JwtAuthenticationToken jwt,@PathVariable String productId) {return service.remove(CustomerIdentity.customerId(jwt),productId);}

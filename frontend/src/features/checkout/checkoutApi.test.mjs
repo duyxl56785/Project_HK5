@@ -12,6 +12,12 @@ after(() => vite?.close());
 
 const conflict = (message) => new ApiError(409, 'BUSINESS_CONFLICT', message);
 
+test('a refused Checkout keeps the line the server named', () => {
+  const items = [{ productId: 'p1', reason: 'PRICE_CHANGED' }, { productId: 'p2', reason: 'OUT_OF_STOCK' }];
+  assert.deepEqual(classify(new ApiError(409, 'CHECKOUT_ITEMS_REJECTED', 'Some Cart items cannot be ordered', items)),
+    { status: 'rejected', reason: 'ITEMS_REJECTED', items });
+});
+
 test('network failures and server errors never claim an outcome', () => {
   assert.deepEqual(classify(new TypeError('fetch failed')), { status: 'unknown' });
   assert.deepEqual(classify(new ApiError(503, 'REQUEST_REJECTED', 'CHECKOUT_OUTCOME_UNKNOWN_RECONCILIATION_REQUIRED')), { status: 'unknown' });

@@ -67,6 +67,14 @@ public class CartService {
         cart.touch();return response(repository.saveAndFlush(cart));
     }
     @Transactional
+    public CartView clear(String customerId) {
+        Cart cart = repository.findForUpdate(customerId).orElse(null);
+        if (cart == null) return view(customerId);
+        cart.ensureEditable();
+        cart.getItems().clear();
+        cart.touch();return response(repository.saveAndFlush(cart));
+    }
+    @Transactional
     public CartView claim(String customerId,String key, Long revision) {
         Cart cart=locked(customerId); cart.claim(key,revision);return response(repository.saveAndFlush(cart));
     }

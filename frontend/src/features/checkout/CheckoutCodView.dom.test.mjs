@@ -65,6 +65,17 @@ async function mounted() {
   return { host, render, click, close };
 }
 
+test('a refused Checkout names each line and why', async () => {
+  const view = await mounted();
+  await view.render(ready(cartA, idA), async () => ({
+    status: 'rejected', reason: 'ITEMS_REJECTED', items: [{ productId: 'prod-a', reason: 'PRICE_CHANGED' }],
+  }));
+  await view.click();
+  const alert = view.host.querySelector('[role="alert"]');
+  assert.match(alert.textContent, /Private A/);
+  assert.match(alert.textContent, /giá đã đổi/);
+});
+
 test('obsolete A confirmation never appears after unauthorized then ready with Cart B/key B', async () => {
   const ui = await mounted();
   const a = deferred();

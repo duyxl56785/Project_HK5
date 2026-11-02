@@ -32,12 +32,12 @@ public class OrderViews {
                     createdAt, updatedAt, deliveredAt, null, null, version, shipping, items);
         }
     }
-    public record CustomerOrder(UUID id, String status, BigDecimal total, String paymentMethod, Instant createdAt,
+    public record CustomerOrder(UUID id, String status, String overallStatus, BigDecimal total, String paymentMethod, Instant createdAt,
                                 Order.Shipping shipping, List<StoreOrder> storeOrders) {}
 
     public List<CustomerOrder> customer(List<Order> orders) {
         Map<String, String> names = names(orders.stream().flatMap(o -> o.getSellerOrders().stream()).toList());
-        return orders.stream().map(o -> new CustomerOrder(o.getId(), o.getStatus().name(), o.getTotal(), o.getPaymentMethod(),
+        return orders.stream().map(o -> new CustomerOrder(o.getId(), o.getStatus().name(), o.overallStatus().name(), o.getTotal(), o.getPaymentMethod(),
                 o.getCreatedAt(), o.getShipping(), o.getSellerOrders().stream().map(so -> store(so, names)).toList())).toList();
     }
 

@@ -6,10 +6,11 @@ export interface CheckoutSubmission {
   readonly expectedRevision: string;
   readonly expectedItems: readonly { readonly productId: string; readonly quantity: number }[];
 }
+export interface RefusedItem { readonly productId: string; readonly reason: string }
 export type CheckoutResponse =
   | { readonly status: 'confirmed'; readonly orderId: string }
   | { readonly status: 'unknown' }
-  | { readonly status: 'rejected'; readonly reason: 'CART_CHANGED' | 'PRICE_CHANGED' | 'OUT_OF_STOCK' | 'UNAUTHORIZED' | 'STORE_UNAVAILABLE' | 'CHECKOUT_PAUSED' };
+  | { readonly status: 'rejected'; readonly reason: 'CART_CHANGED' | 'PRICE_CHANGED' | 'OUT_OF_STOCK' | 'UNAUTHORIZED' | 'STORE_UNAVAILABLE' | 'CHECKOUT_PAUSED' | 'ITEMS_REJECTED'; readonly items?: readonly RefusedItem[] };
 
 export type CheckoutUiState =
   | { readonly status: 'loading' | 'unauthorized' | 'unavailable' | 'empty' | 'unknown' }

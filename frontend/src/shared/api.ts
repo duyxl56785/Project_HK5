@@ -1,6 +1,6 @@
 /** Same-origin API client: access token in memory only, refresh via the HttpOnly cookie. */
 export class ApiError extends Error {
-  constructor(readonly status: number, readonly code: string, message: string) {
+  constructor(readonly status: number, readonly code: string, message: string, readonly items?: readonly { productId: string; reason: string }[]) {
     super(message);
   }
 }
@@ -37,8 +37,8 @@ export function setSessionLostHandler(handler: () => void) { onSessionLost = han
 export const CSRF = { 'X-CSRF-Protection': '1' };
 
 async function failure(response: Response): Promise<ApiError> {
-  const body = await response.json().catch(() => null) as { code?: string; message?: string } | null;
-  return new ApiError(response.status, body?.code ?? 'REQUEST_FAILED', body?.message ?? 'Yêu cầu không thành công');
+  const body = await response.json().catch(() => null) as { code?: string; message?: string; items?: ApiError['items'] } | null;
+  return new ApiError(response.status, body?.code ?? 'REQUEST_FAILED', body?.message ?? 'Yêu cầu không thành công', body?.items);
 }
 
 const postRefresh = () => fetch('/api/auth/refresh', { method: 'POST', headers: CSRF, credentials: 'same-origin' });
