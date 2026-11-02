@@ -29,7 +29,7 @@ export function SellerProductsPage() {
   return <div className="stack">
     <div className="row row--between"><h1>Sản phẩm của cửa hàng</h1><Link className="btn btn--primary" to="/seller/products/new">Thêm sản phẩm</Link></div>
     <StatusFilter value={status} options={STATUSES} onChange={setStatus} allLabel="Tất cả" />
-    <Loaded query={list} empty={(data) => data.products.length === 0}>{(data) => <table className="table">
+    <Loaded query={list} empty={(data) => data.products.length === 0}>{(data) => <table className="table" tabIndex={0}>
       <thead><tr><th>Tên</th><th>SKU</th><th>Giá</th><th>Trạng thái</th></tr></thead>
       <tbody>{data.products.map((p) => <tr key={p.id}>
         <td><Link to={`/seller/products/${p.id}`}>{p.name}</Link></td><td>{p.sku}</td><td>{money(p.unitPrice)}</td><td><Badge value={p.status} /></td>
