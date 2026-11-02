@@ -83,11 +83,12 @@ try {
     $env:HK5_UAT_PROJECT = $ProjectName
     $env:HK5_UAT_GATEWAY_PORT = "$GatewayPort"
     $env:HK5_UAT_FRONTEND_PORT = "$FrontendPort"
-    [ordered]@{
+    $metadataJson = [ordered]@{
         projectName = $ProjectName
         gatewayPort = $GatewayPort
         frontendPort = $FrontendPort
-    } | ConvertTo-Json -Compress | Set-Content -LiteralPath $metadataFile -Encoding utf8NoBOM
+    } | ConvertTo-Json -Compress
+    [IO.File]::WriteAllText($metadataFile, $metadataJson, (New-Object System.Text.UTF8Encoding($false)))
     $compose = @('--env-file', $envFile, '--project-name', $ProjectName, '-f', $baseCompose, '-f', $overlayCompose)
 
     & docker compose @compose config --quiet

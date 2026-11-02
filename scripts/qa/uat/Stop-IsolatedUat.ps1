@@ -26,7 +26,10 @@ foreach ($portName in @('gatewayPort', 'frontendPort')) {
 }
 
 foreach ($volume in @("$ProjectName-pgdemo", "$ProjectName-productimages")) {
-    $owner = (& docker volume inspect $volume --format '{{ index .Labels "com.docker.compose.project" }}' 2>$null).Trim()
+    $labelsJson = & docker volume inspect $volume --format '{{ json .Labels }}' 2>$null
+    $owner = if ($LASTEXITCODE -eq 0 -and $labelsJson) {
+        ($labelsJson | ConvertFrom-Json).'com.docker.compose.project'
+    } else { $null }
     if ($LASTEXITCODE -ne 0 -or $owner -ne $ProjectName) {
         throw "Refusing cleanup: $volume is absent or is not labeled for project $ProjectName."
     }
