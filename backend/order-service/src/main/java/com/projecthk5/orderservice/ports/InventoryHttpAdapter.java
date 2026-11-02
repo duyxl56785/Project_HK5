@@ -55,7 +55,7 @@ public class InventoryHttpAdapter implements InventoryPort {
         var intent = InventoryOperationIntent.prepare(orderId, reserveId(orderId),
                 InventoryOperationIntent.Type.RESERVE, reservationLines(items));
         journal.prepare(intent); // REQUIRES_NEW T1 commits before dispatch can perform HTTP.
-        dispatchReserve(intent.operationId());
+        dispatchReserve(intent.operationId(), intent);
     }
 
     @Override
@@ -71,7 +71,7 @@ public class InventoryHttpAdapter implements InventoryPort {
             // An explicit recovery call may use only the already committed tuple.
             var saved = journal.load(operationId).intent();
             saved.requireSamePayload(InventoryOperationIntent.Type.RESERVE, reservationLines(items));
-            dispatchReserve(operationId);
+            dispatchReserve(operationId, saved);
             return;
         }
         if (token.isBlank())
@@ -94,8 +94,12 @@ public class InventoryHttpAdapter implements InventoryPort {
         return items.stream().map(i -> new InventoryOperationIntent.Line(i.sku(), i.quantity())).toList();
     }
 
-    private void dispatchReserve(String operationId) {
+    private void dispatchReserve(String operationId, InventoryOperationIntent verifiedReservation) {
         var snapshot = journal.load(operationId); // Check fingerprint and reload exact immutable T1 facts.
+        // Bind the Checkout-verified association to the exact immutable tuple actually sent.
+        snapshot.intent().requireSamePayload(verifiedReservation.type(), verifiedReservation.lines());
+        if (!snapshot.intent().checkoutAttemptId().equals(verifiedReservation.checkoutAttemptId()))
+            throw new IllegalArgumentException("Inventory reservation attempt mismatch");
         if (snapshot.intent().type() != InventoryOperationIntent.Type.RESERVE)
             throw new IllegalArgumentException("Inventory journal operation is not RESERVE");
         if (snapshot.state() == InventoryOperationJournal.State.CONFIRMED) return;
@@ -164,7 +168,7 @@ public class InventoryHttpAdapter implements InventoryPort {
                 throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, "Inventory outcome unknown: " + code, refused);
             String sku = sku(refused);
             throw new Rejected(code, "INSUFFICIENT_STOCK".equals(code)
-                    ? "Not enough stock for " + sku : "Inventory rejected " + type + ": " + code, sku);
+                    ? "Not enough stock for " + (sku == null ? "an item" : sku) : "Inventory rejected " + type + ": " + code, sku);
         } catch (RestClientException unknown) {
             throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, "Inventory unavailable", unknown);
         }
@@ -181,9 +185,10 @@ public class InventoryHttpAdapter implements InventoryPort {
 
     private static String sku(HttpClientErrorException e) {
         try {
-            return JSON.readTree(e.getResponseBodyAsString()).path("sku").asText("an item");
+            JsonNode value = JSON.readTree(e.getResponseBodyAsString()).get("sku");
+            return value != null && value.isTextual() ? value.textValue() : null;
         } catch (Exception unreadable) {
-            return "an item";
+            return null;
         }
     }
 }

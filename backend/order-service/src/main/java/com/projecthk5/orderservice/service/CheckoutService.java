@@ -151,10 +151,13 @@ public class CheckoutService {
                 throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE,
                     "CHECKOUT_OUTCOME_UNKNOWN_RECONCILIATION_REQUIRED",error);
             // shortcut: Inventory stops at the first short SKU, so one line is named; report all of them there to list every line.
-            if (error instanceof InventoryPort.Rejected rejected && "INSUFFICIENT_STOCK".equals(rejected.code()))
-                for (InventoryPort.Reservation line:reservation)
-                    if (line.sku()!=null && line.sku().equals(rejected.sku()))
-                        throw new CheckoutItemsRejected(List.of(new CheckoutItemsRejected.Item(line.productId(),CheckoutItemsRejected.Reason.OUT_OF_STOCK)));
+            if (error instanceof InventoryPort.Rejected rejected && "INSUFFICIENT_STOCK".equals(rejected.code())) {
+                // Frozen Catalog-verified Order lines; adapter binds their exact SKU/quantity tuple to immutable T1.
+                // No association is accepted from a replay request or an Inventory-supplied Product ID.
+                var matches=reservation.stream().filter(line -> line.sku()!=null && line.sku().equals(rejected.sku())).toList();
+                if (matches.size()==1)
+                    throw new CheckoutItemsRejected(List.of(new CheckoutItemsRejected.Item(matches.get(0).productId(),CheckoutItemsRejected.Reason.OUT_OF_STOCK)));
+            }
             throw error;
         }
     }

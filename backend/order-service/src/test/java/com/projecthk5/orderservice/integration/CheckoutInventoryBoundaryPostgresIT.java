@@ -5,6 +5,13 @@ import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.projecthk5.orderservice.domain.CheckoutDraft;
+import com.projecthk5.orderservice.domain.InventoryOperationIntent;
+import com.projecthk5.orderservice.domain.RequestFingerprint;
+import com.projecthk5.orderservice.entity.Order;
+import com.projecthk5.orderservice.entity.OrderItem;
+import com.projecthk5.orderservice.entity.SellerOrder;
 import com.projecthk5.orderservice.api.CheckoutDtos.*;
 import com.projecthk5.orderservice.domain.MoneyRules;
 import com.projecthk5.orderservice.entity.CheckoutAttempt;
@@ -17,6 +24,8 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.InetSocketAddress;
 import java.nio.charset.StandardCharsets;
+import java.util.function.Consumer;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,6 +73,7 @@ class CheckoutInventoryBoundaryPostgresIT {
     private static volatile int inventoryStatus;
     private static volatile String inventoryBody;
     private static final AtomicInteger inventoryCalls = new AtomicInteger();
+    private static volatile Consumer<JsonNode> inspectRequest = ignored -> {};
 
     @Autowired IdempotencyCoordinator keys;
     @Autowired OrderWriteService writer;
@@ -72,6 +82,7 @@ class CheckoutInventoryBoundaryPostgresIT {
     @Autowired ObjectMapper json;
     @Autowired JdbcTemplate sql;
     @Autowired InventoryOperationJournal journal;
+    @Autowired CheckoutDraftJournal drafts;
 
     private final CartPort carts = mock(CartPort.class);
     private final CheckoutRequest request = new CheckoutRequest(List.of(new ExpectedItem("p1", 2)), null);
@@ -85,6 +96,7 @@ class CheckoutInventoryBoundaryPostgresIT {
         peer.createContext("/api/inventory/operations", exchange -> {
             inventoryCalls.incrementAndGet();
             var request = WIRE.readTree(exchange.getRequestBody());
+            inspectRequest.accept(request);
             String body = inventoryBody;
             if (inventoryStatus == 200 && "{}".equals(body)) {
                 var items = new java.util.ArrayList<Map<String, Object>>();
@@ -106,6 +118,7 @@ class CheckoutInventoryBoundaryPostgresIT {
         customer = "boundary-" + UUID.randomUUID();
         key = "key-" + UUID.randomUUID();
         inventoryCalls.set(0);
+        inspectRequest = ignored -> {};
         inventoryStatus = 200;
         inventoryBody = "{}";
         catalogBody = catalog("AO-001");
@@ -157,18 +170,100 @@ class CheckoutInventoryBoundaryPostgresIT {
         inventoryStatus = 409;
         inventoryBody = "{\"code\":\"INSUFFICIENT_STOCK\",\"sku\":\"AO-001\",\"available\":0,\"requested\":2}";
         CheckoutItemsRejected error = assertThrows(CheckoutItemsRejected.class, this::place);
-        assertEquals(CheckoutItemsRejected.Reason.OUT_OF_STOCK, error.items().get(0).reason());
+        assertEquals(List.of(new CheckoutItemsRejected.Item("p1", CheckoutItemsRejected.Reason.OUT_OF_STOCK)), error.items());
+        assertEquals(InventoryOperationJournal.State.REJECTED, savedJournal().state());
         verify(carts).release("Bearer fixture", key);
         assertAttempt(CheckoutAttempt.State.FAILED);
     }
 
-    @Test void nonStockRefusalNamingAnSkuKeepsItsOwnCode() {
+    @ParameterizedTest @ValueSource(strings = {"INVALID_QUANTITY", "INVALID_SKU"})
+    void nonStockRefusalNamingAnSkuKeepsItsOwnCode(String code) {
         inventoryStatus = 409;
-        inventoryBody = "{\"code\":\"INVALID_QUANTITY\",\"sku\":\"AO-001\"}";
+        inventoryBody = "{\"code\":\"" + code + "\",\"sku\":\"AO-001\"}";
         InventoryPort.Rejected error = assertThrows(InventoryPort.Rejected.class, this::place);
-        assertEquals("INVALID_QUANTITY", error.code());
+        assertEquals(code, error.code());
+        assertEquals("AO-001", error.sku());
         verify(carts).release("Bearer fixture", key);
         assertAttempt(CheckoutAttempt.State.FAILED);
+    }
+
+    @Test void stockRefusalUsesCommittedDraftAndExactSentJournalNotProviderProductId() {
+        inventoryStatus = 409;
+        inventoryBody = "{\"code\":\"INSUFFICIENT_STOCK\",\"sku\":\"AO-001\",\"productId\":\"forged-provider-product\"}";
+        AtomicReference<CheckoutDraft> committedDraft = new AtomicReference<>();
+        AtomicReference<InventoryOperationJournal.Snapshot> committedJournal = new AtomicReference<>();
+        inspectRequest = wire -> {
+            committedJournal.set(journal.load(wire.path("operationId").asText()));
+            committedDraft.set(drafts.load(committedJournal.get().intent().checkoutAttemptId()));
+        };
+        CheckoutItemsRejected error = assertThrows(CheckoutItemsRejected.class, this::place);
+        assertEquals("p1", error.items().get(0).productId());
+        assertEquals(InventoryOperationJournal.State.IN_FLIGHT, committedJournal.get().state());
+        assertEquals(1, committedJournal.get().sends());
+        assertEquals(committedDraft.get().orderId(), committedJournal.get().intent().checkoutAttemptId());
+        assertEquals("AO-001", committedDraft.get().sellerOrders().get(0).items().get(0).sku());
+        assertEquals(2, committedDraft.get().sellerOrders().get(0).items().get(0).quantity());
+        assertEquals(committedJournal.get().intent().fingerprint(), savedJournal().intent().fingerprint());
+        assertEquals(InventoryOperationJournal.State.REJECTED, savedJournal().state());
+        verify(carts).release("Bearer fixture", key);
+        assertAttempt(CheckoutAttempt.State.FAILED);
+    }
+
+    @Test void replayCallerCannotSupplyProductIdentityEvenWithMatchingSkuAndQuantity() {
+        var attempt = keys.begin(customer, key, RequestFingerprint.compute(request)).attempt();
+        Order order = new Order(attempt.getId(), customer);
+        SellerOrder store = new SellerOrder(order, "seller1", "store1", new BigDecimal("20000"), new BigDecimal("1000"));
+        store.getItems().add(new OrderItem(store, "p1", 2, new BigDecimal("10000"),
+                new BigDecimal("20000"), "AO-001", "synthetic"));
+        order.addSellerOrder(store);
+        writer.prepareDraft(CheckoutDraft.capture(order, attempt.getFingerprint(), null, 1, Map.of("store1", false), "{}"));
+        journal.prepare(InventoryOperationIntent.prepare(attempt.getId(), InventoryHttpAdapter.reserveId(attempt.getId()),
+                InventoryOperationIntent.Type.RESERVE, List.of(new InventoryOperationIntent.Line("AO-001", 2))));
+        inventoryStatus = 409;
+        inventoryBody = "{\"code\":\"INSUFFICIENT_STOCK\",\"sku\":\"AO-001\"}";
+        InventoryHttpAdapter adapter = new InventoryHttpAdapter("http://127.0.0.1:" + peer.getAddress().getPort(), "pair", journal);
+        InventoryPort.Rejected error = assertThrows(InventoryPort.Rejected.class, () -> adapter.apply(
+                InventoryHttpAdapter.reserveId(attempt.getId()), "RESERVE", List.of(new InventoryPort.Reservation("forged-replay-product", 2, "AO-001"))));
+        assertEquals("AO-001", error.sku());
+        assertEquals("INSUFFICIENT_STOCK", error.code());
+        assertEquals(1, inventoryCalls.get());
+        assertEquals(InventoryOperationJournal.State.REJECTED, savedJournal().state());
+    }
+
+    @ParameterizedTest @ValueSource(strings = {"OTHER-SKU", ""})
+    void unknownSkuNeverAcquiresAnUnrelatedProductIdentity(String sku) {
+        inventoryStatus = 409;
+        inventoryBody = "{\"code\":\"INSUFFICIENT_STOCK\",\"sku\":\"" + sku + "\"}";
+        assertUnmappedDefinitiveStockRefusal();
+    }
+
+    @Test void missingSkuCannotMatchTheHumanReadableFallbackAsAnActualSku() throws Exception {
+        catalogBody = catalog("an item");
+        inventoryStatus = 409;
+        inventoryBody = "{\"code\":\"INSUFFICIENT_STOCK\"}";
+        assertUnmappedDefinitiveStockRefusal();
+    }
+
+    @Test void numericSkuIsNotCoercedIntoAProductIdentity() throws Exception {
+        catalogBody = catalog("123");
+        inventoryStatus = 409;
+        inventoryBody = "{\"code\":\"INSUFFICIENT_STOCK\",\"sku\":123}";
+        assertUnmappedDefinitiveStockRefusal();
+    }
+
+    private void assertUnmappedDefinitiveStockRefusal() {
+        InventoryPort.Rejected error = assertThrows(InventoryPort.Rejected.class, this::place);
+        assertEquals("INSUFFICIENT_STOCK", error.code());
+        assertTrue(error.sku()==null || error.sku().isEmpty() || "OTHER-SKU".equals(error.sku()));
+        assertEquals(1, inventoryCalls.get());
+        assertEquals(InventoryOperationJournal.State.REJECTED, savedJournal().state());
+        verify(carts).release("Bearer fixture", key);
+        assertAttempt(CheckoutAttempt.State.FAILED);
+    }
+
+    private InventoryOperationJournal.Snapshot savedJournal() {
+        UUID id = attempts.findByCustomerIdAndIdempotencyKey(customer, key).orElseThrow().getId();
+        return journal.load(InventoryHttpAdapter.reserveId(id));
     }
 
     private CheckoutResult place() {
