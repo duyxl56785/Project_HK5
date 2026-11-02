@@ -48,8 +48,9 @@ public class ModerationController {
     public record AdminProduct(ProductManagementResponse product, String storeName, String reviewReason) {}
     public record ReviewRequest(@NotNull UUID orderId, @NotNull UUID productId, @Min(1) @Max(5) int rating,
                                 @Size(max = 2000) String comment) {}
+    public record HideRequest(String reason) {}
     public record ReviewView(UUID id, UUID orderId, UUID productId, String productName, int rating, String comment,
-                             boolean hidden, Instant createdAt) {}
+                             boolean hidden, String hiddenReason, Instant createdAt) {}
 
     @GetMapping("/api/admin/products")
     @Transactional(readOnly = true)
@@ -79,18 +80,22 @@ public class ModerationController {
 
     @GetMapping("/api/admin/reviews")
     public List<ReviewView> allReviews() {
-        return views(reviews.findTop200ByOrderByCreatedAtDesc());
+        return views(reviews.findTop200ByOrderByCreatedAtDesc(), true);
     }
 
     @PostMapping("/api/admin/reviews/{id}/{action}")
     @Transactional
-    public ReviewView setVisibility(@PathVariable UUID id, @PathVariable String action) {
+    public ReviewView setVisibility(@PathVariable UUID id, @PathVariable String action, @RequestBody(required = false) HideRequest req) {
         if (!Set.of("hide", "show").contains(action)) throw ApiException.notFound("ROUTE_NOT_FOUND", "Unknown action");
         ProductExtras.Review review = reviews.findById(id).orElseThrow(() -> ApiException.notFound("REVIEW_NOT_FOUND", "Review not found"));
         ReviewRules.Rating next = ReviewRules.moderate(new ReviewRules.Rating(review.getRating(), review.isHidden()),
                 "hide".equals(action), () -> Actor.require("ADMIN"));
-        review.setHidden(next.hidden());
-        return views(List.of(review)).get(0);
+        try {
+            review.setHidden(next.hidden(), next.hidden() ? ReviewRules.hideReason(req == null ? null : req.reason()) : null);
+        } catch (IllegalArgumentException invalid) {
+            throw ApiException.badRequest("REVIEW_HIDE_REASON_REQUIRED", invalid.getMessage());
+        }
+        return views(List.of(review), true).get(0);
     }
 
     @PostMapping("/api/reviews")
@@ -107,7 +112,7 @@ public class ModerationController {
         }
         String comment = req.comment() == null || req.comment().isBlank() ? null : req.comment().strip();
         try {
-            return views(List.of(reviews.saveAndFlush(new ProductExtras.Review(req.orderId(), req.productId(), buyer, req.rating(), comment)))).get(0);
+            return views(List.of(reviews.saveAndFlush(new ProductExtras.Review(req.orderId(), req.productId(), buyer, req.rating(), comment))), false).get(0);
         } catch (DataIntegrityViolationException duplicate) {
             // Unique (order_id, product_id) settles concurrent duplicates.
             throw ApiException.conflict("REVIEW_NOT_ALLOWED", "Product already reviewed in this order");
@@ -116,14 +121,15 @@ public class ModerationController {
 
     @GetMapping("/api/reviews/mine")
     public List<ReviewView> mine() {
-        return views(reviews.findByCustomerId(Actor.current().id()));
+        return views(reviews.findByCustomerId(Actor.current().id()), false);
     }
 
-    private List<ReviewView> views(List<ProductExtras.Review> list) {
+    /** The hide reason is an Admin note: customers get their review back without it. */
+    private List<ReviewView> views(List<ProductExtras.Review> list, boolean forAdmin) {
         Set<UUID> ids = list.stream().map(ProductExtras.Review::getProductId).collect(Collectors.toSet());
         Map<UUID, String> names = ids.isEmpty() ? Map.of() : em.createQuery("select p from ProductEntity p where p.id in :ids", ProductEntity.class)
                 .setParameter("ids", ids).getResultList().stream().collect(Collectors.toMap(ProductEntity::getId, ProductEntity::getName));
         return list.stream().map(r -> new ReviewView(r.getId(), r.getOrderId(), r.getProductId(), names.get(r.getProductId()),
-                r.getRating(), r.getComment(), r.isHidden(), r.getCreatedAt())).toList();
+                r.getRating(), r.getComment(), r.isHidden(), forAdmin ? r.getHiddenReason() : null, r.getCreatedAt())).toList();
     }
 }
