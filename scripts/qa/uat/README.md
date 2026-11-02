@@ -15,6 +15,7 @@ Refs #5, #18. Đây là **rehearsal local**, không phải kết quả UAT cuố
 
 ```powershell
 # Từ root của worktree UAT riêng; build là cần thiết nếu JAR chưa có.
+# -Build ghi JAR vào worktree đang chạy; không dùng checkout/stack demo đang phục vụ người khác.
 .\scripts\qa\uat\Smoke-IsolatedUat.ps1 -Build
 
 # Regression âm: chỉ sinh/kiểm tra config, rồi xác minh .env.demo/docker/secrets chung không đổi.
@@ -24,7 +25,7 @@ Refs #5, #18. Đây là **rehearsal local**, không phải kết quả UAT cuố
 .\scripts\qa\uat\Stop-IsolatedUat.ps1 -ProjectName hk5-uat-tv5-YYYYMMDDHHMMSS
 ```
 
-Smoke kiểm tra Docker Compose, bootstrap tám database riêng, `flyway_schema_history`, seed tài khoản giả `ADMIN`, `CUSTOMER`, hai Seller/Store và Catalog read. Nó không chạy Checkout vì pair Inventory và Finance policy cố ý OFF.
+Smoke kiểm tra Docker Compose, bootstrap tám database riêng, `flyway_schema_history`, seed tài khoản giả `ADMIN`, `CUSTOMER`, ba Seller/Store (ít nhất hai Store cho checklist UAT) và Catalog read. Nó không chạy Checkout vì pair Inventory và Finance policy cố ý OFF.
 
 ## Gate trước UAT cuối
 
