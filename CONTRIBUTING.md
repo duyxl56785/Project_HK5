@@ -3,7 +3,7 @@
 **Phiên bản:** 1.0  
 **Áp dụng:** Nhóm 5 thành viên, kế hoạch 3 tuần (W1–W3)  
 **Repository:** [duyxl56785/Project_HK5](https://github.com/duyxl56785/Project_HK5)  
-**Chủ trì quy chuẩn:** TV1 — Lê Xuân Bảo (trưởng nhóm kỹ thuật)
+**Chủ trì quy chuẩn:** TV2 — Nguyễn Văn Duy, từ 01/11/2026 (trước đó: TV1 — Lê Xuân Bảo)
 
 > **Phạm vi xác minh:** Quy chuẩn được xây dựng từ báo cáo phân tích thiết kế V2 và kế hoạch nhóm đã thống nhất. Tại thời điểm soạn thảo, repository GitHub chưa có mã nguồn. Do đó các tên service, công cụ và quy trình dưới đây là **quy ước cần áp dụng/kiểm tra khi đưa source lên**, không phải xác nhận mọi quy ước đã tồn tại trong code.
 
@@ -21,8 +21,8 @@
 
 | Người | Tài khoản GitHub | Khu vực chính | Trách nhiệm review khi liên quan |
 |---|---|---|---|
-| **TV1 — Lê Xuân Bảo** | `lexuanbao258-collab` | Auth, User, Gateway, Docker, cấu hình, UI/layout/router/API client dùng chung | Mọi thay đổi hạ tầng, auth, CI (nếu bổ sung), frontend shared |
-| **TV2 — Nguyễn Văn Duy** | `duyxl56785` | Seller, Store, Category, Product catalog/ảnh/kiểm duyệt | Catalog, trạng thái sản phẩm, seller status, API product |
+| **TV1 — Lê Xuân Bảo** | `lexuanbao258-collab` | Phần việc đã chuyển cho TV2 từ 01/11/2026, xem `docs/OWNERSHIP.md` | Không còn |
+| **TV2 — Nguyễn Văn Duy** | `duyxl56785` | Seller, Store, Category, Product catalog/ảnh/kiểm duyệt; Auth, User, Gateway, Docker, cấu hình, UI/layout/router/API client dùng chung | Catalog, trạng thái sản phẩm, seller status, API product; mọi thay đổi hạ tầng, auth, CI (nếu bổ sung), frontend shared |
 | **TV3 — Trần Văn Chính** | `tranvanchinhbg2006-alt` | Cart, Checkout, tạo đơn tổng/đơn con, idempotency | API checkout, order creation, cart claim, giá/snapshot đơn |
 | **TV4 — Phạm Thế Cường** | `phamthecuong2022006-alt` | Inventory, SellerOrder fulfillment, COD, Notification, outbox/retry liên quan | Tồn kho, chuyển trạng thái đơn, hoàn kho, COD, event status |
 | **TV5 — Nguyễn Minh Duy** | `nguyenminhduy090-alt` | Review, Finance, settlement, QA, báo cáo và demo | Review, đối soát, yêu cầu kiểm thử, nhất quán tài liệu |
@@ -31,9 +31,9 @@
 
 - **`order-service`:** TV3 sở hữu **checkout/order creation**; TV4 sở hữu **fulfillment/COD/hoàn kho**; TV5 sở hữu **Finance/settlement**. Thay đổi entity, migration, enum, controller hoặc DTO dùng chung cần thông báo cả ba, trong đó ít nhất **một người thuộc khu vực bị ảnh hưởng** review.
 - **`product-service`:** TV2 sở hữu catalog, moderation, ảnh; TV5 sở hữu nghiệp vụ reviews và điểm đánh giá. Thay đổi bảng/DTO/product API dùng chung cần TV2 và TV5 cùng thống nhất.
-- **Frontend dùng chung:** TV1 sở hữu router, layout, auth context, API client, theme/global CSS; TV2–TV5 sở hữu màn hình theo nghiệp vụ nhưng không sửa các file shared mà chưa thông báo TV1.
+- **Frontend dùng chung:** TV2 sở hữu router, layout, auth context, API client, theme/global CSS; TV2–TV5 sở hữu màn hình theo nghiệp vụ nhưng không sửa các file shared mà chưa thông báo TV2.
 - **`inventory-service` + checkout:** TV3 và TV4 thống nhất contract consume/release và khóa thao tác theo orderId trước khi thay đổi hành vi.
-- **Auth + seller status:** TV1 và TV2 thống nhất role, seller APPROVED/SUSPENDED và điều kiện kiểm quyền; không chỉ dựa vào trạng thái hiển thị ở UI.
+- **Auth + seller status:** TV2 quyết định role, seller APPROVED/SUSPENDED và điều kiện kiểm quyền; không chỉ dựa vào trạng thái hiển thị ở UI.
 
 > File ownership chính xác sẽ được điền sau khi mã nguồn V2 được import vào repository. Bảng trên mô tả **quyền quyết định nghiệp vụ**, không tự khẳng định tên đường dẫn trong source.
 
@@ -100,7 +100,7 @@ Nếu Git báo conflict: mở file, thảo luận với chủ sở hữu nghiệ
 **Quy tắc review:**
 
 1. PR thông thường: ít nhất **1 review của thành viên khác**, ưu tiên chủ sở hữu module.
-2. PR chạm `order-service`, `product-service`, API shared, migration, event, Auth hoặc Gateway: **chủ sở hữu phần chịu ảnh hưởng phải review**; TV1 kiểm tra khi ảnh hưởng nền tảng/tích hợp.
+2. PR chạm `order-service`, `product-service`, API shared, migration, event, Auth hoặc Gateway: **chủ sở hữu phần chịu ảnh hưởng phải review**; TV2 kiểm tra khi ảnh hưởng nền tảng/tích hợp. PR Auth hoặc Gateway do TV2 viết cần một thành viên khác review.
 3. Không tự merge PR nếu reviewer yêu cầu thay đổi chưa được xử lý.
 4. PR đã sửa theo review phải được test lại. Nếu chưa có CI/CD, đính kèm kết quả test local, không giả định hệ thống tự chạy test.
 5. Ưu tiên **Squash and merge** nếu repo cho phép; xóa feature branch sau khi merge.
@@ -143,11 +143,11 @@ Các phiên bản Java 21, Spring Boot 3.3, Spring Cloud 2023, Spring Security, 
 
 - Dùng TypeScript rõ kiểu; tránh `any` không cần thiết; props, API DTO và trạng thái response có type.
 - Tên component/hook: `PascalCase` cho component (`SellerOrdersPage`), `camelCase` và tiền tố `use` cho custom hook (`useSellerOrders`).
-- Mỗi trang nghiệp vụ do thành viên tương ứng quản lý; những phần chung (router, Auth, API client, layout/global CSS) phải được TV1 review trước khi sửa.
+- Mỗi trang nghiệp vụ do thành viên tương ứng quản lý; những phần chung (router, Auth, API client, layout/global CSS) phải được TV2 review trước khi sửa.
 - Gọi API qua lớp client dùng chung và Gateway; không tạo nhiều hàm refresh token ở từng trang, không hard-code base URL, token hay credential.
 - Query dữ liệu server bằng cơ chế hiện có của dự án (báo cáo nêu TanStack Query), form/validation theo cấu hình hiện có (React Hook Form + Zod); tránh tạo state/server fetching trùng lặp.
 - Mọi trang có loading/empty/error; kiểm tra quyền hiển thị ở UI **không thay cho kiểm tra quyền ở backend**.
-- Không tự đổi cơ chế lưu token hoặc làm mới phiên ở phạm vi riêng; nếu muốn thay vì lý do bảo mật, tạo Issue và thống nhất TV1.
+- Không tự đổi cơ chế lưu token hoặc làm mới phiên ở phạm vi riêng; nếu muốn thay vì lý do bảo mật, tạo Issue và thống nhất TV2.
 - Với màn hình mới, kiểm tra responsive từ 375 px và khả năng truy cập cơ bản (nhãn form, nút, trạng thái lỗi).
 
 ## 7. Database, migration, API và Kafka
