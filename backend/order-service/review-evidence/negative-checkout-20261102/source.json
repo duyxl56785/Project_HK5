@@ -1,0 +1,9 @@
+{
+  "sourceBaseHead": "99979a75efa043b746704e38800db902cd9c3363",
+  "deployedApplicationHead": "bf8eb3a027c72ad9fde81d0aa5dabc4e73bebacf",
+  "sourceDifference": "One OrderEvents Javadoc only in Order/Cart/Inventory src; demo not restarted or redeployed",
+  "testSha256": {
+    "frontend/src/features/checkout/acceptance/negative.live.spec.mjs": "72a24ec8056e4c7c7850f6570b44c1a0fd6a70e26d9ce7837e0db313647779a7",
+    "frontend/src/features/checkout/acceptance/negative.live.config.mjs": "d96fb79c5f6aded20a20324145b7d7e109e94cb16f82ab18ec32b106862d5bea"
+  }
+}

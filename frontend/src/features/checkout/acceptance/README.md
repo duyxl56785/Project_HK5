@@ -59,3 +59,41 @@ same-key replays. Lifecycle cases use real HTTP plus PostgreSQL. Traces/video ar
 disabled because Auth responses contain access tokens. Typecheck/`--list` do not
 count as E2E execution. Keep source SHA, owner-approved application SHA and run
 evidence separate; the runner does not infer a deployed version from local Git.
+
+## Negative Checkout API acceptance (2026-11-02)
+
+Separate from the original five live cases: **6 executed / 6 PASS / 0 FAIL / 0 SKIP**
+using `negative.live.config.mjs` and `negative.live.spec.mjs`. These use real
+Playwright APIRequestContext → frontend/Gateway → services plus read-only PostgreSQL;
+no browser is launched and no network is mocked. See
+[HTTP, SQL facts, JUnit/Playwright reports and SHA256](../../../../../backend/order-service/review-evidence/negative-checkout-20261102/README.md).
+The original two UNKNOWN cases remain NOT_RUN/BLOCKED.
+
+Only run with an explicitly approved, otherwise idle synthetic disposable demo.
+Supply private environment variables without printing their values:
+
+- `TV3_NEG_BASE_URL`: approved loopback frontend origin.
+- `TV3_NEG_PROJECT`: existing `tv3-live-*` Compose project; `TV3_NEG_COMPOSE_DIR`:
+  its exact working directory (verified against the PostgreSQL container label).
+- `TV3_NEG_PG_USER`: PostgreSQL read-oracle user; databases are the demo's
+  `order_db`, `cart_db`, `inventory_db`. Every SQL query uses BEGIN READ ONLY.
+- `TV3_NEG_CUSTOMER_EMAIL`, `TV3_NEG_SELLER_A_EMAIL`, `TV3_NEG_SELLER_B_EMAIL`,
+  `TV3_NEG_PASSWORD`: real synthetic seed accounts/password; CUSTOMER Cart must be empty.
+- `TV3_NEG_ADMIN_EMAIL`, `TV3_NEG_ADMIN_PASSWORD`: approved synthetic moderation actor.
+- `TV3_NEG_EVIDENCE`: new absolute output directory; `TV3_NEG_SOURCE_HEAD` and
+  `TV3_NEG_DEPLOYED_HEAD`: verified source/deployment provenance, never inferred from local Git.
+
+From `frontend`, with matching existing npm dependencies available:
+
+```bash
+npx playwright test --config src/features/checkout/acceptance/negative.live.config.mjs --list
+npx playwright test --config src/features/checkout/acceptance/negative.live.config.mjs
+```
+
+The suite creates two NEW synthetic Products through Seller/Admin APIs and one
+baseline two-Store Order for replay mismatch. It leaves that Order/reservation for
+inspection. Price changes require deactivate → edit → submit → real admin approval;
+stock changes/restoration use the Seller stock API. Existing seed Products are not
+edited. Only this run's unclaimed Cart items are removed through public APIs;
+unknown claims are never released. Read the recorded fixture side effects before
+running; this suite must not be aimed at production or another member's data.

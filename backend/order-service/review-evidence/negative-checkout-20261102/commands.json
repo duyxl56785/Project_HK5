@@ -1,0 +1,61 @@
+{
+  "place": "CODEX TERMINAL (Linux)",
+  "cwd": "/workspace/tv3-t1t2-main-integration/frontend",
+  "sourceBaseHead": "99979a75efa043b746704e38800db902cd9c3363",
+  "deployedApplicationHead": "bf8eb3a027c72ad9fde81d0aa5dabc4e73bebacf",
+  "node": "v24.19.0",
+  "discovery": {
+    "command": [
+      "node",
+      "/tmp/tv3-live-acceptance-145-20261101/node-runtime/node_modules/@playwright/test/cli.js",
+      "test",
+      "--config",
+      "src/features/checkout/acceptance/negative.live.config.mjs",
+      "--list"
+    ],
+    "exit": 0,
+    "testsDiscovered": 6
+  },
+  "execution": {
+    "command": [
+      "node",
+      "/tmp/tv3-live-acceptance-145-20261101/node-runtime/node_modules/@playwright/test/cli.js",
+      "test",
+      "--config",
+      "src/features/checkout/acceptance/negative.live.config.mjs"
+    ],
+    "exit": 0,
+    "passed": 6,
+    "failed": 0,
+    "skipped": 0
+  },
+  "nodeSyntaxChecks": {
+    "commands": [
+      "node --check frontend/src/features/checkout/acceptance/negative.live.spec.mjs",
+      "node --check frontend/src/features/checkout/acceptance/negative.live.config.mjs"
+    ],
+    "exitCodes": [
+      0,
+      0
+    ]
+  },
+  "outerWrapper": {
+    "command": "python /tmp/tv3-negative-checkout-145-20261102/run.py",
+    "exit": 1,
+    "reason": "Compared Docker inspect Mounts arrays positionally. Docker returned the same mount set in a different order. No container or mount changed. Reverified saved raw snapshots by sorting mount records; no acceptance rerun.",
+    "originalWrapperSha256": "7d3a27193e1492787a477b5833031907920c5364e67ff1b3c9f075644d08d0c0",
+    "correctedUnexecutedWrapperSha256": "938ffb566d6153325bde846f0d4c7c013d55118799f4ebdf339d7017911dbf67"
+  },
+  "fullBackendBuild": "NOT_RUN (unchanged production source; user instruction)",
+  "browser": "NOT_RUN (new cases are Playwright APIRequestContext HTTP acceptance, not browser E2E)",
+  "unknownCases": {
+    "claimConflict": {
+      "status": "NOT_RUN/BLOCKED",
+      "executed": 0
+    },
+    "timeout": {
+      "status": "NOT_RUN/BLOCKED",
+      "executed": 0
+    }
+  }
+}

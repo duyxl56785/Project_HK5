@@ -1,0 +1,13 @@
+
+Running 6 tests using 1 worker
+
+  ✓  1 src/features/checkout/acceptance/negative.live.spec.mjs:197:1 › replay-body same key with changed expectedItems rejects without effects (869ms)
+  ✓  2 src/features/checkout/acceptance/negative.live.spec.mjs:201:1 › replay-shipping same key with changed shipping rejects without effects (1.1s)
+  ✓  3 src/features/checkout/acceptance/negative.live.spec.mjs:205:1 › expected-items mismatch rejects before Inventory (1.3s)
+  ✓  4 src/features/checkout/acceptance/negative.live.spec.mjs:209:1 › catalog-price changed since Cart rejects before Inventory (1.7s)
+  ✓  5 src/features/checkout/acceptance/negative.live.spec.mjs:221:1 › insufficient-stock two Store batch rejects without partial reservation (1.6s)
+  ✓  6 src/features/checkout/acceptance/negative.live.spec.mjs:231:1 › product-inactive one unsellable Store line rejects the whole Checkout (1.3s)
+
+  6 passed (11.9s)
+(node:1172027) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)

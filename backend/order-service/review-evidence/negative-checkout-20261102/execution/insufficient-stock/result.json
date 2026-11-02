@@ -1,0 +1,5 @@
+{
+  "title": "insufficient-stock two Store batch rejects without partial reservation",
+  "status": "passed",
+  "expectedStatus": "passed"
+}

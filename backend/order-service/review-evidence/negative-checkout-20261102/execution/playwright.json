@@ -1,0 +1,323 @@
+{
+  "config": {
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+      "/tmp/tv3-live-acceptance-145-20261101/node-runtime/node_modules/@playwright/test/cli.js",
+      "test",
+      "--config",
+      "src/features/checkout/acceptance/negative.live.config.mjs"
+    ],
+    "configFile": "/workspace/tv3-t1t2-main-integration/frontend/src/features/checkout/acceptance/negative.live.config.mjs",
+    "rootDir": "/workspace/tv3-t1t2-main-integration/frontend/src/features/checkout/acceptance",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/tmp/tv3-negative-checkout-145-20261102/execution/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "/workspace/tv3-t1t2-main-integration/frontend/src/features/checkout/acceptance",
+        "testIgnore": [],
+        "testMatch": [
+          "negative.live.spec.mjs"
+        ],
+        "timeout": 90000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/tmp/tv3-negative-checkout-145-20261102/execution/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "",
+        "testDir": "/workspace/tv3-t1t2-main-integration/frontend/src/features/checkout/acceptance",
+        "snapshotDir": "/workspace/tv3-t1t2-main-integration/frontend/src/features/checkout/acceptance",
+        "testIgnore": [],
+        "testMatch": "negative.live.spec.mjs",
+        "timeout": 90000,
+        "use": {
+          "trace": "off",
+          "screenshot": "off",
+          "video": "off"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": ""
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/tmp/tv3-negative-checkout-145-20261102/execution/playwright.json"
+        }
+      ],
+      [
+        "junit",
+        {
+          "outputFile": "/tmp/tv3-negative-checkout-145-20261102/execution/junit.xml"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "negative.live.spec.mjs",
+      "file": "negative.live.spec.mjs",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "replay-body same key with changed expectedItems rejects without effects",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 869,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-02T05:40:29.936Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "75556e33e19c632837af-a81b7a9f1329a203a143",
+          "file": "negative.live.spec.mjs",
+          "line": 197,
+          "column": 1
+        },
+        {
+          "title": "replay-shipping same key with changed shipping rejects without effects",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1076,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-02T05:40:34.301Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "75556e33e19c632837af-032cc22b56b80f138c00",
+          "file": "negative.live.spec.mjs",
+          "line": 201,
+          "column": 1
+        },
+        {
+          "title": "expected-items mismatch rejects before Inventory",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1268,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-02T05:40:35.388Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "75556e33e19c632837af-1f07627abd780dded0a9",
+          "file": "negative.live.spec.mjs",
+          "line": 205,
+          "column": 1
+        },
+        {
+          "title": "catalog-price changed since Cart rejects before Inventory",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1690,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-02T05:40:36.668Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "75556e33e19c632837af-1651e56255237e558d8b",
+          "file": "negative.live.spec.mjs",
+          "line": 209,
+          "column": 1
+        },
+        {
+          "title": "insufficient-stock two Store batch rejects without partial reservation",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1609,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-02T05:40:38.372Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "75556e33e19c632837af-3f0f3c765b0edeed2a6b",
+          "file": "negative.live.spec.mjs",
+          "line": 221,
+          "column": 1
+        },
+        {
+          "title": "product-inactive one unsellable Store line rejects the whole Checkout",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1292,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-02T05:40:39.994Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "75556e33e19c632837af-e60ee1a0ea30aac551ea",
+          "file": "negative.live.spec.mjs",
+          "line": 231,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-02T05:40:29.465Z",
+    "duration": 11878.085000000001,
+    "expected": 6,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

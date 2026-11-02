@@ -1,0 +1,46 @@
+{
+  "name": "Insufficient second Store stock",
+  "status": 409,
+  "error": {
+    "message": "Not enough stock for TV3-NEG-b6396d50-B",
+    "code": "BUSINESS_CONFLICT"
+  },
+  "orders": [
+    4,
+    4
+  ],
+  "sellerOrders": [
+    8,
+    8
+  ],
+  "cartRevision": [
+    29,
+    31
+  ],
+  "inventoryOperations": [
+    8,
+    8
+  ],
+  "inventoryBalancesUnchanged": true,
+  "journalDelta": [
+    {
+      "operation_id": "order-fc95e8d2-1f36-407a-b352-494f834bfc6b-reserve",
+      "operation_type": "RESERVE",
+      "state": "REJECTED",
+      "send_attempts": 1,
+      "last_error_code": "INSUFFICIENT_STOCK",
+      "canonical_lines": [
+        {
+          "sku": "TV3-NEG-b6396d50-A",
+          "quantity": 2
+        },
+        {
+          "sku": "TV3-NEG-b6396d50-B",
+          "quantity": 2
+        }
+      ],
+      "payload_fingerprint": "15100339c23defaeae8ad18986c1cafc10c8b8fb4e52d658059c6129aa504392"
+    }
+  ],
+  "draftDelta": 1
+}

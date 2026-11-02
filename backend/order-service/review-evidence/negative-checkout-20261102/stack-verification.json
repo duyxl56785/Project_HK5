@@ -1,0 +1,9 @@
+{
+  "containers": 15,
+  "identical_ids_running_startedAt_restartCounts_mount_sets": true,
+  "raw_before_sha256": "0f76c88d00363d4a1887a2de8132020cff135d48fe25af9e283b651468df7dcc",
+  "raw_after_sha256": "14e32826336f4383bca153d7a50092fcb8320d99eb018631aa0009019c3db51b",
+  "wrapper_exit": 1,
+  "wrapper_error": "Compared Docker inspect Mounts arrays positionally. Docker returned the same mount set in a different order. No container or mount changed. Reverified saved raw snapshots by sorting mount records; no acceptance rerun.",
+  "acceptance_command_exit": 0
+}
