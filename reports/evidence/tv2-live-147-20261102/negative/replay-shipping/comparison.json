@@ -1,0 +1,27 @@
+{
+  "name": "same-key changed shipping",
+  "status": 409,
+  "error": {
+    "code": "REQUEST_REJECTED",
+    "message": "IDEMPOTENCY_PAYLOAD_MISMATCH"
+  },
+  "orders": [
+    4,
+    4
+  ],
+  "sellerOrders": [
+    8,
+    8
+  ],
+  "cartRevision": [
+    15,
+    15
+  ],
+  "inventoryOperations": [
+    7,
+    7
+  ],
+  "inventoryBalancesUnchanged": true,
+  "journalDelta": [],
+  "draftDelta": 0
+}

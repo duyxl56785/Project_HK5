@@ -1,0 +1,89 @@
+[
+  {
+    "method": "GET",
+    "path": "/api/cart",
+    "status": 200
+  },
+  {
+    "method": "POST",
+    "path": "/api/cart/items",
+    "status": 200
+  },
+  {
+    "method": "POST",
+    "path": "/api/cart/items",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "path": "/api/cart",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "path": "/api/seller/products/7656011f-a908-4350-89d4-6e7c8080454f",
+    "status": 200,
+    "product": {
+      "id": "7656011f-a908-4350-89d4-6e7c8080454f",
+      "sku": "TV3-NEG-cb5858f8-B",
+      "status": "ACTIVE",
+      "version": "6",
+      "unitPrice": "11000"
+    }
+  },
+  {
+    "method": "PUT",
+    "path": "/api/seller/products/7656011f-a908-4350-89d4-6e7c8080454f/stock",
+    "status": 200,
+    "product": {
+      "id": "7656011f-a908-4350-89d4-6e7c8080454f",
+      "sku": "TV3-NEG-cb5858f8-B",
+      "status": "ACTIVE",
+      "version": "6",
+      "unitPrice": "11000"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/cart",
+    "status": 200
+  },
+  {
+    "method": "POST",
+    "path": "/api/orders",
+    "status": 409,
+    "keySha256": "0077e5094ec88f5a781101984e74d8311adc7f13176307f47faf6195d5c5fefc",
+    "expectedItems": [
+      {
+        "productId": "6285d315-4973-434f-8d73-4fc09f0d9695",
+        "quantity": 2
+      },
+      {
+        "productId": "7656011f-a908-4350-89d4-6e7c8080454f",
+        "quantity": 2
+      }
+    ],
+    "expectedRevision": 29,
+    "error": {
+      "code": "CHECKOUT_ITEMS_REJECTED",
+      "message": "Some Cart items cannot be ordered"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/cart",
+    "status": 200
+  },
+  {
+    "method": "PUT",
+    "path": "/api/seller/products/7656011f-a908-4350-89d4-6e7c8080454f/stock",
+    "status": 200,
+    "product": {
+      "id": "7656011f-a908-4350-89d4-6e7c8080454f",
+      "sku": "TV3-NEG-cb5858f8-B",
+      "status": "ACTIVE",
+      "version": "6",
+      "unitPrice": "11000"
+    }
+  }
+]

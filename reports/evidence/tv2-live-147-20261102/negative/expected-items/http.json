@@ -1,0 +1,53 @@
+[
+  {
+    "method": "GET",
+    "path": "/api/cart",
+    "status": 200
+  },
+  {
+    "method": "POST",
+    "path": "/api/cart/items",
+    "status": 200
+  },
+  {
+    "method": "POST",
+    "path": "/api/cart/items",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "path": "/api/cart",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "path": "/api/cart",
+    "status": 200
+  },
+  {
+    "method": "POST",
+    "path": "/api/orders",
+    "status": 409,
+    "keySha256": "8cc1d773b4a28ced437af68cc989794dd42c47362ffb4c4047dfafa5bf76ea7e",
+    "expectedItems": [
+      {
+        "productId": "6285d315-4973-434f-8d73-4fc09f0d9695",
+        "quantity": 1
+      },
+      {
+        "productId": "7656011f-a908-4350-89d4-6e7c8080454f",
+        "quantity": 2
+      }
+    ],
+    "expectedRevision": 17,
+    "error": {
+      "code": "BUSINESS_CONFLICT",
+      "message": "Cart and expectedItems differ"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/cart",
+    "status": 200
+  }
+]

@@ -1,0 +1,33 @@
+{
+  "name": "Catalog repriced after Cart",
+  "status": 409,
+  "error": {
+    "items": [
+      {
+        "productId": "7656011f-a908-4350-89d4-6e7c8080454f",
+        "reason": "PRICE_CHANGED"
+      }
+    ],
+    "message": "Some Cart items cannot be ordered",
+    "code": "CHECKOUT_ITEMS_REJECTED"
+  },
+  "orders": [
+    4,
+    4
+  ],
+  "sellerOrders": [
+    8,
+    8
+  ],
+  "cartRevision": [
+    23,
+    25
+  ],
+  "inventoryOperations": [
+    7,
+    7
+  ],
+  "inventoryBalancesUnchanged": true,
+  "journalDelta": [],
+  "draftDelta": 0
+}
