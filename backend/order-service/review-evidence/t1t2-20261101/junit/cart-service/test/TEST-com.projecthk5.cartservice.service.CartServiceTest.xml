@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuite name="com.projecthk5.cartservice.service.CartServiceTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-11-01T10:41:14" time="0.121">
+  <testcase name="nullOrMalformedClaimKeyCannotSilentlySucceedOnUnclaimedCart()" classname="com.projecthk5.cartservice.service.CartServiceTest" time="0.004" />
+  <testcase name="untrustedBlankStoreOrSellerNeverPersistsCart()" classname="com.projecthk5.cartservice.service.CartServiceTest" time="0.036" />
+  <testcase name="claimedCartRejectsWriteAndReleaseWorks()" classname="com.projecthk5.cartservice.service.CartServiceTest" time="0.038" />
+  <testcase name="priceThatPostgresWouldRoundOrOverflowNeverTouchesCart()" classname="com.projecthk5.cartservice.service.CartServiceTest" time="0.003" />
+  <testcase name="representablePriceCanRetainExactValueWithoutChoosingMoneyPolicy()" classname="com.projecthk5.cartservice.service.CartServiceTest" time="0.002" />
+  <testcase name="finalizationClearsOnlyMatchingClaim()" classname="com.projecthk5.cartservice.service.CartServiceTest" time="0.004" />
+  <testcase name="addUpdateRemoveAndTrustedStore()" classname="com.projecthk5.cartservice.service.CartServiceTest" time="0.002" />
+  <testcase name="invalidProductIdsFromDirectCallDoNotInvokeCatalogOrSave()" classname="com.projecthk5.cartservice.service.CartServiceTest" time="0.012" />
+</testsuite>

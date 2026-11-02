@@ -10,7 +10,11 @@ public class OrderWriteService {
     private final OrderRepository orders;
     private final CheckoutAttemptRepository attempts;
     private final OutboxEventRepository outbox;
-    public OrderWriteService(OrderRepository orders,CheckoutAttemptRepository attempts,OutboxEventRepository outbox){this.orders=orders;this.attempts=attempts;this.outbox=outbox;}
+    private final CheckoutDraftJournal drafts;
+    public OrderWriteService(OrderRepository orders,CheckoutAttemptRepository attempts,OutboxEventRepository outbox,
+            CheckoutDraftJournal drafts){this.orders=orders;this.attempts=attempts;this.outbox=outbox;this.drafts=drafts;}
+    /** Independent commit before Inventory; deliberately does not create a successful Order or outbox row. */
+    public void prepareDraft(com.projecthk5.orderservice.domain.CheckoutDraft draft){drafts.prepare(draft);}
     @Transactional
     public Order savePlaced(Order order,java.util.UUID attemptId,String outboxPayload){
         Order saved=orders.saveAndFlush(order);

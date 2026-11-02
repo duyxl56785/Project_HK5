@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuite name="com.projecthk5.orderservice.service.CheckoutServiceTest" tests="24" skipped="0" failures="0" errors="0" timestamp="2026-11-01T14:45:45" time="0.343">
+  <testcase name="commitConfirmedByReadNeverCompensates()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.005" />
+  <testcase name="invalidClaimedCartQuantityCannotReachReservationOrWriter()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.001" />
+  <testcase name="unsupportedUnitPrecisionNeverReachesInventoryOrWriter()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.002" />
+  <testcase name="unrepresentableFeeUnderSyntheticPolicyFailsBeforeReserve()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.001" />
+  <testcase name="outboxSerializationFailureCannotReserveStockOrWriteOrder()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.26" />
+  <testcase name="definitiveCartRejectionIsNotMarkedForReconciliation()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.003" />
+  <testcase name="twoProductsFromSameSellerAndStoreCreateOneSellerOrder()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.004" />
+  <testcase name="inventoryTimeoutPreservesCartAndReservationForReconciliation()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.005" />
+  <testcase name="conflictingCatalogSellerStoreFactsNeverReachInventoryOrOrderWriter()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.002" />
+  <testcase name="twoStoresGenerateOneOrderWithTwoSellerOrdersAndSnapshot()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.004" />
+  <testcase name="malformedClaimedCartNullLineReleasesClaimWithoutExternalSideEffects()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.002" />
+  <testcase name="draftFailureStopsBeforeInventoryAndReleasesOnlyTheKnownCartClaim()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.003" />
+  <testcase name="reservationCarriesCatalogSkuAndOrderKeepsShippingAndLabels()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.005" />
+  <testcase name="parentOverflowAcrossTwoIndividuallyValidStoresFailsBeforeReserve()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.002" />
+  <testcase name="definitiveStockRejectionReleasesCartAndIsNotMarkedForReconciliation()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.003" />
+  <testcase name="nullCartClaimReplyIsUnknownAndNeverBlindlyReleasesOrReserves()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.001" />
+  <testcase name="explicitlyUnclaimedCartCannotProceedOrReleaseAnotherClaim()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.002" />
+  <testcase name="reversedCartOrderStillRejectsOneSellerFromTwoStoresBeforeInventory()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.002" />
+  <testcase name="changedPriceRejectsCheckoutBeforeStockReservation()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.002" />
+  <testcase name="sameKeyAndExistingSuccessfulOrderReplaysWithoutCreating()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.001" />
+  <testcase name="commitUnknownDoesNotCompensateAndFlagsForReconciliation()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.004" />
+  <testcase name="immutableDraftPrecedesReserveAndUsesTheExactWrittenGraphAndEvent()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.004" />
+  <testcase name="nonFinalProcessingReplayNeverCallsInventory()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.001" />
+  <testcase name="malformedRequestCannotCreateAttemptOrCallRemotePorts()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.001" />
+</testsuite>

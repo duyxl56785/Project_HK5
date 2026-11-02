@@ -35,7 +35,7 @@ public class OrderEvents {
                          String sellerOrderId, String orderId, String customerId, String fromStatus, String toStatus,
                          String actorRole, List<String> productIds) {}
 
-    /** RELEASE on cancel/reject, CONSUME on delivery; the id is fixed per Store order and type. */
+    /** RELEASE on cancel/reject; CONSUME at DISPATCHED handoff. The operation id is fixed per SellerOrder and type. */
     @Transactional(propagation = Propagation.MANDATORY)
     public void inventory(SellerOrder so, String type) {
         List<Line> lines = so.getItems().stream().map(i -> new Line(i.getProductId(), i.getQuantity(), i.getSku())).toList();

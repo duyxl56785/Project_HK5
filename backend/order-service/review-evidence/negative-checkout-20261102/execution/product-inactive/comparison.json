@@ -1,0 +1,27 @@
+{
+  "name": "Inactive Product after Cart",
+  "status": 409,
+  "error": {
+    "message": "Product, seller or store not available",
+    "code": "BUSINESS_CONFLICT"
+  },
+  "orders": [
+    4,
+    4
+  ],
+  "sellerOrders": [
+    8,
+    8
+  ],
+  "cartRevision": [
+    35,
+    37
+  ],
+  "inventoryOperations": [
+    9,
+    9
+  ],
+  "inventoryBalancesUnchanged": true,
+  "journalDelta": [],
+  "draftDelta": 0
+}

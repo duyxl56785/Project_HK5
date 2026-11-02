@@ -36,6 +36,15 @@ public final class ReviewRules {
         return new Rating(current.stars(), hidden);
     }
 
+    /** UC-17: an Admin hides a review only with a stated reason. */
+    public static String hideReason(String reason) {
+        String stripped = reason == null ? "" : reason.strip();
+        if (stripped.isEmpty() || stripped.length() > 500) {
+            throw new IllegalArgumentException("A reason of 1 to 500 characters is required");
+        }
+        return stripped;
+    }
+
     public static void requireEligible(String verifiedBuyerId, Purchase purchase,
             int stars, boolean alreadyReviewed) {
         requireIdentity(verifiedBuyerId);

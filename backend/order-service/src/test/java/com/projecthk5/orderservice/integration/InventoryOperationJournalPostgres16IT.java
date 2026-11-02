@@ -64,9 +64,9 @@ class InventoryOperationJournalPostgres16IT {
         assertEquals(1,db.queryForObject(
                 "select count(*) from inventory_operation_journal where operation_id=?",Integer.class,intent.operationId()));
         assertEquals(1, journal.claimForSend(intent.operationId()));
-        journal.unknown(intent.operationId(),1,"TRANSPORT_OUTCOME_UNKNOWN");
-        assertEquals(InventoryOperationJournal.State.UNKNOWN,journal.load(intent.operationId()).state());
-        assertEquals(2, journal.claimForSend(intent.operationId())); // same ID, new send generation
+        journal.notSent(intent.operationId(),1,"CALLER_DISABLED");
+        assertEquals(InventoryOperationJournal.State.PENDING,journal.load(intent.operationId()).state());
+        assertEquals(2, journal.claimForSend(intent.operationId())); // First attempt provably did not send; same ID, new generation.
         journal.confirm(intent.operationId(),2);
         var t2=journal.load(intent.operationId());
         assertEquals(InventoryOperationJournal.State.CONFIRMED,t2.state());
@@ -114,18 +114,16 @@ class InventoryOperationJournalPostgres16IT {
     }
 
 
-    @Test void staleResponseFromFirstSendCannotMutateReclaimedSecondSend() {
+    @Test void staleGenerationCannotMutateALaterSendAfterPositiveNotSent() {
         var intent = freshIntent();
         journal.prepare(intent);
         int first = journal.claimForSend(intent.operationId());
         assertEquals(1, first);
-        // Simulate sender A losing contact and reconciliation marking its claim stale.
-        db.update("update inventory_operation_journal set updated_at=now()-interval '20 minutes' where operation_id=?",
-                intent.operationId());
-        assertEquals(1, journal.flagStaleInFlight(Duration.ofMinutes(10)));
+        // Only positive NotSent permits another generation; UNKNOWN is never reopened.
+        journal.notSent(intent.operationId(),first,"CALLER_DISABLED");
         int second = journal.claimForSend(intent.operationId());
         assertEquals(2, second);
-        // Sender A returns late while sender B is working the same persisted operationId.
+        // Old callbacks must be fenced even after a permitted PENDING claim gets a newer generation.
         assertThrows(IllegalStateException.class, () -> journal.confirm(intent.operationId(), first));
         assertThrows(IllegalStateException.class, () -> journal.reject(intent.operationId(), first, "OLD_REJECTION"));
         assertThrows(IllegalStateException.class, () -> journal.unknown(intent.operationId(), first, "OLD_TIMEOUT"));
@@ -146,11 +144,20 @@ class InventoryOperationJournalPostgres16IT {
         int first = journal.claimForSend(intent.operationId());
         journal.unknown(intent.operationId(), first, "TIMEOUT");
         assertThrows(IllegalStateException.class, () -> journal.confirm(intent.operationId(), first));
-        int second = journal.claimForSend(intent.operationId());
-        assertEquals(first + 1, second);
-        journal.reject(intent.operationId(), second, "DEFINITE_NONCOMMIT");
-        assertThrows(IllegalStateException.class, () -> journal.confirm(intent.operationId(), second));
-        assertEquals(InventoryOperationJournal.State.REJECTED, journal.load(intent.operationId()).state());
+        assertNull(journal.claimForSend(intent.operationId()));
+        assertNull(journal.claimPendingForSend(intent.operationId()));
+        assertThrows(IllegalStateException.class,()->journal.notSent(intent.operationId(),first,"LATE_DISABLED"));
+        assertEquals(InventoryOperationJournal.State.UNKNOWN,journal.load(intent.operationId()).state());
+        assertEquals(first,journal.load(intent.operationId()).sends());
+    }
+
+    @Test void rejectedAttemptCannotBeClaimedAgain() {
+        var intent=freshIntent();journal.prepare(intent);
+        int first=journal.claimForSend(intent.operationId());
+        journal.reject(intent.operationId(),first,"DEFINITE_NONCOMMIT");
+        assertNull(journal.claimForSend(intent.operationId()));assertNull(journal.claimPendingForSend(intent.operationId()));
+        assertThrows(IllegalStateException.class,()->journal.confirm(intent.operationId(),first));
+        assertEquals(InventoryOperationJournal.State.REJECTED,journal.load(intent.operationId()).state());
     }
 
     @Test void multiSkuReleaseCandidateRetainsExactLongQuantitiesAndIndependentOperationId() {
@@ -212,15 +219,14 @@ class InventoryOperationJournalPostgres16IT {
         assertEquals(1, db.queryForObject(
                 "select count(*) from inventory_operation_journal where checkout_attempt_id=?",
                 Integer.class, committedAttempt.checkoutAttemptId()));
-        Integer second = journal.claimForSend(reserve.operationId());
-        assertEquals(2, second);
-        journal.unknown(reserve.operationId(), second, "SECOND_RESPONSE_MISSING");
+        assertNull(journal.claimForSend(reserve.operationId()));
+        assertNull(journal.claimPendingForSend(reserve.operationId()));
         assertEquals(1, db.queryForObject(
                 "select count(*) from inventory_operation_journal where checkout_attempt_id=?",
                 Integer.class, committedAttempt.checkoutAttemptId()));
         assertEquals(reserve.operationId(), journal.load(reserve.operationId()).intent().operationId());
         assertEquals(reserve.lines(), journal.load(reserve.operationId()).intent().lines());
-        assertEquals(2, journal.load(reserve.operationId()).sends());
+        assertEquals(1, journal.load(reserve.operationId()).sends());
     }
 
 
@@ -254,7 +260,7 @@ class InventoryOperationJournalPostgres16IT {
                 Integer.class, reserve.operationId()));
     }
 
-    @Test void twoWorkersReclaimOneUnknownMultiSkuOperationOnlyOnce() throws Exception {
+    @Test void twoWorkersCannotReclaimUnknownMultiSkuOperation() throws Exception {
         var committedAttempt = freshIntent();
         var intent = InventoryOperationIntent.prepare(committedAttempt.checkoutAttemptId(),
                 "multi-reclaim-" + UUID.randomUUID(), InventoryOperationIntent.Type.RESERVE,
@@ -267,19 +273,17 @@ class InventoryOperationJournalPostgres16IT {
         ExecutorService pool = Executors.newFixedThreadPool(2);
         CountDownLatch go = new CountDownLatch(1);
         try {
-            Callable<Integer> task = () -> { go.await(); return journal.claimForSend(intent.operationId()); };
-            Future<Integer> a = pool.submit(task), b = pool.submit(task);
+            Future<Integer> a = pool.submit(()->{go.await();return journal.claimForSend(intent.operationId());});
+            Future<Integer> b = pool.submit(()->{go.await();return journal.claimPendingForSend(intent.operationId());});
             go.countDown();
             Integer aa = a.get(30, TimeUnit.SECONDS), bb = b.get(30, TimeUnit.SECONDS);
-            assertTrue((Integer.valueOf(2).equals(aa) && bb == null)
-                    || (Integer.valueOf(2).equals(bb) && aa == null));
+            assertNull(aa);assertNull(bb);
             var claimed = journal.load(intent.operationId());
-            assertEquals(InventoryOperationJournal.State.IN_FLIGHT, claimed.state());
-            assertEquals(2, claimed.sends());
+            assertEquals(InventoryOperationJournal.State.UNKNOWN, claimed.state());
+            assertEquals(1, claimed.sends());
             assertEquals(intent.fingerprint(), claimed.intent().fingerprint());
             assertEquals(intent.lines(), claimed.intent().lines());
-            journal.confirm(intent.operationId(), 2);
-            assertEquals(InventoryOperationJournal.State.CONFIRMED, journal.load(intent.operationId()).state());
+            assertThrows(IllegalStateException.class,()->journal.confirm(intent.operationId(),first));
             assertNull(journal.claimForSend(intent.operationId()));
         } finally {
             pool.shutdownNow();

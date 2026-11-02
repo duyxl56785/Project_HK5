@@ -1,24 +1,58 @@
-import { useDeferredValue, useEffect, useState } from 'react';
-import type { FormEvent, ReactElement } from 'react';
+import { Component, lazy, Suspense, useDeferredValue, useEffect, useState } from 'react';
+import type { ComponentType, FormEvent, ReactElement, ReactNode } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { BrowserRouter, Link, NavLink, Outlet, Route, Routes, useNavigate, useSearchParams } from 'react-router-dom';
+import { BrowserRouter, Link, NavLink, Outlet, Route, Routes, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { api } from '../shared/api';
 import { useAuth, Guard } from '../shared/auth';
-import { AccountPage } from '../features/account/AccountPage';
-import { LoginPage, RegisterPage } from '../features/account/AuthPages';
-import { AdminAccountsPage, AdminCategoriesPage, AdminFinancePage, AdminOrdersPage, AdminProductsPage, AdminReviewsPage, AdminSellersPage } from '../features/admin/AdminPages';
-import { CartPage } from '../features/cart/CartPage';
 import { useCart } from '../features/cart/cartApi';
-import { CatalogPage } from '../features/catalog/CatalogPage';
-import { HomePage } from '../features/catalog/HomePage';
-import { ProductPage } from '../features/catalog/ProductPage';
-import { StorePage } from '../features/catalog/StorePage';
-import { CheckoutPage } from '../features/checkout/CheckoutPage';
 import { NotificationBell, NotificationsPage } from '../features/notifications/Notifications';
-import { OrderDetailPage, OrdersPage } from '../features/orders/OrdersPage';
-import { SellerHomePage } from '../features/seller/SellerHomePage';
-import { SellerFinancePage, SellerOrdersPage } from '../features/seller/SellerOrdersPage';
-import { SellerProductPage, SellerProductsPage } from '../features/seller/SellerProductsPage';
+
+const page = <K extends string>(load: () => Promise<Record<K, ComponentType>>, name: K) =>
+  lazy(() => load().then((module) => ({ default: module[name] })));
+
+const accountPages = () => import('../features/account/AccountPage');
+const authPages = () => import('../features/account/AuthPages');
+const adminPages = () => import('../features/admin/AdminPages');
+const orderPages = () => import('../features/orders/OrdersPage');
+const sellerOrderPages = () => import('../features/seller/SellerOrdersPage');
+const sellerProductPages = () => import('../features/seller/SellerProductsPage');
+
+const AccountPage = page(accountPages, 'AccountPage');
+const LoginPage = page(authPages, 'LoginPage');
+const RegisterPage = page(authPages, 'RegisterPage');
+const AdminAccountsPage = page(adminPages, 'AdminAccountsPage');
+const AdminCategoriesPage = page(adminPages, 'AdminCategoriesPage');
+const AdminFinancePage = page(adminPages, 'AdminFinancePage');
+const AdminOrdersPage = page(adminPages, 'AdminOrdersPage');
+const AdminProductsPage = page(adminPages, 'AdminProductsPage');
+const AdminReviewsPage = page(adminPages, 'AdminReviewsPage');
+const AdminSellersPage = page(adminPages, 'AdminSellersPage');
+const CartPage = page(() => import('../features/cart/CartPage'), 'CartPage');
+const CatalogPage = page(() => import('../features/catalog/CatalogPage'), 'CatalogPage');
+const HomePage = page(() => import('../features/catalog/HomePage'), 'HomePage');
+const ProductPage = page(() => import('../features/catalog/ProductPage'), 'ProductPage');
+const StorePage = page(() => import('../features/catalog/StorePage'), 'StorePage');
+const CheckoutPage = page(() => import('../features/checkout/CheckoutPage'), 'CheckoutPage');
+const OrderDetailPage = page(orderPages, 'OrderDetailPage');
+const OrdersPage = page(orderPages, 'OrdersPage');
+const SellerHomePage = page(() => import('../features/seller/SellerHomePage'), 'SellerHomePage');
+const SellerFinancePage = page(sellerOrderPages, 'SellerFinancePage');
+const SellerOrdersPage = page(sellerOrderPages, 'SellerOrdersPage');
+const SellerProductPage = page(sellerProductPages, 'SellerProductPage');
+const SellerProductsPage = page(sellerProductPages, 'SellerProductsPage');
+
+/** A page chunk can fail to load, for example after a new deploy; one broken page must not blank the app. */
+class PageBoundary extends Component<{ readonly children: ReactNode }, { readonly failed: boolean }> {
+  state = { failed: false };
+  static getDerivedStateFromError() { return { failed: true }; }
+  render() {
+    if (!this.state.failed) return this.props.children;
+    return <div role="alert" className="stack">
+      <p>Không tải được trang này.</p>
+      <div><button type="button" className="btn btn--primary" onClick={() => location.reload()}>Tải lại</button></div>
+    </div>;
+  }
+}
 
 function CartLink() {
   const cart = useCart();
@@ -60,6 +94,7 @@ function SearchBar() {
 function Layout() {
   const { account, has, logout } = useAuth();
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   return <>
     <header className="topbar">
       <nav className="topbar__strip" aria-label="Điều hướng chính">
@@ -89,7 +124,9 @@ function Layout() {
         {has('CUSTOMER') && <CartLink />}
       </div>
     </header>
-    <main className="container"><Outlet /></main>
+    <main className="container">
+      <PageBoundary key={pathname}><Suspense fallback={<p role="status">Đang tải…</p>}><Outlet /></Suspense></PageBoundary>
+    </main>
     <footer className="footer">© 2026 Soopi · Sàn thương mại điện tử nhiều người bán · Thanh toán khi nhận hàng</footer>
   </>;
 }

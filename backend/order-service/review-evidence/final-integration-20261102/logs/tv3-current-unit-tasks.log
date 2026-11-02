@@ -1,0 +1,32 @@
+# Selected task/build lines only; raw retained locally and hashed.
+> Task :security-common:compileJava
+> Task :order-service:compileJava
+> Task :order-service:processResources
+> Task :order-service:classes
+> Task :order-service:compileTestJava
+> Task :order-service:processTestResources NO-SOURCE
+> Task :order-service:testClasses
+> Task :security-common:processResources
+> Task :security-common:classes
+> Task :security-common:jar
+> Task :order-service:test
+> Task :auth-service:compileJava
+> Task :auth-service:processResources
+> Task :auth-service:classes
+> Task :auth-service:jar
+> Task :cart-service:compileJava
+> Task :cart-service:processResources
+> Task :cart-service:classes
+> Task :cart-service:compileTestJava
+> Task :cart-service:processTestResources NO-SOURCE
+> Task :cart-service:testClasses
+> Task :cart-service:test
+> Task :inventory-service:compileJava
+> Task :inventory-service:processResources
+> Task :inventory-service:classes
+> Task :inventory-service:compileTestJava
+> Task :inventory-service:processTestResources NO-SOURCE
+> Task :inventory-service:testClasses
+> Task :inventory-service:test
+BUILD SUCCESSFUL in 40s
+18 actionable tasks: 18 executed

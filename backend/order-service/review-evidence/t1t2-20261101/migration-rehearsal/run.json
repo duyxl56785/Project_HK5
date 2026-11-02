@@ -1,0 +1,21 @@
+{
+  "run_id": "a36a6bf5251f4445956cb551d0d47cf1",
+  "source_head": "dfe903230c0d2c41ac59b412fd0f249b9f951da2",
+  "source_tree": "e7a45238a336f1ad52b5e61471302864df2f86e8",
+  "target_policy": "Only newly created label-pinned container and generated loopback URL; no shared/production DB/config/credentials used.",
+  "container_id": "c386b4c61a416938bbed07d8aee24e3bb18334c1174711d76dc405ff81aa6493",
+  "container_name": "tv3-v5-rehearsal-a36a6bf525",
+  "image_id": "sha256:5c773214aed7adab0900cd0a05dbc468348f76fe1e4c2ca5b0e222e9531f7811",
+  "mounts": [],
+  "tmpfs": {
+    "/tmp": "rw,nosuid,size=33554432",
+    "/var/lib/postgresql/data": "rw,nosuid,size=268435456",
+    "/var/run/postgresql": "rw,nosuid,size=8388608"
+  },
+  "readonly_rootfs": true,
+  "host_ip": "127.0.0.1",
+  "host_port": 32770,
+  "harness_exit_code": 0,
+  "owned_container_removed": true,
+  "persistent_volumes_created_or_removed": false
+}

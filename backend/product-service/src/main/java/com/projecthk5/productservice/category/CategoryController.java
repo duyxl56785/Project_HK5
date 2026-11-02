@@ -28,6 +28,11 @@ public class CategoryController {
         return service.list();
     }
 
+    @GetMapping("/all")
+    public List<CategoryResponse> listAll() {
+        return service.listAll();
+    }
+
     @GetMapping("/{id}")
     public CategoryResponse get(@PathVariable UUID id) {
         return service.get(id);

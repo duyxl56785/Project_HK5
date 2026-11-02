@@ -1,0 +1,46 @@
+[
+  {
+    "path": "/workspace/tv3-pr145-live-acceptance/backend/api-gateway/build/libs/api-gateway-0.1.0-SNAPSHOT.jar",
+    "sha256": "1a3b7f3b32166646e9c3a1f02601ea8ee32f39489e012d7bfeed9fbc4bb894eb"
+  },
+  {
+    "path": "/workspace/tv3-pr145-live-acceptance/backend/auth-service/build/libs/auth-service-0.1.0-SNAPSHOT.jar",
+    "sha256": "167d60dae11f1d410f3c8834b9735f5806f4b84714625093f3f50d18410ae91b"
+  },
+  {
+    "path": "/workspace/tv3-pr145-live-acceptance/backend/cart-service/build/libs/cart-service-0.1.0-SNAPSHOT.jar",
+    "sha256": "5c61fba609e4711b497121dded53e4ce7387bb4641da59074b7a36770fc6c904"
+  },
+  {
+    "path": "/workspace/tv3-pr145-live-acceptance/backend/config-server/build/libs/config-server-0.1.0-SNAPSHOT.jar",
+    "sha256": "ec1c6b11b47d05152423be446e80719d5f20213b6b14af37299090e22e2ad6c5"
+  },
+  {
+    "path": "/workspace/tv3-pr145-live-acceptance/backend/discovery-server/build/libs/discovery-server-0.1.0-SNAPSHOT.jar",
+    "sha256": "f51b4408c536a0a89995d8bdbc9c4dc44e14a6666abd90cb44b25906db126fab"
+  },
+  {
+    "path": "/workspace/tv3-pr145-live-acceptance/backend/inventory-service/build/libs/inventory-service-0.1.0-SNAPSHOT.jar",
+    "sha256": "b7e226b81ad5cee8e423d76b4b972ab86f2600c4d895f8dfee96e9c1a086f50b"
+  },
+  {
+    "path": "/workspace/tv3-pr145-live-acceptance/backend/notification-service/build/libs/notification-service-0.1.0-SNAPSHOT.jar",
+    "sha256": "cbfdd8c441da5f3eff9b8a4236e4da86dcf56470a692d4f5875f5ce0224853c4"
+  },
+  {
+    "path": "/workspace/tv3-pr145-live-acceptance/backend/order-service/build/libs/order-service-0.1.0-SNAPSHOT.jar",
+    "sha256": "384c862ff598beb07077f00eab3d86bd50bdc421e02cdb6e1df04d5ab0cd8210"
+  },
+  {
+    "path": "/workspace/tv3-pr145-live-acceptance/backend/product-service/build/libs/product-service-0.1.0-SNAPSHOT.jar",
+    "sha256": "a5ef1884dc30ef5a1cd42e407645dd7303f22ad6d5e4fe4c103dc84436e1eda9"
+  },
+  {
+    "path": "/workspace/tv3-pr145-live-acceptance/backend/seller-service/build/libs/seller-service-0.1.0-SNAPSHOT.jar",
+    "sha256": "a6b61c0287b675531f1f27c8bde0bfad46ef5c54dfee101b41566414b2b81c0e"
+  },
+  {
+    "path": "/workspace/tv3-pr145-live-acceptance/backend/user-service/build/libs/user-service-0.1.0-SNAPSHOT.jar",
+    "sha256": "bf602db27aeaeff3f03fb41c6858c503561cd72067c1c9389eade58112948434"
+  }
+]

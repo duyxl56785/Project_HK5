@@ -32,7 +32,7 @@ class CategoryControllerTest {
 
     @Test
     void listsAndGetsFlatCategoryDtos() throws Exception {
-        CategoryResponse response = new CategoryResponse(id, "Root", null);
+        CategoryResponse response = new CategoryResponse(id, "Root", null, "slug", CategoryStatus.ACTIVE);
         when(service.list()).thenReturn(List.of(response));
         when(service.get(id)).thenReturn(response);
         mvc.perform(get("/api/categories")).andExpect(status().isOk())
@@ -44,7 +44,7 @@ class CategoryControllerTest {
     @Test
     void createsWithLocationAndParentId() throws Exception {
         UUID parentId = UUID.randomUUID();
-        when(service.create(any())).thenReturn(new CategoryResponse(id, "Child", parentId));
+        when(service.create(any())).thenReturn(new CategoryResponse(id, "Child", parentId, "slug", CategoryStatus.ACTIVE));
         mvc.perform(post("/api/categories").contentType(MediaType.APPLICATION_JSON)
                 .content("{\"name\":\"Child\",\"parentId\":\"" + parentId + "\"}"))
                 .andExpect(status().isCreated())
@@ -55,7 +55,7 @@ class CategoryControllerTest {
 
     @Test
     void updatesAndDeletes() throws Exception {
-        when(service.update(eq(id), any())).thenReturn(new CategoryResponse(id, "Changed", null));
+        when(service.update(eq(id), any())).thenReturn(new CategoryResponse(id, "Changed", null, "slug", CategoryStatus.ACTIVE));
         mvc.perform(put("/api/categories/{id}", id).contentType(MediaType.APPLICATION_JSON)
                 .content("{\"name\":\"Changed\",\"parentId\":null}"))
                 .andExpect(status().isOk()).andExpect(jsonPath("$.name").value("Changed"));

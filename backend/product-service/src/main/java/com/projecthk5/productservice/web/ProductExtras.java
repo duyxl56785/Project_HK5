@@ -85,6 +85,8 @@ public final class ProductExtras {
         private String comment;
         @Column(nullable = false)
         private boolean hidden;
+        @Column(name = "hidden_reason", length = 500)
+        private String hiddenReason;
         @Column(name = "created_at", nullable = false)
         private Instant createdAt;
 
@@ -105,7 +107,9 @@ public final class ProductExtras {
         public int getRating() { return rating; }
         public String getComment() { return comment; }
         public boolean isHidden() { return hidden; }
-        public void setHidden(boolean hidden) { this.hidden = hidden; }
+        public String getHiddenReason() { return hiddenReason; }
+        /** Showing a review again clears the reason, so it only ever describes the current hide. */
+        public void setHidden(boolean hidden, String reason) { this.hidden = hidden; this.hiddenReason = hidden ? reason : null; }
         public Instant getCreatedAt() { return createdAt; }
     }
 }

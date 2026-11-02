@@ -1,0 +1,51 @@
+{
+  "application_head": "bf8eb3a027c72ad9fde81d0aa5dabc4e73bebacf",
+  "command": "./gradlew :order-service:test :order-service:postgresIntegrationTest :cart-service:test :cart-service:postgresIntegrationTest :inventory-service:test :inventory-service:postgresIntegrationTest bootJar --rerun-tasks --no-daemon --console=plain",
+  "cwd": "backend, Codex Terminal Linux",
+  "exit_code": 0,
+  "groups": {
+    "order-service:test": {
+      "tests": 156,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "order-service:postgresIntegrationTest": {
+      "tests": 103,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "cart-service:test": {
+      "tests": 11,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "cart-service:postgresIntegrationTest": {
+      "tests": 13,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "inventory-service:test": {
+      "tests": 27,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "inventory-service:postgresIntegrationTest": {
+      "tests": 19,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  },
+  "totals": {
+    "pass": 329,
+    "fail": 0,
+    "skip": 0
+  },
+  "bootJar": "PASS; backend jars built from the tested application HEAD",
+  "note": "New execution after main synchronization, separate from historical 329 candidate PASS and from 3 live acceptance PASS"
+}

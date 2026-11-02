@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuite name="com.projecthk5.orderservice.integration.FulfillmentPostgres16IT" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-11-01T10:38:36" time="0.511">
+  <testcase name="customerSeesOnlyOwnOrdersWithShippingAndStoreSplit()" classname="com.projecthk5.orderservice.integration.FulfillmentPostgres16IT" time="0.155" />
+  <testcase name="sellerListsAndActsOnlyOnOwnStore()" classname="com.projecthk5.orderservice.integration.FulfillmentPostgres16IT" time="0.112" />
+  <testcase name="fullCodFlowWritesSideEffectsAndFinance()" classname="com.projecthk5.orderservice.integration.FulfillmentPostgres16IT" time="0.124" />
+  <testcase name="concurrentAcceptsApplyOnceUnderRowLock()" classname="com.projecthk5.orderservice.integration.FulfillmentPostgres16IT" time="0.03" />
+  <testcase name="databaseRejectsCodCollectionBeforeDelivery()" classname="com.projecthk5.orderservice.integration.FulfillmentPostgres16IT" time="0.01" />
+  <testcase name="rolesAreEnforcedPerRoute()" classname="com.projecthk5.orderservice.integration.FulfillmentPostgres16IT" time="0.025" />
+  <testcase name="customerCancelAndSellerRejectReleaseStockAndCloseOrder()" classname="com.projecthk5.orderservice.integration.FulfillmentPostgres16IT" time="0.049" />
+</testsuite>

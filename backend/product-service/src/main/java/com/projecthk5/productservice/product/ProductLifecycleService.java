@@ -20,16 +20,38 @@ public class ProductLifecycleService {
                                  BigDecimal price, String currency) {
         managedStore(actor, storeId);
         requireCategory(categoryId);
+        requireOpenCategory(categoryId);
         return new ProductListing(UUID.randomUUID(), storeId, categoryId, sku, name, price, currency, ProductStatus.DRAFT, null);
     }
 
     public ProductListing edit(String actor, ProductListing current, UUID categoryId, String name,
                                BigDecimal price, String currency) {
+        return edit(actor, current, categoryId, name, price, currency, false);
+    }
+
+    /**
+     * A price change applies at once; a content change on a Product buyers can see goes back through review.
+     * The description lives outside the listing, so the caller reports whether it changed.
+     */
+    public ProductListing edit(String actor, ProductListing current, UUID categoryId, String name,
+                               BigDecimal price, String currency, boolean descriptionChanged) {
         managedStore(actor, current.storeId());
-        requireState(current, ProductStatus.DRAFT, ProductStatus.REJECTED, ProductStatus.INACTIVE);
+        requireState(current, ProductStatus.DRAFT, ProductStatus.REJECTED, ProductStatus.INACTIVE, ProductStatus.ACTIVE);
         requireCategory(categoryId);
-        return new ProductListing(current.id(), current.storeId(), categoryId, current.sku(), name, price, currency,
-                current.status(), current.reviewReason());
+        if (!categoryId.equals(current.categoryId())) {
+            requireOpenCategory(categoryId);
+        }
+        ProductListing edited = new ProductListing(current.id(), current.storeId(), categoryId, current.sku(), name, price,
+                currency, current.status(), current.reviewReason());
+        if (!descriptionChanged && edited.name().equals(current.name()) && categoryId.equals(current.categoryId())) {
+            return edited;
+        }
+        return switch (current.status()) {
+            case ACTIVE -> edited.withState(ProductStatus.PENDING_REVIEW, null);
+            // Activation skips review, so an INACTIVE listing must keep exactly the approved content.
+            case INACTIVE -> edited.withState(ProductStatus.DRAFT, null);
+            default -> edited;
+        };
     }
 
     public ProductListing submit(String actor, ProductListing current) {
@@ -62,6 +84,27 @@ public class ProductLifecycleService {
         managedStore(actor, current.storeId());
         requireState(current, ProductStatus.ACTIVE);
         return current.withState(ProductStatus.INACTIVE, null);
+    }
+
+    /** Images are reviewed content: an approved set stays frozen, and a new set on an INACTIVE Product needs review again. */
+    public ProductListing changeImages(String actor, ProductListing current) {
+        managedStore(actor, current.storeId());
+        requireState(current, ProductStatus.DRAFT, ProductStatus.REJECTED, ProductStatus.INACTIVE);
+        return current.status() == ProductStatus.INACTIVE ? current.withState(ProductStatus.DRAFT, null) : current;
+    }
+
+    public ProductListing activate(String actor, ProductListing current) {
+        managedStore(actor, current.storeId());
+        requireState(current, ProductStatus.INACTIVE);
+        requireCategory(current.categoryId());
+        return current.withState(ProductStatus.ACTIVE, null);
+    }
+
+    public ProductListing unsuspend(String actor, ProductListing current) {
+        moderatedStore(actor, current.storeId());
+        requireState(current, ProductStatus.SUSPENDED);
+        requireCategory(current.categoryId());
+        return current.withState(ProductStatus.ACTIVE, null);
     }
 
     public ProductListing managementView(String actor, ProductListing current) {
@@ -119,6 +162,12 @@ public class ProductLifecycleService {
         }
         if (!categories.existsById(id)) {
             throw new ProductRuleException(ProductRuleException.Code.CATEGORY_NOT_FOUND, "Category does not exist");
+        }
+    }
+
+    private void requireOpenCategory(UUID id) {
+        if (categories.isHiddenInChain(id)) {
+            throw new ProductRuleException(ProductRuleException.Code.CATEGORY_NOT_FOUND, "Category is not available");
         }
     }
 

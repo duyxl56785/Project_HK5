@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuite name="com.projecthk5.inventoryservice.integration.InventoryInitializePostgresIT" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-11-01T10:41:32" time="0.344">
+  <testcase name="competingInitializationWaitsForUniqueRowAndReturns409AfterWinnerCommits()" classname="com.projecthk5.inventoryservice.integration.InventoryInitializePostgresIT" time="0.196" />
+  <testcase name="encodedAndMatrixPathsRequireTokenAndNeverWriteWithoutIt()" classname="com.projecthk5.inventoryservice.integration.InventoryInitializePostgresIT" time="0.043" />
+  <testcase name="duplicateAfterReservationPreservesAvailableReservedVersionAndTimestamp()" classname="com.projecthk5.inventoryservice.integration.InventoryInitializePostgresIT" time="0.058" />
+  <testcase name="duplicateFreshSkuReturns409WithoutChangingAnyStoredBalanceField()" classname="com.projecthk5.inventoryservice.integration.InventoryInitializePostgresIT" time="0.042" />
+</testsuite>

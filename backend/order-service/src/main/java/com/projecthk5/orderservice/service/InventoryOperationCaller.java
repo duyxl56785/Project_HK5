@@ -7,9 +7,8 @@ import java.util.Set;
 import org.springframework.stereotype.Service;
 
 /**
- * One bounded dispatch attempt at a time: caller must persist T1 via Journal.prepare
- * before calling this method. A future approved scheduler may retry UNKNOWN with the
- * same ID and reviewed backoff/deadline; this class never automatically compensates.
+ * One bounded dispatch from committed PENDING at a time. UNKNOWN is quarantined;
+ * this caller supplies no resolution, retry of UNKNOWN, or compensation policy.
  * No positive transport bean is configured in the baseline.
  */
 @Service
@@ -28,9 +27,11 @@ public class InventoryOperationCaller {
         if (snapshot.state() == InventoryOperationJournal.State.CONFIRMED) return Outcome.CONFIRMED;
         if (snapshot.state() == InventoryOperationJournal.State.REJECTED)
             return Outcome.REJECTED;
+        if (snapshot.state() == InventoryOperationJournal.State.UNKNOWN) return Outcome.UNKNOWN;
         if (snapshot.state() == InventoryOperationJournal.State.IN_FLIGHT)
             throw new IllegalStateException("Inventory step already in flight; reconcile before retry");
-        Integer attempt = journal.claimForSend(operationId);
+        // Recheck PENDING in the atomic DB update: a snapshot can become UNKNOWN before this claim.
+        Integer attempt = journal.claimPendingForSend(operationId);
         if (attempt == null)
             throw new IllegalStateException("Concurrent Inventory sender claimed step");
 

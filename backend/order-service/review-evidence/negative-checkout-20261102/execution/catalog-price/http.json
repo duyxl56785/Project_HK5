@@ -1,0 +1,111 @@
+[
+  {
+    "method": "GET",
+    "path": "/api/cart",
+    "status": 200
+  },
+  {
+    "method": "POST",
+    "path": "/api/cart/items",
+    "status": 200
+  },
+  {
+    "method": "POST",
+    "path": "/api/cart/items",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "path": "/api/cart",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "path": "/api/seller/products/43bc4cd5-3744-46f9-a3e0-88db8429658a",
+    "status": 200,
+    "product": {
+      "id": "43bc4cd5-3744-46f9-a3e0-88db8429658a",
+      "sku": "TV3-NEG-b6396d50-B",
+      "status": "ACTIVE",
+      "version": "2",
+      "unitPrice": "10000"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/seller/products/43bc4cd5-3744-46f9-a3e0-88db8429658a/deactivate",
+    "status": 200,
+    "product": {
+      "id": "43bc4cd5-3744-46f9-a3e0-88db8429658a",
+      "sku": "TV3-NEG-b6396d50-B",
+      "status": "INACTIVE",
+      "version": "3",
+      "unitPrice": "10000"
+    }
+  },
+  {
+    "method": "PUT",
+    "path": "/api/seller/products/43bc4cd5-3744-46f9-a3e0-88db8429658a",
+    "status": 200,
+    "product": {
+      "id": "43bc4cd5-3744-46f9-a3e0-88db8429658a",
+      "sku": "TV3-NEG-b6396d50-B",
+      "status": "INACTIVE",
+      "version": "4",
+      "unitPrice": "11000"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/seller/products/43bc4cd5-3744-46f9-a3e0-88db8429658a/submit",
+    "status": 200,
+    "product": {
+      "id": "43bc4cd5-3744-46f9-a3e0-88db8429658a",
+      "sku": "TV3-NEG-b6396d50-B",
+      "status": "PENDING_REVIEW",
+      "version": "5",
+      "unitPrice": "11000"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/admin/products/43bc4cd5-3744-46f9-a3e0-88db8429658a/approve",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "path": "/api/cart",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "path": "/api/cart",
+    "status": 200
+  },
+  {
+    "method": "POST",
+    "path": "/api/orders",
+    "status": 409,
+    "keySha256": "f383bb9dd317c2563000b2caf9a74771791da30c8d3ce73ba4117d2c533fe426",
+    "expectedItems": [
+      {
+        "productId": "0521c2d6-64e7-4687-9e61-cff48eaaffd6",
+        "quantity": 1
+      },
+      {
+        "productId": "43bc4cd5-3744-46f9-a3e0-88db8429658a",
+        "quantity": 1
+      }
+    ],
+    "expectedRevision": 23,
+    "error": {
+      "code": "BUSINESS_CONFLICT",
+      "message": "Product price changed since adding to cart"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/cart",
+    "status": 200
+  }
+]

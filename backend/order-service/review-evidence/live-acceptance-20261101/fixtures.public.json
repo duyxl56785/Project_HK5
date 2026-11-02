@@ -1,0 +1,23 @@
+{
+  "sourceHead": "bf8eb3a027c72ad9fde81d0aa5dabc4e73bebacf",
+  "customerId": "afd2e3ae-cfb8-45c5-9d20-db09ba576191",
+  "sellerBStoreId": "29e1cd3b-b7dc-48e6-b4c8-da4e4460a16f",
+  "customerRoleVerified": true,
+  "sellerRoleVerified": true,
+  "lines": [
+    {
+      "productId": "25dbf9c2-5e70-4dd8-9ddf-efe3e0d033e3",
+      "sku": "VI-001",
+      "storeId": "56f58629-d305-4e7d-8c99-d0401ae44450",
+      "quantity": 2,
+      "available": 50
+    },
+    {
+      "productId": "6136fb1f-9dac-41ee-8c0b-fe6a259c1d5d",
+      "sku": "BE-001",
+      "storeId": "29e1cd3b-b7dc-48e6-b4c8-da4e4460a16f",
+      "quantity": 2,
+      "available": 50
+    }
+  ]
+}

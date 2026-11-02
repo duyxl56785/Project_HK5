@@ -43,6 +43,26 @@ test('a customer cannot open seller or admin pages', async ({ page }) => {
   }
 });
 
+test('an admin hides a category from the public tree only', async ({ browser, request }) => {
+  const name = `E2E ẩn ${Date.now()}`;
+  const admin = await sessionFor(browser, accounts.admin);
+  await admin.goto('/admin/categories');
+  await admin.getByLabel('Tên danh mục').fill(name);
+  await admin.getByRole('button', { name: 'Thêm' }).click();
+  const status = admin.getByLabel(`Trạng thái ${name}`);
+  await status.selectOption('HIDDEN');
+  await expect(status).toHaveValue('HIDDEN');
+  await expect.poll(async () => {
+    const rows = await (await request.get('/api/categories')).json() as { name: string }[];
+    return rows.some((row) => row.name === name);
+  }).toBe(false);
+  await admin.reload();
+  await expect(admin.getByLabel(`Trạng thái ${name}`)).toHaveValue('HIDDEN');
+  await admin.getByRole('row').filter({ has: admin.getByLabel(`Tên ${name}`) }).getByRole('button', { name: 'Xóa' }).click();
+  await expect(admin.getByLabel(`Tên ${name}`)).toHaveCount(0);
+  await admin.context().close();
+});
+
 test('an admin locks an account, ending its session, and unlocks it', async ({ browser, page }) => {
   const account = { email: `e2e-${unique()}@hk5.local`, password: accounts.customer.password };
   await page.goto('/register');
@@ -84,6 +104,26 @@ test('a signed-in customer is not sent to login while the session is restoring',
   await expect(add).toBeVisible();
   await expect(add).toBeDisabled();
   await expect(add).toBeEnabled();
+});
+
+test('a page chunk that fails to load offers a reload instead of a blank app', async ({ page }) => {
+  await page.goto('/login');
+  await page.route('**/assets/CatalogPage-*', (route) => route.abort());
+  await page.getByRole('search').getByRole('button').click();
+  await expect(page.getByRole('alert')).toContainText('Không tải được trang này');
+  await expect(page.getByRole('button', { name: 'Tải lại' })).toBeVisible();
+  await expect(page.getByRole('search')).toBeVisible();
+});
+
+test('the home banner holds its slide while the pointer is on it', async ({ page }) => {
+  await page.goto('/');
+  const banner = page.getByRole('region', { name: 'Giới thiệu Soopi' });
+  const title = await banner.getByRole('heading').textContent();
+  await banner.hover();
+  await page.waitForTimeout(5500);
+  await expect(banner.getByRole('heading')).toHaveText(title!);
+  await page.mouse.move(0, 0);
+  await expect(banner.getByRole('heading')).not.toHaveText(title!, { timeout: 7000 });
 });
 
 test('a guest page does not ask for a session it never had', async ({ page }) => {

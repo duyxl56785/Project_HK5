@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.UUID;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -46,6 +48,7 @@ class CheckoutReplayPostgresIT {
     @Autowired CheckoutService checkout;
     @Autowired IdempotencyCoordinator keys;
     @Autowired OrderWriteService writer;
+    @Autowired CheckoutDraftJournal drafts;
     @Autowired OrderRepository orders;
     @Autowired CheckoutAttemptRepository attempts;
     @Autowired ObjectMapper json;
@@ -82,7 +85,16 @@ class CheckoutReplayPostgresIT {
         verifyNoInteractions(carts, catalog, inventory);
     }
 
-    @Test void successfulSameKeyRejectsChangedShippingBeforeRemoteSideEffects() {
+    static java.util.stream.Stream<Order.Shipping> changedShipping() {
+        return java.util.stream.Stream.of(
+            new Order.Shipping("Receiver B", "0901234567", "Address A"),
+            new Order.Shipping("Receiver A", "0907654321", "Address A"),
+            new Order.Shipping("Receiver A", "0901234567", "Address B"),
+            null);
+    }
+
+    @ParameterizedTest @MethodSource("changedShipping")
+    void successfulSameKeyRejectsChangedShippingBeforeRemoteSideEffects(Order.Shipping changed) {
         String customer = "shipping-" + UUID.randomUUID();
         String key = "shipping-key-" + UUID.randomUUID();
         Order.Shipping original = new Order.Shipping("Receiver A", "0901234567", "Address A");
@@ -93,7 +105,6 @@ class CheckoutReplayPostgresIT {
         verify(carts).finalizeCart("Bearer fixture", key);
         clearInvocations(carts, catalog, inventory);
 
-        Order.Shipping changed = new Order.Shipping("Receiver A", "0901234567", "Address B");
         ResponseStatusException conflict = assertThrows(ResponseStatusException.class,
             () -> checkout.checkout(customer, "Bearer fixture", key, request, changed));
         assertEquals(HttpStatus.CONFLICT, conflict.getStatusCode());
@@ -127,6 +138,10 @@ class CheckoutReplayPostgresIT {
             true, true, true, true, new BigDecimal("15000")));
         OrderWriteService lostResponse = mock(OrderWriteService.class);
         doAnswer(invocation -> {
+            writer.prepareDraft(invocation.getArgument(0));
+            return null;
+        }).when(lostResponse).prepareDraft(any(com.projecthk5.orderservice.domain.CheckoutDraft.class));
+        doAnswer(invocation -> {
             // This is the real Spring transaction proxy: commit happens before the simulated transport failure.
             writer.savePlaced(invocation.getArgument(0), invocation.getArgument(1), invocation.getArgument(2));
             throw new IllegalStateException("Fixture lost COMMIT response");
@@ -140,6 +155,8 @@ class CheckoutReplayPostgresIT {
         CheckoutAttempt stored = attempts.findByCustomerIdAndIdempotencyKey(customer, "uncertain-key").orElseThrow();
         assertEquals(CheckoutAttempt.State.SUCCEEDED, stored.getState());
         assertEquals(result.orderId(), stored.getOrderId());
+        assertEquals(result.orderId(),drafts.load(stored.getId()).orderId());
+        assertEquals(2,drafts.load(stored.getId()).sellerOrders().size());
         verify(inventory, never()).release(any());
         verify(carts, never()).release(anyString(), anyString());
     }

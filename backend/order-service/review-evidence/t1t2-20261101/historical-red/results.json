@@ -1,0 +1,47 @@
+{
+  "historical": true,
+  "base": "9a6d9f3c5c9cc88084e29cdc9284c42718ee9945",
+  "fixed_candidate": "dfe903230c0d2c41ac59b412fd0f249b9f951da2",
+  "candidate_tree": "e7a45238a336f1ad52b5e61471302864df2f86e8",
+  "red": {
+    "exit_code": 1,
+    "tests": 6,
+    "passed": 0,
+    "failed": 6,
+    "skipped": 0,
+    "cases": [
+      {
+        "class": "com.projecthk5.orderservice.integration.CheckoutDraftPostgresIT",
+        "case": "[1] point=AFTER_DRAFT",
+        "failure": "org.opentest4j.AssertionFailedError: Draft graph must match the request fingerprint ==> expected: <c1ddbe85e752bd1ee941881683d034cd18eb5fe30de491cf03098a6ddbbac174> but was: <14b5c8e964e417f58ff8400b0e7743ef07fe6701cbf40133e6cb6692091b89a5>"
+      },
+      {
+        "class": "com.projecthk5.orderservice.integration.CheckoutDraftPostgresIT",
+        "case": "[2] point=AFTER_T1",
+        "failure": "org.opentest4j.AssertionFailedError: Draft graph must match the request fingerprint ==> expected: <c1ddbe85e752bd1ee941881683d034cd18eb5fe30de491cf03098a6ddbbac174> but was: <14b5c8e964e417f58ff8400b0e7743ef07fe6701cbf40133e6cb6692091b89a5>"
+      },
+      {
+        "class": "com.projecthk5.orderservice.integration.CheckoutDraftPostgresIT",
+        "case": "[3] point=AFTER_RESERVE",
+        "failure": "org.opentest4j.AssertionFailedError: Draft graph must match the request fingerprint ==> expected: <c1ddbe85e752bd1ee941881683d034cd18eb5fe30de491cf03098a6ddbbac174> but was: <14b5c8e964e417f58ff8400b0e7743ef07fe6701cbf40133e6cb6692091b89a5>"
+      },
+      {
+        "class": "com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT",
+        "case": "unknownCannotBeClaimedThroughLegacyJournalApi()",
+        "failure": "org.opentest4j.AssertionFailedError: expected: <null> but was: <2>"
+      },
+      {
+        "class": "com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT",
+        "case": "unknownGenericDisabledTransportCannotReopenRowOrEnableHttpAdapter()",
+        "failure": "org.opentest4j.AssertionFailedError: expected: <UNKNOWN> but was: <PENDING>"
+      },
+      {
+        "class": "com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT",
+        "case": "stalePendingReadCannotClaimAConcurrentlyCommittedUnknown()",
+        "failure": "org.opentest4j.AssertionFailedError: Expected java.util.concurrent.ExecutionException to be thrown, but nothing was thrown."
+      }
+    ],
+    "note": "New tests only on base 9a6d9f3. P2 checks fail before child launch; GREEN later runs the three actual halts."
+  },
+  "current_run": false
+}

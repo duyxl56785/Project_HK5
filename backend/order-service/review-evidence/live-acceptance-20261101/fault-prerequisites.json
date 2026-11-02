@@ -1,0 +1,12 @@
+{
+  "claimConflict": {
+    "state": "NOT_RUN",
+    "executed": 0,
+    "reason": "No TV4/TV5-approved real fault fixture, original operation identity, active fault receipt and evidence SHA256 supplied"
+  },
+  "timeout": {
+    "state": "NOT_RUN",
+    "executed": 0,
+    "reason": "No TV4/TV5-approved timeout/lost-response fixture, operation identity, active fault receipt and evidence SHA256 supplied"
+  }
+}

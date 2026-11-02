@@ -57,6 +57,7 @@ function ProductForm({ current }: { readonly current?: SellerProduct }) {
     <h2>Thông tin sản phẩm</h2>
     <Field label="Danh mục" error={errors.categoryId}><select {...form.register('categoryId')}>
       <option value="">Chọn danh mục…</option>
+      {p && categories.data && !categories.data.some((c) => c.id === p.categoryId) && <option value={p.categoryId}>Danh mục hiện tại (đã ẩn)</option>}
       {categories.data?.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}</select></Field>
     <Field label="SKU" error={errors.sku}><input readOnly={!!p} {...form.register('sku')} /></Field>
     <Field label="Tên sản phẩm" error={errors.name}><input {...form.register('name')} /></Field>
@@ -81,26 +82,30 @@ function Stock({ id, available, reserved }: { readonly id: string; readonly avai
   </section>;
 }
 
-function Images({ id, images }: { readonly id: string; readonly images: SellerProduct['images'] }) {
+function Images({ product, images }: { readonly product: SellerProduct['product']; readonly images: SellerProduct['images'] }) {
+  const { id, status, version } = product;
+  const changeable = ['DRAFT', 'REJECTED', 'INACTIVE'].includes(status);
   const upload = useAction((files: File[]) => {
     const form = new FormData();
+    form.append('expectedVersion', version);
     files.forEach((file) => form.append('files', file));
     return api(`/api/seller/products/${id}/images`, { method: 'POST', form });
-  }, ['seller-product']);
-  const remove = useAction((imageId: string) => api(`/api/seller/products/${id}/images/${imageId}`, { method: 'DELETE' }), ['seller-product']);
+  }, ['seller-product', 'seller-products']);
+  const remove = useAction((imageId: string) => api(`/api/seller/products/${id}/images/${imageId}?expectedVersion=${version}`, { method: 'DELETE' }),
+    ['seller-product', 'seller-products']);
   return <section className="panel stack">
     <h2>Ảnh sản phẩm ({images.length}/5)</h2>
     <div className="row row--wrap">{images.map((image) => <div key={image.id} className="stack thumb-box">
-      <img src={image.url} alt="" /><button type="button" className="btn" disabled={remove.isPending} onClick={() => remove.mutate(image.id)}>Xóa</button>
+      <img src={image.url} alt="" />{changeable && <button type="button" className="btn" disabled={remove.isPending} onClick={() => remove.mutate(image.id)}>Xóa</button>}
     </div>)}</div>
-    <label className="field">Tải ảnh lên (JPEG, PNG, WebP; tối đa 2 MB mỗi ảnh)
+    {changeable ? <label className="field">Tải ảnh lên (JPEG, PNG, WebP; tối đa 2 MB mỗi ảnh)
       <input type="file" multiple accept="image/jpeg,image/png,image/webp" disabled={upload.isPending}
         onChange={(e) => {
           // Copy first: FileList is live and clearing the input empties it.
           const files = Array.from(e.currentTarget.files ?? []);
           e.currentTarget.value = '';
           if (files.length) upload.mutate(files);
-        }} /></label>
+        }} /></label> : <p className="muted">Chỉ đổi được ảnh khi sản phẩm là bản nháp, bị từ chối hoặc đã ngừng bán.</p>}
     <ErrorNote error={upload.error ?? remove.error} />
   </section>;
 }
@@ -115,14 +120,18 @@ export function SellerProductPage() {
     <Link to="/seller/products">← Sản phẩm</Link>
     <div className="row row--between"><h1>{data.product.name}</h1><Badge value={data.product.status} /></div>
     <div className="row row--wrap">
-      {['DRAFT', 'REJECTED', 'INACTIVE'].includes(data.product.status) && <button type="button" className="btn btn--primary" disabled={lifecycle.isPending}
+      {['DRAFT', 'REJECTED'].includes(data.product.status) && <button type="button" className="btn btn--primary" disabled={lifecycle.isPending}
         onClick={() => lifecycle.mutate({ action: 'submit', version: data.product.version })}>Gửi duyệt</button>}
+      {data.product.status === 'INACTIVE' && <button type="button" className="btn btn--primary" disabled={lifecycle.isPending}
+        onClick={() => lifecycle.mutate({ action: 'activate', version: data.product.version })}>Bán lại</button>}
       {data.product.status === 'ACTIVE' && <button type="button" className="btn" disabled={lifecycle.isPending}
         onClick={() => lifecycle.mutate({ action: 'deactivate', version: data.product.version })}>Ngừng bán</button>}
     </div>
     <ErrorNote error={lifecycle.error} />
+    {data.product.status === 'ACTIVE' && <p className="muted">Đổi giá áp dụng ngay. Đổi tên, danh mục hoặc mô tả sẽ đưa sản phẩm về chờ duyệt. Muốn đổi ảnh, hãy ngừng bán trước.</p>}
+    {data.product.status === 'INACTIVE' && <p className="muted">Đổi giá vẫn bán lại được ngay. Đổi tên, danh mục, mô tả hoặc ảnh thì phải gửi duyệt lại.</p>}
     <ProductForm key={data.product.version} current={data} />
     <Stock key={`stock-${data.available}`} id={data.product.id} available={data.available} reserved={data.reserved} />
-    <Images id={data.product.id} images={data.images} />
+    <Images product={data.product} images={data.images} />
   </div>}</Loaded>;
 }

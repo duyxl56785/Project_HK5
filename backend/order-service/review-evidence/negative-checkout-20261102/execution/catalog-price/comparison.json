@@ -1,0 +1,27 @@
+{
+  "name": "Catalog repriced after Cart",
+  "status": 409,
+  "error": {
+    "message": "Product price changed since adding to cart",
+    "code": "BUSINESS_CONFLICT"
+  },
+  "orders": [
+    4,
+    4
+  ],
+  "sellerOrders": [
+    8,
+    8
+  ],
+  "cartRevision": [
+    23,
+    25
+  ],
+  "inventoryOperations": [
+    7,
+    7
+  ],
+  "inventoryBalancesUnchanged": true,
+  "journalDelta": [],
+  "draftDelta": 0
+}
