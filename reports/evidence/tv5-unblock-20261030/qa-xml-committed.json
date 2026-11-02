@@ -1,0 +1,27 @@
+{
+  "kind": "DERIVED offline QA tool regression, not Finance runtime evidence",
+  "head": "9bf27cfedbb0bac6e06ac86308bb3d95dbc81104",
+  "startedUtc": "2026-10-30T03:55:47.261312+00:00",
+  "completedUtc": "2026-10-30T03:55:47.689048+00:00",
+  "command": [
+    "C:\\Users\\Admin\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "scripts/qa/tests",
+    "-v"
+  ],
+  "exitCode": 0,
+  "counts": {
+    "PASS": 53,
+    "FAIL": 0
+  },
+  "rawArtifacts": [
+    {
+      "localPath": ".verification/tv5-unblock-20261030/qa-xml-committed.log",
+      "bytes": 9351,
+      "sha256": "43d1f07e06b886ddc243c8d634d8ec15eb187f32c7f9a40d8fa920f89c8ca781"
+    }
+  ]
+}
