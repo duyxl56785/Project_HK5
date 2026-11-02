@@ -1,0 +1,132 @@
+{
+  "kind": "DERIVED integrity verification; raw logs remain private, screenshots synthetic Finance/recorded public QA only",
+  "verifiedAtUtc": "2026-10-28T01:37:02.648081+00:00",
+  "status": "PASS",
+  "artifacts": [
+    {
+      "path": ".verification/tv5-ui-20261028/model-red/runtime.log",
+      "sha256": "b686401a05d32fe96564ee56a5ea591089cb97be5cc76440ff72b2abf8eb0fcb",
+      "bytes": 30660
+    },
+    {
+      "path": ".verification/tv5-ui-20261028/model-green/runtime.log",
+      "sha256": "dbc77c7093810207f9713415098e7a178958b4e8df31e701c213f34ccf4d492f",
+      "bytes": 8216
+    },
+    {
+      "path": ".verification/tv5-ui-20261028/model-refactor/runtime.log",
+      "sha256": "5507268637982a37e231bf89a04fdda95bb652ad1b8c37e958c46d1be562d4a2",
+      "bytes": 4517
+    },
+    {
+      "path": ".verification/tv5-ui-20261028/component-red/runtime.log",
+      "sha256": "7b5344a6c56d595c79a9fdc99a8e04990fc54b8323417e6a27deb4dbb0d7c6fc",
+      "bytes": 9986
+    },
+    {
+      "path": ".verification/tv5-ui-20261028/component-green/runtime.log",
+      "sha256": "856cde505b712289eb688ece048af02e3ccdc5e4f046e1f5fa3291e75b81125a",
+      "bytes": 17866
+    },
+    {
+      "path": ".verification/tv5-ui-20261028/component-green-final/runtime.log",
+      "sha256": "9984c0f3c1ca78b2f7d015f195a02d420459bebc66ba21deef29bbc12baaf2dc",
+      "bytes": 2126
+    },
+    {
+      "path": ".verification/tv5-ui-20261028/hook-regression/runtime.log",
+      "sha256": "18e121b82559a37e13ec9342fcd667f06f817668b5ec9454f70c8c0715d235bc",
+      "bytes": 3087
+    },
+    {
+      "path": ".verification/tv5-ui-20261028/hook-red-sync/runtime.log",
+      "sha256": "f1ccb30328012d61171686e6ffed9dd164e2a9ff43585e80514a85ed2fc36d29",
+      "bytes": 4695
+    },
+    {
+      "path": ".verification/tv5-ui-20261028/hook-green-sync/runtime.log",
+      "sha256": "0a419e69438a6d356f87abf2bbffb1ad36724f8c10ea779b78667a0d4108b048",
+      "bytes": 1358
+    },
+    {
+      "path": ".verification/tv5-ui-20261028/browser-first/runtime.log",
+      "sha256": "5d5a52bdfe7585afadfdc16ce538d6630aab75791377e45e281ab9247e418bd1",
+      "bytes": 7011
+    },
+    {
+      "path": ".verification/tv5-ui-20261028/browser-green/runtime.log",
+      "sha256": "5d27c127f86bbc88e0b49444c8204ffb653cf0a147f14f561fe226bd73b7a143",
+      "bytes": 3795
+    },
+    {
+      "path": ".verification/tv5-ui-20261028/canonical-money-red/runtime.log",
+      "sha256": "7e116f4d6586b43f1f34383f4329b30e292cdcc3565e4920415d7569c1b30ba4",
+      "bytes": 4952
+    },
+    {
+      "path": ".verification/tv5-ui-20261028/committed-unit-render-dom/runtime.log",
+      "sha256": "69cfa820afdb87d8bc9fd1219292facf67d9c54eb3a8364cbcfe2a783283d2a6",
+      "bytes": 7786
+    },
+    {
+      "path": ".verification/tv5-ui-20261028/committed-browser/runtime.log",
+      "sha256": "6a0f1afcf67aae6bee0cd133aae0402beb9cb2ed4d5fc737426e38f4dd12a5a6",
+      "bytes": 3796
+    },
+    {
+      "path": ".verification/tv5-ui-20261028/existing-feature-regression/runtime.log",
+      "sha256": "a80689e094a7f3e751429cd6079337ccdb3ac102d484e43c1eea6d1e4afabb7d",
+      "bytes": 16581
+    },
+    {
+      "path": ".verification/tv5-ui-20261028/acceptance-unit-render-dom/runtime.log",
+      "sha256": "6c4826aec908fed4848a4aa3feda5725726c1c91936589f02ca7a3ff02e76408",
+      "bytes": 8214
+    },
+    {
+      "path": ".verification/tv5-ui-20261028/acceptance-browser/runtime.log",
+      "sha256": "b7fb24e10277d6e86cba94781f344645c5f56b7017b8a9db6513d5cfc443e33b",
+      "bytes": 3795
+    },
+    {
+      "path": ".verification/tv5-ui-20261028/acceptance-app-build/runtime.log",
+      "sha256": "297ca15950d54cc97c95d22f83692eff4c08660bf49045929ec3b1e2c624753b",
+      "bytes": 392
+    },
+    {
+      "path": ".verification/tv5-ui-20261028/acceptance-preview-build/runtime.log",
+      "sha256": "491e7e7bd40523fefd218853e44c5c4e294399201ff8da4a05c5de213b4ca15c",
+      "bytes": 620
+    },
+    {
+      "path": ".verification/tv5-ui-20261028/final-typecheck/runtime.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": ".verification/tv5-ui-20261028/preview-build-refactored/runtime.log",
+      "sha256": "87ad8f9c56cea125e03d33465b890794265f797b3d5c0863cfe049a8686f82bf",
+      "bytes": 620
+    },
+    {
+      "path": ".verification/tv5-ui-20261028/browser-artifacts-acceptance/finance-desktop.png",
+      "sha256": "bb4a46c751c00f765057f9ac1797bdb951050d8da7af0258855822a3542d0742",
+      "bytes": 146310
+    },
+    {
+      "path": ".verification/tv5-ui-20261028/browser-artifacts-acceptance/finance-375.png",
+      "sha256": "f7d8e092bfdd9087ba8c12edc2ca7a9913b48b259619d3bb3085f99025c5e292",
+      "bytes": 105345
+    },
+    {
+      "path": ".verification/tv5-ui-20261028/browser-artifacts-acceptance/qa-desktop.png",
+      "sha256": "91ad99e496f31ce640ff3fd04b4005ba23dfbe5217ffa34a12a80a9eb702131a",
+      "bytes": 178987
+    },
+    {
+      "path": ".verification/tv5-ui-20261028/browser-artifacts-acceptance/cod-desktop.png",
+      "sha256": "c6a0ccd99ff61294e706adb9a48f50a0cb0fc3ec54b348f23259dcab97dae3ca",
+      "bytes": 126934
+    }
+  ]
+}

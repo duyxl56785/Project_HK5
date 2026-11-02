@@ -1,0 +1,136 @@
+{
+  "kind": "DERIVED tracked-source packaging check",
+  "status": "PASS",
+  "head": "9d62365a76f59ee40deff1d3d8df79c11f1b7e1b",
+  "relativeImports": [
+    {
+      "importer": "frontend/src/features/finance/components.tsx",
+      "target": "frontend/src/features/finance/workspaceModel.ts"
+    },
+    {
+      "importer": "frontend/src/features/finance/EvidenceViews.tsx",
+      "target": "frontend/src/features/finance/components.tsx"
+    },
+    {
+      "importer": "frontend/src/features/finance/EvidenceViews.tsx",
+      "target": "frontend/src/features/finance/workspaceModel.ts"
+    },
+    {
+      "importer": "frontend/src/features/finance/EvidenceViews.tsx",
+      "target": "frontend/src/features/finance/workspaceTypes.ts"
+    },
+    {
+      "importer": "frontend/src/features/finance/FinanceWorkspace.tsx",
+      "target": "frontend/src/features/finance/workspaceAdapter.ts"
+    },
+    {
+      "importer": "frontend/src/features/finance/FinanceWorkspace.tsx",
+      "target": "frontend/src/features/finance/WorkspaceView.tsx"
+    },
+    {
+      "importer": "frontend/src/features/finance/FinanceWorkspace.tsx",
+      "target": "frontend/src/features/finance/workspaceTypes.ts"
+    },
+    {
+      "importer": "frontend/src/features/finance/fixtures.ts",
+      "target": "frontend/src/features/finance/workspaceTypes.ts"
+    },
+    {
+      "importer": "frontend/src/features/finance/fixtures.ts",
+      "target": "frontend/src/features/finance/workspaceModel.ts"
+    },
+    {
+      "importer": "frontend/src/features/finance/fixtures.ts",
+      "target": "frontend/src/features/finance/workspaceTypes.ts"
+    },
+    {
+      "importer": "frontend/src/features/finance/fixtures.ts",
+      "target": "frontend/src/features/finance/recorded/qa-runs.json"
+    },
+    {
+      "importer": "frontend/src/features/finance/fixtures.ts",
+      "target": "frontend/src/features/finance/recorded/pr-audit.json"
+    },
+    {
+      "importer": "frontend/src/features/finance/index.ts",
+      "target": "frontend/src/features/finance/FinanceWorkspace.tsx"
+    },
+    {
+      "importer": "frontend/src/features/finance/index.ts",
+      "target": "frontend/src/features/finance/FinanceWorkspace.tsx"
+    },
+    {
+      "importer": "frontend/src/features/finance/index.ts",
+      "target": "frontend/src/features/finance/WorkspaceView.tsx"
+    },
+    {
+      "importer": "frontend/src/features/finance/index.ts",
+      "target": "frontend/src/features/finance/workspaceAdapter.ts"
+    },
+    {
+      "importer": "frontend/src/features/finance/index.ts",
+      "target": "frontend/src/features/finance/workspaceTypes.ts"
+    },
+    {
+      "importer": "frontend/src/features/finance/TransactionViews.tsx",
+      "target": "frontend/src/features/finance/components.tsx"
+    },
+    {
+      "importer": "frontend/src/features/finance/TransactionViews.tsx",
+      "target": "frontend/src/features/finance/workspaceModel.ts"
+    },
+    {
+      "importer": "frontend/src/features/finance/TransactionViews.tsx",
+      "target": "frontend/src/features/finance/workspaceTypes.ts"
+    },
+    {
+      "importer": "frontend/src/features/finance/workspaceAdapter.ts",
+      "target": "frontend/src/features/finance/workspaceTypes.ts"
+    },
+    {
+      "importer": "frontend/src/features/finance/workspaceModel.ts",
+      "target": "frontend/src/features/finance/workspaceTypes.ts"
+    },
+    {
+      "importer": "frontend/src/features/finance/WorkspaceView.tsx",
+      "target": "frontend/src/features/finance/workspaceTypes.ts"
+    },
+    {
+      "importer": "frontend/src/features/finance/WorkspaceView.tsx",
+      "target": "frontend/src/features/finance/workspaceModel.ts"
+    },
+    {
+      "importer": "frontend/src/features/finance/WorkspaceView.tsx",
+      "target": "frontend/src/features/finance/components.tsx"
+    },
+    {
+      "importer": "frontend/src/features/finance/WorkspaceView.tsx",
+      "target": "frontend/src/features/finance/TransactionViews.tsx"
+    },
+    {
+      "importer": "frontend/src/features/finance/WorkspaceView.tsx",
+      "target": "frontend/src/features/finance/EvidenceViews.tsx"
+    },
+    {
+      "importer": "frontend/src/features/finance/WorkspaceView.tsx",
+      "target": "frontend/src/features/finance/workspace.css"
+    },
+    {
+      "importer": "frontend/src/features/finance/preview/main.tsx",
+      "target": "frontend/src/features/finance/FinanceWorkspace.tsx"
+    },
+    {
+      "importer": "frontend/src/features/finance/preview/main.tsx",
+      "target": "frontend/src/features/finance/fixtures.ts"
+    },
+    {
+      "importer": "frontend/src/features/finance/preview/main.tsx",
+      "target": "frontend/src/features/finance/workspaceTypes.ts"
+    },
+    {
+      "importer": "frontend/src/features/finance/preview/main.tsx",
+      "target": "frontend/src/features/finance/preview/preview.css"
+    }
+  ],
+  "note": "Ignored legacy data copies are not imported. All real relative source imports resolve to tracked Git files; test-only happy-dom/Chrome tooling is explicitly external."
+}

@@ -1,4 +1,4 @@
--- Existing rows get the slug CategoryService.slugOf would give; repeats take part of the id so a real "x-2" cannot clash.
+-- Existing rows get the slug CategoryService.slugOf would give.
 ALTER TABLE categories
     ADD COLUMN slug VARCHAR(140),
     ADD COLUMN status VARCHAR(16) NOT NULL DEFAULT 'ACTIVE';
@@ -11,13 +11,26 @@ WITH plain AS (
 ), base AS (
     SELECT id, COALESCE(NULLIF(btrim(left(btrim(regexp_replace(text, '[^a-z0-9]+', '-', 'g'), '-'), 120), '-'), ''), 'danh-muc') AS slug
     FROM plain
-), numbered AS (
-    SELECT id, slug, row_number() OVER (PARTITION BY slug ORDER BY id) AS position FROM base
 )
-UPDATE categories c
-SET slug = CASE WHEN n.position = 1 THEN n.slug ELSE n.slug || '-' || left(c.id::text, 8) END
-FROM numbered n
-WHERE c.id = n.id;
+UPDATE categories c SET slug = b.slug FROM base b WHERE c.id = b.id;
+
+-- Each first holder keeps its slug; a repeat takes the next number free across all rows, as CategoryService.uniqueSlug does.
+DO $$
+DECLARE
+    repeated RECORD;
+    suffix INT;
+BEGIN
+    FOR repeated IN
+        SELECT id, slug FROM (SELECT id, slug, row_number() OVER (PARTITION BY slug ORDER BY id) AS position FROM categories) numbered
+        WHERE position > 1 ORDER BY id
+    LOOP
+        suffix := 2;
+        WHILE EXISTS (SELECT 1 FROM categories WHERE slug = repeated.slug || '-' || suffix) LOOP
+            suffix := suffix + 1;
+        END LOOP;
+        UPDATE categories SET slug = repeated.slug || '-' || suffix WHERE id = repeated.id;
+    END LOOP;
+END $$;
 
 -- The default covers direct SQL inserts only; CategoryService always writes a slug derived from the name.
 ALTER TABLE categories

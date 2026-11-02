@@ -9,7 +9,7 @@ export interface CheckoutSubmission {
 export type CheckoutResponse =
   | { readonly status: 'confirmed'; readonly orderId: string }
   | { readonly status: 'unknown' }
-  | { readonly status: 'rejected'; readonly reason: 'CART_CHANGED' | 'PRICE_CHANGED' | 'OUT_OF_STOCK' | 'UNAUTHORIZED' | 'STORE_UNAVAILABLE' };
+  | { readonly status: 'rejected'; readonly reason: 'CART_CHANGED' | 'PRICE_CHANGED' | 'OUT_OF_STOCK' | 'UNAUTHORIZED' | 'STORE_UNAVAILABLE' | 'CHECKOUT_PAUSED' };
 
 export type CheckoutUiState =
   | { readonly status: 'loading' | 'unauthorized' | 'unavailable' | 'empty' | 'unknown' }

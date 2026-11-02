@@ -16,7 +16,7 @@ export interface Shipping { readonly name: string; readonly phone: string; reado
 export interface StoreOrder {
   readonly id: string; readonly orderId: string; readonly storeId: string; readonly storeName: string | null;
   readonly status: string; readonly codStatus: string; readonly statusReason: string | null;
-  readonly gross: number; readonly platformFee: number; readonly sellerNet: number;
+  readonly gross: number; readonly platformFee: number | null; readonly sellerNet: number | null;
   readonly createdAt: string; readonly deliveredAt: string | null; readonly codCollectedAt: string | null;
   readonly settledAt: string | null; readonly shipping: Shipping | null; readonly items: readonly OrderItem[];
 }

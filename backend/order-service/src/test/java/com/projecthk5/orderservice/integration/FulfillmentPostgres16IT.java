@@ -85,6 +85,10 @@ class FulfillmentPostgres16IT {
         return new StoreDirectory.Store(id, "seller-" + owner, owner, "Shop " + owner, "shop-" + owner, true, true, false);
     }
 
+    private static StoreDirectory.Store suspended(String id, String owner) {
+        return new StoreDirectory.Store(id, "seller-" + owner, owner, "Shop " + owner, "shop-" + owner, true, false, false);
+    }
+
     private static RequestPostProcessor as(String subject, String role) {
         return jwt().jwt(j -> j.subject(subject).claim("roles", List.of(role)))
                 .authorities(new SimpleGrantedAuthority("ROLE_" + role));
@@ -156,6 +160,53 @@ class FulfillmentPostgres16IT {
                 .andExpect(jsonPath("$.totals.settledNet").value(190000));
         mvc.perform(get("/api/admin/finance").with(as("admin", "ADMIN")))
                 .andExpect(status().isOk()).andExpect(jsonPath("$.totals.platformFee").isNumber());
+    }
+
+    @Test
+    void suspendedSellerFinishesOpenOrdersButTakesNothingNewAndSeesNoFinance() throws Exception {
+        act("owner-1", so1, "accept", null, 200);
+        when(stores.managedBy("owner-1")).thenReturn(suspended(store1, "owner-1"));
+        when(stores.managedBy("owner-2")).thenReturn(suspended(store2, "owner-2"));
+
+        act("owner-2", so2, "accept", null, 403);
+        act("owner-1", so2, "reject", "het hang", 404);
+        act("owner-2", so2, "reject", "het hang", 200);
+        act("owner-1", so1, "prepare", null, 200);
+        act("owner-1", so1, "ready", null, 200);
+        mvc.perform(post("/api/seller/orders/{id}/dispatch", so1.getId()).with(as("owner-1", "SELLER"))
+                .contentType(MediaType.APPLICATION_JSON).content("{}"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.status").value("DISPATCHED"))
+                .andExpect(jsonPath("$.gross").value(200000))
+                .andExpect(jsonPath("$.platformFee").doesNotExist());
+        act("owner-1", so1, "deliver", null, 200);
+
+        mvc.perform(get("/api/seller/orders/{id}", so1.getId()).with(as("owner-1", "SELLER")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.gross").value(200000))
+                .andExpect(jsonPath("$.shipping.phone").value("0901234567"))
+                .andExpect(jsonPath("$.platformFee").doesNotExist())
+                .andExpect(jsonPath("$.sellerNet").doesNotExist())
+                .andExpect(jsonPath("$.codStatus").doesNotExist())
+                .andExpect(jsonPath("$.settledAt").doesNotExist());
+        mvc.perform(get("/api/seller/orders").with(as("owner-1", "SELLER")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[?(@.id=='" + so1.getId() + "')].gross").value(200000.0))
+                .andExpect(jsonPath("$[?(@.id=='" + so1.getId() + "')].sellerNet").value(org.hamcrest.Matchers.contains(org.hamcrest.Matchers.nullValue())));
+        mvc.perform(get("/api/seller/finance").with(as("owner-1", "SELLER"))).andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.code").value("AUTH_FORBIDDEN"));
+
+        when(stores.managedBy("owner-1")).thenReturn(store(store1, "owner-1"));
+        mvc.perform(get("/api/seller/finance").with(as("owner-1", "SELLER"))).andExpect(status().isOk())
+                .andExpect(jsonPath("$.totals.sellerNet").value(190000));
+        mvc.perform(get("/api/seller/orders/{id}", so1.getId()).with(as("owner-1", "SELLER")))
+                .andExpect(jsonPath("$.sellerNet").value(190000));
+    }
+
+    @Test
+    void financeFailsClosedWhenSellerFactsAreUnavailable() throws Exception {
+        when(stores.managedBy("owner-1")).thenThrow(ApiException.unavailable("STORE_DIRECTORY_UNAVAILABLE", "Store facts unavailable"));
+        mvc.perform(get("/api/seller/finance").with(as("owner-1", "SELLER"))).andExpect(status().isServiceUnavailable());
     }
 
     @Test

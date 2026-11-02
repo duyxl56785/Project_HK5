@@ -1,0 +1,63 @@
+{
+  "completedUtc": "2026-10-30T04:11:49.096563+00:00",
+  "report": "https://github.com/duyxl56785/Project_HK5/blob/ef11c4d9a10578858a2d8c37328f18a7b881b3dc/reports/TV5_UNBLOCK_ALL_PR_2026-10-30.md",
+  "UIReport": "https://github.com/duyxl56785/Project_HK5/blob/ff4d3ce71d1ac95a2d4eea103c28e3ff6c0a2c13/reports/TV5_UI_SESSION_INVALIDATION_2026-10-30.md",
+  "actions": [
+    {
+      "PR": 134,
+      "head": "9eb3c0d7ab090553f1803ced1e1489c629f4a57b",
+      "state": "COMMENTED",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/134#pullrequestreview-5707986227"
+    },
+    {
+      "Issue": 5,
+      "url": "https://github.com/duyxl56785/Project_HK5/issues/5#issuecomment-6514666393",
+      "state": "open"
+    },
+    {
+      "Issue": 12,
+      "url": "https://github.com/duyxl56785/Project_HK5/issues/12#issuecomment-6514667524",
+      "state": "open"
+    },
+    {
+      "Issue": 18,
+      "url": "https://github.com/duyxl56785/Project_HK5/issues/18#issuecomment-6514668290",
+      "state": "open"
+    }
+  ],
+  "readback": [
+    {
+      "PR": 115,
+      "head": "ff4d3ce71d1ac95a2d4eea103c28e3ff6c0a2c13",
+      "reviewers": [
+        "lexuanbao258-collab",
+        "duyxl56785"
+      ],
+      "checks": []
+    },
+    {
+      "PR": 117,
+      "head": "ef11c4d9a10578858a2d8c37328f18a7b881b3dc",
+      "reviewers": [
+        "tranvanchinhbg2006-alt",
+        "duyxl56785",
+        "phamthecuong2022006-alt"
+      ],
+      "checks": []
+    },
+    {
+      "PR": 134,
+      "head": "9eb3c0d7ab090553f1803ced1e1489c629f4a57b",
+      "reviewers": [
+        "lexuanbao258-collab"
+      ],
+      "checks": [
+        {
+          "name": "readiness",
+          "state": "success"
+        }
+      ]
+    }
+  ],
+  "captureBoundary": "118PRs incl late134. No auto-approve/merge/close or background monitoring."
+}

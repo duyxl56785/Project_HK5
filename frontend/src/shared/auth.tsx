@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
-import { api, CSRF, refreshSession, setAccessToken, setSessionLostHandler } from './api';
+import { api, CSRF, mayHaveSession, refreshSession, setAccessToken, setSessionLostHandler } from './api';
 import type { Account, TokenResponse } from './api';
 
 interface Auth {
@@ -25,7 +25,8 @@ export function AuthProvider({ children }: { readonly children: ReactNode }) {
 
   useEffect(() => {
     setSessionLostHandler(() => { setAccount(null); client.clear(); });
-    refreshSession().then(setAccount).finally(() => setReady(true));
+    if (mayHaveSession()) refreshSession().then(setAccount).finally(() => setReady(true));
+    else setReady(true);
   }, [client]);
 
   const value = useMemo<Auth>(() => {
