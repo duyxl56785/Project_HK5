@@ -64,6 +64,7 @@ $runtimeRoot = Join-Path ([IO.Path]::GetTempPath()) (Join-Path 'Project_HK5_UAT'
 if (Test-Path -LiteralPath $runtimeRoot) { throw "UAT runtime directory already exists: $runtimeRoot" }
 $envFile = Join-Path $runtimeRoot '.env'
 $secretsDir = Join-Path $runtimeRoot 'secrets'
+$metadataFile = Join-Path $runtimeRoot 'metadata.json'
 
 Push-Location $root
 try {
@@ -82,6 +83,11 @@ try {
     $env:HK5_UAT_PROJECT = $ProjectName
     $env:HK5_UAT_GATEWAY_PORT = "$GatewayPort"
     $env:HK5_UAT_FRONTEND_PORT = "$FrontendPort"
+    [ordered]@{
+        projectName = $ProjectName
+        gatewayPort = $GatewayPort
+        frontendPort = $FrontendPort
+    } | ConvertTo-Json -Compress | Set-Content -LiteralPath $metadataFile -Encoding utf8NoBOM
     $compose = @('--env-file', $envFile, '--project-name', $ProjectName, '-f', $baseCompose, '-f', $overlayCompose)
 
     & docker compose @compose config --quiet

@@ -13,8 +13,16 @@ $overlayCompose = Join-Path $PSScriptRoot 'compose.isolated.yml'
 $runtimeRoot = Join-Path ([IO.Path]::GetTempPath()) (Join-Path 'Project_HK5_UAT' $ProjectName)
 $envFile = Join-Path $runtimeRoot '.env'
 $secretsDir = Join-Path $runtimeRoot 'secrets'
-if (-not (Test-Path -LiteralPath $envFile) -or -not (Test-Path -LiteralPath $secretsDir)) {
-    throw 'The isolated UAT runtime env/secrets are absent; inspect named resources manually instead of guessing.'
+$metadataFile = Join-Path $runtimeRoot 'metadata.json'
+if (-not (Test-Path -LiteralPath $envFile) -or -not (Test-Path -LiteralPath $secretsDir) -or -not (Test-Path -LiteralPath $metadataFile)) {
+    throw 'The isolated UAT runtime env, secrets, or metadata are absent; inspect named resources manually instead of guessing.'
+}
+
+$metadata = Get-Content -Raw -LiteralPath $metadataFile | ConvertFrom-Json
+if ($metadata.projectName -ne $ProjectName) { throw 'Refusing cleanup: runtime metadata belongs to another UAT project.' }
+foreach ($portName in @('gatewayPort', 'frontendPort')) {
+    $port = [int]$metadata.$portName
+    if ($port -lt 1025 -or $port -gt 65535) { throw "Refusing cleanup: invalid $portName in runtime metadata." }
 }
 
 foreach ($volume in @("$ProjectName-pgdemo", "$ProjectName-productimages")) {
@@ -25,8 +33,8 @@ foreach ($volume in @("$ProjectName-pgdemo", "$ProjectName-productimages")) {
 }
 
 $env:HK5_UAT_PROJECT = $ProjectName
-$env:HK5_UAT_GATEWAY_PORT = '18081'
-$env:HK5_UAT_FRONTEND_PORT = '5174'
+$env:HK5_UAT_GATEWAY_PORT = "$($metadata.gatewayPort)"
+$env:HK5_UAT_FRONTEND_PORT = "$($metadata.frontendPort)"
 $env:HK5_UAT_SECRETS_DIR = $secretsDir.Replace('\', '/')
 Push-Location $root
 $cleaned = $false
