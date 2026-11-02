@@ -1,0 +1,1 @@
+Server=28.4.0 Storage=vfs Root=/var/lib/docker Containers=15 Running=15

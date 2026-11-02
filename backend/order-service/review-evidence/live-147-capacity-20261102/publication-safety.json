@@ -1,0 +1,13 @@
+{
+  "filesScanned": 9,
+  "credentialPatterns": [
+    "private_key",
+    "github_token",
+    "jwt_value",
+    "page_form_token",
+    "authorization_literal"
+  ],
+  "findings": 0,
+  "rawSnapshots": "Local only; public hash manifest has no credential contents",
+  "newProductionOrTestSourceChanges": false
+}

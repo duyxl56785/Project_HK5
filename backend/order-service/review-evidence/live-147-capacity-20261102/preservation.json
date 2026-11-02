@@ -1,0 +1,13 @@
+{
+  "protectedContainerCount": 15,
+  "allIDsStartedAtRestartCountsMountSetsUnchanged": true,
+  "allRunning": true,
+  "protectedVolumes": 16,
+  "volumeNamesUnchanged": true,
+  "approvedProjectHasNoRemainingContainers": true,
+  "sharedEnvSecretsDatabasesUntouched": true,
+  "freeBytesAfterCleanup": 2240274432,
+  "sourceHead": "44426859cbcdcd6dd9ba0d5ce6f84f91a317256d",
+  "sourceTree": "20ca9d7212bc6d03e43cc9e14c42f654b7b8c728",
+  "sourceClean": true
+}

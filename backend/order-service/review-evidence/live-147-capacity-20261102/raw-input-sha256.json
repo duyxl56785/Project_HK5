@@ -1,0 +1,62 @@
+[
+  {
+    "localPath": "/tmp/tv3-live-147-20261102/approval-fragment.txt",
+    "bytes": 3924,
+    "sha256": "aff57a962039cb8d9c0ca8a7886e4422f5499c9a8bf184994058456ab4eacc0e"
+  },
+  {
+    "localPath": "/tmp/tv3-live-147-20261102/approval-readback.txt",
+    "bytes": 1327,
+    "sha256": "f1a238effc37e1bf16009318890f1ca4aeb229e1802291f069f4d56fed8f3214"
+  },
+  {
+    "localPath": "/tmp/tv3-live-147-20261102/containers-after.private.json",
+    "bytes": 22892,
+    "sha256": "70c07eaefe230ccfc572cb952b002152851f71a12b45ee98c9230d80212eedcf"
+  },
+  {
+    "localPath": "/tmp/tv3-live-147-20261102/containers-before.private.json",
+    "bytes": 22892,
+    "sha256": "f87a149b701787c11e23a6d0e6b04691c3bbfcc19dc87c4730873416b4e9c482"
+  },
+  {
+    "localPath": "/tmp/tv3-live-147-20261102/local-docker-info.exit",
+    "bytes": 2,
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+  },
+  {
+    "localPath": "/tmp/tv3-live-147-20261102/local-docker-info.txt",
+    "bytes": 72,
+    "sha256": "13ccced19f5d3c63d4ea69be0b9fbd5c7c04663a6815a9e1b327e0391511fbfe"
+  },
+  {
+    "localPath": "/tmp/tv3-live-147-20261102/pr145-before-publication.html",
+    "bytes": 732871,
+    "sha256": "428c54e020edc69b795c701f9cedca97635e669ef5653af9de4ccb9cfa803c76"
+  },
+  {
+    "localPath": "/tmp/tv3-live-147-20261102/pr147-approval-source.html",
+    "bytes": 657316,
+    "sha256": "b29224b29284833b2df2f9975b9731cf29f7ac5802fd26d20bc7b6d0e4393882"
+  },
+  {
+    "localPath": "/tmp/tv3-live-147-20261102/preservation.json",
+    "bytes": 453,
+    "sha256": "e7e965f1d68ffd34184c47a0da72bf7562d81b03299dccfdc609fc702617adb3"
+  },
+  {
+    "localPath": "/tmp/tv3-live-147-20261102/vfs-capacity-preflight.json",
+    "bytes": 284,
+    "sha256": "36fd03df33805037ab5860a223ec6ed4eb29659fc72b9b59e17023e6a7d901bc"
+  },
+  {
+    "localPath": "/tmp/tv3-live-147-20261102/volumes-after.json",
+    "bytes": 967,
+    "sha256": "8954867cdc3b219000436aabb78cdec1c89b0c78e0ebc0bfc2f17bb7c6f3f123"
+  },
+  {
+    "localPath": "/tmp/tv3-live-147-20261102/volumes-before.json",
+    "bytes": 967,
+    "sha256": "8954867cdc3b219000436aabb78cdec1c89b0c78e0ebc0bfc2f17bb7c6f3f123"
+  }
+]

@@ -1,0 +1,105 @@
+{
+  "observedAt": "2026-11-02T14:15:01.001612+00:00",
+  "sourceHead": "44426859cbcdcd6dd9ba0d5ce6f84f91a317256d",
+  "sourceTree": "20ca9d7212bc6d03e43cc9e14c42f654b7b8c728",
+  "executionPlace": "CODEX TERMINAL \u2014 Linux",
+  "sourceWorktree": "/workspace/tv3-owner-147-44426859",
+  "approvedProject": "hk5-tv3-147",
+  "ownerApproval": "https://github.com/duyxl56785/Project_HK5/pull/147#issuecomment-6579014091",
+  "ownerStackApproval": "GRANTED",
+  "stackStarted": false,
+  "seedExecuted": false,
+  "requestedPorts": {
+    "ui": "127.0.0.1:5173",
+    "gateway": "127.0.0.1:18080"
+  },
+  "portsConflictWithProtectedStack": true,
+  "portsAllocatedForNewStack": [],
+  "overrideNotCreatedBecauseCapacityBlockedBeforeStartup": true,
+  "acceptance": {
+    "executed": 0,
+    "passed": 0,
+    "failed": 0,
+    "skipped": 0,
+    "notRun": 12,
+    "blocked": 12
+  },
+  "cases": [
+    {
+      "name": "two-store checkout + same-key replay",
+      "status": "NOT_RUN",
+      "disposition": "BLOCKED",
+      "reason": "DOCKER_FILESYSTEM_CAPACITY: insufficient space to safely create a second isolated 15-container stack."
+    },
+    {
+      "name": "customer cancel + seller reject RELEASE once",
+      "status": "NOT_RUN",
+      "disposition": "BLOCKED",
+      "reason": "DOCKER_FILESYSTEM_CAPACITY: insufficient space to safely create a second isolated 15-container stack."
+    },
+    {
+      "name": "DISPATCHED CONSUME once",
+      "status": "NOT_RUN",
+      "disposition": "BLOCKED",
+      "reason": "DOCKER_FILESYSTEM_CAPACITY: insufficient space to safely create a second isolated 15-container stack."
+    },
+    {
+      "name": "negative same-key changed body",
+      "status": "NOT_RUN",
+      "disposition": "BLOCKED",
+      "reason": "DOCKER_FILESYSTEM_CAPACITY: insufficient space to safely create a second isolated 15-container stack."
+    },
+    {
+      "name": "negative same-key changed shipping",
+      "status": "NOT_RUN",
+      "disposition": "BLOCKED",
+      "reason": "DOCKER_FILESYSTEM_CAPACITY: insufficient space to safely create a second isolated 15-container stack."
+    },
+    {
+      "name": "negative expectedItems mismatch",
+      "status": "NOT_RUN",
+      "disposition": "BLOCKED",
+      "reason": "DOCKER_FILESYSTEM_CAPACITY: insufficient space to safely create a second isolated 15-container stack."
+    },
+    {
+      "name": "negative Catalog price changed",
+      "status": "NOT_RUN",
+      "disposition": "BLOCKED",
+      "reason": "DOCKER_FILESYSTEM_CAPACITY: insufficient space to safely create a second isolated 15-container stack."
+    },
+    {
+      "name": "negative insufficient stock no partial reservation",
+      "status": "NOT_RUN",
+      "disposition": "BLOCKED",
+      "reason": "DOCKER_FILESYSTEM_CAPACITY: insufficient space to safely create a second isolated 15-container stack."
+    },
+    {
+      "name": "negative Product inactive",
+      "status": "NOT_RUN",
+      "disposition": "BLOCKED",
+      "reason": "DOCKER_FILESYSTEM_CAPACITY: insufficient space to safely create a second isolated 15-container stack."
+    },
+    {
+      "name": "browser Order History",
+      "status": "NOT_RUN",
+      "disposition": "BLOCKED",
+      "reason": "DOCKER_FILESYSTEM_CAPACITY: insufficient space to safely create a second isolated 15-container stack."
+    },
+    {
+      "name": "UNKNOWN claim-conflict",
+      "status": "NOT_RUN",
+      "disposition": "BLOCKED",
+      "reason": "Separate TV4/TV5 fault-fixture/operation-identity/receipt approval not provided; also blocked by Docker capacity."
+    },
+    {
+      "name": "UNKNOWN lost-response/timeout",
+      "status": "NOT_RUN",
+      "disposition": "BLOCKED",
+      "reason": "Separate TV4/TV5 fault-fixture/operation-identity/receipt approval not provided; also blocked by Docker capacity."
+    }
+  ],
+  "postgresOracle": "NOT_RUN: new stack/database never started; protected old databases were not queried.",
+  "junitPlaywrightReports": "NOT_GENERATED: no acceptance runner executed; NOT_RUN cases are not represented as skipped or successful testcases.",
+  "runtimeFlagsChanged": false,
+  "disposition": "BLOCKED_TEST_ENVIRONMENT"
+}

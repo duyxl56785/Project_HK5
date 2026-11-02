@@ -1,0 +1,12 @@
+{
+  "image": "eclipse-temurin:21-jre",
+  "dockerDriver": "vfs",
+  "freeBytesBefore": 2240303104,
+  "freeBytesAfterOneStoppedContainer": 1560096768,
+  "observedAllocatedBytes": 680206336,
+  "javaContainersRequired": 11,
+  "project": "hk5-tv3-147",
+  "containerWasNeverStarted": true,
+  "estimatedJavaContainerAllocationBytes": 7482269696,
+  "estimateIsNotMeasurementOfWholeStack": true
+}

@@ -1,0 +1,87 @@
+[
+  {
+    "command": "pwd",
+    "cwd": "/workspace/tv3-owner-147-44426859",
+    "exit": 0
+  },
+  {
+    "command": "git rev-parse HEAD",
+    "cwd": "/workspace/tv3-owner-147-44426859",
+    "exit": 0
+  },
+  {
+    "command": "git status --short --branch",
+    "cwd": "/workspace/tv3-owner-147-44426859",
+    "exit": 0
+  },
+  {
+    "command": "command -v docker",
+    "cwd": "/workspace/tv3-owner-147-44426859",
+    "exit": 0
+  },
+  {
+    "command": "docker info --format '{{.ServerVersion}} {{.Driver}}'",
+    "cwd": "/workspace/tv3-owner-147-44426859",
+    "exit": 0
+  },
+  {
+    "command": "node --version",
+    "cwd": "/workspace/tv3-owner-147-44426859",
+    "exit": 0
+  },
+  {
+    "command": "env -u DOCKER_HOST -u DOCKER_CONTEXT -u DOCKER_TLS -u DOCKER_TLS_VERIFY -u DOCKER_CERT_PATH docker --host=unix:///var/run/docker.sock info --format \"Server={{.ServerVersion}} Storage={{.Driver}} Root={{.DockerRootDir}} Containers={{.Containers}} Running={{.ContainersRunning}}\"",
+    "exit": 0
+  },
+  {
+    "command": "docker create --name hk5-tv3-147-vfs-preflight --label com.docker.compose.project=hk5-tv3-147 --label tv3.purpose=vfs-capacity-preflight eclipse-temurin:21-jre true",
+    "exit": 0,
+    "note": "Capacity probe only. Never started. Filesystem free space measured before and after."
+  },
+  {
+    "command": "docker inspect <exact-created-preflight-id>",
+    "exit": 0,
+    "note": "Verified name/project label before cleanup; no Config.Env export."
+  },
+  {
+    "command": "docker rm <exact-created-preflight-id>",
+    "exit": 0,
+    "note": "Removed only own stopped preflight container after verifying project label."
+  },
+  {
+    "command": "node scripts/demo/up.mjs --approved-inventory-pair --approved-finance-policy",
+    "status": "NOT_RUN",
+    "reason": "Would create isolated stack requiring more Docker disk than available, with fixed occupied ports. No demo/environment/secret generation attempted."
+  },
+  {
+    "command": "Playwright acceptance and read-only SQL oracle",
+    "status": "NOT_RUN",
+    "reason": "Approved new application stack could not safely be started."
+  },
+  {
+    "command": "docker image inspect eclipse-temurin:21-jre",
+    "exit": 0,
+    "note": "Read only Size and metadata; no Config.Env export."
+  },
+  {
+    "command": "docker image inspect postgres:16",
+    "exit": 0,
+    "note": "Read only Size and metadata; no Config.Env export."
+  },
+  {
+    "command": "docker image inspect apache/kafka:3.8.1",
+    "exit": 0,
+    "note": "Read only Size and metadata; no Config.Env export."
+  },
+  {
+    "command": "docker image inspect redis:7-alpine",
+    "exit": 0,
+    "note": "Read only Size and metadata; no Config.Env export."
+  },
+  {
+    "command": "du -sk /var/lib/docker/vfs",
+    "status": "PERMISSION_DENIED",
+    "exitCodeNotCaptured": true,
+    "note": "Optional direct-directory diagnostic denied. Docker socket inspection and actual create/remove filesystem measurement succeeded; no permission escalation attempted."
+  }
+]
