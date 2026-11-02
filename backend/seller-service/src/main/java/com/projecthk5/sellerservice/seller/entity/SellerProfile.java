@@ -31,6 +31,15 @@ public class SellerProfile {
     @Column(name = "review_reason", length = 500)
     private String reviewReason;
 
+    @Column(name = "representative_name", length = 100)
+    private String representativeName;
+
+    @Column(length = 20)
+    private String phone;
+
+    @Column(name = "pickup_address", length = 255)
+    private String pickupAddress;
+
     @Version
     @Column(nullable = false)
     private Long version;
@@ -61,10 +70,19 @@ public class SellerProfile {
         reviewReason = status == SellerStatus.REJECTED || status == SellerStatus.SUSPENDED ? reason : null;
     }
 
+    public void updateContact(String newRepresentativeName, String newPhone, String newPickupAddress) {
+        representativeName = newRepresentativeName;
+        phone = newPhone;
+        pickupAddress = newPickupAddress;
+    }
+
     public UUID getId() { return id; }
     public String getOwnerReference() { return ownerReference; }
     public SellerStatus getStatus() { return status; }
     public String getReviewReason() { return reviewReason; }
+    public String getRepresentativeName() { return representativeName; }
+    public String getPhone() { return phone; }
+    public String getPickupAddress() { return pickupAddress; }
     public Long getVersion() { return version; }
 
     private static SellerRuleException invalid(String message) {

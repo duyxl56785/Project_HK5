@@ -1,0 +1,21 @@
+# Shared by every service. Secrets stay in the environment; nothing here is sensitive.
+spring:
+  kafka:
+    bootstrap-servers: kafka:9092
+  data:
+    redis:
+      host: redis
+  cloud:
+    loadbalancer:
+      cache:
+        ttl: 5s
+eureka:
+  client:
+    service-url:
+      defaultZone: http://discovery-server:8761/eureka
+    registry-fetch-interval-seconds: 5
+  instance:
+    # D-036: a restarted container gets a new address, so register the IP and refresh within 5 seconds.
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 5
+    lease-expiration-duration-in-seconds: 15

@@ -8,4 +8,8 @@ public interface CartPort {
     void finalizeCart(String bearer,String key);
     record Item(String productId,String storeId,String sellerId,int quantity,java.math.BigDecimal unitPriceSnapshot) {}
     record CartSnapshot(String customerId,long revision, boolean claimed,List<Item> items) {}
+    /** Cart definitely refused the claim: nothing was claimed, so the attempt needs no reconciliation. */
+    final class Rejected extends IllegalStateException {
+        public Rejected(String message) { super(message); }
+    }
 }

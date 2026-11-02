@@ -1,0 +1,1010 @@
+{
+  "kind": "DERIVED QA summary, original log/XML private byte-preserved",
+  "head": "446ae44da90832df534b6e37150f26a71f2adf25",
+  "workingTree": "Tracked clean at committed source446ae44; new fixture/regression Git blobs checked, no code delta during run",
+  "sourceManifest": [
+    {
+      "path": "backend/order-service/src/test/java/com/projecthk5/orderservice/finance/FinanceTwoStoreFixture.java",
+      "sha256": "1119649db3876f385f30d59592d72dd7e4dc8d54abf8e9f11f5f8bfacb0a540c"
+    },
+    {
+      "path": "backend/order-service/src/test/java/com/projecthk5/orderservice/finance/FinanceDurabilityPostgresIT.java",
+      "sha256": "5d9876837245fb462a8eaffc13a9a745acf1576e8070beb6780853365f49c6a9"
+    }
+  ],
+  "command": [
+    "D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-finance-durability-20261025\\backend\\gradlew.bat",
+    "-p",
+    "backend",
+    "--init-script",
+    "D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-finance-durability-20261025\\tests\\finance\\fin06-regression.init.gradle",
+    ":order-service:test",
+    ":order-service:postgresIntegrationTest",
+    ":order-service:fin06Regression",
+    "--rerun-tasks",
+    "--no-daemon",
+    "--console=plain"
+  ],
+  "startedUtc": "2026-10-25T16:17:33.672427+00:00",
+  "completedUtc": "2026-10-25T16:18:36.559720+00:00",
+  "exitCode": 0,
+  "environment": {
+    "Java": "21.0.7",
+    "Gradle": "8.10",
+    "JVM": "-Duser.timezone=UTC -Dapi.version=1.44",
+    "PostgreSQL": "16.6 Testcontainers for new suite"
+  },
+  "cases": [
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.domain.CheckoutRulesTest",
+      "name": "malformedCartSnapshotMustNeverMatchExpectedItems()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.domain.CheckoutRulesTest",
+      "name": "malformedExpectedItemsRejectedBeforeFingerprinting()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.domain.CheckoutRulesTest",
+      "name": "malformedExpectedItemsFailClosedEvenWithoutControllerValidation()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.domain.CheckoutRulesTest",
+      "name": "financePolicyRequiresExplicitApprovalAndInputs()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.domain.CheckoutRulesTest",
+      "name": "idempotencyFingerprintOrderIndependentButRevisionSensitive()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.domain.CheckoutRulesTest",
+      "name": "expectedItemsMustExactlyMatchCart()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.domain.InventoryOperationIntentTest",
+      "name": "journalRehydrateRequiresIdenticalFingerprint()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.domain.InventoryOperationIntentTest",
+      "name": "invalidExternalInventoryIdentifiersFailClosed()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.domain.InventoryOperationIntentTest",
+      "name": "unicodeBoundaryPaddedSkuFailsClosedWithoutChangingExactIdentity()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.domain.InventoryOperationIntentTest",
+      "name": "requestHashIsCanonicalButOperationIdIsSeparate()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.domain.InventoryOperationIntentTest",
+      "name": "lineSetCannotBeMutatedOrHaveDuplicates()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.domain.InventoryOperationIntentTest",
+      "name": "changedTypeOrQuantityIsNotAValidReplay()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.domain.OrderAmountStorageBoundsTest",
+      "name": "rejectsParentOverflowEvenWhenStoreAmountsFit()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.domain.OrderAmountStorageBoundsTest",
+      "name": "rejectsSilentPrecisionLossBeforeAnyPersistence()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.domain.OrderAmountStorageBoundsTest",
+      "name": "rejectsOversizeProductAndLineTotals()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.domain.OrderAmountStorageBoundsTest",
+      "name": "acceptsExactZeroAndBoundary()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.domain.OrderAmountStorageBoundsTest",
+      "name": "rejectsNegativeAndNull()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.domain.OrderAmountStorageBoundsTest",
+      "name": "acceptsHigherInputScaleOnlyWhenExact()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceCheckoutPreflightTest",
+      "name": "closedFinanceGateCannotReserveStockOrWriteOrder()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceCheckoutPreflightTest",
+      "name": "currentServiceRoundsOnceForTheStoreRatherThanEachLine()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceCheckoutPreflightTest",
+      "name": "conflictingHouseFactsWithinOneStoreCannotSelectAnExemption()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceCheckoutPreflightTest",
+      "name": "matchingPerItemFactsWithTwoSellersCannotShareOneStoreOrder()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceConsumerParityTest",
+      "name": "largeQuantityMultiplicationStaysExactBeforeAnyPersistenceBoundCheck()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceConsumerParityTest",
+      "name": "[1] scale=0",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceConsumerParityTest",
+      "name": "[2] scale=1",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceConsumerParityTest",
+      "name": "[3] scale=2",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceConsumerParityTest",
+      "name": "[4] scale=3",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceConsumerParityTest",
+      "name": "[5] scale=4",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceConsumerParityTest",
+      "name": "roundingEachStoreIsNotRoundingTheParentOrder()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceConsumerParityTest",
+      "name": "perSellerOrderRoundingDiffersFromPerLineAndMustBeSignedExplicitly()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinancePolicyConfigurationTest",
+      "name": "fixtureApprovalWithoutCompleteInputsFailsStartup()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinancePolicyConfigurationTest",
+      "name": "realYamlDefaultsClosedEvenWithAllPricingInputs()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinancePolicyConfigurationTest",
+      "name": "malformedFixturePolicyCannotCreateReadyMoneyRules()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinancePolicyConfigurationTest",
+      "name": "explicitFixtureEnvironmentBindsRateScaleAndHouseExemptionThroughYaml()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest",
+      "name": "computingNewStoreConfigurationDoesNotMutateEarlierSnapshot()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest",
+      "name": "[1] input=0.09, fee=0.00, net=0.09",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest",
+      "name": "[2] input=0.10, fee=0.01, net=0.09",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest",
+      "name": "[3] input=0.11, fee=0.01, net=0.10",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest",
+      "name": "[4] input=123.45, fee=6.17, net=117.28",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest",
+      "name": "[1] identity=null",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest",
+      "name": "[2] identity=",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest",
+      "name": "[3] identity= ",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest",
+      "name": "[4] identity=\t\n",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest",
+      "name": "[5] identity= ",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest",
+      "name": "rejectsMissingAmountInvalidScaleAndHousePrecisionLossToo()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest",
+      "name": "[1] other=Store-a",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest",
+      "name": "[2] other= store-a",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest",
+      "name": "[3] other=store-a ",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest",
+      "name": "[4] other=store-b",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest",
+      "name": "twoStoreArithmeticAndGuardsRemainIndependent()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest",
+      "name": "conservesMoneyForDeterministicRangeOfAmountsAndBothStoreTypes()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest",
+      "name": "acceptsExactTrailingZeroRescalingWithoutLosingMoney()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesTest",
+      "name": "houseStoreHasZeroCommission()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesTest",
+      "name": "deniesOtherStoreAndUnverifiedStore()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesTest",
+      "name": "rejectsNegativeMoneyAndSilentPrecisionLoss()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesTest",
+      "name": "[1] delivered=false, paid=false, settled=false",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesTest",
+      "name": "[2] delivered=false, paid=true, settled=false",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesTest",
+      "name": "[3] delivered=true, paid=false, settled=false",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesTest",
+      "name": "[4] delivered=true, paid=true, settled=true",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesTest",
+      "name": "[5] delivered=false, paid=false, settled=true",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesTest",
+      "name": "[6] delivered=false, paid=true, settled=true",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesTest",
+      "name": "[7] delivered=true, paid=false, settled=true",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesTest",
+      "name": "[1] subtotal=100000, commission=5000, net=95000",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesTest",
+      "name": "[2] subtotal=10, commission=1, net=9",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesTest",
+      "name": "[3] subtotal=0, commission=0, net=0",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesTest",
+      "name": "[4] subtotal=999999999999999999, commission=50000000000000000, net=949999999999999999",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.finance.FinanceRulesTest",
+      "name": "permitsOnlyDeliveredPaidUnsettledOrder()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.fulfillment.SellerOrderLifecycleTest",
+      "name": "transitionTableRejectsEveryUnlistedStateActionPair()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.fulfillment.SellerOrderLifecycleTest",
+      "name": "allowsCandidateHappyPath()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.fulfillment.SellerOrderLifecycleTest",
+      "name": "requiresReasonForSellerRejection()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.fulfillment.SellerOrderLifecycleTest",
+      "name": "rejectsSkippingOrRepeatingStates()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.fulfillment.SellerOrderLifecycleTest",
+      "name": "rejectsAnyActionFromTerminalStates()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.fulfillment.SellerOrderLifecycleTest",
+      "name": "rejectsNullStatusOrAction()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.fulfillment.SellerOrderLifecycleTest",
+      "name": "allowsCustomerCancelOnlyBeforeAcceptance()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.security.ContractJwtDecoderTest",
+      "name": "currentAndPreviousKidsAccepted()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.security.ContractJwtDecoderTest",
+      "name": "missingShortAndMismatchedKeyringRejectStartup()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.security.ContractJwtDecoderTest",
+      "name": "wrongKidSignatureIssuerRoleAndTtlRejected()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.security.JwtEnvironmentConfigurationTest",
+      "name": "documentedEnvironmentBindsThroughRealYamlAndVerifiesHs256()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.security.JwtEnvironmentConfigurationTest",
+      "name": "missingKeyStillFailsClosed()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.CheckoutServiceTest",
+      "name": "commitConfirmedByReadNeverCompensates()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.CheckoutServiceTest",
+      "name": "invalidClaimedCartQuantityCannotReachReservationOrWriter()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.CheckoutServiceTest",
+      "name": "unsupportedUnitPrecisionNeverReachesInventoryOrWriter()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.CheckoutServiceTest",
+      "name": "unrepresentableFeeUnderSyntheticPolicyFailsBeforeReserve()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.CheckoutServiceTest",
+      "name": "outboxSerializationFailureCannotReserveStockOrWriteOrder()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.CheckoutServiceTest",
+      "name": "twoProductsFromSameSellerAndStoreCreateOneSellerOrder()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.CheckoutServiceTest",
+      "name": "inventoryTimeoutPreservesCartAndReservationForReconciliation()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.CheckoutServiceTest",
+      "name": "conflictingCatalogSellerStoreFactsNeverReachInventoryOrOrderWriter()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.CheckoutServiceTest",
+      "name": "twoStoresGenerateOneOrderWithTwoSellerOrdersAndSnapshot()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.CheckoutServiceTest",
+      "name": "malformedClaimedCartNullLineReleasesClaimWithoutExternalSideEffects()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.CheckoutServiceTest",
+      "name": "parentOverflowAcrossTwoIndividuallyValidStoresFailsBeforeReserve()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.CheckoutServiceTest",
+      "name": "nullCartClaimReplyIsUnknownAndNeverBlindlyReleasesOrReserves()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.CheckoutServiceTest",
+      "name": "explicitlyUnclaimedCartCannotProceedOrReleaseAnotherClaim()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.CheckoutServiceTest",
+      "name": "reversedCartOrderStillRejectsOneSellerFromTwoStoresBeforeInventory()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.CheckoutServiceTest",
+      "name": "changedPriceRejectsCheckoutBeforeStockReservation()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.CheckoutServiceTest",
+      "name": "sameKeyAndExistingSuccessfulOrderReplaysWithoutCreating()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.CheckoutServiceTest",
+      "name": "commitUnknownDoesNotCompensateAndFlagsForReconciliation()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.CheckoutServiceTest",
+      "name": "nonFinalProcessingReplayNeverCallsInventory()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.CheckoutServiceTest",
+      "name": "malformedRequestCannotCreateAttemptOrCallRemotePorts()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.IdempotencyCoordinatorTest",
+      "name": "sameKeyAndDifferentPayloadRejected()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.IdempotencyCoordinatorTest",
+      "name": "repeatedSameKeyReturnsExistingNotNew()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.InventoryOperationCallerTest",
+      "name": "wireAdapterHasNoBroadCredentialOrExtraOperationType()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.InventoryOperationCallerTest",
+      "name": "staleReplyCannotReportConfirmedAfterRetryWasReclaimed()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.InventoryOperationCallerTest",
+      "name": "staleTimeoutCannotOverwriteNewerAttemptState()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.InventoryOperationCallerTest",
+      "name": "concurrentInFlightIsNotSentAgainAndConfirmedReplayDoesNotResend()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.InventoryOperationCallerTest",
+      "name": "retryAfterUnknownUsesSamePersistedIdTypeAndCanonicalLines()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.InventoryOperationCallerTest",
+      "name": "successConfirmsOnlyExactMatchingResponseAndPersistedRequest()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.InventoryOperationCallerTest",
+      "name": "knownDefinitiveAtomicRejectionMustNotBeRetried()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.InventoryOperationCallerTest",
+      "name": "mismatchedOrDuplicateProviderResponseIsUnknownNotSuccess()",
+      "result": "PASS"
+    },
+    {
+      "task": "test",
+      "class": "com.projecthk5.orderservice.service.InventoryOperationCallerTest",
+      "name": "disabledTransportIsProvablyNotSentAndRemainsPending()",
+      "result": "PASS"
+    },
+    {
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.orderservice.finance.FinanceDurabilityPostgresIT",
+      "name": "identicalIdempotencyKeysAcrossCustomersReplayOnlyTheirOwnTwoStoreFinancialAggregate()",
+      "result": "PASS"
+    },
+    {
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.orderservice.finance.FinanceDurabilityPostgresIT",
+      "name": "outerRollbackRevertsAlreadyFlushedTwoStoreMoneyOutboxAndSuccessfulAttemptTogether()",
+      "result": "PASS"
+    },
+    {
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.orderservice.finance.FinanceDurabilityPostgresIT",
+      "name": "concurrentSuccessfulReplaysKeepEveryStoredMoneySnapshotWhileFinancePolicyIsClosed()",
+      "result": "PASS"
+    },
+    {
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.orderservice.finance.FinanceDurabilityPostgresIT",
+      "name": "postgresOutboxFaultAfterTwoStoreFlushRollsBackEveryMoneyRowAndAllowsCleanLocalRetry()",
+      "result": "PASS"
+    },
+    {
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.orderservice.finance.FinanceSnapshotPostgresIT",
+      "name": "currentV1ScaleBoundaryIsTwoAndPostgresCastWouldRoundHigherScale()",
+      "result": "PASS"
+    },
+    {
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.orderservice.finance.FinanceSnapshotPostgresIT",
+      "name": "parentAggregateOverflowRollsBackOrderChildrenAndKeepsAttemptUncommitted()",
+      "result": "PASS"
+    },
+    {
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.orderservice.finance.FinanceSnapshotPostgresIT",
+      "name": "[1] gross=0.00, fee=0.00, net=0.00",
+      "result": "PASS"
+    },
+    {
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.orderservice.finance.FinanceSnapshotPostgresIT",
+      "name": "[2] gross=99999999999999999.99, fee=5000000000000000.00, net=94999999999999999.99",
+      "result": "PASS"
+    },
+    {
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.orderservice.finance.FinanceSnapshotPostgresIT",
+      "name": "twoStoreGrossFeeAndLineAmountsSurviveCommitAndFreshRead()",
+      "result": "PASS"
+    },
+    {
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.orderservice.finance.FinanceSnapshotPostgresIT",
+      "name": "successfulReplayCannotRepriceCommittedTwoStoreAmountsOrCreateAnotherPlacementEvent()",
+      "result": "PASS"
+    },
+    {
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.orderservice.integration.CheckoutReplayPostgresIT",
+      "name": "committedOutcomeReadAfterLostCommitResponseReturnsCompleteResultWithoutCompensation()",
+      "result": "PASS"
+    },
+    {
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.orderservice.integration.CheckoutReplayPostgresIT",
+      "name": "committedOrderReplaysTwiceOutsideTransactionWithoutAnotherOrderOrReservation()",
+      "result": "PASS"
+    },
+    {
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.orderservice.integration.CheckoutReplayPostgresIT",
+      "name": "inconsistentAttemptCannotReadOrFinalizeAnotherCustomersOrder()",
+      "result": "PASS"
+    },
+    {
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.orderservice.integration.CheckoutReplayPostgresIT",
+      "name": "changedPayloadStillRejectsSuccessfulKeyWithoutCallingOtherServices()",
+      "result": "PASS"
+    },
+    {
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.orderservice.integration.CheckoutScannerPostgresIT",
+      "name": "[1] competing=scanner",
+      "result": "PASS"
+    },
+    {
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.orderservice.integration.CheckoutScannerPostgresIT",
+      "name": "[2] competing=failure-handler",
+      "result": "PASS"
+    },
+    {
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.orderservice.integration.CheckoutScannerPostgresIT",
+      "name": "scanFlagsOnlyStaleProcessingAndIsRepeatable()",
+      "result": "PASS"
+    },
+    {
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.orderservice.integration.CheckoutScannerPostgresIT",
+      "name": "scannerWinningBeforeWriterKeepsOrderAndOutboxRolledBack()",
+      "result": "PASS"
+    },
+    {
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.orderservice.integration.InventoryOperationJournalPostgres16IT",
+      "name": "completedOrUnknownAttemptCannotReuseOldGeneration()",
+      "result": "PASS"
+    },
+    {
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.orderservice.integration.InventoryOperationJournalPostgres16IT",
+      "name": "crashedInFlightIsUnknownAndNeverAutomaticallyCompensated()",
+      "result": "PASS"
+    },
+    {
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.orderservice.integration.InventoryOperationJournalPostgres16IT",
+      "name": "t2ConfirmedOutcomeSurvivesCallerTransactionRollback()",
+      "result": "PASS"
+    },
+    {
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.orderservice.integration.InventoryOperationJournalPostgres16IT",
+      "name": "flywayT1PersistsImmutableCanonicalPayloadAndSeparateT2Outcome()",
+      "result": "PASS"
+    },
+    {
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.orderservice.integration.InventoryOperationJournalPostgres16IT",
+      "name": "staleResponseFromFirstSendCannotMutateReclaimedSecondSend()",
+      "result": "PASS"
+    },
+    {
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.orderservice.integration.InventoryOperationJournalPostgres16IT",
+      "name": "t1JournalCommitSurvivesRollbackOfAlreadyCommittedAttemptCaller()",
+      "result": "PASS"
+    },
+    {
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.orderservice.integration.InventoryOperationJournalPostgres16IT",
+      "name": "lateT2AfterCrashScannerMustNotOverwriteUnknown()",
+      "result": "PASS"
+    },
+    {
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.orderservice.integration.InventoryOperationJournalPostgres16IT",
+      "name": "differentPayloadOnSameOperationIdIsRejectedWithoutMutation()",
+      "result": "PASS"
+    },
+    {
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.orderservice.integration.InventoryOperationJournalPostgres16IT",
+      "name": "twoWorkersClaimOneJournalRowOnlyOnce()",
+      "result": "PASS"
+    },
+    {
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.orderservice.integration.OrderPostgres16IT",
+      "name": "realFlywayValidateTwoSellerOrdersCascadeAndUniqueCustomerKey()",
+      "result": "PASS"
+    },
+    {
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.orderservice.integration.OrderPostgres16IT",
+      "name": "concurrentSameKeyOnlyOneRecordCanCommit()",
+      "result": "PASS"
+    },
+    {
+      "task": "fin06Regression",
+      "class": "com.projecthk5.orderservice.finance.CheckoutMoneyPreflightRegressionTest",
+      "name": "unsupportedStoragePrecisionMustBeRejectedRatherThanChangingMoneyOnReplay()",
+      "result": "PASS"
+    },
+    {
+      "task": "fin06Regression",
+      "class": "com.projecthk5.orderservice.finance.CheckoutMoneyPreflightRegressionTest",
+      "name": "parentOverflowMustBeRejectedBeforeReserveOrOrderWrite()",
+      "result": "PASS"
+    },
+    {
+      "task": "fin06Regression",
+      "class": "com.projecthk5.orderservice.finance.CheckoutMoneyPreflightRegressionTest",
+      "name": "positiveControlPersistsExactAmountsAndReplayDoesNotReserveOrWriteAgain()",
+      "result": "PASS"
+    }
+  ],
+  "counts": {
+    "fin06Regression": {
+      "PASS": 3
+    },
+    "postgresIntegrationTest": {
+      "PASS": 29
+    },
+    "test": {
+      "PASS": 109
+    }
+  },
+  "rawArtifacts": [
+    {
+      "path": ".verification/tv5-finance-durability-evidence-20261025/committed-regression/runtime.log",
+      "sha256": "a459e8cae42b0b9307662aa93429a51886e190f30ba19018ef780b9697040b80",
+      "bytes": 6174
+    },
+    {
+      "path": ".verification/tv5-finance-durability-evidence-20261025/committed-regression/fin06Regression/TEST-com.projecthk5.orderservice.finance.CheckoutMoneyPreflightRegressionTest.xml",
+      "sha256": "54fa248d501f0b35e2e543951d25cbd528d4be8798468589aadfb34c93576559",
+      "bytes": 9437
+    },
+    {
+      "path": ".verification/tv5-finance-durability-evidence-20261025/committed-regression/postgresIntegrationTest/TEST-com.projecthk5.orderservice.finance.FinanceDurabilityPostgresIT.xml",
+      "sha256": "1fc91a5934a272e1553b54908be3440f2ee3c845f9b862819bbaf147b0a9f7de",
+      "bytes": 9977
+    },
+    {
+      "path": ".verification/tv5-finance-durability-evidence-20261025/committed-regression/postgresIntegrationTest/TEST-com.projecthk5.orderservice.finance.FinanceSnapshotPostgresIT.xml",
+      "sha256": "44c896262ea9db58ea07daaebb06e3e20c3704be533e0c7701bace39a515cc34",
+      "bytes": 7678
+    },
+    {
+      "path": ".verification/tv5-finance-durability-evidence-20261025/committed-regression/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.CheckoutReplayPostgresIT.xml",
+      "sha256": "db98ab65abc65e1483ad7d723134b7d0d91752fbbf29f649f478162803e7d505",
+      "bytes": 6984
+    },
+    {
+      "path": ".verification/tv5-finance-durability-evidence-20261025/committed-regression/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.CheckoutScannerPostgresIT.xml",
+      "sha256": "bc25d35c5b036cb27b51ed71b1dc8f61cb9375b1a9fd3d2c4f6331a42d4dec8d",
+      "bytes": 6856
+    },
+    {
+      "path": ".verification/tv5-finance-durability-evidence-20261025/committed-regression/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.InventoryOperationJournalPostgres16IT.xml",
+      "sha256": "afc27757c475b52d05a7fcd3264381f751069b55407455d67b9b25b4809c1b25",
+      "bytes": 7947
+    },
+    {
+      "path": ".verification/tv5-finance-durability-evidence-20261025/committed-regression/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.OrderPostgres16IT.xml",
+      "sha256": "4bd83924128847f761e9bd3462d0884e2051403ad4a30810125df8eefde1a26d",
+      "bytes": 7447
+    },
+    {
+      "path": ".verification/tv5-finance-durability-evidence-20261025/committed-regression/test/TEST-com.projecthk5.orderservice.domain.CheckoutRulesTest.xml",
+      "sha256": "980d3d8927a177b52808724eef7b62c802bdd9b6c815db14a46ca272623d8c62",
+      "bytes": 1252
+    },
+    {
+      "path": ".verification/tv5-finance-durability-evidence-20261025/committed-regression/test/TEST-com.projecthk5.orderservice.domain.InventoryOperationIntentTest.xml",
+      "sha256": "4dab2d4b0b2f258be5341bd67053b333e1f4dd39431a7d154aa287f74682cd93",
+      "bytes": 1305
+    },
+    {
+      "path": ".verification/tv5-finance-durability-evidence-20261025/committed-regression/test/TEST-com.projecthk5.orderservice.domain.OrderAmountStorageBoundsTest.xml",
+      "sha256": "1fa2b9cd553067ae71688c911b3f1b2b7a04c605bf76d115a0c32826062b47cf",
+      "bytes": 1239
+    },
+    {
+      "path": ".verification/tv5-finance-durability-evidence-20261025/committed-regression/test/TEST-com.projecthk5.orderservice.finance.FinanceCheckoutPreflightTest.xml",
+      "sha256": "cc4967499b0d346277cbc81c83b8023b0c686159d0e2f026429873e189b7e538",
+      "bytes": 1553
+    },
+    {
+      "path": ".verification/tv5-finance-durability-evidence-20261025/committed-regression/test/TEST-com.projecthk5.orderservice.finance.FinanceConsumerParityTest.xml",
+      "sha256": "12549049e5717ce4937c8b276472433cb3e380bc2d517174de4047e962c1417e",
+      "bytes": 1464
+    },
+    {
+      "path": ".verification/tv5-finance-durability-evidence-20261025/committed-regression/test/TEST-com.projecthk5.orderservice.finance.FinancePolicyConfigurationTest.xml",
+      "sha256": "53bd3b59ee18ce63093cb38e0dc66620a2b1ace4b43c001cc23a74e747c95a96",
+      "bytes": 2598
+    },
+    {
+      "path": ".verification/tv5-finance-durability-evidence-20261025/committed-regression/test/TEST-com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest.xml",
+      "sha256": "d239fb476a3314cdc3b2f2ee106641ac1dd0e12e0dc4571e569f5c5eb2cf0e9b",
+      "bytes": 2863
+    },
+    {
+      "path": ".verification/tv5-finance-durability-evidence-20261025/committed-regression/test/TEST-com.projecthk5.orderservice.finance.FinanceRulesTest.xml",
+      "sha256": "674e80e1c044b733588347fd21ddf15d350a5ae9b9c5290b900cee6c73a5bae8",
+      "bytes": 2504
+    },
+    {
+      "path": ".verification/tv5-finance-durability-evidence-20261025/committed-regression/test/TEST-com.projecthk5.orderservice.fulfillment.SellerOrderLifecycleTest.xml",
+      "sha256": "500e9ffd671c9d73b977587e10b133a467403cc13fe1418739b86e2fa53d13cd",
+      "bytes": 1382
+    },
+    {
+      "path": ".verification/tv5-finance-durability-evidence-20261025/committed-regression/test/TEST-com.projecthk5.orderservice.security.ContractJwtDecoderTest.xml",
+      "sha256": "e2c077c6e817ad7887430ef832f1b83e85d780163b482f3d517716ade9a0d219",
+      "bytes": 791
+    },
+    {
+      "path": ".verification/tv5-finance-durability-evidence-20261025/committed-regression/test/TEST-com.projecthk5.orderservice.security.JwtEnvironmentConfigurationTest.xml",
+      "sha256": "5117de40317611e8017d39ec5a0bb74b8ec20d1af9a7195afd550f691c61c1fe",
+      "bytes": 1617
+    },
+    {
+      "path": ".verification/tv5-finance-durability-evidence-20261025/committed-regression/test/TEST-com.projecthk5.orderservice.service.CheckoutServiceTest.xml",
+      "sha256": "45ead23f0d19e32eb55434ed13df870d6eb319ea58ba2ebd12a9c680da998ef3",
+      "bytes": 3416
+    },
+    {
+      "path": ".verification/tv5-finance-durability-evidence-20261025/committed-regression/test/TEST-com.projecthk5.orderservice.service.IdempotencyCoordinatorTest.xml",
+      "sha256": "05b8c03114ad128b6cf7b765a026468d644e2f33bf4e51f6536cee42a479b73b",
+      "bytes": 644
+    },
+    {
+      "path": ".verification/tv5-finance-durability-evidence-20261025/committed-regression/test/TEST-com.projecthk5.orderservice.service.InventoryOperationCallerTest.xml",
+      "sha256": "f307b26c41d095fe0297ab90a4b252c916014bac2a2cc627861f7898c1f17b8b",
+      "bytes": 1865
+    }
+  ],
+  "excludedStaleXml": [],
+  "publication": "DERIVED SUMMARY only. Raw stdout/XML/artifacts stay byte-preserved private; public SHA256 paths are provenance, not public raw downloads."
+}

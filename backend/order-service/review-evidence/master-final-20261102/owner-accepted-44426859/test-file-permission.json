@@ -1,0 +1,8 @@
+{
+  "file": "docker/postgres/pg_hba.conf",
+  "modeBefore": "0o600",
+  "modeAfter": "0o644",
+  "contentSHA256": "4bf3344083f778ecfa1812d1dbf587229958af08591660cdc75a96aa47916f09",
+  "contentUnchanged": true,
+  "reason": "Fresh worktree inherited restrictive 0600; Testcontainers copies this non-secret HBA fixture and PostgreSQL must read it. No shared/production config modified."
+}

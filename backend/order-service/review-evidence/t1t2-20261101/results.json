@@ -1,0 +1,928 @@
+{
+  "executed_at_utc": "2026-11-01T10:43:03.728053+00:00",
+  "location": "Codex Terminal/Linux, integration worktree backend; not Windows PowerShell",
+  "source_commit": "f2529ffb8036898d9eee847917912128689d8f43",
+  "tested_tree": "0b4a376956f13bb623c3b5c2dc190786142825d7",
+  "base": "faffda5207b87dd362ce1ce402c5501ab3233a1f",
+  "binding": "Both commands executed this exact staged tree; source-only commit created afterward with identical tree. Later evidence commit changes documentation/artifacts only.",
+  "commands": [
+    {
+      "command": "./gradlew :order-service:test :order-service:postgresIntegrationTest --rerun-tasks --no-daemon --console=plain",
+      "exit_code": 0
+    },
+    {
+      "command": "./gradlew :cart-service:test :cart-service:postgresIntegrationTest :inventory-service:test :inventory-service:postgresIntegrationTest --rerun-tasks --no-daemon --console=plain",
+      "exit_code": 0
+    }
+  ],
+  "java": "Temurin 21.0.8+9",
+  "gradle": "8.10",
+  "docker": "28.4.0, managed daemon",
+  "actual_postgresql_versions": [
+    "16.15",
+    "16.6"
+  ],
+  "groups": {
+    "order-service:test": {
+      "counts": {
+        "tests": 156,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "suites": [
+        {
+          "suite": "com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest",
+          "counts": {
+            "tests": 16,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "cases": [
+            "rejectsUnrepresentableOrderPriceBeforeAnyStockSideEffect()",
+            "enforcesBatchCardinalityOneThroughOneHundredAndUniqueProductIds()",
+            "rejectsPriceAndCurrencyMismatchButNoImplicitMoneyPolicyIsSelected()",
+            "allowsMultipleProductsForConsistentSameStoreSameSellerAndHouse()",
+            "acceptsTwoStoresAndOnlyAuthoritativeSkuInOriginalOrder()",
+            "rejectsSameStoreWithConflictingHouseClassification()",
+            "rejectsPartialBatchMissingRowWrongVersionOrUnverifiedResponse()",
+            "rejectsUnicodePaddedSkuAndNoncanonicalExpectedIdentifiers()",
+            "rejectsMissingOrDuplicatedTrustedSkuAcrossProducts()",
+            "rejectsSameStoreWithDifferentSellersRegardlessOfOrder()",
+            "doesNotDeriveSkuFromProductId()",
+            "rejectsOneSellerClaimedByTwoStoresRegardlessOfOrder()",
+            "rejectsIncorrectStoreSellerOrUnavailableSource()",
+            "rejectsNonReadyItemEvenIfProviderIncorrectlyClaimsAllReady()",
+            "rejectsReorderedExtraDuplicatedAndMismatchedProductRows()",
+            "preservesExactCanonicalSkuCaseCompositionAndInternalUnicode()"
+          ]
+        },
+        {
+          "suite": "com.projecthk5.orderservice.domain.CheckoutRulesTest",
+          "counts": {
+            "tests": 6,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "cases": [
+            "malformedCartSnapshotMustNeverMatchExpectedItems()",
+            "malformedExpectedItemsRejectedBeforeFingerprinting()",
+            "malformedExpectedItemsFailClosedEvenWithoutControllerValidation()",
+            "financePolicyRequiresExplicitApprovalAndInputs()",
+            "idempotencyFingerprintOrderIndependentButRevisionSensitive()",
+            "expectedItemsMustExactlyMatchCart()"
+          ]
+        },
+        {
+          "suite": "com.projecthk5.orderservice.domain.InventoryOperationIntentTest",
+          "counts": {
+            "tests": 6,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "cases": [
+            "journalRehydrateRequiresIdenticalFingerprint()",
+            "invalidExternalInventoryIdentifiersFailClosed()",
+            "unicodeBoundaryPaddedSkuFailsClosedWithoutChangingExactIdentity()",
+            "requestHashIsCanonicalButOperationIdIsSeparate()",
+            "lineSetCannotBeMutatedOrHaveDuplicates()",
+            "changedTypeOrQuantityIsNotAValidReplay()"
+          ]
+        },
+        {
+          "suite": "com.projecthk5.orderservice.domain.OrderAmountStorageBoundsTest",
+          "counts": {
+            "tests": 6,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "cases": [
+            "rejectsParentOverflowEvenWhenStoreAmountsFit()",
+            "rejectsSilentPrecisionLossBeforeAnyPersistence()",
+            "rejectsOversizeProductAndLineTotals()",
+            "acceptsExactZeroAndBoundary()",
+            "rejectsNegativeAndNull()",
+            "acceptsHigherInputScaleOnlyWhenExact()"
+          ]
+        },
+        {
+          "suite": "com.projecthk5.orderservice.entity.SellerOrderTest",
+          "counts": {
+            "tests": 6,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "cases": [
+            "cancellingEveryStoreOrderCancelsTheParentOrder()",
+            "settlementRequiresCollectedCodAndHappensOnce()",
+            "fullHappyPathRecordsDeliveryTimeAndNet()",
+            "codIsCollectedOnceAndOnlyAfterDelivery()",
+            "cannotCancelAfterAcceptOrSkipSteps()",
+            "rejectNeedsReasonAndVoidsCod()"
+          ]
+        },
+        {
+          "suite": "com.projecthk5.orderservice.finance.FinanceCheckoutPreflightTest",
+          "counts": {
+            "tests": 4,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "cases": [
+            "closedFinanceGateCannotReserveStockOrWriteOrder()",
+            "currentServiceRoundsOnceForTheStoreRatherThanEachLine()",
+            "conflictingHouseFactsWithinOneStoreCannotSelectAnExemption()",
+            "matchingPerItemFactsWithTwoSellersCannotShareOneStoreOrder()"
+          ]
+        },
+        {
+          "suite": "com.projecthk5.orderservice.finance.FinanceConsumerParityTest",
+          "counts": {
+            "tests": 8,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "cases": [
+            "largeQuantityMultiplicationStaysExactBeforeAnyPersistenceBoundCheck()",
+            "[1] scale=0",
+            "[2] scale=1",
+            "[3] scale=2",
+            "[4] scale=3",
+            "[5] scale=4",
+            "roundingEachStoreIsNotRoundingTheParentOrder()",
+            "perSellerOrderRoundingDiffersFromPerLineAndMustBeSignedExplicitly()"
+          ]
+        },
+        {
+          "suite": "com.projecthk5.orderservice.finance.FinancePolicyConfigurationTest",
+          "counts": {
+            "tests": 4,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "cases": [
+            "fixtureApprovalWithoutCompleteInputsFailsStartup()",
+            "realYamlDefaultsClosedEvenWithAllPricingInputs()",
+            "malformedFixturePolicyCannotCreateReadyMoneyRules()",
+            "explicitFixtureEnvironmentBindsRateScaleAndHouseExemptionThroughYaml()"
+          ]
+        },
+        {
+          "suite": "com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest",
+          "counts": {
+            "tests": 18,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "cases": [
+            "computingNewStoreConfigurationDoesNotMutateEarlierSnapshot()",
+            "[1] input=0.09, fee=0.00, net=0.09",
+            "[2] input=0.10, fee=0.01, net=0.09",
+            "[3] input=0.11, fee=0.01, net=0.10",
+            "[4] input=123.45, fee=6.17, net=117.28",
+            "[1] identity=null",
+            "[2] identity=",
+            "[3] identity= ",
+            "[4] identity=\t\n",
+            "[5] identity= ",
+            "rejectsMissingAmountInvalidScaleAndHousePrecisionLossToo()",
+            "[1] other=Store-a",
+            "[2] other= store-a",
+            "[3] other=store-a ",
+            "[4] other=store-b",
+            "twoStoreArithmeticAndGuardsRemainIndependent()",
+            "conservesMoneyForDeterministicRangeOfAmountsAndBothStoreTypes()",
+            "acceptsExactTrailingZeroRescalingWithoutLosingMoney()"
+          ]
+        },
+        {
+          "suite": "com.projecthk5.orderservice.finance.FinanceRulesTest",
+          "counts": {
+            "tests": 15,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "cases": [
+            "houseStoreHasZeroCommission()",
+            "deniesOtherStoreAndUnverifiedStore()",
+            "rejectsNegativeMoneyAndSilentPrecisionLoss()",
+            "[1] delivered=false, paid=false, settled=false",
+            "[2] delivered=false, paid=true, settled=false",
+            "[3] delivered=true, paid=false, settled=false",
+            "[4] delivered=true, paid=true, settled=true",
+            "[5] delivered=false, paid=false, settled=true",
+            "[6] delivered=false, paid=true, settled=true",
+            "[7] delivered=true, paid=false, settled=true",
+            "[1] subtotal=100000, commission=5000, net=95000",
+            "[2] subtotal=10, commission=1, net=9",
+            "[3] subtotal=0, commission=0, net=0",
+            "[4] subtotal=999999999999999999, commission=50000000000000000, net=949999999999999999",
+            "permitsOnlyDeliveredPaidUnsettledOrder()"
+          ]
+        },
+        {
+          "suite": "com.projecthk5.orderservice.fulfillment.SellerOrderLifecycleTest",
+          "counts": {
+            "tests": 7,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "cases": [
+            "transitionTableRejectsEveryUnlistedStateActionPair()",
+            "allowsCandidateHappyPath()",
+            "requiresReasonForSellerRejection()",
+            "rejectsSkippingOrRepeatingStates()",
+            "rejectsAnyActionFromTerminalStates()",
+            "rejectsNullStatusOrAction()",
+            "allowsCustomerCancelOnlyBeforeAcceptance()"
+          ]
+        },
+        {
+          "suite": "com.projecthk5.orderservice.security.ContractJwtDecoderTest",
+          "counts": {
+            "tests": 3,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "cases": [
+            "currentAndPreviousKidsAccepted()",
+            "missingShortAndMismatchedKeyringRejectStartup()",
+            "wrongKidSignatureIssuerRoleAndTtlRejected()"
+          ]
+        },
+        {
+          "suite": "com.projecthk5.orderservice.security.JwtEnvironmentConfigurationTest",
+          "counts": {
+            "tests": 2,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "cases": [
+            "documentedEnvironmentBindsThroughRealYamlAndVerifiesHs256()",
+            "missingKeyStillFailsClosed()"
+          ]
+        },
+        {
+          "suite": "com.projecthk5.orderservice.service.CheckoutServiceTest",
+          "counts": {
+            "tests": 24,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "cases": [
+            "commitConfirmedByReadNeverCompensates()",
+            "invalidClaimedCartQuantityCannotReachReservationOrWriter()",
+            "unsupportedUnitPrecisionNeverReachesInventoryOrWriter()",
+            "unrepresentableFeeUnderSyntheticPolicyFailsBeforeReserve()",
+            "outboxSerializationFailureCannotReserveStockOrWriteOrder()",
+            "definitiveCartRejectionIsNotMarkedForReconciliation()",
+            "twoProductsFromSameSellerAndStoreCreateOneSellerOrder()",
+            "inventoryTimeoutPreservesCartAndReservationForReconciliation()",
+            "conflictingCatalogSellerStoreFactsNeverReachInventoryOrOrderWriter()",
+            "twoStoresGenerateOneOrderWithTwoSellerOrdersAndSnapshot()",
+            "malformedClaimedCartNullLineReleasesClaimWithoutExternalSideEffects()",
+            "draftFailureStopsBeforeInventoryAndReleasesOnlyTheKnownCartClaim()",
+            "reservationCarriesCatalogSkuAndOrderKeepsShippingAndLabels()",
+            "parentOverflowAcrossTwoIndividuallyValidStoresFailsBeforeReserve()",
+            "definitiveStockRejectionReleasesCartAndIsNotMarkedForReconciliation()",
+            "nullCartClaimReplyIsUnknownAndNeverBlindlyReleasesOrReserves()",
+            "explicitlyUnclaimedCartCannotProceedOrReleaseAnotherClaim()",
+            "reversedCartOrderStillRejectsOneSellerFromTwoStoresBeforeInventory()",
+            "changedPriceRejectsCheckoutBeforeStockReservation()",
+            "sameKeyAndExistingSuccessfulOrderReplaysWithoutCreating()",
+            "commitUnknownDoesNotCompensateAndFlagsForReconciliation()",
+            "immutableDraftPrecedesReserveAndUsesTheExactWrittenGraphAndEvent()",
+            "nonFinalProcessingReplayNeverCallsInventory()",
+            "malformedRequestCannotCreateAttemptOrCallRemotePorts()"
+          ]
+        },
+        {
+          "suite": "com.projecthk5.orderservice.service.FinanceReportTest",
+          "counts": {
+            "tests": 2,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "cases": [
+            "totalsSplitPendingCollectedSettledAndPayable()",
+            "emptyStoreHasZeroTotals()"
+          ]
+        },
+        {
+          "suite": "com.projecthk5.orderservice.service.FulfillmentServiceTest",
+          "counts": {
+            "tests": 7,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "cases": [
+            "sellerCannotTouchAnotherStoresOrder()",
+            "customerCancelIsScopedToBuyerAndOnlyBeforeAcceptance()",
+            "rejectRequiresReasonThenReleasesStock()",
+            "dispatchConsumesReservedStockExactlyOnce()",
+            "acceptNotifiesBuyer()",
+            "codAndSettlementFollowDeliveryAndHappenOnce()",
+            "unknownActionAndMissingOrderAre404()"
+          ]
+        },
+        {
+          "suite": "com.projecthk5.orderservice.service.IdempotencyCoordinatorTest",
+          "counts": {
+            "tests": 2,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "cases": [
+            "sameKeyAndDifferentPayloadRejected()",
+            "repeatedSameKeyReturnsExistingNotNew()"
+          ]
+        },
+        {
+          "suite": "com.projecthk5.orderservice.service.InventoryOperationCallerTest",
+          "counts": {
+            "tests": 12,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "cases": [
+            "multiSkuTimeoutPreservesRequestAndQuarantinesFurtherDispatch()",
+            "wireAdapterHasNoBroadCredentialOrExtraOperationType()",
+            "staleTimeoutCannotOverwriteNewerAttemptState()",
+            "unknownRemainsQuarantinedWithoutAnotherSend()",
+            "concurrentInFlightIsNotSentAgainAndConfirmedReplayDoesNotResend()",
+            "successConfirmsOnlyExactMatchingResponseAndPersistedRequest()",
+            "staleReplyCannotReportConfirmedAfterItsClaimWasLost()",
+            "multiSkuMismatchedProviderSkuSetRecordsUnknownRatherThanConfirming()",
+            "multiSkuReleaseCandidateDisabledTransportDoesNotConfirmOrChangeIntent()",
+            "knownDefinitiveAtomicRejectionMustNotBeRetried()",
+            "mismatchedOrDuplicateProviderResponseIsUnknownNotSuccess()",
+            "disabledTransportIsProvablyNotSentAndRemainsPending()"
+          ]
+        },
+        {
+          "suite": "com.projecthk5.orderservice.service.OutboxRelayTest",
+          "counts": {
+            "tests": 8,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "cases": [
+            "brokerOutageKeepsEventsQueuedWithoutSpendingAttempts()",
+            "inventoryOperationIsSentWithStableIdAndMarkedPublished()",
+            "definitiveInventoryRejectionIsParkedForOperators()",
+            "storeNoticeIsDeliveredToTheCurrentStoreOwner()",
+            "unknownTopicIsParkedNotRetried()",
+            "inventoryStillFlowsDuringBrokerOutage()",
+            "retriesStopAfterTheLimit()",
+            "transientFailureStaysQueuedForRetry()"
+          ]
+        }
+      ]
+    },
+    "order-service:postgresIntegrationTest": {
+      "counts": {
+        "tests": 103,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "suites": [
+        {
+          "suite": "com.projecthk5.orderservice.finance.FinanceDurabilityPostgresIT",
+          "counts": {
+            "tests": 5,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "cases": [
+            "conflictingReplayCannotMutateTheFinancialAggregateWhileAValidReplayCompletes()",
+            "identicalIdempotencyKeysAcrossCustomersReplayOnlyTheirOwnTwoStoreFinancialAggregate()",
+            "outerRollbackRevertsAlreadyFlushedTwoStoreMoneyOutboxAndSuccessfulAttemptTogether()",
+            "concurrentSuccessfulReplaysKeepEveryStoredMoneySnapshotWhileFinancePolicyIsClosed()",
+            "postgresOutboxFaultAfterTwoStoreFlushRollsBackEveryMoneyRowAndAllowsCleanLocalRetry()"
+          ]
+        },
+        {
+          "suite": "com.projecthk5.orderservice.finance.FinanceSnapshotPostgresIT",
+          "counts": {
+            "tests": 6,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "cases": [
+            "currentV1ScaleBoundaryIsTwoAndPostgresCastWouldRoundHigherScale()",
+            "parentAggregateOverflowRollsBackOrderChildrenAndKeepsAttemptUncommitted()",
+            "[1] gross=0.00, fee=0.00, net=0.00",
+            "[2] gross=99999999999999999.99, fee=5000000000000000.00, net=94999999999999999.99",
+            "twoStoreGrossFeeAndLineAmountsSurviveCommitAndFreshRead()",
+            "successfulReplayCannotRepriceCommittedTwoStoreAmountsOrCreateAnotherPlacementEvent()"
+          ]
+        },
+        {
+          "suite": "com.projecthk5.orderservice.integration.CheckoutDraftPostgresIT",
+          "counts": {
+            "tests": 14,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "cases": [
+            "executionCutAfterDraftBeforeT1LeavesFactsForScannerWithoutAutomaticRecovery()",
+            "draftCommitFaultPreventsT1AndAllInventoryHttp()",
+            "realHttpReadTimeoutRetainsUnknownDraftAndCannotSendOrReleaseOnReplay()",
+            "unknownSurvivesNewServiceInstanceAndSameKeyNeverReservesOrFinalizes()",
+            "corruptPayloadFailsClosedWithoutNetworkOrOrderCreation()",
+            "outboxTransactionRollbackRetainsExactDraftAndConfirmedReservation()",
+            "completeBusinessSnapshotCommitsBeforeHttpAndMatchesPlacedRowsAndOutbox()",
+            "[1] point=AFTER_DRAFT",
+            "[2] point=AFTER_T1",
+            "[3] point=AFTER_RESERVE",
+            "lateHttpSuccessCannotOverwriteUnknownOrCommitOrderAfterStaleScan()",
+            "concurrentSameDraftIsOneRowAndChangedShippingCannotOverwriteIt()",
+            "wrongCustomerFingerprintOrClosedAttemptCannotWriteDraft()",
+            "overlappingSameKeyCheckoutCreatesOneDraftOrderOutboxAndInventorySend()"
+          ]
+        },
+        {
+          "suite": "com.projecthk5.orderservice.integration.CheckoutInventoryBoundaryPostgresIT",
+          "counts": {
+            "tests": 15,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "cases": [
+            "[1] body={\"code\":\"IDEMPOTENCY_CLAIM_CONFLICT\"}",
+            "[2] body={\"code\":\"IDEMPOTENCY_KEY_REUSED\"}",
+            "[3] body={\"code\":\"INVENTORY_CONFLICT\"}",
+            "[4] body=not json",
+            "insufficientStockIsDefinitiveAndReleasesTheCart()",
+            "[1] sku=null",
+            "[2] sku=",
+            "[3] sku=   ",
+            "[4] sku= AO-001",
+            "[5] sku=AO-001 ",
+            "[6] sku=AO-001\n",
+            "[7] sku= AO-001",
+            "[8] sku=AO?001",
+            "[9] sku=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+            "canonicalSkuReachesInventoryUnchanged()"
+          ]
+        },
+        {
+          "suite": "com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT",
+          "counts": {
+            "tests": 25,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "cases": [
+            "definitiveRejectionIsDurableBeforeCartRelease()",
+            "unknownCannotBeClaimedThroughLegacyJournalApi()",
+            "unknownGenericDisabledTransportCannotReopenRowOrEnableHttpAdapter()",
+            "concurrentGenericCallersCannotBothSend()",
+            "concurrentSendersCannotBothDispatchOneJournalEntry()",
+            "missingCommittedAttemptPreventsAnyHttp()",
+            "checkoutRejectsAmbientTransactionBeforeAnyRemoteClaim()",
+            "intentIsCommittedBeforeHttpAndSuccessfulReplayUsesNoNewSnapshotOrSend()",
+            "stalePendingReadCannotClaimAConcurrentlyCommittedUnknown()",
+            "pendingGenericSuccessConfirmsOnceAndReplayDoesNotSend()",
+            "explicitPendingDispatchReloadsSavedTupleAndRejectsRemapping()",
+            "standaloneAdapterCannotFallBackToUnjournaledReserve()",
+            "lateGenericReplyAfterStaleScanCannotConfirmOrRestorePending()",
+            "failedOrderTransactionDoesNotLoseConfirmedInventoryIntent()",
+            "[1] profile=claim",
+            "[2] profile=503",
+            "[1] profile=bad-id",
+            "[2] profile=bad-type",
+            "[3] profile=bad-skus",
+            "[4] profile=duplicate-skus",
+            "[5] profile=no-body",
+            "[1] forbiddenState=CONFIRMED",
+            "[2] forbiddenState=REJECTED",
+            "unresolvedUnknownCannotBeRedispatchedByEitherReserveEntryPoint()",
+            "pendingGenericDisabledTransportKeepsNotSentPendingWithoutHttp()"
+          ]
+        },
+        {
+          "suite": "com.projecthk5.orderservice.integration.CheckoutReplayPostgresIT",
+          "counts": {
+            "tests": 8,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "cases": [
+            "committedOutcomeReadAfterLostCommitResponseReturnsCompleteResultWithoutCompensation()",
+            "[1] changed=Shipping[name=Receiver B, phone=0901234567, address=Address A]",
+            "[2] changed=Shipping[name=Receiver A, phone=0907654321, address=Address A]",
+            "[3] changed=Shipping[name=Receiver A, phone=0901234567, address=Address B]",
+            "[4] changed=null",
+            "committedOrderReplaysTwiceOutsideTransactionWithoutAnotherOrderOrReservation()",
+            "inconsistentAttemptCannotReadOrFinalizeAnotherCustomersOrder()",
+            "changedPayloadStillRejectsSuccessfulKeyWithoutCallingOtherServices()"
+          ]
+        },
+        {
+          "suite": "com.projecthk5.orderservice.integration.CheckoutScannerPostgresIT",
+          "counts": {
+            "tests": 4,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "cases": [
+            "[1] competing=scanner",
+            "[2] competing=failure-handler",
+            "scanFlagsOnlyStaleProcessingAndIsRepeatable()",
+            "scannerWinningBeforeWriterKeepsOrderAndOutboxRolledBack()"
+          ]
+        },
+        {
+          "suite": "com.projecthk5.orderservice.integration.FulfillmentPostgres16IT",
+          "counts": {
+            "tests": 7,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "cases": [
+            "customerSeesOnlyOwnOrdersWithShippingAndStoreSplit()",
+            "sellerListsAndActsOnlyOnOwnStore()",
+            "fullCodFlowWritesSideEffectsAndFinance()",
+            "concurrentAcceptsApplyOnceUnderRowLock()",
+            "databaseRejectsCodCollectionBeforeDelivery()",
+            "rolesAreEnforcedPerRoute()",
+            "customerCancelAndSellerRejectReleaseStockAndCloseOrder()"
+          ]
+        },
+        {
+          "suite": "com.projecthk5.orderservice.integration.InventoryOperationJournalPostgres16IT",
+          "counts": {
+            "tests": 14,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "cases": [
+            "completedOrUnknownAttemptCannotReuseOldGeneration()",
+            "multiSkuUnknownIntentRejectsSameIdDifferentTypeOrCheckoutAttempt()",
+            "crashedInFlightIsUnknownAndNeverAutomaticallyCompensated()",
+            "t2ConfirmedOutcomeSurvivesCallerTransactionRollback()",
+            "flywayT1PersistsImmutableCanonicalPayloadAndSeparateT2Outcome()",
+            "unknownMultiSkuReservePreservesStableIdAndNeverCreatesImplicitRelease()",
+            "t1JournalCommitSurvivesRollbackOfAlreadyCommittedAttemptCaller()",
+            "lateT2AfterCrashScannerMustNotOverwriteUnknown()",
+            "rejectedAttemptCannotBeClaimedAgain()",
+            "multiSkuReleaseCandidateRetainsExactLongQuantitiesAndIndependentOperationId()",
+            "differentPayloadOnSameOperationIdIsRejectedWithoutMutation()",
+            "staleGenerationCannotMutateALaterSendAfterPositiveNotSent()",
+            "twoWorkersClaimOneJournalRowOnlyOnce()",
+            "twoWorkersCannotReclaimUnknownMultiSkuOperation()"
+          ]
+        },
+        {
+          "suite": "com.projecthk5.orderservice.integration.OrderPostgres16IT",
+          "counts": {
+            "tests": 2,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "cases": [
+            "realFlywayValidateTwoSellerOrdersCascadeAndUniqueCustomerKey()",
+            "concurrentSameKeyOnlyOneRecordCanCommit()"
+          ]
+        },
+        {
+          "suite": "com.projecthk5.orderservice.integration.SellerWriteFencePostgresIT",
+          "counts": {
+            "tests": 3,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "cases": [
+            "sellerWriteHeldInItsTransactionRollsBackWhenAuthClosesItsReservation()",
+            "writeWhoseReservationStaysOpenCommitsAndALateCloseChangesNothing()",
+            "closeRequiresThePairToken()"
+          ]
+        }
+      ]
+    },
+    "cart-service:test": {
+      "counts": {
+        "tests": 11,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "suites": [
+        {
+          "suite": "com.projecthk5.cartservice.security.ContractJwtDecoderTest",
+          "counts": {
+            "tests": 3,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "cases": [
+            "currentAndPreviousKidsAccepted()",
+            "missingShortAndMismatchedKeyringRejectStartup()",
+            "wrongKidSignatureIssuerRoleAndTtlRejected()"
+          ]
+        },
+        {
+          "suite": "com.projecthk5.cartservice.service.CartServiceTest",
+          "counts": {
+            "tests": 8,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "cases": [
+            "nullOrMalformedClaimKeyCannotSilentlySucceedOnUnclaimedCart()",
+            "untrustedBlankStoreOrSellerNeverPersistsCart()",
+            "claimedCartRejectsWriteAndReleaseWorks()",
+            "priceThatPostgresWouldRoundOrOverflowNeverTouchesCart()",
+            "representablePriceCanRetainExactValueWithoutChoosingMoneyPolicy()",
+            "finalizationClearsOnlyMatchingClaim()",
+            "addUpdateRemoveAndTrustedStore()",
+            "invalidProductIdsFromDirectCallDoNotInvokeCatalogOrSave()"
+          ]
+        }
+      ]
+    },
+    "cart-service:postgresIntegrationTest": {
+      "counts": {
+        "tests": 13,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "suites": [
+        {
+          "suite": "com.projecthk5.cartservice.integration.CartPostgres16IT",
+          "counts": {
+            "tests": 1,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "cases": [
+            "migrationHibernateValidateCascadeTwoStoresAndUniqueProduct()"
+          ]
+        },
+        {
+          "suite": "com.projecthk5.cartservice.integration.HttpSellerRevocationWriteFencePostgresIT",
+          "counts": {
+            "tests": 4,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "cases": [
+            "authenticatedCartWriteRollsBackWhenAuthRevokesSellerBeforeCommit()",
+            "disablingAnAccountStopsItsWriteInFlightAndEndsItsSessions()",
+            "anAccessTokenFromBeforeALockIsRefusedWhileLockedAndWorksAgainAfterUnlock()",
+            "writeCommittedBeforeRevokeStaysAndTheSameTokenIsThenRefused()"
+          ]
+        },
+        {
+          "suite": "com.projecthk5.cartservice.integration.WriteFencePostgres16IT",
+          "counts": {
+            "tests": 8,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "cases": [
+            "writeClosedBeforeItCommitsRollsBack()",
+            "writeThatWasNotClosedCommitsInEveryTransaction()",
+            "writeOutsideAnyReservationIsNotChecked()",
+            "fenceListensOnTheTransactionManagerBootBuilt()",
+            "closeWaitsForACommitAlreadyPastItsCheck()",
+            "everyLaterTransactionOfAClosedOperationIsRefused()",
+            "closeRequiresThePairToken()",
+            "weakerSnapshotIsRefusedBecauseItCouldMissATombstone()"
+          ]
+        }
+      ]
+    },
+    "inventory-service:test": {
+      "counts": {
+        "tests": 27,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "suites": [
+        {
+          "suite": "com.projecthk5.inventoryservice.api.InventoryRequestValidationTest",
+          "counts": {
+            "tests": 3,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "cases": [
+            "initializeSkuAccepts128CharactersAndRejects129()",
+            "operationIdAndSkuAccept128CharactersAndReject129()",
+            "invalidArgumentAndOverflowUseBadRequestErrorCodes()"
+          ]
+        },
+        {
+          "suite": "com.projecthk5.inventoryservice.model.InventoryItemTest",
+          "counts": {
+            "tests": 7,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "cases": [
+            "cannotDecreaseAvailableStockBelowZero()",
+            "releaseRestoresAvailableQuantityOnlyOncePerRequestedAmount()",
+            "consumeReducesReservedQuantityWithoutIncreasingAvailableStock()",
+            "quantitiesMustBePositiveForOperations()",
+            "reserveMovesQuantityFromAvailableToReserved()",
+            "increasingBeyondLongRangeThrowsWithoutChangingBalance()",
+            "cannotReleaseMoreThanReserved()"
+          ]
+        },
+        {
+          "suite": "com.projecthk5.inventoryservice.security.InventoryInternalTokenFilterTest",
+          "counts": {
+            "tests": 1,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "cases": [
+            "missingTokenConfigurationFailsClosedForEncodedAndMatrixPaths()"
+          ]
+        },
+        {
+          "suite": "com.projecthk5.inventoryservice.security.InventoryOrderPairGateTest",
+          "counts": {
+            "tests": 10,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "cases": [
+            "pairTokenOnlyAllowsPostOperationsForReserveConsumeReleaseAndPreservesBody()",
+            "bodyOneByteOverMaximumIsRejectedWith413()",
+            "pairTokenAloneCannotEnableMutationWhenFeatureFlagIsOff()",
+            "pairCredentialRejectsPathAliasesAndNonCanonicalOperationPaths()",
+            "bodyLimitAlsoAppliesWhenContentLengthIsUnknown()",
+            "pairCredentialCannotInitializeOrUseIncreaseDecreaseOrWrongMethodPath()",
+            "missingOrWrongPairCredentialIsUnauthorized()",
+            "unconfiguredPairVerifierFailsClosed()",
+            "exactMaximumBodySizeIsAcceptedAndReplayed()",
+            "pairCredentialRejectsMissingNullNonTextualAndPaddedOperationTypes()"
+          ]
+        },
+        {
+          "suite": "com.projecthk5.inventoryservice.service.InventoryOperationServiceTest",
+          "counts": {
+            "tests": 6,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "cases": [
+            "replayWithSameIdAndPayloadDoesNotApplyStockTwice()",
+            "insufficientStockDoesNotChangeBalance()",
+            "operationIdCannotBeReusedForDifferentPayload()",
+            "successfulMultiSkuReserveChangesAllRequestedBalances()",
+            "concurrentClaimWithSamePayloadIsTreatedAsReplay()",
+            "delimiterContainingSkuCannotCollideWithMultipleItems()"
+          ]
+        }
+      ]
+    },
+    "inventory-service:postgresIntegrationTest": {
+      "counts": {
+        "tests": 19,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "suites": [
+        {
+          "suite": "com.projecthk5.inventoryservice.InventoryPostgresIntegrationTest",
+          "counts": {
+            "tests": 3,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "cases": [
+            "flywaySchemaMatchesJpaValidationAtApplicationStartup()",
+            "duplicateInitializationReturnsConflictWithoutChangingBalance()",
+            "concurrentDifferentPayloadsCannotBothClaimSameOperationId()"
+          ]
+        },
+        {
+          "suite": "com.projecthk5.inventoryservice.integration.InventoryInitializePostgresIT",
+          "counts": {
+            "tests": 4,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "cases": [
+            "competingInitializationWaitsForUniqueRowAndReturns409AfterWinnerCommits()",
+            "encodedAndMatrixPathsRequireTokenAndNeverWriteWithoutIt()",
+            "duplicateAfterReservationPreservesAvailableReservedVersionAndTimestamp()",
+            "duplicateFreshSkuReturns409WithoutChangingAnyStoredBalanceField()"
+          ]
+        },
+        {
+          "suite": "com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT",
+          "counts": {
+            "tests": 10,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "cases": [
+            "reserveConsumeAndReleaseRetriesDoNotApplyStockTwice()",
+            "failureOnLaterSkuRollsBackEarlierStockMutationAndClaimedLedger()",
+            "disjointSkuSameIdCannotReplaceWinnerAfterEarlierEmptyLedgerRead()",
+            "concurrentDuplicateMultiSkuReleaseReplaysAfterFirstCommitWithoutDoubleReturn()",
+            "concurrentDifferentIdsCannotOversellSharedSkuAndLosingClaimRollsBack()",
+            "multiSkuReserveAndReleaseReplayCanonicalizeLineOrderAndRejectPayloadReuse()",
+            "[1] samePayload=true",
+            "[2] samePayload=false",
+            "competingMultiSkuReleaseIdsCannotOverdrawReservedBalances()",
+            "multiSkuReleaseAfterConsumeRejectsExcessHeldQuantityAndRollsBackWholeBatch()"
+          ]
+        },
+        {
+          "suite": "com.projecthk5.inventoryservice.integration.InventorySchemaPostgresIT",
+          "counts": {
+            "tests": 2,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "cases": [
+            "forwardMigrationSchemaValidatesAndHashRoundTripsThroughJpa()",
+            "upgradingExistingV1PreservesHashLedgerAndStockAndV1Checksum()"
+          ]
+        }
+      ]
+    }
+  },
+  "totals": {
+    "tests": 329,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "unit_and_protocol_note": "Unit/MockMvc tests may use mocks or synthetic tokens; not a live identity/provider proof.",
+  "postgres_note": "Real disposable PostgreSQL/Testcontainers, Flyway/JPA; several Order tests use mock Cart/Catalog and loopback HTTP Inventory fixture, never physical Inventory stock E2E.",
+  "historical_329_candidate_tests": "Separate earlier run at dfe9032; not added to current totals.",
+  "migration_rehearsal": {
+    "historical_source": "dfe903230c0d2c41ac59b412fd0f249b9f951da2",
+    "checks": 35,
+    "pass": 35,
+    "fail": 0,
+    "skip": 0,
+    "exit_code": 0,
+    "rerun_on_integrated_commit": false,
+    "v1_v5_bytes_identical": true
+  },
+  "live_acceptance": {
+    "tests": 5,
+    "status": "NOT_RUN",
+    "executed": 0,
+    "reason": "No owner-confirmed isolated live stack/fixtures and real fault evidence"
+  },
+  "full_backend_readiness": "NOT_RUN locally this turn; require fresh GitHub PR CI at final HEAD",
+  "runtime_flags_changed": false,
+  "production_database_accessed": false
+}

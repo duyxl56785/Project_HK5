@@ -1,0 +1,20 @@
+{
+  "cwd": "/workspace/tv3-pr145-live-acceptance/frontend",
+  "command": [
+    "node",
+    "/tmp/tv3-live-acceptance-145-20261101/node-runtime/node_modules/@playwright/test/cli.js",
+    "test",
+    "--config",
+    "/tmp/tv3-live-acceptance-145-20261101/runtime.config.ts",
+    "--project",
+    "two-store"
+  ],
+  "exitCode": 0,
+  "signal": null,
+  "applicationHead": "bf8eb3a027c72ad9fde81d0aa5dabc4e73bebacf",
+  "runLabel": "original",
+  "case": "two-store",
+  "browser": "/usr/bin/chromium",
+  "trace": "off",
+  "mockedNetwork": false
+}

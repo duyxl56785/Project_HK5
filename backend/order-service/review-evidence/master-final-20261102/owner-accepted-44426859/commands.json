@@ -1,0 +1,15 @@
+[
+  {
+    "cwd": "/workspace/tv3-owner-147-44426859/backend",
+    "setup": "source /workspace/.setup/java-proxy.sh",
+    "command": "env -u DOCKER_HOST -u DOCKER_CONTEXT -u DOCKER_TLS -u DOCKER_TLS_VERIFY -u DOCKER_CERT_PATH DOCKER_HOST=unix:///var/run/docker.sock ./gradlew --init-script /tmp/tv3-owner-147-44426859-20261102/build-output.init.gradle :order-service:compileJava :cart-service:compileJava :inventory-service:compileJava :order-service:test :order-service:postgresIntegrationTest :cart-service:test :cart-service:postgresIntegrationTest :inventory-service:test :inventory-service:postgresIntegrationTest build --rerun-tasks --continue --no-parallel --max-workers=1 --no-daemon --console=plain",
+    "exit": 0,
+    "note": "Independent execution on exact owner HEAD; all 88 tasks executed. No network retry/fault fixture/demo runtime flags enabled."
+  },
+  {
+    "cwd": "/workspace/tv3-owner-147-44426859",
+    "command": "npm --prefix frontend run typecheck",
+    "exit": 0,
+    "note": "Temporary local node_modules symlink with byte-identical package/lock; removed after command."
+  }
+]

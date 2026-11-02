@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuite name="com.projecthk5.cartservice.integration.WriteFencePostgres16IT" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-11-01T10:41:39" time="0.806">
+  <testcase name="writeClosedBeforeItCommitsRollsBack()" classname="com.projecthk5.cartservice.integration.WriteFencePostgres16IT" time="0.032" />
+  <testcase name="writeThatWasNotClosedCommitsInEveryTransaction()" classname="com.projecthk5.cartservice.integration.WriteFencePostgres16IT" time="0.011" />
+  <testcase name="writeOutsideAnyReservationIsNotChecked()" classname="com.projecthk5.cartservice.integration.WriteFencePostgres16IT" time="0.006" />
+  <testcase name="fenceListensOnTheTransactionManagerBootBuilt()" classname="com.projecthk5.cartservice.integration.WriteFencePostgres16IT" time="0.003" />
+  <testcase name="closeWaitsForACommitAlreadyPastItsCheck()" classname="com.projecthk5.cartservice.integration.WriteFencePostgres16IT" time="0.712" />
+  <testcase name="everyLaterTransactionOfAClosedOperationIsRefused()" classname="com.projecthk5.cartservice.integration.WriteFencePostgres16IT" time="0.021" />
+  <testcase name="closeRequiresThePairToken()" classname="com.projecthk5.cartservice.integration.WriteFencePostgres16IT" time="0.007" />
+  <testcase name="weakerSnapshotIsRefusedBecauseItCouldMissATombstone()" classname="com.projecthk5.cartservice.integration.WriteFencePostgres16IT" time="0.007" />
+</testsuite>

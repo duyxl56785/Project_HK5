@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.UUID;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -46,6 +48,7 @@ class CheckoutReplayPostgresIT {
     @Autowired CheckoutService checkout;
     @Autowired IdempotencyCoordinator keys;
     @Autowired OrderWriteService writer;
+    @Autowired CheckoutDraftJournal drafts;
     @Autowired OrderRepository orders;
     @Autowired CheckoutAttemptRepository attempts;
     @Autowired ObjectMapper json;
@@ -82,6 +85,36 @@ class CheckoutReplayPostgresIT {
         verifyNoInteractions(carts, catalog, inventory);
     }
 
+    static java.util.stream.Stream<Order.Shipping> changedShipping() {
+        return java.util.stream.Stream.of(
+            new Order.Shipping("Receiver B", "0901234567", "Address A"),
+            new Order.Shipping("Receiver A", "0907654321", "Address A"),
+            new Order.Shipping("Receiver A", "0901234567", "Address B"),
+            null);
+    }
+
+    @ParameterizedTest @MethodSource("changedShipping")
+    void successfulSameKeyRejectsChangedShippingBeforeRemoteSideEffects(Order.Shipping changed) {
+        String customer = "shipping-" + UUID.randomUUID();
+        String key = "shipping-key-" + UUID.randomUUID();
+        Order.Shipping original = new Order.Shipping("Receiver A", "0901234567", "Address A");
+        UUID id = place(customer, key, original);
+
+        CheckoutResult same = checkout.checkout(customer, "Bearer fixture", key, request, original);
+        assertEquals(id, same.orderId());
+        verify(carts).finalizeCart("Bearer fixture", key);
+        clearInvocations(carts, catalog, inventory);
+
+        ResponseStatusException conflict = assertThrows(ResponseStatusException.class,
+            () -> checkout.checkout(customer, "Bearer fixture", key, request, changed));
+        assertEquals(HttpStatus.CONFLICT, conflict.getStatusCode());
+        assertEquals("IDEMPOTENCY_PAYLOAD_MISMATCH", conflict.getReason());
+        verifyNoInteractions(carts, catalog, inventory);
+        assertEquals(1, sql.queryForObject("select count(*) from orders where customer_id=?",
+            Integer.class, customer));
+        assertEquals(original, orders.findByIdAndCustomerId(id, customer).orElseThrow().getShipping());
+    }
+
     @Test void inconsistentAttemptCannotReadOrFinalizeAnotherCustomersOrder() {
         UUID foreign = place("foreign-" + UUID.randomUUID(), "foreign-key");
         String customer = "own-" + UUID.randomUUID();
@@ -105,6 +138,10 @@ class CheckoutReplayPostgresIT {
             true, true, true, true, new BigDecimal("15000")));
         OrderWriteService lostResponse = mock(OrderWriteService.class);
         doAnswer(invocation -> {
+            writer.prepareDraft(invocation.getArgument(0));
+            return null;
+        }).when(lostResponse).prepareDraft(any(com.projecthk5.orderservice.domain.CheckoutDraft.class));
+        doAnswer(invocation -> {
             // This is the real Spring transaction proxy: commit happens before the simulated transport failure.
             writer.savePlaced(invocation.getArgument(0), invocation.getArgument(1), invocation.getArgument(2));
             throw new IllegalStateException("Fixture lost COMMIT response");
@@ -118,13 +155,20 @@ class CheckoutReplayPostgresIT {
         CheckoutAttempt stored = attempts.findByCustomerIdAndIdempotencyKey(customer, "uncertain-key").orElseThrow();
         assertEquals(CheckoutAttempt.State.SUCCEEDED, stored.getState());
         assertEquals(result.orderId(), stored.getOrderId());
+        assertEquals(result.orderId(),drafts.load(stored.getId()).orderId());
+        assertEquals(2,drafts.load(stored.getId()).sellerOrders().size());
         verify(inventory, never()).release(any());
         verify(carts, never()).release(anyString(), anyString());
     }
 
     private UUID place(String customer, String key) {
+        return place(customer, key, null);
+    }
+
+    private UUID place(String customer, String key, Order.Shipping shipping) {
         CheckoutAttempt attempt = keys.begin(customer, key, RequestFingerprint.compute(request)).attempt();
         Order order = new Order(attempt.getId(), customer);
+        order.ship(shipping);
         SellerOrder first = new SellerOrder(order, "seller1", "store1", new BigDecimal("20000"), new BigDecimal("1000"));
         SellerOrder second = new SellerOrder(order, "seller2", "store2", new BigDecimal("15000"), BigDecimal.ZERO);
         first.getItems().add(new OrderItem(first, "p1", 2, new BigDecimal("10000"), new BigDecimal("20000")));

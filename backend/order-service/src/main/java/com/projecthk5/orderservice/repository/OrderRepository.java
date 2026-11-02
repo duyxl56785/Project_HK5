@@ -1,8 +1,10 @@
 package com.projecthk5.orderservice.repository;
 
 import com.projecthk5.orderservice.entity.Order;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -11,4 +13,6 @@ public interface OrderRepository extends JpaRepository<Order,UUID> {
     // Scope the read to the verified customer, including uncertain-commit recovery reads.
     @EntityGraph(attributePaths = "sellerOrders")
     Optional<Order> findByIdAndCustomerId(UUID id, String customerId);
+
+    List<Order> findByCustomerIdOrderByCreatedAtDesc(String customerId, Pageable page);
 }

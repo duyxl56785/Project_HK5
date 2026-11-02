@@ -1,0 +1,336 @@
+{
+  "sourceBaseHead": "99979a75efa043b746704e38800db902cd9c3363",
+  "deployedApplicationHead": "bf8eb3a027c72ad9fde81d0aa5dabc4e73bebacf",
+  "passed": 6,
+  "failed": 0,
+  "skipped": 0,
+  "executed": 6,
+  "cases": [
+    {
+      "case": "replay-body",
+      "status": "PASS",
+      "httpStatus": 409,
+      "error": {
+        "message": "IDEMPOTENCY_PAYLOAD_MISMATCH",
+        "code": "REQUEST_REJECTED"
+      },
+      "cartRevision": [
+        15,
+        15
+      ],
+      "orderCount": [
+        4,
+        4
+      ],
+      "sellerOrderCount": [
+        8,
+        8
+      ],
+      "inventoryOperations": [
+        7,
+        7
+      ],
+      "balancesBefore": [
+        {
+          "sku": "TV3-NEG-b6396d50-A",
+          "available": 7,
+          "reserved": 1
+        },
+        {
+          "sku": "TV3-NEG-b6396d50-B",
+          "available": 7,
+          "reserved": 1
+        }
+      ],
+      "balancesAfter": [
+        {
+          "sku": "TV3-NEG-b6396d50-A",
+          "available": 7,
+          "reserved": 1
+        },
+        {
+          "sku": "TV3-NEG-b6396d50-B",
+          "available": 7,
+          "reserved": 1
+        }
+      ],
+      "journalDelta": [],
+      "draftDelta": 0
+    },
+    {
+      "case": "replay-shipping",
+      "status": "PASS",
+      "httpStatus": 409,
+      "error": {
+        "message": "IDEMPOTENCY_PAYLOAD_MISMATCH",
+        "code": "REQUEST_REJECTED"
+      },
+      "cartRevision": [
+        15,
+        15
+      ],
+      "orderCount": [
+        4,
+        4
+      ],
+      "sellerOrderCount": [
+        8,
+        8
+      ],
+      "inventoryOperations": [
+        7,
+        7
+      ],
+      "balancesBefore": [
+        {
+          "sku": "TV3-NEG-b6396d50-A",
+          "available": 7,
+          "reserved": 1
+        },
+        {
+          "sku": "TV3-NEG-b6396d50-B",
+          "available": 7,
+          "reserved": 1
+        }
+      ],
+      "balancesAfter": [
+        {
+          "sku": "TV3-NEG-b6396d50-A",
+          "available": 7,
+          "reserved": 1
+        },
+        {
+          "sku": "TV3-NEG-b6396d50-B",
+          "available": 7,
+          "reserved": 1
+        }
+      ],
+      "journalDelta": [],
+      "draftDelta": 0
+    },
+    {
+      "case": "expected-items",
+      "status": "PASS",
+      "httpStatus": 409,
+      "error": {
+        "message": "Cart and expectedItems differ",
+        "code": "BUSINESS_CONFLICT"
+      },
+      "cartRevision": [
+        17,
+        19
+      ],
+      "orderCount": [
+        4,
+        4
+      ],
+      "sellerOrderCount": [
+        8,
+        8
+      ],
+      "inventoryOperations": [
+        7,
+        7
+      ],
+      "balancesBefore": [
+        {
+          "sku": "TV3-NEG-b6396d50-A",
+          "available": 7,
+          "reserved": 1
+        },
+        {
+          "sku": "TV3-NEG-b6396d50-B",
+          "available": 7,
+          "reserved": 1
+        }
+      ],
+      "balancesAfter": [
+        {
+          "sku": "TV3-NEG-b6396d50-A",
+          "available": 7,
+          "reserved": 1
+        },
+        {
+          "sku": "TV3-NEG-b6396d50-B",
+          "available": 7,
+          "reserved": 1
+        }
+      ],
+      "journalDelta": [],
+      "draftDelta": 0
+    },
+    {
+      "case": "catalog-price",
+      "status": "PASS",
+      "httpStatus": 409,
+      "error": {
+        "message": "Product price changed since adding to cart",
+        "code": "BUSINESS_CONFLICT"
+      },
+      "cartRevision": [
+        23,
+        25
+      ],
+      "orderCount": [
+        4,
+        4
+      ],
+      "sellerOrderCount": [
+        8,
+        8
+      ],
+      "inventoryOperations": [
+        7,
+        7
+      ],
+      "balancesBefore": [
+        {
+          "sku": "TV3-NEG-b6396d50-A",
+          "available": 7,
+          "reserved": 1
+        },
+        {
+          "sku": "TV3-NEG-b6396d50-B",
+          "available": 7,
+          "reserved": 1
+        }
+      ],
+      "balancesAfter": [
+        {
+          "sku": "TV3-NEG-b6396d50-A",
+          "available": 7,
+          "reserved": 1
+        },
+        {
+          "sku": "TV3-NEG-b6396d50-B",
+          "available": 7,
+          "reserved": 1
+        }
+      ],
+      "journalDelta": [],
+      "draftDelta": 0
+    },
+    {
+      "case": "insufficient-stock",
+      "status": "PASS",
+      "httpStatus": 409,
+      "error": {
+        "message": "Not enough stock for TV3-NEG-b6396d50-B",
+        "code": "BUSINESS_CONFLICT"
+      },
+      "cartRevision": [
+        29,
+        31
+      ],
+      "orderCount": [
+        4,
+        4
+      ],
+      "sellerOrderCount": [
+        8,
+        8
+      ],
+      "inventoryOperations": [
+        8,
+        8
+      ],
+      "balancesBefore": [
+        {
+          "sku": "TV3-NEG-b6396d50-A",
+          "available": 7,
+          "reserved": 1
+        },
+        {
+          "sku": "TV3-NEG-b6396d50-B",
+          "available": 1,
+          "reserved": 1
+        }
+      ],
+      "balancesAfter": [
+        {
+          "sku": "TV3-NEG-b6396d50-A",
+          "available": 7,
+          "reserved": 1
+        },
+        {
+          "sku": "TV3-NEG-b6396d50-B",
+          "available": 1,
+          "reserved": 1
+        }
+      ],
+      "journalDelta": [
+        {
+          "operation_id": "order-fc95e8d2-1f36-407a-b352-494f834bfc6b-reserve",
+          "operation_type": "RESERVE",
+          "state": "REJECTED",
+          "send_attempts": 1,
+          "last_error_code": "INSUFFICIENT_STOCK",
+          "canonical_lines": [
+            {
+              "sku": "TV3-NEG-b6396d50-A",
+              "quantity": 2
+            },
+            {
+              "sku": "TV3-NEG-b6396d50-B",
+              "quantity": 2
+            }
+          ],
+          "payload_fingerprint": "15100339c23defaeae8ad18986c1cafc10c8b8fb4e52d658059c6129aa504392"
+        }
+      ],
+      "draftDelta": 1
+    },
+    {
+      "case": "product-inactive",
+      "status": "PASS",
+      "httpStatus": 409,
+      "error": {
+        "message": "Product, seller or store not available",
+        "code": "BUSINESS_CONFLICT"
+      },
+      "cartRevision": [
+        35,
+        37
+      ],
+      "orderCount": [
+        4,
+        4
+      ],
+      "sellerOrderCount": [
+        8,
+        8
+      ],
+      "inventoryOperations": [
+        9,
+        9
+      ],
+      "balancesBefore": [
+        {
+          "sku": "TV3-NEG-b6396d50-A",
+          "available": 7,
+          "reserved": 1
+        },
+        {
+          "sku": "TV3-NEG-b6396d50-B",
+          "available": 7,
+          "reserved": 1
+        }
+      ],
+      "balancesAfter": [
+        {
+          "sku": "TV3-NEG-b6396d50-A",
+          "available": 7,
+          "reserved": 1
+        },
+        {
+          "sku": "TV3-NEG-b6396d50-B",
+          "available": 7,
+          "reserved": 1
+        }
+      ],
+      "journalDelta": [],
+      "draftDelta": 0
+    }
+  ],
+  "historicalOriginalLiveSuite": "3 PASS / 2 UNKNOWN NOT_RUN-BLOCKED, unchanged; not rerun by these negative tests"
+}

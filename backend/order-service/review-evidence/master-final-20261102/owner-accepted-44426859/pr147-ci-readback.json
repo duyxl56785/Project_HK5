@@ -1,0 +1,16 @@
+{
+  "head": "44426859cbcdcd6dd9ba0d5ce6f84f91a317256d",
+  "source": "Public GitHub PR checks HTML; not an API claim or local run",
+  "checks": [
+    {
+      "name": "Backend readiness",
+      "status": "SUCCESS",
+      "runURL": "https://github.com/duyxl56785/Project_HK5/actions/runs/41453659081"
+    },
+    {
+      "name": "Frontend and E2E",
+      "status": "SUCCESS",
+      "runURL": "https://github.com/duyxl56785/Project_HK5/actions/runs/41453659331"
+    }
+  ]
+}

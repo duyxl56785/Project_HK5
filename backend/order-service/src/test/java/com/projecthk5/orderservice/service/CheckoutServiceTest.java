@@ -68,7 +68,8 @@ class CheckoutServiceTest {
         verify(cart,never()).release(anyString(),anyString());
         verify(inventory,never()).release(any());
         verify(keys).fail(attempt.getId(),true);
-        verifyNoInteractions(write);
+        verify(write).prepareDraft(any());
+        verify(write,never()).savePlaced(any(),any(),anyString());
     }
     @Test void commitUnknownDoesNotCompensateAndFlagsForReconciliation() {
         CheckoutAttempt attempt=fresh();catalogAndCart();
@@ -97,6 +98,53 @@ class CheckoutServiceTest {
         verify(inventory,never()).reserve(any(),anyList());
         verify(cart).release(bearer,key);
         verify(keys).fail(attempt.getId(),false);
+    }
+    @Test void everyRefusedLineIsListedBeforeStockIsTouched() {
+        CheckoutAttempt attempt=fresh();catalogAndCart();
+        when(catalog.verify("p1")).thenReturn(new CatalogPort.ProductSnapshot("p1","seller1","store1",true,true,true,false,new BigDecimal("12000")));
+        when(catalog.verify("p2")).thenReturn(new CatalogPort.ProductSnapshot("p2","seller2","store2",true,true,false,true,new BigDecimal("15000")));
+        CheckoutItemsRejected refused=assertThrows(CheckoutItemsRejected.class,()->svc.checkout(customer,bearer,key,request));
+        assertEquals(List.of(new CheckoutItemsRejected.Item("p1",CheckoutItemsRejected.Reason.PRICE_CHANGED),
+            new CheckoutItemsRejected.Item("p2",CheckoutItemsRejected.Reason.STORE_UNAVAILABLE)),refused.items());
+        verify(inventory,never()).reserve(any(),anyList());
+        verify(cart).release(bearer,key);
+        verify(keys).fail(attempt.getId(),false);
+    }
+    @Test void productGoneFromCatalogIsListedWithTheOtherLines() {
+        fresh();catalogAndCart();
+        when(catalog.verify("p1")).thenThrow(new IllegalStateException("Product no longer exists"));
+        when(catalog.verify("p2")).thenReturn(new CatalogPort.ProductSnapshot("p2","seller2","store2",false,true,true,true,new BigDecimal("15000")));
+        CheckoutItemsRejected refused=assertThrows(CheckoutItemsRejected.class,()->svc.checkout(customer,bearer,key,request));
+        assertEquals(List.of(new CheckoutItemsRejected.Item("p1",CheckoutItemsRejected.Reason.PRODUCT_UNAVAILABLE),
+            new CheckoutItemsRejected.Item("p2",CheckoutItemsRejected.Reason.PRODUCT_UNAVAILABLE)),refused.items());
+    }
+    @Test void shortStockNamesTheLineAndReleasesTheCart() {
+        CheckoutAttempt attempt=fresh();catalogAndCart();skus();
+        doThrow(new InventoryPort.Rejected("INSUFFICIENT_STOCK","Not enough stock for SKU-2","SKU-2")).when(inventory).reserve(any(),anyList());
+        CheckoutItemsRejected refused=assertThrows(CheckoutItemsRejected.class,()->svc.checkout(customer,bearer,key,request));
+        assertEquals(List.of(new CheckoutItemsRejected.Item("p2",CheckoutItemsRejected.Reason.OUT_OF_STOCK)),refused.items());
+        verify(cart).release(bearer,key);
+        verify(keys).fail(attempt.getId(),false);
+    }
+    @Test void inventoryRefusalThatIsNotAboutStockIsNotReportedAsShortStock() {
+        CheckoutAttempt attempt=fresh();catalogAndCart();skus();
+        doThrow(new InventoryPort.Rejected("INVALID_QUANTITY","Inventory rejected RESERVE: INVALID_QUANTITY","SKU-2")).when(inventory).reserve(any(),anyList());
+        InventoryPort.Rejected rejected=assertThrows(InventoryPort.Rejected.class,()->svc.checkout(customer,bearer,key,request));
+        assertEquals("INVALID_QUANTITY",rejected.code());
+        verify(cart).release(bearer,key);
+        verify(keys).fail(attempt.getId(),false);
+    }
+    @Test void shortStockNamingAnSkuOutsideTheVerifiedLinesKeepsTheOriginalRefusal() {
+        CheckoutAttempt attempt=fresh();catalogAndCart();skus();
+        doThrow(new InventoryPort.Rejected("INSUFFICIENT_STOCK","Not enough stock for SKU-9","SKU-9")).when(inventory).reserve(any(),anyList());
+        InventoryPort.Rejected rejected=assertThrows(InventoryPort.Rejected.class,()->svc.checkout(customer,bearer,key,request));
+        assertEquals("INSUFFICIENT_STOCK",rejected.code());
+        verify(cart).release(bearer,key);
+        verify(keys).fail(attempt.getId(),false);
+    }
+    private void skus() {
+        when(catalog.verify("p1")).thenReturn(new CatalogPort.ProductSnapshot("p1","seller1","store1",true,true,true,false,new BigDecimal("10000"),"SKU-1","P1"));
+        when(catalog.verify("p2")).thenReturn(new CatalogPort.ProductSnapshot("p2","seller2","store2",true,true,true,true,new BigDecimal("15000"),"SKU-2","P2"));
     }
     @Test void malformedClaimedCartNullLineReleasesClaimWithoutExternalSideEffects() {
         CheckoutAttempt attempt=fresh();
@@ -291,5 +339,78 @@ class CheckoutServiceTest {
         verify(inventory).reserve(eq(attempt.getId()),argThat(items -> items.size()==2));
         verify(cart).finalizeCart(bearer,key);
         verify(cart,never()).release(anyString(),anyString());
+    }
+
+    @Test void definitiveStockRejectionReleasesCartAndIsNotMarkedForReconciliation() {
+        CheckoutAttempt attempt=fresh();catalogAndCart();
+        doThrow(new InventoryPort.Rejected("INSUFFICIENT_STOCK","Not enough stock for SKU-1"))
+            .when(inventory).reserve(eq(attempt.getId()),anyList());
+        InventoryPort.Rejected rejected=assertThrows(InventoryPort.Rejected.class,
+            ()->svc.checkout(customer,bearer,key,request));
+        assertEquals("INSUFFICIENT_STOCK",rejected.code());
+        verify(cart).release(bearer,key);
+        verify(keys).fail(attempt.getId(),false);
+        verify(write,never()).savePlaced(any(),any(),anyString());
+    }
+
+    @Test void definitiveCartRejectionIsNotMarkedForReconciliation() {
+        CheckoutAttempt attempt=fresh();
+        when(cart.claim(bearer,key,null)).thenThrow(new CartPort.Rejected("Cart revision changed"));
+        CartPort.Rejected rejected=assertThrows(CartPort.Rejected.class,
+            ()->svc.checkout(customer,bearer,key,request));
+        assertEquals("Cart revision changed",rejected.getMessage());
+        verify(keys).fail(attempt.getId(),false);
+        verify(cart,never()).release(anyString(),anyString());
+        verify(inventory,never()).reserve(any(),anyList());
+    }
+    @Test void reservationCarriesCatalogSkuAndOrderKeepsShippingAndLabels() {
+        CheckoutAttempt attempt=fresh();
+        when(cart.claim(bearer,key,null)).thenReturn(new CartPort.CartSnapshot(customer,1,true,List.of(
+            new CartPort.Item("p1","store1","seller1",2,new BigDecimal("10000")),
+            new CartPort.Item("p2","store2","seller2",1,new BigDecimal("15000")))));
+        when(catalog.verify("p1")).thenReturn(new CatalogPort.ProductSnapshot("p1","seller1","store1",true,true,true,false,
+            new BigDecimal("10000"),"SKU-1","Ao thun"));
+        when(catalog.verify("p2")).thenReturn(new CatalogPort.ProductSnapshot("p2","seller2","store2",true,true,true,false,
+            new BigDecimal("15000"),"SKU-2","Quan jean"));
+        when(write.savePlaced(any(Order.class),eq(attempt.getId()),anyString())).thenAnswer(inv -> inv.getArgument(0));
+        Order.Shipping ship=new Order.Shipping("Nguyen Van A","0901234567","1 Le Loi, Q1, HCM");
+        svc.checkout(customer,bearer,key,request,ship);
+        verify(inventory).reserve(eq(attempt.getId()),argThat(items -> items.size()==2
+            && items.contains(new InventoryPort.Reservation("p1",2,"SKU-1"))
+            && items.contains(new InventoryPort.Reservation("p2",1,"SKU-2"))));
+        verify(write).savePlaced(argThat(o -> ship.equals(o.getShipping())
+            && o.getSellerOrders().stream().flatMap(so -> so.getItems().stream())
+                .anyMatch(i -> "SKU-1".equals(i.getSku()) && "Ao thun".equals(i.getProductName()))),
+            eq(attempt.getId()),anyString());
+    }
+
+    @Test void draftFailureStopsBeforeInventoryAndReleasesOnlyTheKnownCartClaim() {
+        CheckoutAttempt attempt=fresh();catalogAndCart();
+        doThrow(new IllegalStateException("Draft commit failed")).when(write).prepareDraft(any());
+        assertThrows(IllegalStateException.class,()->svc.checkout(customer,bearer,key,request));
+        verifyNoInteractions(inventory);
+        verify(write,never()).savePlaced(any(),any(),anyString());
+        verify(cart).release(bearer,key);
+        verify(keys).fail(attempt.getId(),false);
+    }
+
+    @Test void immutableDraftPrecedesReserveAndUsesTheExactWrittenGraphAndEvent() {
+        CheckoutAttempt attempt=fresh();catalogAndCart();
+        svc.checkout(customer,bearer,key,request);
+        var draft=org.mockito.ArgumentCaptor.forClass(com.projecthk5.orderservice.domain.CheckoutDraft.class);
+        var order=org.mockito.ArgumentCaptor.forClass(Order.class);
+        var payload=org.mockito.ArgumentCaptor.forClass(String.class);
+        var sequence=inOrder(write,inventory);
+        sequence.verify(write).prepareDraft(draft.capture());
+        sequence.verify(inventory).reserve(eq(attempt.getId()),anyList());
+        sequence.verify(write).savePlaced(order.capture(),eq(attempt.getId()),payload.capture());
+        assertEquals(payload.getValue(),draft.getValue().outboxPayload());
+        assertEquals(order.getValue().getSellerOrders().stream().map(SellerOrder::getId).toList(),
+            draft.getValue().sellerOrders().stream().map(com.projecthk5.orderservice.domain.CheckoutDraft.Store::id).toList());
+        assertEquals(List.of(false,true),draft.getValue().sellerOrders().stream()
+            .map(com.projecthk5.orderservice.domain.CheckoutDraft.Store::houseStore).toList());
+        order.getValue().getSellerOrders().get(0).getItems().clear();
+        assertEquals(1,draft.getValue().sellerOrders().get(0).items().size());
+        assertThrows(UnsupportedOperationException.class,()->draft.getValue().sellerOrders().clear());
     }
 }

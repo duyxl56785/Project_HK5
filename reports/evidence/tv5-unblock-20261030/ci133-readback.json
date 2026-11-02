@@ -1,0 +1,29 @@
+[
+  {
+    "PR": 133,
+    "featureHead": "3031523fdf8100c36cc3d9fef8c12748a18ee1ff",
+    "checkState": "success",
+    "runURL": "https://github.com/duyxl56785/Project_HK5/actions/runs/40996452007",
+    "jobURL": "https://github.com/duyxl56785/Project_HK5/actions/runs/40996452007/job/123870595435",
+    "checkoutSha": "023dc49b72a81dc311ba14ee52669068f1e8e830",
+    "checkoutParents": [
+      "dc10c0c9cfcc8aecf437df9f55978f98b8abaaf5",
+      "3031523fdf8100c36cc3d9fef8c12748a18ee1ff"
+    ],
+    "checkoutTree": "740359162d562fc4526f489c6dfd9df608b1f333",
+    "featureTree": "740359162d562fc4526f489c6dfd9df608b1f333",
+    "rawLog": {
+      "localPath": ".verification/tv5-unblock-20261030/ci133-private.log",
+      "bytes": 52485,
+      "sha256": "dee37f796241d00949457f63a4e58f8e40413ef6dddfd81895fcaf20c9265ace"
+    },
+    "derivedSignals": {
+      "buildSuccessful": true,
+      "orderPG29": false,
+      "gateway10": true,
+      "authority5": true,
+      "coreTest": true
+    },
+    "boundary": "Signals are derived log checks, not invented CI aggregate totals. Original runner output remains private."
+  }
+]

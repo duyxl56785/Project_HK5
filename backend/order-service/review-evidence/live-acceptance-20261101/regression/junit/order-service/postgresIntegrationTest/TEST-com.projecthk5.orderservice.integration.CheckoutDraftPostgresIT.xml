@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuite name="com.projecthk5.orderservice.integration.CheckoutDraftPostgresIT" tests="14" skipped="0" failures="0" errors="0" timestamp="2026-11-01T14:46:20" time="9.898">
+  <testcase name="executionCutAfterDraftBeforeT1LeavesFactsForScannerWithoutAutomaticRecovery()" classname="com.projecthk5.orderservice.integration.CheckoutDraftPostgresIT" time="0.13" />
+  <testcase name="draftCommitFaultPreventsT1AndAllInventoryHttp()" classname="com.projecthk5.orderservice.integration.CheckoutDraftPostgresIT" time="0.039" />
+  <testcase name="realHttpReadTimeoutRetainsUnknownDraftAndCannotSendOrReleaseOnReplay()" classname="com.projecthk5.orderservice.integration.CheckoutDraftPostgresIT" time="5.151" />
+  <testcase name="unknownSurvivesNewServiceInstanceAndSameKeyNeverReservesOrFinalizes()" classname="com.projecthk5.orderservice.integration.CheckoutDraftPostgresIT" time="0.062" />
+  <testcase name="corruptPayloadFailsClosedWithoutNetworkOrOrderCreation()" classname="com.projecthk5.orderservice.integration.CheckoutDraftPostgresIT" time="0.024" />
+  <testcase name="outboxTransactionRollbackRetainsExactDraftAndConfirmedReservation()" classname="com.projecthk5.orderservice.integration.CheckoutDraftPostgresIT" time="0.085" />
+  <testcase name="completeBusinessSnapshotCommitsBeforeHttpAndMatchesPlacedRowsAndOutbox()" classname="com.projecthk5.orderservice.integration.CheckoutDraftPostgresIT" time="0.056" />
+  <testcase name="[1] point=AFTER_DRAFT" classname="com.projecthk5.orderservice.integration.CheckoutDraftPostgresIT" time="1.398" />
+  <testcase name="[2] point=AFTER_T1" classname="com.projecthk5.orderservice.integration.CheckoutDraftPostgresIT" time="1.344" />
+  <testcase name="[3] point=AFTER_RESERVE" classname="com.projecthk5.orderservice.integration.CheckoutDraftPostgresIT" time="1.455" />
+  <testcase name="lateHttpSuccessCannotOverwriteUnknownOrCommitOrderAfterStaleScan()" classname="com.projecthk5.orderservice.integration.CheckoutDraftPostgresIT" time="0.039" />
+  <testcase name="concurrentSameDraftIsOneRowAndChangedShippingCannotOverwriteIt()" classname="com.projecthk5.orderservice.integration.CheckoutDraftPostgresIT" time="0.025" />
+  <testcase name="wrongCustomerFingerprintOrClosedAttemptCannotWriteDraft()" classname="com.projecthk5.orderservice.integration.CheckoutDraftPostgresIT" time="0.013" />
+  <testcase name="overlappingSameKeyCheckoutCreatesOneDraftOrderOutboxAndInventorySend()" classname="com.projecthk5.orderservice.integration.CheckoutDraftPostgresIT" time="0.059" />
+</testsuite>

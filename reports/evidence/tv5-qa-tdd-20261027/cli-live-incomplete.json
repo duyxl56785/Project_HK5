@@ -1,0 +1,12 @@
+{
+  "kind": "DERIVED live attempt receipt",
+  "head": "c25c67879b642b9a3521392dc02e648413ee5eca",
+  "exitCode": 2,
+  "status": "BLOCKED_REQUEST_OR_RESPONSE; sanitized request/JSON failure before publication; root cause not established",
+  "complete": false,
+  "snapshotPublished": false,
+  "logPath": ".verification/tv5-preflight-composition-20261027/cli-live/runtime.log",
+  "logSHA256": "e7c4e6523f2913c01fd0b4fc6f2f5f2149bd4118b503a17bee672f9966878f10",
+  "boundary": "CLI correctly failed closed; not a PR runtime finding or live PASS",
+  "privateOriginalSummarySHA256": "2eb70ae86dcebed44d3c8a170d124efd4df2d5ad3030e1db8ffb042272f1c169"
+}

@@ -17,7 +17,8 @@ class SellerStoreJsonTest {
 
     @Test
     void mapsAllSixSchemasToExistingValidatedInputsWithoutCoercion() {
-        assertDoesNotThrow(() -> json.registration(" {} \n"));
+        assertEquals("An", json.registration(" {\"representativeName\":\" An \",\"phone\":\"+84901234567\",\"pickupAddress\":\"1 Le Loi\"} \n").representativeName());
+        assertEquals("1 Le Loi", json.resubmission("{\"expectedVersion\":\"3\",\"representativeName\":\"An\",\"phone\":\"0901234567\",\"pickupAddress\":\"1 Le Loi\"}").contact().pickupAddress());
         assertEquals(Long.MAX_VALUE, json.version("{\"expectedVersion\":\"9223372036854775807\"}").expectedVersion());
         assertEquals("Reason", json.moderation("{\"reason\":\" Reason \",\"expectedVersion\":\"0\"}").reason());
         assertEquals("Store", json.createStore("{\"name\":\" Store \",\"slug\":\"store\"}").name());
@@ -27,11 +28,13 @@ class SellerStoreJsonTest {
 
     @ParameterizedTest
     @NullAndEmptySource
-    @ValueSource(strings = {" ", "null", "[]", "\"text\"", "0", "true", "{", "{}{}", "{} null", "{} garbage",
+    @ValueSource(strings = {" ", "null", "[]", "\"text\"", "0", "true", "{", "{}", "{}{}", "{} null", "{} garbage",
+            "{\"representativeName\":\"An\",\"phone\":\"abc\",\"pickupAddress\":\"1 Le Loi\"}",
+            "{\"representativeName\":\" \",\"phone\":\"0901234567\",\"pickupAddress\":\"1 Le Loi\"}",
             "{\"role\":\"SELLER\"}", "{\"ownerReference\":\"other-owner\"}", "{\"status\":\"APPROVED\"}",
             "{\"id\":\"other\"}", "{\"sellerId\":\"other\"}", "{\"storeId\":\"other\"}",
             "{\"role\":null}", "{\"extra\":{}}", "{/*comment*/}", "{,}"})
-    void registrationAcceptsOnlyAnEmptyObject(String payload) {
+    void registrationRequiresExactlyValidContactDetails(String payload) {
         invalid(() -> json.registration(payload));
     }
 

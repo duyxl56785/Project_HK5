@@ -1,0 +1,81 @@
+{
+  "kind": "DERIVED QA summary, original log/XML private byte-preserved",
+  "head": "ed85f6290de7f611c82e5c0ad973f98180f04df4",
+  "workingTree": "new source fingerprint, commit status must be checked separately",
+  "sourceManifest": [
+    {
+      "path": "backend/order-service/src/test/java/com/projecthk5/orderservice/finance/FinanceTwoStoreFixture.java",
+      "sha256": "1119649db3876f385f30d59592d72dd7e4dc8d54abf8e9f11f5f8bfacb0a540c"
+    },
+    {
+      "path": "backend/order-service/src/test/java/com/projecthk5/orderservice/finance/FinanceDurabilityPostgresIT.java",
+      "sha256": "5d9876837245fb462a8eaffc13a9a745acf1576e8070beb6780853365f49c6a9"
+    }
+  ],
+  "command": [
+    "D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-finance-durability-20261025\\backend\\gradlew.bat",
+    "-p",
+    "backend",
+    ":order-service:postgresIntegrationTest",
+    "--tests",
+    "*FinanceDurabilityPostgresIT",
+    "--rerun-tasks",
+    "--no-daemon",
+    "--console=plain"
+  ],
+  "startedUtc": "2026-10-25T16:13:43.559921+00:00",
+  "completedUtc": "2026-10-25T16:14:16.255048+00:00",
+  "exitCode": 0,
+  "environment": {
+    "Java": "21.0.7",
+    "Gradle": "8.10",
+    "JVM": "-Duser.timezone=UTC -Dapi.version=1.44",
+    "PostgreSQL": "16.6 Testcontainers for new suite"
+  },
+  "cases": [
+    {
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.orderservice.finance.FinanceDurabilityPostgresIT",
+      "name": "identicalIdempotencyKeysAcrossCustomersReplayOnlyTheirOwnTwoStoreFinancialAggregate()",
+      "result": "PASS"
+    },
+    {
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.orderservice.finance.FinanceDurabilityPostgresIT",
+      "name": "outerRollbackRevertsAlreadyFlushedTwoStoreMoneyOutboxAndSuccessfulAttemptTogether()",
+      "result": "PASS"
+    },
+    {
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.orderservice.finance.FinanceDurabilityPostgresIT",
+      "name": "concurrentSuccessfulReplaysKeepEveryStoredMoneySnapshotWhileFinancePolicyIsClosed()",
+      "result": "PASS"
+    },
+    {
+      "task": "postgresIntegrationTest",
+      "class": "com.projecthk5.orderservice.finance.FinanceDurabilityPostgresIT",
+      "name": "postgresOutboxFaultAfterTwoStoreFlushRollsBackEveryMoneyRowAndAllowsCleanLocalRetry()",
+      "result": "PASS"
+    }
+  ],
+  "counts": {
+    "postgresIntegrationTest": {
+      "PASS": 4
+    }
+  },
+  "rawArtifacts": [
+    {
+      "path": ".verification/tv5-finance-durability-evidence-20261025/focused/runtime.log",
+      "sha256": "6f9bce7e57766997df051aff3fc1914b2c31e38812fdf7ae32a54ef42cc056f6",
+      "bytes": 2186
+    },
+    {
+      "path": ".verification/tv5-finance-durability-evidence-20261025/focused/postgresIntegrationTest/TEST-com.projecthk5.orderservice.finance.FinanceDurabilityPostgresIT.xml",
+      "sha256": "b4c224715445419e65bfa9b81dac7175390372288894a04eff9662595e3f846c",
+      "bytes": 10005
+    }
+  ],
+  "excludedStaleXml": [],
+  "sourceAttribution": "Precommit new-source fingerprint on baseed85f62; not a fresh execution of committed446ae44",
+  "publication": "DERIVED SUMMARY only. Raw stdout/XML/artifacts stay byte-preserved private; public SHA256 paths are provenance, not public raw downloads."
+}

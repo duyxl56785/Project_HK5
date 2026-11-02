@@ -1,0 +1,382 @@
+{
+  "kind": "DERIVED SUMMARY, original logs/XML private and byte-preserved",
+  "metadata": {
+    "source": "0860dc940bba44b5eceee082db2d2ea784a565b1",
+    "PR": 91,
+    "command": [
+      "D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-audit-20261025\\source91\\backend\\gradlew.bat",
+      "-p",
+      "backend",
+      ":product-service:test",
+      "--tests",
+      "*CatalogSearchQueryTest",
+      ":product-service:integrationTest",
+      "--tests",
+      "*ProductCatalogSearchIntegrationTest",
+      "--rerun-tasks",
+      "--no-daemon",
+      "--console=plain"
+    ],
+    "startedUtc": "2026-10-24T17:48:05.886862+00:00",
+    "executor": "TV5 independent exact-head execution",
+    "environment": {
+      "Java": "21.0.7",
+      "Gradle": "8.10",
+      "Docker": "29.8.1",
+      "PostgreSQL": "16 Testcontainers where tagged",
+      "JAVA_TOOL_OPTIONS": "-Duser.timezone=UTC -Dapi.version=1.44"
+    },
+    "exitCode": 0,
+    "completedUtc": "2026-10-24T17:48:39.673648+00:00"
+  },
+  "counts": {
+    "product-service:test": {
+      "PASS": 11
+    },
+    "product-service:integrationTest": {
+      "PASS": 35
+    }
+  },
+  "cases": [
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogSearchQueryTest",
+      "name": "[1] value=-1:10",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogSearchQueryTest",
+      "name": "[2] value=0:0",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogSearchQueryTest",
+      "name": "[3] value=0:-1",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogSearchQueryTest",
+      "name": "[4] value=0:101",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogSearchQueryTest",
+      "name": "[5] value=2147483647:100",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogSearchQueryTest",
+      "name": "[1] amount=0",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogSearchQueryTest",
+      "name": "[2] amount=-1",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogSearchQueryTest",
+      "name": "[3] amount=1.5",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogSearchQueryTest",
+      "name": "[4] amount=1000000001",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogSearchQueryTest",
+      "name": "blanksDefaultsAndIntegralScaleAreExplicitWithoutRounding()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.CatalogSearchQueryTest",
+      "name": "inverseRangeAndInvalidTextAreRejected()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSearchIntegrationTest",
+      "name": "[1] term=%",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSearchIntegrationTest",
+      "name": "[2] term=_",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSearchIntegrationTest",
+      "name": "[3] term=\\",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSearchIntegrationTest",
+      "name": "[4] term=%' OR 1=1 --",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSearchIntegrationTest",
+      "name": "[5] term=x'); DROP TABLE products; --",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSearchIntegrationTest",
+      "name": "[1] mutation=price",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSearchIntegrationTest",
+      "name": "[2] mutation=status",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSearchIntegrationTest",
+      "name": "[3] mutation=category",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSearchIntegrationTest",
+      "name": "[4] mutation=delete",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSearchIntegrationTest",
+      "name": "unicodeNamesAndCaseNfcNfdAndSupplementarySkuArePreserved()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSearchIntegrationTest",
+      "name": "nameSearchIsLiteralCaseInsensitiveAndPreservesExactProjection()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSearchIntegrationTest",
+      "name": "paginationFirstMiddleLastBeyondAndEmptyHaveCandidateCountsOnly()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSearchIntegrationTest",
+      "name": "evenAWhollyEligibleCandidatePageDoesNotProveGlobalEligibleCount()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSearchIntegrationTest",
+      "name": "privateFieldsAreAbsentAndResultsImmutable()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSearchIntegrationTest",
+      "name": "actualPostgresCountTimeoutReturnsUnavailableWithoutPartialPage()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSearchIntegrationTest",
+      "name": "[1] sort=NAME_ASC",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSearchIntegrationTest",
+      "name": "[2] sort=PRICE_ASC",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSearchIntegrationTest",
+      "name": "[3] sort=PRICE_DESC",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSearchIntegrationTest",
+      "name": "[1] isolation=default",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSearchIntegrationTest",
+      "name": "[2] isolation=read-committed",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSearchIntegrationTest",
+      "name": "invalidInputsDoNotExecuteProductQueries()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSearchIntegrationTest",
+      "name": "normalCategoryDeleteRemainsRestrictedAndInjectedMissingCategoryIsExcluded()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSearchIntegrationTest",
+      "name": "priceBoundsAreInclusiveExplicitWholeVndWithoutRounding()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSearchIntegrationTest",
+      "name": "[1] status=DRAFT",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSearchIntegrationTest",
+      "name": "[2] status=PENDING_REVIEW",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSearchIntegrationTest",
+      "name": "[3] status=ACTIVE",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSearchIntegrationTest",
+      "name": "[4] status=REJECTED",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSearchIntegrationTest",
+      "name": "[5] status=SUSPENDED",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSearchIntegrationTest",
+      "name": "[6] status=INACTIVE",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSearchIntegrationTest",
+      "name": "categoryAndCombinedFiltersMatchRowsAndCounts()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSearchIntegrationTest",
+      "name": "maximumPageSizeUsesTwoScalarQueriesAndNoEntityOrCategoryNPlusOne()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSearchIntegrationTest",
+      "name": "[1] mode=unavailable",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSearchIntegrationTest",
+      "name": "[2] mode=closed",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSearchIntegrationTest",
+      "name": "[3] mode=unapproved",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSearchIntegrationTest",
+      "name": "defaultRuntimeCannotExposeCatalogEvenWithForgedAuthorityHeaders()",
+      "result": "PASS"
+    }
+  ],
+  "staleXmlExcluded": [],
+  "rawArtifacts": [
+    {
+      "localPath": ".verification/tv5-audit-20261025/run91/integrationTest/TEST-com.projecthk5.productservice.catalog.ProductCatalogSearchIntegrationTest.xml",
+      "bytes": 221093,
+      "sha256": "bfe4fb4ea25ce30e6dd6201372f73b9283f175ad1dc6e66fbcf02d89668685a1"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261025/run91/runtime.log",
+      "bytes": 1886,
+      "sha256": "1276aba0a4c1ca10b5ba87413b0df29f6140cb60a1740e7a9d7d042fa86b3a43"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261025/run91/test/TEST-com.projecthk5.productservice.catalog.CatalogSearchQueryTest.xml",
+      "bytes": 1778,
+      "sha256": "ffec2c722185e4d9c9b71188a94d80d8e7bced53739ca3339457e93c4cbc6877"
+    }
+  ]
+}

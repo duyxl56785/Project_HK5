@@ -1,0 +1,44 @@
+[
+  {
+    "order_id": "b0c34d99-98ac-4aed-9830-0e4a9bd1f0da",
+    "state": "SUCCEEDED",
+    "snapshot_version": 1,
+    "draft_checksum_valid": true,
+    "attempt_binding_matches": true,
+    "frozen_total_matches": true,
+    "persisted_shipping_matches": true,
+    "exact_frozen_outbox_retained": true,
+    "frozen_store_ids_money_match": true,
+    "frozen_item_ids_sku_quantity_money_match": true,
+    "seller_order_count": 2,
+    "placed_outbox_count": 1
+  },
+  {
+    "order_id": "cc4c3284-02ac-428e-af8c-e0d1b59afe7b",
+    "state": "SUCCEEDED",
+    "snapshot_version": 1,
+    "draft_checksum_valid": true,
+    "attempt_binding_matches": true,
+    "frozen_total_matches": true,
+    "persisted_shipping_matches": true,
+    "exact_frozen_outbox_retained": true,
+    "frozen_store_ids_money_match": true,
+    "frozen_item_ids_sku_quantity_money_match": true,
+    "seller_order_count": 2,
+    "placed_outbox_count": 1
+  },
+  {
+    "order_id": "cf77f2cf-863d-40ea-b849-7403a2d588dd",
+    "state": "SUCCEEDED",
+    "snapshot_version": 1,
+    "draft_checksum_valid": true,
+    "attempt_binding_matches": true,
+    "frozen_total_matches": true,
+    "persisted_shipping_matches": true,
+    "exact_frozen_outbox_retained": true,
+    "frozen_store_ids_money_match": true,
+    "frozen_item_ids_sku_quantity_money_match": true,
+    "seller_order_count": 2,
+    "placed_outbox_count": 1
+  }
+]

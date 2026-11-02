@@ -1,0 +1,5 @@
+{
+  "title": "catalog-price changed since Cart rejects before Inventory",
+  "status": "passed",
+  "expectedStatus": "passed"
+}

@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuite name="com.projecthk5.orderservice.entity.SellerOrderTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-11-01T14:45:40" time="0.024">
+  <testcase name="cancellingEveryStoreOrderCancelsTheParentOrder()" classname="com.projecthk5.orderservice.entity.SellerOrderTest" time="0.007" />
+  <testcase name="settlementRequiresCollectedCodAndHappensOnce()" classname="com.projecthk5.orderservice.entity.SellerOrderTest" time="0.001" />
+  <testcase name="fullHappyPathRecordsDeliveryTimeAndNet()" classname="com.projecthk5.orderservice.entity.SellerOrderTest" time="0.001" />
+  <testcase name="codIsCollectedOnceAndOnlyAfterDelivery()" classname="com.projecthk5.orderservice.entity.SellerOrderTest" time="0.005" />
+  <testcase name="cannotCancelAfterAcceptOrSkipSteps()" classname="com.projecthk5.orderservice.entity.SellerOrderTest" time="0.004" />
+  <testcase name="rejectNeedsReasonAndVoidsCod()" classname="com.projecthk5.orderservice.entity.SellerOrderTest" time="0.001" />
+</testsuite>

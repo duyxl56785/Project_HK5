@@ -1,0 +1,1 @@
+Read-only PostgreSQL oracle. No shipping fields, passwords, tokens, idempotency keys, raw draft/outbox payloads or account email addresses are exported. Synthetic test identifiers and money/stock facts only.

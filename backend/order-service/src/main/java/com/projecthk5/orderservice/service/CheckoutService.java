@@ -12,6 +12,7 @@ import java.util.*;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service
@@ -33,6 +34,13 @@ public class CheckoutService {
     }
 
     public CheckoutResult checkout(String customerId, String bearer, String key, CheckoutRequest req) {
+        return checkout(customerId, bearer, key, req, null);
+    }
+
+    public CheckoutResult checkout(String customerId, String bearer, String key, CheckoutRequest req, Order.Shipping shipping) {
+        // Cart/Inventory HTTP must not occur under a caller's DB transaction; T1 needs a committed attempt FK.
+        if (TransactionSynchronizationManager.isActualTransactionActive())
+            throw new IllegalStateException("Checkout cannot run inside an outer database transaction");
         if (key == null || key.isBlank() || key.length()>128 || !key.equals(key.trim()))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Idempotency-Key required (1-128 characters)");
         if (req == null)
@@ -52,6 +60,13 @@ public class CheckoutService {
         if (attempt.getState()==CheckoutAttempt.State.SUCCEEDED) {
             Order placed=orders.findByIdAndCustomerId(attempt.getOrderId(), customerId)
                 .orElseThrow(() -> new IllegalStateException("Placed order needs reconciliation"));
+            // A legacy idempotency fingerprint covers Cart revision/items but not the
+            // separately supplied shipping address. Never replay a committed order
+            // as a successful response to the same key with different shipping.
+            // Compare persisted, controller-normalized facts without altering
+            // historical fingerprints or re-running any external side effects.
+            if (!Objects.equals(placed.getShipping(), shipping))
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "IDEMPOTENCY_PAYLOAD_MISMATCH");
             try { carts.finalizeCart(bearer,key); } catch (Exception ignored) {
                 // Committed outcome is authoritative; leave cart cleanup for reconciliation.
             }
@@ -67,6 +82,7 @@ public class CheckoutService {
         UUID orderId=attempt.getId();
         boolean claimRequested=false, claimConfirmed=false, claimOwned=false;
         boolean reserveRequested=false, writeRequested=false;
+        List<InventoryPort.Reservation> reservation=List.of();
         try {
             claimRequested=true;
             CartPort.CartSnapshot cart=carts.claim(bearer,key,req.expectedRevision());
@@ -78,13 +94,21 @@ public class CheckoutService {
             if (!claimOwned) throw new IllegalStateException("Cart claim was not acquired");
             if (!customerId.equals(cart.customerId())) throw new IllegalStateException("Cart customer mismatch");
             CheckoutRules.requireSameItems(req.expectedItems(),cart.items());
-            Order order=prepareOrder(orderId,customerId,cart.items());
-            List<InventoryPort.Reservation> reservation=cart.items().stream()
-                 .map(i -> new InventoryPort.Reservation(i.productId(),i.quantity())).toList();
+            PreparedOrder prepared=prepareOrder(orderId,customerId,cart.items());
+            Order order=prepared.order();
+            order.ship(shipping);
+            // Reserve exactly the verified lines, including the immutable SKU from Catalog.
+            reservation=order.getSellerOrders().stream()
+                 .flatMap(so -> so.getItems().stream())
+                 .map(i -> new InventoryPort.Reservation(i.getProductId(),i.getQuantity(),i.getSku())).toList();
             // Serialize the deterministic Order facts before external Inventory side
             // effects. A local serialization failure is known-safe and can release
             // the confirmed Cart claim without inventing an UNKNOWN reservation.
             String outboxPayload=eventPayload(order);
+            // Preserve the exact business graph and event ID before any external stock effect.
+            // A restart can inspect it without repricing or minting new child/item IDs.
+            writer.prepareDraft(CheckoutDraft.capture(order,fingerprint,req.expectedRevision(),cart.revision(),
+                prepared.houseStores(),outboxPayload));
             // Any error/timeout after this point has UNKNOWN outcome. Never
             // automatically compensate after reserve or uncertain DB commit.
             reserveRequested=true;
@@ -108,7 +132,10 @@ public class CheckoutService {
                     error.addSuppressed(readFailure);
                 }
             }
-            boolean uncertain=reserveRequested || writeRequested || (claimRequested && !claimConfirmed);
+            // A definitive Inventory rejection proves no stock moved, so the Cart claim can be released.
+            boolean reserveRejected=reserveRequested && !writeRequested && error instanceof InventoryPort.Rejected;
+            boolean uncertain=(reserveRequested && !reserveRejected) || writeRequested
+                || (claimRequested && !claimConfirmed && !(error instanceof CartPort.Rejected));
             if (!uncertain && claimConfirmed && claimOwned) {
                 try { carts.release(bearer,key); }
                 catch (Exception releaseFailure) {
@@ -123,25 +150,39 @@ public class CheckoutService {
             if (uncertain)
                 throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE,
                     "CHECKOUT_OUTCOME_UNKNOWN_RECONCILIATION_REQUIRED",error);
+            // shortcut: Inventory stops at the first short SKU, so one line is named; report all of them there to list every line.
+            if (error instanceof InventoryPort.Rejected rejected && "INSUFFICIENT_STOCK".equals(rejected.code())) {
+                // Frozen Catalog-verified Order lines; adapter binds their exact SKU/quantity tuple to immutable T1.
+                // No association is accepted from a replay request or an Inventory-supplied Product ID.
+                var matches=reservation.stream().filter(line -> line.sku()!=null && line.sku().equals(rejected.sku())).toList();
+                if (matches.size()==1)
+                    throw new CheckoutItemsRejected(List.of(new CheckoutItemsRejected.Item(matches.get(0).productId(),CheckoutItemsRejected.Reason.OUT_OF_STOCK)));
+            }
             throw error;
         }
     }
 
-    private Order prepareOrder(UUID id,String customer,List<CartPort.Item> items) {
+    private PreparedOrder prepareOrder(UUID id,String customer,List<CartPort.Item> items) {
         Order order=new Order(id,customer);
+        Map<String,Boolean> houseStores=new LinkedHashMap<>();
         Map<String,List<Prepared>> grouped=new LinkedHashMap<>();
         // S01: authoritative Catalog facts cannot assign the same Seller to two
         // Stores within one checkout. Reject the whole batch before Inventory.
         Map<String,String> storeForSeller=new HashMap<>();
+        List<CheckoutItemsRejected.Item> refused=new ArrayList<>();
         for (CartPort.Item item:items) {
-            CatalogPort.ProductSnapshot product=catalog.verify(item.productId());
-            if (!product.available() || !product.sellerApproved() || !product.storeOpen())
-                throw new IllegalStateException("Product, seller or store not available");
-            if (!product.productId().equals(item.productId()) || !product.storeId().equals(item.storeId())
-                    || !product.sellerId().equals(item.sellerId()))
-                throw new IllegalStateException("Catalog changed since cart creation");
-            if (item.unitPriceSnapshot()==null || product.unitPrice().compareTo(item.unitPriceSnapshot())!=0)
-                throw new IllegalStateException("Product price changed since adding to cart");
+            CatalogPort.ProductSnapshot product;
+            // CatalogHttpAdapter throws IllegalStateException only for a definite "gone"; an outage stays a 503.
+            try { product=catalog.verify(item.productId()); }
+            catch (IllegalStateException gone) {
+                refused.add(new CheckoutItemsRejected.Item(item.productId(),CheckoutItemsRejected.Reason.PRODUCT_UNAVAILABLE));
+                continue;
+            }
+            CheckoutItemsRejected.Reason problem=problem(item,product);
+            if (problem!=null) {
+                refused.add(new CheckoutItemsRejected.Item(item.productId(),problem));
+                continue;
+            }
             String previouslyVerifiedStore=storeForSeller.putIfAbsent(product.sellerId(),product.storeId());
             if (previouslyVerifiedStore!=null && !previouslyVerifiedStore.equals(product.storeId()))
                 throw new IllegalStateException("Catalog assigned one Seller to multiple Stores");
@@ -153,6 +194,7 @@ public class CheckoutService {
             grouped.computeIfAbsent(product.storeId(),ignore -> new ArrayList<>())
                 .add(new Prepared(product,item.quantity(),amount));
         }
+        if (!refused.isEmpty()) throw new CheckoutItemsRejected(refused);
         for (var entry:grouped.entrySet()) {
             List<Prepared> lines=entry.getValue();
             Prepared first=lines.get(0);
@@ -168,14 +210,25 @@ public class CheckoutService {
             OrderAmountStorageBounds.requireExactNonnegative(gross.subtract(fee));
             SellerOrder so=new SellerOrder(order,first.product.sellerId(),entry.getKey(),gross,fee);
             lines.forEach(line -> so.getItems().add(new OrderItem(so,line.product.productId(),
-                line.quantity,line.product.unitPrice(),line.total)));
+                line.quantity,line.product.unitPrice(),line.total,line.product.sku(),line.product.name())));
             order.addSellerOrder(so);
+            houseStores.put(entry.getKey(),first.product.houseStore());
         }
         // Two Store subtotals may fit NUMERIC(19,2) individually while the parent
         // aggregate does not. The caller has not set reserveRequested yet.
         OrderAmountStorageBounds.requireExactNonnegative(order.getTotal());
-        return order;
+        return new PreparedOrder(order,Map.copyOf(houseStores));
     }
+    private static CheckoutItemsRejected.Reason problem(CartPort.Item item,CatalogPort.ProductSnapshot product) {
+        if (!product.available()) return CheckoutItemsRejected.Reason.PRODUCT_UNAVAILABLE;
+        if (!product.sellerApproved() || !product.storeOpen()) return CheckoutItemsRejected.Reason.STORE_UNAVAILABLE;
+        if (!product.productId().equals(item.productId()) || !product.storeId().equals(item.storeId())
+                || !product.sellerId().equals(item.sellerId())) return CheckoutItemsRejected.Reason.CATALOG_CHANGED;
+        if (item.unitPriceSnapshot()==null || product.unitPrice().compareTo(item.unitPriceSnapshot())!=0)
+            return CheckoutItemsRejected.Reason.PRICE_CHANGED;
+        return null;
+    }
+    private record PreparedOrder(Order order,Map<String,Boolean> houseStores){}
     private record Prepared(CatalogPort.ProductSnapshot product,int quantity,BigDecimal total){}
     private String eventPayload(Order order) {
         try { return json.writeValueAsString(Map.of("eventId",UUID.randomUUID().toString(),

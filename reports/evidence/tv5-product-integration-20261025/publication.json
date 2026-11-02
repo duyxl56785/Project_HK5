@@ -1,0 +1,58 @@
+{
+  "timeUtc": "2026-10-25T13:58:42.200360+00:00",
+  "PR": 93,
+  "head": "76e99572cce68a43a45dd764b3b303d7c4d00557",
+  "url": "https://github.com/duyxl56785/Project_HK5/pull/93",
+  "newReviewRequests": [
+    "duyxl56785",
+    "lexuanbao258-collab"
+  ],
+  "deliberateRemovalsRespected": [],
+  "requestedReviewers": [
+    "lexuanbao258-collab",
+    "duyxl56785"
+  ],
+  "issueUpdates": [
+    "https://github.com/duyxl56785/Project_HK5/issues/5#issuecomment-6282711041",
+    "https://github.com/duyxl56785/Project_HK5/issues/12#issuecomment-6282712138"
+  ],
+  "reviews": [
+    {
+      "PR": 89,
+      "head": "17f98f4fc96b19f784fe39eeb5fd0c90e49915f6",
+      "review": "https://github.com/duyxl56785/Project_HK5/pull/89#pullrequestreview-5643550058",
+      "state": "COMMENTED"
+    },
+    {
+      "PR": 94,
+      "head": "96d59ca320845495dd2ce6acf42d0b10ee0286a6",
+      "review": "https://github.com/duyxl56785/Project_HK5/pull/94#pullrequestreview-5643550440",
+      "state": "COMMENTED"
+    },
+    {
+      "PR": 90,
+      "head": "6a290fffc35e6795f9e25f4a79b2b6fe74aa757f",
+      "review": "https://github.com/duyxl56785/Project_HK5/pull/90#pullrequestreview-5643550842",
+      "state": "COMMENTED"
+    },
+    {
+      "PR": 91,
+      "head": "4915c3768a310b519e218674e405b132103cd024",
+      "review": "https://github.com/duyxl56785/Project_HK5/pull/91#pullrequestreview-5643551253",
+      "state": "COMMENTED"
+    },
+    {
+      "PR": 83,
+      "head": "c831edb4d7c610b76e434222d51b115cfb863d81",
+      "review": "https://github.com/duyxl56785/Project_HK5/pull/83#pullrequestreview-5643551596",
+      "state": "COMMENTED"
+    }
+  ],
+  "own83Thread": {
+    "id": "PRRT_kwDOVGqk_M6v6eDr",
+    "state": "RESOLVED_FIXED_VERIFIED",
+    "reply": "https://github.com/duyxl56785/Project_HK5/pull/83#discussion_r4371081982",
+    "head": "c831edb4d7c610b76e434222d51b115cfb863d81"
+  },
+  "noAgentApproval": true
+}

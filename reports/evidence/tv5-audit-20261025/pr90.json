@@ -1,0 +1,452 @@
+{
+  "kind": "DERIVED SUMMARY, original logs/XML private and byte-preserved",
+  "metadata": {
+    "source": "6b5897956659439066500ccf6069b030ad8f7352",
+    "PR": 90,
+    "command": [
+      "D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-audit-20261025\\source90\\backend\\gradlew.bat",
+      "-p",
+      "backend",
+      ":product-service:test",
+      "--tests",
+      "*ProductCatalogSnapshotSourceTest",
+      ":product-service:integrationTest",
+      "--tests",
+      "*ProductCatalogSnapshotSourceIntegrationTest",
+      "--rerun-tasks",
+      "--no-daemon",
+      "--console=plain"
+    ],
+    "startedUtc": "2026-10-24T17:46:11.008753+00:00",
+    "executor": "TV5 independent exact-head execution",
+    "environment": {
+      "Java": "21.0.7",
+      "Gradle": "8.10",
+      "Docker": "29.8.1",
+      "PostgreSQL": "16 Testcontainers where tagged",
+      "JAVA_TOOL_OPTIONS": "-Duser.timezone=UTC -Dapi.version=1.44"
+    },
+    "exitCode": 0,
+    "completedUtc": "2026-10-24T17:46:48.207157+00:00"
+  },
+  "counts": {
+    "product-service:test": {
+      "PASS": 10
+    },
+    "product-service:integrationTest": {
+      "PASS": 46
+    }
+  },
+  "cases": [
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceTest",
+      "name": "databaseConnectionFailureDoesNotProveAnyAbsence()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceTest",
+      "name": "[1] invalid=null-list",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceTest",
+      "name": "[2] invalid=null-row",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceTest",
+      "name": "[3] invalid=unrequested",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceTest",
+      "name": "[4] invalid=duplicate",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceTest",
+      "name": "[5] invalid=price",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceTest",
+      "name": "[6] invalid=currency",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceTest",
+      "name": "[7] invalid=category",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceTest",
+      "name": "[8] invalid=id",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "test",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceTest",
+      "name": "invalidInputNeverReadsDatabaseOrDependencies()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceIntegrationTest",
+      "name": "[1] mismatch=price",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceIntegrationTest",
+      "name": "[2] mismatch=currency",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceIntegrationTest",
+      "name": "[3] mismatch=store",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceIntegrationTest",
+      "name": "[4] mismatch=seller",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceIntegrationTest",
+      "name": "oneNonReadyProductRemovesEveryUsableSnapshotInEitherRequestOrder()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceIntegrationTest",
+      "name": "unconfiguredDefaultProductionAuthorityNeverCreatesFoundOrReady()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceIntegrationTest",
+      "name": "anAmbientTransactionWithUnreportedIsolationAlsoFailsClosed()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceIntegrationTest",
+      "name": "[1] invalid=unapproved",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceIntegrationTest",
+      "name": "[2] invalid=closed",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceIntegrationTest",
+      "name": "[3] invalid=missing-category",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceIntegrationTest",
+      "name": "confirmedAbsenceIsPreservedAlongsideUnavailableExistingProductButValidatorAborts()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceIntegrationTest",
+      "name": "[1] outage=seller-unavailable",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceIntegrationTest",
+      "name": "[2] outage=store-unavailable",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceIntegrationTest",
+      "name": "consumerOutputDoesNotExposePrivateOwnerOrModerationReasonOrRejectedDetails()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceIntegrationTest",
+      "name": "multipleProductsFromOneStoreShareOneTrustedStoreFact()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceIntegrationTest",
+      "name": "[1] changed=price",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceIntegrationTest",
+      "name": "[2] changed=status",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceIntegrationTest",
+      "name": "queryProjectionBypassesCachedEntityWithoutClaimingDistributedFreshness()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceIntegrationTest",
+      "name": "twoStoresHaveDistinctSellerAndExplicitHouseFactsAndOrderedResults()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceIntegrationTest",
+      "name": "retainedRepeatableReadSnapshotCannotClaimCurrentFacts()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceIntegrationTest",
+      "name": "onlySuccessfulProductLookupConfirmsAbsenceAndDoesNotCallStoreDependency()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceIntegrationTest",
+      "name": "caseNfcNfdAndSupplementarySkuIdentityIsUnchanged()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceIntegrationTest",
+      "name": "[1] invalid=missing",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceIntegrationTest",
+      "name": "[2] invalid=extra",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceIntegrationTest",
+      "name": "[3] invalid=duplicate",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceIntegrationTest",
+      "name": "[4] invalid=conflict",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceIntegrationTest",
+      "name": "[5] invalid=seller-conflict",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceIntegrationTest",
+      "name": "[6] invalid=stale",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceIntegrationTest",
+      "name": "[7] invalid=unknown-house",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceIntegrationTest",
+      "name": "[8] invalid=unknown-seller",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceIntegrationTest",
+      "name": "[9] invalid=unknown-store",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceIntegrationTest",
+      "name": "[10] invalid=unknown-owner",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceIntegrationTest",
+      "name": "[11] invalid=unknown-seller-id",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceIntegrationTest",
+      "name": "[12] invalid=wrong-store",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceIntegrationTest",
+      "name": "[13] invalid=null-batch",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceIntegrationTest",
+      "name": "[14] invalid=null-fact",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceIntegrationTest",
+      "name": "ambiguousDependenciesDoNotSelectAnAuthorityOrReturnFound()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceIntegrationTest",
+      "name": "actualPostgresLockTimeoutIsUnavailableNeverAuthoritativeAbsence()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceIntegrationTest",
+      "name": "aValidProductIsReadFromProductionDatabaseWithExactFields()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceIntegrationTest",
+      "name": "productAndCatalogHttpRoutesRemainDenyDefaultEvenWithForgedCredentials()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceIntegrationTest",
+      "name": "[1] status=DRAFT",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceIntegrationTest",
+      "name": "[2] status=PENDING_REVIEW",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceIntegrationTest",
+      "name": "[3] status=REJECTED",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceIntegrationTest",
+      "name": "[4] status=SUSPENDED",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceIntegrationTest",
+      "name": "[5] status=INACTIVE",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceIntegrationTest",
+      "name": "maximumBatchUsesOneProductCategoryQueryAndOneUniqueStoreBatch()",
+      "result": "PASS"
+    }
+  ],
+  "staleXmlExcluded": [],
+  "rawArtifacts": [
+    {
+      "localPath": ".verification/tv5-audit-20261025/run90/integrationTest/TEST-com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceIntegrationTest.xml",
+      "bytes": 227359,
+      "sha256": "02c8ce4b3073b2771923126f87f3bc0978be40713762a452e7b0bf0783d90995"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261025/run90/runtime.log",
+      "bytes": 2025,
+      "sha256": "2cf9a8df36172d2310d2964c979d45346cb208b79a3273bf9198ae73359ca9a3"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261025/run90/test/TEST-com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceTest.xml",
+      "bytes": 2325,
+      "sha256": "e0c96d6a69021eaff6a476e78ad0c7365cf693a9ddc716493506cc1b321ceea3"
+    }
+  ]
+}

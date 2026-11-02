@@ -1,0 +1,21 @@
+# Docker DNS names beside Eureka: an empty registry after a Eureka restart must not take the Gateway down.
+spring:
+  cloud:
+    discovery:
+      client:
+        simple:
+          instances:
+            auth-service:
+              - uri: http://auth-service:8101
+            user-service:
+              - uri: http://user-service:8102
+            seller-service:
+              - uri: http://seller-service:8103
+            product-service:
+              - uri: http://product-service:8104
+            cart-service:
+              - uri: http://cart-service:8106
+            order-service:
+              - uri: http://order-service:8107
+            notification-service:
+              - uri: http://notification-service:8108

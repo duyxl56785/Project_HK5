@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "files_scanned": 108,
+  "actual_local_credential_values_scanned": 23,
+  "findings": [],
+  "excluded_fields": [
+    "shipping names/phones/addresses",
+    "idempotency keys",
+    "raw draft/outbox payloads"
+  ],
+  "test_source_note": "Existing synthetic shipping fixture literals are retained as test source, not real customer data. No live credential value is exported."
+}

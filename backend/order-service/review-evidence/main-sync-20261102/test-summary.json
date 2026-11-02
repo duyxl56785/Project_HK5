@@ -1,0 +1,231 @@
+{
+  "groups": {
+    "api-gateway:test": {
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 5
+    },
+    "auth-service:test": {
+      "tests": 42,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 11,
+      "passed": 31
+    },
+    "cart-service:postgresIntegrationTest": {
+      "tests": 13,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 13
+    },
+    "cart-service:test": {
+      "tests": 11,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 11
+    },
+    "inventory-service:postgresIntegrationTest": {
+      "tests": 19,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 19
+    },
+    "inventory-service:test": {
+      "tests": 27,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 27
+    },
+    "notification-service:test": {
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 2
+    },
+    "order-service:postgresIntegrationTest": {
+      "tests": 103,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 103
+    },
+    "order-service:test": {
+      "tests": 156,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 156
+    },
+    "product-service:integrationTest": {
+      "tests": 305,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 305
+    },
+    "product-service:test": {
+      "tests": 581,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 581
+    },
+    "security-common:test": {
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 5
+    },
+    "seller-service:integrationTest": {
+      "tests": 139,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 139
+    },
+    "seller-service:test": {
+      "tests": 249,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 249
+    },
+    "user-service:test": {
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 5,
+      "passed": 0
+    }
+  },
+  "totals": {
+    "tests": 1662,
+    "passed": 1646,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 16
+  },
+  "skipped_cases": [
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.service.SellerRoleRevisionDatabaseTest",
+      "case": "replayOfTheCurrentRevisionChangesNothing()",
+      "reason": "TV1_DATABASE_TESTS != true (existing source annotation)"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.service.SellerRoleRevisionDatabaseTest",
+      "case": "reservationReflectsTheAccountRightNow()",
+      "reason": "TV1_DATABASE_TESTS != true (existing source annotation)"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.service.SellerRoleRevisionDatabaseTest",
+      "case": "disabledAccountCannotReserve()",
+      "reason": "TV1_DATABASE_TESTS != true (existing source annotation)"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.service.SellerRoleRevisionDatabaseTest",
+      "case": "revocationAbortsReservedWritesThroughTheirService()",
+      "reason": "TV1_DATABASE_TESTS != true (existing source annotation)"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.service.SellerRoleRevisionDatabaseTest",
+      "case": "staleGrantCannotUndoANewerRevocation()",
+      "reason": "TV1_DATABASE_TESTS != true (existing source annotation)"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.service.SellerRoleRevisionDatabaseTest",
+      "case": "revocationAndReservationNeverInterleave()",
+      "reason": "TV1_DATABASE_TESTS != true (existing source annotation)"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.service.SellerRoleRevisionDatabaseTest",
+      "case": "reinstatementWithANewerRevisionGrantsAgain()",
+      "reason": "TV1_DATABASE_TESTS != true (existing source annotation)"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.service.SellerRoleRevisionDatabaseTest",
+      "case": "concurrentOutOfOrderDeliveriesConvergeOnTheHighestRevision()",
+      "reason": "TV1_DATABASE_TESTS != true (existing source annotation)"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.service.SellerRoleRevisionDatabaseTest",
+      "case": "unreachableServiceKeepsTheReservationSoTheRelayRetries()",
+      "reason": "TV1_DATABASE_TESTS != true (existing source annotation)"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.DatabaseReadinessTest",
+      "case": "migrationProfileMigratesWithSeparateRoleAndRuntimeJpaValidates()",
+      "reason": "TV1_DATABASE_TESTS != true (existing source annotation)"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.EmailInventoryTest",
+      "case": "existingDatabaseInventoryIsReadOnly()",
+      "reason": "AUTH_EMAIL_INVENTORY_JDBC_URL unset"
+    },
+    {
+      "module": "user-service",
+      "task": "test",
+      "class": "com.projecthk5.userservice.DatabaseReadinessTest",
+      "case": "migrationProfileMigratesWithSeparateRoleAndRuntimeJpaValidates()",
+      "reason": "TV1_DATABASE_TESTS != true (existing source annotation)"
+    },
+    {
+      "module": "user-service",
+      "task": "test",
+      "class": "com.projecthk5.userservice.profile.AddressBookDatabaseTest",
+      "case": "updateCanMoveTheDefaultWithoutHittingTheUniqueIndex()",
+      "reason": "TV1_DATABASE_TESTS != true (existing source annotation)"
+    },
+    {
+      "module": "user-service",
+      "task": "test",
+      "class": "com.projecthk5.userservice.profile.AddressBookDatabaseTest",
+      "case": "firstAddressBecomesDefaultAndANewDefaultReplacesIt()",
+      "reason": "TV1_DATABASE_TESTS != true (existing source annotation)"
+    },
+    {
+      "module": "user-service",
+      "task": "test",
+      "class": "com.projecthk5.userservice.profile.AddressBookDatabaseTest",
+      "case": "anotherAccountCannotSeeChangeOrDeleteAnAddress()",
+      "reason": "TV1_DATABASE_TESTS != true (existing source annotation)"
+    },
+    {
+      "module": "user-service",
+      "task": "test",
+      "class": "com.projecthk5.userservice.profile.AddressBookDatabaseTest",
+      "case": "addressBookStopsAtTenEntries()",
+      "reason": "TV1_DATABASE_TESTS != true (existing source annotation)"
+    }
+  ],
+  "aggregation": "Each final JUnit task report counted once; earlier failed setup attempts retained separately. Resumed commands reused successful tasks, not counted again."
+}

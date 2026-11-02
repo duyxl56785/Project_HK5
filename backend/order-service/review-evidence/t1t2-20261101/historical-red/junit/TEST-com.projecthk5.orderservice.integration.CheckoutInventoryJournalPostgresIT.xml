@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuite name="com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT" tests="3" skipped="0" failures="3" errors="0" timestamp="2026-10-31T15:29:24" time="0.478">
+  <testcase name="unknownCannotBeClaimedThroughLegacyJournalApi()" classname="com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT" time="0.223">
+    <failure type="org.opentest4j.AssertionFailedError" message="org.opentest4j.AssertionFailedError: expected: &lt;null&gt; but was: &lt;2&gt;" />
+  </testcase>
+  <testcase name="unknownGenericDisabledTransportCannotReopenRowOrEnableHttpAdapter()" classname="com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT" time="0.162">
+    <failure type="org.opentest4j.AssertionFailedError" message="org.opentest4j.AssertionFailedError: expected: &lt;UNKNOWN&gt; but was: &lt;PENDING&gt;" />
+  </testcase>
+  <testcase name="stalePendingReadCannotClaimAConcurrentlyCommittedUnknown()" classname="com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT" time="0.086">
+    <failure type="org.opentest4j.AssertionFailedError" message="org.opentest4j.AssertionFailedError: Expected java.util.concurrent.ExecutionException to be thrown, but nothing was thrown." />
+  </testcase>
+</testsuite>

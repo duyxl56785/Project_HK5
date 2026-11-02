@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuite name="com.projecthk5.cartservice.security.ContractJwtDecoderTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-11-01T14:45:37" time="0.499">
+  <testcase name="currentAndPreviousKidsAccepted()" classname="com.projecthk5.cartservice.security.ContractJwtDecoderTest" time="0.483" />
+  <testcase name="missingShortAndMismatchedKeyringRejectStartup()" classname="com.projecthk5.cartservice.security.ContractJwtDecoderTest" time="0.002" />
+  <testcase name="wrongKidSignatureIssuerRoleAndTtlRejected()" classname="com.projecthk5.cartservice.security.ContractJwtDecoderTest" time="0.011" />
+</testsuite>

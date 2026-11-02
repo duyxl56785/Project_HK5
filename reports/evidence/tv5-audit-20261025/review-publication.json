@@ -1,0 +1,50 @@
+{
+  "verifiedAtUtc": "2026-10-24T18:11:18.738456+00:00",
+  "directHumanAuthorization": "Cho phép APPROVED mức B riêng #88",
+  "reviews": [
+    {
+      "PR": 88,
+      "head": "199211beb55656f88c7b33850289e887d1390fbe",
+      "state": "APPROVED",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/88#pullrequestreview-5639341936"
+    },
+    {
+      "PR": 83,
+      "head": "1018c2d7d8323aa0ba2a312fc278ee37c0b57a0c",
+      "state": "COMMENTED",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/83#pullrequestreview-5639342363"
+    },
+    {
+      "PR": 85,
+      "head": "fc39c7100caa7ffb49f9baa27b18dde595b54d1f",
+      "state": "COMMENTED",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/85#pullrequestreview-5639342788"
+    },
+    {
+      "PR": 87,
+      "head": "1a67b01315cc328a9c28b4f728ad0cb17a7225a0",
+      "state": "COMMENTED",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/87#pullrequestreview-5639343199"
+    },
+    {
+      "PR": 89,
+      "head": "036c80db61684a5c0a22379c6215ef8cb76917cf",
+      "state": "COMMENTED",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/89#pullrequestreview-5639343510"
+    },
+    {
+      "PR": 90,
+      "head": "6b5897956659439066500ccf6069b030ad8f7352",
+      "state": "COMMENTED",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/90#pullrequestreview-5639343858"
+    },
+    {
+      "PR": 91,
+      "head": "0860dc940bba44b5eceee082db2d2ea784a565b1",
+      "state": "COMMENTED",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/91#pullrequestreview-5639344207"
+    }
+  ],
+  "levelB": "APPROVED private ProductPersistence88@199211b only; no policy/HTTP/deploy/merge/flaggrant",
+  "priorSnapshot": "Earlier report/snapshot describes gates before this direct authorization/publication; preserved as dated history"
+}

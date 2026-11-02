@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuite name="com.projecthk5.orderservice.integration.CheckoutDraftPostgresIT" tests="3" skipped="0" failures="3" errors="0" timestamp="2026-10-31T15:29:19" time="0.878">
+  <testcase name="[1] point=AFTER_DRAFT" classname="com.projecthk5.orderservice.integration.CheckoutDraftPostgresIT" time="0.797">
+    <failure type="org.opentest4j.AssertionFailedError" message="org.opentest4j.AssertionFailedError: Draft graph must match the request fingerprint ==&gt; expected: &lt;c1ddbe85e752bd1ee941881683d034cd18eb5fe30de491cf03098a6ddbbac174&gt; but was: &lt;14b5c8e964e417f58ff8400b0e7743ef07fe6701cbf40133e6cb6692091b89a5&gt;" />
+  </testcase>
+  <testcase name="[2] point=AFTER_T1" classname="com.projecthk5.orderservice.integration.CheckoutDraftPostgresIT" time="0.032">
+    <failure type="org.opentest4j.AssertionFailedError" message="org.opentest4j.AssertionFailedError: Draft graph must match the request fingerprint ==&gt; expected: &lt;c1ddbe85e752bd1ee941881683d034cd18eb5fe30de491cf03098a6ddbbac174&gt; but was: &lt;14b5c8e964e417f58ff8400b0e7743ef07fe6701cbf40133e6cb6692091b89a5&gt;" />
+  </testcase>
+  <testcase name="[3] point=AFTER_RESERVE" classname="com.projecthk5.orderservice.integration.CheckoutDraftPostgresIT" time="0.041">
+    <failure type="org.opentest4j.AssertionFailedError" message="org.opentest4j.AssertionFailedError: Draft graph must match the request fingerprint ==&gt; expected: &lt;c1ddbe85e752bd1ee941881683d034cd18eb5fe30de491cf03098a6ddbbac174&gt; but was: &lt;14b5c8e964e417f58ff8400b0e7743ef07fe6701cbf40133e6cb6692091b89a5&gt;" />
+  </testcase>
+</testsuite>

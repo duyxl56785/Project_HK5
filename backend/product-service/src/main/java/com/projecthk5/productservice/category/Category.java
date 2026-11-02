@@ -2,6 +2,8 @@ package com.projecthk5.productservice.category;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,11 +27,19 @@ public class Category {
     @JoinColumn(name = "parent_id")
     private Category parent;
 
+    @Column(nullable = false, length = 140, updatable = false)
+    private String slug;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 16)
+    private CategoryStatus status = CategoryStatus.ACTIVE;
+
     protected Category() {
     }
 
-    Category(String name, Category parent) {
+    Category(String name, String slug, Category parent) {
         this.name = name;
+        this.slug = slug;
         this.parent = parent;
     }
 
@@ -45,8 +55,20 @@ public class Category {
         return parent;
     }
 
+    public String getSlug() {
+        return slug;
+    }
+
+    public CategoryStatus getStatus() {
+        return status;
+    }
+
     void update(String name, Category parent) {
         this.name = name;
         this.parent = parent;
+    }
+
+    void setStatus(CategoryStatus status) {
+        this.status = status;
     }
 }

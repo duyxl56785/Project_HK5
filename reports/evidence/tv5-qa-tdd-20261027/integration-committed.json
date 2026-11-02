@@ -1,0 +1,168 @@
+{
+  "kind": "DERIVED SUMMARY, raw logs/XML private byte-preserved",
+  "branch": "codex/tv5-product-catalog-composition-qa",
+  "baseMain": "7d68e11ce3327aa0ac423938ab9d97a174438b78",
+  "PR90head": "0f9c0c84a310bcfcf86f06592b64aed6690258dd",
+  "head": "53658de1f66140abbf293efb073486a17c2850ac",
+  "candidateTree": "0b664dd774031ed8cb68ba02ba9eac11d151c765",
+  "workingTree": "",
+  "sourceAttribution": "exact committed QA source",
+  "qaSourceManifest": [
+    {
+      "path": "tests/integration/fixtures/tv5-two-store.json",
+      "bytes": 841,
+      "sha256": "6133e3be6afb2f2fa28285d82ca02d95952fb6ef2d04001740f61beb2a55865f"
+    },
+    {
+      "path": "tests/integration/product-catalog-composition.init.gradle",
+      "bytes": 1934,
+      "sha256": "28f35b105db22818b3d21c949bd7113506bd59607014df668bb2a8fabd2b0bc8"
+    },
+    {
+      "path": "tests/integration/ProductCatalogCheckoutPreflightPostgresTest.java",
+      "bytes": 15317,
+      "sha256": "6732e6c29fcf4862c1162f68c139f8ea9bca40379c95648bae3b715863e72a79"
+    },
+    {
+      "path": "tests/integration/ProductCatalogCompositionPostgresTest.java",
+      "bytes": 12689,
+      "sha256": "e806cabf90e8eb5ace8c5b2735bc48735dbd58f2527f18225b1b19f2448495db"
+    },
+    {
+      "path": "tests/integration/README.md",
+      "bytes": 7468,
+      "sha256": "f23497187746410584e31b07aa6812a7f6af54f5cefaed04c0cfa2d23553b613"
+    }
+  ],
+  "command": [
+    "D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-product-six-tasks-20261027\\source90\\backend\\gradlew.bat",
+    "-p",
+    "backend",
+    "--init-script",
+    "D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-product-six-tasks-20261027\\source90\\tests\\integration\\product-catalog-composition.init.gradle",
+    "-Ptv5CompositionSources=D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-product-six-tasks-20261027\\source90\\tests\\integration",
+    ":product-service:tv5ProductCatalogComposition",
+    "--rerun-tasks",
+    "--no-daemon",
+    "--console=plain"
+  ],
+  "startedUtc": "2026-10-27T02:41:14.484248+00:00",
+  "completedUtc": "2026-10-27T02:41:51.623823+00:00",
+  "exitCode": 0,
+  "environment": {
+    "Java": "21.0.7",
+    "Gradle": "8.10",
+    "PostgreSQL": "16.6 Testcontainers; isolated Product and Order databases",
+    "JAVA_TOOL_OPTIONS": "-Duser.timezone=UTC -Dapi.version=1.44"
+  },
+  "counts": {
+    "PASS": 17
+  },
+  "cases": [
+    {
+      "class": "com.projecthk5.tv5integration.ProductCatalogCheckoutPreflightPostgresTest",
+      "name": "eRejectedPreflightRollsBackAnEarlierProductWriteAndLeavesOrderTablesUntouched()",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.tv5integration.ProductCatalogCheckoutPreflightPostgresTest",
+      "name": "[1] mode=absent",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.tv5integration.ProductCatalogCheckoutPreflightPostgresTest",
+      "name": "[2] mode=missing-store",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.tv5integration.ProductCatalogCheckoutPreflightPostgresTest",
+      "name": "[3] mode=unknown-house",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.tv5integration.ProductCatalogCheckoutPreflightPostgresTest",
+      "name": "[4] mode=same-seller-two-stores",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.tv5integration.ProductCatalogCheckoutPreflightPostgresTest",
+      "name": "[5] mode=stale-store",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.tv5integration.ProductCatalogCheckoutPreflightPostgresTest",
+      "name": "[1] field=store",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.tv5integration.ProductCatalogCheckoutPreflightPostgresTest",
+      "name": "[2] field=seller",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.tv5integration.ProductCatalogCheckoutPreflightPostgresTest",
+      "name": "dTwoStoreReadyControlPreservesProviderSkuAndRequestOrderWithoutWrites()",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.tv5integration.ProductCatalogCheckoutPreflightPostgresTest",
+      "name": "aCommittedRepriceRejectsStaleExpectationThenAcceptsFreshExactPrice()",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.tv5integration.ProductCatalogCheckoutPreflightPostgresTest",
+      "name": "[1] operation=deactivate",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.tv5integration.ProductCatalogCheckoutPreflightPostgresTest",
+      "name": "[2] operation=suspend",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.tv5integration.ProductCatalogCompositionPostgresTest",
+      "name": "foreignStoreDenialRollsBackAnEarlierLifecycleWriteInTheSameTransaction()",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.tv5integration.ProductCatalogCompositionPostgresTest",
+      "name": "successfulLocalWriteCannotSupplyUnknownHouseAuthorityToTheBatchReader()",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.tv5integration.ProductCatalogCompositionPostgresTest",
+      "name": "changedPriceRejectsTheWholeCartExpectationAndDoesNotRewriteEarlierValueObjects()",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.tv5integration.ProductCatalogCompositionPostgresTest",
+      "name": "rolledBackApprovalCannotBecomeCommittedCatalogEligibility()",
+      "result": "PASS"
+    },
+    {
+      "class": "com.projecthk5.tv5integration.ProductCatalogCompositionPostgresTest",
+      "name": "committedLifecycleDrivesCatalogVisibilityWithoutDirectStateSql()",
+      "result": "PASS"
+    }
+  ],
+  "rawArtifacts": [
+    {
+      "localPath": ".verification/tv5-preflight-composition-20261027/qa-committed/runtime.log",
+      "bytes": 5114,
+      "sha256": "02a2706f44295dc1049a6eef1920b05a69bc60e2012eb5f7d081f3503e9bca16"
+    },
+    {
+      "localPath": ".verification/tv5-preflight-composition-20261027/qa-committed/TEST-com.projecthk5.tv5integration.ProductCatalogCheckoutPreflightPostgresTest.xml",
+      "bytes": 20805,
+      "sha256": "92415851bfd519ba7c17ad2d009b1ed908df40ad91b960d3056ddd3558fbc06b"
+    },
+    {
+      "localPath": ".verification/tv5-preflight-composition-20261027/qa-committed/TEST-com.projecthk5.tv5integration.ProductCatalogCompositionPostgresTest.xml",
+      "bytes": 7197,
+      "sha256": "4d4aae397863b289b7ab7981b474368c6a12570334eccb6a3a894fea84101693"
+    }
+  ],
+  "excludedStaleXml": [],
+  "boundary": "Real Product lifecycle/PG/Catalog -> QA-only record mapping -> existing pure Order preflight. Order PG migrations observed; no CheckoutService/Inventory HTTP wiring, no authoritative Auth/House or live E2E.",
+  "privateOriginalSummarySHA256": "ab6e48c306643e540d0db31b2acadb298e2f56d3d81507faf9ee17e4ac6b92f5"
+}

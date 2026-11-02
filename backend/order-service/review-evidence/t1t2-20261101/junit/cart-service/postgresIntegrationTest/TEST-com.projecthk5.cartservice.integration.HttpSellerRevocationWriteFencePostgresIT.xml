@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuite name="com.projecthk5.cartservice.integration.HttpSellerRevocationWriteFencePostgresIT" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-11-01T10:41:34" time="1.954">
+  <testcase name="authenticatedCartWriteRollsBackWhenAuthRevokesSellerBeforeCommit()" classname="com.projecthk5.cartservice.integration.HttpSellerRevocationWriteFencePostgresIT" time="0.752" />
+  <testcase name="disablingAnAccountStopsItsWriteInFlightAndEndsItsSessions()" classname="com.projecthk5.cartservice.integration.HttpSellerRevocationWriteFencePostgresIT" time="0.81" />
+  <testcase name="anAccessTokenFromBeforeALockIsRefusedWhileLockedAndWorksAgainAfterUnlock()" classname="com.projecthk5.cartservice.integration.HttpSellerRevocationWriteFencePostgresIT" time="0.237" />
+  <testcase name="writeCommittedBeforeRevokeStaysAndTheSameTokenIsThenRefused()" classname="com.projecthk5.cartservice.integration.HttpSellerRevocationWriteFencePostgresIT" time="0.152" />
+</testsuite>

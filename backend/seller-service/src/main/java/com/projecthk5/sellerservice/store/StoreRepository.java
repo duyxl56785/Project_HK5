@@ -1,12 +1,20 @@
 package com.projecthk5.sellerservice.store;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface StoreRepository extends JpaRepository<StoreEntity, UUID> {
+    // Private owner data from the local persisted Seller; no client identity or cross-service join.
+    @Query("select new com.projecthk5.sellerservice.store.StoreCurrentSource$OwnedFacts("
+            + "s.id, p.id, s.status, p.status, s.version, p.version, p.ownerReference) "
+            + "from StoreEntity s join s.seller p where s.id in :ids order by s.id")
+    List<StoreCurrentSource.OwnedFacts> findOwnedFactsByIds(@Param("ids") Set<UUID> ids);
+
     @Query("select store from StoreEntity store where store.seller.id = :sellerId")
     Optional<StoreEntity> findBySellerId(@Param("sellerId") UUID sellerId);
 

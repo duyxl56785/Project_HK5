@@ -1,0 +1,59 @@
+{
+  "finance": {
+    "PR": 99,
+    "url": "https://github.com/duyxl56785/Project_HK5/pull/99",
+    "head": "446ae44da90832df534b6e37150f26a71f2adf25",
+    "branch": "codex/tv5-finance-durability-qa",
+    "files": [
+      "backend/order-service/src/test/java/com/projecthk5/orderservice/finance/FinanceDurabilityPostgresIT.java",
+      "backend/order-service/src/test/java/com/projecthk5/orderservice/finance/FinanceTwoStoreFixture.java",
+      "tests/finance/README_DURABILITY.md"
+    ],
+    "push": "SUCCESS",
+    "requestedReviewers": [
+      "tranvanchinhbg2006-alt",
+      "duyxl56785",
+      "phamthecuong2022006-alt"
+    ]
+  },
+  "audit": {
+    "PR": 100,
+    "url": "https://github.com/duyxl56785/Project_HK5/pull/100",
+    "head": "8bf9f12e1a7df92b77f8a506fba5e1907a4f1c6c",
+    "branch": "codex/tv5-readonly-pr-audit",
+    "files": [
+      "scripts/qa/.gitignore",
+      "scripts/qa/README.md",
+      "scripts/qa/pr_review_audit.py",
+      "scripts/qa/tests/test_pr_review_audit.py"
+    ],
+    "push": "SUCCESS",
+    "requestedReviewers": [
+      "lexuanbao258-collab",
+      "duyxl56785"
+    ]
+  },
+  "reviews97and96": [
+    {
+      "PR": 97,
+      "head": "aa790f422a8b3ee698f53e74c455edae7b77d6fa",
+      "state": "COMMENTED",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/97#pullrequestreview-5644073946"
+    },
+    {
+      "PR": 96,
+      "head": "c59f34024748f290bd304b64140cf6c0848940b5",
+      "state": "COMMENTED",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/96#pullrequestreview-5644074054"
+    }
+  ],
+  "initialAutomationRun": {
+    "kind": "TOOL_TRANSCRIPT_ONLY",
+    "toolChunk": "74dfe1",
+    "PASS": 22,
+    "ERROR": 2,
+    "cause": "managed Windows default Temp was not writable",
+    "rawFile": "NOT_AVAILABLE: initial command was not redirected; do not fabricate a raw log",
+    "fix": "Test harness uses verified temporary directory inside checkout; assertions retained; later expanded27case run is the committed source evidence"
+  }
+}

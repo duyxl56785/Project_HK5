@@ -1,0 +1,22 @@
+{
+  "kind": "DERIVED exact-final-commit offline regression",
+  "head": "e22365e9c0da5c2adf8906ef1bbf1f19539e6f06",
+  "command": [
+    "C:\\Users\\Admin\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "scripts/qa/tests",
+    "-v"
+  ],
+  "startedUtc": "2026-10-27T17:22:24.349362+00:00",
+  "completedUtc": "2026-10-27T17:22:24.687341+00:00",
+  "exitCode": 0,
+  "logSHA256": "de207a06fce024d6ea43a58e030714f4b7dcdedff0c67a42cdfa1057442e0d34",
+  "result": {
+    "PASS": 32,
+    "FAIL": 0,
+    "SKIP": 0
+  }
+}

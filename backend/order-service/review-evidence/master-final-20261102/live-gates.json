@@ -1,0 +1,69 @@
+{
+  "candidate": "351fb032bf2c6931a6ce5720940aa3d7169c5e80",
+  "executed": 0,
+  "ownerConfirmation": "User answered: Chưa có phê duyệt stack mới",
+  "preservedProject": "tv3-live-145-20261101",
+  "cases": [
+    {
+      "case": "two-store browser + same-key replay",
+      "status": "NOT_RUN/BLOCKED",
+      "reason": "No approved separate stack at the integrated candidate HEAD."
+    },
+    {
+      "case": "customer cancel / seller reject RELEASE once",
+      "status": "NOT_RUN/BLOCKED",
+      "reason": "No approved separate stack at the integrated candidate HEAD."
+    },
+    {
+      "case": "DISPATCHED CONSUME once",
+      "status": "NOT_RUN/BLOCKED",
+      "reason": "No approved separate stack at the integrated candidate HEAD."
+    },
+    {
+      "case": "negative replay changed body",
+      "status": "NOT_RUN/BLOCKED",
+      "reason": "No approved separate stack at the integrated candidate HEAD."
+    },
+    {
+      "case": "negative replay changed shipping",
+      "status": "NOT_RUN/BLOCKED",
+      "reason": "No approved separate stack at the integrated candidate HEAD."
+    },
+    {
+      "case": "negative expectedItems mismatch",
+      "status": "NOT_RUN/BLOCKED",
+      "reason": "No approved separate stack at the integrated candidate HEAD."
+    },
+    {
+      "case": "negative Catalog price changed",
+      "status": "NOT_RUN/BLOCKED",
+      "reason": "No approved separate stack at the integrated candidate HEAD."
+    },
+    {
+      "case": "negative insufficient stock no partial reserve",
+      "status": "NOT_RUN/BLOCKED",
+      "reason": "No approved separate stack at the integrated candidate HEAD."
+    },
+    {
+      "case": "negative Product inactive",
+      "status": "NOT_RUN/BLOCKED",
+      "reason": "No approved separate stack at the integrated candidate HEAD."
+    },
+    {
+      "case": "browser Order History",
+      "status": "NOT_RUN/BLOCKED",
+      "reason": "No approved separate stack at the integrated candidate HEAD."
+    },
+    {
+      "case": "UNKNOWN claim-conflict",
+      "status": "NOT_RUN/BLOCKED",
+      "reason": "Requires TV4/TV5 approved real fault fixture, operation identity and provider receipt, plus separately approved final-source stack."
+    },
+    {
+      "case": "UNKNOWN timeout / lost response",
+      "status": "NOT_RUN/BLOCKED",
+      "reason": "Requires TV4/TV5 approved real fault fixture, operation identity and provider receipt, plus separately approved final-source stack."
+    }
+  ],
+  "historicalResults": "Three live PASS and six legacy145 negative PASS remain historical at their recorded source; not reclassified as results of this candidate. Two UNKNOWN never executed."
+}

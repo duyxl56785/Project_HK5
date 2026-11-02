@@ -250,3 +250,178 @@ Evidence: [R2 report and test commands](../reports/TV5_PR_REVIEW_FOLLOWUP_2026-1
 - [ ] Human formal decision if needed and TV3Draft disposition; M01/business/currentAuth/Store/SKU/COD/atomicsettlement/liveUAT gates remain separate and pending. No Finance/pair enablement or IssueDONE.
 
 [Focused report, findings, reviewers and member handoff](../reports/TV5_PR79_REVIEW_2026-10-23.md), [derived test/source/CI receipt](../reports/evidence/tv5-audit-20261023/pr79-comprehensive.json). Initial TV5/owner/CI test counts are separate historical invocations, not a combined release total.
+
+### QA25 review and unblock delta — 25 October 2026
+
+- [x] All75initialPR/230submittedreview/16Issue metadata audited;61merged/2closed-unmerged/12open. NewpublicationPRs are later events, not retroactive totals.
+- [x] Actual80/c8parent14unit+28AuthPG+5unchangedauthorityPGPASS; ownP2resolved,92runbookcorrection pushed.82actuallyMERGEDintoAuthfeaturec8, notmain; oldclosed-unmergedownercheckpoint obsolete.
+- [x] Independent83(33candidatePG),85(16unit/14PG),87(121focused),88(437unit/61PG),89(3unit/59PG),90(10unit/46PG),91(11unit/35PG)PASS,0fail/skip perrun; no cross-head release total.
+- [x] Productprice84business+TV5LevelA+TV2mappingACK confirmed/MERGED; do not keep that slice pending. BroaderM01/Finance stillnotapproved.
+- [x] Synthetic83after88compileFAIL retained separately: newcandidate testmissingexplicitcurrency. Baseline83/88remainPASS; TV2mustadapt atintegration, no defaultVND or assertionweakening.
+- [ ] HumanLevelB88/formalreview andauthorDraftdisposition;86TV2SSRfindingOPEN/needsTV3fix; no agentapproval or other-reviewerresolve.
+- [ ] RuntimecurrentAuth/Store/House/SKUprovider/C06/COD/refund/atomicsettlement/liveUAT. Issue5/12/18OPEN/PARTIAL,Finance/Inventoryflagsunchanged.
+
+[Current all-PR handoff](../reports/TV5_PR_REVIEW_UNBLOCK_2026-10-25.md), [API/source/compatibility metadata](../reports/evidence/tv5-audit-20261025/repository-reviewers.json). Previous checkpoints remain dated history.
+
+#### Later publication — explicitly authorized Level B88
+
+- [x] Human explicitly authorized onlyLevelB88; [TV5APPROVED](https://github.com/duyxl56785/Project_HK5/pull/88#pullrequestreview-5639341936) read back at199211b. EarlierwaitingLevelBcheckboxes are historical; authorDraft/merge andallruntime/Financegatesremain separate.
+- [x] COMMENTQA83/85/87/89/90/91published,83inlineintegrationcompilefinding handedtoTV2; no duplicateapproval/request or86threadtakeover.
+
+[Current report section7](../reports/TV5_PR_REVIEW_UNBLOCK_2026-10-25.md#7-later-authorized-level-b-decision-and-published-review-handoff), [reviewreceipt](../reports/evidence/tv5-audit-20261025/review-publication.json).
+
+
+### TV5 current Product/Seller review — 25/10/2026, later integration checkpoint
+
+- [x]88 MERGED recognized;89/17f98f4 440unit+98PG,94/96d59ca 246unit+138PG,90/6a290ff 447unit+107PG,91/4915c37 448unit+96PG and83/c831edb 437unit+70PG PASS, each separate full build/exit0. No release-total sum.
+- [x]Actual combined89→90→91 tree29d2904:461unit+179PG=640PASS in one fresh TV5 invocation. Not an individual PR head, CI or live E2E.
+- [x]Current main ed85f62:109Orderunit+25PG+3original FIN01/06/control PASS. Existing technical bugs fixed, not policy/atomicsettlement acceptance.
+- [x]All89/94/90/91 changed paths reviewed; no actionable introduced blocker found; READY_FOR_HUMAN_APPROVAL for their entire internal PR scopes.83own finding FIXED_VERIFIED; thread/publication receipt kept separately.
+- [x]Current price-only business/LevelA/TV2ACK/LevelB88 receipt appended to Finance ledger, original signed packet/history retained.
+- [ ]Human TV5 actual formal reviews; owner readiness/integration and runtime gates.95 source-only TV1approval is not HTTP/E2E; TV5 frontend runtime NOT_RUN in this checkpoint.
+- [ ]FullM01/COD/refund/currentAuth/House/C01E01/MD07/reservation/atomicsettlement/Storequeries/live2StoreE2E; Issue5/12 OPEN/PARTIAL, flags unchanged.
+
+[Current review, commands and member handoff](../reports/TV5_PRODUCT_INTEGRATION_REVIEW_2026-10-25.md); [source/CI/reviews/compatibility receipt](../reports/evidence/tv5-product-integration-20261025/review-context.json). Original raw logs/XML private and byte-preserved; publication derived, never mock-as-E2E.
+
+
+#### Publication receipt — Product/Seller integration review
+
+- [x] COMMENT89/94/90/91/83 published at exact tested heads; own83thread RESOLVED_FIXED_VERIFIED after507PASS. [Reply](https://github.com/duyxl56785/Project_HK5/pull/83#discussion_r4371081982).
+- [x] Commit76e9957 pushed on existing TV5 PR93; own Issue5/12 evidence/checklists updated and historical content preserved, issues OPEN/PARTIAL. TV1/default TV2 re-requested once for substantive delta.
+- [ ] Human formal review and external runtime/business gates remain pending. No agent APPROVE/Merge/Ready; no test rerun claimed for this receipt-only update.
+
+[Published receipts](../reports/evidence/tv5-product-integration-20261025/publication.json), [current review report](../reports/TV5_PRODUCT_INTEGRATION_REVIEW_2026-10-25.md).
+
+
+#### Later review refresh — 25/10/2026, independent86 QA
+
+- [x] All15open PRs checked:0activeTV5request/0effectiveTV5CR/0ownopen threads. Priority89/94/90/91 samehead/base/commits/full diff;146old raw artifact hashes verified. Their runtime thisrefresh NOT_RUN; previous exact-head execution remains historical/current-source evidence.
+- [x] New86P1 regression: unchanged tests old3c23319 **22PASS/3FAIL**, current28a8abc **25PASS/0FAIL**, typecheck/build exit0. Separate invocations, not release total; private raw bytes and source CRLF/LF boundary explicit. No production/assertion edits.
+- [ ] Human decisions89/94/90/91,TV2own86P1thread/CR,TV1new80passwordP2; overallM01/Finance/runtime/liveE2E still blocked. No agentApprove/Merge/flags or duplicate requests. Issue5/12 PARTIAL.
+
+[Current report refresh](../reports/TV5_PRODUCT_INTEGRATION_REVIEW_2026-10-25.md), [reviewers audit](../reports/evidence/tv5-review-refresh-20261025-r2/audit.json), [actual86RED/GREEN](../reports/evidence/tv5-review-refresh-20261025-r2/pr86-red-green.json).
+
+
+#### Sequential Product integration handoff —25/10/2026
+
+- [x] Sequence locked:humanTV5review→TV2integrate89→newmaincheck→90→newmaincheck→91→newmaincheck;94separate. Mainstill88baselineed85f62; allactualpostmergeA/B/Cchecks NOT_RUN, historical640notasubstitute.
+- [x] New97wholeprivatehandlerreview:488unit+115PG=603PASS;96childNULfix:25securityunit+28AuthPG+5explicitQA=58PASS,0FAIL/skip/exit0 each. Parent80notfixedbychilduntilintegration+parentrerun; no other-reviewerthreadresolve.
+- [x] Seven-item TV1 Auth/currentroles/policy/Gateway/pairs/frontendclient/frontendCI handoff has source/version/test/CI/interface/blocker/owner; runtimeisnotreadyfromunit tests. Productpriceapprovalretained,Finance/HTTP/E2Egatesseparate.
+- [ ] Humanformalreviews,TV2sequentialactualintegrationchecks,TV1runtime+frontendCI,liveacceptance. Issue5/12 PARTIAL; no agentApprove/Merge/flags or ownercodechanges.
+
+[Sequential handoff](../reports/TV5_PRODUCT_SEQUENTIAL_HANDOFF_2026-10-25.md), [sequence snapshot](../reports/evidence/tv5-integration-sequence-20261025-r3/sequence.json), [97actual](../reports/evidence/tv5-integration-sequence-20261025-r3/pr97.json), [96actual](../reports/evidence/tv5-integration-sequence-20261025-r3/pr96.json).
+
+
+#### TV5 actual QA code —25/10/2026
+
+- [x]PR99/446ae44:4newactualFinancePostgreSQLregressions+reusabletwoStorefixture;exactcommittedOrder109unit+29PG+3originalFINdiagnosticsPASS,0FAIL/skip. NoProductionCheckout/settlement/schema/policyedit.
+- [x]PR100/8bf9f12:read-onlyauditCLI+27offlinecasesPASS;actualGitHub18PRmetadatareadcomplete/exit0,notapplicationE2E. Privatecollectorapproachpromoted,notanothernotificationbot.
+- [x]Coverageinventorychecked;no12duplicatedProduct/CatalogcasesorrewrittenFIN01/06. Codeonnewfeaturebranches,onlyderivedevidencein93;rawbytesprivate/hashchecked,reviewersrequestedonce.
+- [ ]IndependentcodePRreview/CI;human89/90/91/94decisions,ownerA→B→Cactualintegrationchecks;Finance/COD/HTTP/currentauthority/liveUATgatesremain. Issue5/12 PARTIAL.
+
+[Code/evidence/inventory](../reports/TV5_INDEPENDENT_QA_CODE_2026-10-25.md), [Financecommittedrun](../reports/evidence/tv5-independent-code-20261025/finance-committed.json), [auditoffline](../reports/evidence/tv5-independent-code-20261025/audit-offline.json), [livemetadata](../reports/evidence/tv5-independent-code-20261025/audit-live.json).
+
+
+## TV5-BACKLOG-20261026 — formal Product approvals and new Auth/Gateway QA
+
+This dated checkpoint supersedes earlier waiting labels only for scopes verified here; history stays intact. [All21OPENPR/reviewers, exact source/tests/remainingowner gates](../reports/TV5_ALL_PR_UNBLOCK_2026-10-26.md).
+
+- [x] TV5 user-authorized formalAPPROVED #89@17f98f4/#90@6a290ff/#91@4915c37/#94@96d59ca, API state/reviewer/commit readback verified; no duplicate. No89/90/91merge yet;94separate.
+- [x] NewTV5exact101/e45:95PASS/0FAIL/2SKIP;102/a4:137PASS/0FAIL/2SKIP (22Gateway,18realembedded/loopbackupstream);98/d53:3unitPASS;100/8bf:27offlinePASS+21/21metadatacomplete. Each invocation separate, rawlogs/XMLprivate/hashverified; skippedexistingDBprovision/inventory areNOT_RUN, notPASS.
+- [x]80NULnowintegratedtofeature083andTV2threadresolved; oldTV2formalCRstillneedsdisposition.102Gatewaytechnicalfixverifiedwithcurrenttests, TV2P1thread/CRstillitsown.86earlierTV5RED-GREENnotrerun; avoidduplicatehandoff.99CIgreen/nofindings/sourceunchanged;100CI_NOT_CONFIGURED (notrequiredbycurrentrules); existingownerreviewrequestsretained.
+- [ ] ActualTV2integration89→newmainPG/unit→90→newmainPG/unit→91→newmainPG/unit; human/ownerreview99/100/93,80/86/102decisions; realAuth/servicepair/House/C01E01/C06/COD/settlement/liveUAT gates. FullM01PARTIAL/PENDING, FinanceBLOCKED, flagsunchanged. Productpricesliceapprovalnotreopened; Issues5/12OPEN/PARTIAL.
+
+
+## TV5-PRODUCT-SIX-TASKS-20261027 — current QA, formal review and diagnostics
+
+[Ma trận6nhiệm vụ/evidence](../reports/TV5_PRODUCT_SIX_TASKS_2026-10-27.md), [House/freshness/privacy/E2E gates](../docs/TV5_PRODUCT_CATALOG_INTEGRATION_GATES.md).
+
+- [x]90/head273:978candidatePASS; [formal APPROVED mới5661077942](https://github.com/duyxl56785/Project_HK5/pull/90#pullrequestreview-5661077942) đã được humanTV5 ủy quyền và API xác nhận.89/94đã merge; không gọi978là postmerge90.
+- [x]97/aa:603regularPASS; sau [TV1 narrowvisibilitydecision](https://github.com/duyxl56785/Project_HK5/pull/97#issuecomment-6430723502), bổ sung DraftQA#104/51be73e riêng:4PASS/4assertionFAIL,exit1, giữ originalRED/controls. TV2confirmation/fix còn chờ; không báo fixPASS.
+- [x]103/151361b:5committedPGPASS +fixture2Store +explicitcompositiontask, không productionedit. House/freshness/C01E01matrix và8livecases chuẩn bị, không tự ký policy.
+- [ ] Actual90merge +fresh actualmain Product/Seller/explicitQA;91sync sau đó. Main1833có thêm83/77/78, không dùng lại978cho nguồn mới.
+- [ ]97ownerfix→8diagnosticPASS, protectedHTTP/currentprincipal/Store/House/provider/C06/Checkout/Finance/COD/liveE2E. FullM01PARTIAL/PENDING; flags không đổi; Issues5/12OPEN/PARTIAL.
+
+
+## TV5-PRODUCT-DELTA-20261027
+
+- [x] Đối chiếu lại90/91/97: HEAD/diffblobs không đổi, approval90thật còn hiệu lực; không request/approve/finding trùng. [Current matrix/evidence](../reports/TV5_PRODUCT_SIX_TASKS_2026-10-27.md#follow-up-tv5-product-delta-20261027--sau-checkpoint-ban-đầu).
+- [x]103README phản ánh TV1 decision đã có, commit/pushdec62e9; focused5PGPASS mới. Dependency102/36ad mới được TV5 tự chạy147PASS/0FAIL/2SKIP,exit0; raw/childlogs giữ riêng byte/hash, SKIP không là PASS. Không cộng với các snapshot cũ.
+- [ ] Actual90merge/postmerge;91sync/finalreview;97TV2ACK/fix→8GREEN/protectedHTTP/currentStore; House/freshness/C01E01/C06/fullM01/liveE2E vẫn chờ. Issues5/12OPEN/PARTIAL; không đổi flags/deploy/source owner.
+
+
+## TV5-QA-TDD-PREFLIGHT-20261027
+
+[Source, TDD RED/GREEN, cases, receipts và giới hạn](../reports/TV5_QA_TDD_PREFLIGHT_2026-10-27.md).
+
+- [x]90đãmergeactualmain7d68:1144PASS mới (Product/Seller/Order unit+PG); không dùng978lịch sử.103sync/retargetmain,53658de có17PGPASS với12ca mới (preventive, không fakeRED).
+- [x]99/931feee:FD05mixed valid/conflicting replay giữ tiền/fingerprint/outbox;165PASS committed (128unit+34PG+3FIN), không Finance policy/StoreAPI/COD acceptance.
+- [x]100/c25c678:1realCLI TDDcycle,2newtests; RED27PASS/2ERROR→29PASS→refactor29PASS→committed29PASS. Firstlive failclosed retained; retry18/18complete. No credential/rawlog publication or mutation.
+- [ ]1048diagnostics còn original4PASS/4FAIL, WAITING_TV2_FIX; policy đã TV1decided/TV2confirmed, không hỏi lại. ProductHTTP/authority/House/C01E01/C06/fullM01/Finance/liveE2E vẫn BLOCKED/PENDING; Issues5/12OPEN/PARTIAL.
+
+
+## TV5-QA-TDD-FINAL-20261027
+
+- [x] Owner97/d376176 đã có fix;104/a0c9d4b chạy519unit+205PG+8originalQA PASS. Eight-test Java SHA256 giữ nguyên, original4FAIL retained. P2 FIXED_VERIFIED trong privatehandler/PG scope; không còn WAITING_TV2_FIX ở checkpoint hiện tại.
+- [x] Main đã merge91tạif888725;103sync6d99953 chạy461unit+188PG+17QA PASS. Các receipt/source tách riêng; không dùng approval/QA cũ để gán cho source mới.
+- [ ] ProtectedHTTP/currentStore/House/sharedwire/C06/fullM01/Finance/COD/settlement/liveE2E vẫn chờ; không tựApprove/Merge/flags. [Current evidence](../reports/TV5_QA_TDD_PREFLIGHT_2026-10-27.md#checkpoint-cuối--owner-fix-và-search-được-tích-hợp-trong-lúc-bàn-giao).
+
+## TV5-ALL-PR-TDD-20261028 — scoped evidence checkpoint
+
+Refs #5/#12. [All PR/reviewer/TDD matrix](../reports/TV5_ALL_PR_QA_AUDIT_2026-10-28.md), [derived receipts and raw hashes](../reports/evidence/tv5-all-pr-20261028/).
+
+- [x] QA103 current Store fixture/V01 compatibility fixed and pushed at e7d8948:519unit+205PG+17composition+8originalvisibility=749PASS,0FAIL/SKIP; original RED retained separately.
+- [x] CLI optional all-state pagination at445deec:3newcases,32offlinePASS after actualRED/GREEN/refactor;97PR inventory18OPEN(4Draft)/76MERGED/3CLOSED observed.
+- [x] Scoped authorized formal approvals87/7f2c6b2,108/8d4186c,109/cdea283 confirmed; fresh54/49/86PASS runs are separate snapshots.
+- [x]107 source/HTTP-PG17PASS;110fixture213DOM+46Chrome and buildsPASS;111tree/PRlinksPASS. These are separate scopes, not live integrated E2E.
+- [ ]103 owner-thread/formal review closure;110/111 human review;113owner review remain WAITING_REVIEW.
+- [ ]Real authority/House/sharedwire/freshness/COD/settlement/Finance production acceptance remains separately gated. M01 full policy PENDING; no flags enabled; Issue5/12 OPEN/PARTIAL.
+
+## TV5-FRONTEND-20261028 — isolated read-only UI (explicit user task)
+
+Refs #5/#12/#115. [Acceptance and A–G report](../reports/TV5_FRONTEND_ACCEPTANCE_2026-10-28.md), [derived receipts/raw hashes](../reports/evidence/tv5-ui-20261028/).
+
+- [x] Finance/COD/Settlement read-only DEMO UI; QA/PR recorded-source views, filters/pagination/details and shared feature components implemented on a separate TV5 branch.
+- [x] At 9d62365: 46 model/render/DOM + 18 Chrome = 64 new frontend PASS, 0 FAIL/SKIP; 85 existing feature regression at 6c74f05 is separate, not a release sum.
+- [x] Typecheck/app build/feature preview build and actual responsive/keyboard/screenshot checks; 4 RED→GREEN traces retained. Three additional canonical money cases immediately PASS, not fake RED.
+- [ ] Lint NOT_RUN: no configured repository linter. Protected Finance HTTP/live E2E/API integration remains NOT_RUN/BLOCKED; no production backend/Auth/shared-router edits.
+- [ ] TV1/TV2 review, owner routing/current authority, full M01/Finance/COD/settlement policy/read contracts pending. Explicit frontend task does not close week 1/full F15/F16 gates; Issues #5/#12 remain PARTIAL.
+
+## TV5-TASKS61-66-20261028 — current source checkpoint
+
+Refs #5/#12/#99/#103/#117. [A–H task/RTM/readiness report](../reports/TV5_TASKS_6_1_TO_6_6_2026-10-28.md), [derived receipts](../reports/evidence/tv5-tasks6-20261028/).
+
+- [x]6.1originalcoreDONEverified79freshunit atmainbb0; no rules rewritten.
+- [x]6.2source931fresh165PASS(128unit+34PG+3FIN),FD01–05retained; TV3/TV4reviewpending, no mergedDONE claim.
+- [x]6.3original8visibilityGREEN andactual97/104mainmerges verified; no protectedHTTP/E2E claim.
+- [x]6.4stale17FAILcorrected: all17PASS ate7 andfinal0d; source-syncedmainbb0full901PASS atf666, final25PASS at0d. No newJava/assertionchanges; oldfixturefixkept.
+- [x]6.5independentauditor19newunitRED/GREEN+refactor48offlinePASS, real165/901/79artifacts verified; FinanceassessmentstillBLOCKED_DEPENDENCY.
+- [x]6.6RTM/results/defect/integration/E2E/reviewer/handofftables andrawhashes updated.
+- [ ]6.2/6.4formalownerreview/acceptance;6.5liveCOD/settlement;6.6fullprojectE2E remainWAITING_REVIEW/BLOCKED/PARTIAL. Issue5/12OPEN/PARTIAL; noflags/merge/businesssignature.
+
+## TV5-COMPLETION-20261029
+
+Refs #5/#12/#18. [Kiểm kê 105 PR, 16 Issue, kết quả test và 5 bảng bàn giao](../reports/TV5_COMPLETION_AUDIT_2026-10-29.md).
+
+- [x] Đọc đủ mọi trạng thái PR/reviews/threads/CI; 5/5 PR mở TV5 giữ reviewer phù hợp, không request trùng hoặc thêm lại reviewer bị gỡ.
+- [x] Sửa công cụ QA tại 120b5de: Docker init không che assertion FAIL độc lập; giữ 2 RED và 50 regression PASS.
+- [x] Independent tests từng HEAD: #119 1486 PASS/3 SKIP; #116 918 PASS; #118 393 PASS; #85 467 PASS; #120 177 PASS/2 SKIP; #121 206 PASS/2 SKIP. Không cộng thành release total.
+- [x] UI #115 cùng cae695c: 46 model/render/DOM + 18 Chrome PASS; typecheck, app build, preview build PASS. Lượt thiếu happy-dom giữ riêng là lỗi môi trường, không nhận là bug UI đã sửa.
+- [ ] Human/owner review, CR/thread TV2 của #103 và nghiệm thu #99/#113/#115/#117 còn chờ; COMMENT không thay APPROVE.
+- [ ] Full M01/COD/settlement/Store queries/security wire và live hai Store E2E BLOCKED/NOT_RUN; Issue #5/#12/#18 chưa DONE. Product price slice #84 giữ riêng.
+- [ ] Project V2 NOT_VERIFIED: token thiếu read:project; API milestones trả danh sách rỗng.
+
+## TV5-UNBLOCK-20261030
+
+Refs #5/#12/#18. [117 PR/16 Issue audit, source fixes, exact-head tests and owner handoff](../reports/TV5_UNBLOCK_ALL_PR_2026-10-30.md).
+
+- [x] Full API pagination across all PR states/reviewers/comments/CI; old #39/#63/#64 MERGED and #60/#62 CLOSED without merge verified, no push/request on closed PRs.
+- [x] QA XML UTF-16 DOCTYPE bypass:2RED→53regressionPASS; code9cd635a pushed117, valid UTF-16 positive control retained.
+- [x] Finance UI same-Store session invalidation: corrected2behaviorRED→48model/render/DOM+18ChromePASS at6ab0f3f; code/evidence pushed115, host/API integration still separate.
+- [x] Stale Product-price PENDING rows explicitly superseded by existing84/88 acceptance; signed packet digest verified, no new policy/signature.
+- [x] TV5 current133 independent1102PASS/2optionalSKIP includes12forced child-JVM crashes and54authorityPG; not deployed Auth/Seller/businessE2E.
+- [x] Current107925f04c +1147c825b5:177backendPASS and8actualHTTP/PG/HappyDOMPASS; JUnit wrapper separate, not Chrome/liveAuth/Gateway.
+- [x] Original DOCX matches archived stacked source byte-for-byte; provenance only, no live report/NFR acceptance.
+- [ ] Owner review/target migration/global credential manifest/all mutation paths, fullM01/COD/Finance/ReviewAPI/live2StoreUAT remain BLOCKED/NOT_RUN; Issue5/12/18 notDONE.
+
+- [x] Late PR134: API/diff/reviews/CI checked, independent1122PASS/2optionalSKIP at9eb3c0d; current inventory118PR. Seller Auth commit proof/production mutation acceptance remains BLOCKED, not inherited PASS from133.

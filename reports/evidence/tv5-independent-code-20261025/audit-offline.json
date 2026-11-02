@@ -1,0 +1,30 @@
+{
+  "kind": "DERIVED offline QA test evidence",
+  "source": "8bf9f12e1a7df92b77f8a506fba5e1907a4f1c6c",
+  "command": [
+    "C:\\Users\\Admin\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "scripts/qa/tests",
+    "-v"
+  ],
+  "startedUtc": "2026-10-25T16:27:37.315704+00:00",
+  "completedUtc": "2026-10-25T16:27:37.722701+00:00",
+  "Python": "3.12.14",
+  "exitCode": 0,
+  "counts": {
+    "PASS": 27,
+    "FAIL": 0
+  },
+  "live": null,
+  "rawArtifacts": [
+    {
+      "path": ".verification/tv5-pr-audit-evidence-20261025/offline/runtime.log",
+      "bytes": 4906,
+      "sha256": "112d770337715ca1925f6b22515c08f35cba423550a5c3d8ae38e617ee7f2ff8"
+    }
+  ],
+  "publication": "DERIVED SUMMARY only. Raw stdout/XML/artifacts stay byte-preserved private; public SHA256 paths are provenance, not public raw downloads."
+}

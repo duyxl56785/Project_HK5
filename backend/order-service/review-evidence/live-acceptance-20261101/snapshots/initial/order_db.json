@@ -1,0 +1,48 @@
+{
+  "database": "order_db",
+  "postgres_version": "PostgreSQL 16.15 (Debian 16.15-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+  "flyway": [
+    {
+      "installed_rank": 1,
+      "version": "1",
+      "script": "V1__checkout_baseline.sql",
+      "checksum": 304267561,
+      "success": true
+    },
+    {
+      "installed_rank": 2,
+      "version": "2",
+      "script": "V2__inventory_operation_journal.sql",
+      "checksum": -1781072333,
+      "success": true
+    },
+    {
+      "installed_rank": 3,
+      "version": "3",
+      "script": "V3__fulfillment_cod_shipping_outbox.sql",
+      "checksum": -474404700,
+      "success": true
+    },
+    {
+      "installed_rank": 4,
+      "version": "4",
+      "script": "V4__write_fence_abort.sql",
+      "checksum": 1182150034,
+      "success": true
+    },
+    {
+      "installed_rank": 5,
+      "version": "5",
+      "script": "V5__checkout_order_drafts.sql",
+      "checksum": -759154235,
+      "success": true
+    }
+  ],
+  "orders": [],
+  "seller_orders": [],
+  "items": [],
+  "attempts": [],
+  "drafts": [],
+  "journals": [],
+  "outbox": []
+}

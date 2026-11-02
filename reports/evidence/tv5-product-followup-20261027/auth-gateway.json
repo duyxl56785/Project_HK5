@@ -1,0 +1,1243 @@
+{
+  "kind": "DERIVED SUMMARY; raw private unchanged; no credential/body/token publication",
+  "source": "36ad517174ef3911bf794ef4ac568647cd9eb4eb",
+  "executor": "TV5 independent followup",
+  "sourceDeltaFrom": "a4d63600d1c72712391566ac04d794149eab0c59",
+  "command": [
+    "D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-product-followup-20261027\\source102\\backend\\gradlew.bat",
+    "-p",
+    "backend",
+    "--init-script",
+    "D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-product-followup-20261027\\source102\\tests\\security\\auth-current-authority.init.gradle",
+    "-Ptv5AuthAuthoritySources=D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-product-followup-20261027\\source102\\tests\\security\\auth-current-authority",
+    ":auth-service:test",
+    ":auth-service:tv5CurrentAuthorityRegression",
+    ":api-gateway:test",
+    ":auth-service:bootJar",
+    ":api-gateway:bootJar",
+    "--rerun-tasks",
+    "--no-daemon",
+    "--console=plain"
+  ],
+  "startedUtc": "2026-10-27T01:43:12.572530+00:00",
+  "completedUtc": "2026-10-27T01:46:17.307257+00:00",
+  "exitCode": 0,
+  "environment": {
+    "Java": "21.0.7",
+    "Gradle": "8.10",
+    "Docker": "29.8.1",
+    "PostgreSQL": "16 disposable Testcontainers; optional external-data checks not enabled",
+    "JAVA_TOOL_OPTIONS": "-Duser.timezone=UTC -Dapi.version=1.44"
+  },
+  "counts": {
+    "auth-service:test": {
+      "PASS": 110,
+      "SKIPPED": 2
+    },
+    "auth-service:tv5CurrentAuthorityRegression": {
+      "PASS": 5
+    },
+    "api-gateway:test": {
+      "PASS": 32
+    }
+  },
+  "cases": [
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.AuthPersistenceTest",
+      "name": "refreshConstraintsEnforceHashFamilyParentAndAbsoluteExpiry()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.AuthPersistenceTest",
+      "name": "allJavaStripCharactersAreRejectedAtSqlEmailBoundaries()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.AuthPersistenceTest",
+      "name": "tokenConsumptionAndChildInsertRollbackTogether()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.AuthPersistenceTest",
+      "name": "schemaRejectsInvalidRolesEmailsAndMissingAccount()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.AuthPersistenceTest",
+      "name": "accountPersistsNormalizedEmailRolesAndDurableTaskAtomically()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.AuthPersistenceTest",
+      "name": "[1] logout=false",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.AuthPersistenceTest",
+      "name": "[2] logout=true",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.AuthPersistenceTest",
+      "name": "canonicalUnicodeIsNotRestrictedToAsciiOrCaseFolded()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.AuthPersistenceTest",
+      "name": "familyLockBlocksOtherTransactionAndLogoutPreventsConsumption()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.AuthPersistenceTest",
+      "name": "rawUnicodeAliasCannotBypassDatabaseNormalization()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.AuthPersistenceTest",
+      "name": "accountRolesAndProvisioningRollbackTogether()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.AuthPersistenceTest",
+      "name": "consumeKeepsFamilyLockUntilCallerCommits()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.AuthPersistenceTest",
+      "name": "committedDataSurvivesApplicationRestartWithRuntimeFlywayDisabled()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.AuthPersistenceTest",
+      "name": "twoRotationsSerializeAndReuseCanRevokeCommittedChild()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.AuthPersistenceTest",
+      "name": "postgresConstraintRejectsExactlyJavaLowercaseChangingScalars()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.AuthPersistenceTest",
+      "name": "[1] prefix=ascii",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.AuthPersistenceTest",
+      "name": "[2] prefix=É",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.AuthPersistenceTest",
+      "name": "[3] prefix=İ",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.AuthPersistenceTest",
+      "name": "[4] prefix=ΟΣ",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.AuthPersistenceTest",
+      "name": "[5] prefix=𐐀",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.AuthPersistenceTest",
+      "name": "[1] duplicate=false",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.AuthPersistenceTest",
+      "name": "[2] duplicate=true",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.AuthPersistenceTest",
+      "name": "runtimeHasOnlyExplicitBusinessDmlAndCannotTouchSchemaHistory()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.AuthPersistenceTest",
+      "name": "migrationRerunsAndValidatesWithRuntimeDdlDisabled()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.AuthPersistenceTest",
+      "name": "migrationRejectsWrongActorBeforeCreatingBusinessTables()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.AuthPersistenceTest",
+      "name": "unicodeDuplicateLookupAndCanonicalSqlInsertUseSameUniqueKey()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.AuthPersistenceTest",
+      "name": "consumptionRequiresActiveUnexpiredTokenAndTransaction()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.AuthPersistenceTest",
+      "name": "committedDataSurvivesPostgresRestart()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.DatabaseReadinessTest",
+      "name": "migrationProfileMigratesWithSeparateRoleAndRuntimeJpaValidates()",
+      "result": "SKIPPED"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.EmailInventoryTest",
+      "name": "existingDatabaseInventoryIsReadOnly()",
+      "result": "SKIPPED"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.EmailNormalizationTest",
+      "name": "normalizationPreservesContractUnicodeSemantics()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.EmailNormalizationTest",
+      "name": "migrationConstraintMatchesEveryJava21ScalarAndStripCharacter()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.Hs256DependencyTest",
+      "name": "managedJoseDependenciesSupportHs256AndRejectAnotherKey()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.runtime.AuthHttpControllerTest",
+      "name": "logoutIs204AndNeverReturnsAnAccessToken()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.runtime.AuthHttpControllerTest",
+      "name": "meRejectsMissingMalformedAndTamperedBearer()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.runtime.AuthHttpControllerTest",
+      "name": "registerEmits201WithoutCredentialsOrAutoLogin()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.runtime.AuthHttpControllerTest",
+      "name": "rejectsUnknownRegisterFieldsAndMalformedBodyBeforePersistence()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.runtime.AuthHttpControllerTest",
+      "name": "deniedOriginOrThrottleNeverRunsBusinessMutation()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.runtime.AuthHttpControllerTest",
+      "name": "loginReturnsRefreshOnlyInSecureCookieAndNotJson()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.runtime.AuthHttpControllerTest",
+      "name": "meReturnsCurrentAccountOnlyAfterServiceVerification()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.runtime.AuthHttpControllerTest",
+      "name": "refreshWithoutCookieRejectsAndClearsCookie()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.runtime.AuthHttpGateTest",
+      "name": "deniesInvalidOriginConfigAndLocalRateOverrun()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.runtime.AuthHttpGateTest",
+      "name": "requiresExactOriginAndCsrfHeader()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.runtime.AuthSessionServiceTest",
+      "name": "rejectsInvalidRegistrationAndDuplicateWithoutPersisting()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.runtime.AuthSessionServiceTest",
+      "name": "meExposesOnlySignedAndCurrentlyGrantedRolesAfterAccountPromotion()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.runtime.AuthSessionServiceTest",
+      "name": "logoutRevokesMatchingFamilyAndUnknownIsIdempotent()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.runtime.AuthSessionServiceTest",
+      "name": "meRequiresCryptographicProofAndCurrentDbRoles()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.runtime.AuthSessionServiceTest",
+      "name": "disabledAndInvalidCredentialUseSameGeneric401AndNeverCreateFamily()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.runtime.AuthSessionServiceTest",
+      "name": "loginUsesVerifiedCurrentAccountBeforePersistingRefreshFamily()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.runtime.AuthSessionServiceTest",
+      "name": "registrationCreatesActiveCustomerOnlyAndDurablePersistence()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.runtime.AuthSessionServiceTest",
+      "name": "refreshConsumesOnceAndReplayedTokenRevokesFamily()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.runtime.AuthSessionServiceWiringTest",
+      "name": "disabledHttpNeverCreatesServiceBean()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.runtime.AuthSessionServiceWiringTest",
+      "name": "explicitHttpOptInSelectsProductionConstructor()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.AuthBootstrapConfigurationTest",
+      "name": "explicitCurrentAndPreviousKeysAreAcceptedWithoutFallback()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.AuthBootstrapConfigurationTest",
+      "name": "noImplicitIssuerKeyOrActiveStatusCanInitialize()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.AuthBootstrapConfigurationTest",
+      "name": "weakMalformedOrPaddedKeysFailClosedWithoutSecretDisclosure()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.AuthBootstrapConfigurationTest",
+      "name": "invalidOrPartialRotationCannotBeEnabled()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.AuthBootstrapConfigurationTest",
+      "name": "activeStatusMustBeExplicitExactAndBounded()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.AuthBootstrapStartupTest",
+      "name": "absentOptInCreatesNoSecurityBeansEvenWithCompleteEnvironment()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.AuthBootstrapStartupTest",
+      "name": "[1] inactive=DISABLED",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.AuthBootstrapStartupTest",
+      "name": "[2] inactive=QA_EXPLICIT_ACTIVE",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.AuthBootstrapStartupTest",
+      "name": "[3] inactive=active",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.AuthBootstrapStartupTest",
+      "name": "[4] inactive=APPROVED",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.AuthBootstrapStartupTest",
+      "name": "[5] inactive=SUSPENDED",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.AuthBootstrapStartupTest",
+      "name": "springPropertiesCannotSupplyMissingRuntimeSecrets()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.AuthBootstrapStartupTest",
+      "name": "[1] setting=HK5_AUTH_JWT_ISSUER",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.AuthBootstrapStartupTest",
+      "name": "[2] setting=HK5_AUTH_JWT_AUDIENCE",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.AuthBootstrapStartupTest",
+      "name": "[3] setting=HK5_AUTH_JWT_CURRENT_KID",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.AuthBootstrapStartupTest",
+      "name": "[4] setting=HK5_AUTH_JWT_CURRENT_KEY_B64",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.AuthBootstrapStartupTest",
+      "name": "[5] setting=HK5_AUTH_ACTIVE_STATUS",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.AuthBootstrapStartupTest",
+      "name": "runtimeKeyringAcceptsOldAndNewSignsOnlyCurrentAndRetiresPrevious()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.AuthBootstrapStartupTest",
+      "name": "explicitRuntimeEnvironmentCreatesBothBeans()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.AuthBootstrapStartupTest",
+      "name": "nonStringEnvironmentValuesAreRejectedWithoutCoercion()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.AuthBootstrapStartupTest",
+      "name": "[1] setting=HK5_AUTH_JWT_ISSUER, value=",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.AuthBootstrapStartupTest",
+      "name": "[2] setting=HK5_AUTH_JWT_AUDIENCE, value= padded ",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.AuthBootstrapStartupTest",
+      "name": "[3] setting=HK5_AUTH_JWT_CURRENT_KID, value=invalid/kid",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.AuthBootstrapStartupTest",
+      "name": "[4] setting=HK5_AUTH_JWT_CURRENT_KEY_B64, value=not-base64!",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.AuthBootstrapStartupTest",
+      "name": "[5] setting=HK5_AUTH_JWT_CURRENT_KEY_B64, value=YQ==",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.AuthBootstrapStartupTest",
+      "name": "[6] setting=HK5_AUTH_ACTIVE_STATUS, value= ACTIVE ",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.AuthBootstrapStartupTest",
+      "name": "[7] setting=HK5_AUTH_ACTIVE_STATUS, value=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.AuthBootstrapStartupTest",
+      "name": "[1] kind=kid-only",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.AuthBootstrapStartupTest",
+      "name": "[2] kind=key-only",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.AuthBootstrapStartupTest",
+      "name": "[3] kind=same-kid",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.AuthBootstrapStartupTest",
+      "name": "[4] kind=same-key",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.AuthBootstrapStartupTest",
+      "name": "[5] kind=malformed-previous-key",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.AuthPasswordHasherTest",
+      "name": "trailingNulCannotAuthenticateAsTheAcceptedPassword()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.AuthPasswordHasherTest",
+      "name": "tamperedSaltOrDigestCannotAuthenticate()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.AuthPasswordHasherTest",
+      "name": "loginSupportsLegacyShortLengthOnlyWhenMatchingAnExistingHash()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.AuthPasswordHasherTest",
+      "name": "full128CodeUnitPasswordWorksAndExcessInputIsRejectedRatherThanTruncated()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.AuthPasswordHasherTest",
+      "name": "registrationRejectsWrongLengthOrMalformedUnicodeWithoutNormalization()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.AuthPasswordHasherTest",
+      "name": "[1] password=?abcdefghijkl",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.AuthPasswordHasherTest",
+      "name": "[2] password=abcdef?ghijkl",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.AuthPasswordHasherTest",
+      "name": "[3] password=abcdefghijkl?",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.AuthPasswordHasherTest",
+      "name": "acceptedRegistrationPasswordHashesAndVerifiesWithoutPersistingRawValue()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.AuthPasswordHasherTest",
+      "name": "multiByteAndLongPasswordNeverSilentlyTruncateAtBcrypt72Bytes()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.AuthPasswordHasherTest",
+      "name": "malformedStoredRecordsCannotSelectWeakWorkFactorOrDifferentAlgorithm()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.CurrentAccountAuthorityTest",
+      "name": "inactiveOrMissingAccountReturns401ButDependencyFailureReturns503()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.CurrentAccountAuthorityTest",
+      "name": "staleJwtAdminIsDeniedOnceCurrentGrantIsRemoved()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.CurrentAccountAuthorityTest",
+      "name": "currentGrantCannotElevateAnOldTokenMissingTheRole()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.CurrentAccountAuthorityTest",
+      "name": "activeStatusIsExplicitAndNoRawPrincipalCanBeCreatedFromClientData()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.CurrentAccountAuthorityTest",
+      "name": "lazyRolesReadExceptionMapsTo503WithoutMaskingInactiveAccounts()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.CurrentAccountAuthorityTest",
+      "name": "[1] inactiveStatus=DISABLED",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.CurrentAccountAuthorityTest",
+      "name": "[2] inactiveStatus=UNKNOWN",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.CurrentAccountAuthorityTest",
+      "name": "[3] inactiveStatus=ACTIVE",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.CurrentAccountAuthorityTest",
+      "name": "[4] inactiveStatus=active",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.CurrentAccountAuthorityTest",
+      "name": "[5] inactiveStatus=APPROVED",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.CurrentAccountAuthorityTest",
+      "name": "[6] inactiveStatus=SUSPENDED",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.CurrentAccountAuthorityTest",
+      "name": "[7] inactiveStatus=QA_EXPLICIT_ACTIVE ",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.Hk5JwtCodecTest",
+      "name": "acceptsLocalPreviousKeyUntilRotationRetirementAndRejectsExpired()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.Hk5JwtCodecTest",
+      "name": "rejectsTamperingUnknownKeyAndWrongIssuerAudience()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.Hk5JwtCodecTest",
+      "name": "issuesExactContractAndVerifiesCurrentRoleAfterDatabaseRead()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "test",
+      "class": "com.projecthk5.authservice.security.Hk5JwtCodecTest",
+      "name": "missingWeakOrExcessKeysCannotInitializeAndAbsentConfigNeverDefaults()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "tv5CurrentAuthorityRegression",
+      "class": "com.projecthk5.tv5authqa.CurrentAccountAuthorityPostgresRegressionTest",
+      "name": "transactionalProxyLoadsLazyRolesAndCurrentRevocationOverridesSignedAdmin()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "tv5CurrentAuthorityRegression",
+      "class": "com.projecthk5.tv5authqa.CurrentAccountAuthorityPostgresRegressionTest",
+      "name": "currentGrantCannotElevateOldTokenButFreshlyIssuedTokenCanUseIt()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "tv5CurrentAuthorityRegression",
+      "class": "com.projecthk5.tv5authqa.CurrentAccountAuthorityPostgresRegressionTest",
+      "name": "unavailableLazyRoleQueryIsAlso503RatherThanLeakingPersistenceFailure()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "tv5CurrentAuthorityRegression",
+      "class": "com.projecthk5.tv5authqa.CurrentAccountAuthorityPostgresRegressionTest",
+      "name": "unavailableAccountQueryIs503RatherThanAnInvalidAccount()",
+      "result": "PASS"
+    },
+    {
+      "module": "auth-service",
+      "task": "tv5CurrentAuthorityRegression",
+      "class": "com.projecthk5.tv5authqa.CurrentAccountAuthorityPostgresRegressionTest",
+      "name": "inactiveAndMissingCurrentAccountsReturn401()",
+      "result": "PASS"
+    },
+    {
+      "module": "api-gateway",
+      "task": "test",
+      "class": "com.projecthk5.gateway.GatewayAuthPostgresE2ETest",
+      "name": "realDatabaseConnectionFailureReturns503WithoutIssuingOrRevokingSessions()",
+      "result": "PASS"
+    },
+    {
+      "module": "api-gateway",
+      "task": "test",
+      "class": "com.projecthk5.gateway.GatewayAuthPostgresE2ETest",
+      "name": "currentRolesNeverPromoteStaleJwtAndRevocationFailsClosed()",
+      "result": "PASS"
+    },
+    {
+      "module": "api-gateway",
+      "task": "test",
+      "class": "com.projecthk5.gateway.GatewayAuthPostgresE2ETest",
+      "name": "issuerVerifierRejectInvalidSignaturesClaimsAndUnknownKeysAtBothHttpBoundaries()",
+      "result": "PASS"
+    },
+    {
+      "module": "api-gateway",
+      "task": "test",
+      "class": "com.projecthk5.gateway.GatewayAuthPostgresE2ETest",
+      "name": "concurrentRefreshCommitsOneChildThenReplayRevokesFamily()",
+      "result": "PASS"
+    },
+    {
+      "module": "api-gateway",
+      "task": "test",
+      "class": "com.projecthk5.gateway.GatewayAuthPostgresE2ETest",
+      "name": "malformedBodiesAndConcurrentRegistrationKeepAtomicAccountProvisioning()",
+      "result": "PASS"
+    },
+    {
+      "module": "api-gateway",
+      "task": "test",
+      "class": "com.projecthk5.gateway.GatewayAuthPostgresE2ETest",
+      "name": "realAuthReceivesBearerBodyCookieAndOnlyAllowlistedGatewayRoutes()",
+      "result": "PASS"
+    },
+    {
+      "module": "api-gateway",
+      "task": "test",
+      "class": "com.projecthk5.gateway.GatewayAuthPostgresE2ETest",
+      "name": "defaultFlagsKeepBothRealApplicationsClosed()",
+      "result": "PASS"
+    },
+    {
+      "module": "api-gateway",
+      "task": "test",
+      "class": "com.projecthk5.gateway.GatewayAuthPostgresE2ETest",
+      "name": "csrfOriginAndCorsDenialsCannotMutateDatabaseOrConsumeCookie()",
+      "result": "PASS"
+    },
+    {
+      "module": "api-gateway",
+      "task": "test",
+      "class": "com.projecthk5.gateway.GatewayAuthPostgresE2ETest",
+      "name": "singleInstanceThrottleIsEnforcedThroughRealHttp()",
+      "result": "PASS"
+    },
+    {
+      "module": "api-gateway",
+      "task": "test",
+      "class": "com.projecthk5.gateway.GatewayAuthPostgresE2ETest",
+      "name": "registerLoginRotateReplayLogoutAndIndependentFamilies()",
+      "result": "PASS"
+    },
+    {
+      "module": "api-gateway",
+      "task": "test",
+      "class": "com.projecthk5.gateway.GatewayEmbeddedNettyForwardingTest",
+      "name": "[1] path=/api/auth/me/extra",
+      "result": "PASS"
+    },
+    {
+      "module": "api-gateway",
+      "task": "test",
+      "class": "com.projecthk5.gateway.GatewayEmbeddedNettyForwardingTest",
+      "name": "[2] path=/api/auth/unknown",
+      "result": "PASS"
+    },
+    {
+      "module": "api-gateway",
+      "task": "test",
+      "class": "com.projecthk5.gateway.GatewayEmbeddedNettyForwardingTest",
+      "name": "[3] path=/internal",
+      "result": "PASS"
+    },
+    {
+      "module": "api-gateway",
+      "task": "test",
+      "class": "com.projecthk5.gateway.GatewayEmbeddedNettyForwardingTest",
+      "name": "[4] path=/internal/accounts",
+      "result": "PASS"
+    },
+    {
+      "module": "api-gateway",
+      "task": "test",
+      "class": "com.projecthk5.gateway.GatewayEmbeddedNettyForwardingTest",
+      "name": "[5] path=/api/products",
+      "result": "PASS"
+    },
+    {
+      "module": "api-gateway",
+      "task": "test",
+      "class": "com.projecthk5.gateway.GatewayEmbeddedNettyForwardingTest",
+      "name": "missingBearerCannotBeReplacedBySpoofedIdentity()",
+      "result": "PASS"
+    },
+    {
+      "module": "api-gateway",
+      "task": "test",
+      "class": "com.projecthk5.gateway.GatewayEmbeddedNettyForwardingTest",
+      "name": "actualNettySignedMeForwardsWithout500AndStripsAllNineSpoofedHeaders()",
+      "result": "PASS"
+    },
+    {
+      "module": "api-gateway",
+      "task": "test",
+      "class": "com.projecthk5.gateway.GatewayEmbeddedNettyForwardingTest",
+      "name": "publicMutationWrongMethodAndUnknownPreflightFollowExactContract()",
+      "result": "PASS"
+    },
+    {
+      "module": "api-gateway",
+      "task": "test",
+      "class": "com.projecthk5.gateway.GatewayEmbeddedNettyForwardingTest",
+      "name": "trustedPreflightAllowsOnlyReviewedHeadersWithoutUpstreamCall()",
+      "result": "PASS"
+    },
+    {
+      "module": "api-gateway",
+      "task": "test",
+      "class": "com.projecthk5.gateway.GatewayEmbeddedNettyForwardingTest",
+      "name": "[1] path=/api/auth/register",
+      "result": "PASS"
+    },
+    {
+      "module": "api-gateway",
+      "task": "test",
+      "class": "com.projecthk5.gateway.GatewayEmbeddedNettyForwardingTest",
+      "name": "[2] path=/api/auth/login",
+      "result": "PASS"
+    },
+    {
+      "module": "api-gateway",
+      "task": "test",
+      "class": "com.projecthk5.gateway.GatewayEmbeddedNettyForwardingTest",
+      "name": "[3] path=/api/auth/refresh",
+      "result": "PASS"
+    },
+    {
+      "module": "api-gateway",
+      "task": "test",
+      "class": "com.projecthk5.gateway.GatewayEmbeddedNettyForwardingTest",
+      "name": "[4] path=/api/auth/logout",
+      "result": "PASS"
+    },
+    {
+      "module": "api-gateway",
+      "task": "test",
+      "class": "com.projecthk5.gateway.GatewayEmbeddedNettyForwardingTest",
+      "name": "preflightCannotAuthorizeSpoofedInternalHeader()",
+      "result": "PASS"
+    },
+    {
+      "module": "api-gateway",
+      "task": "test",
+      "class": "com.projecthk5.gateway.GatewayEmbeddedNettyForwardingTest",
+      "name": "dummyUpstreamIsReachableIndependentOfGateway()",
+      "result": "PASS"
+    },
+    {
+      "module": "api-gateway",
+      "task": "test",
+      "class": "com.projecthk5.gateway.GatewayEmbeddedNettyForwardingTest",
+      "name": "invalidBearerCannotReachActualNettyUpstream()",
+      "result": "PASS"
+    },
+    {
+      "module": "api-gateway",
+      "task": "test",
+      "class": "com.projecthk5.gateway.GatewayEmbeddedNettyForwardingTest",
+      "name": "signedMeWithWrongMethodNeverReachesUpstream()",
+      "result": "PASS"
+    },
+    {
+      "module": "api-gateway",
+      "task": "test",
+      "class": "com.projecthk5.gateway.GatewayEmbeddedNettyForwardingTest",
+      "name": "untrustedOriginIsRejectedBeforePublicForwarding()",
+      "result": "PASS"
+    },
+    {
+      "module": "api-gateway",
+      "task": "test",
+      "class": "com.projecthk5.gateway.GatewayHeaderSanitizationTest",
+      "name": "preservesOnlyTrustedTransportHeadersOnWritableExchange()",
+      "result": "PASS"
+    },
+    {
+      "module": "api-gateway",
+      "task": "test",
+      "class": "com.projecthk5.gateway.GatewayJwtDecoderTest",
+      "name": "noUntrustedKeyOrImplicitIssuerIsAccepted()",
+      "result": "PASS"
+    },
+    {
+      "module": "api-gateway",
+      "task": "test",
+      "class": "com.projecthk5.gateway.GatewayJwtDecoderTest",
+      "name": "verifiedClaimsAndTamperNegative()",
+      "result": "PASS"
+    },
+    {
+      "module": "api-gateway",
+      "task": "test",
+      "class": "com.projecthk5.gateway.GatewayJwtDecoderTest",
+      "name": "previousKeyCanVerifyButUnknownAndRetiredCannot()",
+      "result": "PASS"
+    }
+  ],
+  "rawArtifacts": [
+    {
+      "localPath": ".verification/tv5-product-followup-20261027/auth-gateway-run/api-gateway/test/TEST-com.projecthk5.gateway.GatewayAuthPostgresE2ETest.xml",
+      "bytes": 44162,
+      "sha256": "79c9d2f7d314e9b530046a42079ec20e41c651ce45ca9bf088e5c6c558363ff7"
+    },
+    {
+      "localPath": ".verification/tv5-product-followup-20261027/auth-gateway-run/api-gateway/test/TEST-com.projecthk5.gateway.GatewayEmbeddedNettyForwardingTest.xml",
+      "bytes": 6932,
+      "sha256": "fbf1f6f76e78e045ff8b88eae2275d5d0b204953b9100f5ebdd4d8555266627b"
+    },
+    {
+      "localPath": ".verification/tv5-product-followup-20261027/auth-gateway-run/api-gateway/test/TEST-com.projecthk5.gateway.GatewayHeaderSanitizationTest.xml",
+      "bytes": 495,
+      "sha256": "1755d9c16455372f34dc124b5be0b6a87fc0a1175c37019acac7e7ac17b2ca0a"
+    },
+    {
+      "localPath": ".verification/tv5-product-followup-20261027/auth-gateway-run/api-gateway/test/TEST-com.projecthk5.gateway.GatewayJwtDecoderTest.xml",
+      "bytes": 730,
+      "sha256": "4f63ba16b3ae7b00eadb6dfb4498687de0731b89feee3f9157772e250db98d08"
+    },
+    {
+      "localPath": ".verification/tv5-product-followup-20261027/auth-gateway-run/auth-service/test/TEST-com.projecthk5.authservice.AuthPersistenceTest.xml",
+      "bytes": 37523,
+      "sha256": "9d2145629501b1d387a6320743002541d8e2e2156b5644c37ff693cc85af26e2"
+    },
+    {
+      "localPath": ".verification/tv5-product-followup-20261027/auth-gateway-run/auth-service/test/TEST-com.projecthk5.authservice.DatabaseReadinessTest.xml",
+      "bytes": 521,
+      "sha256": "6fd282bd1c642744af1e7000352e05159d3bf4b1123005d36daf2a4352af74d8"
+    },
+    {
+      "localPath": ".verification/tv5-product-followup-20261027/auth-gateway-run/auth-service/test/TEST-com.projecthk5.authservice.EmailInventoryTest.xml",
+      "bytes": 488,
+      "sha256": "8fbad9604e1add3eb83297eea28f2b66590e3d9dbf3c32d550f04c772a0547ef"
+    },
+    {
+      "localPath": ".verification/tv5-product-followup-20261027/auth-gateway-run/auth-service/test/TEST-com.projecthk5.authservice.EmailNormalizationTest.xml",
+      "bytes": 640,
+      "sha256": "d21ec41d11f7b598020c554e267196a3cde53c75abe45a315a037f6f02caf581"
+    },
+    {
+      "localPath": ".verification/tv5-product-followup-20261027/auth-gateway-run/auth-service/test/TEST-com.projecthk5.authservice.Hs256DependencyTest.xml",
+      "bytes": 481,
+      "sha256": "a583810c9a61ab67ed50ea370aef7e6f3456db09c0329e4b513e244eefb5156c"
+    },
+    {
+      "localPath": ".verification/tv5-product-followup-20261027/auth-gateway-run/auth-service/test/TEST-com.projecthk5.authservice.runtime.AuthHttpControllerTest.xml",
+      "bytes": 5755,
+      "sha256": "666760e7b733a9d8bc5bea38e7b7835ab21f5e8fe3d5317dff16696ed7a49eeb"
+    },
+    {
+      "localPath": ".verification/tv5-product-followup-20261027/auth-gateway-run/auth-service/test/TEST-com.projecthk5.authservice.runtime.AuthHttpGateTest.xml",
+      "bytes": 616,
+      "sha256": "5e66cedf2ec25b4c0051a9f00f29d713505f8b942dbf0ebe4e1ee0e931a5d446"
+    },
+    {
+      "localPath": ".verification/tv5-product-followup-20261027/auth-gateway-run/auth-service/test/TEST-com.projecthk5.authservice.runtime.AuthSessionServiceTest.xml",
+      "bytes": 1650,
+      "sha256": "7c4243dde1e22db74c3cd6388df653cf9f7515c0389b8c2941d069b080955b0c"
+    },
+    {
+      "localPath": ".verification/tv5-product-followup-20261027/auth-gateway-run/auth-service/test/TEST-com.projecthk5.authservice.runtime.AuthSessionServiceWiringTest.xml",
+      "bytes": 657,
+      "sha256": "632570806c835e29b884cb116e7036d735f49b5232ec6307bde18d13d70e7101"
+    },
+    {
+      "localPath": ".verification/tv5-product-followup-20261027/auth-gateway-run/auth-service/test/TEST-com.projecthk5.authservice.security.AuthBootstrapConfigurationTest.xml",
+      "bytes": 1177,
+      "sha256": "926a97899d23a994472ef6230cd12b6acef17a18d77f94f101ff3079d3b49b30"
+    },
+    {
+      "localPath": ".verification/tv5-product-followup-20261027/auth-gateway-run/auth-service/test/TEST-com.projecthk5.authservice.security.AuthBootstrapStartupTest.xml",
+      "bytes": 17195,
+      "sha256": "14f90030dba81ccbe3c061f87e7ff8ffca0ad807d524a2a298f49faff3578801"
+    },
+    {
+      "localPath": ".verification/tv5-product-followup-20261027/auth-gateway-run/auth-service/test/TEST-com.projecthk5.authservice.security.AuthPasswordHasherTest.xml",
+      "bytes": 2101,
+      "sha256": "e9957a22a130fd0cb93df61faa3df910927a48d1a5501979bd7b287f8a27ed54"
+    },
+    {
+      "localPath": ".verification/tv5-product-followup-20261027/auth-gateway-run/auth-service/test/TEST-com.projecthk5.authservice.security.CurrentAccountAuthorityTest.xml",
+      "bytes": 2183,
+      "sha256": "de03a84306417a6467d071bf9bfc19d1e384eee971bffb1a1ece3203c798cc84"
+    },
+    {
+      "localPath": ".verification/tv5-product-followup-20261027/auth-gateway-run/auth-service/test/TEST-com.projecthk5.authservice.security.Hk5JwtCodecTest.xml",
+      "bytes": 981,
+      "sha256": "60c7fbecca99ac96bd1066d28272e90eb43933217ea5dd2a0cbce909d470edf6"
+    },
+    {
+      "localPath": ".verification/tv5-product-followup-20261027/auth-gateway-run/auth-service/tv5CurrentAuthorityRegression/TEST-com.projecthk5.tv5authqa.CurrentAccountAuthorityPostgresRegressionTest.xml",
+      "bytes": 35242,
+      "sha256": "39a4ec9d21732bc9cfa3cb52050c392c6a8cbc5a552657493c9cd348c38f2caf"
+    },
+    {
+      "localPath": ".verification/tv5-product-followup-20261027/auth-gateway-run/runtime.log",
+      "bytes": 2961,
+      "sha256": "14c63c49338a212fdf7f2272cb8221bbcae77dcfc986b5fd42706a3312cbfe9b"
+    },
+    {
+      "localPath": ".verification/tv5-product-followup-20261027/auth-gateway-run/auth-child-logs/concurrentRefreshCommitsOneChildThenReplayRevokesFamily.log",
+      "bytes": 5366,
+      "sha256": "9fc39ce3d58420af3aadc52632c8428d59d4cf43c9ef5ee80c9b7743b3124f88"
+    },
+    {
+      "localPath": ".verification/tv5-product-followup-20261027/auth-gateway-run/auth-child-logs/csrfOriginAndCorsDenialsCannotMutateDatabaseOrConsumeCookie.log",
+      "bytes": 5366,
+      "sha256": "ac09b8fcfd488b7c16d0ee381a1bc8393745f5c20c204f8eaf23b339829409ef"
+    },
+    {
+      "localPath": ".verification/tv5-product-followup-20261027/auth-gateway-run/auth-child-logs/currentRolesNeverPromoteStaleJwtAndRevocationFailsClosed.log",
+      "bytes": 5366,
+      "sha256": "609b9ff03cf66a30b9b8017024bd948235643a22073054ba25381102f9ba0df0"
+    },
+    {
+      "localPath": ".verification/tv5-product-followup-20261027/auth-gateway-run/auth-child-logs/defaultFlagsKeepBothRealApplicationsClosed.log",
+      "bytes": 5365,
+      "sha256": "604f7701616734072ccce1ccc378a52b0eddcddb9c7cb4f0478daf1b6f3ad507"
+    },
+    {
+      "localPath": ".verification/tv5-product-followup-20261027/auth-gateway-run/auth-child-logs/issuerVerifierRejectInvalidSignaturesClaimsAndUnknownKeysAtBothHttpBoundaries.log",
+      "bytes": 5366,
+      "sha256": "83a7ebdaea5c5292e66711561b80d4c28a7aec82444b86e48fcb25af3351fb04"
+    },
+    {
+      "localPath": ".verification/tv5-product-followup-20261027/auth-gateway-run/auth-child-logs/malformedBodiesAndConcurrentRegistrationKeepAtomicAccountProvisioning.log",
+      "bytes": 6131,
+      "sha256": "7448694948ec52d4459a4d8e1b52b85b7e3a256f8f7854ab7600b8415bfb2639"
+    },
+    {
+      "localPath": ".verification/tv5-product-followup-20261027/auth-gateway-run/auth-child-logs/realAuthReceivesBearerBodyCookieAndOnlyAllowlistedGatewayRoutes.log",
+      "bytes": 5366,
+      "sha256": "4d181329871c4a992a6858831f97976f73455c5fa8ba161297400053eaaca29a"
+    },
+    {
+      "localPath": ".verification/tv5-product-followup-20261027/auth-gateway-run/auth-child-logs/realDatabaseConnectionFailureReturns503WithoutIssuingOrRevokingSessions.log",
+      "bytes": 129153,
+      "sha256": "9f744c1e53ff8d57047ef6195a6c62842f8b54702cdc6fcc889beb49af176544"
+    },
+    {
+      "localPath": ".verification/tv5-product-followup-20261027/auth-gateway-run/auth-child-logs/registerLoginRotateReplayLogoutAndIndependentFamilies.log",
+      "bytes": 5366,
+      "sha256": "581293164b3e08320f3a4bcff23efc68a3ffc654039aa9245c5448db52546789"
+    },
+    {
+      "localPath": ".verification/tv5-product-followup-20261027/auth-gateway-run/auth-child-logs/singleInstanceThrottleIsEnforcedThroughRealHttp.log",
+      "bytes": 5365,
+      "sha256": "9355bc2006f6e74e00a791c75057a5c0f77487d3f328ac34bd662e694e5c86ac"
+    }
+  ],
+  "excludedStaleXml": [],
+  "boundary": "Candidate Auth/Gateway loopback HTTP and current-authority PG only. NOT Product protected HTTP, Seller role-sync, House/current Store, Cart/Checkout/Inventory or whole-flow E2E. No deployed runtime/flags changed."
+}

@@ -1,0 +1,67 @@
+{
+  "kind": "DERIVED delta checkpoint; not a new release total",
+  "verifiedUtc": "2026-10-27T01:48:11.922232+00:00",
+  "main": "1833dd4e5baf61683adaea34a54b6bb9a239e43d",
+  "unchangedSources": [
+    {
+      "PR": 90,
+      "sameHead": true,
+      "sameDiffFileBlobs": true,
+      "head": "273a44db9a24e5aac69e7d9f9e8e0208c9f963b7",
+      "openThreads": 0,
+      "newRuntimeRerun": "NOT_RUN; exact unchanged source, existing raw receipts retained; no postmerge source available"
+    },
+    {
+      "PR": 91,
+      "sameHead": true,
+      "sameDiffFileBlobs": true,
+      "head": "4915c3768a310b519e218674e405b132103cd024",
+      "openThreads": 0,
+      "newRuntimeRerun": "NOT_RUN; exact unchanged source, existing raw receipts retained; no postmerge source available"
+    },
+    {
+      "PR": 97,
+      "sameHead": true,
+      "sameDiffFileBlobs": true,
+      "head": "aa790f422a8b3ee698f53e74c455edae7b77d6fa",
+      "openThreads": 0,
+      "newRuntimeRerun": "NOT_RUN; exact unchanged source, existing raw receipts retained; no postmerge source available"
+    }
+  ],
+  "newQA103": {
+    "utc": "2026-10-27T01:43:51.506342+00:00",
+    "PR": 103,
+    "url": "https://github.com/duyxl56785/Project_HK5/pull/103",
+    "commit": "dec62e903eaa3fec0d768db7da46262b072b25b0",
+    "branch": "codex/tv5-product-catalog-composition-qa",
+    "base": "feat/tv2-catalog-postgres-batch-source",
+    "files": [
+      "tests/integration/README.md"
+    ],
+    "test": "5 PG PASS exact commit; no test or production source changes",
+    "push": "SUCCESS",
+    "requestedReviewers": [
+      "tranvanchinhbg2006-alt",
+      "duyxl56785"
+    ],
+    "reviewRequestAction": "Kept existing requests; no duplicate"
+  },
+  "newAuthDependency": {
+    "PR": 102,
+    "head": "36ad517174ef3911bf794ef4ac568647cd9eb4eb",
+    "baseline": "a4d63600d1c72712391566ac04d794149eab0c59",
+    "ci": [
+      {
+        "name": "readiness",
+        "state": "success",
+        "url": "https://github.com/duyxl56785/Project_HK5/actions/runs/40432484825/job/121953257251"
+      }
+    ],
+    "independentResult": "147PASS/0FAIL/2SKIP exit0; 10 Auth/Gateway HTTP PG cases within this invocation",
+    "ownerReport": "backend/auth-service/verification/20261027-gateway-auth-pg16-e2e.md",
+    "scope": "Draft candidate; current protected Product and Seller role-sync not implemented",
+    "approval": "No new formal approval on102"
+  },
+  "scopeDecisions": "No new House/freshness/C01/E01/Finance decision; TV1 scoped visibility decided, TV2 ACK/fix pending",
+  "publicationLimits": "Raw logs/XML/Auth child JVM logs local byte-preserved; derived case/count/path/hash JSON public; no credential/token/body publication"
+}

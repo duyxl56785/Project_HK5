@@ -1,0 +1,16 @@
+{
+  "java": "Temurin 21.0.8+9",
+  "node": "24.19.0",
+  "docker_client_server": "28.4.0",
+  "container_images_observed_in_final_raw_xml": [
+    "apache/kafka:3.8.1",
+    "postgres:16",
+    "postgres:16-alpine",
+    "postgres:16.6-alpine",
+    "testcontainers/ryuk:0.7.0"
+  ],
+  "postgresql_versions_logged_by_flyway": [
+    "16.15",
+    "16.6"
+  ]
+}

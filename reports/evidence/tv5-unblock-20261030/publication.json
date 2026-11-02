@@ -1,0 +1,218 @@
+{
+  "kind": "DERIVED GitHub read-back, no approval/merge/runtime claim",
+  "completedUtc": "2026-10-30T04:03:42.119088+00:00",
+  "viewer": "nguyenminhduy090-alt",
+  "QAReportHead": "47cc8542c824279a32a082d585e718d15d573375",
+  "UIReportHead": "ff4d3ce71d1ac95a2d4eea103c28e3ff6c0a2c13",
+  "report": "https://github.com/duyxl56785/Project_HK5/blob/47cc8542c824279a32a082d585e718d15d573375/reports/TV5_UNBLOCK_ALL_PR_2026-10-30.md",
+  "UIReport": "https://github.com/duyxl56785/Project_HK5/blob/ff4d3ce71d1ac95a2d4eea103c28e3ff6c0a2c13/reports/TV5_UI_SESSION_INVALIDATION_2026-10-30.md",
+  "actions": [
+    {
+      "PR": 133,
+      "head": "3031523fdf8100c36cc3d9fef8c12748a18ee1ff",
+      "state": "COMMENTED",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/133#pullrequestreview-5707937444"
+    },
+    {
+      "PR": 107,
+      "head": "925f04cb947ad272bcbfef95bc068f7a52af8252",
+      "state": "COMMENTED",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/107#pullrequestreview-5707938033"
+    },
+    {
+      "PR": 114,
+      "head": "7c825b51d61fb15f258121918cd2f2f7d2b91913",
+      "state": "COMMENTED",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/114#pullrequestreview-5707938920"
+    },
+    {
+      "PR": 117,
+      "head": "47cc8542c824279a32a082d585e718d15d573375",
+      "bodyUpdated": true,
+      "reviewers": [
+        "tranvanchinhbg2006-alt",
+        "duyxl56785",
+        "phamthecuong2022006-alt"
+      ]
+    },
+    {
+      "PR": 115,
+      "head": "ff4d3ce71d1ac95a2d4eea103c28e3ff6c0a2c13",
+      "bodyUpdated": true,
+      "reviewers": [
+        "lexuanbao258-collab",
+        "duyxl56785"
+      ]
+    },
+    {
+      "Issue": 5,
+      "state": "OPEN/PARTIAL",
+      "url": "https://github.com/duyxl56785/Project_HK5/issues/5#issuecomment-6514666393"
+    },
+    {
+      "Issue": 12,
+      "state": "OPEN/PARTIAL",
+      "url": "https://github.com/duyxl56785/Project_HK5/issues/12#issuecomment-6514667524"
+    },
+    {
+      "Issue": 18,
+      "state": "OPEN/PARTIAL",
+      "url": "https://github.com/duyxl56785/Project_HK5/issues/18#issuecomment-6514668290"
+    }
+  ],
+  "final": [
+    {
+      "PR": 99,
+      "head": "931feee45ac3f17293a4f200c604010fce63bf39",
+      "state": "open",
+      "draft": false,
+      "mergeable": true,
+      "reviewers": [
+        "tranvanchinhbg2006-alt",
+        "phamthecuong2022006-alt"
+      ],
+      "checks": [
+        {
+          "name": "readiness",
+          "status": "success"
+        }
+      ]
+    },
+    {
+      "PR": 103,
+      "head": "0d8a203221a07bb0a3a9fa91dc9531d6c6cc16a0",
+      "state": "open",
+      "draft": false,
+      "mergeable": true,
+      "reviewers": [
+        "tranvanchinhbg2006-alt",
+        "duyxl56785"
+      ],
+      "checks": []
+    },
+    {
+      "PR": 113,
+      "head": "5235aa395e604ba6eb33fe1b6bf2395f30837935",
+      "state": "open",
+      "draft": false,
+      "mergeable": true,
+      "reviewers": [
+        "duyxl56785"
+      ],
+      "checks": []
+    },
+    {
+      "PR": 115,
+      "head": "ff4d3ce71d1ac95a2d4eea103c28e3ff6c0a2c13",
+      "state": "open",
+      "draft": false,
+      "mergeable": true,
+      "reviewers": [
+        "lexuanbao258-collab",
+        "duyxl56785"
+      ],
+      "checks": []
+    },
+    {
+      "PR": 117,
+      "head": "47cc8542c824279a32a082d585e718d15d573375",
+      "state": "open",
+      "draft": false,
+      "mergeable": true,
+      "reviewers": [
+        "tranvanchinhbg2006-alt",
+        "duyxl56785",
+        "phamthecuong2022006-alt"
+      ],
+      "checks": []
+    },
+    {
+      "PR": 107,
+      "head": "925f04cb947ad272bcbfef95bc068f7a52af8252",
+      "state": "open",
+      "draft": true,
+      "mergeable": true,
+      "reviewers": [
+        "duyxl56785"
+      ],
+      "checks": [
+        {
+          "name": "readiness",
+          "status": "failure"
+        }
+      ]
+    },
+    {
+      "PR": 114,
+      "head": "7c825b51d61fb15f258121918cd2f2f7d2b91913",
+      "state": "open",
+      "draft": true,
+      "mergeable": true,
+      "reviewers": [],
+      "checks": []
+    },
+    {
+      "PR": 122,
+      "head": "72dd476aea7cd578dd05142a1ac79541f1b8134d",
+      "state": "open",
+      "draft": true,
+      "mergeable": true,
+      "reviewers": [
+        "nguyenminhduy090-alt"
+      ],
+      "checks": [
+        {
+          "name": "readiness",
+          "status": "success"
+        }
+      ]
+    },
+    {
+      "PR": 125,
+      "head": "a1fb3551a44ccb667355ff9a4951184d0d81708d",
+      "state": "open",
+      "draft": true,
+      "mergeable": true,
+      "reviewers": [
+        "nguyenminhduy090-alt"
+      ],
+      "checks": [
+        {
+          "name": "readiness",
+          "status": "success"
+        }
+      ]
+    },
+    {
+      "PR": 128,
+      "head": "e378fcf70d9553d3bd5ae8af8ceb134b22d72425",
+      "state": "open",
+      "draft": true,
+      "mergeable": true,
+      "reviewers": [
+        "nguyenminhduy090-alt"
+      ],
+      "checks": [
+        {
+          "name": "readiness",
+          "status": "success"
+        }
+      ]
+    },
+    {
+      "PR": 133,
+      "head": "3031523fdf8100c36cc3d9fef8c12748a18ee1ff",
+      "state": "open",
+      "draft": true,
+      "mergeable": true,
+      "reviewers": [],
+      "checks": [
+        {
+          "name": "readiness",
+          "status": "success"
+        }
+      ]
+    }
+  ],
+  "latestCreatedPR": 134
+}

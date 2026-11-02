@@ -27,8 +27,13 @@ public final class SellerStoreJson {
     public static final class InvalidInput extends IllegalArgumentException {
         private InvalidInput() { super("Invalid Seller/Store JSON"); }
     }
-    public void registration(String payload) {
-        decode(payload, Set.of(), node -> null);
+    public SellerInputs.Contact registration(String payload) {
+        return decode(payload, Set.of("representativeName", "phone", "pickupAddress"), SellerStoreJson::contact);
+    }
+
+    public SellerInputs.Resubmission resubmission(String payload) {
+        return decode(payload, Set.of("expectedVersion", "representativeName", "phone", "pickupAddress"),
+                node -> new SellerInputs.Resubmission(version(node), contact(node)));
     }
 
     public SellerInputs.Version version(String payload) {
@@ -88,6 +93,10 @@ public final class SellerStoreJson {
         JsonNode value = node.get(name);
         if (!value.isTextual()) throw new InvalidInput();
         return value.textValue();
+    }
+
+    private static SellerInputs.Contact contact(ObjectNode node) {
+        return new SellerInputs.Contact(text(node, "representativeName"), text(node, "phone"), text(node, "pickupAddress"));
     }
 
     private static long version(ObjectNode node) {

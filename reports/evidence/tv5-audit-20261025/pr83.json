@@ -1,0 +1,280 @@
+{
+  "kind": "DERIVED SUMMARY, original logs/XML private and byte-preserved",
+  "metadata": {
+    "source": "1018c2d7d8323aa0ba2a312fc278ee37c0b57a0c",
+    "PR": 83,
+    "command": [
+      "D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-audit-20261025\\source83\\backend\\gradlew.bat",
+      "-p",
+      "backend",
+      ":product-service:integrationTest",
+      "--tests",
+      "*CatalogSchemaProposalPostgresTest",
+      "--rerun-tasks",
+      "--no-daemon",
+      "--console=plain"
+    ],
+    "startedUtc": "2026-10-24T17:52:07.696725+00:00",
+    "executor": "TV5 independent exact-head execution",
+    "environment": {
+      "Java": "21.0.7",
+      "Gradle": "8.10",
+      "Docker": "29.8.1",
+      "PostgreSQL": "16 Testcontainers where tagged",
+      "JAVA_TOOL_OPTIONS": "-Duser.timezone=UTC -Dapi.version=1.44"
+    },
+    "exitCode": 0,
+    "completedUtc": "2026-10-24T17:52:32.228958+00:00"
+  },
+  "counts": {
+    "product-service:integrationTest": {
+      "PASS": 33
+    }
+  },
+  "cases": [
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "proposalDoesNotBecomeAnAppliedProductFlywayMigration()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "candidateExactLookupPreservesCaseCompositionAndInternalSpaces()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "concurrentDifferentStoresCannotCommitTheSameSku()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "exactSkuMappingAndDecimalPricePersistWithoutCaseFoldingOrRounding()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "rollbackRestoresPriceVersionAndUpdateTimestampTogether()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "[1] price=0",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "[2] price=-1",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "[3] price=NaN",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "[4] price=Infinity",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "[5] price=-Infinity",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "[1] prefix=true",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "[2] prefix=false",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "runtimeFlywayRevalidationLeavesCandidateOutsideMigrationHistory()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "versionAndTimestampsAreDurableAndUpdatesRetainSku()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "categoryReferencePreventsDeletionAndUnknownCategoryInsert()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "concurrentCompareAndSetCannotOverwriteTheSameVersionTwice()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "globalSkuIsUniqueAcrossDifferentStoreReferences()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "[1] productFirst=true",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "[2] productFirst=false",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "[1] conflict=UNIQUE",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "[2] conflict=FK",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "oversizedSkuCannotBeSilentlyTruncatedBeforeBoundaryValidation()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "rollbackDoesNotLeaveCandidateProductBehind()",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "[1] assignment=version=-1",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "[2] assignment=version=NULL",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "[3] assignment=status='UNKNOWN'",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "[4] assignment=inventory_sku=''",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "[5] assignment=inventory_sku=' padded '",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "[6] assignment=currency=' '",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "[7] assignment=store_reference=' '",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "[8] assignment=created_at=NULL",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "[9] assignment=updated_at=NULL",
+      "result": "PASS"
+    },
+    {
+      "module": "product-service",
+      "task": "integrationTest",
+      "class": "com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest",
+      "name": "[10] assignment=updated_at=created_at-interval '1 second'",
+      "result": "PASS"
+    }
+  ],
+  "staleXmlExcluded": [],
+  "rawArtifacts": [
+    {
+      "localPath": ".verification/tv5-audit-20261025/run83/integrationTest/TEST-com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest.xml",
+      "bytes": 9735,
+      "sha256": "1d5cf9194eb2c41e4938a53ee06df04b129f0ccf9bf94e040409d5ad952bd067"
+    },
+    {
+      "localPath": ".verification/tv5-audit-20261025/run83/runtime.log",
+      "bytes": 1146,
+      "sha256": "7c48cb8afa470d82744c2e3224ed74bdd753c9e8ce0ec24e12be9a8335ad0194"
+    }
+  ]
+}

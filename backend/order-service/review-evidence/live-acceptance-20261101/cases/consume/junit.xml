@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuites name="" tests="1" failures="0" skipped="0" errors="0" time="5.192737999999999">
+  <testsuite name="lifecycle.live.spec.ts" timestamp="2026-11-01T14:55:45.716Z" tests="1" failures="0" skipped="0" time="4.498" errors="0">
+    <testcase name="TV4 contract gate: CONSUME follows committed DISPATCHED, never waits for DELIVERED/COD" classname="lifecycle.live.spec.ts" time="4.498" />
+  </testsuite>
+</testsuites>

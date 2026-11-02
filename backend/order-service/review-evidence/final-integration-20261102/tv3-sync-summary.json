@@ -1,0 +1,54 @@
+{
+  "groups": {
+    "cart-service:postgresIntegrationTest": {
+      "tests": 13,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 13
+    },
+    "cart-service:test": {
+      "tests": 11,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 11
+    },
+    "inventory-service:postgresIntegrationTest": {
+      "tests": 19,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 19
+    },
+    "inventory-service:test": {
+      "tests": 27,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 27
+    },
+    "order-service:postgresIntegrationTest": {
+      "tests": 105,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 105
+    },
+    "order-service:test": {
+      "tests": 163,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 163
+    }
+  },
+  "totals": {
+    "tests": 338,
+    "passed": 338,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "skippedCases": []
+}

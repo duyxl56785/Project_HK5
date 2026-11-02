@@ -1,0 +1,61 @@
+{
+  "kind": "OFFLINE_QA_ARTIFACT_AUDIT_NOT_FINANCE_ACCEPTANCE",
+  "status": "BLOCKED_DEPENDENCY",
+  "runs": [
+    {
+      "head": "931feee45ac3f17293a4f200c604010fce63bf39",
+      "level": "POSTGRESQL",
+      "status": "VERIFIED_ARTIFACTS",
+      "counts": {
+        "PASS": 165,
+        "FAIL": 0,
+        "SKIP": 0
+      },
+      "artifactCount": 23,
+      "executionClaimsOnly": true
+    },
+    {
+      "head": "f666886c34e7df1e5eae42c9d476f340d733ea4a",
+      "level": "LOCAL_INTEGRATION",
+      "status": "VERIFIED_ARTIFACTS",
+      "counts": {
+        "PASS": 901,
+        "FAIL": 0,
+        "SKIP": 0
+      },
+      "artifactCount": 37,
+      "executionClaimsOnly": true
+    },
+    {
+      "head": "bb0b9a2d0d2e909a59653619bce98c77f75e77d2",
+      "level": "UNIT",
+      "status": "VERIFIED_ARTIFACTS",
+      "counts": {
+        "PASS": 79,
+        "FAIL": 0,
+        "SKIP": 0
+      },
+      "artifactCount": 8,
+      "executionClaimsOnly": true
+    }
+  ],
+  "gates": {
+    "finance_policy": "PENDING",
+    "cod_source_and_authority": "PENDING",
+    "settlement_contract": "PENDING",
+    "reconciliation_contract": "PENDING",
+    "store_authorization": "PENDING",
+    "runtime_environment": "PENDING"
+  },
+  "blockers": [
+    "LIVE_E2E_NOT_VERIFIED",
+    "MISSING_COD_SOURCE_AND_AUTHORITY",
+    "MISSING_FINANCE_POLICY",
+    "MISSING_RECONCILIATION_CONTRACT",
+    "MISSING_RUNTIME_ENVIRONMENT",
+    "MISSING_SETTLEMENT_CONTRACT",
+    "MISSING_STORE_AUTHORIZATION"
+  ],
+  "releaseTotal": null,
+  "authority": "No business approval, runtime activation, DONE, merge or Finance flag is granted by this tool."
+}

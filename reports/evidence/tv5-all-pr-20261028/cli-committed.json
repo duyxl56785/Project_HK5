@@ -1,0 +1,24 @@
+{
+  "head": "445deec7db7cd992724b5afe210ef8dc2dd1e009",
+  "kind": "DERIVED exact-commit inventory offline regression",
+  "command": [
+    "C:/Users/Admin/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "scripts/qa/tests",
+    "-v"
+  ],
+  "startedUtc": "2026-10-27T17:00:45.312733+00:00",
+  "completedUtc": "2026-10-27T17:00:45.538421+00:00",
+  "exitCode": 0,
+  "result": {
+    "PASS": 32,
+    "FAIL": 0,
+    "ERROR": 0,
+    "SKIP": 0
+  },
+  "logPath": ".verification/tv5-all-pr-tdd-20261027/cli-inventory-committed/runtime.log",
+  "logSHA256": "0b485507665610b48a875187b1d07aea0e3ed7999aca170248d427a809faa2bd"
+}

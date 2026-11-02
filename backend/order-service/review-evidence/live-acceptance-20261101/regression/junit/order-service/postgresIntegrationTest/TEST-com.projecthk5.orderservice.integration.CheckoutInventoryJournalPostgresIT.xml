@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuite name="com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT" tests="25" skipped="0" failures="0" errors="0" timestamp="2026-11-01T14:46:38" time="1.22">
+  <testcase name="definitiveRejectionIsDurableBeforeCartRelease()" classname="com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT" time="0.078" />
+  <testcase name="unknownCannotBeClaimedThroughLegacyJournalApi()" classname="com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT" time="0.036" />
+  <testcase name="unknownGenericDisabledTransportCannotReopenRowOrEnableHttpAdapter()" classname="com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT" time="0.188" />
+  <testcase name="concurrentGenericCallersCannotBothSend()" classname="com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT" time="0.125" />
+  <testcase name="concurrentSendersCannotBothDispatchOneJournalEntry()" classname="com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT" time="0.039" />
+  <testcase name="missingCommittedAttemptPreventsAnyHttp()" classname="com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT" time="0.011" />
+  <testcase name="checkoutRejectsAmbientTransactionBeforeAnyRemoteClaim()" classname="com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT" time="0.013" />
+  <testcase name="intentIsCommittedBeforeHttpAndSuccessfulReplayUsesNoNewSnapshotOrSend()" classname="com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT" time="0.081" />
+  <testcase name="stalePendingReadCannotClaimAConcurrentlyCommittedUnknown()" classname="com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT" time="0.064" />
+  <testcase name="pendingGenericSuccessConfirmsOnceAndReplayDoesNotSend()" classname="com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT" time="0.038" />
+  <testcase name="explicitPendingDispatchReloadsSavedTupleAndRejectsRemapping()" classname="com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT" time="0.059" />
+  <testcase name="standaloneAdapterCannotFallBackToUnjournaledReserve()" classname="com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT" time="0.009" />
+  <testcase name="lateGenericReplyAfterStaleScanCannotConfirmOrRestorePending()" classname="com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT" time="0.037" />
+  <testcase name="failedOrderTransactionDoesNotLoseConfirmedInventoryIntent()" classname="com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT" time="0.05" />
+  <testcase name="[1] profile=claim" classname="com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT" time="0.04" />
+  <testcase name="[2] profile=503" classname="com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT" time="0.036" />
+  <testcase name="[1] profile=bad-id" classname="com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT" time="0.031" />
+  <testcase name="[2] profile=bad-type" classname="com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT" time="0.027" />
+  <testcase name="[3] profile=bad-skus" classname="com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT" time="0.03" />
+  <testcase name="[4] profile=duplicate-skus" classname="com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT" time="0.029" />
+  <testcase name="[5] profile=no-body" classname="com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT" time="0.029" />
+  <testcase name="[1] forbiddenState=CONFIRMED" classname="com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT" time="0.033" />
+  <testcase name="[2] forbiddenState=REJECTED" classname="com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT" time="0.032" />
+  <testcase name="unresolvedUnknownCannotBeRedispatchedByEitherReserveEntryPoint()" classname="com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT" time="0.043" />
+  <testcase name="pendingGenericDisabledTransportKeepsNotSentPendingWithoutHttp()" classname="com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT" time="0.018" />
+</testsuite>

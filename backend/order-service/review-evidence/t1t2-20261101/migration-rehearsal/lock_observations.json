@@ -1,0 +1,689 @@
+{
+  "sql_state" : "55P03",
+  "elapsed_ms" : 1589,
+  "samples" : [ {
+    "locks" : [ {
+      "pid" : 106,
+      "application_name" : "tv3_v5_lock_probe",
+      "state" : "active",
+      "wait_event_type" : "Lock",
+      "wait_event" : "relation",
+      "mode" : "ShareRowExclusiveLock",
+      "granted" : false,
+      "relname" : "checkout_attempts"
+    } ],
+    "elapsed_ms" : 89
+  }, {
+    "locks" : [ {
+      "pid" : 106,
+      "application_name" : "tv3_v5_lock_probe",
+      "state" : "active",
+      "wait_event_type" : "Lock",
+      "wait_event" : "relation",
+      "mode" : "ShareRowExclusiveLock",
+      "granted" : false,
+      "relname" : "checkout_attempts"
+    } ],
+    "elapsed_ms" : 116
+  }, {
+    "locks" : [ {
+      "pid" : 106,
+      "application_name" : "tv3_v5_lock_probe",
+      "state" : "active",
+      "wait_event_type" : "Lock",
+      "wait_event" : "relation",
+      "mode" : "ShareRowExclusiveLock",
+      "granted" : false,
+      "relname" : "checkout_attempts"
+    } ],
+    "elapsed_ms" : 143
+  }, {
+    "locks" : [ {
+      "pid" : 106,
+      "application_name" : "tv3_v5_lock_probe",
+      "state" : "active",
+      "wait_event_type" : "Lock",
+      "wait_event" : "relation",
+      "mode" : "ShareRowExclusiveLock",
+      "granted" : false,
+      "relname" : "checkout_attempts"
+    } ],
+    "elapsed_ms" : 169
+  }, {
+    "locks" : [ {
+      "pid" : 106,
+      "application_name" : "tv3_v5_lock_probe",
+      "state" : "active",
+      "wait_event_type" : "Lock",
+      "wait_event" : "relation",
+      "mode" : "ShareRowExclusiveLock",
+      "granted" : false,
+      "relname" : "checkout_attempts"
+    } ],
+    "elapsed_ms" : 195
+  }, {
+    "locks" : [ {
+      "pid" : 106,
+      "application_name" : "tv3_v5_lock_probe",
+      "state" : "active",
+      "wait_event_type" : "Lock",
+      "wait_event" : "relation",
+      "mode" : "ShareRowExclusiveLock",
+      "granted" : false,
+      "relname" : "checkout_attempts"
+    } ],
+    "elapsed_ms" : 222
+  }, {
+    "locks" : [ {
+      "pid" : 106,
+      "application_name" : "tv3_v5_lock_probe",
+      "state" : "active",
+      "wait_event_type" : "Lock",
+      "wait_event" : "relation",
+      "mode" : "ShareRowExclusiveLock",
+      "granted" : false,
+      "relname" : "checkout_attempts"
+    } ],
+    "elapsed_ms" : 248
+  }, {
+    "locks" : [ {
+      "pid" : 106,
+      "application_name" : "tv3_v5_lock_probe",
+      "state" : "active",
+      "wait_event_type" : "Lock",
+      "wait_event" : "relation",
+      "mode" : "ShareRowExclusiveLock",
+      "granted" : false,
+      "relname" : "checkout_attempts"
+    } ],
+    "elapsed_ms" : 274
+  }, {
+    "locks" : [ {
+      "pid" : 106,
+      "application_name" : "tv3_v5_lock_probe",
+      "state" : "active",
+      "wait_event_type" : "Lock",
+      "wait_event" : "relation",
+      "mode" : "ShareRowExclusiveLock",
+      "granted" : false,
+      "relname" : "checkout_attempts"
+    } ],
+    "elapsed_ms" : 300
+  }, {
+    "locks" : [ {
+      "pid" : 106,
+      "application_name" : "tv3_v5_lock_probe",
+      "state" : "active",
+      "wait_event_type" : "Lock",
+      "wait_event" : "relation",
+      "mode" : "ShareRowExclusiveLock",
+      "granted" : false,
+      "relname" : "checkout_attempts"
+    } ],
+    "elapsed_ms" : 327
+  }, {
+    "locks" : [ {
+      "pid" : 106,
+      "application_name" : "tv3_v5_lock_probe",
+      "state" : "active",
+      "wait_event_type" : "Lock",
+      "wait_event" : "relation",
+      "mode" : "ShareRowExclusiveLock",
+      "granted" : false,
+      "relname" : "checkout_attempts"
+    } ],
+    "elapsed_ms" : 354
+  }, {
+    "locks" : [ {
+      "pid" : 106,
+      "application_name" : "tv3_v5_lock_probe",
+      "state" : "active",
+      "wait_event_type" : "Lock",
+      "wait_event" : "relation",
+      "mode" : "ShareRowExclusiveLock",
+      "granted" : false,
+      "relname" : "checkout_attempts"
+    } ],
+    "elapsed_ms" : 380
+  }, {
+    "locks" : [ {
+      "pid" : 106,
+      "application_name" : "tv3_v5_lock_probe",
+      "state" : "active",
+      "wait_event_type" : "Lock",
+      "wait_event" : "relation",
+      "mode" : "ShareRowExclusiveLock",
+      "granted" : false,
+      "relname" : "checkout_attempts"
+    } ],
+    "elapsed_ms" : 406
+  }, {
+    "locks" : [ {
+      "pid" : 106,
+      "application_name" : "tv3_v5_lock_probe",
+      "state" : "active",
+      "wait_event_type" : "Lock",
+      "wait_event" : "relation",
+      "mode" : "ShareRowExclusiveLock",
+      "granted" : false,
+      "relname" : "checkout_attempts"
+    } ],
+    "elapsed_ms" : 432
+  }, {
+    "locks" : [ {
+      "pid" : 106,
+      "application_name" : "tv3_v5_lock_probe",
+      "state" : "active",
+      "wait_event_type" : "Lock",
+      "wait_event" : "relation",
+      "mode" : "ShareRowExclusiveLock",
+      "granted" : false,
+      "relname" : "checkout_attempts"
+    } ],
+    "elapsed_ms" : 459
+  }, {
+    "locks" : [ {
+      "pid" : 106,
+      "application_name" : "tv3_v5_lock_probe",
+      "state" : "active",
+      "wait_event_type" : "Lock",
+      "wait_event" : "relation",
+      "mode" : "ShareRowExclusiveLock",
+      "granted" : false,
+      "relname" : "checkout_attempts"
+    } ],
+    "elapsed_ms" : 485
+  }, {
+    "locks" : [ {
+      "pid" : 106,
+      "application_name" : "tv3_v5_lock_probe",
+      "state" : "active",
+      "wait_event_type" : "Lock",
+      "wait_event" : "relation",
+      "mode" : "ShareRowExclusiveLock",
+      "granted" : false,
+      "relname" : "checkout_attempts"
+    } ],
+    "elapsed_ms" : 511
+  }, {
+    "locks" : [ {
+      "pid" : 106,
+      "application_name" : "tv3_v5_lock_probe",
+      "state" : "active",
+      "wait_event_type" : "Lock",
+      "wait_event" : "relation",
+      "mode" : "ShareRowExclusiveLock",
+      "granted" : false,
+      "relname" : "checkout_attempts"
+    } ],
+    "elapsed_ms" : 537
+  }, {
+    "locks" : [ {
+      "pid" : 106,
+      "application_name" : "tv3_v5_lock_probe",
+      "state" : "active",
+      "wait_event_type" : "Lock",
+      "wait_event" : "relation",
+      "mode" : "ShareRowExclusiveLock",
+      "granted" : false,
+      "relname" : "checkout_attempts"
+    } ],
+    "elapsed_ms" : 564
+  }, {
+    "locks" : [ {
+      "pid" : 106,
+      "application_name" : "tv3_v5_lock_probe",
+      "state" : "active",
+      "wait_event_type" : "Lock",
+      "wait_event" : "relation",
+      "mode" : "ShareRowExclusiveLock",
+      "granted" : false,
+      "relname" : "checkout_attempts"
+    } ],
+    "elapsed_ms" : 590
+  }, {
+    "locks" : [ {
+      "pid" : 106,
+      "application_name" : "tv3_v5_lock_probe",
+      "state" : "active",
+      "wait_event_type" : "Lock",
+      "wait_event" : "relation",
+      "mode" : "ShareRowExclusiveLock",
+      "granted" : false,
+      "relname" : "checkout_attempts"
+    } ],
+    "elapsed_ms" : 616
+  }, {
+    "locks" : [ {
+      "pid" : 106,
+      "application_name" : "tv3_v5_lock_probe",
+      "state" : "active",
+      "wait_event_type" : "Lock",
+      "wait_event" : "relation",
+      "mode" : "ShareRowExclusiveLock",
+      "granted" : false,
+      "relname" : "checkout_attempts"
+    } ],
+    "elapsed_ms" : 642
+  }, {
+    "locks" : [ {
+      "pid" : 106,
+      "application_name" : "tv3_v5_lock_probe",
+      "state" : "active",
+      "wait_event_type" : "Lock",
+      "wait_event" : "relation",
+      "mode" : "ShareRowExclusiveLock",
+      "granted" : false,
+      "relname" : "checkout_attempts"
+    } ],
+    "elapsed_ms" : 668
+  }, {
+    "locks" : [ {
+      "pid" : 106,
+      "application_name" : "tv3_v5_lock_probe",
+      "state" : "active",
+      "wait_event_type" : "Lock",
+      "wait_event" : "relation",
+      "mode" : "ShareRowExclusiveLock",
+      "granted" : false,
+      "relname" : "checkout_attempts"
+    } ],
+    "elapsed_ms" : 695
+  }, {
+    "locks" : [ {
+      "pid" : 106,
+      "application_name" : "tv3_v5_lock_probe",
+      "state" : "active",
+      "wait_event_type" : "Lock",
+      "wait_event" : "relation",
+      "mode" : "ShareRowExclusiveLock",
+      "granted" : false,
+      "relname" : "checkout_attempts"
+    } ],
+    "elapsed_ms" : 721
+  }, {
+    "locks" : [ {
+      "pid" : 106,
+      "application_name" : "tv3_v5_lock_probe",
+      "state" : "active",
+      "wait_event_type" : "Lock",
+      "wait_event" : "relation",
+      "mode" : "ShareRowExclusiveLock",
+      "granted" : false,
+      "relname" : "checkout_attempts"
+    } ],
+    "elapsed_ms" : 747
+  }, {
+    "locks" : [ {
+      "pid" : 106,
+      "application_name" : "tv3_v5_lock_probe",
+      "state" : "active",
+      "wait_event_type" : "Lock",
+      "wait_event" : "relation",
+      "mode" : "ShareRowExclusiveLock",
+      "granted" : false,
+      "relname" : "checkout_attempts"
+    } ],
+    "elapsed_ms" : 773
+  }, {
+    "locks" : [ {
+      "pid" : 106,
+      "application_name" : "tv3_v5_lock_probe",
+      "state" : "active",
+      "wait_event_type" : "Lock",
+      "wait_event" : "relation",
+      "mode" : "ShareRowExclusiveLock",
+      "granted" : false,
+      "relname" : "checkout_attempts"
+    } ],
+    "elapsed_ms" : 799
+  }, {
+    "locks" : [ {
+      "pid" : 106,
+      "application_name" : "tv3_v5_lock_probe",
+      "state" : "active",
+      "wait_event_type" : "Lock",
+      "wait_event" : "relation",
+      "mode" : "ShareRowExclusiveLock",
+      "granted" : false,
+      "relname" : "checkout_attempts"
+    } ],
+    "elapsed_ms" : 825
+  }, {
+    "locks" : [ {
+      "pid" : 106,
+      "application_name" : "tv3_v5_lock_probe",
+      "state" : "active",
+      "wait_event_type" : "Lock",
+      "wait_event" : "relation",
+      "mode" : "ShareRowExclusiveLock",
+      "granted" : false,
+      "relname" : "checkout_attempts"
+    } ],
+    "elapsed_ms" : 852
+  }, {
+    "locks" : [ {
+      "pid" : 106,
+      "application_name" : "tv3_v5_lock_probe",
+      "state" : "active",
+      "wait_event_type" : "Lock",
+      "wait_event" : "relation",
+      "mode" : "ShareRowExclusiveLock",
+      "granted" : false,
+      "relname" : "checkout_attempts"
+    } ],
+    "elapsed_ms" : 878
+  }, {
+    "locks" : [ {
+      "pid" : 106,
+      "application_name" : "tv3_v5_lock_probe",
+      "state" : "active",
+      "wait_event_type" : "Lock",
+      "wait_event" : "relation",
+      "mode" : "ShareRowExclusiveLock",
+      "granted" : false,
+      "relname" : "checkout_attempts"
+    } ],
+    "elapsed_ms" : 904
+  }, {
+    "locks" : [ {
+      "pid" : 106,
+      "application_name" : "tv3_v5_lock_probe",
+      "state" : "active",
+      "wait_event_type" : "Lock",
+      "wait_event" : "relation",
+      "mode" : "ShareRowExclusiveLock",
+      "granted" : false,
+      "relname" : "checkout_attempts"
+    } ],
+    "elapsed_ms" : 930
+  }, {
+    "locks" : [ {
+      "pid" : 106,
+      "application_name" : "tv3_v5_lock_probe",
+      "state" : "active",
+      "wait_event_type" : "Lock",
+      "wait_event" : "relation",
+      "mode" : "ShareRowExclusiveLock",
+      "granted" : false,
+      "relname" : "checkout_attempts"
+    } ],
+    "elapsed_ms" : 957
+  }, {
+    "locks" : [ {
+      "pid" : 106,
+      "application_name" : "tv3_v5_lock_probe",
+      "state" : "active",
+      "wait_event_type" : "Lock",
+      "wait_event" : "relation",
+      "mode" : "ShareRowExclusiveLock",
+      "granted" : false,
+      "relname" : "checkout_attempts"
+    } ],
+    "elapsed_ms" : 986
+  }, {
+    "locks" : [ {
+      "pid" : 106,
+      "application_name" : "tv3_v5_lock_probe",
+      "state" : "active",
+      "wait_event_type" : "Lock",
+      "wait_event" : "relation",
+      "mode" : "ShareRowExclusiveLock",
+      "granted" : false,
+      "relname" : "checkout_attempts"
+    } ],
+    "elapsed_ms" : 1012
+  }, {
+    "locks" : [ {
+      "pid" : 106,
+      "application_name" : "tv3_v5_lock_probe",
+      "state" : "active",
+      "wait_event_type" : "Lock",
+      "wait_event" : "relation",
+      "mode" : "ShareRowExclusiveLock",
+      "granted" : false,
+      "relname" : "checkout_attempts"
+    } ],
+    "elapsed_ms" : 1038
+  }, {
+    "locks" : [ {
+      "pid" : 106,
+      "application_name" : "tv3_v5_lock_probe",
+      "state" : "active",
+      "wait_event_type" : "Lock",
+      "wait_event" : "relation",
+      "mode" : "ShareRowExclusiveLock",
+      "granted" : false,
+      "relname" : "checkout_attempts"
+    } ],
+    "elapsed_ms" : 1064
+  }, {
+    "locks" : [ {
+      "pid" : 106,
+      "application_name" : "tv3_v5_lock_probe",
+      "state" : "active",
+      "wait_event_type" : "Lock",
+      "wait_event" : "relation",
+      "mode" : "ShareRowExclusiveLock",
+      "granted" : false,
+      "relname" : "checkout_attempts"
+    } ],
+    "elapsed_ms" : 1090
+  }, {
+    "locks" : [ {
+      "pid" : 106,
+      "application_name" : "tv3_v5_lock_probe",
+      "state" : "active",
+      "wait_event_type" : "Lock",
+      "wait_event" : "relation",
+      "mode" : "ShareRowExclusiveLock",
+      "granted" : false,
+      "relname" : "checkout_attempts"
+    } ],
+    "elapsed_ms" : 1116
+  }, {
+    "locks" : [ {
+      "pid" : 106,
+      "application_name" : "tv3_v5_lock_probe",
+      "state" : "active",
+      "wait_event_type" : "Lock",
+      "wait_event" : "relation",
+      "mode" : "ShareRowExclusiveLock",
+      "granted" : false,
+      "relname" : "checkout_attempts"
+    } ],
+    "elapsed_ms" : 1142
+  }, {
+    "locks" : [ {
+      "pid" : 106,
+      "application_name" : "tv3_v5_lock_probe",
+      "state" : "active",
+      "wait_event_type" : "Lock",
+      "wait_event" : "relation",
+      "mode" : "ShareRowExclusiveLock",
+      "granted" : false,
+      "relname" : "checkout_attempts"
+    } ],
+    "elapsed_ms" : 1168
+  }, {
+    "locks" : [ {
+      "pid" : 106,
+      "application_name" : "tv3_v5_lock_probe",
+      "state" : "active",
+      "wait_event_type" : "Lock",
+      "wait_event" : "relation",
+      "mode" : "ShareRowExclusiveLock",
+      "granted" : false,
+      "relname" : "checkout_attempts"
+    } ],
+    "elapsed_ms" : 1194
+  }, {
+    "locks" : [ {
+      "pid" : 106,
+      "application_name" : "tv3_v5_lock_probe",
+      "state" : "active",
+      "wait_event_type" : "Lock",
+      "wait_event" : "relation",
+      "mode" : "ShareRowExclusiveLock",
+      "granted" : false,
+      "relname" : "checkout_attempts"
+    } ],
+    "elapsed_ms" : 1221
+  }, {
+    "locks" : [ {
+      "pid" : 106,
+      "application_name" : "tv3_v5_lock_probe",
+      "state" : "active",
+      "wait_event_type" : "Lock",
+      "wait_event" : "relation",
+      "mode" : "ShareRowExclusiveLock",
+      "granted" : false,
+      "relname" : "checkout_attempts"
+    } ],
+    "elapsed_ms" : 1247
+  }, {
+    "locks" : [ {
+      "pid" : 106,
+      "application_name" : "tv3_v5_lock_probe",
+      "state" : "active",
+      "wait_event_type" : "Lock",
+      "wait_event" : "relation",
+      "mode" : "ShareRowExclusiveLock",
+      "granted" : false,
+      "relname" : "checkout_attempts"
+    } ],
+    "elapsed_ms" : 1273
+  }, {
+    "locks" : [ {
+      "pid" : 106,
+      "application_name" : "tv3_v5_lock_probe",
+      "state" : "active",
+      "wait_event_type" : "Lock",
+      "wait_event" : "relation",
+      "mode" : "ShareRowExclusiveLock",
+      "granted" : false,
+      "relname" : "checkout_attempts"
+    } ],
+    "elapsed_ms" : 1299
+  }, {
+    "locks" : [ {
+      "pid" : 106,
+      "application_name" : "tv3_v5_lock_probe",
+      "state" : "active",
+      "wait_event_type" : "Lock",
+      "wait_event" : "relation",
+      "mode" : "ShareRowExclusiveLock",
+      "granted" : false,
+      "relname" : "checkout_attempts"
+    } ],
+    "elapsed_ms" : 1325
+  }, {
+    "locks" : [ {
+      "pid" : 106,
+      "application_name" : "tv3_v5_lock_probe",
+      "state" : "active",
+      "wait_event_type" : "Lock",
+      "wait_event" : "relation",
+      "mode" : "ShareRowExclusiveLock",
+      "granted" : false,
+      "relname" : "checkout_attempts"
+    } ],
+    "elapsed_ms" : 1352
+  }, {
+    "locks" : [ {
+      "pid" : 106,
+      "application_name" : "tv3_v5_lock_probe",
+      "state" : "active",
+      "wait_event_type" : "Lock",
+      "wait_event" : "relation",
+      "mode" : "ShareRowExclusiveLock",
+      "granted" : false,
+      "relname" : "checkout_attempts"
+    } ],
+    "elapsed_ms" : 1379
+  }, {
+    "locks" : [ {
+      "pid" : 106,
+      "application_name" : "tv3_v5_lock_probe",
+      "state" : "active",
+      "wait_event_type" : "Lock",
+      "wait_event" : "relation",
+      "mode" : "ShareRowExclusiveLock",
+      "granted" : false,
+      "relname" : "checkout_attempts"
+    } ],
+    "elapsed_ms" : 1406
+  }, {
+    "locks" : [ {
+      "pid" : 106,
+      "application_name" : "tv3_v5_lock_probe",
+      "state" : "active",
+      "wait_event_type" : "Lock",
+      "wait_event" : "relation",
+      "mode" : "ShareRowExclusiveLock",
+      "granted" : false,
+      "relname" : "checkout_attempts"
+    } ],
+    "elapsed_ms" : 1432
+  }, {
+    "locks" : [ {
+      "pid" : 106,
+      "application_name" : "tv3_v5_lock_probe",
+      "state" : "active",
+      "wait_event_type" : "Lock",
+      "wait_event" : "relation",
+      "mode" : "ShareRowExclusiveLock",
+      "granted" : false,
+      "relname" : "checkout_attempts"
+    } ],
+    "elapsed_ms" : 1458
+  }, {
+    "locks" : [ {
+      "pid" : 106,
+      "application_name" : "tv3_v5_lock_probe",
+      "state" : "active",
+      "wait_event_type" : "Lock",
+      "wait_event" : "relation",
+      "mode" : "ShareRowExclusiveLock",
+      "granted" : false,
+      "relname" : "checkout_attempts"
+    } ],
+    "elapsed_ms" : 1484
+  }, {
+    "locks" : [ {
+      "pid" : 106,
+      "application_name" : "tv3_v5_lock_probe",
+      "state" : "active",
+      "wait_event_type" : "Lock",
+      "wait_event" : "relation",
+      "mode" : "ShareRowExclusiveLock",
+      "granted" : false,
+      "relname" : "checkout_attempts"
+    } ],
+    "elapsed_ms" : 1510
+  }, {
+    "locks" : [ {
+      "pid" : 106,
+      "application_name" : "tv3_v5_lock_probe",
+      "state" : "active",
+      "wait_event_type" : "Lock",
+      "wait_event" : "relation",
+      "mode" : "ShareRowExclusiveLock",
+      "granted" : false,
+      "relname" : "checkout_attempts"
+    } ],
+    "elapsed_ms" : 1536
+  }, {
+    "locks" : [ {
+      "pid" : 106,
+      "application_name" : "tv3_v5_lock_probe",
+      "state" : "active",
+      "wait_event_type" : "Lock",
+      "wait_event" : "relation",
+      "mode" : "ShareRowExclusiveLock",
+      "granted" : false,
+      "relname" : "checkout_attempts"
+    } ],
+    "elapsed_ms" : 1563
+  } ]
+}

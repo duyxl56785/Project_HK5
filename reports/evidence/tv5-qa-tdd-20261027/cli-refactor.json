@@ -1,0 +1,34 @@
+{
+  "kind": "DERIVED offline regression after shared fault-fixture refactor",
+  "command": [
+    "C:/Users/Admin/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "scripts/qa/tests",
+    "-v"
+  ],
+  "startedUtc": "2026-10-27T02:43:02.040518+00:00",
+  "completedUtc": "2026-10-27T02:43:02.388784+00:00",
+  "exitCode": 0,
+  "result": {
+    "PASS": 29,
+    "FAIL": 0,
+    "ERROR": 0,
+    "SKIP": 0
+  },
+  "logPath": ".verification/tv5-preflight-composition-20261027/cli-refactor/runtime.log",
+  "logSHA256": "08081df612470216b8ae675257896eb1d6f7bd7f4121a49aac00aa823090e498",
+  "sourceManifest": [
+    {
+      "path": "scripts\\qa\\pr_review_audit.py",
+      "sha256": "9aa93513895b857abc391b9bdf69b5167a315d9b95b89bf0f54d04ccb50d1b69"
+    },
+    {
+      "path": "scripts\\qa\\tests\\test_pr_review_audit.py",
+      "sha256": "d6e7003ce337593041325fd88915beab2079f4ecbda8f400f435c7743b9c8909"
+    }
+  ],
+  "privateOriginalSummarySHA256": "44034f2688b6727cf884b0bf8dc461ca5a4edf157c4b453f5f0238c520895813"
+}
