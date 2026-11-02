@@ -1,0 +1,13 @@
+{
+  "filesScanned": 35,
+  "literalCredentialPatterns": [
+    "private_key",
+    "github_token",
+    "jwt_value",
+    "authorization_literal",
+    "fixture_shipping_phone"
+  ],
+  "findings": 0,
+  "publicExports": "No DB dumps, tokens, passwords, env files or shipping PII. JUnit system-out/system-err/properties omitted; fixture shipping attributes redacted.",
+  "rawEvidence": "Kept unchanged locally, hash manifest published"
+}

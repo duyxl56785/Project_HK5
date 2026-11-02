@@ -1,0 +1,24 @@
+{
+  "worktreesChecked": 18,
+  "otherWorktreeHeadsAndDirtyStatesPreserved": true,
+  "permittedChanges": [
+    "/workspace/tv3-final-main-145-147",
+    "/workspace/tv3-t1t2-main-integration"
+  ],
+  "candidateClean": true,
+  "demoProject": "tv3-live-145-20261101",
+  "containersPreserved": 15,
+  "idsStartTimesRestartCountsMountSetsUnchanged": true,
+  "mountComparison": "Sorted by Destination; Docker array order is not stable",
+  "all15Running": true,
+  "existingVolumeCount": 16,
+  "allExistingVolumeNamesPreserved": true,
+  "savedRefs": {
+    "refs/tv3-preserved/journal-b903a6d": "b903a6d77a18801766b3695cbc893ef30dd6233e",
+    "refs/tv3-preserved/draft-04876a1": "04876a1858703c3f936cfbb86ee24d8a04d1e729"
+  },
+  "noDemoStartup": true,
+  "noLiveTestExecuted": true,
+  "sharedEnvAndSecretsNotWritten": true,
+  "buildOutputsIsolatedUnderTmp": true
+}
