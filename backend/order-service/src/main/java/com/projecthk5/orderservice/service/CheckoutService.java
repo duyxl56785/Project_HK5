@@ -141,7 +141,7 @@ public class CheckoutService {
                 throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE,
                     "CHECKOUT_OUTCOME_UNKNOWN_RECONCILIATION_REQUIRED",error);
             // shortcut: Inventory stops at the first short SKU, so one line is named; report all of them there to list every line.
-            if (error instanceof InventoryPort.Rejected rejected && rejected.productId()!=null)
+            if (error instanceof InventoryPort.Rejected rejected && "INSUFFICIENT_STOCK".equals(rejected.code()) && rejected.productId()!=null)
                 throw new CheckoutItemsRejected(List.of(new CheckoutItemsRejected.Item(rejected.productId(),CheckoutItemsRejected.Reason.OUT_OF_STOCK)));
             throw error;
         }

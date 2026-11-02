@@ -151,6 +151,15 @@ class CheckoutInventoryBoundaryPostgresIT {
         assertAttempt(CheckoutAttempt.State.FAILED);
     }
 
+    @Test void nonStockRefusalNamingAnSkuKeepsItsOwnCode() {
+        inventoryStatus = 409;
+        inventoryBody = "{\"code\":\"INVALID_QUANTITY\",\"sku\":\"AO-001\"}";
+        InventoryPort.Rejected error = assertThrows(InventoryPort.Rejected.class, this::place);
+        assertEquals("INVALID_QUANTITY", error.code());
+        verify(carts).release("Bearer fixture", key);
+        assertAttempt(CheckoutAttempt.State.FAILED);
+    }
+
     private CheckoutResult place() {
         return checkout.checkout(customer, "Bearer fixture", key, request);
     }

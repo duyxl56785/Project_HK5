@@ -125,6 +125,14 @@ class CheckoutServiceTest {
         verify(cart).release(bearer,key);
         verify(keys).fail(attempt.getId(),false);
     }
+    @Test void inventoryRefusalThatIsNotAboutStockIsNotReportedAsShortStock() {
+        CheckoutAttempt attempt=fresh();catalogAndCart();
+        doThrow(new InventoryPort.Rejected("INVALID_QUANTITY","Inventory rejected RESERVE: INVALID_QUANTITY","p2")).when(inventory).reserve(any(),anyList());
+        InventoryPort.Rejected rejected=assertThrows(InventoryPort.Rejected.class,()->svc.checkout(customer,bearer,key,request));
+        assertEquals("INVALID_QUANTITY",rejected.code());
+        verify(cart).release(bearer,key);
+        verify(keys).fail(attempt.getId(),false);
+    }
     @Test void malformedClaimedCartNullLineReleasesClaimWithoutExternalSideEffects() {
         CheckoutAttempt attempt=fresh();
         List<CartPort.Item> malformed = new ArrayList<>();
