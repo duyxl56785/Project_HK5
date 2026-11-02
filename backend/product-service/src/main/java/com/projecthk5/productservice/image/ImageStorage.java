@@ -8,4 +8,6 @@ public interface ImageStorage {
     record StoredImage(String key, Format format, int size, int width, int height) { }
     StoredImage store(ValidatedImage image);
     byte[] read(String key);
+    /** Removes the stored bytes; an absent key is already removed. */
+    void delete(String key);
 }

@@ -72,6 +72,7 @@ public class ModerationController {
             case "approve" -> application.approve(admin, id, version);
             case "reject" -> application.reject(admin, id, version, req.reason());
             case "suspend" -> application.suspend(admin, id, version, req.reason());
+            case "unsuspend" -> application.unsuspend(admin, id, version);
             default -> throw ApiException.notFound("ROUTE_NOT_FOUND", "Unknown moderation action");
         });
     }

@@ -101,6 +101,25 @@ class ProductApplicationServiceIntegrationTest {
         assertEquals("Policy issue", jdbc.queryForObject("SELECT review_reason FROM products WHERE id=?", String.class, current.listing().id()));
     }
 
+    @Test void sellingProductKeepsSellingOnPriceChangeAndReturnsThroughEveryExit() {
+        StoredProduct current = create("Live-Edit");
+        current = service.submit(OWNER_A, current.listing().id(), current.version());
+        current = service.approve(ADMIN, current.listing().id(), current.version());
+        current = service.edit(OWNER_A, current.listing().id(), current.version(), CATEGORY, current.listing().name(), new BigDecimal("9.00"), "VND");
+        assertEquals(ProductStatus.ACTIVE, current.listing().status());
+        assertEquals(new BigDecimal("9.00"), current.listing().unitPrice());
+        current = service.edit(OWNER_A, current.listing().id(), current.version(), CATEGORY, "Renamed", new BigDecimal("9.00"), "VND");
+        assertEquals(ProductStatus.PENDING_REVIEW, current.listing().status());
+        current = service.approve(ADMIN, current.listing().id(), current.version());
+        current = service.deactivate(OWNER_A, current.listing().id(), current.version());
+        current = service.activate(OWNER_A, current.listing().id(), current.version());
+        assertEquals(ProductStatus.ACTIVE, current.listing().status());
+        current = service.suspend(ADMIN, current.listing().id(), current.version(), "Policy");
+        current = service.unsuspend(ADMIN, current.listing().id(), current.version());
+        assertEquals(ProductStatus.ACTIVE, current.listing().status());
+        assertNull(jdbc.queryForObject("SELECT review_reason FROM products WHERE id=?", String.class, current.listing().id()));
+    }
+
     @ParameterizedTest
     @ValueSource(strings = {"create", "edit", "submit", "approve", "reject", "suspend", "deactivate", "read"})
     void crossSellerAndUnprivilegedActorCannotReadOrWrite(String command) {
@@ -128,7 +147,7 @@ class ProductApplicationServiceIntegrationTest {
         StoredProduct current = create("invalid-state");
         if (Set.of("edit", "submit").contains(command)) {
             current = service.submit(OWNER_A, current.listing().id(), current.version());
-            current = service.approve(ADMIN, current.listing().id(), current.version());
+            if (command.equals("submit")) current = service.approve(ADMIN, current.listing().id(), current.version());
         }
         StoredProduct original = current;
         String actor = Set.of("approve", "reject", "suspend").contains(command) ? ADMIN : OWNER_A;
