@@ -25,7 +25,7 @@ Trạng thái theo PR #135, xác minh ngày 30/10/2026 trên stack Docker thật
 | F14 | Thông báo trong ứng dụng; outbox; có DLT | PASS | Outbox Order đẩy Kafka, Notification tiêu thụ idempotent, bản ghi lỗi vào `.dlt`. `OrderEventKafkaIT` và `smoke-platform.mjs`: Kafka tắt vẫn đặt được đơn, thông báo đến sau khi Kafka bật lại |
 | F15 | Đánh giá đã mua; ẩn/hiện; HIDDEN không tính điểm | PASS | Quyền đánh giá mở từ event DELIVERED trên `seller-order.status-changed.v1`, lưu `reviewable_items`. Smoke: bị từ chối trước khi giao, mở sau khi giao |
 | F16 | Doanh thu, phí 5%, đối soát | PASS | E2E: thanh toán 142.500 ₫, tài chính sàn và cửa hàng khớp |
-| F17 | Giao diện sàn, ảnh sản phẩm | PARTIAL | Giao diện Soopi: header tìm kiếm có gợi ý từ khóa, banner, ô danh mục, kệ sản phẩm, trang cửa hàng, Mua ngay; seed 24 sản phẩm có ảnh, kiểm 375px. Ảnh seed là ảnh vẽ tạm. Playwright chạy trên stack thật |
+| F17 | Giao diện sàn, ảnh sản phẩm | PARTIAL | Giao diện Soopi: header tìm kiếm có gợi ý từ khóa, banner, ô danh mục, kệ sản phẩm, trang cửa hàng, Mua ngay; seed 24 sản phẩm có ảnh, kiểm 375px. Ảnh seed là ảnh thật, nguồn ghi ở `scripts/demo/images/CREDITS.md`. Playwright chạy trên stack thật |
 
 ## Khác với thiết kế kiến trúc
 
