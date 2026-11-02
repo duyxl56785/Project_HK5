@@ -3,6 +3,7 @@
 **FIXED_VERIFIED cho source/regression; BLOCKED_OWNER cho acceptance local cuối.** Lượt cập nhật này thay trạng thái “WAITING_OWNER_ACCEPTANCE” của patch production trong snapshot trước. Không cần gửi lại hoặc áp lại patch cũ.
 
 - Main: `d446577d2f9268f2212a4ee214ff3d805ee7a1d9`.
+- Sau regression, main cập nhật `bf34af645d0e244775fc7c0edd3b73bff1a187da` bằng #141, chỉ đổi CODEOWNERS/CONTRIBUTING/OWNERSHIP để chuyển phạm vi TV1 sang TV2. Đã merge thường main này vào nhánh TV3 tại `ee5de3fa86cccfab2ceb1c572de6125bc9feea90`; không đổi source/test/runtime input nên không chạy lại build. Xem `main-docs-sync.json`.
 - PR #147: **`44426859cbcdcd6dd9ba0d5ce6f84f91a317256d`**, tree **`20ca9d7212bc6d03e43cc9e14c42f654b7b8c728`**.
 - TV2 merge #145 `81ad9f7` tại `ec91506`, sau đó commit `4442685` tiếp nhận hardening ba file của TV3. Chỉ fetch/read branch TV2, không push/sửa/merge branch đó.
 - Worktree detached mới: `/workspace/tv3-owner-147-44426859`, sạch trước/sau; source không chỉnh sửa.
@@ -48,7 +49,7 @@ Không khởi động demo, bật flags, dùng production/shared DB, tạo fault
 | TV2 / maintainer | **P1 production đã tích hợp.** Chọn quy trình merge #145/#147 và review cuối; cấp project/ports/HEAD/fixtures cho stack local tách biệt. Không tự merge hoặc resolve REQUEST_CHANGES/thread. |
 | TV4 | Xác nhận definitive no-movement errors, operation ownership/authority, UNKNOWN reconciliation và fault fixtures/receipts thật; RELEASE/CONSUME không bị TV3 thay semantics. |
 | TV5 + TV2 / DB owner | Retention/PII của successful drafts, grants/backup/purge/runbook production và UAT; cung cấp fault evidence cho hai UNKNOWN. Không tự thêm TTL hoặc retry/release. |
-| TV1 | Current-authority/revoke đối đầu business write thật và provisioning các gated tests; Gateway/Auth không bị sửa trong lượt này. |
+| TV2, nhận phạm vi cũ TV1 theo #141 | Current-authority/revoke đối đầu business write thật và provisioning các gated tests; Gateway/Auth không bị sửa trong lượt này. PR Auth/Gateway do TV2 viết vẫn cần thành viên khác review. |
 
 Không có source fix mới cần đưa cho TV2 sau `44426859`. TV3 chỉ publish cập nhật test acceptance và evidence vào #145; không mở PR mới hoặc approve/merge thay owner. Không tuyên bố Checkout/website/Finance production DONE.
 
