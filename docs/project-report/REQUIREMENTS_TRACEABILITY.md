@@ -60,9 +60,9 @@ Trạng thái theo PR #135, xác minh ngày 30/10/2026 trên stack Docker thật
 
 ## Chạy thử UAT, 01/11/2026
 
-Chạy thử bằng API qua Gateway trên clone sạch main `5280ac7`, hai gate bật cục bộ, DB mới, script thủ công ngoài repo. Đây là bằng chứng thử, không thay UAT chính thức #18.
+Chạy thử bằng API qua Gateway trên clone sạch main `5280ac7`, hai gate bật cục bộ, DB mới, script thủ công ngoài repo. Toàn bộ mục này là ghi nhận của TV2, trạng thái `NOT_VERIFIED`: script, lệnh, log gốc và ánh xạ từng ca không được lưu, nên không ai kiểm lại được số liệu. Không dùng làm bằng chứng QA PASS và không thay UAT chính thức #18.
 
-**54 PASS, 5 FAIL trong lượt chính.** Sau khi xét từng FAIL: 2 FAIL là hai dòng đầu bảng trên, 1 FAIL là dòng overallStatus, 1 FAIL do #138 chưa merge, 1 FAIL do script đọc sai số đơn (`size=100` không trả danh sách) nên kiểm tra số đơn sau replay được chạy lại riêng.
+**TV2 ghi nhận 54 PASS, 5 FAIL trong lượt chính.** Sau khi xét từng FAIL: 2 FAIL là hai dòng đầu bảng trên, 1 FAIL là dòng overallStatus, 1 FAIL do #138 chưa merge, 1 FAIL do script đọc sai số đơn (`size=100` không trả danh sách) nên kiểm tra số đơn sau replay được chạy lại riêng.
 
 | Tình huống | Kết quả |
 | --- | --- |

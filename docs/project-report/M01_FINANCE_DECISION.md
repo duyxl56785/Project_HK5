@@ -29,4 +29,4 @@ Các lựa chọn này được chốt cùng lúc, cùng một phiên bản. Mu�
 | --- | --- |
 | MD11 | Bản nộp không vận hành cửa hàng của sàn. Mọi cửa hàng hiện có thu phí 5% vì `StoreController` luôn trả `houseStore=false`. Luật 0% ở MD04 giữ trong `FinanceRules` nhưng chưa có cửa hàng nào dùng. Không thêm API Admin xử lý đơn thay người bán hay gắn ảnh riêng cho cửa hàng của sàn. |
 
-MD11 làm rõ phạm vi của MD04, không đổi cách tính phí hay dữ liệu đã có. Người quyết định: `duyxl56785`.
+MD11 làm rõ phạm vi của MD04 cho bản nộp và demo local, không đổi cách tính phí hay dữ liệu đã có. MD11 không thay thế MD01–MD10 và không cho phép bật Finance, COD hay đối soát trên production. Người quyết định: `duyxl56785`.
