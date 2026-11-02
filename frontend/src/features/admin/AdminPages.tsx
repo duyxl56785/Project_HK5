@@ -66,7 +66,7 @@ export function AdminSellersPage() {
     <h1>Duyệt người bán</h1>
     <StatusFilter value={status} options={['PENDING_REVIEW', 'APPROVED', 'REJECTED', 'SUSPENDED']} onChange={setStatus} allLabel="Tất cả" />
     <ErrorNote error={moderate.error} />
-    <Loaded query={list} empty={(rows) => rows.length === 0}>{(rows) => <table className="table">
+    <Loaded query={list} empty={(rows) => rows.length === 0}>{(rows) => <table className="table" tabIndex={0}>
       <thead><tr><th>Tài khoản</th><th>Hồ sơ</th><th>Cửa hàng</th><th>Trạng thái</th><th>Thao tác</th></tr></thead>
       <tbody>{rows.map((row) => <tr key={row.id}>
         <td><code>{row.ownerReference}</code></td>
@@ -95,7 +95,7 @@ export function AdminProductsPage() {
     <h1>Duyệt sản phẩm</h1>
     <StatusFilter value={status} options={['PENDING_REVIEW', 'ACTIVE', 'REJECTED', 'SUSPENDED', 'INACTIVE', 'DRAFT']} onChange={setStatus} />
     <ErrorNote error={moderate.error} />
-    <Loaded query={list} empty={(rows) => rows.length === 0}>{(rows) => <table className="table">
+    <Loaded query={list} empty={(rows) => rows.length === 0}>{(rows) => <table className="table" tabIndex={0}>
       <thead><tr><th>Sản phẩm</th><th>Cửa hàng</th><th>Giá</th><th>Thao tác</th></tr></thead>
       <tbody>{rows.map(({ product, storeName, reviewReason }) => <tr key={product.id}>
         <td>{product.name} <small className="muted">{product.sku}</small>{reviewReason && <small className="muted"> — {reviewReason}</small>}</td>
@@ -128,7 +128,7 @@ export function AdminCategoriesPage() {
       {form.formState.errors.name && <small className="field__error" role="alert">{form.formState.errors.name.message}</small>}
     </form>
     <ErrorNote error={create.error ?? rename.error ?? remove.error} />
-    <Loaded query={categories} empty={(rows) => rows.length === 0}>{(rows) => <table className="table">
+    <Loaded query={categories} empty={(rows) => rows.length === 0}>{(rows) => <table className="table" tabIndex={0}>
       <thead><tr><th>Tên</th><th>Slug</th><th>Danh mục cha</th><th>Trạng thái</th><th>Thao tác</th></tr></thead>
       <tbody>{rows.map((c) => <tr key={c.id} className={c.status === 'HIDDEN' ? 'muted' : ''}>
         <td><input aria-label={`Tên ${c.name}`} defaultValue={c.name} maxLength={255} onBlur={(e) => {
@@ -157,7 +157,7 @@ export function AdminReviewsPage() {
   return <div className="stack">
     <h1>Đánh giá</h1>
     <ErrorNote error={toggle.error} />
-    <Loaded query={list} empty={(rows) => rows.length === 0}>{(rows) => <table className="table">
+    <Loaded query={list} empty={(rows) => rows.length === 0}>{(rows) => <table className="table" tabIndex={0}>
       <thead><tr><th>Sản phẩm</th><th>Sao</th><th>Nội dung</th><th>Thời gian</th><th>Thao tác</th></tr></thead>
       <tbody>{rows.map((r) => <tr key={r.id} className={r.hidden ? 'muted' : ''}>
         <td>{r.productName}</td><td>{r.rating}</td><td>{r.comment}</td><td>{dateTime(r.createdAt)}</td>
@@ -183,7 +183,7 @@ export function AdminAccountsPage() {
     <h1>Tài khoản</h1>
     <input aria-label="Tìm theo email" placeholder="Tìm theo email" maxLength={254} value={term} onChange={(e) => setTerm(e.target.value)} />
     <ErrorNote error={act.error} />
-    <Loaded query={list} empty={(rows) => rows.length === 0}>{(rows) => <table className="table">
+    <Loaded query={list} empty={(rows) => rows.length === 0}>{(rows) => <table className="table" tabIndex={0}>
       <thead><tr><th>Email</th><th>Vai trò</th><th>Trạng thái</th><th>Tạo lúc</th><th>Thao tác</th></tr></thead>
       <tbody>{rows.map((r) => <tr key={r.id} className={r.status === 'ACTIVE' ? '' : 'muted'}>
         <td>{r.email}</td><td>{r.roles.join(', ')}</td><td>{r.status === 'ACTIVE' ? 'Hoạt động' : 'Đã khóa'}</td><td>{dateTime(r.createdAt)}</td>
@@ -202,7 +202,7 @@ export function AdminOrdersPage() {
     <h1>Đối soát COD</h1>
     <StatusFilter value={cod} options={['PENDING', 'COLLECTED', 'VOID']} onChange={setCod} allLabel="Tất cả" />
     <ErrorNote error={act.error} />
-    <Loaded query={list} empty={(rows) => rows.length === 0}>{(rows) => <table className="table">
+    <Loaded query={list} empty={(rows) => rows.length === 0}>{(rows) => <table className="table" tabIndex={0}>
       <thead><tr><th>Đơn</th><th>Cửa hàng</th><th>Trạng thái</th><th>COD</th><th>Số tiền</th><th>Thao tác</th></tr></thead>
       <tbody>{rows.map((o) => <tr key={o.id}>
         <td>#{shortId(o.orderId)}</td><td>{o.storeName ?? o.storeId}</td><td><Badge value={o.status} /></td><td><Badge value={o.codStatus} /></td><td>{money(o.gross)}</td>
@@ -224,7 +224,7 @@ export function AdminFinancePage() {
     <h1>Tài chính sàn</h1>
     <Loaded query={report}>{(data) => <>
       <TotalsGrid totals={data.totals} />
-      {data.stores.length > 0 && <table className="table">
+      {data.stores.length > 0 && <table className="table" tabIndex={0}>
         <thead><tr><th>Cửa hàng</th><th>Đơn</th><th>Doanh thu</th><th>Phí sàn</th><th>COD chờ thu</th><th>Còn phải trả</th></tr></thead>
         <tbody>{data.stores.map((s) => <tr key={s.storeId}>
           <td>{s.storeName ?? s.storeId}</td><td>{s.totals.deliveredOrders}</td><td>{money(s.totals.gross)}</td>

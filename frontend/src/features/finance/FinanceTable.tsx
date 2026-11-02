@@ -22,7 +22,7 @@ export function TotalsGrid({ totals }: { readonly totals: Totals }) {
 export function FinanceTable({ summary }: { readonly summary: StoreSummary }) {
   return <div className="stack">
     <TotalsGrid totals={summary.totals} />
-    {summary.rows.length > 0 && <table className="table">
+    {summary.rows.length > 0 && <table className="table" tabIndex={0}>
       <thead><tr><th>Đơn</th><th>Giao lúc</th><th>Doanh thu</th><th>Phí sàn</th><th>Thực nhận</th><th>COD</th><th>Thanh toán</th></tr></thead>
       <tbody>{summary.rows.map((r) => <tr key={r.storeOrderId}>
         <td>#{shortId(r.orderId)}</td><td>{dateTime(r.deliveredAt)}</td><td>{money(r.gross)}</td><td>{money(r.platformFee)}</td>
