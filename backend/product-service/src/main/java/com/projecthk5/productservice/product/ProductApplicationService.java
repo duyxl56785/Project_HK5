@@ -40,6 +40,12 @@ public class ProductApplicationService {
                 (domain, current) -> domain.edit(actor, current, categoryId, name, price, currency));
     }
 
+    public StoredProduct edit(String actor, UUID id, long expectedVersion, UUID categoryId, String name,
+                              BigDecimal price, String currency, boolean descriptionChanged) {
+        return change(actor, id, expectedVersion, true,
+                (domain, current) -> domain.edit(actor, current, categoryId, name, price, currency, descriptionChanged));
+    }
+
     public StoredProduct submit(String actor, UUID id, long expectedVersion) {
         return change(actor, id, expectedVersion, true, (domain, current) -> domain.submit(actor, current));
     }
@@ -54,6 +60,19 @@ public class ProductApplicationService {
 
     public StoredProduct suspend(String actor, UUID id, long expectedVersion, String reason) {
         return change(actor, id, expectedVersion, false, (domain, current) -> domain.suspend(actor, current, reason));
+    }
+
+    public StoredProduct changeImages(String actor, UUID id, long expectedVersion) {
+        return change(actor, id, expectedVersion, true, (domain, current) -> domain.changeImages(actor, current),
+                persistence::updateContent);
+    }
+
+    public StoredProduct unsuspend(String actor, UUID id, long expectedVersion) {
+        return change(actor, id, expectedVersion, false, (domain, current) -> domain.unsuspend(actor, current));
+    }
+
+    public StoredProduct activate(String actor, UUID id, long expectedVersion) {
+        return change(actor, id, expectedVersion, true, (domain, current) -> domain.activate(actor, current));
     }
 
     public StoredProduct deactivate(String actor, UUID id, long expectedVersion) {
@@ -80,6 +99,12 @@ public class ProductApplicationService {
 
     private StoredProduct change(String actor, UUID id, long expectedVersion, boolean ownerManagement,
                                  BiFunction<ProductLifecycleService, ProductListing, ProductListing> transition) {
+        return change(actor, id, expectedVersion, ownerManagement, transition, persistence::update);
+    }
+
+    private StoredProduct change(String actor, UUID id, long expectedVersion, boolean ownerManagement,
+                                 BiFunction<ProductLifecycleService, ProductListing, ProductListing> transition,
+                                 BiFunction<ProductListing, Long, StoredProduct> write) {
         if (expectedVersion < 0) throw invalid("A nonnegative expected version is required");
         ProductAccessPolicy policy = policy(actor);
         ProductLifecycleService domain = new ProductLifecycleService(policy, categories);
@@ -90,7 +115,7 @@ public class ProductApplicationService {
             throw new ProductPersistenceException(ProductPersistenceException.Code.STALE_VERSION,
                     "Product changed since it was read");
         }
-        return persistence.update(next, expectedVersion);
+        return write.apply(next, expectedVersion);
     }
 
     private StoredProduct current(UUID id) {

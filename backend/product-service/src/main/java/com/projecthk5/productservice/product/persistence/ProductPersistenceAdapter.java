@@ -6,6 +6,7 @@ import com.projecthk5.productservice.product.ProductOwnerQuery;
 import com.projecthk5.productservice.product.ProductRuleException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.LockModeType;
 import jakarta.persistence.PersistenceException;
 import java.util.Optional;
 import java.util.UUID;
@@ -90,6 +91,15 @@ public class ProductPersistenceAdapter {
     }
 
     public StoredProduct update(ProductListing listing, long expectedVersion) {
+        return update(listing, expectedVersion, false);
+    }
+
+    /** For content stored beside the row: no column changes, yet edit and submit snapshots of it must go stale. */
+    public StoredProduct updateContent(ProductListing listing, long expectedVersion) {
+        return update(listing, expectedVersion, true);
+    }
+
+    private StoredProduct update(ProductListing listing, long expectedVersion, boolean forceVersion) {
         require(listing != null && expectedVersion >= 0, "Product and nonnegative version are required");
         try {
             ProductEntity entity = repository.findById(listing.id()).orElseThrow(() ->
@@ -102,7 +112,12 @@ public class ProductPersistenceAdapter {
             }
             entity.apply(listing);
             // Flush inside REQUIRED so constraints/version failures roll back the caller's transaction too.
-            return stored(repository.saveAndFlush(entity));
+            ProductEntity saved = repository.saveAndFlush(entity);
+            if (forceVersion) {
+                entityManager.lock(saved, LockModeType.PESSIMISTIC_FORCE_INCREMENT);
+                entityManager.flush();
+            }
+            return stored(saved);
         } catch (EntityNotFoundException failure) {
             throw new ProductPersistenceException(ProductPersistenceException.Code.NOT_FOUND,
                     "Product was not found", failure);

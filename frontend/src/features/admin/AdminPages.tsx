@@ -83,6 +83,7 @@ interface ProductRow { readonly product: Product; readonly storeName: string; re
 const PRODUCT_ACTIONS: Record<string, { action: string; label: string }[]> = {
   PENDING_REVIEW: [{ action: 'approve', label: 'Duyệt' }, { action: 'reject', label: 'Từ chối' }],
   ACTIVE: [{ action: 'suspend', label: 'Đình chỉ' }],
+  SUSPENDED: [{ action: 'unsuspend', label: 'Mở lại' }],
 };
 
 export function AdminProductsPage() {
@@ -146,12 +147,13 @@ export function AdminCategoriesPage() {
 
 interface ReviewRow {
   readonly id: string; readonly productName: string | null; readonly rating: number; readonly comment: string | null;
-  readonly hidden: boolean; readonly createdAt: string;
+  readonly hidden: boolean; readonly hiddenReason: string | null; readonly createdAt: string;
 }
 
 export function AdminReviewsPage() {
   const list = useQuery({ queryKey: ['admin-reviews'], queryFn: () => api<ReviewRow[]>('/api/admin/reviews') });
-  const toggle = useAction((row: ReviewRow) => api(`/api/admin/reviews/${row.id}/${row.hidden ? 'show' : 'hide'}`, { method: 'POST' }), ['admin-reviews']);
+  const toggle = useAction(({ row, action, reason }: { row: ReviewRow; action: string; reason: string }) =>
+    api(`/api/admin/reviews/${row.id}/${action}`, { method: 'POST', body: action === 'hide' ? { reason } : undefined }), ['admin-reviews']);
   return <div className="stack">
     <h1>Đánh giá</h1>
     <ErrorNote error={toggle.error} />
@@ -159,7 +161,9 @@ export function AdminReviewsPage() {
       <thead><tr><th>Sản phẩm</th><th>Sao</th><th>Nội dung</th><th>Thời gian</th><th>Thao tác</th></tr></thead>
       <tbody>{rows.map((r) => <tr key={r.id} className={r.hidden ? 'muted' : ''}>
         <td>{r.productName}</td><td>{r.rating}</td><td>{r.comment}</td><td>{dateTime(r.createdAt)}</td>
-        <td><button type="button" className="btn" disabled={toggle.isPending} onClick={() => toggle.mutate(r)}>{r.hidden ? 'Hiện' : 'Ẩn'}</button></td>
+        <td>{r.hiddenReason && <small>Lý do ẩn: {r.hiddenReason}</small>}
+          <Moderate actions={[r.hidden ? { action: 'show', label: 'Hiện' } : { action: 'hide', label: 'Ẩn' }]} needsReason={['hide']}
+            busy={toggle.isPending} run={(action, reason) => toggle.mutate({ row: r, action, reason })} /></td>
       </tr>)}</tbody></table>}</Loaded>
   </div>;
 }

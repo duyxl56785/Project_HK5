@@ -110,6 +110,22 @@ public final class LocalFileSystemImageStorage implements ImageStorage {
         }
     }
 
+    @Override
+    public void delete(String key) {
+        if (key == null || !KEY.matcher(key).matches()) throw failure(INVALID_KEY);
+        checkRoot();
+        Path directory = root.resolve(key);
+        try {
+            checkOwnedDirectory(directory, directory(directory));
+            Files.deleteIfExists(directory.resolve("content"));
+            Files.delete(directory); // Never recursive: anything unexpected inside stays and fails here.
+        } catch (NoSuchFileException absent) {
+            // Already removed.
+        } catch (IOException | SecurityException io) {
+            throw failure(IO_FAILURE);
+        }
+    }
+
     private void checkRoot() {
         try {
             checkAncestors(root);

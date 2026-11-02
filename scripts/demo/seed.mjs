@@ -79,22 +79,24 @@ async function category(admin, name) {
 }
 
 async function image(token, id, sku) {
-  const { images } = await must(`/api/seller/products/${id}`, { token });
-  if (images.length > 0) return;
+  const { images, product: current } = await must(`/api/seller/products/${id}`, { token });
+  if (images.length > 0 || current.status === 'ACTIVE') return current.version;
   const form = new FormData();
+  form.append('expectedVersion', current.version);
   form.append('files', new Blob([readFileSync(resolve(import.meta.dirname, 'images', `${sku}.jpg`))], { type: 'image/jpeg' }), `${sku}.jpg`);
   const response = await fetch(`${gateway}/api/seller/products/${id}/images`, {
     method: 'POST', headers: { Origin: origin, 'X-CSRF-Protection': '1', Authorization: `Bearer ${token}` }, body: form,
   });
   if (!response.ok) throw new Error(`upload ${sku} -> ${response.status} ${await response.text()}`);
+  return (await response.json()).product.version;
 }
 
 async function product(token, admin, categoryId, item) {
   const existing = (await must(`/api/seller/products?size=100&term=${encodeURIComponent(item.sku)}`, { token })).products.find((p) => p.sku === item.sku);
   if (existing) return image(token, existing.id, item.sku);
   const { product: created } = await must('/api/seller/products', { token, method: 'POST', body: { ...item, categoryId, initialStock: 50 } });
-  await image(token, created.id, item.sku);
-  const submitted = await must(`/api/seller/products/${created.id}/submit`, { token, method: 'POST', body: { expectedVersion: created.version } });
+  const imaged = await image(token, created.id, item.sku);
+  const submitted = await must(`/api/seller/products/${created.id}/submit`, { token, method: 'POST', body: { expectedVersion: imaged } });
   const version = (submitted.product ?? submitted).version;
   await must(`/api/admin/products/${created.id}/approve`, { token: admin, method: 'POST', body: { expectedVersion: version, reason: 'Seed data' } });
 }
