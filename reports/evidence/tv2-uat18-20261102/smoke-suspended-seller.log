@@ -1,0 +1,37 @@
+PASS set stock -> 200
+PASS accept before suspension -> 200
+PASS suspend -> 200
+PASS new token keeps SELLER -> true
+PASS old token: accept refused -> 403
+PASS old token: finance refused -> 403
+PASS old token: stock refused -> 403
+PASS old token: Store write refused -> 403
+PASS new token: accept refused -> 403
+PASS new token: finance refused -> 403
+PASS new token: stock refused -> 403
+PASS new token: Store write refused -> 403
+PASS old token: order hides the fee -> null
+PASS old token: order keeps the amount to collect -> true
+PASS old token: reject pending -> 200
+PASS new token: prepare accepted -> 200
+PASS other Store cannot act -> 404
+PASS reinstate -> 200
+PASS reinstated: accept -> 200
+PASS reinstated: finance -> 200
+PASS old token after reinstate: finance -> 200
+PASS accept: suspend while the write waits -> 200
+PASS accept: role sync done first -> true
+PASS accept: write stopped -> 401
+PASS accept: nothing committed -> true
+PASS accept: reinstate -> 200
+PASS Product: suspend while the write waits -> 200
+PASS Product: role sync done first -> true
+PASS Product: write stopped -> 401
+PASS Product: nothing committed -> true
+PASS Product: reinstate -> 200
+PASS Store: suspension waits for the write -> APPROVED
+PASS Store: write finished first -> 200
+PASS Store: then the suspension -> 200
+PASS Store: reinstate -> 200
+PASS Store: reopen -> 200
+FAILS=0

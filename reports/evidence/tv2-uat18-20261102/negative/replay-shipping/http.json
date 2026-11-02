@@ -1,0 +1,33 @@
+[
+  {
+    "method": "GET",
+    "path": "/api/cart",
+    "status": 200
+  },
+  {
+    "method": "POST",
+    "path": "/api/orders",
+    "status": 409,
+    "keySha256": "6c272bdab7e2acd13df7ab023d19dd66a969a08cf182216bc564f217860ecf7e",
+    "expectedItems": [
+      {
+        "productId": "78350375-dea6-4faa-b389-424e82a5d7fd",
+        "quantity": 1
+      },
+      {
+        "productId": "960af141-0d41-4499-b3a1-75bb674148b3",
+        "quantity": 1
+      }
+    ],
+    "expectedRevision": 13,
+    "error": {
+      "code": "REQUEST_REJECTED",
+      "message": "IDEMPOTENCY_PAYLOAD_MISMATCH"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/cart",
+    "status": 200
+  }
+]

@@ -1,0 +1,9 @@
+order-service 0
+inventory-service 0
+cart-service 0
+product-service 2
+auth-service 0
+seller-service 25
+user-service 0
+notification-service 9
+api-gateway 342

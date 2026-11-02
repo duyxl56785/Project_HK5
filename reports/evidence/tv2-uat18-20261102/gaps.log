@@ -1,0 +1,64 @@
+PASS SETUP register C2 [201] -> true
+PASS F01 set price 100000 keeps product sellable [[200,"ACTIVE"]] -> true
+PASS F01 gross/fee/net -> [100000,5000,95000]
+PASS R02 review before delivery refused -> 409
+PASS R02 other buyer refused -> 403
+PASS R02 product outside order refused -> 409
+PASS R02 stars 0 refused -> 400
+PASS R02 stars 6 refused -> 400
+PASS R02 DB has no review after refusals -> 0
+PASS R01 buyer reviews delivered product, 5 stars -> [201,"dcdd952b-f04c-4886-86ee-e9a62f16ea7b","a44344da-d0e0-4ca5-ace3-a78939d7e995",5]
+PASS R01 buyer reviews delivered product, 1 star -> [201,1]
+PASS R01 rating count grew by 2 -> 2
+PASS R02 second review on same order and product refused -> 409
+PASS R03 concurrent reviews: one wins -> [201,409]
+PASS R03 DB has one row -> 1
+PASS R05 no visible review maps to count 0 -> 0
+PASS R05 one 1-star review -> [1,1]
+PASS R04 Seller cannot hide -> 403
+PASS R04 Customer cannot hide -> 403
+PASS R06 hide without reason refused -> 400
+PASS R06 reason over 500 refused -> 400
+PASS R04 Admin hides -> 200
+PASS R05 hidden drops from count -> 0
+PASS R04 hide replay keeps count -> [true,0]
+PASS R04 Admin shows -> 200
+PASS R05 show restores count and average -> [1,1]
+PASS R06 comment over 2000 refused -> 400
+FAIL R06 comment of 1001 refused (TV5_UAT.md limit 1000) -> 201 (expected 400)
+PASS F03 F/F/F settle refused -> 409
+PASS F03 COD before delivery refused, so F/T/* is unreachable -> 409
+PASS F03 T/F/F settle refused -> 409
+PASS F03 Seller cannot record COD -> 403
+PASS F03 Seller cannot settle -> 403
+PASS F03 COD collected -> 200
+PASS F03 T/T/F eligible, exactly one settles -> 1
+PASS F04 concurrent settle: others refused -> 4
+PASS F03 T/T/T settle refused -> 409
+PASS F04 money moved once -> 256500
+PASS F04 retry after restart refused -> 409
+PASS F04 settledAt and total durable after restart -> [1793638117358,256500]
+PASS F05 Seller A cannot read Store B order [404] -> true
+PASS F05 Seller A cannot act on Store B order [404] -> true
+PASS F05 Seller A list has no Store B row [13] -> true
+PASS F05 Seller A finance has no Store B row [8] -> true
+PASS F05 Seller cannot read platform finance -> 403
+PASS C01 C2 cannot read C order [404] -> true
+PASS C02 last unit: one checkout wins -> [200,409]
+PASS C02 stock not negative -> [0,1]
+PASS C03 held 2 -> 43
+PASS C03 cancel -> 200
+PASS C03 cancel replay refused -> 409
+PASS C03 released once -> [45,0]
+PASS C03 cancelled order cannot be settled -> 409
+PASS C03 cancelled order cannot record COD -> 409
+PASS C03 Seller rejects -> 200
+PASS C03 reject replay refused -> 409
+PASS C03 reject released once -> [45,0]
+PASS A01 no token -> 401
+PASS A01 fake token -> 401
+PASS A01 wrong role -> 403
+PASS A01 Gateway does not route /internal -> 404
+PASS A01 site serves the SPA shell for /internal, no product data [200] -> true
+PASS OPS no dead outbox rows -> [200,0]
+62 PASS, 1 FAIL

@@ -1,0 +1,20 @@
+{
+  "customerId": "9ed0d857-c0e8-4d3b-8de8-dd15ea879cac",
+  "lines": [
+    {
+      "productId": "960af141-0d41-4499-b3a1-75bb674148b3",
+      "sku": "TV3-NEG-20a3b5f9-A",
+      "storeId": "31fa32f2-2705-48c4-a65f-248cf3ef911e"
+    },
+    {
+      "productId": "78350375-dea6-4faa-b389-424e82a5d7fd",
+      "sku": "TV3-NEG-20a3b5f9-B",
+      "storeId": "3c6c6fd7-f620-4364-9c1d-3343f16169d2"
+    }
+  ],
+  "baselineOrderId": "b6c1af18-d8ff-43ac-9928-ea72380105ea",
+  "originalKeySha256": "6c272bdab7e2acd13df7ab023d19dd66a969a08cf182216bc564f217860ecf7e",
+  "sourceHead": "052388c84f378ee90732de5b37f7c7bef6fcc64f",
+  "deployedApplicationHead": "052388c84f378ee90732de5b37f7c7bef6fcc64f",
+  "mockedNetwork": false
+}

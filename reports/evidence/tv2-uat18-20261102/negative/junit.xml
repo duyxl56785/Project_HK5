@@ -1,0 +1,16 @@
+<testsuites id="" name="" tests="6" failures="0" skipped="0" errors="0" time="27.367493">
+<testsuite name="negative.live.spec.mjs" timestamp="2026-11-02T16:45:22.848Z" hostname="" tests="6" failures="0" skipped="0" time="21.759" errors="0">
+<testcase name="replay-body same key with changed expectedItems rejects without effects" classname="negative.live.spec.mjs" time="3.47">
+</testcase>
+<testcase name="replay-shipping same key with changed shipping rejects without effects" classname="negative.live.spec.mjs" time="3.344">
+</testcase>
+<testcase name="expected-items mismatch rejects before Inventory" classname="negative.live.spec.mjs" time="3.616">
+</testcase>
+<testcase name="catalog-price changed since Cart rejects before Inventory" classname="negative.live.spec.mjs" time="3.836">
+</testcase>
+<testcase name="insufficient-stock two Store batch rejects without partial reservation" classname="negative.live.spec.mjs" time="3.858">
+</testcase>
+<testcase name="product-inactive one unsellable Store line rejects the whole Checkout" classname="negative.live.spec.mjs" time="3.635">
+</testcase>
+</testsuite>
+</testsuites>

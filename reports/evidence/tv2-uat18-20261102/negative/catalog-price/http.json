@@ -1,0 +1,111 @@
+[
+  {
+    "method": "GET",
+    "path": "/api/cart",
+    "status": 200
+  },
+  {
+    "method": "POST",
+    "path": "/api/cart/items",
+    "status": 200
+  },
+  {
+    "method": "POST",
+    "path": "/api/cart/items",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "path": "/api/cart",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "path": "/api/seller/products/78350375-dea6-4faa-b389-424e82a5d7fd",
+    "status": 200,
+    "product": {
+      "id": "78350375-dea6-4faa-b389-424e82a5d7fd",
+      "sku": "TV3-NEG-20a3b5f9-B",
+      "status": "ACTIVE",
+      "version": "2",
+      "unitPrice": "10000"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/seller/products/78350375-dea6-4faa-b389-424e82a5d7fd/deactivate",
+    "status": 200,
+    "product": {
+      "id": "78350375-dea6-4faa-b389-424e82a5d7fd",
+      "sku": "TV3-NEG-20a3b5f9-B",
+      "status": "INACTIVE",
+      "version": "3",
+      "unitPrice": "10000"
+    }
+  },
+  {
+    "method": "PUT",
+    "path": "/api/seller/products/78350375-dea6-4faa-b389-424e82a5d7fd",
+    "status": 200,
+    "product": {
+      "id": "78350375-dea6-4faa-b389-424e82a5d7fd",
+      "sku": "TV3-NEG-20a3b5f9-B",
+      "status": "INACTIVE",
+      "version": "4",
+      "unitPrice": "11000"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/seller/products/78350375-dea6-4faa-b389-424e82a5d7fd/submit",
+    "status": 200,
+    "product": {
+      "id": "78350375-dea6-4faa-b389-424e82a5d7fd",
+      "sku": "TV3-NEG-20a3b5f9-B",
+      "status": "PENDING_REVIEW",
+      "version": "5",
+      "unitPrice": "11000"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/admin/products/78350375-dea6-4faa-b389-424e82a5d7fd/approve",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "path": "/api/cart",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "path": "/api/cart",
+    "status": 200
+  },
+  {
+    "method": "POST",
+    "path": "/api/orders",
+    "status": 409,
+    "keySha256": "af23d2425c7e883b735d349cc3786905ea791f7d49582cbb867629333c575269",
+    "expectedItems": [
+      {
+        "productId": "78350375-dea6-4faa-b389-424e82a5d7fd",
+        "quantity": 1
+      },
+      {
+        "productId": "960af141-0d41-4499-b3a1-75bb674148b3",
+        "quantity": 1
+      }
+    ],
+    "expectedRevision": 23,
+    "error": {
+      "code": "CHECKOUT_ITEMS_REJECTED",
+      "message": "Some Cart items cannot be ordered"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/cart",
+    "status": 200
+  }
+]

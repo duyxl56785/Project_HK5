@@ -1,0 +1,12 @@
+
+Running 6 tests using 1 worker
+
+  ok 1 src\features\checkout\acceptance\negative.live.spec.mjs:201:1 › replay-body same key with changed expectedItems rejects without effects (3.5s)
+  ok 2 src\features\checkout\acceptance\negative.live.spec.mjs:205:1 › replay-shipping same key with changed shipping rejects without effects (3.3s)
+  ok 3 src\features\checkout\acceptance\negative.live.spec.mjs:209:1 › expected-items mismatch rejects before Inventory (3.6s)
+  ok 4 src\features\checkout\acceptance\negative.live.spec.mjs:213:1 › catalog-price changed since Cart rejects before Inventory (3.8s)
+  ok 5 src\features\checkout\acceptance\negative.live.spec.mjs:226:1 › insufficient-stock two Store batch rejects without partial reservation (3.9s)
+  ok 6 src\features\checkout\acceptance\negative.live.spec.mjs:237:1 › product-inactive one unsellable Store line rejects the whole Checkout (3.6s)
+
+  6 passed (27.4s)
+

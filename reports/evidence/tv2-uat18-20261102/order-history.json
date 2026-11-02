@@ -1,0 +1,11 @@
+{
+  "rows": 4,
+  "statuses": [
+    "PROCESSING",
+    "PROCESSING",
+    "CANCELLED",
+    "PROCESSING"
+  ],
+  "openedDetail": "b6c1af18-d8ff-43ac-9928-ea72380105ea",
+  "problems": []
+}

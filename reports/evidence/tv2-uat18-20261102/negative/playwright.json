@@ -1,0 +1,323 @@
+{
+  "config": {
+    "argv": [
+      "D:\\App\\ung_dung\\nodejs\\node.exe",
+      "D:\\monhoc\\CNPM\\project_hk5\\.worktrees\\uat18\\frontend\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "--config",
+      "src/features/checkout/acceptance/negative.live.config.mjs"
+    ],
+    "configFile": "D:\\monhoc\\CNPM\\project_hk5\\.worktrees\\uat18\\frontend\\src\\features\\checkout\\acceptance\\negative.live.config.mjs",
+    "rootDir": "D:/monhoc/CNPM/project_hk5/.worktrees/uat18/frontend/src/features/checkout/acceptance",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/ADMIN/AppData/Local/Temp/claude/D--monhoc-CNPM-project-hk5/a2d9f544-9a6a-4e3e-896c-7542372808c6/scratchpad/uat18/evidence/negative/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "D:/monhoc/CNPM/project_hk5/.worktrees/uat18/frontend/src/features/checkout/acceptance",
+        "testIgnore": [],
+        "testMatch": [
+          "negative.live.spec.mjs"
+        ],
+        "timeout": 90000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "C:\\Users\\ADMIN\\AppData\\Local\\Temp\\claude\\D--monhoc-CNPM-project-hk5\\a2d9f544-9a6a-4e3e-896c-7542372808c6\\scratchpad\\uat18\\evidence\\negative\\artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "",
+        "testDir": "D:\\monhoc\\CNPM\\project_hk5\\.worktrees\\uat18\\frontend\\src\\features\\checkout\\acceptance",
+        "snapshotDir": "D:\\monhoc\\CNPM\\project_hk5\\.worktrees\\uat18\\frontend\\src\\features\\checkout\\acceptance",
+        "testIgnore": [],
+        "testMatch": "negative.live.spec.mjs",
+        "timeout": 90000,
+        "use": {
+          "trace": "off",
+          "screenshot": "off",
+          "video": "off"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": ""
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "C:\\Users\\ADMIN\\AppData\\Local\\Temp\\claude\\D--monhoc-CNPM-project-hk5\\a2d9f544-9a6a-4e3e-896c-7542372808c6\\scratchpad\\uat18\\evidence\\negative/playwright.json"
+        }
+      ],
+      [
+        "junit",
+        {
+          "outputFile": "C:\\Users\\ADMIN\\AppData\\Local\\Temp\\claude\\D--monhoc-CNPM-project-hk5\\a2d9f544-9a6a-4e3e-896c-7542372808c6\\scratchpad\\uat18\\evidence\\negative/junit.xml"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "negative.live.spec.mjs",
+      "file": "negative.live.spec.mjs",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "replay-body same key with changed expectedItems rejects without effects",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3470,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-02T16:45:23.246Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "75556e33e19c632837af-a81b7a9f1329a203a143",
+          "file": "negative.live.spec.mjs",
+          "line": 201,
+          "column": 1
+        },
+        {
+          "title": "replay-shipping same key with changed shipping rejects without effects",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3344,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-02T16:45:31.677Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "75556e33e19c632837af-032cc22b56b80f138c00",
+          "file": "negative.live.spec.mjs",
+          "line": 205,
+          "column": 1
+        },
+        {
+          "title": "expected-items mismatch rejects before Inventory",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3616,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-02T16:45:35.035Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "75556e33e19c632837af-1f07627abd780dded0a9",
+          "file": "negative.live.spec.mjs",
+          "line": 209,
+          "column": 1
+        },
+        {
+          "title": "catalog-price changed since Cart rejects before Inventory",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3836,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-02T16:45:38.668Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "75556e33e19c632837af-1651e56255237e558d8b",
+          "file": "negative.live.spec.mjs",
+          "line": 213,
+          "column": 1
+        },
+        {
+          "title": "insufficient-stock two Store batch rejects without partial reservation",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3858,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-02T16:45:42.520Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "75556e33e19c632837af-3f0f3c765b0edeed2a6b",
+          "file": "negative.live.spec.mjs",
+          "line": 226,
+          "column": 1
+        },
+        {
+          "title": "product-inactive one unsellable Store line rejects the whole Checkout",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3635,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-02T16:45:46.395Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "75556e33e19c632837af-e60ee1a0ea30aac551ea",
+          "file": "negative.live.spec.mjs",
+          "line": 237,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-02T16:45:22.732Z",
+    "duration": 27367.493,
+    "expected": 6,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

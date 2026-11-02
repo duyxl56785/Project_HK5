@@ -1,0 +1,527 @@
+[
+  {
+    "id": "SETUP",
+    "name": "register C2 [201]",
+    "ok": true,
+    "actual": true,
+    "expected": true
+  },
+  {
+    "id": "F01",
+    "name": "set price 100000 keeps product sellable [[200,\"ACTIVE\"]]",
+    "ok": true,
+    "actual": true,
+    "expected": true
+  },
+  {
+    "id": "F01",
+    "name": "gross/fee/net",
+    "ok": true,
+    "actual": [
+      100000,
+      5000,
+      95000
+    ],
+    "expected": [
+      100000,
+      5000,
+      95000
+    ]
+  },
+  {
+    "id": "R02",
+    "name": "review before delivery refused",
+    "ok": true,
+    "actual": 409,
+    "expected": 409
+  },
+  {
+    "id": "R02",
+    "name": "other buyer refused",
+    "ok": true,
+    "actual": 403,
+    "expected": 403
+  },
+  {
+    "id": "R02",
+    "name": "product outside order refused",
+    "ok": true,
+    "actual": 409,
+    "expected": 409
+  },
+  {
+    "id": "R02",
+    "name": "stars 0 refused",
+    "ok": true,
+    "actual": 400,
+    "expected": 400
+  },
+  {
+    "id": "R02",
+    "name": "stars 6 refused",
+    "ok": true,
+    "actual": 400,
+    "expected": 400
+  },
+  {
+    "id": "R02",
+    "name": "DB has no review after refusals",
+    "ok": true,
+    "actual": 0,
+    "expected": 0
+  },
+  {
+    "id": "R01",
+    "name": "buyer reviews delivered product, 5 stars",
+    "ok": true,
+    "actual": [
+      201,
+      "dcdd952b-f04c-4886-86ee-e9a62f16ea7b",
+      "a44344da-d0e0-4ca5-ace3-a78939d7e995",
+      5
+    ],
+    "expected": [
+      201,
+      "dcdd952b-f04c-4886-86ee-e9a62f16ea7b",
+      "a44344da-d0e0-4ca5-ace3-a78939d7e995",
+      5
+    ]
+  },
+  {
+    "id": "R01",
+    "name": "buyer reviews delivered product, 1 star",
+    "ok": true,
+    "actual": [
+      201,
+      1
+    ],
+    "expected": [
+      201,
+      1
+    ]
+  },
+  {
+    "id": "R01",
+    "name": "rating count grew by 2",
+    "ok": true,
+    "actual": 2,
+    "expected": 2
+  },
+  {
+    "id": "R02",
+    "name": "second review on same order and product refused",
+    "ok": true,
+    "actual": 409,
+    "expected": 409
+  },
+  {
+    "id": "R03",
+    "name": "concurrent reviews: one wins",
+    "ok": true,
+    "actual": [
+      201,
+      409
+    ],
+    "expected": [
+      201,
+      409
+    ]
+  },
+  {
+    "id": "R03",
+    "name": "DB has one row",
+    "ok": true,
+    "actual": 1,
+    "expected": 1
+  },
+  {
+    "id": "R05",
+    "name": "no visible review maps to count 0",
+    "ok": true,
+    "actual": 0,
+    "expected": 0
+  },
+  {
+    "id": "R05",
+    "name": "one 1-star review",
+    "ok": true,
+    "actual": [
+      1,
+      1
+    ],
+    "expected": [
+      1,
+      1
+    ]
+  },
+  {
+    "id": "R04",
+    "name": "Seller cannot hide",
+    "ok": true,
+    "actual": 403,
+    "expected": 403
+  },
+  {
+    "id": "R04",
+    "name": "Customer cannot hide",
+    "ok": true,
+    "actual": 403,
+    "expected": 403
+  },
+  {
+    "id": "R06",
+    "name": "hide without reason refused",
+    "ok": true,
+    "actual": 400,
+    "expected": 400
+  },
+  {
+    "id": "R06",
+    "name": "reason over 500 refused",
+    "ok": true,
+    "actual": 400,
+    "expected": 400
+  },
+  {
+    "id": "R04",
+    "name": "Admin hides",
+    "ok": true,
+    "actual": 200,
+    "expected": 200
+  },
+  {
+    "id": "R05",
+    "name": "hidden drops from count",
+    "ok": true,
+    "actual": 0,
+    "expected": 0
+  },
+  {
+    "id": "R04",
+    "name": "hide replay keeps count",
+    "ok": true,
+    "actual": [
+      true,
+      0
+    ],
+    "expected": [
+      true,
+      0
+    ]
+  },
+  {
+    "id": "R04",
+    "name": "Admin shows",
+    "ok": true,
+    "actual": 200,
+    "expected": 200
+  },
+  {
+    "id": "R05",
+    "name": "show restores count and average",
+    "ok": true,
+    "actual": [
+      1,
+      1
+    ],
+    "expected": [
+      1,
+      1
+    ]
+  },
+  {
+    "id": "R06",
+    "name": "comment over 2000 refused",
+    "ok": true,
+    "actual": 400,
+    "expected": 400
+  },
+  {
+    "id": "R06",
+    "name": "comment of 1001 refused (TV5_UAT.md limit 1000)",
+    "ok": false,
+    "actual": 201,
+    "expected": 400
+  },
+  {
+    "id": "F03",
+    "name": "F/F/F settle refused",
+    "ok": true,
+    "actual": 409,
+    "expected": 409
+  },
+  {
+    "id": "F03",
+    "name": "COD before delivery refused, so F/T/* is unreachable",
+    "ok": true,
+    "actual": 409,
+    "expected": 409
+  },
+  {
+    "id": "F03",
+    "name": "T/F/F settle refused",
+    "ok": true,
+    "actual": 409,
+    "expected": 409
+  },
+  {
+    "id": "F03",
+    "name": "Seller cannot record COD",
+    "ok": true,
+    "actual": 403,
+    "expected": 403
+  },
+  {
+    "id": "F03",
+    "name": "Seller cannot settle",
+    "ok": true,
+    "actual": 403,
+    "expected": 403
+  },
+  {
+    "id": "F03",
+    "name": "COD collected",
+    "ok": true,
+    "actual": 200,
+    "expected": 200
+  },
+  {
+    "id": "F03",
+    "name": "T/T/F eligible, exactly one settles",
+    "ok": true,
+    "actual": 1,
+    "expected": 1
+  },
+  {
+    "id": "F04",
+    "name": "concurrent settle: others refused",
+    "ok": true,
+    "actual": 4,
+    "expected": 4
+  },
+  {
+    "id": "F03",
+    "name": "T/T/T settle refused",
+    "ok": true,
+    "actual": 409,
+    "expected": 409
+  },
+  {
+    "id": "F04",
+    "name": "money moved once",
+    "ok": true,
+    "actual": 256500,
+    "expected": 256500
+  },
+  {
+    "id": "F04",
+    "name": "retry after restart refused",
+    "ok": true,
+    "actual": 409,
+    "expected": 409
+  },
+  {
+    "id": "F04",
+    "name": "settledAt and total durable after restart",
+    "ok": true,
+    "actual": [
+      1793638117358,
+      256500
+    ],
+    "expected": [
+      1793638117358,
+      256500
+    ]
+  },
+  {
+    "id": "F05",
+    "name": "Seller A cannot read Store B order [404]",
+    "ok": true,
+    "actual": true,
+    "expected": true
+  },
+  {
+    "id": "F05",
+    "name": "Seller A cannot act on Store B order [404]",
+    "ok": true,
+    "actual": true,
+    "expected": true
+  },
+  {
+    "id": "F05",
+    "name": "Seller A list has no Store B row [13]",
+    "ok": true,
+    "actual": true,
+    "expected": true
+  },
+  {
+    "id": "F05",
+    "name": "Seller A finance has no Store B row [8]",
+    "ok": true,
+    "actual": true,
+    "expected": true
+  },
+  {
+    "id": "F05",
+    "name": "Seller cannot read platform finance",
+    "ok": true,
+    "actual": 403,
+    "expected": 403
+  },
+  {
+    "id": "C01",
+    "name": "C2 cannot read C order [404]",
+    "ok": true,
+    "actual": true,
+    "expected": true
+  },
+  {
+    "id": "C02",
+    "name": "last unit: one checkout wins",
+    "ok": true,
+    "actual": [
+      200,
+      409
+    ],
+    "expected": [
+      200,
+      409
+    ]
+  },
+  {
+    "id": "C02",
+    "name": "stock not negative",
+    "ok": true,
+    "actual": [
+      0,
+      1
+    ],
+    "expected": [
+      0,
+      1
+    ]
+  },
+  {
+    "id": "C03",
+    "name": "held 2",
+    "ok": true,
+    "actual": 43,
+    "expected": 43
+  },
+  {
+    "id": "C03",
+    "name": "cancel",
+    "ok": true,
+    "actual": 200,
+    "expected": 200
+  },
+  {
+    "id": "C03",
+    "name": "cancel replay refused",
+    "ok": true,
+    "actual": 409,
+    "expected": 409
+  },
+  {
+    "id": "C03",
+    "name": "released once",
+    "ok": true,
+    "actual": [
+      45,
+      0
+    ],
+    "expected": [
+      45,
+      0
+    ]
+  },
+  {
+    "id": "C03",
+    "name": "cancelled order cannot be settled",
+    "ok": true,
+    "actual": 409,
+    "expected": 409
+  },
+  {
+    "id": "C03",
+    "name": "cancelled order cannot record COD",
+    "ok": true,
+    "actual": 409,
+    "expected": 409
+  },
+  {
+    "id": "C03",
+    "name": "Seller rejects",
+    "ok": true,
+    "actual": 200,
+    "expected": 200
+  },
+  {
+    "id": "C03",
+    "name": "reject replay refused",
+    "ok": true,
+    "actual": 409,
+    "expected": 409
+  },
+  {
+    "id": "C03",
+    "name": "reject released once",
+    "ok": true,
+    "actual": [
+      45,
+      0
+    ],
+    "expected": [
+      45,
+      0
+    ]
+  },
+  {
+    "id": "A01",
+    "name": "no token",
+    "ok": true,
+    "actual": 401,
+    "expected": 401
+  },
+  {
+    "id": "A01",
+    "name": "fake token",
+    "ok": true,
+    "actual": 401,
+    "expected": 401
+  },
+  {
+    "id": "A01",
+    "name": "wrong role",
+    "ok": true,
+    "actual": 403,
+    "expected": 403
+  },
+  {
+    "id": "A01",
+    "name": "Gateway does not route /internal",
+    "ok": true,
+    "actual": 404,
+    "expected": 404
+  },
+  {
+    "id": "A01",
+    "name": "site serves the SPA shell for /internal, no product data [200]",
+    "ok": true,
+    "actual": true,
+    "expected": true
+  },
+  {
+    "id": "OPS",
+    "name": "no dead outbox rows",
+    "ok": true,
+    "actual": [
+      200,
+      0
+    ],
+    "expected": [
+      200,
+      0
+    ]
+  }
+]

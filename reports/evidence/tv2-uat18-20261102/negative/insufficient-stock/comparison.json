@@ -1,0 +1,52 @@
+{
+  "name": "Insufficient second Store stock",
+  "status": 409,
+  "error": {
+    "message": "Some Cart items cannot be ordered",
+    "code": "CHECKOUT_ITEMS_REJECTED",
+    "items": [
+      {
+        "productId": "78350375-dea6-4faa-b389-424e82a5d7fd",
+        "reason": "OUT_OF_STOCK"
+      }
+    ]
+  },
+  "orders": [
+    4,
+    4
+  ],
+  "sellerOrders": [
+    8,
+    8
+  ],
+  "cartRevision": [
+    29,
+    31
+  ],
+  "inventoryOperations": [
+    8,
+    8
+  ],
+  "inventoryBalancesUnchanged": true,
+  "journalDelta": [
+    {
+      "operation_id": "order-847df066-7e1a-40a7-b8c8-431aedae5a4e-reserve",
+      "operation_type": "RESERVE",
+      "state": "REJECTED",
+      "send_attempts": 1,
+      "last_error_code": "INSUFFICIENT_STOCK",
+      "canonical_lines": [
+        {
+          "sku": "TV3-NEG-20a3b5f9-A",
+          "quantity": 2
+        },
+        {
+          "sku": "TV3-NEG-20a3b5f9-B",
+          "quantity": 2
+        }
+      ],
+      "payload_fingerprint": "466fda9b2090979c2e4259b760dfda805a37bf0686425f5577bb20154a0a96aa"
+    }
+  ],
+  "draftDelta": 1
+}

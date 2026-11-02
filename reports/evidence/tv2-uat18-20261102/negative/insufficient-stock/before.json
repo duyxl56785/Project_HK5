@@ -1,0 +1,416 @@
+{
+  "order": {
+    "orderCount": 4,
+    "sellerOrderCount": 8,
+    "orders": [
+      {
+        "id": "46ee8a45-ab7d-4400-a4d4-db08de2f59da",
+        "status": "PLACED",
+        "total": "505000.00"
+      },
+      {
+        "id": "5b9f9323-e53d-4beb-a3df-757616df0bec",
+        "status": "CANCELLED",
+        "total": "505000.00"
+      },
+      {
+        "id": "935596b5-94c2-4125-bd43-3d6d35cf33ad",
+        "status": "PLACED",
+        "total": "505000.00"
+      },
+      {
+        "id": "b6c1af18-d8ff-43ac-9928-ea72380105ea",
+        "status": "PLACED",
+        "total": "20000.00"
+      }
+    ],
+    "attempts": [
+      {
+        "id": "2facce0e-dd3e-41a2-83c4-289feb8c9431",
+        "state": "FAILED",
+        "order_id": null,
+        "fingerprint": "c604b014b2388a693e6a8b6d3e48cfe496abfbc92ed7803f35ffd02c626a5d11"
+      },
+      {
+        "id": "46ee8a45-ab7d-4400-a4d4-db08de2f59da",
+        "state": "SUCCEEDED",
+        "order_id": "46ee8a45-ab7d-4400-a4d4-db08de2f59da",
+        "fingerprint": "12acb6ce8e1307c9ce115e527ad98c68a4d21152abd50b31366fc160de883ee3"
+      },
+      {
+        "id": "5b9f9323-e53d-4beb-a3df-757616df0bec",
+        "state": "SUCCEEDED",
+        "order_id": "5b9f9323-e53d-4beb-a3df-757616df0bec",
+        "fingerprint": "73167e71a01b55d5cd216c0b78d919e1f832f09a175d55f899a2ed6edf65891f"
+      },
+      {
+        "id": "935596b5-94c2-4125-bd43-3d6d35cf33ad",
+        "state": "SUCCEEDED",
+        "order_id": "935596b5-94c2-4125-bd43-3d6d35cf33ad",
+        "fingerprint": "fd58d3cae8f186048ae6bd90d531910058fecd23c442490469289b212e97b7e2"
+      },
+      {
+        "id": "b6c1af18-d8ff-43ac-9928-ea72380105ea",
+        "state": "SUCCEEDED",
+        "order_id": "b6c1af18-d8ff-43ac-9928-ea72380105ea",
+        "fingerprint": "17bb1168d3f015d0460e4cdccd11011be2ee30f1137935095035aa54014e590a"
+      },
+      {
+        "id": "be606872-0877-45ae-82c5-6f30813c40ab",
+        "state": "FAILED",
+        "order_id": null,
+        "fingerprint": "9788e4daf33b5b4b47795a7a785981cc1188d509822a3758953e054607df9a5e"
+      }
+    ],
+    "drafts": [
+      {
+        "checkout_attempt_id": "46ee8a45-ab7d-4400-a4d4-db08de2f59da",
+        "payload_sha256": "34d88991ba3f4fc75ae58a88fcc6dd1054546266238a07ee5096bb69aeeff36e"
+      },
+      {
+        "checkout_attempt_id": "5b9f9323-e53d-4beb-a3df-757616df0bec",
+        "payload_sha256": "8251766291bdb759087c29f0fd4bb48227b57c72eda1e7819d22d56179670f30"
+      },
+      {
+        "checkout_attempt_id": "935596b5-94c2-4125-bd43-3d6d35cf33ad",
+        "payload_sha256": "4e00701087f6eec6bfd09f0b06531cad1c55b32d1f2e25b294692d173877cfbb"
+      },
+      {
+        "checkout_attempt_id": "b6c1af18-d8ff-43ac-9928-ea72380105ea",
+        "payload_sha256": "a6165b8960735c454b7edbc0520176fe9781aa50ad8a24ad034ae8f4e9c2ec44"
+      }
+    ],
+    "journals": [
+      {
+        "operation_id": "order-46ee8a45-ab7d-4400-a4d4-db08de2f59da-reserve",
+        "operation_type": "RESERVE",
+        "state": "CONFIRMED",
+        "send_attempts": 1,
+        "last_error_code": null,
+        "canonical_lines": [
+          {
+            "sku": "AO-002",
+            "quantity": 1
+          },
+          {
+            "sku": "BE-001",
+            "quantity": 1
+          }
+        ],
+        "payload_fingerprint": "25bb2234246bd44c1614150912b6e2834512623acdf2c62210eb9dab60385223"
+      },
+      {
+        "operation_id": "order-5b9f9323-e53d-4beb-a3df-757616df0bec-reserve",
+        "operation_type": "RESERVE",
+        "state": "CONFIRMED",
+        "send_attempts": 1,
+        "last_error_code": null,
+        "canonical_lines": [
+          {
+            "sku": "AO-002",
+            "quantity": 1
+          },
+          {
+            "sku": "BE-001",
+            "quantity": 1
+          }
+        ],
+        "payload_fingerprint": "25bb2234246bd44c1614150912b6e2834512623acdf2c62210eb9dab60385223"
+      },
+      {
+        "operation_id": "order-935596b5-94c2-4125-bd43-3d6d35cf33ad-reserve",
+        "operation_type": "RESERVE",
+        "state": "CONFIRMED",
+        "send_attempts": 1,
+        "last_error_code": null,
+        "canonical_lines": [
+          {
+            "sku": "AO-002",
+            "quantity": 1
+          },
+          {
+            "sku": "BE-001",
+            "quantity": 1
+          }
+        ],
+        "payload_fingerprint": "25bb2234246bd44c1614150912b6e2834512623acdf2c62210eb9dab60385223"
+      },
+      {
+        "operation_id": "order-b6c1af18-d8ff-43ac-9928-ea72380105ea-reserve",
+        "operation_type": "RESERVE",
+        "state": "CONFIRMED",
+        "send_attempts": 1,
+        "last_error_code": null,
+        "canonical_lines": [
+          {
+            "sku": "TV3-NEG-20a3b5f9-A",
+            "quantity": 1
+          },
+          {
+            "sku": "TV3-NEG-20a3b5f9-B",
+            "quantity": 1
+          }
+        ],
+        "payload_fingerprint": "e2aac4abfe97c5eea12604bd6168350c6cc8de8987c806b2a27539e5abda5489"
+      }
+    ],
+    "outboxCount": 12
+  },
+  "inventory": {
+    "balances": [
+      {
+        "sku": "AO-001",
+        "available": 50,
+        "reserved": 0,
+        "version": 0
+      },
+      {
+        "sku": "AO-002",
+        "available": 48,
+        "reserved": 2,
+        "version": 4
+      },
+      {
+        "sku": "BE-001",
+        "available": 48,
+        "reserved": 1,
+        "version": 5
+      },
+      {
+        "sku": "BE-002",
+        "available": 50,
+        "reserved": 0,
+        "version": 0
+      },
+      {
+        "sku": "DEN-001",
+        "available": 50,
+        "reserved": 0,
+        "version": 0
+      },
+      {
+        "sku": "DT-001",
+        "available": 50,
+        "reserved": 0,
+        "version": 0
+      },
+      {
+        "sku": "DT-002",
+        "available": 50,
+        "reserved": 0,
+        "version": 0
+      },
+      {
+        "sku": "DT-003",
+        "available": 50,
+        "reserved": 0,
+        "version": 0
+      },
+      {
+        "sku": "GOI-001",
+        "available": 50,
+        "reserved": 0,
+        "version": 0
+      },
+      {
+        "sku": "KE-001",
+        "available": 50,
+        "reserved": 0,
+        "version": 0
+      },
+      {
+        "sku": "LD-001",
+        "available": 50,
+        "reserved": 0,
+        "version": 0
+      },
+      {
+        "sku": "LD-002",
+        "available": 50,
+        "reserved": 0,
+        "version": 0
+      },
+      {
+        "sku": "NON-001",
+        "available": 50,
+        "reserved": 0,
+        "version": 0
+      },
+      {
+        "sku": "QUAN-001",
+        "available": 50,
+        "reserved": 0,
+        "version": 0
+      },
+      {
+        "sku": "SACH-001",
+        "available": 50,
+        "reserved": 0,
+        "version": 0
+      },
+      {
+        "sku": "SACH-002",
+        "available": 50,
+        "reserved": 0,
+        "version": 0
+      },
+      {
+        "sku": "SACH-003",
+        "available": 50,
+        "reserved": 0,
+        "version": 0
+      },
+      {
+        "sku": "TP-001",
+        "available": 50,
+        "reserved": 0,
+        "version": 0
+      },
+      {
+        "sku": "TP-002",
+        "available": 50,
+        "reserved": 0,
+        "version": 0
+      },
+      {
+        "sku": "TT-001",
+        "available": 50,
+        "reserved": 0,
+        "version": 0
+      },
+      {
+        "sku": "TT-002",
+        "available": 50,
+        "reserved": 0,
+        "version": 0
+      },
+      {
+        "sku": "TUI-001",
+        "available": 50,
+        "reserved": 0,
+        "version": 0
+      },
+      {
+        "sku": "TV3-NEG-20a3b5f9-A",
+        "available": 7,
+        "reserved": 1,
+        "version": 1
+      },
+      {
+        "sku": "TV3-NEG-20a3b5f9-B",
+        "available": 1,
+        "reserved": 1,
+        "version": 2
+      },
+      {
+        "sku": "VAY-001",
+        "available": 50,
+        "reserved": 0,
+        "version": 0
+      },
+      {
+        "sku": "VI-001",
+        "available": 50,
+        "reserved": 0,
+        "version": 0
+      }
+    ],
+    "operations": [
+      {
+        "operation_id": "order-46ee8a45-ab7d-4400-a4d4-db08de2f59da-reserve",
+        "operation_type": "RESERVE",
+        "request_hash": "25bb2234246bd44c1614150912b6e2834512623acdf2c62210eb9dab60385223"
+      },
+      {
+        "operation_id": "order-5b9f9323-e53d-4beb-a3df-757616df0bec-reserve",
+        "operation_type": "RESERVE",
+        "request_hash": "25bb2234246bd44c1614150912b6e2834512623acdf2c62210eb9dab60385223"
+      },
+      {
+        "operation_id": "order-935596b5-94c2-4125-bd43-3d6d35cf33ad-reserve",
+        "operation_type": "RESERVE",
+        "request_hash": "25bb2234246bd44c1614150912b6e2834512623acdf2c62210eb9dab60385223"
+      },
+      {
+        "operation_id": "order-b6c1af18-d8ff-43ac-9928-ea72380105ea-reserve",
+        "operation_type": "RESERVE",
+        "request_hash": "e2aac4abfe97c5eea12604bd6168350c6cc8de8987c806b2a27539e5abda5489"
+      },
+      {
+        "operation_id": "seller-order-46bfaf6f-6241-4d66-9eb1-12847d274b59-release",
+        "operation_type": "RELEASE",
+        "request_hash": "063e7166dafc807ce239204c1b23192b5e917963756c7840db4bf6665b2b48a8"
+      },
+      {
+        "operation_id": "seller-order-9f69e8ea-e824-4de7-976f-3ccf3b9455c9-release",
+        "operation_type": "RELEASE",
+        "request_hash": "5ac96395e303201baf9931445e3fb7dd7c3b4037bc5a0e2d5ff7cea6cd420288"
+      },
+      {
+        "operation_id": "seller-order-f989756d-6f76-412e-8f1c-dae57e40d08f-consume",
+        "operation_type": "CONSUME",
+        "request_hash": "d39fd1d576306a8adf120bcadbf9848e3ee29d79d51b44fad60e004efa5ef488"
+      },
+      {
+        "operation_id": "stock-78350375-dea6-4faa-b389-424e82a5d7fd-1681e9b9-b842-43ba-af81-56e55fc7b67e",
+        "operation_type": "DECREASE",
+        "request_hash": "9df2267739702fac932a69d714b7a4cfd36dfc78648424619461617e7a1b90a3"
+      }
+    ]
+  },
+  "cart": {
+    "customerId": "9ed0d857-c0e8-4d3b-8de8-dd15ea879cac",
+    "revision": 29,
+    "claimed": false,
+    "items": [
+      {
+        "productId": "78350375-dea6-4faa-b389-424e82a5d7fd",
+        "storeId": "3c6c6fd7-f620-4364-9c1d-3343f16169d2",
+        "sellerId": "1f685376-f309-4596-87c2-59fa2684310c",
+        "quantity": 2,
+        "unitPriceSnapshot": 11000
+      },
+      {
+        "productId": "960af141-0d41-4499-b3a1-75bb674148b3",
+        "storeId": "31fa32f2-2705-48c4-a65f-248cf3ef911e",
+        "sellerId": "108d106e-5346-48f6-94b4-32d8afbf741f",
+        "quantity": 2,
+        "unitPriceSnapshot": 10000
+      }
+    ],
+    "groups": [
+      {
+        "storeId": "3c6c6fd7-f620-4364-9c1d-3343f16169d2",
+        "sellerId": "1f685376-f309-4596-87c2-59fa2684310c",
+        "items": [
+          {
+            "productId": "78350375-dea6-4faa-b389-424e82a5d7fd",
+            "storeId": "3c6c6fd7-f620-4364-9c1d-3343f16169d2",
+            "sellerId": "1f685376-f309-4596-87c2-59fa2684310c",
+            "quantity": 2,
+            "unitPriceSnapshot": 11000
+          }
+        ]
+      },
+      {
+        "storeId": "31fa32f2-2705-48c4-a65f-248cf3ef911e",
+        "sellerId": "108d106e-5346-48f6-94b4-32d8afbf741f",
+        "items": [
+          {
+            "productId": "960af141-0d41-4499-b3a1-75bb674148b3",
+            "storeId": "31fa32f2-2705-48c4-a65f-248cf3ef911e",
+            "sellerId": "108d106e-5346-48f6-94b4-32d8afbf741f",
+            "quantity": 2,
+            "unitPriceSnapshot": 10000
+          }
+        ]
+      }
+    ]
+  },
+  "dbCart": {
+    "cart": {
+      "revision": 29,
+      "claimed": false
+    }
+  }
+}

@@ -1,0 +1,15 @@
+PASS cart claim without a token -> 401
+PASS cart claim with a wrong token -> 401
+PASS gateway does not route internal paths -> true
+PASS history without a token -> 401
+PASS history as customer -> 403
+PASS history as seller -> 403
+PASS history as admin -> 200
+PASS history has the approval -> APPROVED
+PASS deep link served by Nginx -> 200
+PASS deep link is the app -> true
+PASS Nginx proxies /api -> 200
+PASS secrets absent from docker inspect -> false
+PASS login works after PostgreSQL restart -> true
+PASS data survives PostgreSQL restart -> 9
+FAILS=0
