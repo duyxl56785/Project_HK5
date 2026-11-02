@@ -1,0 +1,17 @@
+{
+  "existing18WorktreesPreserved": true,
+  "newDetachedWorktree": "/workspace/tv3-owner-147-44426859",
+  "newWorktreeClean": true,
+  "candidate351fb03Clean": true,
+  "savedRefs": {
+    "refs/tv3-preserved/journal-b903a6d": "b903a6d77a18801766b3695cbc893ef30dd6233e",
+    "refs/tv3-preserved/draft-04876a1": "04876a1858703c3f936cfbb86ee24d8a04d1e729"
+  },
+  "demo15ContainerIDsStartTimesRestartCountsMountSetsUnchanged": true,
+  "all15Running": true,
+  "all16ExistingVolumesPreserved": true,
+  "noLiveTestsExecuted": true,
+  "noDemoStartup": true,
+  "noSharedEnvOrSecretsModified": true,
+  "noProductionSourceChanged": true
+}

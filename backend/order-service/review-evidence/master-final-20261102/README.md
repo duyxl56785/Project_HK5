@@ -1,5 +1,7 @@
 # TV3 — Final integration handoff, 2026-11-02
 
+**Cập nhật sau publication đầu:** TV2 đã tích hợp P1 vào #147 `44426859`; [kết quả chạy mới trên exact owner HEAD và trạng thái hiện tại](owner-accepted-44426859/README.md). Phần dưới giữ snapshot trước khi tiếp nhận, không còn là trạng thái chờ apply patch mới nhất.
+
 **Source/regression: FIXED_VERIFIED. Overall acceptance: BLOCKED_OWNER.**
 
 Chạy thực tế tại **CODEX TERMINAL — Linux**, không phải Windows PowerShell. Lượt này không thay production code, schema, API hay runtime flags. Không merge PR, review/approve, resolve thread hoặc sửa branch thành viên khác.
