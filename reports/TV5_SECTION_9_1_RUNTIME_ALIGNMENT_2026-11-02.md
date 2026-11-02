@@ -1,7 +1,7 @@
 # Phụ lục TV5 — đối chiếu §9.1 với runtime và bằng chứng
 
 Ngày đối chiếu: 02/11/2026 (UTC+07).  Nguồn nhánh tích hợp được kiểm tra: `origin/main` tại
-`d446577d2f9268f2212a4ee214ff3d805ee7a1d9` (đã merge #140, #143 và #148 sau #115/#144); các PR còn mở được đối chiếu riêng tại HEAD ghi bên dưới.
+`9ca80006fce359a96862a93a42b5d0fa631f85a7` (đã merge #140, #141, #143, #144, #145 và #148); các PR còn mở được đối chiếu riêng tại HEAD ghi bên dưới.
 
 ## Phạm vi và giới hạn nguồn
 
@@ -16,9 +16,9 @@ TV5 chỉ phụ trách QA, kiểm thử tích hợp, Finance/Settlement theo ph�
 
 | Hạng mục | Trạng thái xác minh | Căn cứ và giới hạn |
 | --- | --- | --- |
-| Product/Category | **MERGED / UAT PENDING** | PR #140 V7 slug/status và PR #143 Product đã merge vào `main@d446577`; CI của PR không thay nghiệm thu tích hợp hai Store. |
+| Product/Category | **MERGED / UAT PENDING** | PR #140 V7 slug/status và PR #143 Product đã merge vào `main@9ca8000`; CI của PR không thay nghiệm thu tích hợp hai Store. |
 | Product Review (F15) | **MERGED / UAT PENDING** | Rule 1–5 sao, buyer/delivered, unique `(order_id, product_id)` và reason ẩn review từ PR #148/V8 đã nằm trên main. Chưa có bằng chứng UAT cuối tại full SHA này cho toàn bộ F15; không báo production PASS. |
-| Cart/Checkout/Order/Inventory | **PARTIAL / WAITING_REVIEW** | PR #147 (`cb576a6`) thêm `overallStatus`, lỗi checkout theo item và clear cart; PR #145 (`81ad9f7`) còn giữ durable draft/journal V5. CI nhánh không thay nghiệm thu main; TV3/TV4 còn phải chốt ownership/UNKNOWN và kiểm lại tổ hợp sau tích hợp. |
+| Cart/Checkout/Order/Inventory | **PARTIAL / WAITING_REVIEW** | PR #145 durable draft/journal V5 đã merge vào `main@9ca8000`; PR #147 (`b4e869d`) còn mở với `overallStatus`, lỗi checkout theo item và clear cart. Hai fixture UNKNOWN, retention PII production và kiểm thử tổ hợp sau #147 vẫn chưa có nghiệm thu cuối. CI nhánh hoặc merge #145 không thay bằng chứng UAT hai Store. |
 | COD/Fulfillment | **PARTIAL / OWNER_CONFIRMATION** | PR #144 đã merge vào main; merge và demo evidence chưa xác nhận toàn bộ COD/Fulfillment production policy. Cần owner TV2/TV3/TV4 xác nhận luồng đang mở. |
 | Finance/Settlement (F16) | **DEMO-ONLY DECISION / PRODUCTION BLOCKED** | `docs/project-report/M01_FINANCE_DECISION.md` ghi TV2 đã chọn MD01–MD10 cho bản nộp/demo local và MD09 chỉ cho phép hai gate trong `.env.demo` local; đó không phải phê duyệt production hay evidence E2E cuối. House Store operation và quyết định phạm vi kinh doanh thuộc TV2/người phê duyệt nghiệp vụ, ngoài quyền TV5 tự chốt; TV5 chỉ đối chiếu tác động fee 5%/0% trong F16. UAT cô lập #146 giữ gate OFF; không bật `--approved-finance-policy` hay kết luận settlement production PASS từ quyết định demo. |
 | UAT hai Store / Issue #18 | **BLOCKED / NOT_RUN** | Không có full SHA main đáp ứng đồng thời các dependency mở và tất cả gate business. UAT cuối không được suy ra từ mock, unit test, CI nhánh hoặc demo stack. |
@@ -38,9 +38,16 @@ phân loại **PASS**, **FAIL**, **NOT_RUN**, **BLOCKED** hoặc **WAITING_REVIE
 3. Mọi phạm vi ngoài demo local phải có quyết định business riêng cho Finance/COD/Settlement; các gate mặc định fail-closed chỉ được bật trong scope đã ký.
 4. TV5 chạy UAT hai Store trên môi trường Docker/volume/data giả cô lập, công bố evidence gắn với full SHA main.
 
+## Kiểm thử chọn lọc mới tại main 9ca8000
+
+- TV5 chạy trên worktree cô lập tại full SHA `9ca80006fce359a96862a93a42b5d0fa631f85a7`, Java 21.0.7, Gradle 8.10, PostgreSQL Testcontainers; không sử dụng dữ liệu/volume `pgdev` hoặc `redisdev`.
+- `:product-service:test` với `ReviewRulesTest`, `ReviewRulesBoundaryTest` và `:order-service:test` với `FinanceRulesTest`, `FinanceRulesBoundaryTest`, `FinanceReportTest`, `--rerun-tasks`: **66/66 unit PASS**, exit 0. Raw local log SHA256 `0AFCF5A9AE7BF24547D9198D39BABD7525D90BD64CC8BB9997F441F699CC72D9`.
+- Lệnh kết hợp đầu tiên chọn sai `:product-service:test` cho `CatalogSchemaProposalPostgresTest` (test này mang tag `postgresql` và thuộc `integrationTest`): **Gradle FAIL, exit 1**; riêng ba bộ `:order-service:postgresIntegrationTest` có **20/20 JUnit PASS**. Log gốc giữ nguyên, SHA256 `B4E374DEFF85DA41F82C8FF40571EF2EAB7EFCF2C89256C15894086519B17DED`; có lỗi kết nối của scheduled outbox sau khi container dừng, không được che khỏi evidence.
+- Chạy lại đúng `:product-service:integrationTest` với `CatalogSchemaProposalPostgresTest` và `ProductMigrationPostgresTest`: **34/34 PostgreSQL PASS**, exit 0. Raw local log SHA256 `22749AF9E1FC8E068A3C86943ABAF2F8DD01C0124553EF92CD28E267489EBD66`.
+- Ba hosted checks `frontend`, `e2e`, `readiness` của [main@9ca8000](https://github.com/duyxl56785/Project_HK5/commit/9ca80006fce359a96862a93a42b5d0fa631f85a7) đã SUCCESS. Unit/PG chọn lọc không thay thế UAT live hai Store; Issue #18 vẫn **BLOCKED/NOT_RUN** vì #147 và các gate business/owner chưa hoàn tất. Raw logs và JUnit XML của lượt TV5 giữ ở worktree cục bộ `.verification/tv5-midterm-main-20261102/`, chưa công bố như artifact release.
 ## Evidence truy vết
 
 - `scripts/qa/uat/Start-IsolatedUat.ps1`, `scripts/qa/uat/Stop-IsolatedUat.ps1` — rehearsal cô lập, không dùng volume chung.
-- PR #140, #143, #148 đã merge vào `main@d446577`; PR #145 `81ad9f7`, #147 `cb576a6` còn mở tại lần đối chiếu này. PR #144 đã merge trước đó.
+- PR #140, #141, #143, #144, #145 và #148 đã merge vào `main@9ca8000`; PR #147 `b4e869d` còn mở tại lần đối chiếu này. #145 merge không tự chứng minh hai fixture UNKNOWN hoặc retention PII production đã được nghiệm thu.
 - `docs/project-report/M01_FINANCE_DECISION.md` ghi quyết định cho bản nộp/demo local; `docs/TV5_M01_HUMAN_DECISION_PACKET.md` là gói đề xuất lịch sử. Không dùng hai tài liệu để suy ra production sign-off.
 - Issue #18 — UAT final giữ **BLOCKED/NOT_RUN** cho đến khi các điều kiện trên đạt.

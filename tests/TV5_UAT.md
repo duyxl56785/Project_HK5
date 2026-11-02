@@ -1,6 +1,16 @@
 # TV5 — QA matrix và UAT hai Store
 
-Refs #5. Mọi ca live bên dưới **NOT_RUN**: main còn scaffold, thiếu Auth/Product/Order/Inventory API và seed thật. Unit rules không thay thế API/DB/E2E. Kết quả thực chạy xem reports/TV5_W1_AUDIT_2026-10-15.md.
+Refs #5, #18. Ma trận bên dưới là **snapshot kế hoạch tuần 1 ngày 15/10/2026**; câu “main còn scaffold” và các trạng thái NOT_RUN trong bản lịch sử không mô tả source hiện tại. Không tự đổi ô kết quả lịch sử thành PASS khi thiếu evidence live.
+
+## Gate hiện tại, đối chiếu 02/11/2026
+
+- Main `9ca80006fce359a96862a93a42b5d0fa631f85a7` đã merge F15 #148 và Checkout draft #145; CI main frontend/e2e/readiness SUCCESS. TV5 chạy riêng 66 unit PASS, 20 Order PostgreSQL JUnit PASS và 34 Product PostgreSQL PASS tại SHA này; xem [phụ lục §9.1](../reports/TV5_SECTION_9_1_RUNTIME_ALIGNMENT_2026-11-02.md) để phân biệt lệnh kết hợp FAIL vì chọn sai Gradle task và các raw log/hash. **UAT cuối #18 vẫn BLOCKED/NOT_RUN** vì #147 còn mở và gate owner/business chưa đủ.
+- UAT hiện tại phải dùng **hai Store thường**, Customer và Admin giả trong Compose project/volume riêng của PR #146, qua React → Gateway → Backend → PostgreSQL thật. Kiểm tra login/logout, JWT/RBAC, Seller revoke, Catalog, Cart/Checkout, Inventory RESERVE/CONSUME/RELEASE, Order/Fulfillment, COD, review, Finance, 401/403/409, replay, retry và recovery; ghi full SHA main, seed version, lệnh, response đã ẩn PII, JUnit/log và từng case PASS/FAIL/BLOCKED/NOT_RUN.
+- Kịch bản House Store 0%/chuyển Store thành House trong F01/F02 bên dưới là **candidate lịch sử, không thuộc vận hành bản nộp/demo local theo MD11**. House Store operation thuộc TV2/business owner, ngoài phạm vi vận hành TV5; TV5 chỉ đối chiếu tác động Finance/Settlement khi có quyết định. Finance/COD/Settlement production không được suy PASS từ test rules, mock hoặc demo; hai approval flags của UAT cô lập mặc định OFF.
+- Chỉ dừng/dọn **đúng Compose project `hk5-uat-*`** bằng `scripts/qa/uat/Stop-IsolatedUat.ps1` sau khi giữ evidence. Không prune/xóa volume dùng chung. Không tick checklist Issue #18 trước lượt UAT final đủ gate.
+
+## Ma trận tuần 1 (lưu nguyên kết quả lịch sử)
+
 
 | ID | Yêu cầu / thao tác | Kết quả mong đợi | Owner | Live |
 |---|---|---|---|---|
