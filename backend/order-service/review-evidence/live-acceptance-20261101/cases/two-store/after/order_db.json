@@ -1,0 +1,145 @@
+{
+  "database": "order_db",
+  "postgres_version": "PostgreSQL 16.15 (Debian 16.15-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+  "flyway": [
+    {
+      "installed_rank": 1,
+      "version": "1",
+      "script": "V1__checkout_baseline.sql",
+      "checksum": 304267561,
+      "success": true
+    },
+    {
+      "installed_rank": 2,
+      "version": "2",
+      "script": "V2__inventory_operation_journal.sql",
+      "checksum": -1781072333,
+      "success": true
+    },
+    {
+      "installed_rank": 3,
+      "version": "3",
+      "script": "V3__fulfillment_cod_shipping_outbox.sql",
+      "checksum": -474404700,
+      "success": true
+    },
+    {
+      "installed_rank": 4,
+      "version": "4",
+      "script": "V4__write_fence_abort.sql",
+      "checksum": 1182150034,
+      "success": true
+    },
+    {
+      "installed_rank": 5,
+      "version": "5",
+      "script": "V5__checkout_order_drafts.sql",
+      "checksum": -759154235,
+      "success": true
+    }
+  ],
+  "orders": [
+    {
+      "id": "b0c34d99-98ac-4aed-9830-0e4a9bd1f0da",
+      "customer_id": "afd2e3ae-cfb8-45c5-9d20-db09ba576191",
+      "status": "PLACED",
+      "total": "790000.00",
+      "created_at": "2026-11-01T14:53:29.738961+00:00",
+      "payment_method": "COD"
+    }
+  ],
+  "seller_orders": [
+    {
+      "id": "18c3424b-c46e-42c6-bb42-de939e34a4e9",
+      "order_id": "b0c34d99-98ac-4aed-9830-0e4a9bd1f0da",
+      "store_id": "29e1cd3b-b7dc-48e6-b4c8-da4e4460a16f",
+      "seller_id": "18016824-c5f4-4bcc-b0fc-acf1bccb8966",
+      "status": "PLACED",
+      "cod_status": "PENDING",
+      "gross": "370000.00",
+      "platform_fee": "18500.00",
+      "version": 0
+    },
+    {
+      "id": "be73c125-c372-4831-aab5-f291d971ea6c",
+      "order_id": "b0c34d99-98ac-4aed-9830-0e4a9bd1f0da",
+      "store_id": "56f58629-d305-4e7d-8c99-d0401ae44450",
+      "seller_id": "99fea343-16ec-4f6b-8c44-6231d702f9f9",
+      "status": "PLACED",
+      "cod_status": "PENDING",
+      "gross": "420000.00",
+      "platform_fee": "21000.00",
+      "version": 0
+    }
+  ],
+  "items": [
+    {
+      "id": "1ada0f34-096a-49dc-b8c7-350742ded4eb",
+      "seller_order_id": "be73c125-c372-4831-aab5-f291d971ea6c",
+      "product_id": "25dbf9c2-5e70-4dd8-9ddf-efe3e0d033e3",
+      "sku": "VI-001",
+      "quantity": 2,
+      "unit_price_snapshot": "210000.00",
+      "line_total": "420000.00"
+    },
+    {
+      "id": "cbecff99-c0e6-4b73-a06e-db74e2c52124",
+      "seller_order_id": "18c3424b-c46e-42c6-bb42-de939e34a4e9",
+      "product_id": "6136fb1f-9dac-41ee-8c0b-fe6a259c1d5d",
+      "sku": "BE-001",
+      "quantity": 2,
+      "unit_price_snapshot": "185000.00",
+      "line_total": "370000.00"
+    }
+  ],
+  "attempts": [
+    {
+      "id": "b0c34d99-98ac-4aed-9830-0e4a9bd1f0da",
+      "customer_id": "afd2e3ae-cfb8-45c5-9d20-db09ba576191",
+      "fingerprint": "8cf4f76ff2e2f1cfd4aea19715731ae944970ace52ee43bcf5bce1503e6d3eb9",
+      "state": "SUCCEEDED",
+      "order_id": "b0c34d99-98ac-4aed-9830-0e4a9bd1f0da"
+    }
+  ],
+  "drafts": [
+    {
+      "checkout_attempt_id": "b0c34d99-98ac-4aed-9830-0e4a9bd1f0da",
+      "snapshot_version": 1,
+      "payload_sha256": "dbf2fb488fa49535de6a0c9f32abe44afb3a24e349fae5fee86d7cf2bff4df50",
+      "checksum_matches": true,
+      "created_at": "2026-11-01T14:53:29.812272+00:00"
+    }
+  ],
+  "journals": [
+    {
+      "operation_id": "order-b0c34d99-98ac-4aed-9830-0e4a9bd1f0da-reserve",
+      "checkout_attempt_id": "b0c34d99-98ac-4aed-9830-0e4a9bd1f0da",
+      "operation_type": "RESERVE",
+      "canonical_lines": [
+        {
+          "sku": "BE-001",
+          "quantity": 2
+        },
+        {
+          "sku": "VI-001",
+          "quantity": 2
+        }
+      ],
+      "payload_fingerprint": "c285b59ec68fafc0186812ec71934a59d6b6919a1d0edec828a42df430005de0",
+      "state": "CONFIRMED",
+      "send_attempts": 1,
+      "last_error_code": null
+    }
+  ],
+  "outbox": [
+    {
+      "id": "d32aafaa-6dc0-4341-ab44-a1a099f304b5",
+      "topic": "order.placed.v1",
+      "aggregate_id": "b0c34d99-98ac-4aed-9830-0e4a9bd1f0da",
+      "published_at": "2026-11-01T14:53:31.421973+00:00",
+      "attempts": 0,
+      "dead": false,
+      "payload_sha256": "01ab59437b2531a49c8a398424fa7ef389f2967d2996da785751882160edc8fc"
+    }
+  ]
+}

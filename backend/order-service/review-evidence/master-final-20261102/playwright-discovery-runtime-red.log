@@ -1,0 +1,26 @@
+
+Error: Playwright Test did not expect test.beforeAll() to be called here.
+Most common reasons include:
+- You are calling test.beforeAll() in a configuration file.
+- You are calling test.beforeAll() in a file that is imported by the configuration file.
+- You have two different versions of @playwright/test. This usually happens
+  when one of the dependencies in your package.json depends on @playwright/test.
+- You are calling test.beforeAll() from an async test.describe() block. Only sync ones are supported.
+
+   at negative.live.spec.mjs:167
+
+  165 | }
+  166 |
+> 167 | test.beforeAll(async () => {
+      |      ^
+  168 |   currentDir = resolve(evidence, 'setup'); http = [];
+  169 |   context = await request.newContext();
+  170 |   const signed = await login(required('TV3_NEG_CUSTOMER_EMAIL'), required('TV3_NEG_PASSWORD'), 'CUSTOMER');
+    at _TestTypeImpl._currentSuite (/tmp/tv3-pr145-sync-20261102/node-runtime/node_modules/playwright/lib/common/index.js:2235:13)
+    at _TestTypeImpl._hook (/tmp/tv3-pr145-sync-20261102/node-runtime/node_modules/playwright/lib/common/index.js:2323:24)
+    at Function.beforeAll (/tmp/tv3-pr145-sync-20261102/node-runtime/node_modules/playwright/lib/common/index.js:1169:12)
+    at /workspace/tv3-final-main-145-147/frontend/src/features/checkout/acceptance/negative.live.spec.mjs:167:6
+
+Error: No tests found
+Listing tests:
+Total: 0 tests in 0 files

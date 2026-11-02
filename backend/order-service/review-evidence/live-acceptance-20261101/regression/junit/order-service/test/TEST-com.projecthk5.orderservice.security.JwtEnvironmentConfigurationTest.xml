@@ -1,0 +1,5 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuite name="com.projecthk5.orderservice.security.JwtEnvironmentConfigurationTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-11-01T14:45:44" time="1.101">
+  <testcase name="documentedEnvironmentBindsThroughRealYamlAndVerifiesHs256()" classname="com.projecthk5.orderservice.security.JwtEnvironmentConfigurationTest" time="1.022" />
+  <testcase name="missingKeyStillFailsClosed()" classname="com.projecthk5.orderservice.security.JwtEnvironmentConfigurationTest" time="0.078" />
+</testsuite>

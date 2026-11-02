@@ -1,0 +1,11 @@
+{
+  "cart": {
+    "revision": 39,
+    "claimed": false,
+    "itemCount": 0
+  },
+  "containersPreserved": 15,
+  "sameMountSetsAndLifecycle": true,
+  "baselineOrderRetained": "2b119e70-cac0-453e-b122-8f0a91e6e5fa",
+  "noFurtherMutation": true
+}

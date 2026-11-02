@@ -1,0 +1,260 @@
+[
+  {
+    "local_relative_path": "source.json",
+    "published_path": "source.json",
+    "sha256": "ca012e29517c9e7bdcf0ad17ba04844b3fd8f73bf0254b3682ecf85b155e6230",
+    "transform": "None: privacy-projected during capture; original reporter/log bytes unchanged"
+  },
+  {
+    "local_relative_path": "stack-verification.json",
+    "published_path": "stack-verification.json",
+    "sha256": "830c1565430a905120dbad2388d3146fe1579515302e922d81f498e08a7fd838",
+    "transform": "None: privacy-projected during capture; original reporter/log bytes unchanged"
+  },
+  {
+    "local_relative_path": "discovery.log",
+    "published_path": "discovery.log",
+    "sha256": "67369406883cee9b8387d8f49c7d427672c83f41f2219a03c62d6b43dc7b07a6",
+    "transform": "None: privacy-projected during capture; original reporter/log bytes unchanged"
+  },
+  {
+    "local_relative_path": "discovery.exit",
+    "published_path": "discovery.exit",
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "transform": "None: privacy-projected during capture; original reporter/log bytes unchanged"
+  },
+  {
+    "local_relative_path": "execution.log",
+    "published_path": "execution.log",
+    "sha256": "5b4bf3f123c9f02f65c138b107d618c75ba6edc9f4e2a67edc5a717681de9ca4",
+    "transform": "None: privacy-projected during capture; original reporter/log bytes unchanged"
+  },
+  {
+    "local_relative_path": "execution.exit",
+    "published_path": "execution.exit",
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "transform": "None: privacy-projected during capture; original reporter/log bytes unchanged"
+  },
+  {
+    "local_relative_path": "execution/catalog-price/after.json",
+    "published_path": "execution/catalog-price/after.json",
+    "sha256": "1f571eb3aa282f1d44983bd34d08d70ffb8710e1758b880fba7f0af773aba3e8",
+    "transform": "None: privacy-projected during capture; original reporter/log bytes unchanged"
+  },
+  {
+    "local_relative_path": "execution/catalog-price/before.json",
+    "published_path": "execution/catalog-price/before.json",
+    "sha256": "a06bd67b0341b63d99acd6791e23db3d7e18ee060118b13d7761ed3ec56dc505",
+    "transform": "None: privacy-projected during capture; original reporter/log bytes unchanged"
+  },
+  {
+    "local_relative_path": "execution/catalog-price/comparison.json",
+    "published_path": "execution/catalog-price/comparison.json",
+    "sha256": "b6a66fe3033ea6a2a8da050da905b68d91e9411fb52941fb8fd2cdece4a6f95a",
+    "transform": "None: privacy-projected during capture; original reporter/log bytes unchanged"
+  },
+  {
+    "local_relative_path": "execution/catalog-price/http.json",
+    "published_path": "execution/catalog-price/http.json",
+    "sha256": "65217c10c09bd1df8da61874fe748dfb949e1f3497130f40def1900217b5286d",
+    "transform": "None: privacy-projected during capture; original reporter/log bytes unchanged"
+  },
+  {
+    "local_relative_path": "execution/catalog-price/price-fixture.json",
+    "published_path": "execution/catalog-price/price-fixture.json",
+    "sha256": "fe4ea6e8b3d2daf8935b6ef33b6a7ca23a38bd141daf3706fe0cc23154b0df9c",
+    "transform": "None: privacy-projected during capture; original reporter/log bytes unchanged"
+  },
+  {
+    "local_relative_path": "execution/catalog-price/result.json",
+    "published_path": "execution/catalog-price/result.json",
+    "sha256": "d6aee7d8b760e16660412b2c4aa989792b3ac6279b96026def7bb237da931aee",
+    "transform": "None: privacy-projected during capture; original reporter/log bytes unchanged"
+  },
+  {
+    "local_relative_path": "execution/expected-items/after.json",
+    "published_path": "execution/expected-items/after.json",
+    "sha256": "4104b65f7dbba6e9bd180469c3a2465ea7d063275ff4a252ba7ee737d1ed5a87",
+    "transform": "None: privacy-projected during capture; original reporter/log bytes unchanged"
+  },
+  {
+    "local_relative_path": "execution/expected-items/before.json",
+    "published_path": "execution/expected-items/before.json",
+    "sha256": "886a397829cc8605eb5b56be00565e01a698d56133dd9e97927ccd6502e4941c",
+    "transform": "None: privacy-projected during capture; original reporter/log bytes unchanged"
+  },
+  {
+    "local_relative_path": "execution/expected-items/comparison.json",
+    "published_path": "execution/expected-items/comparison.json",
+    "sha256": "dbd581d570da6a04b2982b7d94f729d445f8b23cec663c67029b9a50ee98667f",
+    "transform": "None: privacy-projected during capture; original reporter/log bytes unchanged"
+  },
+  {
+    "local_relative_path": "execution/expected-items/http.json",
+    "published_path": "execution/expected-items/http.json",
+    "sha256": "48fcd65b38aa90e13572d38d2dcab75e642c143cab7a923e7b6fbad69316a819",
+    "transform": "None: privacy-projected during capture; original reporter/log bytes unchanged"
+  },
+  {
+    "local_relative_path": "execution/expected-items/result.json",
+    "published_path": "execution/expected-items/result.json",
+    "sha256": "2268e92311596fe0112b8cad86bb6e276639b51e1da061516a12b7a3fe042d42",
+    "transform": "None: privacy-projected during capture; original reporter/log bytes unchanged"
+  },
+  {
+    "local_relative_path": "execution/insufficient-stock/after.json",
+    "published_path": "execution/insufficient-stock/after.json",
+    "sha256": "9d56e1ff13d8cc5a917a8a517cc4a5225912478b91d5ae7bf0707af2732fc6ad",
+    "transform": "None: privacy-projected during capture; original reporter/log bytes unchanged"
+  },
+  {
+    "local_relative_path": "execution/insufficient-stock/before.json",
+    "published_path": "execution/insufficient-stock/before.json",
+    "sha256": "4776bf5dd838807b03b7273480ebcce1eb0126fc922e7b210c5c416a59c61c86",
+    "transform": "None: privacy-projected during capture; original reporter/log bytes unchanged"
+  },
+  {
+    "local_relative_path": "execution/insufficient-stock/comparison.json",
+    "published_path": "execution/insufficient-stock/comparison.json",
+    "sha256": "790efff20774e930e253ed7df67c1e5eca619b2461b4a08d86c614edd82611af",
+    "transform": "None: privacy-projected during capture; original reporter/log bytes unchanged"
+  },
+  {
+    "local_relative_path": "execution/insufficient-stock/http.json",
+    "published_path": "execution/insufficient-stock/http.json",
+    "sha256": "bd92fd31b4d60c1fccddbece578bf291340bbba4a22918bd9174aaac49d43f80",
+    "transform": "None: privacy-projected during capture; original reporter/log bytes unchanged"
+  },
+  {
+    "local_relative_path": "execution/insufficient-stock/result.json",
+    "published_path": "execution/insufficient-stock/result.json",
+    "sha256": "c0995412cd183b5b7c418d0772c3a2efd2fc4ed5e5df804a51e76fbabdb040e0",
+    "transform": "None: privacy-projected during capture; original reporter/log bytes unchanged"
+  },
+  {
+    "local_relative_path": "execution/playwright.json",
+    "published_path": "execution/playwright.json",
+    "sha256": "7b160e6c4fd116b3dd046369afff089474c0211969847b98cf3f8830bc602ea8",
+    "transform": "None: privacy-projected during capture; original reporter/log bytes unchanged"
+  },
+  {
+    "local_relative_path": "execution/product-inactive/after.json",
+    "published_path": "execution/product-inactive/after.json",
+    "sha256": "a5afb7605f8b381cf268ab3fd1b571681224c323c7b9a427f0b64f762074faf1",
+    "transform": "None: privacy-projected during capture; original reporter/log bytes unchanged"
+  },
+  {
+    "local_relative_path": "execution/product-inactive/before.json",
+    "published_path": "execution/product-inactive/before.json",
+    "sha256": "ffdf998d29a22ba4d39ec681f7f255c26aa1fa62a3b684eec7c047ba170cc546",
+    "transform": "None: privacy-projected during capture; original reporter/log bytes unchanged"
+  },
+  {
+    "local_relative_path": "execution/product-inactive/comparison.json",
+    "published_path": "execution/product-inactive/comparison.json",
+    "sha256": "426cf49ffc469b3f4084becf64d1ec47f1a1ac6d0a480c6d5bb3a199ea5429d2",
+    "transform": "None: privacy-projected during capture; original reporter/log bytes unchanged"
+  },
+  {
+    "local_relative_path": "execution/product-inactive/http.json",
+    "published_path": "execution/product-inactive/http.json",
+    "sha256": "c44dd2a96c96c607f717b1b9e80f92c30e1073185c552d563e57dbce26758d8f",
+    "transform": "None: privacy-projected during capture; original reporter/log bytes unchanged"
+  },
+  {
+    "local_relative_path": "execution/product-inactive/result.json",
+    "published_path": "execution/product-inactive/result.json",
+    "sha256": "0171b0a642635598a884f8483ca8d2d576fc9a7bea375675431bdcf9fd9be219",
+    "transform": "None: privacy-projected during capture; original reporter/log bytes unchanged"
+  },
+  {
+    "local_relative_path": "execution/replay-body/after.json",
+    "published_path": "execution/replay-body/after.json",
+    "sha256": "3f3ffd73fe78f66a6a5a3e06198d31adbde5002e886d403fa6c88ef25478f2f2",
+    "transform": "None: privacy-projected during capture; original reporter/log bytes unchanged"
+  },
+  {
+    "local_relative_path": "execution/replay-body/before.json",
+    "published_path": "execution/replay-body/before.json",
+    "sha256": "3f3ffd73fe78f66a6a5a3e06198d31adbde5002e886d403fa6c88ef25478f2f2",
+    "transform": "None: privacy-projected during capture; original reporter/log bytes unchanged"
+  },
+  {
+    "local_relative_path": "execution/replay-body/comparison.json",
+    "published_path": "execution/replay-body/comparison.json",
+    "sha256": "5ea8bdd179239bf1928b53e138fbae3d8e17b1b6cb305cba5c4058ba17238663",
+    "transform": "None: privacy-projected during capture; original reporter/log bytes unchanged"
+  },
+  {
+    "local_relative_path": "execution/replay-body/http.json",
+    "published_path": "execution/replay-body/http.json",
+    "sha256": "30614ef67cd3ef1857276484f4c41c3421dd9ced6d75cf1a2c003dcc77dfc41d",
+    "transform": "None: privacy-projected during capture; original reporter/log bytes unchanged"
+  },
+  {
+    "local_relative_path": "execution/replay-body/result.json",
+    "published_path": "execution/replay-body/result.json",
+    "sha256": "94e52365018dbe855c5c4d9fc33577a297a208b1474cfc15db9f56726c209f8e",
+    "transform": "None: privacy-projected during capture; original reporter/log bytes unchanged"
+  },
+  {
+    "local_relative_path": "execution/replay-shipping/after.json",
+    "published_path": "execution/replay-shipping/after.json",
+    "sha256": "3f3ffd73fe78f66a6a5a3e06198d31adbde5002e886d403fa6c88ef25478f2f2",
+    "transform": "None: privacy-projected during capture; original reporter/log bytes unchanged"
+  },
+  {
+    "local_relative_path": "execution/replay-shipping/before.json",
+    "published_path": "execution/replay-shipping/before.json",
+    "sha256": "3f3ffd73fe78f66a6a5a3e06198d31adbde5002e886d403fa6c88ef25478f2f2",
+    "transform": "None: privacy-projected during capture; original reporter/log bytes unchanged"
+  },
+  {
+    "local_relative_path": "execution/replay-shipping/comparison.json",
+    "published_path": "execution/replay-shipping/comparison.json",
+    "sha256": "274af29c62b45fc881933cd4a76abc85d85cff5db56424dd9a1f2f16b315331b",
+    "transform": "None: privacy-projected during capture; original reporter/log bytes unchanged"
+  },
+  {
+    "local_relative_path": "execution/replay-shipping/http.json",
+    "published_path": "execution/replay-shipping/http.json",
+    "sha256": "cd8829da508c4c19f30dafa0e576f34382bcb6c61bef99a2d360a915fe4e7020",
+    "transform": "None: privacy-projected during capture; original reporter/log bytes unchanged"
+  },
+  {
+    "local_relative_path": "execution/replay-shipping/result.json",
+    "published_path": "execution/replay-shipping/result.json",
+    "sha256": "a641ac7cc067797f6dab16a46fa85bf4bb6b44cedbe09ca4f0b628bdfe37ec06",
+    "transform": "None: privacy-projected during capture; original reporter/log bytes unchanged"
+  },
+  {
+    "local_relative_path": "execution/setup/after-baseline.json",
+    "published_path": "execution/setup/after-baseline.json",
+    "sha256": "3f3ffd73fe78f66a6a5a3e06198d31adbde5002e886d403fa6c88ef25478f2f2",
+    "transform": "None: privacy-projected during capture; original reporter/log bytes unchanged"
+  },
+  {
+    "local_relative_path": "execution/setup/before-baseline.json",
+    "published_path": "execution/setup/before-baseline.json",
+    "sha256": "fc252c67dec5f1db97d109be308e1349634e5c7cac9d7250512827cc279ea6e3",
+    "transform": "None: privacy-projected during capture; original reporter/log bytes unchanged"
+  },
+  {
+    "local_relative_path": "execution/setup/fixture.json",
+    "published_path": "execution/setup/fixture.json",
+    "sha256": "09593fe6c7166df39bcbba5eb135523eaa018ae8940aada9e3391ab021ba0539",
+    "transform": "None: privacy-projected during capture; original reporter/log bytes unchanged"
+  },
+  {
+    "local_relative_path": "execution/setup/http.json",
+    "published_path": "execution/setup/http.json",
+    "sha256": "6cedcb34c5164233bf9cf61f0f70c9ef512608c00c8d3c9d74eac541dfd4e88d",
+    "transform": "None: privacy-projected during capture; original reporter/log bytes unchanged"
+  },
+  {
+    "local_relative_path": "execution/junit.xml",
+    "published_path": "execution/junit.xml",
+    "sha256": "3a422a5542a35cc345cd385bf79f822836b2719f5afac3195cd9de7263e1da41",
+    "transform": "None: privacy-projected during capture; original reporter/log bytes unchanged"
+  }
+]

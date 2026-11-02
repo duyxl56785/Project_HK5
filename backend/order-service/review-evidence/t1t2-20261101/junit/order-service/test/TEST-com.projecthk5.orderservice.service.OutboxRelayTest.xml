@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuite name="com.projecthk5.orderservice.service.OutboxRelayTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-11-01T10:37:43" time="0.112">
+  <testcase name="brokerOutageKeepsEventsQueuedWithoutSpendingAttempts()" classname="com.projecthk5.orderservice.service.OutboxRelayTest" time="0.057" />
+  <testcase name="inventoryOperationIsSentWithStableIdAndMarkedPublished()" classname="com.projecthk5.orderservice.service.OutboxRelayTest" time="0.014" />
+  <testcase name="definitiveInventoryRejectionIsParkedForOperators()" classname="com.projecthk5.orderservice.service.OutboxRelayTest" time="0.006" />
+  <testcase name="storeNoticeIsDeliveredToTheCurrentStoreOwner()" classname="com.projecthk5.orderservice.service.OutboxRelayTest" time="0.005" />
+  <testcase name="unknownTopicIsParkedNotRetried()" classname="com.projecthk5.orderservice.service.OutboxRelayTest" time="0.001" />
+  <testcase name="inventoryStillFlowsDuringBrokerOutage()" classname="com.projecthk5.orderservice.service.OutboxRelayTest" time="0.007" />
+  <testcase name="retriesStopAfterTheLimit()" classname="com.projecthk5.orderservice.service.OutboxRelayTest" time="0.008" />
+  <testcase name="transientFailureStaysQueuedForRetry()" classname="com.projecthk5.orderservice.service.OutboxRelayTest" time="0.003" />
+</testsuite>

@@ -1,0 +1,77 @@
+[
+  {
+    "method": "GET",
+    "path": "/api/cart",
+    "status": 200
+  },
+  {
+    "method": "POST",
+    "path": "/api/cart/items",
+    "status": 200
+  },
+  {
+    "method": "POST",
+    "path": "/api/cart/items",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "path": "/api/cart",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "path": "/api/seller/products/43bc4cd5-3744-46f9-a3e0-88db8429658a",
+    "status": 200,
+    "product": {
+      "id": "43bc4cd5-3744-46f9-a3e0-88db8429658a",
+      "sku": "TV3-NEG-b6396d50-B",
+      "status": "ACTIVE",
+      "version": "6",
+      "unitPrice": "11000"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/seller/products/43bc4cd5-3744-46f9-a3e0-88db8429658a/deactivate",
+    "status": 200,
+    "product": {
+      "id": "43bc4cd5-3744-46f9-a3e0-88db8429658a",
+      "sku": "TV3-NEG-b6396d50-B",
+      "status": "INACTIVE",
+      "version": "7",
+      "unitPrice": "11000"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/cart",
+    "status": 200
+  },
+  {
+    "method": "POST",
+    "path": "/api/orders",
+    "status": 409,
+    "keySha256": "8d98f1261e37a75a5588ab24ca837ce5b1e549db3dd0a6fc8ddccf2c5ff0a51e",
+    "expectedItems": [
+      {
+        "productId": "0521c2d6-64e7-4687-9e61-cff48eaaffd6",
+        "quantity": 1
+      },
+      {
+        "productId": "43bc4cd5-3744-46f9-a3e0-88db8429658a",
+        "quantity": 1
+      }
+    ],
+    "expectedRevision": 35,
+    "error": {
+      "code": "BUSINESS_CONFLICT",
+      "message": "Product, seller or store not available"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/cart",
+    "status": 200
+  }
+]

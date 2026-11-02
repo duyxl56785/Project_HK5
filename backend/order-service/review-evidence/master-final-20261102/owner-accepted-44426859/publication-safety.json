@@ -1,0 +1,13 @@
+{
+  "filesScanned": 15,
+  "literalCredentialPatterns": [
+    "private_key",
+    "github_token",
+    "jwt_value",
+    "authorization_literal",
+    "fixture_shipping_phone"
+  ],
+  "findings": 0,
+  "publicXML": "Sanitized export, stdout/stderr/properties omitted, synthetic shipping attributes redacted",
+  "rawLogs": "Unmodified local; SHA256 manifest published"
+}

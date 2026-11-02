@@ -1,0 +1,18 @@
+{
+  "ownerHead": "44426859cbcdcd6dd9ba0d5ce6f84f91a317256d",
+  "ownerTree": "20ca9d7212bc6d03e43cc9e14c42f654b7b8c728",
+  "previousTestedCandidate": "351fb032bf2c6931a6ce5720940aa3d7169c5e80",
+  "p1OwnerCommit": "fix(order): bind the short-stock line to the journaled reservation",
+  "ownerMergedPR145": "81ad9f7712a6fd1d59798c6b7d58e06a0095033f",
+  "nonEvidenceNonAcceptanceDiffs": [
+    "backend/order-service/src/main/java/com/projecthk5/orderservice/service/CheckoutService.java"
+  ],
+  "onlyProductionDelta": "Position of the same private PreparedOrder record declaration relative to helper problem(...); all remaining bytes identical",
+  "declarationRemovedComparisonEqual": true,
+  "exactByteMatchingP1Files": {
+    "backend/order-service/src/main/java/com/projecthk5/orderservice/ports/InventoryHttpAdapter.java": "1fca59d7e6e7eb23b0d1686184c933513d4f4e010368f2fe2bcf5705d0c5f2ab",
+    "backend/order-service/src/test/java/com/projecthk5/orderservice/integration/CheckoutInventoryBoundaryPostgresIT.java": "657f20d62414cb7f86543ee227597aab29109c6c2265ff3e6d7ea1eb2e74f595"
+  },
+  "productionAcceptanceStatus": "INTEGRATED_BY_TV2_IN_PR147",
+  "liveAcceptanceStatus": "NOT_RUN/BLOCKED: no owner approval for a new separate final-source stack"
+}

@@ -1,0 +1,7 @@
+{
+  "image_id": "sha256:1e7426c6891f8b5e79ec6b55a2ce888ae70e1222250e8f79a3215c2edc04ca3d",
+  "built_application_head": "593ac8db32c3f03570a8391923e9b8e5c5ffd7e5",
+  "deployed_head": "bf8eb3a027c72ad9fde81d0aa5dabc4e73bebacf",
+  "tracked_frontend_tree_identical": "ff82078c350bf92beb3a2872fa2301139307ad88",
+  "acceptance_files_not_application_bundle": true
+}

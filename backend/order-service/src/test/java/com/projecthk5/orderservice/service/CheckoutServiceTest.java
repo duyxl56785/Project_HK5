@@ -68,7 +68,8 @@ class CheckoutServiceTest {
         verify(cart,never()).release(anyString(),anyString());
         verify(inventory,never()).release(any());
         verify(keys).fail(attempt.getId(),true);
-        verifyNoInteractions(write);
+        verify(write).prepareDraft(any());
+        verify(write,never()).savePlaced(any(),any(),anyString());
     }
     @Test void commitUnknownDoesNotCompensateAndFlagsForReconciliation() {
         CheckoutAttempt attempt=fresh();catalogAndCart();
@@ -334,5 +335,35 @@ class CheckoutServiceTest {
             && o.getSellerOrders().stream().flatMap(so -> so.getItems().stream())
                 .anyMatch(i -> "SKU-1".equals(i.getSku()) && "Ao thun".equals(i.getProductName()))),
             eq(attempt.getId()),anyString());
+    }
+
+    @Test void draftFailureStopsBeforeInventoryAndReleasesOnlyTheKnownCartClaim() {
+        CheckoutAttempt attempt=fresh();catalogAndCart();
+        doThrow(new IllegalStateException("Draft commit failed")).when(write).prepareDraft(any());
+        assertThrows(IllegalStateException.class,()->svc.checkout(customer,bearer,key,request));
+        verifyNoInteractions(inventory);
+        verify(write,never()).savePlaced(any(),any(),anyString());
+        verify(cart).release(bearer,key);
+        verify(keys).fail(attempt.getId(),false);
+    }
+
+    @Test void immutableDraftPrecedesReserveAndUsesTheExactWrittenGraphAndEvent() {
+        CheckoutAttempt attempt=fresh();catalogAndCart();
+        svc.checkout(customer,bearer,key,request);
+        var draft=org.mockito.ArgumentCaptor.forClass(com.projecthk5.orderservice.domain.CheckoutDraft.class);
+        var order=org.mockito.ArgumentCaptor.forClass(Order.class);
+        var payload=org.mockito.ArgumentCaptor.forClass(String.class);
+        var sequence=inOrder(write,inventory);
+        sequence.verify(write).prepareDraft(draft.capture());
+        sequence.verify(inventory).reserve(eq(attempt.getId()),anyList());
+        sequence.verify(write).savePlaced(order.capture(),eq(attempt.getId()),payload.capture());
+        assertEquals(payload.getValue(),draft.getValue().outboxPayload());
+        assertEquals(order.getValue().getSellerOrders().stream().map(SellerOrder::getId).toList(),
+            draft.getValue().sellerOrders().stream().map(com.projecthk5.orderservice.domain.CheckoutDraft.Store::id).toList());
+        assertEquals(List.of(false,true),draft.getValue().sellerOrders().stream()
+            .map(com.projecthk5.orderservice.domain.CheckoutDraft.Store::houseStore).toList());
+        order.getValue().getSellerOrders().get(0).getItems().clear();
+        assertEquals(1,draft.getValue().sellerOrders().get(0).items().size());
+        assertThrows(UnsupportedOperationException.class,()->draft.getValue().sellerOrders().clear());
     }
 }

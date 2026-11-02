@@ -12,6 +12,7 @@ import java.util.*;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service
@@ -37,6 +38,9 @@ public class CheckoutService {
     }
 
     public CheckoutResult checkout(String customerId, String bearer, String key, CheckoutRequest req, Order.Shipping shipping) {
+        // Cart/Inventory HTTP must not occur under a caller's DB transaction; T1 needs a committed attempt FK.
+        if (TransactionSynchronizationManager.isActualTransactionActive())
+            throw new IllegalStateException("Checkout cannot run inside an outer database transaction");
         if (key == null || key.isBlank() || key.length()>128 || !key.equals(key.trim()))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Idempotency-Key required (1-128 characters)");
         if (req == null)
@@ -89,7 +93,8 @@ public class CheckoutService {
             if (!claimOwned) throw new IllegalStateException("Cart claim was not acquired");
             if (!customerId.equals(cart.customerId())) throw new IllegalStateException("Cart customer mismatch");
             CheckoutRules.requireSameItems(req.expectedItems(),cart.items());
-            Order order=prepareOrder(orderId,customerId,cart.items());
+            PreparedOrder prepared=prepareOrder(orderId,customerId,cart.items());
+            Order order=prepared.order();
             order.ship(shipping);
             // Reserve exactly the verified lines, including the immutable SKU from Catalog.
             List<InventoryPort.Reservation> reservation=order.getSellerOrders().stream()
@@ -99,6 +104,10 @@ public class CheckoutService {
             // effects. A local serialization failure is known-safe and can release
             // the confirmed Cart claim without inventing an UNKNOWN reservation.
             String outboxPayload=eventPayload(order);
+            // Preserve the exact business graph and event ID before any external stock effect.
+            // A restart can inspect it without repricing or minting new child/item IDs.
+            writer.prepareDraft(CheckoutDraft.capture(order,fingerprint,req.expectedRevision(),cart.revision(),
+                prepared.houseStores(),outboxPayload));
             // Any error/timeout after this point has UNKNOWN outcome. Never
             // automatically compensate after reserve or uncertain DB commit.
             reserveRequested=true;
@@ -144,8 +153,9 @@ public class CheckoutService {
         }
     }
 
-    private Order prepareOrder(UUID id,String customer,List<CartPort.Item> items) {
+    private PreparedOrder prepareOrder(UUID id,String customer,List<CartPort.Item> items) {
         Order order=new Order(id,customer);
+        Map<String,Boolean> houseStores=new LinkedHashMap<>();
         Map<String,List<Prepared>> grouped=new LinkedHashMap<>();
         // S01: authoritative Catalog facts cannot assign the same Seller to two
         // Stores within one checkout. Reject the whole batch before Inventory.
@@ -187,12 +197,14 @@ public class CheckoutService {
             lines.forEach(line -> so.getItems().add(new OrderItem(so,line.product.productId(),
                 line.quantity,line.product.unitPrice(),line.total,line.product.sku(),line.product.name())));
             order.addSellerOrder(so);
+            houseStores.put(entry.getKey(),first.product.houseStore());
         }
         // Two Store subtotals may fit NUMERIC(19,2) individually while the parent
         // aggregate does not. The caller has not set reserveRequested yet.
         OrderAmountStorageBounds.requireExactNonnegative(order.getTotal());
-        return order;
+        return new PreparedOrder(order,Map.copyOf(houseStores));
     }
+    private record PreparedOrder(Order order,Map<String,Boolean> houseStores){}
     private record Prepared(CatalogPort.ProductSnapshot product,int quantity,BigDecimal total){}
     private String eventPayload(Order order) {
         try { return json.writeValueAsString(Map.of("eventId",UUID.randomUUID().toString(),

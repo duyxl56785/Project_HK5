@@ -1,0 +1,161 @@
+# Selected task/build lines only; raw retained locally and hashed.
+> Task :security-common:compileJava UP-TO-DATE
+> Task :product-service:compileJava
+> Task :product-service:processResources
+> Task :product-service:classes
+> Task :product-service:resolveMainClassName
+> Task :security-common:processResources UP-TO-DATE
+> Task :security-common:classes UP-TO-DATE
+> Task :security-common:jar
+> Task :product-service:bootJar
+> Task :product-service:jar
+> Task :product-service:compileTestJava
+> Task :product-service:processTestResources UP-TO-DATE
+> Task :product-service:testClasses
+> Task :product-service:test
+> Task :product-service:integrationTest
+> Task :api-gateway:compileJava UP-TO-DATE
+> Task :api-gateway:processResources UP-TO-DATE
+> Task :api-gateway:classes UP-TO-DATE
+> Task :api-gateway:resolveMainClassName UP-TO-DATE
+> Task :api-gateway:bootJar UP-TO-DATE
+> Task :api-gateway:jar UP-TO-DATE
+> Task :api-gateway:assemble UP-TO-DATE
+> Task :api-gateway:compileTestJava UP-TO-DATE
+> Task :api-gateway:processTestResources NO-SOURCE
+> Task :api-gateway:testClasses UP-TO-DATE
+> Task :api-gateway:test UP-TO-DATE
+> Task :api-gateway:check UP-TO-DATE
+> Task :api-gateway:build UP-TO-DATE
+> Task :auth-service:compileJava UP-TO-DATE
+> Task :auth-service:processResources UP-TO-DATE
+> Task :auth-service:classes UP-TO-DATE
+> Task :auth-service:resolveMainClassName UP-TO-DATE
+> Task :auth-service:bootJar
+> Task :auth-service:jar
+> Task :auth-service:assemble
+> Task :auth-service:compileTestJava UP-TO-DATE
+> Task :auth-service:processTestResources UP-TO-DATE
+> Task :auth-service:testClasses UP-TO-DATE
+> Task :auth-service:test
+> Task :auth-service:check
+> Task :auth-service:build
+> Task :cart-service:compileJava UP-TO-DATE
+> Task :cart-service:processResources UP-TO-DATE
+> Task :cart-service:classes UP-TO-DATE
+> Task :cart-service:resolveMainClassName UP-TO-DATE
+> Task :cart-service:bootJar
+> Task :cart-service:jar UP-TO-DATE
+> Task :cart-service:assemble
+> Task :cart-service:compileTestJava
+> Task :cart-service:processTestResources NO-SOURCE
+> Task :cart-service:testClasses
+> Task :cart-service:test UP-TO-DATE
+> Task :cart-service:check UP-TO-DATE
+> Task :cart-service:build
+> Task :config-server:compileJava UP-TO-DATE
+> Task :config-server:processResources UP-TO-DATE
+> Task :config-server:classes UP-TO-DATE
+> Task :config-server:resolveMainClassName UP-TO-DATE
+> Task :config-server:bootJar UP-TO-DATE
+> Task :config-server:jar UP-TO-DATE
+> Task :config-server:assemble UP-TO-DATE
+> Task :config-server:compileTestJava NO-SOURCE
+> Task :config-server:processTestResources NO-SOURCE
+> Task :config-server:testClasses UP-TO-DATE
+> Task :config-server:test NO-SOURCE
+> Task :config-server:check UP-TO-DATE
+> Task :config-server:build UP-TO-DATE
+> Task :discovery-server:compileJava UP-TO-DATE
+> Task :discovery-server:processResources UP-TO-DATE
+> Task :discovery-server:classes UP-TO-DATE
+> Task :discovery-server:resolveMainClassName UP-TO-DATE
+> Task :discovery-server:bootJar UP-TO-DATE
+> Task :discovery-server:jar UP-TO-DATE
+> Task :discovery-server:assemble UP-TO-DATE
+> Task :discovery-server:compileTestJava NO-SOURCE
+> Task :discovery-server:processTestResources NO-SOURCE
+> Task :discovery-server:testClasses UP-TO-DATE
+> Task :discovery-server:test NO-SOURCE
+> Task :discovery-server:check UP-TO-DATE
+> Task :discovery-server:build UP-TO-DATE
+> Task :inventory-service:compileJava UP-TO-DATE
+> Task :inventory-service:processResources UP-TO-DATE
+> Task :inventory-service:classes UP-TO-DATE
+> Task :inventory-service:resolveMainClassName UP-TO-DATE
+> Task :inventory-service:bootJar UP-TO-DATE
+> Task :inventory-service:jar UP-TO-DATE
+> Task :inventory-service:assemble UP-TO-DATE
+> Task :inventory-service:compileTestJava UP-TO-DATE
+> Task :inventory-service:processTestResources NO-SOURCE
+> Task :inventory-service:testClasses UP-TO-DATE
+> Task :inventory-service:test UP-TO-DATE
+> Task :inventory-service:check UP-TO-DATE
+> Task :inventory-service:build UP-TO-DATE
+> Task :notification-service:compileJava UP-TO-DATE
+> Task :notification-service:processResources UP-TO-DATE
+> Task :notification-service:classes UP-TO-DATE
+> Task :notification-service:resolveMainClassName UP-TO-DATE
+> Task :notification-service:bootJar
+> Task :notification-service:jar UP-TO-DATE
+> Task :notification-service:assemble
+> Task :notification-service:compileTestJava UP-TO-DATE
+> Task :notification-service:processTestResources NO-SOURCE
+> Task :notification-service:testClasses UP-TO-DATE
+> Task :notification-service:test UP-TO-DATE
+> Task :notification-service:check UP-TO-DATE
+> Task :notification-service:build
+> Task :order-service:compileJava UP-TO-DATE
+> Task :order-service:processResources UP-TO-DATE
+> Task :order-service:classes UP-TO-DATE
+> Task :order-service:resolveMainClassName UP-TO-DATE
+> Task :order-service:bootJar
+> Task :order-service:jar UP-TO-DATE
+> Task :order-service:assemble
+> Task :order-service:compileTestJava UP-TO-DATE
+> Task :order-service:processTestResources NO-SOURCE
+> Task :order-service:testClasses UP-TO-DATE
+> Task :order-service:test UP-TO-DATE
+> Task :order-service:check UP-TO-DATE
+> Task :order-service:build
+> Task :product-service:assemble
+> Task :product-service:check
+> Task :product-service:build
+> Task :security-common:resolveMainClassName UP-TO-DATE
+> Task :security-common:bootJar SKIPPED
+> Task :security-common:assemble
+> Task :security-common:compileTestJava UP-TO-DATE
+> Task :security-common:processTestResources NO-SOURCE
+> Task :security-common:testClasses UP-TO-DATE
+> Task :security-common:test UP-TO-DATE
+> Task :security-common:check UP-TO-DATE
+> Task :security-common:build
+> Task :seller-service:compileJava UP-TO-DATE
+> Task :seller-service:processResources UP-TO-DATE
+> Task :seller-service:classes UP-TO-DATE
+> Task :seller-service:resolveMainClassName UP-TO-DATE
+> Task :seller-service:bootJar
+> Task :seller-service:jar UP-TO-DATE
+> Task :seller-service:assemble
+> Task :seller-service:compileTestJava UP-TO-DATE
+> Task :seller-service:processTestResources UP-TO-DATE
+> Task :seller-service:testClasses UP-TO-DATE
+> Task :seller-service:test UP-TO-DATE
+> Task :seller-service:integrationTest UP-TO-DATE
+> Task :seller-service:check UP-TO-DATE
+> Task :seller-service:build
+> Task :user-service:compileJava UP-TO-DATE
+> Task :user-service:processResources UP-TO-DATE
+> Task :user-service:classes UP-TO-DATE
+> Task :user-service:resolveMainClassName UP-TO-DATE
+> Task :user-service:bootJar
+> Task :user-service:jar UP-TO-DATE
+> Task :user-service:assemble
+> Task :user-service:compileTestJava UP-TO-DATE
+> Task :user-service:processTestResources UP-TO-DATE
+> Task :user-service:testClasses UP-TO-DATE
+> Task :user-service:test UP-TO-DATE
+> Task :user-service:check UP-TO-DATE
+> Task :user-service:build
+BUILD SUCCESSFUL in 2m 37s
+85 actionable tasks: 18 executed, 67 up-to-date

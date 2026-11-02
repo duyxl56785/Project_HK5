@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuite name="com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT" tests="10" skipped="0" failures="0" errors="0" timestamp="2026-11-01T10:41:34" time="0.935">
+  <testcase name="reserveConsumeAndReleaseRetriesDoNotApplyStockTwice()" classname="com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT" time="0.118" />
+  <testcase name="failureOnLaterSkuRollsBackEarlierStockMutationAndClaimedLedger()" classname="com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT" time="0.084" />
+  <testcase name="disjointSkuSameIdCannotReplaceWinnerAfterEarlierEmptyLedgerRead()" classname="com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT" time="0.078" />
+  <testcase name="concurrentDuplicateMultiSkuReleaseReplaysAfterFirstCommitWithoutDoubleReturn()" classname="com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT" time="0.113" />
+  <testcase name="concurrentDifferentIdsCannotOversellSharedSkuAndLosingClaimRollsBack()" classname="com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT" time="0.082" />
+  <testcase name="multiSkuReserveAndReleaseReplayCanonicalizeLineOrderAndRejectPayloadReuse()" classname="com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT" time="0.098" />
+  <testcase name="[1] samePayload=true" classname="com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT" time="0.123" />
+  <testcase name="[2] samePayload=false" classname="com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT" time="0.063" />
+  <testcase name="competingMultiSkuReleaseIdsCannotOverdrawReservedBalances()" classname="com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT" time="0.08" />
+  <testcase name="multiSkuReleaseAfterConsumeRejectsExcessHeldQuantityAndRollsBackWholeBatch()" classname="com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT" time="0.066" />
+</testsuite>

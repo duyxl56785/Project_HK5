@@ -1,0 +1,1004 @@
+{
+  "tests": 1741,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 16,
+  "passed": 1725,
+  "reportFiles": 116,
+  "tasks": [
+    {
+      "path": "backend-builds/api-gateway/test-results/test/TEST-com.projecthk5.gateway.GatewayRoutingTest.xml",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 5
+    },
+    {
+      "path": "backend-builds/auth-service/test-results/test/TEST-com.projecthk5.authservice.AuthPersistenceTest.xml",
+      "tests": 28,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 28
+    },
+    {
+      "path": "backend-builds/auth-service/test-results/test/TEST-com.projecthk5.authservice.DatabaseReadinessTest.xml",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 1,
+      "passed": 0
+    },
+    {
+      "path": "backend-builds/auth-service/test-results/test/TEST-com.projecthk5.authservice.EmailInventoryTest.xml",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 1,
+      "passed": 0
+    },
+    {
+      "path": "backend-builds/auth-service/test-results/test/TEST-com.projecthk5.authservice.EmailNormalizationTest.xml",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 2
+    },
+    {
+      "path": "backend-builds/auth-service/test-results/test/TEST-com.projecthk5.authservice.Hs256DependencyTest.xml",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 1
+    },
+    {
+      "path": "backend-builds/auth-service/test-results/test/TEST-com.projecthk5.authservice.api.InternalAccountControllerTest.xml",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 3
+    },
+    {
+      "path": "backend-builds/auth-service/test-results/test/TEST-com.projecthk5.authservice.service.SellerRoleRevisionDatabaseTest.xml",
+      "tests": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 9,
+      "passed": 0
+    },
+    {
+      "path": "backend-builds/cart-service/test-results/postgresIntegrationTest/TEST-com.projecthk5.cartservice.integration.CartPostgres16IT.xml",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 1
+    },
+    {
+      "path": "backend-builds/cart-service/test-results/postgresIntegrationTest/TEST-com.projecthk5.cartservice.integration.HttpSellerRevocationWriteFencePostgresIT.xml",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 4
+    },
+    {
+      "path": "backend-builds/cart-service/test-results/postgresIntegrationTest/TEST-com.projecthk5.cartservice.integration.WriteFencePostgres16IT.xml",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 8
+    },
+    {
+      "path": "backend-builds/cart-service/test-results/test/TEST-com.projecthk5.cartservice.security.ContractJwtDecoderTest.xml",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 3
+    },
+    {
+      "path": "backend-builds/cart-service/test-results/test/TEST-com.projecthk5.cartservice.service.CartServiceTest.xml",
+      "tests": 10,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 10
+    },
+    {
+      "path": "backend-builds/inventory-service/test-results/postgresIntegrationTest/TEST-com.projecthk5.inventoryservice.InventoryPostgresIntegrationTest.xml",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 3
+    },
+    {
+      "path": "backend-builds/inventory-service/test-results/postgresIntegrationTest/TEST-com.projecthk5.inventoryservice.integration.InventoryInitializePostgresIT.xml",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 4
+    },
+    {
+      "path": "backend-builds/inventory-service/test-results/postgresIntegrationTest/TEST-com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT.xml",
+      "tests": 10,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 10
+    },
+    {
+      "path": "backend-builds/inventory-service/test-results/postgresIntegrationTest/TEST-com.projecthk5.inventoryservice.integration.InventorySchemaPostgresIT.xml",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 2
+    },
+    {
+      "path": "backend-builds/inventory-service/test-results/test/TEST-com.projecthk5.inventoryservice.api.InventoryRequestValidationTest.xml",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 3
+    },
+    {
+      "path": "backend-builds/inventory-service/test-results/test/TEST-com.projecthk5.inventoryservice.model.InventoryItemTest.xml",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 7
+    },
+    {
+      "path": "backend-builds/inventory-service/test-results/test/TEST-com.projecthk5.inventoryservice.security.InventoryInternalTokenFilterTest.xml",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 1
+    },
+    {
+      "path": "backend-builds/inventory-service/test-results/test/TEST-com.projecthk5.inventoryservice.security.InventoryOrderPairGateTest.xml",
+      "tests": 10,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 10
+    },
+    {
+      "path": "backend-builds/inventory-service/test-results/test/TEST-com.projecthk5.inventoryservice.service.InventoryOperationServiceTest.xml",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 6
+    },
+    {
+      "path": "backend-builds/notification-service/test-results/test/TEST-com.projecthk5.notificationservice.web.OrderEventKafkaIT.xml",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 2
+    },
+    {
+      "path": "backend-builds/order-service/test-results/postgresIntegrationTest/TEST-com.projecthk5.orderservice.finance.FinanceDurabilityPostgresIT.xml",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 5
+    },
+    {
+      "path": "backend-builds/order-service/test-results/postgresIntegrationTest/TEST-com.projecthk5.orderservice.finance.FinanceSnapshotPostgresIT.xml",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 6
+    },
+    {
+      "path": "backend-builds/order-service/test-results/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.CheckoutDraftPostgresIT.xml",
+      "tests": 14,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 14
+    },
+    {
+      "path": "backend-builds/order-service/test-results/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.CheckoutInventoryBoundaryPostgresIT.xml",
+      "tests": 23,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 23
+    },
+    {
+      "path": "backend-builds/order-service/test-results/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT.xml",
+      "tests": 25,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 25
+    },
+    {
+      "path": "backend-builds/order-service/test-results/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.CheckoutReplayPostgresIT.xml",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 8
+    },
+    {
+      "path": "backend-builds/order-service/test-results/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.CheckoutScannerPostgresIT.xml",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 4
+    },
+    {
+      "path": "backend-builds/order-service/test-results/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.FulfillmentPostgres16IT.xml",
+      "tests": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 9
+    },
+    {
+      "path": "backend-builds/order-service/test-results/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.InventoryOperationJournalPostgres16IT.xml",
+      "tests": 14,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 14
+    },
+    {
+      "path": "backend-builds/order-service/test-results/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.OrderPostgres16IT.xml",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 2
+    },
+    {
+      "path": "backend-builds/order-service/test-results/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.SellerWriteFencePostgresIT.xml",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 3
+    },
+    {
+      "path": "backend-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.api.SellerOrderControllerTest.xml",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 7
+    },
+    {
+      "path": "backend-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest.xml",
+      "tests": 16,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 16
+    },
+    {
+      "path": "backend-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.domain.CheckoutRulesTest.xml",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 6
+    },
+    {
+      "path": "backend-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.domain.InventoryOperationIntentTest.xml",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 6
+    },
+    {
+      "path": "backend-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.domain.OrderAmountStorageBoundsTest.xml",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 6
+    },
+    {
+      "path": "backend-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.entity.OrderOverallStatusTest.xml",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 3
+    },
+    {
+      "path": "backend-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.entity.SellerOrderTest.xml",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 6
+    },
+    {
+      "path": "backend-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.finance.FinanceCheckoutPreflightTest.xml",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 4
+    },
+    {
+      "path": "backend-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.finance.FinanceConsumerParityTest.xml",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 8
+    },
+    {
+      "path": "backend-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.finance.FinancePolicyConfigurationTest.xml",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 4
+    },
+    {
+      "path": "backend-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest.xml",
+      "tests": 18,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 18
+    },
+    {
+      "path": "backend-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.finance.FinanceRulesTest.xml",
+      "tests": 15,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 15
+    },
+    {
+      "path": "backend-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.fulfillment.SellerOrderLifecycleTest.xml",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 7
+    },
+    {
+      "path": "backend-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.security.ContractJwtDecoderTest.xml",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 3
+    },
+    {
+      "path": "backend-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.security.JwtEnvironmentConfigurationTest.xml",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 2
+    },
+    {
+      "path": "backend-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.service.CheckoutServiceTest.xml",
+      "tests": 29,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 29
+    },
+    {
+      "path": "backend-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.service.FinanceReportTest.xml",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 2
+    },
+    {
+      "path": "backend-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.service.FulfillmentServiceTest.xml",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 7
+    },
+    {
+      "path": "backend-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.service.IdempotencyCoordinatorTest.xml",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 2
+    },
+    {
+      "path": "backend-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.service.InventoryOperationCallerTest.xml",
+      "tests": 12,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 12
+    },
+    {
+      "path": "backend-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.service.OutboxRelayTest.xml",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 8
+    },
+    {
+      "path": "backend-builds/product-service/test-results/integrationTest/TEST-com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest.xml",
+      "tests": 33,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 33
+    },
+    {
+      "path": "backend-builds/product-service/test-results/integrationTest/TEST-com.projecthk5.productservice.catalog.ProductCatalogSearchIntegrationTest.xml",
+      "tests": 35,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 35
+    },
+    {
+      "path": "backend-builds/product-service/test-results/integrationTest/TEST-com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceIntegrationTest.xml",
+      "tests": 46,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 46
+    },
+    {
+      "path": "backend-builds/product-service/test-results/integrationTest/TEST-com.projecthk5.productservice.category.CategoryIntegrationTest.xml",
+      "tests": 14,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 14
+    },
+    {
+      "path": "backend-builds/product-service/test-results/integrationTest/TEST-com.projecthk5.productservice.category.CategorySlugMigrationPostgresTest.xml",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 1
+    },
+    {
+      "path": "backend-builds/product-service/test-results/integrationTest/TEST-com.projecthk5.productservice.category.CategorySlugStatusIntegrationTest.xml",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 6
+    },
+    {
+      "path": "backend-builds/product-service/test-results/integrationTest/TEST-com.projecthk5.productservice.image.ProductImageMetadataServiceIntegrationTest.xml",
+      "tests": 37,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 37
+    },
+    {
+      "path": "backend-builds/product-service/test-results/integrationTest/TEST-com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest.xml",
+      "tests": 30,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 30
+    },
+    {
+      "path": "backend-builds/product-service/test-results/integrationTest/TEST-com.projecthk5.productservice.product.ProductApplicationServiceIntegrationTest.xml",
+      "tests": 37,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 37
+    },
+    {
+      "path": "backend-builds/product-service/test-results/integrationTest/TEST-com.projecthk5.productservice.product.ProductOwnerListIntegrationTest.xml",
+      "tests": 31,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 31
+    },
+    {
+      "path": "backend-builds/product-service/test-results/integrationTest/TEST-com.projecthk5.productservice.product.http.ProductManagementHandlerIntegrationTest.xml",
+      "tests": 17,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 17
+    },
+    {
+      "path": "backend-builds/product-service/test-results/integrationTest/TEST-com.projecthk5.productservice.product.persistence.ProductMigrationPostgresTest.xml",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 1
+    },
+    {
+      "path": "backend-builds/product-service/test-results/integrationTest/TEST-com.projecthk5.productservice.product.persistence.ProductPersistenceIntegrationTest.xml",
+      "tests": 23,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 23
+    },
+    {
+      "path": "backend-builds/product-service/test-results/integrationTest/TEST-com.projecthk5.productservice.web.SellerProductImageGateIntegrationTest.xml",
+      "tests": 11,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 11
+    },
+    {
+      "path": "backend-builds/product-service/test-results/integrationTest/TEST-com.projecthk5.productservice.web.SellerProductWriteFenceIntegrationTest.xml",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 2
+    },
+    {
+      "path": "backend-builds/product-service/test-results/test/TEST-com.projecthk5.productservice.catalog.CatalogBatchValidatorTest.xml",
+      "tests": 54,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 54
+    },
+    {
+      "path": "backend-builds/product-service/test-results/test/TEST-com.projecthk5.productservice.catalog.CatalogSearchQueryTest.xml",
+      "tests": 11,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 11
+    },
+    {
+      "path": "backend-builds/product-service/test-results/test/TEST-com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceTest.xml",
+      "tests": 10,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 10
+    },
+    {
+      "path": "backend-builds/product-service/test-results/test/TEST-com.projecthk5.productservice.category.CategoryControllerTest.xml",
+      "tests": 13,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 13
+    },
+    {
+      "path": "backend-builds/product-service/test-results/test/TEST-com.projecthk5.productservice.category.CategorySecurityTest.xml",
+      "tests": 10,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 10
+    },
+    {
+      "path": "backend-builds/product-service/test-results/test/TEST-com.projecthk5.productservice.category.CategoryServiceTest.xml",
+      "tests": 18,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 18
+    },
+    {
+      "path": "backend-builds/product-service/test-results/test/TEST-com.projecthk5.productservice.image.LocalFileSystemImageStorageTest.xml",
+      "tests": 32,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 32
+    },
+    {
+      "path": "backend-builds/product-service/test-results/test/TEST-com.projecthk5.productservice.image.ProductImageMetadataServiceTest.xml",
+      "tests": 10,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 10
+    },
+    {
+      "path": "backend-builds/product-service/test-results/test/TEST-com.projecthk5.productservice.image.ProductImageValidatorTest.xml",
+      "tests": 67,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 67
+    },
+    {
+      "path": "backend-builds/product-service/test-results/test/TEST-com.projecthk5.productservice.product.ProductApplicationServiceTest.xml",
+      "tests": 13,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 13
+    },
+    {
+      "path": "backend-builds/product-service/test-results/test/TEST-com.projecthk5.productservice.product.ProductLifecycleServiceTest.xml",
+      "tests": 120,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 120
+    },
+    {
+      "path": "backend-builds/product-service/test-results/test/TEST-com.projecthk5.productservice.product.ProductListingValidationTest.xml",
+      "tests": 40,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 40
+    },
+    {
+      "path": "backend-builds/product-service/test-results/test/TEST-com.projecthk5.productservice.product.ProductOwnerListTest.xml",
+      "tests": 10,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 10
+    },
+    {
+      "path": "backend-builds/product-service/test-results/test/TEST-com.projecthk5.productservice.product.ProductPriceTest.xml",
+      "tests": 46,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 46
+    },
+    {
+      "path": "backend-builds/product-service/test-results/test/TEST-com.projecthk5.productservice.product.Week1CatalogFixtureTest.xml",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 1
+    },
+    {
+      "path": "backend-builds/product-service/test-results/test/TEST-com.projecthk5.productservice.product.http.ProductManagementHandlerTest.xml",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 6
+    },
+    {
+      "path": "backend-builds/product-service/test-results/test/TEST-com.projecthk5.productservice.product.http.ProductManagementJsonTest.xml",
+      "tests": 42,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 42
+    },
+    {
+      "path": "backend-builds/product-service/test-results/test/TEST-com.projecthk5.productservice.product.persistence.ProductEntityTest.xml",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 5
+    },
+    {
+      "path": "backend-builds/product-service/test-results/test/TEST-com.projecthk5.productservice.product.persistence.ProductPersistenceAdapterTest.xml",
+      "tests": 40,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 40
+    },
+    {
+      "path": "backend-builds/product-service/test-results/test/TEST-com.projecthk5.productservice.review.ReviewRulesBoundaryTest.xml",
+      "tests": 15,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 15
+    },
+    {
+      "path": "backend-builds/product-service/test-results/test/TEST-com.projecthk5.productservice.review.ReviewRulesTest.xml",
+      "tests": 16,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 16
+    },
+    {
+      "path": "backend-builds/product-service/test-results/test/TEST-com.projecthk5.productservice.security.ProductServiceSecurityTest.xml",
+      "tests": 23,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 23
+    },
+    {
+      "path": "backend-builds/product-service/test-results/test/TEST-com.projecthk5.productservice.web.CatalogCacheTest.xml",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 7
+    },
+    {
+      "path": "backend-builds/security-common/test-results/test/TEST-com.projecthk5.security.CurrentAuthorityFilterTest.xml",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 5
+    },
+    {
+      "path": "backend-builds/seller-service/test-results/integrationTest/TEST-com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest.xml",
+      "tests": 26,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 26
+    },
+    {
+      "path": "backend-builds/seller-service/test-results/integrationTest/TEST-com.projecthk5.sellerservice.store.SellerHistoryBackfillPostgresTest.xml",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 1
+    },
+    {
+      "path": "backend-builds/seller-service/test-results/integrationTest/TEST-com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest.xml",
+      "tests": 65,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 65
+    },
+    {
+      "path": "backend-builds/seller-service/test-results/integrationTest/TEST-com.projecthk5.sellerservice.store.StoreProductFactsIntegrationTest.xml",
+      "tests": 21,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 21
+    },
+    {
+      "path": "backend-builds/seller-service/test-results/integrationTest/TEST-com.projecthk5.sellerservice.store.StoreSchemaProposalPostgresTest.xml",
+      "tests": 26,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 26
+    },
+    {
+      "path": "backend-builds/seller-service/test-results/integrationTest/TEST-com.projecthk5.sellerservice.store.SuspendedSellerRoleBackfillPostgresTest.xml",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 1
+    },
+    {
+      "path": "backend-builds/seller-service/test-results/test/TEST-com.projecthk5.sellerservice.http.CanonicalVersionTest.xml",
+      "tests": 21,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 21
+    },
+    {
+      "path": "backend-builds/seller-service/test-results/test/TEST-com.projecthk5.sellerservice.http.SellerStoreJsonTest.xml",
+      "tests": 68,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 68
+    },
+    {
+      "path": "backend-builds/seller-service/test-results/test/TEST-com.projecthk5.sellerservice.http.SellerStoreResponsesTest.xml",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 4
+    },
+    {
+      "path": "backend-builds/seller-service/test-results/test/TEST-com.projecthk5.sellerservice.seller.domain.SellerApplicationTest.xml",
+      "tests": 13,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 13
+    },
+    {
+      "path": "backend-builds/seller-service/test-results/test/TEST-com.projecthk5.sellerservice.seller.entity.SellerProfileTest.xml",
+      "tests": 10,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 10
+    },
+    {
+      "path": "backend-builds/seller-service/test-results/test/TEST-com.projecthk5.sellerservice.seller.service.SellerInputsTest.xml",
+      "tests": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 9
+    },
+    {
+      "path": "backend-builds/seller-service/test-results/test/TEST-com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest.xml",
+      "tests": 50,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 50
+    },
+    {
+      "path": "backend-builds/seller-service/test-results/test/TEST-com.projecthk5.sellerservice.seller.service.SellerPersistenceServiceTest.xml",
+      "tests": 17,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 17
+    },
+    {
+      "path": "backend-builds/seller-service/test-results/test/TEST-com.projecthk5.sellerservice.store.StoreEntityTest.xml",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 4
+    },
+    {
+      "path": "backend-builds/seller-service/test-results/test/TEST-com.projecthk5.sellerservice.store.StoreInputsServiceTest.xml",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 2
+    },
+    {
+      "path": "backend-builds/seller-service/test-results/test/TEST-com.projecthk5.sellerservice.store.StoreInputsTest.xml",
+      "tests": 22,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 22
+    },
+    {
+      "path": "backend-builds/seller-service/test-results/test/TEST-com.projecthk5.sellerservice.store.StoreLifecycleServiceTest.xml",
+      "tests": 19,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 19
+    },
+    {
+      "path": "backend-builds/seller-service/test-results/test/TEST-com.projecthk5.sellerservice.store.StoreOwnedFactsTest.xml",
+      "tests": 10,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 10
+    },
+    {
+      "path": "backend-builds/seller-service/test-results/test/TEST-com.projecthk5.sellerservice.web.SellerControllerTest.xml",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 1
+    },
+    {
+      "path": "backend-builds/user-service/test-results/test/TEST-com.projecthk5.userservice.DatabaseReadinessTest.xml",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 1,
+      "passed": 0
+    },
+    {
+      "path": "backend-builds/user-service/test-results/test/TEST-com.projecthk5.userservice.profile.AddressBookDatabaseTest.xml",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 4,
+      "passed": 0
+    }
+  ],
+  "skippedCases": [
+    {
+      "suite": "com.projecthk5.authservice.DatabaseReadinessTest",
+      "test": "migrationProfileMigratesWithSeparateRoleAndRuntimeJpaValidates()"
+    },
+    {
+      "suite": "com.projecthk5.authservice.EmailInventoryTest",
+      "test": "existingDatabaseInventoryIsReadOnly()"
+    },
+    {
+      "suite": "com.projecthk5.authservice.service.SellerRoleRevisionDatabaseTest",
+      "test": "replayOfTheCurrentRevisionChangesNothing()"
+    },
+    {
+      "suite": "com.projecthk5.authservice.service.SellerRoleRevisionDatabaseTest",
+      "test": "reservationReflectsTheAccountRightNow()"
+    },
+    {
+      "suite": "com.projecthk5.authservice.service.SellerRoleRevisionDatabaseTest",
+      "test": "disabledAccountCannotReserve()"
+    },
+    {
+      "suite": "com.projecthk5.authservice.service.SellerRoleRevisionDatabaseTest",
+      "test": "revocationAbortsReservedWritesThroughTheirService()"
+    },
+    {
+      "suite": "com.projecthk5.authservice.service.SellerRoleRevisionDatabaseTest",
+      "test": "staleGrantCannotUndoANewerRevocation()"
+    },
+    {
+      "suite": "com.projecthk5.authservice.service.SellerRoleRevisionDatabaseTest",
+      "test": "revocationAndReservationNeverInterleave()"
+    },
+    {
+      "suite": "com.projecthk5.authservice.service.SellerRoleRevisionDatabaseTest",
+      "test": "reinstatementWithANewerRevisionGrantsAgain()"
+    },
+    {
+      "suite": "com.projecthk5.authservice.service.SellerRoleRevisionDatabaseTest",
+      "test": "concurrentOutOfOrderDeliveriesConvergeOnTheHighestRevision()"
+    },
+    {
+      "suite": "com.projecthk5.authservice.service.SellerRoleRevisionDatabaseTest",
+      "test": "unreachableServiceKeepsTheReservationSoTheRelayRetries()"
+    },
+    {
+      "suite": "com.projecthk5.userservice.DatabaseReadinessTest",
+      "test": "migrationProfileMigratesWithSeparateRoleAndRuntimeJpaValidates()"
+    },
+    {
+      "suite": "com.projecthk5.userservice.profile.AddressBookDatabaseTest",
+      "test": "updateCanMoveTheDefaultWithoutHittingTheUniqueIndex()"
+    },
+    {
+      "suite": "com.projecthk5.userservice.profile.AddressBookDatabaseTest",
+      "test": "firstAddressBecomesDefaultAndANewDefaultReplacesIt()"
+    },
+    {
+      "suite": "com.projecthk5.userservice.profile.AddressBookDatabaseTest",
+      "test": "anotherAccountCannotSeeChangeOrDeleteAnAddress()"
+    },
+    {
+      "suite": "com.projecthk5.userservice.profile.AddressBookDatabaseTest",
+      "test": "addressBookStopsAtTenEntries()"
+    }
+  ]
+}

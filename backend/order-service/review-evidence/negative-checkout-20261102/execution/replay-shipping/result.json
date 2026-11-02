@@ -1,0 +1,5 @@
+{
+  "title": "replay-shipping same key with changed shipping rejects without effects",
+  "status": "passed",
+  "expectedStatus": "passed"
+}

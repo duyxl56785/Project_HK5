@@ -1,0 +1,27 @@
+{
+  "name": "expectedItems mismatch",
+  "status": 409,
+  "error": {
+    "message": "Cart and expectedItems differ",
+    "code": "BUSINESS_CONFLICT"
+  },
+  "orders": [
+    4,
+    4
+  ],
+  "sellerOrders": [
+    8,
+    8
+  ],
+  "cartRevision": [
+    17,
+    19
+  ],
+  "inventoryOperations": [
+    7,
+    7
+  ],
+  "inventoryBalancesUnchanged": true,
+  "journalDelta": [],
+  "draftDelta": 0
+}

@@ -1,0 +1,5 @@
+{
+  "cross_task_overlapping_class_and_display_name": 0,
+  "counting": "1662 engine executions, final XML once per task; repeated parameterized display labels within one task remain separate executions. 329 focused PASS are included, not added again.",
+  "xml_transform": "Retains suite/testcase attributes and skipped/failure/error; removes hostname, properties and all stdout/stderr. Raw files unchanged locally; hash manifest included."
+}

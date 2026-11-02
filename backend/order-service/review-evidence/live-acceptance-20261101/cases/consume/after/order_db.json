@@ -1,0 +1,397 @@
+{
+  "database": "order_db",
+  "postgres_version": "PostgreSQL 16.15 (Debian 16.15-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+  "flyway": [
+    {
+      "installed_rank": 1,
+      "version": "1",
+      "script": "V1__checkout_baseline.sql",
+      "checksum": 304267561,
+      "success": true
+    },
+    {
+      "installed_rank": 2,
+      "version": "2",
+      "script": "V2__inventory_operation_journal.sql",
+      "checksum": -1781072333,
+      "success": true
+    },
+    {
+      "installed_rank": 3,
+      "version": "3",
+      "script": "V3__fulfillment_cod_shipping_outbox.sql",
+      "checksum": -474404700,
+      "success": true
+    },
+    {
+      "installed_rank": 4,
+      "version": "4",
+      "script": "V4__write_fence_abort.sql",
+      "checksum": 1182150034,
+      "success": true
+    },
+    {
+      "installed_rank": 5,
+      "version": "5",
+      "script": "V5__checkout_order_drafts.sql",
+      "checksum": -759154235,
+      "success": true
+    }
+  ],
+  "orders": [
+    {
+      "id": "b0c34d99-98ac-4aed-9830-0e4a9bd1f0da",
+      "customer_id": "afd2e3ae-cfb8-45c5-9d20-db09ba576191",
+      "status": "PLACED",
+      "total": "790000.00",
+      "created_at": "2026-11-01T14:53:29.738961+00:00",
+      "payment_method": "COD"
+    },
+    {
+      "id": "cc4c3284-02ac-428e-af8c-e0d1b59afe7b",
+      "customer_id": "afd2e3ae-cfb8-45c5-9d20-db09ba576191",
+      "status": "PLACED",
+      "total": "790000.00",
+      "created_at": "2026-11-01T14:55:47.522577+00:00",
+      "payment_method": "COD"
+    },
+    {
+      "id": "cf77f2cf-863d-40ea-b849-7403a2d588dd",
+      "customer_id": "afd2e3ae-cfb8-45c5-9d20-db09ba576191",
+      "status": "CANCELLED",
+      "total": "790000.00",
+      "created_at": "2026-11-01T14:54:32.827778+00:00",
+      "payment_method": "COD"
+    }
+  ],
+  "seller_orders": [
+    {
+      "id": "0b3b75e8-c679-4156-b21b-a9bded7a47ff",
+      "order_id": "cc4c3284-02ac-428e-af8c-e0d1b59afe7b",
+      "store_id": "56f58629-d305-4e7d-8c99-d0401ae44450",
+      "seller_id": "99fea343-16ec-4f6b-8c44-6231d702f9f9",
+      "status": "PLACED",
+      "cod_status": "PENDING",
+      "gross": "420000.00",
+      "platform_fee": "21000.00",
+      "version": 0
+    },
+    {
+      "id": "18c3424b-c46e-42c6-bb42-de939e34a4e9",
+      "order_id": "b0c34d99-98ac-4aed-9830-0e4a9bd1f0da",
+      "store_id": "29e1cd3b-b7dc-48e6-b4c8-da4e4460a16f",
+      "seller_id": "18016824-c5f4-4bcc-b0fc-acf1bccb8966",
+      "status": "PLACED",
+      "cod_status": "PENDING",
+      "gross": "370000.00",
+      "platform_fee": "18500.00",
+      "version": 0
+    },
+    {
+      "id": "27789a6f-8c45-4111-97c8-404923e4a16e",
+      "order_id": "cf77f2cf-863d-40ea-b849-7403a2d588dd",
+      "store_id": "29e1cd3b-b7dc-48e6-b4c8-da4e4460a16f",
+      "seller_id": "18016824-c5f4-4bcc-b0fc-acf1bccb8966",
+      "status": "REJECTED",
+      "cod_status": "VOID",
+      "gross": "370000.00",
+      "platform_fee": "18500.00",
+      "version": 1
+    },
+    {
+      "id": "28a70a47-e9e6-4fd7-b8c9-ed64acc3eb00",
+      "order_id": "cc4c3284-02ac-428e-af8c-e0d1b59afe7b",
+      "store_id": "29e1cd3b-b7dc-48e6-b4c8-da4e4460a16f",
+      "seller_id": "18016824-c5f4-4bcc-b0fc-acf1bccb8966",
+      "status": "DELIVERED",
+      "cod_status": "PENDING",
+      "gross": "370000.00",
+      "platform_fee": "18500.00",
+      "version": 5
+    },
+    {
+      "id": "46e0d5a6-b041-4e0e-bb48-069c4a25ea79",
+      "order_id": "cf77f2cf-863d-40ea-b849-7403a2d588dd",
+      "store_id": "56f58629-d305-4e7d-8c99-d0401ae44450",
+      "seller_id": "99fea343-16ec-4f6b-8c44-6231d702f9f9",
+      "status": "CANCELLED",
+      "cod_status": "VOID",
+      "gross": "420000.00",
+      "platform_fee": "21000.00",
+      "version": 1
+    },
+    {
+      "id": "be73c125-c372-4831-aab5-f291d971ea6c",
+      "order_id": "b0c34d99-98ac-4aed-9830-0e4a9bd1f0da",
+      "store_id": "56f58629-d305-4e7d-8c99-d0401ae44450",
+      "seller_id": "99fea343-16ec-4f6b-8c44-6231d702f9f9",
+      "status": "PLACED",
+      "cod_status": "PENDING",
+      "gross": "420000.00",
+      "platform_fee": "21000.00",
+      "version": 0
+    }
+  ],
+  "items": [
+    {
+      "id": "1ada0f34-096a-49dc-b8c7-350742ded4eb",
+      "seller_order_id": "be73c125-c372-4831-aab5-f291d971ea6c",
+      "product_id": "25dbf9c2-5e70-4dd8-9ddf-efe3e0d033e3",
+      "sku": "VI-001",
+      "quantity": 2,
+      "unit_price_snapshot": "210000.00",
+      "line_total": "420000.00"
+    },
+    {
+      "id": "4728500f-b34f-4006-90fd-4e708617dc3e",
+      "seller_order_id": "46e0d5a6-b041-4e0e-bb48-069c4a25ea79",
+      "product_id": "25dbf9c2-5e70-4dd8-9ddf-efe3e0d033e3",
+      "sku": "VI-001",
+      "quantity": 2,
+      "unit_price_snapshot": "210000.00",
+      "line_total": "420000.00"
+    },
+    {
+      "id": "6feb259a-1c5f-40d1-b539-ed3b8fab4e90",
+      "seller_order_id": "28a70a47-e9e6-4fd7-b8c9-ed64acc3eb00",
+      "product_id": "6136fb1f-9dac-41ee-8c0b-fe6a259c1d5d",
+      "sku": "BE-001",
+      "quantity": 2,
+      "unit_price_snapshot": "185000.00",
+      "line_total": "370000.00"
+    },
+    {
+      "id": "cbecff99-c0e6-4b73-a06e-db74e2c52124",
+      "seller_order_id": "18c3424b-c46e-42c6-bb42-de939e34a4e9",
+      "product_id": "6136fb1f-9dac-41ee-8c0b-fe6a259c1d5d",
+      "sku": "BE-001",
+      "quantity": 2,
+      "unit_price_snapshot": "185000.00",
+      "line_total": "370000.00"
+    },
+    {
+      "id": "ecde20c5-19ff-409c-848d-b1f0e9acd9a0",
+      "seller_order_id": "27789a6f-8c45-4111-97c8-404923e4a16e",
+      "product_id": "6136fb1f-9dac-41ee-8c0b-fe6a259c1d5d",
+      "sku": "BE-001",
+      "quantity": 2,
+      "unit_price_snapshot": "185000.00",
+      "line_total": "370000.00"
+    },
+    {
+      "id": "ef9456be-0571-4f5a-99cb-56c163be1001",
+      "seller_order_id": "0b3b75e8-c679-4156-b21b-a9bded7a47ff",
+      "product_id": "25dbf9c2-5e70-4dd8-9ddf-efe3e0d033e3",
+      "sku": "VI-001",
+      "quantity": 2,
+      "unit_price_snapshot": "210000.00",
+      "line_total": "420000.00"
+    }
+  ],
+  "attempts": [
+    {
+      "id": "b0c34d99-98ac-4aed-9830-0e4a9bd1f0da",
+      "customer_id": "afd2e3ae-cfb8-45c5-9d20-db09ba576191",
+      "fingerprint": "8cf4f76ff2e2f1cfd4aea19715731ae944970ace52ee43bcf5bce1503e6d3eb9",
+      "state": "SUCCEEDED",
+      "order_id": "b0c34d99-98ac-4aed-9830-0e4a9bd1f0da"
+    },
+    {
+      "id": "cc4c3284-02ac-428e-af8c-e0d1b59afe7b",
+      "customer_id": "afd2e3ae-cfb8-45c5-9d20-db09ba576191",
+      "fingerprint": "f16dc453b849e5f128dde64cbe0942ad970f7423c224ae3e6a186a4db03e6ae2",
+      "state": "SUCCEEDED",
+      "order_id": "cc4c3284-02ac-428e-af8c-e0d1b59afe7b"
+    },
+    {
+      "id": "cf77f2cf-863d-40ea-b849-7403a2d588dd",
+      "customer_id": "afd2e3ae-cfb8-45c5-9d20-db09ba576191",
+      "fingerprint": "b2b0fb560babd28a67a3f90ce1a40fe1c6e62d076e3c7978be273c681d098730",
+      "state": "SUCCEEDED",
+      "order_id": "cf77f2cf-863d-40ea-b849-7403a2d588dd"
+    }
+  ],
+  "drafts": [
+    {
+      "checkout_attempt_id": "b0c34d99-98ac-4aed-9830-0e4a9bd1f0da",
+      "snapshot_version": 1,
+      "payload_sha256": "dbf2fb488fa49535de6a0c9f32abe44afb3a24e349fae5fee86d7cf2bff4df50",
+      "checksum_matches": true,
+      "created_at": "2026-11-01T14:53:29.812272+00:00"
+    },
+    {
+      "checkout_attempt_id": "cc4c3284-02ac-428e-af8c-e0d1b59afe7b",
+      "snapshot_version": 1,
+      "payload_sha256": "86c3c41f6bd8f2576f18ac61da69271626015f2ebcdd7dba45117e689c2229ab",
+      "checksum_matches": true,
+      "created_at": "2026-11-01T14:55:47.554592+00:00"
+    },
+    {
+      "checkout_attempt_id": "cf77f2cf-863d-40ea-b849-7403a2d588dd",
+      "snapshot_version": 1,
+      "payload_sha256": "d80ac835e8d9d94e0cac2818b74a9c0f391962a8e87e3c63938034923bb1939b",
+      "checksum_matches": true,
+      "created_at": "2026-11-01T14:54:32.86679+00:00"
+    }
+  ],
+  "journals": [
+    {
+      "operation_id": "order-b0c34d99-98ac-4aed-9830-0e4a9bd1f0da-reserve",
+      "checkout_attempt_id": "b0c34d99-98ac-4aed-9830-0e4a9bd1f0da",
+      "operation_type": "RESERVE",
+      "canonical_lines": [
+        {
+          "sku": "BE-001",
+          "quantity": 2
+        },
+        {
+          "sku": "VI-001",
+          "quantity": 2
+        }
+      ],
+      "payload_fingerprint": "c285b59ec68fafc0186812ec71934a59d6b6919a1d0edec828a42df430005de0",
+      "state": "CONFIRMED",
+      "send_attempts": 1,
+      "last_error_code": null
+    },
+    {
+      "operation_id": "order-cc4c3284-02ac-428e-af8c-e0d1b59afe7b-reserve",
+      "checkout_attempt_id": "cc4c3284-02ac-428e-af8c-e0d1b59afe7b",
+      "operation_type": "RESERVE",
+      "canonical_lines": [
+        {
+          "sku": "BE-001",
+          "quantity": 2
+        },
+        {
+          "sku": "VI-001",
+          "quantity": 2
+        }
+      ],
+      "payload_fingerprint": "c285b59ec68fafc0186812ec71934a59d6b6919a1d0edec828a42df430005de0",
+      "state": "CONFIRMED",
+      "send_attempts": 1,
+      "last_error_code": null
+    },
+    {
+      "operation_id": "order-cf77f2cf-863d-40ea-b849-7403a2d588dd-reserve",
+      "checkout_attempt_id": "cf77f2cf-863d-40ea-b849-7403a2d588dd",
+      "operation_type": "RESERVE",
+      "canonical_lines": [
+        {
+          "sku": "BE-001",
+          "quantity": 2
+        },
+        {
+          "sku": "VI-001",
+          "quantity": 2
+        }
+      ],
+      "payload_fingerprint": "c285b59ec68fafc0186812ec71934a59d6b6919a1d0edec828a42df430005de0",
+      "state": "CONFIRMED",
+      "send_attempts": 1,
+      "last_error_code": null
+    }
+  ],
+  "outbox": [
+    {
+      "id": "0a40f353-8df6-4442-813f-44bb2f9c98fb",
+      "topic": "inventory.operation.v1",
+      "aggregate_id": "28a70a47-e9e6-4fd7-b8c9-ed64acc3eb00",
+      "published_at": "2026-11-01T14:55:50.035634+00:00",
+      "attempts": 0,
+      "dead": false,
+      "payload_sha256": "080baf4c16ff83d52bf4906e206534523cb51e9999521ad91f3b87820c31c818"
+    },
+    {
+      "id": "1291d898-43df-49d7-9a87-457582409c1d",
+      "topic": "notification.v1",
+      "aggregate_id": "28a70a47-e9e6-4fd7-b8c9-ed64acc3eb00",
+      "published_at": "2026-11-01T14:55:50.050942+00:00",
+      "attempts": 0,
+      "dead": false,
+      "payload_sha256": "984b2425adaa54745b4c49b3599499094742a1f7fb411cc748d219ea0b2a191d"
+    },
+    {
+      "id": "1656916f-45c1-434b-a056-c85d56091996",
+      "topic": "order.placed.v1",
+      "aggregate_id": "cc4c3284-02ac-428e-af8c-e0d1b59afe7b",
+      "published_at": "2026-11-01T14:55:47.98744+00:00",
+      "attempts": 0,
+      "dead": false,
+      "payload_sha256": "f5a3afa1032091dd11f5965dbc7e44a69288a45fa53270924a021c2aa18f12e3"
+    },
+    {
+      "id": "32077e84-3e1e-4fa4-a13a-325811e11b4d",
+      "topic": "notification.v1",
+      "aggregate_id": "28a70a47-e9e6-4fd7-b8c9-ed64acc3eb00",
+      "published_at": null,
+      "attempts": 0,
+      "dead": false,
+      "payload_sha256": "6e4ef8b1bb13b12067b66ab0c9d741fd903c476e508121294a78ba5903cb8390"
+    },
+    {
+      "id": "443fa690-905f-4118-a764-6603698824ce",
+      "topic": "notification.v1",
+      "aggregate_id": "28a70a47-e9e6-4fd7-b8c9-ed64acc3eb00",
+      "published_at": "2026-11-01T14:55:50.014487+00:00",
+      "attempts": 0,
+      "dead": false,
+      "payload_sha256": "aada5164546b241a6c93bffdb9087996e0f62faf00e32ebd7e938fd5d9f95004"
+    },
+    {
+      "id": "8c3ad0b3-8f96-42c4-b816-6908f454c62a",
+      "topic": "order.placed.v1",
+      "aggregate_id": "cf77f2cf-863d-40ea-b849-7403a2d588dd",
+      "published_at": "2026-11-01T14:54:33.56066+00:00",
+      "attempts": 0,
+      "dead": false,
+      "payload_sha256": "2714fd62e3bfe36b6a57b06802affc2f6b902684cd47f579b0b56900f0232479"
+    },
+    {
+      "id": "8e769cf4-83da-4b30-ba65-702a5b059231",
+      "topic": "notification.v1",
+      "aggregate_id": "46e0d5a6-b041-4e0e-bb48-069c4a25ea79",
+      "published_at": "2026-11-01T14:54:33.684415+00:00",
+      "attempts": 0,
+      "dead": false,
+      "payload_sha256": "33e0ef7d47ae5a3983d0c0d98f0ffc0788e19ab312a088b95d84fe07bad8ae5f"
+    },
+    {
+      "id": "984fb239-271a-4337-9488-f82f52b8944e",
+      "topic": "notification.v1",
+      "aggregate_id": "27789a6f-8c45-4111-97c8-404923e4a16e",
+      "published_at": "2026-11-01T14:54:35.829639+00:00",
+      "attempts": 0,
+      "dead": false,
+      "payload_sha256": "7c2258e6a70a20656a48a7c0ea472f8880c4b649f09fa57d3fdcc46fe0274da3"
+    },
+    {
+      "id": "d32aafaa-6dc0-4341-ab44-a1a099f304b5",
+      "topic": "order.placed.v1",
+      "aggregate_id": "b0c34d99-98ac-4aed-9830-0e4a9bd1f0da",
+      "published_at": "2026-11-01T14:53:31.421973+00:00",
+      "attempts": 0,
+      "dead": false,
+      "payload_sha256": "01ab59437b2531a49c8a398424fa7ef389f2967d2996da785751882160edc8fc"
+    },
+    {
+      "id": "e63f90e2-8456-4ee7-badc-8a25501d6240",
+      "topic": "inventory.operation.v1",
+      "aggregate_id": "46e0d5a6-b041-4e0e-bb48-069c4a25ea79",
+      "published_at": "2026-11-01T14:54:33.649941+00:00",
+      "attempts": 0,
+      "dead": false,
+      "payload_sha256": "4d9bcac7eefc8b2a5deb0792d39f74845f6d11228e4a6483ca2a35296dabcb14"
+    },
+    {
+      "id": "f2e0ef74-83c2-4b61-8aab-45587d66ccdf",
+      "topic": "inventory.operation.v1",
+      "aggregate_id": "27789a6f-8c45-4111-97c8-404923e4a16e",
+      "published_at": "2026-11-01T14:54:35.773608+00:00",
+      "attempts": 0,
+      "dead": false,
+      "payload_sha256": "89ab75034db099887c6e5a59045575af953048fa6ed58a15c24f38e8315dacfd"
+    }
+  ]
+}

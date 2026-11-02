@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuites name="" tests="1" failures="0" skipped="0" errors="0" time="5.93651">
+  <testsuite name="two-store.live.spec.ts" timestamp="2026-11-01T14:53:25.979Z" tests="1" failures="0" skipped="0" time="5.07" errors="0">
+    <testcase name="real browser: two Stores, exact stock delta and same-key replay" classname="two-store.live.spec.ts" time="5.07" />
+  </testsuite>
+</testsuites>

@@ -1,0 +1,8 @@
+{
+  "project": "tv3-live-145-20261101",
+  "containers": 15,
+  "same_ids_running_start_times_restart_counts_and_mounts": true,
+  "before_raw_sha256": "dc3cbaef4d2ebef8e81228022c1c9410a226e4fe13d4c4ab7516db36c3edd53e",
+  "after_raw_sha256": "dc3cbaef4d2ebef8e81228022c1c9410a226e4fe13d4c4ab7516db36c3edd53e",
+  "live_tests_this_sync": "NOT_RUN; historical 3 PASS / 2 UNKNOWN BLOCKED preserved; deployed application remains bf8eb3a027c72ad9fde81d0aa5dabc4e73bebacf"
+}

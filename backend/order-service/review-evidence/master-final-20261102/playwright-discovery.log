@@ -1,0 +1,8 @@
+Listing tests:
+  negative.live.spec.mjs:201:1 › replay-body same key with changed expectedItems rejects without effects
+  negative.live.spec.mjs:205:1 › replay-shipping same key with changed shipping rejects without effects
+  negative.live.spec.mjs:209:1 › expected-items mismatch rejects before Inventory
+  negative.live.spec.mjs:213:1 › catalog-price changed since Cart rejects before Inventory
+  negative.live.spec.mjs:226:1 › insufficient-stock two Store batch rejects without partial reservation
+  negative.live.spec.mjs:237:1 › product-inactive one unsellable Store line rejects the whole Checkout
+Total: 6 tests in 1 file

@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuite name="com.projecthk5.orderservice.finance.FinanceSnapshotPostgresIT" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-11-01T14:46:16" time="0.25">
+  <testcase name="currentV1ScaleBoundaryIsTwoAndPostgresCastWouldRoundHigherScale()" classname="com.projecthk5.orderservice.finance.FinanceSnapshotPostgresIT" time="0.026" />
+  <testcase name="parentAggregateOverflowRollsBackOrderChildrenAndKeepsAttemptUncommitted()" classname="com.projecthk5.orderservice.finance.FinanceSnapshotPostgresIT" time="0.075" />
+  <testcase name="[1] gross=0.00, fee=0.00, net=0.00" classname="com.projecthk5.orderservice.finance.FinanceSnapshotPostgresIT" time="0.029" />
+  <testcase name="[2] gross=99999999999999999.99, fee=5000000000000000.00, net=94999999999999999.99" classname="com.projecthk5.orderservice.finance.FinanceSnapshotPostgresIT" time="0.012" />
+  <testcase name="twoStoreGrossFeeAndLineAmountsSurviveCommitAndFreshRead()" classname="com.projecthk5.orderservice.finance.FinanceSnapshotPostgresIT" time="0.018" />
+  <testcase name="successfulReplayCannotRepriceCommittedTwoStoreAmountsOrCreateAnotherPlacementEvent()" classname="com.projecthk5.orderservice.finance.FinanceSnapshotPostgresIT" time="0.042" />
+</testsuite>

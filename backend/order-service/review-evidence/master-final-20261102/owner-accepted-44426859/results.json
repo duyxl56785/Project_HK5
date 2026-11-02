@@ -1,0 +1,88 @@
+{
+  "head": "44426859cbcdcd6dd9ba0d5ce6f84f91a317256d",
+  "tree": "20ca9d7212bc6d03e43cc9e14c42f654b7b8c728",
+  "main": "d446577d2f9268f2212a4ee214ff3d805ee7a1d9",
+  "executionPlace": "CODEX TERMINAL — Linux",
+  "focused": [
+    {
+      "service": "order-service",
+      "task": "test",
+      "tests": 171,
+      "passed": 171,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "service": "order-service",
+      "task": "postgresIntegrationTest",
+      "tests": 113,
+      "passed": 113,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "service": "cart-service",
+      "task": "test",
+      "tests": 13,
+      "passed": 13,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "service": "cart-service",
+      "task": "postgresIntegrationTest",
+      "tests": 13,
+      "passed": 13,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "service": "inventory-service",
+      "task": "test",
+      "tests": 27,
+      "passed": 27,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "service": "inventory-service",
+      "task": "postgresIntegrationTest",
+      "tests": 19,
+      "passed": 19,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "focusedAlreadyIncludedInFullTotal": true,
+  "fullBackend": {
+    "passed": 1725,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 16,
+    "exit": 0
+  },
+  "postgresVersions": [
+    "PostgreSQL 16.15",
+    "PostgreSQL 16.6"
+  ],
+  "frontendTypecheckExit": 0,
+  "productionPatch": "INTEGRATED_BY_TV2_IN_PR147",
+  "sourceDisposition": "FIXED_VERIFIED",
+  "overallDisposition": "BLOCKED_OWNER",
+  "live": {
+    "executed": 0,
+    "passed": 0,
+    "failed": 0,
+    "status": "NOT_RUN/BLOCKED",
+    "reason": "User confirmed no owner approval for a separate stack at final integrated HEAD; UNKNOWN also needs approved fault evidence."
+  },
+  "priorReports": "Parent evidence at 351fb03 is a separate earlier run; do not sum repeat executions.",
+  "cartProbe": "4 PASS at 351fb03; Cart source/input unchanged at this owner HEAD, not rerun or recounted.",
+  "assertionUnit": "8 PASS at 351fb03 and equivalent TV3 branch; not live acceptance and not present on PR147 until owner takes latest TV3 test commit."
+}

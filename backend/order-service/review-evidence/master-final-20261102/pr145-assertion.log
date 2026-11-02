@@ -1,0 +1,16 @@
+✔ 147 accepts exactly the declared product and stock reason (2.110726ms)
+✔ 147 cannot pass with the old generic refusal (3.336386ms)
+✔ 147 rejects a different product identity (3.512783ms)
+✔ 147 rejects an invented stock reason or missing item list (1.326303ms)
+✔ 147 does not silently discard extra refused products (2.301464ms)
+✔ 145 retains its explicitly selected legacy contract (0.374506ms)
+✔ payload mismatch remains non-itemized under both contracts (0.220092ms)
+✔ unknown contract fails closed (0.175305ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 125.002595

@@ -1,0 +1,4 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuite name="com.projecthk5.inventoryservice.security.InventoryInternalTokenFilterTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-11-01T10:41:13" time="0.131">
+  <testcase name="missingTokenConfigurationFailsClosedForEncodedAndMatrixPaths()" classname="com.projecthk5.inventoryservice.security.InventoryInternalTokenFilterTest" time="0.131" />
+</testsuite>

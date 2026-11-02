@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuites>
+  <testcase name="147 accepts exactly the declared product and stock reason" time="0.002445" classname="test" file="/workspace/tv3-final-main-145-147/frontend/src/features/checkout/acceptance/negative-refusal-contract.test.mjs" />
+  <testcase name="147 cannot pass with the old generic refusal" time="0.001467" classname="test" file="/workspace/tv3-final-main-145-147/frontend/src/features/checkout/acceptance/negative-refusal-contract.test.mjs" />
+  <testcase name="147 rejects a different product identity" time="0.004081" classname="test" file="/workspace/tv3-final-main-145-147/frontend/src/features/checkout/acceptance/negative-refusal-contract.test.mjs" />
+  <testcase name="147 rejects an invented stock reason or missing item list" time="0.000818" classname="test" file="/workspace/tv3-final-main-145-147/frontend/src/features/checkout/acceptance/negative-refusal-contract.test.mjs" />
+  <testcase name="147 does not silently discard extra refused products" time="0.000403" classname="test" file="/workspace/tv3-final-main-145-147/frontend/src/features/checkout/acceptance/negative-refusal-contract.test.mjs" />
+  <testcase name="145 retains its explicitly selected legacy contract" time="0.000273" classname="test" file="/workspace/tv3-final-main-145-147/frontend/src/features/checkout/acceptance/negative-refusal-contract.test.mjs" />
+  <testcase name="payload mismatch remains non-itemized under both contracts" time="0.000199" classname="test" file="/workspace/tv3-final-main-145-147/frontend/src/features/checkout/acceptance/negative-refusal-contract.test.mjs" />
+  <testcase name="unknown contract fails closed" time="0.000798" classname="test" file="/workspace/tv3-final-main-145-147/frontend/src/features/checkout/acceptance/negative-refusal-contract.test.mjs" />
+</testsuites>

@@ -1,0 +1,4 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuite name="com.projecthk5.cartservice.integration.CartPostgres16IT" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-11-01T10:41:27" time="0.558">
+  <testcase name="migrationHibernateValidateCascadeTwoStoresAndUniqueProduct()" classname="com.projecthk5.cartservice.integration.CartPostgres16IT" time="0.558" />
+</testsuite>

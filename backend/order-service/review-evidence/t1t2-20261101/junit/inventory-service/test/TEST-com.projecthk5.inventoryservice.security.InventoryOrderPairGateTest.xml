@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuite name="com.projecthk5.inventoryservice.security.InventoryOrderPairGateTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2026-11-01T10:41:13" time="0.046">
+  <testcase name="pairTokenOnlyAllowsPostOperationsForReserveConsumeReleaseAndPreservesBody()" classname="com.projecthk5.inventoryservice.security.InventoryOrderPairGateTest" time="0.016" />
+  <testcase name="bodyOneByteOverMaximumIsRejectedWith413()" classname="com.projecthk5.inventoryservice.security.InventoryOrderPairGateTest" time="0.004" />
+  <testcase name="pairTokenAloneCannotEnableMutationWhenFeatureFlagIsOff()" classname="com.projecthk5.inventoryservice.security.InventoryOrderPairGateTest" time="0.001" />
+  <testcase name="pairCredentialRejectsPathAliasesAndNonCanonicalOperationPaths()" classname="com.projecthk5.inventoryservice.security.InventoryOrderPairGateTest" time="0.001" />
+  <testcase name="bodyLimitAlsoAppliesWhenContentLengthIsUnknown()" classname="com.projecthk5.inventoryservice.security.InventoryOrderPairGateTest" time="0.003" />
+  <testcase name="pairCredentialCannotInitializeOrUseIncreaseDecreaseOrWrongMethodPath()" classname="com.projecthk5.inventoryservice.security.InventoryOrderPairGateTest" time="0.002" />
+  <testcase name="missingOrWrongPairCredentialIsUnauthorized()" classname="com.projecthk5.inventoryservice.security.InventoryOrderPairGateTest" time="0.001" />
+  <testcase name="unconfiguredPairVerifierFailsClosed()" classname="com.projecthk5.inventoryservice.security.InventoryOrderPairGateTest" time="0.0" />
+  <testcase name="exactMaximumBodySizeIsAcceptedAndReplayed()" classname="com.projecthk5.inventoryservice.security.InventoryOrderPairGateTest" time="0.004" />
+  <testcase name="pairCredentialRejectsMissingNullNonTextualAndPaddedOperationTypes()" classname="com.projecthk5.inventoryservice.security.InventoryOrderPairGateTest" time="0.007" />
+</testsuite>

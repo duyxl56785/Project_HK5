@@ -1,0 +1,106 @@
+[ {
+  "name" : "target_is_owned_disposable_database",
+  "state" : "PASS"
+}, {
+  "name" : "bootstrap_real_v1_v4_migrations",
+  "state" : "PASS"
+}, {
+  "name" : "legacy_fixture_fingerprints_and_reserve_quantities_match_order_items",
+  "state" : "PASS"
+}, {
+  "name" : "v1_v4_checksums_valid",
+  "state" : "PASS"
+}, {
+  "name" : "controlled_private_db_lock_timeout_observed",
+  "state" : "PASS"
+}, {
+  "name" : "failed_v5_ddl_rolled_back_without_repair",
+  "state" : "PASS"
+}, {
+  "name" : "lock_probe_preserves_all_v1_v4_rows",
+  "state" : "PASS"
+}, {
+  "name" : "applied_v1_v4_checksums_valid_after_transactional_lock_failure",
+  "state" : "PASS"
+}, {
+  "name" : "upgrade_applies_exactly_one_v5",
+  "state" : "PASS"
+}, {
+  "name" : "v1_v5_checksum_validation",
+  "state" : "PASS"
+}, {
+  "name" : "upgrade_preserves_all_legacy_rows_and_money",
+  "state" : "PASS"
+}, {
+  "name" : "flyway_v1_v4_history_checksums_unchanged",
+  "state" : "PASS"
+}, {
+  "name" : "v5_empty_no_legacy_backfill",
+  "state" : "PASS"
+}, {
+  "name" : "v5_has_no_implicit_runtime_grant",
+  "state" : "PASS"
+}, {
+  "name" : "runtime_without_v5_grant_is_denied",
+  "state" : "PASS"
+}, {
+  "name" : "runtime_cannot_create_schema_objects",
+  "state" : "PASS"
+}, {
+  "name" : "hibernate_validates_actual_candidate_entities",
+  "state" : "PASS"
+}, {
+  "name" : "customer_owned_order_and_two_store_repositories_read_legacy_data",
+  "state" : "PASS"
+}, {
+  "name" : "finance_cod_settlement_rules_and_real_db_rollback",
+  "state" : "PASS"
+}, {
+  "name" : "new_draft_committed_visible_on_independent_connection",
+  "state" : "PASS"
+}, {
+  "name" : "draft_reload_preserves_all_frozen_facts",
+  "state" : "PASS"
+}, {
+  "name" : "required_order_writer_rollback_retains_committed_draft",
+  "state" : "PASS"
+}, {
+  "name" : "upgraded_db_unknown_remains_quarantined_through_all_claims",
+  "state" : "PASS"
+}, {
+  "name" : "old_unknown_is_not_backfilled_or_reopened",
+  "state" : "PASS"
+}, {
+  "name" : "v5_orphan_fk_rejected",
+  "state" : "PASS"
+}, {
+  "name" : "v5_duplicate_attempt_rejected",
+  "state" : "PASS"
+}, {
+  "name" : "v5_unsupported_version_rejected",
+  "state" : "PASS"
+}, {
+  "name" : "v5_invalid_json_rejected",
+  "state" : "PASS"
+}, {
+  "name" : "v5_json_array_rejected",
+  "state" : "PASS"
+}, {
+  "name" : "v5_bad_checksum_shape_rejected",
+  "state" : "PASS"
+}, {
+  "name" : "v5_fk_blocks_parent_purge",
+  "state" : "PASS"
+}, {
+  "name" : "fixture_runtime_grant_forbids_draft_update",
+  "state" : "PASS"
+}, {
+  "name" : "fixture_auditor_is_read_only",
+  "state" : "PASS"
+}, {
+  "name" : "legacy_customer_key_uniqueness_survives_v5",
+  "state" : "PASS"
+}, {
+  "name" : "all_original_rows_money_outbox_and_inventory_states_unchanged_after_regression",
+  "state" : "PASS"
+} ]

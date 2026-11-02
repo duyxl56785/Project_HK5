@@ -1,0 +1,5 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuite name="com.projecthk5.orderservice.service.IdempotencyCoordinatorTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-11-01T10:37:43" time="0.003">
+  <testcase name="sameKeyAndDifferentPayloadRejected()" classname="com.projecthk5.orderservice.service.IdempotencyCoordinatorTest" time="0.002" />
+  <testcase name="repeatedSameKeyReturnsExistingNotNew()" classname="com.projecthk5.orderservice.service.IdempotencyCoordinatorTest" time="0.001" />
+</testsuite>

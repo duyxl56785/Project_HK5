@@ -1,0 +1,3 @@
+allprojects { p ->
+ p.layout.buildDirectory.set(new File('/tmp/tv3-final-integration-20261102/tv3-sync-builds',p.path==':'?'root':p.path.substring(1).replace(':','/')))
+}

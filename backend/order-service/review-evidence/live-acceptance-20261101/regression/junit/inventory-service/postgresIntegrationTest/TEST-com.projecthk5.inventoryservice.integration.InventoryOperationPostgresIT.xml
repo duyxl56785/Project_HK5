@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuite name="com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT" tests="10" skipped="0" failures="0" errors="0" timestamp="2026-11-01T14:46:08" time="0.899">
+  <testcase name="reserveConsumeAndReleaseRetriesDoNotApplyStockTwice()" classname="com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT" time="0.103" />
+  <testcase name="failureOnLaterSkuRollsBackEarlierStockMutationAndClaimedLedger()" classname="com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT" time="0.081" />
+  <testcase name="disjointSkuSameIdCannotReplaceWinnerAfterEarlierEmptyLedgerRead()" classname="com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT" time="0.053" />
+  <testcase name="concurrentDuplicateMultiSkuReleaseReplaysAfterFirstCommitWithoutDoubleReturn()" classname="com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT" time="0.148" />
+  <testcase name="concurrentDifferentIdsCannotOversellSharedSkuAndLosingClaimRollsBack()" classname="com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT" time="0.069" />
+  <testcase name="multiSkuReserveAndReleaseReplayCanonicalizeLineOrderAndRejectPayloadReuse()" classname="com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT" time="0.083" />
+  <testcase name="[1] samePayload=true" classname="com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT" time="0.069" />
+  <testcase name="[2] samePayload=false" classname="com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT" time="0.028" />
+  <testcase name="competingMultiSkuReleaseIdsCannotOverdrawReservedBalances()" classname="com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT" time="0.119" />
+  <testcase name="multiSkuReleaseAfterConsumeRejectsExcessHeldQuantityAndRollsBackWholeBatch()" classname="com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT" time="0.126" />
+</testsuite>

@@ -1,0 +1,431 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuites>
+  <testsuite name="com.projecthk5.cartservice.integration.CartPostgres16IT" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-11-02T12:02:15" time="0.555" sourceTask="cart-service:postgresIntegrationTest">
+    <testcase name="migrationHibernateValidateCascadeTwoStoresAndUniqueProduct()" classname="com.projecthk5.cartservice.integration.CartPostgres16IT" time="0.555" />
+  </testsuite>
+  <testsuite name="com.projecthk5.cartservice.integration.HttpSellerRevocationWriteFencePostgresIT" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-11-02T12:02:21" time="2.233" sourceTask="cart-service:postgresIntegrationTest">
+    <testcase name="authenticatedCartWriteRollsBackWhenAuthRevokesSellerBeforeCommit()" classname="com.projecthk5.cartservice.integration.HttpSellerRevocationWriteFencePostgresIT" time="0.735" />
+    <testcase name="disablingAnAccountStopsItsWriteInFlightAndEndsItsSessions()" classname="com.projecthk5.cartservice.integration.HttpSellerRevocationWriteFencePostgresIT" time="0.824" />
+    <testcase name="anAccessTokenFromBeforeALockIsRefusedWhileLockedAndWorksAgainAfterUnlock()" classname="com.projecthk5.cartservice.integration.HttpSellerRevocationWriteFencePostgresIT" time="0.428" />
+    <testcase name="writeCommittedBeforeRevokeStaysAndTheSameTokenIsThenRefused()" classname="com.projecthk5.cartservice.integration.HttpSellerRevocationWriteFencePostgresIT" time="0.24" />
+  </testsuite>
+  <testsuite name="com.projecthk5.cartservice.integration.WriteFencePostgres16IT" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-11-02T12:02:27" time="0.873" sourceTask="cart-service:postgresIntegrationTest">
+    <testcase name="writeClosedBeforeItCommitsRollsBack()" classname="com.projecthk5.cartservice.integration.WriteFencePostgres16IT" time="0.04" />
+    <testcase name="writeThatWasNotClosedCommitsInEveryTransaction()" classname="com.projecthk5.cartservice.integration.WriteFencePostgres16IT" time="0.027" />
+    <testcase name="writeOutsideAnyReservationIsNotChecked()" classname="com.projecthk5.cartservice.integration.WriteFencePostgres16IT" time="0.009" />
+    <testcase name="fenceListensOnTheTransactionManagerBootBuilt()" classname="com.projecthk5.cartservice.integration.WriteFencePostgres16IT" time="0.002" />
+    <testcase name="closeWaitsForACommitAlreadyPastItsCheck()" classname="com.projecthk5.cartservice.integration.WriteFencePostgres16IT" time="0.711" />
+    <testcase name="everyLaterTransactionOfAClosedOperationIsRefused()" classname="com.projecthk5.cartservice.integration.WriteFencePostgres16IT" time="0.021" />
+    <testcase name="closeRequiresThePairToken()" classname="com.projecthk5.cartservice.integration.WriteFencePostgres16IT" time="0.009" />
+    <testcase name="weakerSnapshotIsRefusedBecauseItCouldMissATombstone()" classname="com.projecthk5.cartservice.integration.WriteFencePostgres16IT" time="0.043" />
+  </testsuite>
+  <testsuite name="com.projecthk5.cartservice.security.ContractJwtDecoderTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-11-02T12:11:46" time="0.312" sourceTask="cart-service:test">
+    <testcase name="currentAndPreviousKidsAccepted()" classname="com.projecthk5.cartservice.security.ContractJwtDecoderTest" time="0.295" />
+    <testcase name="missingShortAndMismatchedKeyringRejectStartup()" classname="com.projecthk5.cartservice.security.ContractJwtDecoderTest" time="0.003" />
+    <testcase name="wrongKidSignatureIssuerRoleAndTtlRejected()" classname="com.projecthk5.cartservice.security.ContractJwtDecoderTest" time="0.011" />
+  </testsuite>
+  <testsuite name="com.projecthk5.cartservice.service.CartServiceTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-11-02T12:11:48" time="0.159" sourceTask="cart-service:test">
+    <testcase name="nullOrMalformedClaimKeyCannotSilentlySucceedOnUnclaimedCart()" classname="com.projecthk5.cartservice.service.CartServiceTest" time="0.007" />
+    <testcase name="untrustedBlankStoreOrSellerNeverPersistsCart()" classname="com.projecthk5.cartservice.service.CartServiceTest" time="0.044" />
+    <testcase name="claimedCartRejectsWriteAndReleaseWorks()" classname="com.projecthk5.cartservice.service.CartServiceTest" time="0.051" />
+    <testcase name="priceThatPostgresWouldRoundOrOverflowNeverTouchesCart()" classname="com.projecthk5.cartservice.service.CartServiceTest" time="0.003" />
+    <testcase name="representablePriceCanRetainExactValueWithoutChoosingMoneyPolicy()" classname="com.projecthk5.cartservice.service.CartServiceTest" time="0.003" />
+    <testcase name="finalizationClearsOnlyMatchingClaim()" classname="com.projecthk5.cartservice.service.CartServiceTest" time="0.004" />
+    <testcase name="addUpdateRemoveAndTrustedStore()" classname="com.projecthk5.cartservice.service.CartServiceTest" time="0.002" />
+    <testcase name="invalidProductIdsFromDirectCallDoNotInvokeCatalogOrSave()" classname="com.projecthk5.cartservice.service.CartServiceTest" time="0.013" />
+  </testsuite>
+  <testsuite name="com.projecthk5.inventoryservice.InventoryPostgresIntegrationTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-11-02T12:02:43" time="0.979" sourceTask="inventory-service:postgresIntegrationTest">
+    <testcase name="flywaySchemaMatchesJpaValidationAtApplicationStartup()" classname="com.projecthk5.inventoryservice.InventoryPostgresIntegrationTest" time="0.685" />
+    <testcase name="duplicateInitializationReturnsConflictWithoutChangingBalance()" classname="com.projecthk5.inventoryservice.InventoryPostgresIntegrationTest" time="0.173" />
+    <testcase name="concurrentDifferentPayloadsCannotBothClaimSameOperationId()" classname="com.projecthk5.inventoryservice.InventoryPostgresIntegrationTest" time="0.118" />
+  </testsuite>
+  <testsuite name="com.projecthk5.inventoryservice.integration.InventoryInitializePostgresIT" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-11-02T12:02:48" time="0.325" sourceTask="inventory-service:postgresIntegrationTest">
+    <testcase name="competingInitializationWaitsForUniqueRowAndReturns409AfterWinnerCommits()" classname="com.projecthk5.inventoryservice.integration.InventoryInitializePostgresIT" time="0.22" />
+    <testcase name="encodedAndMatrixPathsRequireTokenAndNeverWriteWithoutIt()" classname="com.projecthk5.inventoryservice.integration.InventoryInitializePostgresIT" time="0.014" />
+    <testcase name="duplicateAfterReservationPreservesAvailableReservedVersionAndTimestamp()" classname="com.projecthk5.inventoryservice.integration.InventoryInitializePostgresIT" time="0.035" />
+    <testcase name="duplicateFreshSkuReturns409WithoutChangingAnyStoredBalanceField()" classname="com.projecthk5.inventoryservice.integration.InventoryInitializePostgresIT" time="0.051" />
+  </testsuite>
+  <testsuite name="com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT" tests="10" skipped="0" failures="0" errors="0" timestamp="2026-11-02T12:02:49" time="0.621" sourceTask="inventory-service:postgresIntegrationTest">
+    <testcase name="reserveConsumeAndReleaseRetriesDoNotApplyStockTwice()" classname="com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT" time="0.072" />
+    <testcase name="failureOnLaterSkuRollsBackEarlierStockMutationAndClaimedLedger()" classname="com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT" time="0.044" />
+    <testcase name="disjointSkuSameIdCannotReplaceWinnerAfterEarlierEmptyLedgerRead()" classname="com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT" time="0.071" />
+    <testcase name="concurrentDuplicateMultiSkuReleaseReplaysAfterFirstCommitWithoutDoubleReturn()" classname="com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT" time="0.06" />
+    <testcase name="concurrentDifferentIdsCannotOversellSharedSkuAndLosingClaimRollsBack()" classname="com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT" time="0.054" />
+    <testcase name="multiSkuReserveAndReleaseReplayCanonicalizeLineOrderAndRejectPayloadReuse()" classname="com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT" time="0.064" />
+    <testcase name="[1] samePayload=true" classname="com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT" time="0.063" />
+    <testcase name="[2] samePayload=false" classname="com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT" time="0.049" />
+    <testcase name="competingMultiSkuReleaseIdsCannotOverdrawReservedBalances()" classname="com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT" time="0.048" />
+    <testcase name="multiSkuReleaseAfterConsumeRejectsExcessHeldQuantityAndRollsBackWholeBatch()" classname="com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT" time="0.072" />
+  </testsuite>
+  <testsuite name="com.projecthk5.inventoryservice.integration.InventorySchemaPostgresIT" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-11-02T12:02:50" time="0.234" sourceTask="inventory-service:postgresIntegrationTest">
+    <testcase name="forwardMigrationSchemaValidatesAndHashRoundTripsThroughJpa()" classname="com.projecthk5.inventoryservice.integration.InventorySchemaPostgresIT" time="0.04" />
+    <testcase name="upgradingExistingV1PreservesHashLedgerAndStockAndV1Checksum()" classname="com.projecthk5.inventoryservice.integration.InventorySchemaPostgresIT" time="0.193" />
+  </testsuite>
+  <testsuite name="com.projecthk5.inventoryservice.api.InventoryRequestValidationTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-11-02T12:11:50" time="0.134" sourceTask="inventory-service:test">
+    <testcase name="initializeSkuAccepts128CharactersAndRejects129()" classname="com.projecthk5.inventoryservice.api.InventoryRequestValidationTest" time="0.094" />
+    <testcase name="operationIdAndSkuAccept128CharactersAndReject129()" classname="com.projecthk5.inventoryservice.api.InventoryRequestValidationTest" time="0.027" />
+    <testcase name="invalidArgumentAndOverflowUseBadRequestErrorCodes()" classname="com.projecthk5.inventoryservice.api.InventoryRequestValidationTest" time="0.008" />
+  </testsuite>
+  <testsuite name="com.projecthk5.inventoryservice.model.InventoryItemTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-11-02T12:11:51" time="0.01" sourceTask="inventory-service:test">
+    <testcase name="cannotDecreaseAvailableStockBelowZero()" classname="com.projecthk5.inventoryservice.model.InventoryItemTest" time="0.002" />
+    <testcase name="releaseRestoresAvailableQuantityOnlyOncePerRequestedAmount()" classname="com.projecthk5.inventoryservice.model.InventoryItemTest" time="0.0" />
+    <testcase name="consumeReducesReservedQuantityWithoutIncreasingAvailableStock()" classname="com.projecthk5.inventoryservice.model.InventoryItemTest" time="0.0" />
+    <testcase name="quantitiesMustBePositiveForOperations()" classname="com.projecthk5.inventoryservice.model.InventoryItemTest" time="0.001" />
+    <testcase name="reserveMovesQuantityFromAvailableToReserved()" classname="com.projecthk5.inventoryservice.model.InventoryItemTest" time="0.001" />
+    <testcase name="increasingBeyondLongRangeThrowsWithoutChangingBalance()" classname="com.projecthk5.inventoryservice.model.InventoryItemTest" time="0.001" />
+    <testcase name="cannotReleaseMoreThanReserved()" classname="com.projecthk5.inventoryservice.model.InventoryItemTest" time="0.001" />
+  </testsuite>
+  <testsuite name="com.projecthk5.inventoryservice.security.InventoryInternalTokenFilterTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-11-02T12:11:51" time="0.162" sourceTask="inventory-service:test">
+    <testcase name="missingTokenConfigurationFailsClosedForEncodedAndMatrixPaths()" classname="com.projecthk5.inventoryservice.security.InventoryInternalTokenFilterTest" time="0.162" />
+  </testsuite>
+  <testsuite name="com.projecthk5.inventoryservice.security.InventoryOrderPairGateTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2026-11-02T12:11:51" time="0.084" sourceTask="inventory-service:test">
+    <testcase name="pairTokenOnlyAllowsPostOperationsForReserveConsumeReleaseAndPreservesBody()" classname="com.projecthk5.inventoryservice.security.InventoryOrderPairGateTest" time="0.024" />
+    <testcase name="bodyOneByteOverMaximumIsRejectedWith413()" classname="com.projecthk5.inventoryservice.security.InventoryOrderPairGateTest" time="0.007" />
+    <testcase name="pairTokenAloneCannotEnableMutationWhenFeatureFlagIsOff()" classname="com.projecthk5.inventoryservice.security.InventoryOrderPairGateTest" time="0.0" />
+    <testcase name="pairCredentialRejectsPathAliasesAndNonCanonicalOperationPaths()" classname="com.projecthk5.inventoryservice.security.InventoryOrderPairGateTest" time="0.001" />
+    <testcase name="bodyLimitAlsoAppliesWhenContentLengthIsUnknown()" classname="com.projecthk5.inventoryservice.security.InventoryOrderPairGateTest" time="0.002" />
+    <testcase name="pairCredentialCannotInitializeOrUseIncreaseDecreaseOrWrongMethodPath()" classname="com.projecthk5.inventoryservice.security.InventoryOrderPairGateTest" time="0.015" />
+    <testcase name="missingOrWrongPairCredentialIsUnauthorized()" classname="com.projecthk5.inventoryservice.security.InventoryOrderPairGateTest" time="0.001" />
+    <testcase name="unconfiguredPairVerifierFailsClosed()" classname="com.projecthk5.inventoryservice.security.InventoryOrderPairGateTest" time="0.007" />
+    <testcase name="exactMaximumBodySizeIsAcceptedAndReplayed()" classname="com.projecthk5.inventoryservice.security.InventoryOrderPairGateTest" time="0.011" />
+    <testcase name="pairCredentialRejectsMissingNullNonTextualAndPaddedOperationTypes()" classname="com.projecthk5.inventoryservice.security.InventoryOrderPairGateTest" time="0.003" />
+  </testsuite>
+  <testsuite name="com.projecthk5.inventoryservice.service.InventoryOperationServiceTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-11-02T12:11:51" time="1.182" sourceTask="inventory-service:test">
+    <testcase name="replayWithSameIdAndPayloadDoesNotApplyStockTwice()" classname="com.projecthk5.inventoryservice.service.InventoryOperationServiceTest" time="1.146" />
+    <testcase name="insufficientStockDoesNotChangeBalance()" classname="com.projecthk5.inventoryservice.service.InventoryOperationServiceTest" time="0.005" />
+    <testcase name="operationIdCannotBeReusedForDifferentPayload()" classname="com.projecthk5.inventoryservice.service.InventoryOperationServiceTest" time="0.004" />
+    <testcase name="successfulMultiSkuReserveChangesAllRequestedBalances()" classname="com.projecthk5.inventoryservice.service.InventoryOperationServiceTest" time="0.007" />
+    <testcase name="concurrentClaimWithSamePayloadIsTreatedAsReplay()" classname="com.projecthk5.inventoryservice.service.InventoryOperationServiceTest" time="0.004" />
+    <testcase name="delimiterContainingSkuCannotCollideWithMultipleItems()" classname="com.projecthk5.inventoryservice.service.InventoryOperationServiceTest" time="0.003" />
+  </testsuite>
+  <testsuite name="com.projecthk5.orderservice.finance.FinanceDurabilityPostgresIT" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-02T11:58:55" time="1.361" sourceTask="order-service:postgresIntegrationTest">
+    <testcase name="conflictingReplayCannotMutateTheFinancialAggregateWhileAValidReplayCompletes()" classname="com.projecthk5.orderservice.finance.FinanceDurabilityPostgresIT" time="1.065" />
+    <testcase name="identicalIdempotencyKeysAcrossCustomersReplayOnlyTheirOwnTwoStoreFinancialAggregate()" classname="com.projecthk5.orderservice.finance.FinanceDurabilityPostgresIT" time="0.103" />
+    <testcase name="outerRollbackRevertsAlreadyFlushedTwoStoreMoneyOutboxAndSuccessfulAttemptTogether()" classname="com.projecthk5.orderservice.finance.FinanceDurabilityPostgresIT" time="0.039" />
+    <testcase name="concurrentSuccessfulReplaysKeepEveryStoredMoneySnapshotWhileFinancePolicyIsClosed()" classname="com.projecthk5.orderservice.finance.FinanceDurabilityPostgresIT" time="0.075" />
+    <testcase name="postgresOutboxFaultAfterTwoStoreFlushRollsBackEveryMoneyRowAndAllowsCleanLocalRetry()" classname="com.projecthk5.orderservice.finance.FinanceDurabilityPostgresIT" time="0.068" />
+  </testsuite>
+  <testsuite name="com.projecthk5.orderservice.finance.FinanceSnapshotPostgresIT" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-11-02T11:59:02" time="0.461" sourceTask="order-service:postgresIntegrationTest">
+    <testcase name="currentV1ScaleBoundaryIsTwoAndPostgresCastWouldRoundHigherScale()" classname="com.projecthk5.orderservice.finance.FinanceSnapshotPostgresIT" time="0.062" />
+    <testcase name="parentAggregateOverflowRollsBackOrderChildrenAndKeepsAttemptUncommitted()" classname="com.projecthk5.orderservice.finance.FinanceSnapshotPostgresIT" time="0.09" />
+    <testcase name="[1] gross=0.00, fee=0.00, net=0.00" classname="com.projecthk5.orderservice.finance.FinanceSnapshotPostgresIT" time="0.061" />
+    <testcase name="[2] gross=99999999999999999.99, fee=5000000000000000.00, net=94999999999999999.99" classname="com.projecthk5.orderservice.finance.FinanceSnapshotPostgresIT" time="0.037" />
+    <testcase name="twoStoreGrossFeeAndLineAmountsSurviveCommitAndFreshRead()" classname="com.projecthk5.orderservice.finance.FinanceSnapshotPostgresIT" time="0.039" />
+    <testcase name="successfulReplayCannotRepriceCommittedTwoStoreAmountsOrCreateAnotherPlacementEvent()" classname="com.projecthk5.orderservice.finance.FinanceSnapshotPostgresIT" time="0.093" />
+  </testsuite>
+  <testsuite name="com.projecthk5.orderservice.integration.CheckoutDraftPostgresIT" tests="14" skipped="0" failures="0" errors="0" timestamp="2026-11-02T11:59:06" time="10.86" sourceTask="order-service:postgresIntegrationTest">
+    <testcase name="executionCutAfterDraftBeforeT1LeavesFactsForScannerWithoutAutomaticRecovery()" classname="com.projecthk5.orderservice.integration.CheckoutDraftPostgresIT" time="0.149" />
+    <testcase name="draftCommitFaultPreventsT1AndAllInventoryHttp()" classname="com.projecthk5.orderservice.integration.CheckoutDraftPostgresIT" time="0.048" />
+    <testcase name="realHttpReadTimeoutRetainsUnknownDraftAndCannotSendOrReleaseOnReplay()" classname="com.projecthk5.orderservice.integration.CheckoutDraftPostgresIT" time="5.192" />
+    <testcase name="unknownSurvivesNewServiceInstanceAndSameKeyNeverReservesOrFinalizes()" classname="com.projecthk5.orderservice.integration.CheckoutDraftPostgresIT" time="0.063" />
+    <testcase name="corruptPayloadFailsClosedWithoutNetworkOrOrderCreation()" classname="com.projecthk5.orderservice.integration.CheckoutDraftPostgresIT" time="0.06" />
+    <testcase name="outboxTransactionRollbackRetainsExactDraftAndConfirmedReservation()" classname="com.projecthk5.orderservice.integration.CheckoutDraftPostgresIT" time="0.151" />
+    <testcase name="completeBusinessSnapshotCommitsBeforeHttpAndMatchesPlacedRowsAndOutbox()" classname="com.projecthk5.orderservice.integration.CheckoutDraftPostgresIT" time="0.114" />
+    <testcase name="[1] point=AFTER_DRAFT" classname="com.projecthk5.orderservice.integration.CheckoutDraftPostgresIT" time="1.673" />
+    <testcase name="[2] point=AFTER_T1" classname="com.projecthk5.orderservice.integration.CheckoutDraftPostgresIT" time="1.541" />
+    <testcase name="[3] point=AFTER_RESERVE" classname="com.projecthk5.orderservice.integration.CheckoutDraftPostgresIT" time="1.669" />
+    <testcase name="lateHttpSuccessCannotOverwriteUnknownOrCommitOrderAfterStaleScan()" classname="com.projecthk5.orderservice.integration.CheckoutDraftPostgresIT" time="0.053" />
+    <testcase name="concurrentSameDraftIsOneRowAndChangedShippingCannotOverwriteIt()" classname="com.projecthk5.orderservice.integration.CheckoutDraftPostgresIT" time="0.029" />
+    <testcase name="wrongCustomerFingerprintOrClosedAttemptCannotWriteDraft()" classname="com.projecthk5.orderservice.integration.CheckoutDraftPostgresIT" time="0.027" />
+    <testcase name="overlappingSameKeyCheckoutCreatesOneDraftOrderOutboxAndInventorySend()" classname="com.projecthk5.orderservice.integration.CheckoutDraftPostgresIT" time="0.06" />
+  </testsuite>
+  <testsuite name="com.projecthk5.orderservice.integration.CheckoutInventoryBoundaryPostgresIT" tests="15" skipped="0" failures="0" errors="0" timestamp="2026-11-02T11:59:21" time="1.466" sourceTask="order-service:postgresIntegrationTest">
+    <testcase name="[1] body={&quot;code&quot;:&quot;IDEMPOTENCY_CLAIM_CONFLICT&quot;}" classname="com.projecthk5.orderservice.integration.CheckoutInventoryBoundaryPostgresIT" time="0.125" />
+    <testcase name="[2] body={&quot;code&quot;:&quot;IDEMPOTENCY_KEY_REUSED&quot;}" classname="com.projecthk5.orderservice.integration.CheckoutInventoryBoundaryPostgresIT" time="0.131" />
+    <testcase name="[3] body={&quot;code&quot;:&quot;INVENTORY_CONFLICT&quot;}" classname="com.projecthk5.orderservice.integration.CheckoutInventoryBoundaryPostgresIT" time="0.144" />
+    <testcase name="[4] body=not json" classname="com.projecthk5.orderservice.integration.CheckoutInventoryBoundaryPostgresIT" time="0.139" />
+    <testcase name="insufficientStockIsDefinitiveAndReleasesTheCart()" classname="com.projecthk5.orderservice.integration.CheckoutInventoryBoundaryPostgresIT" time="0.127" />
+    <testcase name="[1] sku=null" classname="com.projecthk5.orderservice.integration.CheckoutInventoryBoundaryPostgresIT" time="0.037" />
+    <testcase name="[2] sku=" classname="com.projecthk5.orderservice.integration.CheckoutInventoryBoundaryPostgresIT" time="0.075" />
+    <testcase name="[3] sku=   " classname="com.projecthk5.orderservice.integration.CheckoutInventoryBoundaryPostgresIT" time="0.079" />
+    <testcase name="[4] sku= AO-001" classname="com.projecthk5.orderservice.integration.CheckoutInventoryBoundaryPostgresIT" time="0.073" />
+    <testcase name="[5] sku=AO-001 " classname="com.projecthk5.orderservice.integration.CheckoutInventoryBoundaryPostgresIT" time="0.073" />
+    <testcase name="[6] sku=AO-001&#10;" classname="com.projecthk5.orderservice.integration.CheckoutInventoryBoundaryPostgresIT" time="0.074" />
+    <testcase name="[7] sku= AO-001" classname="com.projecthk5.orderservice.integration.CheckoutInventoryBoundaryPostgresIT" time="0.073" />
+    <testcase name="[8] sku=AO?001" classname="com.projecthk5.orderservice.integration.CheckoutInventoryBoundaryPostgresIT" time="0.045" />
+    <testcase name="[9] sku=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" classname="com.projecthk5.orderservice.integration.CheckoutInventoryBoundaryPostgresIT" time="0.079" />
+    <testcase name="canonicalSkuReachesInventoryUnchanged()" classname="com.projecthk5.orderservice.integration.CheckoutInventoryBoundaryPostgresIT" time="0.148" />
+  </testsuite>
+  <testsuite name="com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT" tests="25" skipped="0" failures="0" errors="0" timestamp="2026-11-02T11:59:26" time="1.463" sourceTask="order-service:postgresIntegrationTest">
+    <testcase name="definitiveRejectionIsDurableBeforeCartRelease()" classname="com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT" time="0.071" />
+    <testcase name="unknownCannotBeClaimedThroughLegacyJournalApi()" classname="com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT" time="0.031" />
+    <testcase name="unknownGenericDisabledTransportCannotReopenRowOrEnableHttpAdapter()" classname="com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT" time="0.182" />
+    <testcase name="concurrentGenericCallersCannotBothSend()" classname="com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT" time="0.169" />
+    <testcase name="concurrentSendersCannotBothDispatchOneJournalEntry()" classname="com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT" time="0.045" />
+    <testcase name="missingCommittedAttemptPreventsAnyHttp()" classname="com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT" time="0.018" />
+    <testcase name="checkoutRejectsAmbientTransactionBeforeAnyRemoteClaim()" classname="com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT" time="0.014" />
+    <testcase name="intentIsCommittedBeforeHttpAndSuccessfulReplayUsesNoNewSnapshotOrSend()" classname="com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT" time="0.069" />
+    <testcase name="stalePendingReadCannotClaimAConcurrentlyCommittedUnknown()" classname="com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT" time="0.071" />
+    <testcase name="pendingGenericSuccessConfirmsOnceAndReplayDoesNotSend()" classname="com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT" time="0.038" />
+    <testcase name="explicitPendingDispatchReloadsSavedTupleAndRejectsRemapping()" classname="com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT" time="0.057" />
+    <testcase name="standaloneAdapterCannotFallBackToUnjournaledReserve()" classname="com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT" time="0.007" />
+    <testcase name="lateGenericReplyAfterStaleScanCannotConfirmOrRestorePending()" classname="com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT" time="0.039" />
+    <testcase name="failedOrderTransactionDoesNotLoseConfirmedInventoryIntent()" classname="com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT" time="0.077" />
+    <testcase name="[1] profile=claim" classname="com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT" time="0.08" />
+    <testcase name="[2] profile=503" classname="com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT" time="0.052" />
+    <testcase name="[1] profile=bad-id" classname="com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT" time="0.045" />
+    <testcase name="[2] profile=bad-type" classname="com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT" time="0.04" />
+    <testcase name="[3] profile=bad-skus" classname="com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT" time="0.044" />
+    <testcase name="[4] profile=duplicate-skus" classname="com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT" time="0.038" />
+    <testcase name="[5] profile=no-body" classname="com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT" time="0.044" />
+    <testcase name="[1] forbiddenState=CONFIRMED" classname="com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT" time="0.048" />
+    <testcase name="[2] forbiddenState=REJECTED" classname="com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT" time="0.049" />
+    <testcase name="unresolvedUnknownCannotBeRedispatchedByEitherReserveEntryPoint()" classname="com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT" time="0.065" />
+    <testcase name="pendingGenericDisabledTransportKeepsNotSentPendingWithoutHttp()" classname="com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT" time="0.025" />
+  </testsuite>
+  <testsuite name="com.projecthk5.orderservice.integration.CheckoutReplayPostgresIT" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-11-02T11:59:33" time="0.452" sourceTask="order-service:postgresIntegrationTest">
+    <testcase name="committedOutcomeReadAfterLostCommitResponseReturnsCompleteResultWithoutCompensation()" classname="com.projecthk5.orderservice.integration.CheckoutReplayPostgresIT" time="0.165" />
+    <testcase name="[1] changed=Shipping[name=Receiver B, phone=0901234567, address=Address A]" classname="com.projecthk5.orderservice.integration.CheckoutReplayPostgresIT" time="0.065" />
+    <testcase name="[2] changed=Shipping[name=Receiver A, phone=0907654321, address=Address A]" classname="com.projecthk5.orderservice.integration.CheckoutReplayPostgresIT" time="0.031" />
+    <testcase name="[3] changed=Shipping[name=Receiver A, phone=0901234567, address=Address B]" classname="com.projecthk5.orderservice.integration.CheckoutReplayPostgresIT" time="0.045" />
+    <testcase name="[4] changed=null" classname="com.projecthk5.orderservice.integration.CheckoutReplayPostgresIT" time="0.039" />
+    <testcase name="committedOrderReplaysTwiceOutsideTransactionWithoutAnotherOrderOrReservation()" classname="com.projecthk5.orderservice.integration.CheckoutReplayPostgresIT" time="0.032" />
+    <testcase name="inconsistentAttemptCannotReadOrFinalizeAnotherCustomersOrder()" classname="com.projecthk5.orderservice.integration.CheckoutReplayPostgresIT" time="0.037" />
+    <testcase name="changedPayloadStillRejectsSuccessfulKeyWithoutCallingOtherServices()" classname="com.projecthk5.orderservice.integration.CheckoutReplayPostgresIT" time="0.024" />
+  </testsuite>
+  <testsuite name="com.projecthk5.orderservice.integration.CheckoutScannerPostgresIT" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-11-02T11:59:38" time="0.2" sourceTask="order-service:postgresIntegrationTest">
+    <testcase name="[1] competing=scanner" classname="com.projecthk5.orderservice.integration.CheckoutScannerPostgresIT" time="0.102" />
+    <testcase name="[2] competing=failure-handler" classname="com.projecthk5.orderservice.integration.CheckoutScannerPostgresIT" time="0.056" />
+    <testcase name="scanFlagsOnlyStaleProcessingAndIsRepeatable()" classname="com.projecthk5.orderservice.integration.CheckoutScannerPostgresIT" time="0.012" />
+    <testcase name="scannerWinningBeforeWriterKeepsOrderAndOutboxRolledBack()" classname="com.projecthk5.orderservice.integration.CheckoutScannerPostgresIT" time="0.027" />
+  </testsuite>
+  <testsuite name="com.projecthk5.orderservice.integration.FulfillmentPostgres16IT" tests="9" skipped="0" failures="0" errors="0" timestamp="2026-11-02T11:59:43" time="1.09" sourceTask="order-service:postgresIntegrationTest">
+    <testcase name="customerSeesOnlyOwnOrdersWithShippingAndStoreSplit()" classname="com.projecthk5.orderservice.integration.FulfillmentPostgres16IT" time="0.246" />
+    <testcase name="sellerListsAndActsOnlyOnOwnStore()" classname="com.projecthk5.orderservice.integration.FulfillmentPostgres16IT" time="0.227" />
+    <testcase name="fullCodFlowWritesSideEffectsAndFinance()" classname="com.projecthk5.orderservice.integration.FulfillmentPostgres16IT" time="0.261" />
+    <testcase name="concurrentAcceptsApplyOnceUnderRowLock()" classname="com.projecthk5.orderservice.integration.FulfillmentPostgres16IT" time="0.045" />
+    <testcase name="databaseRejectsCodCollectionBeforeDelivery()" classname="com.projecthk5.orderservice.integration.FulfillmentPostgres16IT" time="0.018" />
+    <testcase name="rolesAreEnforcedPerRoute()" classname="com.projecthk5.orderservice.integration.FulfillmentPostgres16IT" time="0.033" />
+    <testcase name="suspendedSellerFinishesOpenOrdersButTakesNothingNewAndSeesNoFinance()" classname="com.projecthk5.orderservice.integration.FulfillmentPostgres16IT" time="0.144" />
+    <testcase name="customerCancelAndSellerRejectReleaseStockAndCloseOrder()" classname="com.projecthk5.orderservice.integration.FulfillmentPostgres16IT" time="0.073" />
+    <testcase name="financeFailsClosedWhenSellerFactsAreUnavailable()" classname="com.projecthk5.orderservice.integration.FulfillmentPostgres16IT" time="0.029" />
+  </testsuite>
+  <testsuite name="com.projecthk5.orderservice.integration.InventoryOperationJournalPostgres16IT" tests="14" skipped="0" failures="0" errors="0" timestamp="2026-11-02T11:59:48" time="0.206" sourceTask="order-service:postgresIntegrationTest">
+    <testcase name="completedOrUnknownAttemptCannotReuseOldGeneration()" classname="com.projecthk5.orderservice.integration.InventoryOperationJournalPostgres16IT" time="0.034" />
+    <testcase name="multiSkuUnknownIntentRejectsSameIdDifferentTypeOrCheckoutAttempt()" classname="com.projecthk5.orderservice.integration.InventoryOperationJournalPostgres16IT" time="0.02" />
+    <testcase name="crashedInFlightIsUnknownAndNeverAutomaticallyCompensated()" classname="com.projecthk5.orderservice.integration.InventoryOperationJournalPostgres16IT" time="0.01" />
+    <testcase name="t2ConfirmedOutcomeSurvivesCallerTransactionRollback()" classname="com.projecthk5.orderservice.integration.InventoryOperationJournalPostgres16IT" time="0.011" />
+    <testcase name="flywayT1PersistsImmutableCanonicalPayloadAndSeparateT2Outcome()" classname="com.projecthk5.orderservice.integration.InventoryOperationJournalPostgres16IT" time="0.015" />
+    <testcase name="unknownMultiSkuReservePreservesStableIdAndNeverCreatesImplicitRelease()" classname="com.projecthk5.orderservice.integration.InventoryOperationJournalPostgres16IT" time="0.015" />
+    <testcase name="t1JournalCommitSurvivesRollbackOfAlreadyCommittedAttemptCaller()" classname="com.projecthk5.orderservice.integration.InventoryOperationJournalPostgres16IT" time="0.01" />
+    <testcase name="lateT2AfterCrashScannerMustNotOverwriteUnknown()" classname="com.projecthk5.orderservice.integration.InventoryOperationJournalPostgres16IT" time="0.009" />
+    <testcase name="rejectedAttemptCannotBeClaimedAgain()" classname="com.projecthk5.orderservice.integration.InventoryOperationJournalPostgres16IT" time="0.01" />
+    <testcase name="multiSkuReleaseCandidateRetainsExactLongQuantitiesAndIndependentOperationId()" classname="com.projecthk5.orderservice.integration.InventoryOperationJournalPostgres16IT" time="0.018" />
+    <testcase name="differentPayloadOnSameOperationIdIsRejectedWithoutMutation()" classname="com.projecthk5.orderservice.integration.InventoryOperationJournalPostgres16IT" time="0.009" />
+    <testcase name="staleGenerationCannotMutateALaterSendAfterPositiveNotSent()" classname="com.projecthk5.orderservice.integration.InventoryOperationJournalPostgres16IT" time="0.015" />
+    <testcase name="twoWorkersClaimOneJournalRowOnlyOnce()" classname="com.projecthk5.orderservice.integration.InventoryOperationJournalPostgres16IT" time="0.009" />
+    <testcase name="twoWorkersCannotReclaimUnknownMultiSkuOperation()" classname="com.projecthk5.orderservice.integration.InventoryOperationJournalPostgres16IT" time="0.01" />
+  </testsuite>
+  <testsuite name="com.projecthk5.orderservice.integration.OrderPostgres16IT" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-11-02T11:59:52" time="0.037" sourceTask="order-service:postgresIntegrationTest">
+    <testcase name="realFlywayValidateTwoSellerOrdersCascadeAndUniqueCustomerKey()" classname="com.projecthk5.orderservice.integration.OrderPostgres16IT" time="0.028" />
+    <testcase name="concurrentSameKeyOnlyOneRecordCanCommit()" classname="com.projecthk5.orderservice.integration.OrderPostgres16IT" time="0.008" />
+  </testsuite>
+  <testsuite name="com.projecthk5.orderservice.integration.SellerWriteFencePostgresIT" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-11-02T11:59:58" time="0.459" sourceTask="order-service:postgresIntegrationTest">
+    <testcase name="sellerWriteHeldInItsTransactionRollsBackWhenAuthClosesItsReservation()" classname="com.projecthk5.orderservice.integration.SellerWriteFencePostgresIT" time="0.386" />
+    <testcase name="writeWhoseReservationStaysOpenCommitsAndALateCloseChangesNothing()" classname="com.projecthk5.orderservice.integration.SellerWriteFencePostgresIT" time="0.06" />
+    <testcase name="closeRequiresThePairToken()" classname="com.projecthk5.orderservice.integration.SellerWriteFencePostgresIT" time="0.008" />
+  </testsuite>
+  <testsuite name="com.projecthk5.orderservice.api.SellerOrderControllerTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-11-02T12:11:37" time="0.091" sourceTask="order-service:test">
+    <testcase name="suspendedSellerCannotTakeOnNewOrders()" classname="com.projecthk5.orderservice.api.SellerOrderControllerTest" time="0.024" />
+    <testcase name="[1] action=reject" classname="com.projecthk5.orderservice.api.SellerOrderControllerTest" time="0.016" />
+    <testcase name="[2] action=prepare" classname="com.projecthk5.orderservice.api.SellerOrderControllerTest" time="0.001" />
+    <testcase name="[3] action=ready" classname="com.projecthk5.orderservice.api.SellerOrderControllerTest" time="0.001" />
+    <testcase name="[4] action=dispatch" classname="com.projecthk5.orderservice.api.SellerOrderControllerTest" time="0.001" />
+    <testcase name="[5] action=deliver" classname="com.projecthk5.orderservice.api.SellerOrderControllerTest" time="0.0" />
+    <testcase name="approvedSellerAcceptsOrders()" classname="com.projecthk5.orderservice.api.SellerOrderControllerTest" time="0.0" />
+  </testsuite>
+  <testsuite name="com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest" tests="16" skipped="0" failures="0" errors="0" timestamp="2026-11-02T12:11:37" time="0.059" sourceTask="order-service:test">
+    <testcase name="rejectsUnrepresentableOrderPriceBeforeAnyStockSideEffect()" classname="com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest" time="0.002" />
+    <testcase name="enforcesBatchCardinalityOneThroughOneHundredAndUniqueProductIds()" classname="com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest" time="0.006" />
+    <testcase name="rejectsPriceAndCurrencyMismatchButNoImplicitMoneyPolicyIsSelected()" classname="com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest" time="0.002" />
+    <testcase name="allowsMultipleProductsForConsistentSameStoreSameSellerAndHouse()" classname="com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest" time="0.003" />
+    <testcase name="acceptsTwoStoresAndOnlyAuthoritativeSkuInOriginalOrder()" classname="com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest" time="0.001" />
+    <testcase name="rejectsSameStoreWithConflictingHouseClassification()" classname="com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest" time="0.0" />
+    <testcase name="rejectsPartialBatchMissingRowWrongVersionOrUnverifiedResponse()" classname="com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest" time="0.001" />
+    <testcase name="rejectsUnicodePaddedSkuAndNoncanonicalExpectedIdentifiers()" classname="com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest" time="0.002" />
+    <testcase name="rejectsMissingOrDuplicatedTrustedSkuAcrossProducts()" classname="com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest" time="0.023" />
+    <testcase name="rejectsSameStoreWithDifferentSellersRegardlessOfOrder()" classname="com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest" time="0.001" />
+    <testcase name="doesNotDeriveSkuFromProductId()" classname="com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest" time="0.001" />
+    <testcase name="rejectsOneSellerClaimedByTwoStoresRegardlessOfOrder()" classname="com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest" time="0.002" />
+    <testcase name="rejectsIncorrectStoreSellerOrUnavailableSource()" classname="com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest" time="0.001" />
+    <testcase name="rejectsNonReadyItemEvenIfProviderIncorrectlyClaimsAllReady()" classname="com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest" time="0.001" />
+    <testcase name="rejectsReorderedExtraDuplicatedAndMismatchedProductRows()" classname="com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest" time="0.001" />
+    <testcase name="preservesExactCanonicalSkuCaseCompositionAndInternalUnicode()" classname="com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest" time="0.001" />
+  </testsuite>
+  <testsuite name="com.projecthk5.orderservice.domain.CheckoutRulesTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-11-02T12:11:37" time="0.012" sourceTask="order-service:test">
+    <testcase name="malformedCartSnapshotMustNeverMatchExpectedItems()" classname="com.projecthk5.orderservice.domain.CheckoutRulesTest" time="0.002" />
+    <testcase name="malformedExpectedItemsRejectedBeforeFingerprinting()" classname="com.projecthk5.orderservice.domain.CheckoutRulesTest" time="0.001" />
+    <testcase name="malformedExpectedItemsFailClosedEvenWithoutControllerValidation()" classname="com.projecthk5.orderservice.domain.CheckoutRulesTest" time="0.002" />
+    <testcase name="financePolicyRequiresExplicitApprovalAndInputs()" classname="com.projecthk5.orderservice.domain.CheckoutRulesTest" time="0.001" />
+    <testcase name="idempotencyFingerprintOrderIndependentButRevisionSensitive()" classname="com.projecthk5.orderservice.domain.CheckoutRulesTest" time="0.002" />
+    <testcase name="expectedItemsMustExactlyMatchCart()" classname="com.projecthk5.orderservice.domain.CheckoutRulesTest" time="0.001" />
+  </testsuite>
+  <testsuite name="com.projecthk5.orderservice.domain.InventoryOperationIntentTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-11-02T12:11:37" time="0.025" sourceTask="order-service:test">
+    <testcase name="journalRehydrateRequiresIdenticalFingerprint()" classname="com.projecthk5.orderservice.domain.InventoryOperationIntentTest" time="0.003" />
+    <testcase name="invalidExternalInventoryIdentifiersFailClosed()" classname="com.projecthk5.orderservice.domain.InventoryOperationIntentTest" time="0.002" />
+    <testcase name="unicodeBoundaryPaddedSkuFailsClosedWithoutChangingExactIdentity()" classname="com.projecthk5.orderservice.domain.InventoryOperationIntentTest" time="0.001" />
+    <testcase name="requestHashIsCanonicalButOperationIdIsSeparate()" classname="com.projecthk5.orderservice.domain.InventoryOperationIntentTest" time="0.012" />
+    <testcase name="lineSetCannotBeMutatedOrHaveDuplicates()" classname="com.projecthk5.orderservice.domain.InventoryOperationIntentTest" time="0.002" />
+    <testcase name="changedTypeOrQuantityIsNotAValidReplay()" classname="com.projecthk5.orderservice.domain.InventoryOperationIntentTest" time="0.001" />
+  </testsuite>
+  <testsuite name="com.projecthk5.orderservice.domain.OrderAmountStorageBoundsTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-11-02T12:11:37" time="0.008" sourceTask="order-service:test">
+    <testcase name="rejectsParentOverflowEvenWhenStoreAmountsFit()" classname="com.projecthk5.orderservice.domain.OrderAmountStorageBoundsTest" time="0.002" />
+    <testcase name="rejectsSilentPrecisionLossBeforeAnyPersistence()" classname="com.projecthk5.orderservice.domain.OrderAmountStorageBoundsTest" time="0.001" />
+    <testcase name="rejectsOversizeProductAndLineTotals()" classname="com.projecthk5.orderservice.domain.OrderAmountStorageBoundsTest" time="0.001" />
+    <testcase name="acceptsExactZeroAndBoundary()" classname="com.projecthk5.orderservice.domain.OrderAmountStorageBoundsTest" time="0.001" />
+    <testcase name="rejectsNegativeAndNull()" classname="com.projecthk5.orderservice.domain.OrderAmountStorageBoundsTest" time="0.001" />
+    <testcase name="acceptsHigherInputScaleOnlyWhenExact()" classname="com.projecthk5.orderservice.domain.OrderAmountStorageBoundsTest" time="0.001" />
+  </testsuite>
+  <testsuite name="com.projecthk5.orderservice.entity.SellerOrderTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-11-02T12:11:37" time="0.035" sourceTask="order-service:test">
+    <testcase name="cancellingEveryStoreOrderCancelsTheParentOrder()" classname="com.projecthk5.orderservice.entity.SellerOrderTest" time="0.003" />
+    <testcase name="settlementRequiresCollectedCodAndHappensOnce()" classname="com.projecthk5.orderservice.entity.SellerOrderTest" time="0.001" />
+    <testcase name="fullHappyPathRecordsDeliveryTimeAndNet()" classname="com.projecthk5.orderservice.entity.SellerOrderTest" time="0.001" />
+    <testcase name="codIsCollectedOnceAndOnlyAfterDelivery()" classname="com.projecthk5.orderservice.entity.SellerOrderTest" time="0.001" />
+    <testcase name="cannotCancelAfterAcceptOrSkipSteps()" classname="com.projecthk5.orderservice.entity.SellerOrderTest" time="0.001" />
+    <testcase name="rejectNeedsReasonAndVoidsCod()" classname="com.projecthk5.orderservice.entity.SellerOrderTest" time="0.001" />
+  </testsuite>
+  <testsuite name="com.projecthk5.orderservice.finance.FinanceCheckoutPreflightTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-11-02T12:11:39" time="0.301" sourceTask="order-service:test">
+    <testcase name="closedFinanceGateCannotReserveStockOrWriteOrder()" classname="com.projecthk5.orderservice.finance.FinanceCheckoutPreflightTest" time="0.208" />
+    <testcase name="currentServiceRoundsOnceForTheStoreRatherThanEachLine()" classname="com.projecthk5.orderservice.finance.FinanceCheckoutPreflightTest" time="0.067" />
+    <testcase name="conflictingHouseFactsWithinOneStoreCannotSelectAnExemption()" classname="com.projecthk5.orderservice.finance.FinanceCheckoutPreflightTest" time="0.01" />
+    <testcase name="matchingPerItemFactsWithTwoSellersCannotShareOneStoreOrder()" classname="com.projecthk5.orderservice.finance.FinanceCheckoutPreflightTest" time="0.003" />
+  </testsuite>
+  <testsuite name="com.projecthk5.orderservice.finance.FinanceConsumerParityTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-11-02T12:11:39" time="0.045" sourceTask="order-service:test">
+    <testcase name="largeQuantityMultiplicationStaysExactBeforeAnyPersistenceBoundCheck()" classname="com.projecthk5.orderservice.finance.FinanceConsumerParityTest" time="0.002" />
+    <testcase name="[1] scale=0" classname="com.projecthk5.orderservice.finance.FinanceConsumerParityTest" time="0.004" />
+    <testcase name="[2] scale=1" classname="com.projecthk5.orderservice.finance.FinanceConsumerParityTest" time="0.001" />
+    <testcase name="[3] scale=2" classname="com.projecthk5.orderservice.finance.FinanceConsumerParityTest" time="0.001" />
+    <testcase name="[4] scale=3" classname="com.projecthk5.orderservice.finance.FinanceConsumerParityTest" time="0.001" />
+    <testcase name="[5] scale=4" classname="com.projecthk5.orderservice.finance.FinanceConsumerParityTest" time="0.002" />
+    <testcase name="roundingEachStoreIsNotRoundingTheParentOrder()" classname="com.projecthk5.orderservice.finance.FinanceConsumerParityTest" time="0.002" />
+    <testcase name="perSellerOrderRoundingDiffersFromPerLineAndMustBeSignedExplicitly()" classname="com.projecthk5.orderservice.finance.FinanceConsumerParityTest" time="0.001" />
+  </testsuite>
+  <testsuite name="com.projecthk5.orderservice.finance.FinancePolicyConfigurationTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-11-02T12:11:39" time="0.846" sourceTask="order-service:test">
+    <testcase name="fixtureApprovalWithoutCompleteInputsFailsStartup()" classname="com.projecthk5.orderservice.finance.FinancePolicyConfigurationTest" time="0.611" />
+    <testcase name="realYamlDefaultsClosedEvenWithAllPricingInputs()" classname="com.projecthk5.orderservice.finance.FinancePolicyConfigurationTest" time="0.05" />
+    <testcase name="malformedFixturePolicyCannotCreateReadyMoneyRules()" classname="com.projecthk5.orderservice.finance.FinancePolicyConfigurationTest" time="0.149" />
+    <testcase name="explicitFixtureEnvironmentBindsRateScaleAndHouseExemptionThroughYaml()" classname="com.projecthk5.orderservice.finance.FinancePolicyConfigurationTest" time="0.032" />
+  </testsuite>
+  <testsuite name="com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest" tests="18" skipped="0" failures="0" errors="0" timestamp="2026-11-02T12:11:40" time="0.089" sourceTask="order-service:test">
+    <testcase name="computingNewStoreConfigurationDoesNotMutateEarlierSnapshot()" classname="com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest" time="0.001" />
+    <testcase name="[1] input=0.09, fee=0.00, net=0.09" classname="com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest" time="0.002" />
+    <testcase name="[2] input=0.10, fee=0.01, net=0.09" classname="com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest" time="0.001" />
+    <testcase name="[3] input=0.11, fee=0.01, net=0.10" classname="com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest" time="0.0" />
+    <testcase name="[4] input=123.45, fee=6.17, net=117.28" classname="com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest" time="0.0" />
+    <testcase name="[1] identity=null" classname="com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest" time="0.003" />
+    <testcase name="[2] identity=" classname="com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest" time="0.0" />
+    <testcase name="[3] identity= " classname="com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest" time="0.001" />
+    <testcase name="[4] identity=&#09;&#10;" classname="com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest" time="0.0" />
+    <testcase name="[5] identity= " classname="com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest" time="0.001" />
+    <testcase name="rejectsMissingAmountInvalidScaleAndHousePrecisionLossToo()" classname="com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest" time="0.001" />
+    <testcase name="[1] other=Store-a" classname="com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest" time="0.001" />
+    <testcase name="[2] other= store-a" classname="com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest" time="0.001" />
+    <testcase name="[3] other=store-a " classname="com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest" time="0.001" />
+    <testcase name="[4] other=store-b" classname="com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest" time="0.0" />
+    <testcase name="twoStoreArithmeticAndGuardsRemainIndependent()" classname="com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest" time="0.001" />
+    <testcase name="conservesMoneyForDeterministicRangeOfAmountsAndBothStoreTypes()" classname="com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest" time="0.016" />
+    <testcase name="acceptsExactTrailingZeroRescalingWithoutLosingMoney()" classname="com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest" time="0.001" />
+  </testsuite>
+  <testsuite name="com.projecthk5.orderservice.finance.FinanceRulesTest" tests="15" skipped="0" failures="0" errors="0" timestamp="2026-11-02T12:11:40" time="0.025" sourceTask="order-service:test">
+    <testcase name="houseStoreHasZeroCommission()" classname="com.projecthk5.orderservice.finance.FinanceRulesTest" time="0.0" />
+    <testcase name="deniesOtherStoreAndUnverifiedStore()" classname="com.projecthk5.orderservice.finance.FinanceRulesTest" time="0.001" />
+    <testcase name="rejectsNegativeMoneyAndSilentPrecisionLoss()" classname="com.projecthk5.orderservice.finance.FinanceRulesTest" time="0.001" />
+    <testcase name="[1] delivered=false, paid=false, settled=false" classname="com.projecthk5.orderservice.finance.FinanceRulesTest" time="0.003" />
+    <testcase name="[2] delivered=false, paid=true, settled=false" classname="com.projecthk5.orderservice.finance.FinanceRulesTest" time="0.002" />
+    <testcase name="[3] delivered=true, paid=false, settled=false" classname="com.projecthk5.orderservice.finance.FinanceRulesTest" time="0.0" />
+    <testcase name="[4] delivered=true, paid=true, settled=true" classname="com.projecthk5.orderservice.finance.FinanceRulesTest" time="0.0" />
+    <testcase name="[5] delivered=false, paid=false, settled=true" classname="com.projecthk5.orderservice.finance.FinanceRulesTest" time="0.001" />
+    <testcase name="[6] delivered=false, paid=true, settled=true" classname="com.projecthk5.orderservice.finance.FinanceRulesTest" time="0.0" />
+    <testcase name="[7] delivered=true, paid=false, settled=true" classname="com.projecthk5.orderservice.finance.FinanceRulesTest" time="0.0" />
+    <testcase name="[1] subtotal=100000, commission=5000, net=95000" classname="com.projecthk5.orderservice.finance.FinanceRulesTest" time="0.001" />
+    <testcase name="[2] subtotal=10, commission=1, net=9" classname="com.projecthk5.orderservice.finance.FinanceRulesTest" time="0.001" />
+    <testcase name="[3] subtotal=0, commission=0, net=0" classname="com.projecthk5.orderservice.finance.FinanceRulesTest" time="0.001" />
+    <testcase name="[4] subtotal=999999999999999999, commission=50000000000000000, net=949999999999999999" classname="com.projecthk5.orderservice.finance.FinanceRulesTest" time="0.001" />
+    <testcase name="permitsOnlyDeliveredPaidUnsettledOrder()" classname="com.projecthk5.orderservice.finance.FinanceRulesTest" time="0.0" />
+  </testsuite>
+  <testsuite name="com.projecthk5.orderservice.fulfillment.SellerOrderLifecycleTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-11-02T12:11:40" time="0.031" sourceTask="order-service:test">
+    <testcase name="transitionTableRejectsEveryUnlistedStateActionPair()" classname="com.projecthk5.orderservice.fulfillment.SellerOrderLifecycleTest" time="0.002" />
+    <testcase name="allowsCandidateHappyPath()" classname="com.projecthk5.orderservice.fulfillment.SellerOrderLifecycleTest" time="0.0" />
+    <testcase name="requiresReasonForSellerRejection()" classname="com.projecthk5.orderservice.fulfillment.SellerOrderLifecycleTest" time="0.0" />
+    <testcase name="rejectsSkippingOrRepeatingStates()" classname="com.projecthk5.orderservice.fulfillment.SellerOrderLifecycleTest" time="0.002" />
+    <testcase name="rejectsAnyActionFromTerminalStates()" classname="com.projecthk5.orderservice.fulfillment.SellerOrderLifecycleTest" time="0.001" />
+    <testcase name="rejectsNullStatusOrAction()" classname="com.projecthk5.orderservice.fulfillment.SellerOrderLifecycleTest" time="0.0" />
+    <testcase name="allowsCustomerCancelOnlyBeforeAcceptance()" classname="com.projecthk5.orderservice.fulfillment.SellerOrderLifecycleTest" time="0.0" />
+  </testsuite>
+  <testsuite name="com.projecthk5.orderservice.security.ContractJwtDecoderTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-11-02T12:11:40" time="0.162" sourceTask="order-service:test">
+    <testcase name="currentAndPreviousKidsAccepted()" classname="com.projecthk5.orderservice.security.ContractJwtDecoderTest" time="0.146" />
+    <testcase name="missingShortAndMismatchedKeyringRejectStartup()" classname="com.projecthk5.orderservice.security.ContractJwtDecoderTest" time="0.002" />
+    <testcase name="wrongKidSignatureIssuerRoleAndTtlRejected()" classname="com.projecthk5.orderservice.security.ContractJwtDecoderTest" time="0.011" />
+  </testsuite>
+  <testsuite name="com.projecthk5.orderservice.security.JwtEnvironmentConfigurationTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-11-02T12:11:40" time="1.446" sourceTask="order-service:test">
+    <testcase name="documentedEnvironmentBindsThroughRealYamlAndVerifiesHs256()" classname="com.projecthk5.orderservice.security.JwtEnvironmentConfigurationTest" time="1.334" />
+    <testcase name="missingKeyStillFailsClosed()" classname="com.projecthk5.orderservice.security.JwtEnvironmentConfigurationTest" time="0.11" />
+  </testsuite>
+  <testsuite name="com.projecthk5.orderservice.service.CheckoutServiceTest" tests="24" skipped="0" failures="0" errors="0" timestamp="2026-11-02T12:11:42" time="0.392" sourceTask="order-service:test">
+    <testcase name="commitConfirmedByReadNeverCompensates()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.008" />
+    <testcase name="invalidClaimedCartQuantityCannotReachReservationOrWriter()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.002" />
+    <testcase name="unsupportedUnitPrecisionNeverReachesInventoryOrWriter()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.003" />
+    <testcase name="unrepresentableFeeUnderSyntheticPolicyFailsBeforeReserve()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.003" />
+    <testcase name="outboxSerializationFailureCannotReserveStockOrWriteOrder()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.295" />
+    <testcase name="definitiveCartRejectionIsNotMarkedForReconciliation()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.002" />
+    <testcase name="twoProductsFromSameSellerAndStoreCreateOneSellerOrder()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.003" />
+    <testcase name="inventoryTimeoutPreservesCartAndReservationForReconciliation()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.006" />
+    <testcase name="conflictingCatalogSellerStoreFactsNeverReachInventoryOrOrderWriter()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.001" />
+    <testcase name="twoStoresGenerateOneOrderWithTwoSellerOrdersAndSnapshot()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.003" />
+    <testcase name="malformedClaimedCartNullLineReleasesClaimWithoutExternalSideEffects()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.001" />
+    <testcase name="draftFailureStopsBeforeInventoryAndReleasesOnlyTheKnownCartClaim()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.003" />
+    <testcase name="reservationCarriesCatalogSkuAndOrderKeepsShippingAndLabels()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.005" />
+    <testcase name="parentOverflowAcrossTwoIndividuallyValidStoresFailsBeforeReserve()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.002" />
+    <testcase name="definitiveStockRejectionReleasesCartAndIsNotMarkedForReconciliation()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.003" />
+    <testcase name="nullCartClaimReplyIsUnknownAndNeverBlindlyReleasesOrReserves()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.002" />
+    <testcase name="explicitlyUnclaimedCartCannotProceedOrReleaseAnotherClaim()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.001" />
+    <testcase name="reversedCartOrderStillRejectsOneSellerFromTwoStoresBeforeInventory()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.001" />
+    <testcase name="changedPriceRejectsCheckoutBeforeStockReservation()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.002" />
+    <testcase name="sameKeyAndExistingSuccessfulOrderReplaysWithoutCreating()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.001" />
+    <testcase name="commitUnknownDoesNotCompensateAndFlagsForReconciliation()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.003" />
+    <testcase name="immutableDraftPrecedesReserveAndUsesTheExactWrittenGraphAndEvent()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.006" />
+    <testcase name="nonFinalProcessingReplayNeverCallsInventory()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.001" />
+    <testcase name="malformedRequestCannotCreateAttemptOrCallRemotePorts()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.001" />
+  </testsuite>
+  <testsuite name="com.projecthk5.orderservice.service.FinanceReportTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-11-02T12:11:42" time="0.002" sourceTask="order-service:test">
+    <testcase name="totalsSplitPendingCollectedSettledAndPayable()" classname="com.projecthk5.orderservice.service.FinanceReportTest" time="0.001" />
+    <testcase name="emptyStoreHasZeroTotals()" classname="com.projecthk5.orderservice.service.FinanceReportTest" time="0.001" />
+  </testsuite>
+  <testsuite name="com.projecthk5.orderservice.service.FulfillmentServiceTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-11-02T12:11:42" time="0.018" sourceTask="order-service:test">
+    <testcase name="sellerCannotTouchAnotherStoresOrder()" classname="com.projecthk5.orderservice.service.FulfillmentServiceTest" time="0.001" />
+    <testcase name="customerCancelIsScopedToBuyerAndOnlyBeforeAcceptance()" classname="com.projecthk5.orderservice.service.FulfillmentServiceTest" time="0.003" />
+    <testcase name="rejectRequiresReasonThenReleasesStock()" classname="com.projecthk5.orderservice.service.FulfillmentServiceTest" time="0.002" />
+    <testcase name="dispatchConsumesReservedStockExactlyOnce()" classname="com.projecthk5.orderservice.service.FulfillmentServiceTest" time="0.002" />
+    <testcase name="acceptNotifiesBuyer()" classname="com.projecthk5.orderservice.service.FulfillmentServiceTest" time="0.0" />
+    <testcase name="codAndSettlementFollowDeliveryAndHappenOnce()" classname="com.projecthk5.orderservice.service.FulfillmentServiceTest" time="0.003" />
+    <testcase name="unknownActionAndMissingOrderAre404()" classname="com.projecthk5.orderservice.service.FulfillmentServiceTest" time="0.001" />
+  </testsuite>
+  <testsuite name="com.projecthk5.orderservice.service.IdempotencyCoordinatorTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-11-02T12:11:42" time="0.004" sourceTask="order-service:test">
+    <testcase name="sameKeyAndDifferentPayloadRejected()" classname="com.projecthk5.orderservice.service.IdempotencyCoordinatorTest" time="0.002" />
+    <testcase name="repeatedSameKeyReturnsExistingNotNew()" classname="com.projecthk5.orderservice.service.IdempotencyCoordinatorTest" time="0.001" />
+  </testsuite>
+  <testsuite name="com.projecthk5.orderservice.service.InventoryOperationCallerTest" tests="12" skipped="0" failures="0" errors="0" timestamp="2026-11-02T12:11:42" time="0.028" sourceTask="order-service:test">
+    <testcase name="multiSkuTimeoutPreservesRequestAndQuarantinesFurtherDispatch()" classname="com.projecthk5.orderservice.service.InventoryOperationCallerTest" time="0.005" />
+    <testcase name="wireAdapterHasNoBroadCredentialOrExtraOperationType()" classname="com.projecthk5.orderservice.service.InventoryOperationCallerTest" time="0.001" />
+    <testcase name="staleTimeoutCannotOverwriteNewerAttemptState()" classname="com.projecthk5.orderservice.service.InventoryOperationCallerTest" time="0.001" />
+    <testcase name="unknownRemainsQuarantinedWithoutAnotherSend()" classname="com.projecthk5.orderservice.service.InventoryOperationCallerTest" time="0.002" />
+    <testcase name="concurrentInFlightIsNotSentAgainAndConfirmedReplayDoesNotResend()" classname="com.projecthk5.orderservice.service.InventoryOperationCallerTest" time="0.001" />
+    <testcase name="successConfirmsOnlyExactMatchingResponseAndPersistedRequest()" classname="com.projecthk5.orderservice.service.InventoryOperationCallerTest" time="0.002" />
+    <testcase name="staleReplyCannotReportConfirmedAfterItsClaimWasLost()" classname="com.projecthk5.orderservice.service.InventoryOperationCallerTest" time="0.001" />
+    <testcase name="multiSkuMismatchedProviderSkuSetRecordsUnknownRatherThanConfirming()" classname="com.projecthk5.orderservice.service.InventoryOperationCallerTest" time="0.001" />
+    <testcase name="multiSkuReleaseCandidateDisabledTransportDoesNotConfirmOrChangeIntent()" classname="com.projecthk5.orderservice.service.InventoryOperationCallerTest" time="0.002" />
+    <testcase name="knownDefinitiveAtomicRejectionMustNotBeRetried()" classname="com.projecthk5.orderservice.service.InventoryOperationCallerTest" time="0.002" />
+    <testcase name="mismatchedOrDuplicateProviderResponseIsUnknownNotSuccess()" classname="com.projecthk5.orderservice.service.InventoryOperationCallerTest" time="0.002" />
+    <testcase name="disabledTransportIsProvablyNotSentAndRemainsPending()" classname="com.projecthk5.orderservice.service.InventoryOperationCallerTest" time="0.002" />
+  </testsuite>
+  <testsuite name="com.projecthk5.orderservice.service.OutboxRelayTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-11-02T12:11:43" time="0.142" sourceTask="order-service:test">
+    <testcase name="brokerOutageKeepsEventsQueuedWithoutSpendingAttempts()" classname="com.projecthk5.orderservice.service.OutboxRelayTest" time="0.071" />
+    <testcase name="inventoryOperationIsSentWithStableIdAndMarkedPublished()" classname="com.projecthk5.orderservice.service.OutboxRelayTest" time="0.027" />
+    <testcase name="definitiveInventoryRejectionIsParkedForOperators()" classname="com.projecthk5.orderservice.service.OutboxRelayTest" time="0.006" />
+    <testcase name="storeNoticeIsDeliveredToTheCurrentStoreOwner()" classname="com.projecthk5.orderservice.service.OutboxRelayTest" time="0.008" />
+    <testcase name="unknownTopicIsParkedNotRetried()" classname="com.projecthk5.orderservice.service.OutboxRelayTest" time="0.001" />
+    <testcase name="inventoryStillFlowsDuringBrokerOutage()" classname="com.projecthk5.orderservice.service.OutboxRelayTest" time="0.007" />
+    <testcase name="retriesStopAfterTheLimit()" classname="com.projecthk5.orderservice.service.OutboxRelayTest" time="0.007" />
+    <testcase name="transientFailureStaysQueuedForRetry()" classname="com.projecthk5.orderservice.service.OutboxRelayTest" time="0.005" />
+  </testsuite>
+</testsuites>

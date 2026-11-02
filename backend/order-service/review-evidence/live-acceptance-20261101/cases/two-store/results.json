@@ -1,0 +1,204 @@
+{
+  "config": {
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+      "/tmp/tv3-live-acceptance-145-20261101/node-runtime/node_modules/@playwright/test/cli.js",
+      "test",
+      "--config",
+      "/tmp/tv3-live-acceptance-145-20261101/runtime.config.ts",
+      "--project",
+      "two-store"
+    ],
+    "configFile": "/tmp/tv3-live-acceptance-145-20261101/runtime.config.ts",
+    "rootDir": "/workspace/tv3-pr145-live-acceptance/frontend/src/features/checkout/acceptance",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/tmp/tv3-live-acceptance-145-20261101/cases/original/two-store/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "two-store",
+        "name": "two-store",
+        "testDir": "/workspace/tv3-pr145-live-acceptance/frontend/src/features/checkout/acceptance",
+        "testIgnore": [],
+        "testMatch": [
+          "two-store.live.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/tmp/tv3-live-acceptance-145-20261101/cases/original/two-store/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "unknown-replay",
+        "name": "unknown-replay",
+        "testDir": "/workspace/tv3-pr145-live-acceptance/frontend/src/features/checkout/acceptance",
+        "testIgnore": [],
+        "testMatch": [
+          "unknown.live.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/tmp/tv3-live-acceptance-145-20261101/cases/original/two-store/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "tv4-lifecycle",
+        "name": "tv4-lifecycle",
+        "testDir": "/workspace/tv3-pr145-live-acceptance/frontend/src/features/checkout/acceptance",
+        "testIgnore": [],
+        "testMatch": [
+          "lifecycle.live.spec.ts"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/tmp/tv3-live-acceptance-145-20261101/cases/original/two-store/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "two-store",
+        "testDir": "/workspace/tv3-pr145-live-acceptance/frontend/src/features/checkout/acceptance",
+        "snapshotDir": "/workspace/tv3-pr145-live-acceptance/frontend/src/features/checkout/acceptance",
+        "testIgnore": [],
+        "testMatch": "two-store.live.spec.ts",
+        "timeout": 120000,
+        "use": {
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Safari/537.36",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "screen": {
+            "width": 1920,
+            "height": 1080
+          },
+          "deviceScaleFactor": 1,
+          "isMobile": false,
+          "hasTouch": false,
+          "defaultBrowserType": "chromium",
+          "baseURL": "http://localhost:5173",
+          "trace": "off",
+          "screenshot": "off",
+          "video": "off",
+          "launchOptions": {
+            "executablePath": "/usr/bin/chromium"
+          }
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "two-store"
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/tmp/tv3-live-acceptance-145-20261101/cases/original/two-store/results.private.json"
+        }
+      ],
+      [
+        "junit",
+        {
+          "outputFile": "/tmp/tv3-live-acceptance-145-20261101/cases/original/two-store/junit.private.xml"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "two-store.live.spec.ts",
+      "file": "two-store.live.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "real browser: two Stores, exact stock delta and same-key replay",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "two-store",
+              "projectName": "two-store",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5070,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-01T14:53:26.368Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "576a640a4dc86778523d-279c5f92db627ad3f757",
+          "file": "two-store.live.spec.ts",
+          "line": 7,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-01T14:53:25.951Z",
+    "duration": 5936.51,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

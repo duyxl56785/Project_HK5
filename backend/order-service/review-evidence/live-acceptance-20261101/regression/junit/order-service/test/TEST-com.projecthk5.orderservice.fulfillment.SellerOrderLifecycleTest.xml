@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuite name="com.projecthk5.orderservice.fulfillment.SellerOrderLifecycleTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-11-01T14:45:44" time="0.007">
+  <testcase name="transitionTableRejectsEveryUnlistedStateActionPair()" classname="com.projecthk5.orderservice.fulfillment.SellerOrderLifecycleTest" time="0.001" />
+  <testcase name="allowsCandidateHappyPath()" classname="com.projecthk5.orderservice.fulfillment.SellerOrderLifecycleTest" time="0.0" />
+  <testcase name="requiresReasonForSellerRejection()" classname="com.projecthk5.orderservice.fulfillment.SellerOrderLifecycleTest" time="0.0" />
+  <testcase name="rejectsSkippingOrRepeatingStates()" classname="com.projecthk5.orderservice.fulfillment.SellerOrderLifecycleTest" time="0.001" />
+  <testcase name="rejectsAnyActionFromTerminalStates()" classname="com.projecthk5.orderservice.fulfillment.SellerOrderLifecycleTest" time="0.002" />
+  <testcase name="rejectsNullStatusOrAction()" classname="com.projecthk5.orderservice.fulfillment.SellerOrderLifecycleTest" time="0.001" />
+  <testcase name="allowsCustomerCancelOnlyBeforeAcceptance()" classname="com.projecthk5.orderservice.fulfillment.SellerOrderLifecycleTest" time="0.001" />
+</testsuite>

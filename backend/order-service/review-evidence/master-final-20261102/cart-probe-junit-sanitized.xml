@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuites tests="4" failures="0" errors="0" skipped="0">
+  <testsuite name="com.projecthk5.cartservice.integration.CartClearOwnerPostgresIT" tests="4" failures="0" errors="0" skipped="0">
+    <testcase name="absentCartAndRepeatedClearAreSafeAndDoNotTouchOtherCustomer()" classname="com.projecthk5.cartservice.integration.CartClearOwnerPostgresIT" time="0.634" />
+    <testcase name="concurrentClearWaitsForRealPostgresClaimLockThenRefuses()" classname="com.projecthk5.cartservice.integration.CartClearOwnerPostgresIT" time="0.047" />
+    <testcase name="clearOnlyOneCustomerAndPhysicallyRemovesOnlyItsItems()" classname="com.projecthk5.cartservice.integration.CartClearOwnerPostgresIT" time="0.037" />
+    <testcase name="clearOfClaimedCartRollsBackAndRetainsEveryCheckoutFact()" classname="com.projecthk5.cartservice.integration.CartClearOwnerPostgresIT" time="0.039" />
+  </testsuite>
+</testsuites>

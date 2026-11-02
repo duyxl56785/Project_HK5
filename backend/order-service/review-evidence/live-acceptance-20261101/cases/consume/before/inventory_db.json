@@ -1,0 +1,188 @@
+{
+  "database": "inventory_db",
+  "postgres_version": "PostgreSQL 16.15 (Debian 16.15-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+  "flyway": [
+    {
+      "installed_rank": 1,
+      "version": "1",
+      "script": "V1__inventory.sql",
+      "checksum": -2037350462,
+      "success": true
+    },
+    {
+      "installed_rank": 2,
+      "version": "2",
+      "script": "V2__request_hash_varchar.sql",
+      "checksum": -1986962813,
+      "success": true
+    }
+  ],
+  "balances": [
+    {
+      "sku": "AO-001",
+      "available": 50,
+      "reserved": 0,
+      "version": 0
+    },
+    {
+      "sku": "AO-002",
+      "available": 50,
+      "reserved": 0,
+      "version": 0
+    },
+    {
+      "sku": "BE-001",
+      "available": 48,
+      "reserved": 2,
+      "version": 3
+    },
+    {
+      "sku": "BE-002",
+      "available": 50,
+      "reserved": 0,
+      "version": 0
+    },
+    {
+      "sku": "DEN-001",
+      "available": 50,
+      "reserved": 0,
+      "version": 0
+    },
+    {
+      "sku": "DT-001",
+      "available": 50,
+      "reserved": 0,
+      "version": 0
+    },
+    {
+      "sku": "DT-002",
+      "available": 50,
+      "reserved": 0,
+      "version": 0
+    },
+    {
+      "sku": "DT-003",
+      "available": 50,
+      "reserved": 0,
+      "version": 0
+    },
+    {
+      "sku": "GOI-001",
+      "available": 50,
+      "reserved": 0,
+      "version": 0
+    },
+    {
+      "sku": "KE-001",
+      "available": 50,
+      "reserved": 0,
+      "version": 0
+    },
+    {
+      "sku": "LD-001",
+      "available": 50,
+      "reserved": 0,
+      "version": 0
+    },
+    {
+      "sku": "LD-002",
+      "available": 50,
+      "reserved": 0,
+      "version": 0
+    },
+    {
+      "sku": "NON-001",
+      "available": 50,
+      "reserved": 0,
+      "version": 0
+    },
+    {
+      "sku": "QUAN-001",
+      "available": 50,
+      "reserved": 0,
+      "version": 0
+    },
+    {
+      "sku": "SACH-001",
+      "available": 50,
+      "reserved": 0,
+      "version": 0
+    },
+    {
+      "sku": "SACH-002",
+      "available": 50,
+      "reserved": 0,
+      "version": 0
+    },
+    {
+      "sku": "SACH-003",
+      "available": 50,
+      "reserved": 0,
+      "version": 0
+    },
+    {
+      "sku": "TP-001",
+      "available": 50,
+      "reserved": 0,
+      "version": 0
+    },
+    {
+      "sku": "TP-002",
+      "available": 50,
+      "reserved": 0,
+      "version": 0
+    },
+    {
+      "sku": "TT-001",
+      "available": 50,
+      "reserved": 0,
+      "version": 0
+    },
+    {
+      "sku": "TT-002",
+      "available": 50,
+      "reserved": 0,
+      "version": 0
+    },
+    {
+      "sku": "TUI-001",
+      "available": 50,
+      "reserved": 0,
+      "version": 0
+    },
+    {
+      "sku": "VAY-001",
+      "available": 50,
+      "reserved": 0,
+      "version": 0
+    },
+    {
+      "sku": "VI-001",
+      "available": 48,
+      "reserved": 2,
+      "version": 3
+    }
+  ],
+  "operations": [
+    {
+      "operation_id": "order-b0c34d99-98ac-4aed-9830-0e4a9bd1f0da-reserve",
+      "operation_type": "RESERVE",
+      "request_hash": "c285b59ec68fafc0186812ec71934a59d6b6919a1d0edec828a42df430005de0"
+    },
+    {
+      "operation_id": "order-cf77f2cf-863d-40ea-b849-7403a2d588dd-reserve",
+      "operation_type": "RESERVE",
+      "request_hash": "c285b59ec68fafc0186812ec71934a59d6b6919a1d0edec828a42df430005de0"
+    },
+    {
+      "operation_id": "seller-order-27789a6f-8c45-4111-97c8-404923e4a16e-release",
+      "operation_type": "RELEASE",
+      "request_hash": "03ea83c13988b4359a8fe9e7174f3bf15d4ee635ae778234230158d9a1c58b03"
+    },
+    {
+      "operation_id": "seller-order-46e0d5a6-b041-4e0e-bb48-069c4a25ea79-release",
+      "operation_type": "RELEASE",
+      "request_hash": "cbeea8bc5f28c9e6e565a00a1fa3939e04ff976cf7ce3cf6c02f9eb82182cbef"
+    }
+  ]
+}

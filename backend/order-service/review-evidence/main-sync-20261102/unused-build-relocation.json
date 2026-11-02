@@ -1,0 +1,178 @@
+[
+  {
+    "original": "/workspace/Project_HK5/backend/api-gateway/build/libs/api-gateway-0.1.0-SNAPSHOT.jar",
+    "preserved_at": "/tmp/tv3-pr145-sync-20261102/unused-built-jars/Project_HK5/api-gateway/api-gateway-0.1.0-SNAPSHOT.jar",
+    "sha256": "eae8149792941504131c973cac88ca4653a173ba256b090297a7f9dd5ec95501",
+    "bytes": 37166690,
+    "git_ignored": true,
+    "mounted_by_any_container": false
+  },
+  {
+    "original": "/workspace/Project_HK5/backend/auth-service/build/libs/auth-service-0.1.0-SNAPSHOT.jar",
+    "preserved_at": "/tmp/tv3-pr145-sync-20261102/unused-built-jars/Project_HK5/auth-service/auth-service-0.1.0-SNAPSHOT.jar",
+    "sha256": "75fc1955ff1e203ca07d3770d06d109f0b7b5e0d9d0b3e15f8f04e72982bf6c5",
+    "bytes": 49990901,
+    "git_ignored": true,
+    "mounted_by_any_container": false
+  },
+  {
+    "original": "/workspace/Project_HK5/backend/cart-service/build/libs/cart-service-0.1.0-SNAPSHOT.jar",
+    "preserved_at": "/tmp/tv3-pr145-sync-20261102/unused-built-jars/Project_HK5/cart-service/cart-service-0.1.0-SNAPSHOT.jar",
+    "sha256": "b6500c7e7b73b903016f335a71851f413d38b82b0b052995fdb1bfbd9f440a8f",
+    "bytes": 55917935,
+    "git_ignored": true,
+    "mounted_by_any_container": false
+  },
+  {
+    "original": "/workspace/Project_HK5/backend/config-server/build/libs/config-server-0.1.0-SNAPSHOT.jar",
+    "preserved_at": "/tmp/tv3-pr145-sync-20261102/unused-built-jars/Project_HK5/config-server/config-server-0.1.0-SNAPSHOT.jar",
+    "sha256": "41771d999c7a98453084589662d01dc9a851af66857ab63012938bbfea0fe86d",
+    "bytes": 42922037,
+    "git_ignored": true,
+    "mounted_by_any_container": false
+  },
+  {
+    "original": "/workspace/Project_HK5/backend/discovery-server/build/libs/discovery-server-0.1.0-SNAPSHOT.jar",
+    "preserved_at": "/tmp/tv3-pr145-sync-20261102/unused-built-jars/Project_HK5/discovery-server/discovery-server-0.1.0-SNAPSHOT.jar",
+    "sha256": "93cebf1973cb8080aea70af9402dc7dd63f55cb2a3497ded5949e65527e01716",
+    "bytes": 56801152,
+    "git_ignored": true,
+    "mounted_by_any_container": false
+  },
+  {
+    "original": "/workspace/Project_HK5/backend/inventory-service/build/libs/inventory-service-0.1.0-SNAPSHOT.jar",
+    "preserved_at": "/tmp/tv3-pr145-sync-20261102/unused-built-jars/Project_HK5/inventory-service/inventory-service-0.1.0-SNAPSHOT.jar",
+    "sha256": "63c90c04604035ed5cd893a309c2c712e39ad6fcc2bb6a9a668c74caa6e243ac",
+    "bytes": 51430768,
+    "git_ignored": true,
+    "mounted_by_any_container": false
+  },
+  {
+    "original": "/workspace/Project_HK5/backend/notification-service/build/libs/notification-service-0.1.0-SNAPSHOT.jar",
+    "preserved_at": "/tmp/tv3-pr145-sync-20261102/unused-built-jars/Project_HK5/notification-service/notification-service-0.1.0-SNAPSHOT.jar",
+    "sha256": "ea15491b739132056d1f70f77c063824e8d2ae8e31d61d83e44b34de1213558c",
+    "bytes": 22611389,
+    "git_ignored": true,
+    "mounted_by_any_container": false
+  },
+  {
+    "original": "/workspace/Project_HK5/backend/order-service/build/libs/order-service-0.1.0-SNAPSHOT.jar",
+    "preserved_at": "/tmp/tv3-pr145-sync-20261102/unused-built-jars/Project_HK5/order-service/order-service-0.1.0-SNAPSHOT.jar",
+    "sha256": "0a66c66623c6483e06930e59a8eef2ffcef1e684d79547aa37eaf046f9298550",
+    "bytes": 55975693,
+    "git_ignored": true,
+    "mounted_by_any_container": false
+  },
+  {
+    "original": "/workspace/Project_HK5/backend/product-service/build/libs/product-service-0.1.0-SNAPSHOT.jar",
+    "preserved_at": "/tmp/tv3-pr145-sync-20261102/unused-built-jars/Project_HK5/product-service/product-service-0.1.0-SNAPSHOT.jar",
+    "sha256": "e3013e532e4371f1bf83cea208bd697bc46ee858526f1d5137757c6771c0447c",
+    "bytes": 55458084,
+    "git_ignored": true,
+    "mounted_by_any_container": false
+  },
+  {
+    "original": "/workspace/Project_HK5/backend/seller-service/build/libs/seller-service-0.1.0-SNAPSHOT.jar",
+    "preserved_at": "/tmp/tv3-pr145-sync-20261102/unused-built-jars/Project_HK5/seller-service/seller-service-0.1.0-SNAPSHOT.jar",
+    "sha256": "ff3be247457c752e516ef752a9114c7417487b57ae400a9afe3af1a974663c08",
+    "bytes": 50039064,
+    "git_ignored": true,
+    "mounted_by_any_container": false
+  },
+  {
+    "original": "/workspace/Project_HK5/backend/user-service/build/libs/user-service-0.1.0-SNAPSHOT.jar",
+    "preserved_at": "/tmp/tv3-pr145-sync-20261102/unused-built-jars/Project_HK5/user-service/user-service-0.1.0-SNAPSHOT.jar",
+    "sha256": "0d0c4f6d9adcee57d83bd626a16442053ee044db804675bdbc9e9854aadddf79",
+    "bytes": 49976744,
+    "git_ignored": true,
+    "mounted_by_any_container": false
+  },
+  {
+    "original": "/workspace/verify-pr107-ci119/backend/api-gateway/build/libs/api-gateway-0.1.0-SNAPSHOT.jar",
+    "preserved_at": "/tmp/tv3-pr145-sync-20261102/unused-built-jars/verify-pr107-ci119/api-gateway/api-gateway-0.1.0-SNAPSHOT.jar",
+    "sha256": "c8b8764c958320d5a9ef13282f1a614912ef6f526f2c019b441c080934572a55",
+    "bytes": 37166690,
+    "git_ignored": true,
+    "mounted_by_any_container": false
+  },
+  {
+    "original": "/workspace/verify-pr107-ci119/backend/auth-service/build/libs/auth-service-0.1.0-SNAPSHOT.jar",
+    "preserved_at": "/tmp/tv3-pr145-sync-20261102/unused-built-jars/verify-pr107-ci119/auth-service/auth-service-0.1.0-SNAPSHOT.jar",
+    "sha256": "9604f49b6df4fb28bbd34895437352898ff5247ae2516f0c32afa1081b7e6bff",
+    "bytes": 49990901,
+    "git_ignored": true,
+    "mounted_by_any_container": false
+  },
+  {
+    "original": "/workspace/verify-pr107-ci119/backend/cart-service/build/libs/cart-service-0.1.0-SNAPSHOT.jar",
+    "preserved_at": "/tmp/tv3-pr145-sync-20261102/unused-built-jars/verify-pr107-ci119/cart-service/cart-service-0.1.0-SNAPSHOT.jar",
+    "sha256": "1405af8e487559f2cf5a335ab626c21733380623e8253e4ea62616bab3293147",
+    "bytes": 55917935,
+    "git_ignored": true,
+    "mounted_by_any_container": false
+  },
+  {
+    "original": "/workspace/verify-pr107-ci119/backend/config-server/build/libs/config-server-0.1.0-SNAPSHOT.jar",
+    "preserved_at": "/tmp/tv3-pr145-sync-20261102/unused-built-jars/verify-pr107-ci119/config-server/config-server-0.1.0-SNAPSHOT.jar",
+    "sha256": "bf620266546ed39b22c378a8aaa5a19d8baf7ae61e57d439a51f53f13034ff59",
+    "bytes": 42922037,
+    "git_ignored": true,
+    "mounted_by_any_container": false
+  },
+  {
+    "original": "/workspace/verify-pr107-ci119/backend/discovery-server/build/libs/discovery-server-0.1.0-SNAPSHOT.jar",
+    "preserved_at": "/tmp/tv3-pr145-sync-20261102/unused-built-jars/verify-pr107-ci119/discovery-server/discovery-server-0.1.0-SNAPSHOT.jar",
+    "sha256": "e898b65a6c42597e14abaf1715f5ad9ef2961693aae9c50c99f7c548c65e206e",
+    "bytes": 56801152,
+    "git_ignored": true,
+    "mounted_by_any_container": false
+  },
+  {
+    "original": "/workspace/verify-pr107-ci119/backend/inventory-service/build/libs/inventory-service-0.1.0-SNAPSHOT.jar",
+    "preserved_at": "/tmp/tv3-pr145-sync-20261102/unused-built-jars/verify-pr107-ci119/inventory-service/inventory-service-0.1.0-SNAPSHOT.jar",
+    "sha256": "83610204d3e2895195166447efe25df569fd409cde015fd04785b741a0d3e1c2",
+    "bytes": 51430768,
+    "git_ignored": true,
+    "mounted_by_any_container": false
+  },
+  {
+    "original": "/workspace/verify-pr107-ci119/backend/notification-service/build/libs/notification-service-0.1.0-SNAPSHOT.jar",
+    "preserved_at": "/tmp/tv3-pr145-sync-20261102/unused-built-jars/verify-pr107-ci119/notification-service/notification-service-0.1.0-SNAPSHOT.jar",
+    "sha256": "a6e6564aa61d21c08cf9c1a085190bfd7624e35d5650a9e68a0836a6cba4a985",
+    "bytes": 22611389,
+    "git_ignored": true,
+    "mounted_by_any_container": false
+  },
+  {
+    "original": "/workspace/verify-pr107-ci119/backend/order-service/build/libs/order-service-0.1.0-SNAPSHOT.jar",
+    "preserved_at": "/tmp/tv3-pr145-sync-20261102/unused-built-jars/verify-pr107-ci119/order-service/order-service-0.1.0-SNAPSHOT.jar",
+    "sha256": "411262d0d745ae3711c93b1588b213869385a9d7a24acef3a72dc207c672592d",
+    "bytes": 55999521,
+    "git_ignored": true,
+    "mounted_by_any_container": false
+  },
+  {
+    "original": "/workspace/verify-pr107-ci119/backend/product-service/build/libs/product-service-0.1.0-SNAPSHOT.jar",
+    "preserved_at": "/tmp/tv3-pr145-sync-20261102/unused-built-jars/verify-pr107-ci119/product-service/product-service-0.1.0-SNAPSHOT.jar",
+    "sha256": "5fdc232a72c3922465cb23e5824bb910dc9bcc9cb2cc287e6be78b90d7362548",
+    "bytes": 55531977,
+    "git_ignored": true,
+    "mounted_by_any_container": false
+  },
+  {
+    "original": "/workspace/verify-pr107-ci119/backend/seller-service/build/libs/seller-service-0.1.0-SNAPSHOT.jar",
+    "preserved_at": "/tmp/tv3-pr145-sync-20261102/unused-built-jars/verify-pr107-ci119/seller-service/seller-service-0.1.0-SNAPSHOT.jar",
+    "sha256": "a6c835da7e217211d3723dd1cf391aaa8627df215b5d21da669ca12b6dc9b878",
+    "bytes": 50039064,
+    "git_ignored": true,
+    "mounted_by_any_container": false
+  },
+  {
+    "original": "/workspace/verify-pr107-ci119/backend/user-service/build/libs/user-service-0.1.0-SNAPSHOT.jar",
+    "preserved_at": "/tmp/tv3-pr145-sync-20261102/unused-built-jars/verify-pr107-ci119/user-service/user-service-0.1.0-SNAPSHOT.jar",
+    "sha256": "f1990989c988174bb872b00afc16df77b3293b650a660e72efc853cc4c11575d",
+    "bytes": 49976744,
+    "git_ignored": true,
+    "mounted_by_any_container": false
+  }
+]

@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuite name="com.projecthk5.orderservice.integration.CheckoutInventoryBoundaryPostgresIT" tests="15" skipped="0" failures="0" errors="0" timestamp="2026-11-01T10:38:20" time="1.243">
+  <testcase name="[1] body={&quot;code&quot;:&quot;IDEMPOTENCY_CLAIM_CONFLICT&quot;}" classname="com.projecthk5.orderservice.integration.CheckoutInventoryBoundaryPostgresIT" time="0.099" />
+  <testcase name="[2] body={&quot;code&quot;:&quot;IDEMPOTENCY_KEY_REUSED&quot;}" classname="com.projecthk5.orderservice.integration.CheckoutInventoryBoundaryPostgresIT" time="0.112" />
+  <testcase name="[3] body={&quot;code&quot;:&quot;INVENTORY_CONFLICT&quot;}" classname="com.projecthk5.orderservice.integration.CheckoutInventoryBoundaryPostgresIT" time="0.118" />
+  <testcase name="[4] body=not json" classname="com.projecthk5.orderservice.integration.CheckoutInventoryBoundaryPostgresIT" time="0.115" />
+  <testcase name="insufficientStockIsDefinitiveAndReleasesTheCart()" classname="com.projecthk5.orderservice.integration.CheckoutInventoryBoundaryPostgresIT" time="0.112" />
+  <testcase name="[1] sku=null" classname="com.projecthk5.orderservice.integration.CheckoutInventoryBoundaryPostgresIT" time="0.06" />
+  <testcase name="[2] sku=" classname="com.projecthk5.orderservice.integration.CheckoutInventoryBoundaryPostgresIT" time="0.058" />
+  <testcase name="[3] sku=   " classname="com.projecthk5.orderservice.integration.CheckoutInventoryBoundaryPostgresIT" time="0.063" />
+  <testcase name="[4] sku= AO-001" classname="com.projecthk5.orderservice.integration.CheckoutInventoryBoundaryPostgresIT" time="0.061" />
+  <testcase name="[5] sku=AO-001 " classname="com.projecthk5.orderservice.integration.CheckoutInventoryBoundaryPostgresIT" time="0.062" />
+  <testcase name="[6] sku=AO-001&#10;" classname="com.projecthk5.orderservice.integration.CheckoutInventoryBoundaryPostgresIT" time="0.061" />
+  <testcase name="[7] sku= AO-001" classname="com.projecthk5.orderservice.integration.CheckoutInventoryBoundaryPostgresIT" time="0.058" />
+  <testcase name="[8] sku=AO?001" classname="com.projecthk5.orderservice.integration.CheckoutInventoryBoundaryPostgresIT" time="0.058" />
+  <testcase name="[9] sku=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" classname="com.projecthk5.orderservice.integration.CheckoutInventoryBoundaryPostgresIT" time="0.058" />
+  <testcase name="canonicalSkuReachesInventoryUnchanged()" classname="com.projecthk5.orderservice.integration.CheckoutInventoryBoundaryPostgresIT" time="0.12" />
+</testsuite>

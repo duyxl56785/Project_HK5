@@ -1,0 +1,14 @@
+{
+  "mainAtRegression": "d446577d2f9268f2212a4ee214ff3d805ee7a1d9",
+  "mainAfterPR141": "bf34af645d0e244775fc7c0edd3b73bff1a187da",
+  "tv3NormalMerge": "ee5de3fa86cccfab2ceb1c572de6125bc9feea90",
+  "filesChanged": [
+    ".github/CODEOWNERS",
+    "CONTRIBUTING.md",
+    "docs/OWNERSHIP.md"
+  ],
+  "backendFrontendRuntimeAndTestSourceUnchanged": true,
+  "regressionNotRepeatedForDocsOnlyChange": true,
+  "authGatewaySharedOwnerNow": "TV2",
+  "note": "Historical TV1 evidence and decisions preserved. TV2-authored Auth/Gateway changes still need another member review."
+}
