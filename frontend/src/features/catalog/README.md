@@ -12,7 +12,7 @@ User-approved scope: one usable Category Browser before other Catalog/Seller pag
 
 ## Backend boundary
 
-`backend/product-service/src/main/java/com/projecthk5/productservice/category/CategoryResponse.java` defines exactly `UUID id, String name, UUID parentId`. `GET /api/categories` returns the flat array. Category GET is permitted within product-service; writes remain deny-all. Main `aca5dff` has no Gateway route or frontend API utility for this resource. Do not infer `slug`, `status`, image, price, stock or product count.
+`backend/product-service/src/main/java/com/projecthk5/productservice/category/CategoryResponse.java` defines exactly `UUID id, String name, UUID parentId, String slug, CategoryStatus status`. `GET /api/categories` returns the flat array without hidden branches; `GET /api/categories/all` (ADMIN) returns every row. Category GET is permitted within product-service; writes remain deny-all. Main `aca5dff` has no Gateway route or frontend API utility for this resource. Do not infer image, price, stock or product count.
 
 The future TV1 loader must supply `CategoryBrowserState`, including a real retry callback, and own cancellation/loading/error transitions. Do not replace unavailable data with an empty success response. `selectedId` is controlled by the caller; a selection is presentation state, not ownership or authorization.
 

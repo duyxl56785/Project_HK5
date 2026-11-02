@@ -43,6 +43,26 @@ test('a customer cannot open seller or admin pages', async ({ page }) => {
   }
 });
 
+test('an admin hides a category from the public tree only', async ({ browser, request }) => {
+  const name = `E2E ẩn ${Date.now()}`;
+  const admin = await sessionFor(browser, accounts.admin);
+  await admin.goto('/admin/categories');
+  await admin.getByLabel('Tên danh mục').fill(name);
+  await admin.getByRole('button', { name: 'Thêm' }).click();
+  const status = admin.getByLabel(`Trạng thái ${name}`);
+  await status.selectOption('HIDDEN');
+  await expect(status).toHaveValue('HIDDEN');
+  await expect.poll(async () => {
+    const rows = await (await request.get('/api/categories')).json() as { name: string }[];
+    return rows.some((row) => row.name === name);
+  }).toBe(false);
+  await admin.reload();
+  await expect(admin.getByLabel(`Trạng thái ${name}`)).toHaveValue('HIDDEN');
+  await admin.getByRole('row').filter({ has: admin.getByLabel(`Tên ${name}`) }).getByRole('button', { name: 'Xóa' }).click();
+  await expect(admin.getByLabel(`Tên ${name}`)).toHaveCount(0);
+  await admin.context().close();
+});
+
 test('an admin locks an account, ending its session, and unlocks it', async ({ browser, page }) => {
   const account = { email: `e2e-${unique()}@hk5.local`, password: accounts.customer.password };
   await page.goto('/register');

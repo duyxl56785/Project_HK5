@@ -57,6 +57,7 @@ function ProductForm({ current }: { readonly current?: SellerProduct }) {
     <h2>Thông tin sản phẩm</h2>
     <Field label="Danh mục" error={errors.categoryId}><select {...form.register('categoryId')}>
       <option value="">Chọn danh mục…</option>
+      {p && categories.data && !categories.data.some((c) => c.id === p.categoryId) && <option value={p.categoryId}>Danh mục hiện tại (đã ẩn)</option>}
       {categories.data?.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}</select></Field>
     <Field label="SKU" error={errors.sku}><input readOnly={!!p} {...form.register('sku')} /></Field>
     <Field label="Tên sản phẩm" error={errors.name}><input {...form.register('name')} /></Field>
