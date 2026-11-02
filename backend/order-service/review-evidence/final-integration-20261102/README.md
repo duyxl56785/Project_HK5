@@ -4,11 +4,11 @@
 
 ## Mốc đã kiểm thử
 
-- Main mới nhất: `b2dd17ed4d1b4f5ebc536649dc08eb30fae4902a`; main ban đầu `e9b98c7`, sau đó #140 merge trong lúc chạy.
+- Main mới nhất: `d446577d2f9268f2212a4ee214ff3d805ee7a1d9`; main ban đầu `e9b98c7`, sau đó #140, #143 và #148 merge trong lúc chạy.
 - #145 gốc: `9dbd7815299960c5b3474977c8bed7f5c54ff8c5`.
 - #147: `cb576a6894d88304097862dc2ee7c25373903084`.
-- Candidate local cả ba nguồn + hardening: `ee8c59ca4dc65c385bfe13f4b94fc7ea190fae10`, tree **`29772fac0b944f9943f2838745bced98f9a73901`**, worktree `/workspace/tv3-final-main-145-147`. Candidate commit không push.
-- Nhánh #145 đã merge thường main qua `98f16a8` rồi `28f487ccb511b8e873e3de287f8a64d499cc5b80`, tree **`1f5ae8a6dea64305cc1cde8c55a56eb649fa6937`**. Nhánh này chứa main +145; source147 vẫn do TV2 tiếp nhận riêng. Evidence commit tiếp theo chỉ thêm artifact, không thay source đã test.
+- Candidate local cả ba nguồn + hardening: `3dd5980f71ccce5b05ab518e39bc1e661f956c45`, tree **`849d06e63bf935df7f88a38ea086700e4b48f8bf`**, worktree `/workspace/tv3-final-main-145-147`. Candidate commit không push.
+- Nhánh #145 đã merge thường main qua `98f16a8` rồi `c514f0d3596224ede9ee76a5e6d3084f54c8a3f0`, tree **`6c3fe48768609634d8150328597303102b3e83c9`**. Nhánh này chứa main +145; source147 vẫn do TV2 tiếp nhận riêng. Evidence commit tiếp theo chỉ thêm artifact, không thay source đã test.
 
 ## Thay đổi thực tế
 
@@ -33,11 +33,11 @@ P1 compile của owner cb576 đã được xác minh compile exit0 trước hard
 | Nhánh145 sau đồng bộ: Cart |11|13|0/0/0|
 | Nhánh145 sau đồng bộ: Inventory |27|19|0/0/0|
 
-**Full backend cây tích hợp:1688 PASS,0 FAIL/ERROR,16 SKIP, exit0.** Focused356 đã nằm trong số này, không cộng lại.16 SKIP giữ nguyên source gates:15 cần TV1_DATABASE_TESTS/provisioning và1 cần AUTH_EMAIL_INVENTORY_JDBC_URL. Không tự bật test DB vào database chung để ép xanh.
+**Full backend cây tích hợp:1725 PASS,0 FAIL/ERROR,16 SKIP, exit0.** Focused356 đã nằm trong số này, không cộng lại.16 SKIP giữ nguyên source gates:15 cần TV1_DATABASE_TESTS/provisioning và1 cần AUTH_EMAIL_INVENTORY_JDBC_URL. Không tự bật test DB vào database chung để ép xanh.
 
-Lượt full e9b98c7 dùng --rerun-tasks:1678PASS/16SKIP, exit0. Sau main140, Product source/migration/frontend thay đổi; chạy lại Product tests + build:1688PASS/16SKIP theo final reports, exit0 (9 tasks executed,76 up-to-date). Order/Cart/Inventory source và input kiểm thử không đổi bởi #140 nên giữ report cuối mỗi task đúng1 lần. Nhánh145 chạy lại đủ6 tasks riêng sau sync:338PASS,0FAIL/SKIP, exit0. Bốn probe PG ngoài repository (không mock DB) kiểm riêng Customer isolation/orphan deletion, claimed Cart rollback, missing/repeated clear và quan sát pg_blocking_pids khi clear phải chờ claim thật. Probe không cộng vào full build.
+Lượt full e9b98c7 dùng --rerun-tasks:1678PASS/16SKIP, exit0. Sau main140 rồi main143/148, Product source/migration/frontend thay đổi; chạy lại Product tests + build:1725PASS/16SKIP theo final reports, exit0 (lượt cuối18 tasks executed,67 up-to-date). Order/Cart/Inventory source và input kiểm thử không đổi bởi #140 nên giữ report cuối mỗi task đúng1 lần. Nhánh145 chạy lại đủ6 tasks sau sync140:338PASS,0FAIL/SKIP, exit0. Sau143/148, cả ba source module Order/Cart/Inventory không đổi; chạy lại201 unit PASS, giữ137 PG PASS từ source/input không đổi; không cộng201 lần nữa. Bốn probe PG ngoài repository (không mock DB) kiểm riêng Customer isolation/orphan deletion, claimed Cart rollback, missing/repeated clear và quan sát pg_blocking_pids khi clear phải chờ claim thật. Probe không cộng vào full build.
 
-Frontend typecheck cả candidate và nhánh145 sau main140 đều exit0. Java21.0.8+9, Gradle8.10, Docker28.4.0; PostgreSQL Testcontainers16.15/16.6. Unit có mocks; Checkout boundary dùng HTTP peer fixture + real Order PG/journal/draft + mocked Cart. Không gọi đây là live Inventory/Gateway/browser E2E. Kafka Notification tests dùng Kafka/PG disposable thực; cảnh báo Kafka/datasource shutdown được giữ raw local.
+Frontend typecheck cả candidate và nhánh145 sau main143/148 đều exit0. Java21.0.8+9, Gradle8.10, Docker28.4.0; PostgreSQL Testcontainers16.15/16.6. Unit có mocks; Checkout boundary dùng HTTP peer fixture + real Order PG/journal/draft + mocked Cart. Không gọi đây là live Inventory/Gateway/browser E2E. Kafka Notification tests dùng Kafka/PG disposable thực; cảnh báo Kafka/datasource shutdown được giữ raw local.
 
 ## Lệnh và evidence
 
@@ -59,3 +59,5 @@ Summary JSON + JUnit sanitized giữ toàn bộ testcase/result, chỉ bỏ stdo
 TV2/maintainer chọn base/thứ tự merge được duyệt. Patch áp dụng trên source đã kết hợp main+145+147, không áp thẳng vào147 standalone chưa có journal. Bước tối thiểu: giữ PreparedOrder + problem helper, `git apply --check` patch rồi áp dụng trong worktree owner, chạy lại regression/CI exact HEAD cuối. TV3 bàn giao bản đã test; TV4 cần xác nhận definitive no-movement errors và reservation ownership/CONSUME/RELEASE. Không sửa branchTV2, không merge PR, không gỡ REQUEST_CHANGES/resolve thread thay reviewer.
 
 Gate còn lại: owner tiếp nhận patch/merge order; fresh hosted CI ở source nhận patch; TV4 Inventory authority/ownership; TV2+TV5/DB owner retention/grants/backups/purge cho V5. TV3 đã chọn giữ immutable successful draft cho DEMO tạm thời, không tự thay sang production TTL/purge. Hai UNKNOWN live cần fault fixture/receipt thật TV4+TV5; giữ **3 livePASS lịch sử/2UNKNOWN NOT_RUN-BLOCKED**, không chạy lại hoặc tráo bằng unit/HTTP fixture.15 container demo, volumes và worktree/patch cũ được giữ nguyên. Không tuyên bố Checkout/UAT production DONE.
+
+Ghi chú diff-check: source code/Markdown sạch. Unified patch giữ các dòng context rỗng có ký tự khoảng trắng theo định dạng Git; diff-check trên chính artifact có cảnh báo context. Không strip chúng vì sẽ đổi patch/hash. Các raw log lịch sử vẫn được giữ nguyên byte.

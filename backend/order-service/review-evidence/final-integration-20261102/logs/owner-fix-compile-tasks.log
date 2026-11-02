@@ -1,4 +1,4 @@
-# Selected task/build lines only. Raw local log preserved and SHA256 recorded.
+# Selected task/build lines only; raw retained locally and hashed.
 > Task :security-common:compileJava FROM-CACHE
 > Task :order-service:compileJava
 BUILD SUCCESSFUL in 13s

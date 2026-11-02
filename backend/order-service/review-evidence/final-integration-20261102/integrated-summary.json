@@ -64,18 +64,18 @@
       "passed": 171
     },
     "product-service:integrationTest": {
-      "tests": 312,
+      "tests": 324,
       "failures": 0,
       "errors": 0,
       "skipped": 0,
-      "passed": 312
+      "passed": 324
     },
     "product-service:test": {
-      "tests": 584,
+      "tests": 609,
       "failures": 0,
       "errors": 0,
       "skipped": 0,
-      "passed": 584
+      "passed": 609
     },
     "security-common:test": {
       "tests": 5,
@@ -107,8 +107,8 @@
     }
   },
   "totals": {
-    "tests": 1704,
-    "passed": 1688,
+    "tests": 1741,
+    "passed": 1725,
     "failures": 0,
     "errors": 0,
     "skipped": 16
