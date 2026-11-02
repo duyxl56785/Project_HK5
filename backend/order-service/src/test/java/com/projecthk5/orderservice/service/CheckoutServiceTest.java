@@ -118,20 +118,32 @@ class CheckoutServiceTest {
             new CheckoutItemsRejected.Item("p2",CheckoutItemsRejected.Reason.PRODUCT_UNAVAILABLE)),refused.items());
     }
     @Test void shortStockNamesTheLineAndReleasesTheCart() {
-        CheckoutAttempt attempt=fresh();catalogAndCart();
-        doThrow(new InventoryPort.Rejected("INSUFFICIENT_STOCK","Not enough stock for SKU-2","p2")).when(inventory).reserve(any(),anyList());
+        CheckoutAttempt attempt=fresh();catalogAndCart();skus();
+        doThrow(new InventoryPort.Rejected("INSUFFICIENT_STOCK","Not enough stock for SKU-2","SKU-2")).when(inventory).reserve(any(),anyList());
         CheckoutItemsRejected refused=assertThrows(CheckoutItemsRejected.class,()->svc.checkout(customer,bearer,key,request));
         assertEquals(List.of(new CheckoutItemsRejected.Item("p2",CheckoutItemsRejected.Reason.OUT_OF_STOCK)),refused.items());
         verify(cart).release(bearer,key);
         verify(keys).fail(attempt.getId(),false);
     }
     @Test void inventoryRefusalThatIsNotAboutStockIsNotReportedAsShortStock() {
-        CheckoutAttempt attempt=fresh();catalogAndCart();
-        doThrow(new InventoryPort.Rejected("INVALID_QUANTITY","Inventory rejected RESERVE: INVALID_QUANTITY","p2")).when(inventory).reserve(any(),anyList());
+        CheckoutAttempt attempt=fresh();catalogAndCart();skus();
+        doThrow(new InventoryPort.Rejected("INVALID_QUANTITY","Inventory rejected RESERVE: INVALID_QUANTITY","SKU-2")).when(inventory).reserve(any(),anyList());
         InventoryPort.Rejected rejected=assertThrows(InventoryPort.Rejected.class,()->svc.checkout(customer,bearer,key,request));
         assertEquals("INVALID_QUANTITY",rejected.code());
         verify(cart).release(bearer,key);
         verify(keys).fail(attempt.getId(),false);
+    }
+    @Test void shortStockNamingAnSkuOutsideTheVerifiedLinesKeepsTheOriginalRefusal() {
+        CheckoutAttempt attempt=fresh();catalogAndCart();skus();
+        doThrow(new InventoryPort.Rejected("INSUFFICIENT_STOCK","Not enough stock for SKU-9","SKU-9")).when(inventory).reserve(any(),anyList());
+        InventoryPort.Rejected rejected=assertThrows(InventoryPort.Rejected.class,()->svc.checkout(customer,bearer,key,request));
+        assertEquals("INSUFFICIENT_STOCK",rejected.code());
+        verify(cart).release(bearer,key);
+        verify(keys).fail(attempt.getId(),false);
+    }
+    private void skus() {
+        when(catalog.verify("p1")).thenReturn(new CatalogPort.ProductSnapshot("p1","seller1","store1",true,true,true,false,new BigDecimal("10000"),"SKU-1","P1"));
+        when(catalog.verify("p2")).thenReturn(new CatalogPort.ProductSnapshot("p2","seller2","store2",true,true,true,true,new BigDecimal("15000"),"SKU-2","P2"));
     }
     @Test void malformedClaimedCartNullLineReleasesClaimWithoutExternalSideEffects() {
         CheckoutAttempt attempt=fresh();

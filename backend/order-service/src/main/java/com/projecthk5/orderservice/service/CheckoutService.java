@@ -78,6 +78,7 @@ public class CheckoutService {
         UUID orderId=attempt.getId();
         boolean claimRequested=false, claimConfirmed=false, claimOwned=false;
         boolean reserveRequested=false, writeRequested=false;
+        List<InventoryPort.Reservation> reservation=List.of();
         try {
             claimRequested=true;
             CartPort.CartSnapshot cart=carts.claim(bearer,key,req.expectedRevision());
@@ -92,7 +93,7 @@ public class CheckoutService {
             Order order=prepareOrder(orderId,customerId,cart.items());
             order.ship(shipping);
             // Reserve exactly the verified lines, including the immutable SKU from Catalog.
-            List<InventoryPort.Reservation> reservation=order.getSellerOrders().stream()
+            reservation=order.getSellerOrders().stream()
                  .flatMap(so -> so.getItems().stream())
                  .map(i -> new InventoryPort.Reservation(i.getProductId(),i.getQuantity(),i.getSku())).toList();
             // Serialize the deterministic Order facts before external Inventory side
@@ -141,8 +142,10 @@ public class CheckoutService {
                 throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE,
                     "CHECKOUT_OUTCOME_UNKNOWN_RECONCILIATION_REQUIRED",error);
             // shortcut: Inventory stops at the first short SKU, so one line is named; report all of them there to list every line.
-            if (error instanceof InventoryPort.Rejected rejected && "INSUFFICIENT_STOCK".equals(rejected.code()) && rejected.productId()!=null)
-                throw new CheckoutItemsRejected(List.of(new CheckoutItemsRejected.Item(rejected.productId(),CheckoutItemsRejected.Reason.OUT_OF_STOCK)));
+            if (error instanceof InventoryPort.Rejected rejected && "INSUFFICIENT_STOCK".equals(rejected.code()))
+                for (InventoryPort.Reservation line:reservation)
+                    if (line.sku()!=null && line.sku().equals(rejected.sku()))
+                        throw new CheckoutItemsRejected(List.of(new CheckoutItemsRejected.Item(line.productId(),CheckoutItemsRejected.Reason.OUT_OF_STOCK)));
             throw error;
         }
     }
