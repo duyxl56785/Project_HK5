@@ -1,7 +1,9 @@
 package com.projecthk5.productservice.category;
 
+import java.text.Normalizer;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 import java.util.UUID;
 import org.springframework.data.domain.Sort;
@@ -13,6 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional(readOnly = true)
 public class CategoryService {
+    private static final int MAX_SLUG_BASE = 120;
+
     private final CategoryRepository repository;
     private final CategoryHierarchyLock hierarchyLock;
 
@@ -21,7 +25,13 @@ public class CategoryService {
         this.hierarchyLock = hierarchyLock;
     }
 
+    /** The public tree: a hidden Category takes its descendants with it, so the tree has no orphans. */
     public List<CategoryResponse> list() {
+        return repository.findAll(Sort.by("name", "id")).stream()
+                .filter(CategoryService::visible).map(this::toResponse).toList();
+    }
+
+    public List<CategoryResponse> listAll() {
         return repository.findAll(Sort.by("name", "id")).stream()
                 .map(this::toResponse).toList();
     }
@@ -35,7 +45,11 @@ public class CategoryService {
         hierarchyLock.acquire();
         String name = validatedName(request);
         Category parent = validatedParent(null, request.parentId());
-        return toResponse(repository.saveAndFlush(new Category(name, parent)));
+        Category category = new Category(name, uniqueSlug(name), parent);
+        if (request.status() != null) {
+            category.setStatus(request.status());
+        }
+        return toResponse(repository.saveAndFlush(category));
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.READ_COMMITTED)
@@ -45,6 +59,9 @@ public class CategoryService {
         String name = validatedName(request);
         Category parent = validatedParent(id, request.parentId());
         category.update(name, parent);
+        if (request.status() != null) {
+            category.setStatus(request.status());
+        }
         return toResponse(repository.saveAndFlush(category));
     }
 
@@ -58,6 +75,38 @@ public class CategoryService {
         }
         repository.delete(category);
         repository.flush();
+    }
+
+    /** Keep in step with V7__category_slug_status.sql, which gives existing rows the same slug. */
+    static String slugOf(String name) {
+        String plain = Normalizer.normalize(name.replace('đ', 'd').replace('Đ', 'D'), Normalizer.Form.NFD)
+                .replaceAll("\\p{M}", "").toLowerCase(Locale.ROOT);
+        String slug = plain.replaceAll("[^a-z0-9]+", "-").replaceAll("^-|-$", "");
+        if (slug.length() > MAX_SLUG_BASE) {
+            slug = slug.substring(0, MAX_SLUG_BASE).replaceAll("-$", "");
+        }
+        return slug.isEmpty() ? "danh-muc" : slug;
+    }
+
+    // The hierarchy lock serializes writers, so the check cannot race; the UNIQUE constraint still backs it.
+    private String uniqueSlug(String name) {
+        String base = slugOf(name);
+        String slug = base;
+        for (int suffix = 2; repository.existsBySlug(slug); suffix++) {
+            slug = base + "-" + suffix;
+        }
+        return slug;
+    }
+
+    // Writes reject cycles, but old rows may hold one and a public read must still end.
+    private static boolean visible(Category category) {
+        Set<UUID> visited = new HashSet<>();
+        for (Category ancestor = category; ancestor != null && visited.add(ancestor.getId()); ancestor = ancestor.getParent()) {
+            if (ancestor.getStatus() != CategoryStatus.ACTIVE) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private Category find(UUID id) {
@@ -100,6 +149,6 @@ public class CategoryService {
     private CategoryResponse toResponse(Category category) {
         Category parent = category.getParent();
         return new CategoryResponse(category.getId(), category.getName(),
-                parent == null ? null : parent.getId());
+                parent == null ? null : parent.getId(), category.getSlug(), category.getStatus());
     }
 }

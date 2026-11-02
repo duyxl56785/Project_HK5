@@ -29,6 +29,22 @@ class ProductLifecycleServiceTest {
         service = new ProductLifecycleService(policy, categories);
     }
 
+    @Test void hiddenCategoryTakesNoNewProductsButKeepsTheOnesItHas() {
+        ProductListing draft = service.create("owner", storeId, categoryId, "Sku-A", "Product", new BigDecimal("12.00000"), "VND");
+        UUID hiddenId = UUID.randomUUID();
+        when(categories.existsById(hiddenId)).thenReturn(true);
+        when(categories.isHiddenInChain(hiddenId)).thenReturn(true);
+
+        assertEquals(ProductRuleException.Code.CATEGORY_NOT_FOUND, assertThrows(ProductRuleException.class,
+                () -> service.create("owner", storeId, hiddenId, "Sku-B", "Product", new BigDecimal("12.00000"), "VND")).getCode());
+        assertEquals(ProductRuleException.Code.CATEGORY_NOT_FOUND, assertThrows(ProductRuleException.class,
+                () -> service.edit("owner", draft, hiddenId, "Product", new BigDecimal("12.00000"), "VND")).getCode());
+
+        when(categories.isHiddenInChain(categoryId)).thenReturn(true);
+        ProductListing kept = service.edit("owner", draft, categoryId, "Renamed", new BigDecimal("12.00000"), "VND");
+        assertEquals(ProductStatus.ACTIVE, service.approve("admin", service.submit("owner", kept)).status());
+    }
+
     @Test void createEditAndModerateRetainsIdentitySkuAndExactPrice() {
         BigDecimal createPrice = new BigDecimal("12.00000"), editPrice = new BigDecimal("13.00000");
         ProductListing draft = service.create("owner", storeId, categoryId, "Sku-A", " Product ", createPrice, "VND");

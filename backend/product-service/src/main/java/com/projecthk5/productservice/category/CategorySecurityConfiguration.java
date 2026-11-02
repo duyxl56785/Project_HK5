@@ -20,7 +20,8 @@ public class CategorySecurityConfiguration {
         // Contract v1.0: public reads; writes need a verified JWT with the ADMIN role (401/403 JSON).
         return JwtResourceServer.configure(http.securityMatcher("/api/categories", "/api/categories/**"))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.GET, "/api/categories", "/api/categories/**").permitAll()
+                        .requestMatchers("/api/categories/all").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/categories","/api/categories/**").permitAll()
                         .requestMatchers(HttpMethod.HEAD, "/api/categories", "/api/categories/**").permitAll()
                         .anyRequest().hasRole("ADMIN"))
                 .build();
