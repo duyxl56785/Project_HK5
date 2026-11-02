@@ -1,0 +1,21 @@
+# TV5 — ghi nhớ thuyết trình giữa kỳ 03/11/2026
+
+Đối chiếu ngày 02/11/2026 trên main `9ca80006fce359a96862a93a42b5d0fa631f85a7`. Đây là câu trả lời ngắn để trình bày, không thay biên bản nghiệm thu. Nguồn chi tiết và trạng thái test nằm trong [phụ lục §9.1](TV5_SECTION_9_1_RUNTIME_ALIGNMENT_2026-11-02.md) và [ma trận UAT](../tests/TV5_UAT.md).
+
+1. **Em phụ trách gì?** Em phụ trách Product Review F15, kiểm tra Finance/Settlement F16, QA tích hợp và tài liệu bằng chứng. Phần vận hành House Store do TV2/business owner phụ trách; em chỉ kiểm tra tác động Finance/đối soát ([ownership](../docs/OWNERSHIP.md), [phụ lục §9.1](TV5_SECTION_9_1_RUNTIME_ALIGNMENT_2026-11-02.md)).
+
+2. **F15 hoạt động thế nào?** Khách chỉ được đánh giá sản phẩm trong đơn đủ điều kiện đã giao, 1–5 sao và không tạo đánh giá trùng cùng đơn/sản phẩm. Admin có thể ẩn/hiện với lý do 1–500 ký tự; đánh giá ẩn không tính vào điểm công khai, lý do không hiển thị cho Customer ([PR #148](https://github.com/duyxl56785/Project_HK5/pull/148), migration V8 trên main).
+
+3. **F16 xử lý gì?** F16 tính snapshot phí và tiền người bán, báo cáo doanh thu và kiểm soát đối soát theo trạng thái giao hàng/COD; rules hiện có kiểm 5% cho Store thường, 0% cho House và `sellerNet = subtotal - commission`. MD01–MD11 chỉ được chốt cho bản nộp/demo local; không coi đó là phê duyệt Finance/COD/Settlement production ([M01](../docs/project-report/M01_FINANCE_DECISION.md), [phụ lục §9.1](TV5_SECTION_9_1_RUNTIME_ALIGNMENT_2026-11-02.md)).
+
+4. **Em đã kiểm thử gì?** Trên main SHA trên, em chạy 66 unit F15/F16 PASS, 20 Order PostgreSQL JUnit PASS và một lệnh riêng 34 Product PostgreSQL PASS; ba check hosted frontend/e2e/readiness cũng SUCCESS đúng SHA. Lệnh PostgreSQL kết hợp đầu tiên FAIL vì em chọn sai task Product, được giữ nguyên log rồi chạy lại đúng `integrationTest`; đây chưa phải UAT cuối ([CI main](https://github.com/duyxl56785/Project_HK5/commit/9ca80006fce359a96862a93a42b5d0fa631f85a7), [evidence](TV5_SECTION_9_1_RUNTIME_ALIGNMENT_2026-11-02.md)).
+
+5. **Em đóng góp PR/commit nào?** Em đã review ownership [#141](https://github.com/duyxl56785/Project_HK5/pull/141#pullrequestreview-5737385115), yêu cầu sửa evidence [#142](https://github.com/duyxl56785/Project_HK5/pull/142#pullrequestreview-5737389138), và review UI [#149](https://github.com/duyxl56785/Project_HK5/pull/149#pullrequestreview-5737913034). Gói UAT cô lập/§9.1 của em ở [#146](https://github.com/duyxl56785/Project_HK5/pull/146), gồm sửa tương thích PowerShell [f64dcf8](https://github.com/duyxl56785/Project_HK5/commit/f64dcf8ec9c4dfc66ac8bfd09a70273449772a27) và cập nhật ownership [e1ed79e](https://github.com/duyxl56785/Project_HK5/commit/e1ed79e45d826da6262b2e40dd9db9c53e8a1b10).
+
+6. **Một lỗi em phát hiện và xử lý?** Em phát hiện hồ sơ chạy thử ở #142 ghi 54 PASS/5 FAIL nhưng không giữ log gốc, SHA/lệnh và ánh xạ ca, nên không thể dùng làm bằng chứng QA. TV2 đã hạ tài liệu thành `NOT_VERIFIED`; mô tả PR vẫn còn câu PASS và em đã gửi review yêu cầu sửa tại đúng HEAD ([review #142](https://github.com/duyxl56785/Project_HK5/pull/142#pullrequestreview-5737389138)).
+
+7. **Việc nào đã hoàn thành?** F15 #148, bàn giao ownership #141 và Checkout draft #145 đã merge; em đã cập nhật ma trận QA và kiểm chứng chọn lọc trên main mới. Đây là hoàn thành các phần đã nêu, không phải xác nhận mọi chức năng production hoặc UAT hai Store ([main](https://github.com/duyxl56785/Project_HK5/commit/9ca80006fce359a96862a93a42b5d0fa631f85a7)).
+
+8. **Còn chờ ai?** TV2 cần sửa mô tả #142 và quyết định review #146; TV2/TV3/TV4 cần hoàn tất contract, review và tích hợp #147 cùng hai fixture UNKNOWN/retention liên quan #145. Business owner cần phê duyệt scope production riêng; [Issue #18](https://github.com/duyxl56785/Project_HK5/issues/18) vẫn `BLOCKED/NOT_RUN` cho UAT cuối.
+
+**Giới hạn evidence:** raw Gradle logs/JUnit của lượt TV5 ở worktree local `.verification/tv5-midterm-main-20261102/`, chưa phải artifact release. CI xanh và các test chọn lọc không chứng minh protected live E2E hai Store hoặc Finance production.
