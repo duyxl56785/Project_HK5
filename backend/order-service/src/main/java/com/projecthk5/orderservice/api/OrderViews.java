@@ -25,7 +25,13 @@ public class OrderViews {
     public record StoreOrder(UUID id, UUID orderId, String storeId, String storeName, String status, String codStatus,
                              String statusReason, BigDecimal gross, BigDecimal platformFee, BigDecimal sellerNet,
                              Instant createdAt, Instant updatedAt, Instant deliveredAt, Instant codCollectedAt,
-                             Instant settledAt, String version, Order.Shipping shipping, List<Item> items) {}
+                             Instant settledAt, String version, Order.Shipping shipping, List<Item> items) {
+        /** Keeps what fulfillment needs, including the COD amount to collect, and drops the Store's finance. */
+        StoreOrder withoutFinance() {
+            return new StoreOrder(id, orderId, storeId, storeName, status, null, statusReason, gross, null, null,
+                    createdAt, updatedAt, deliveredAt, null, null, version, shipping, items);
+        }
+    }
     public record CustomerOrder(UUID id, String status, BigDecimal total, String paymentMethod, Instant createdAt,
                                 Order.Shipping shipping, List<StoreOrder> storeOrders) {}
 

@@ -95,6 +95,11 @@ public class SellerController {
                         row.getObject(5, OffsetDateTime.class)), id);
     }
 
+    /** A suspended Seller must still finish accepted orders; Store and Product writes check live APPROVED instead. */
+    static boolean keepsSellerRole(SellerStatus status) {
+        return status == SellerStatus.APPROVED || status == SellerStatus.SUSPENDED;
+    }
+
     @PostMapping("/api/admin/sellers/{id}/{action}")
     public SellerStoreResponses.SellerPrivate moderate(@PathVariable UUID id, @PathVariable String action, @RequestBody String body) {
         SellerIdentity admin = new SellerIdentity(Actor.current().id());
@@ -111,7 +116,7 @@ public class SellerController {
         SellerStatus status = result.application().status();
         String owner = result.application().owner().reference();
         recordStatus(id, from, status, result.application().reviewReason(), admin.reference());
-        enqueue(SellerOutbox.Kind.ROLE_SYNC, result.id(), Map.of("accountId", owner, "granted", status == SellerStatus.APPROVED,
+        enqueue(SellerOutbox.Kind.ROLE_SYNC, result.id(), Map.of("accountId", owner, "granted", keepsSellerRole(status),
                 "revision", result.version()));
         enqueue(SellerOutbox.Kind.NOTIFY, result.id(), Map.of("recipient", owner, "type", "SELLER_" + status.name(),
                 "title", switch (status) {

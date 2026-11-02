@@ -188,12 +188,13 @@ class StorePersistenceIntegrationTest {
         Flyway current = Flyway.configure()
                 .dataSource(POSTGRES.getJdbcUrl(), POSTGRES.getUsername(), POSTGRES.getPassword())
                 .defaultSchema(schema).schemas(schema).locations("classpath:db/migration").load();
-        assertEquals(5, current.migrate().migrationsExecuted);
+        assertEquals(6, current.migrate().migrationsExecuted);
         current.validate();
         assertEquals(checksum, jdbc.queryForObject("SELECT checksum FROM " + schema
                 + ".flyway_schema_history WHERE version='1'", Integer.class));
+        // V7 advances a suspended Seller so Auth takes the resent role; nothing else changes.
         assertEquals(Map.of("owner_reference", " Kept-Owner ", "status", "SUSPENDED",
-                "review_reason", "Existing moderation reason", "version", 7L), jdbc.queryForMap(
+                "review_reason", "Existing moderation reason", "version", 8L), jdbc.queryForMap(
                 "SELECT owner_reference,status,review_reason,version FROM " + schema + ".seller_profiles WHERE id=?", existing));
         jdbc.update("INSERT INTO " + schema + ".stores(id,seller_id,name,slug,status) VALUES (?,?,?,?,'CLOSED')",
                 UUID.randomUUID(), existing, "Existing seller store", "existing-store");
