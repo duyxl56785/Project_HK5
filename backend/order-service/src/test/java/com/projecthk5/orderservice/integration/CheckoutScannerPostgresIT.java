@@ -16,6 +16,8 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.scheduling.annotation.ScheduledAnnotationBeanPostProcessor;
+import org.springframework.scheduling.config.FixedDelayTask;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -48,6 +50,7 @@ class CheckoutScannerPostgresIT {
     @Autowired IdempotencyCoordinator keys;
     @Autowired JdbcTemplate sql;
     @Autowired PlatformTransactionManager transactions;
+    @Autowired ScheduledAnnotationBeanPostProcessor schedules;
 
     @ParameterizedTest
     @ValueSource(strings = {"scanner", "failure-handler"})
@@ -90,6 +93,13 @@ class CheckoutScannerPostgresIT {
             workers.shutdownNow();
             assertTrue(workers.awaitTermination(15, TimeUnit.SECONDS));
         }
+    }
+
+    @Test void startupDoesNotRunTheScanBeforeOneInterval() {
+        FixedDelayTask scan = schedules.getScheduledTasks().stream()
+            .filter(task -> task.toString().contains("flagAbandonedAttempts"))
+            .map(task -> (FixedDelayTask) task.getTask()).findFirst().orElseThrow();
+        assertEquals(Duration.ofDays(1), scan.getInitialDelayDuration());
     }
 
     @Test void scanFlagsOnlyStaleProcessingAndIsRepeatable() {

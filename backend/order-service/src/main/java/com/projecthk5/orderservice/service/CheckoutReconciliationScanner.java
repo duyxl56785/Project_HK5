@@ -22,7 +22,8 @@ public class CheckoutReconciliationScanner {
         if (staleSeconds < 120) throw new IllegalArgumentException("Unsafe checkout stale interval");
         this.attempts=attempts;this.staleSeconds=staleSeconds;
     }
-    @Scheduled(fixedDelayString="${app.checkout.reconcile-scan-ms:60000}")
+    @Scheduled(fixedDelayString="${app.checkout.reconcile-scan-ms:60000}",
+        initialDelayString="${app.checkout.reconcile-scan-ms:60000}")
     @Transactional
     public void flagAbandonedAttempts() {
         // Predicate and transition are one DB operation. A writer committing SUCCEEDED
