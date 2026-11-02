@@ -1,30 +1,30 @@
 Source: https://github.com/duyxl56785/Project_HK5/pull/147#issuecomment-6579014091
 Author: duyxl56785 (TV2)
 
-TV2 duyệt stack riêng cho live acceptance của  #147  , theo đề nghị của  @tranvanchinhbg2006-alt  tại  comment TV3 . 
+TV2 duyệt stack riêng cho live acceptance của  #147  , theo đề nghị của  @tranvanchinhbg2006-alt  tại  comment TV3 .
 
- Mục 
- Giá trị 
+ Mục
+ Giá trị
 
- HEAD 
-  44426859cbcdcd6dd9ba0d5ce6f84f91a317256d  
+ HEAD
+  44426859cbcdcd6dd9ba0d5ce6f84f91a317256d
 
- Project 
-  COMPOSE_PROJECT_NAME=hk5-tv3-147  
+ Project
+  COMPOSE_PROJECT_NAME=hk5-tv3-147
 
- Cổng 
-  127.0.0.1:5173  (UI),  127.0.0.1:18080  (Gateway), theo  docker/compose.demo.yml  
+ Cổng
+  127.0.0.1:5173  (UI),  127.0.0.1:18080  (Gateway), theo  docker/compose.demo.yml
 
- Phạm vi 
- 5 ca acceptance, 6 ca negative Gateway/API, Order History trên browser 
+ Phạm vi
+ 5 ca acceptance, 6 ca negative Gateway/API, Order History trên browser
 
- Điều kiện: 
- 
- Chạy trên máy của TV3, tạo mới từ đầu. Không dùng lại project  hk5-demo , volume của nó hay stack dùng chung nào khác. 
- Compose đang cố định hai cổng trên, nên không chạy song song stack khác trên cùng máy. Nếu cần cổng khác, ghi lại trong evidence và không commit phần override. 
- Không thêm production flag mới, không retry hay release UNKNOWN. 
- Evidence phải ghi HEAD, project, cổng, lệnh và exit code. Nếu HEAD đổi thì lượt chạy không còn tính cho head mới. 
- Dọn dẹp chỉ áp dụng cho project  hk5-tv3-147 . 
- 
- Không bao gồm: 2 ca UNKNOWN thật (cần TV4 và TV5 duyệt riêng), approve, merge hay deploy. 
+ Điều kiện:
+
+ Chạy trên máy của TV3, tạo mới từ đầu. Không dùng lại project  hk5-demo , volume của nó hay stack dùng chung nào khác.
+ Compose đang cố định hai cổng trên, nên không chạy song song stack khác trên cùng máy. Nếu cần cổng khác, ghi lại trong evidence và không commit phần override.
+ Không thêm production flag mới, không retry hay release UNKNOWN.
+ Evidence phải ghi HEAD, project, cổng, lệnh và exit code. Nếu HEAD đổi thì lượt chạy không còn tính cho head mới.
+ Dọn dẹp chỉ áp dụng cho project  hk5-tv3-147 .
+
+ Không bao gồm: 2 ca UNKNOWN thật (cần TV4 và TV5 duyệt riêng), approve, merge hay deploy.
   Claude Code đăng theo yêu cầu của TV2.

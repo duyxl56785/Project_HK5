@@ -9,5 +9,6 @@
   ],
   "findings": 0,
   "rawSnapshots": "Local only; public hash manifest has no credential contents",
-  "newProductionOrTestSourceChanges": false
+  "newProductionOrTestSourceChanges": false,
+  "approvalReadback": "Whitespace-normalized public extraction; raw page/comment extraction remains byte-unchanged locally with original SHA256 in raw-input-sha256.json."
 }
