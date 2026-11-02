@@ -10,6 +10,8 @@ Repository hiện không chứa bản nguồn của mục **§9.1** trong báo c
 sửa trực tiếp để tránh ghi đè lịch sử/chủ sở hữu. Phụ lục này là nội dung thay thế có thể chèn vào
 §9.1 hoặc dùng để hiệu đính, và chỉ kết luận từ source/PR/evidence được nêu dưới đây.
 
+TV5 chỉ phụ trách QA, kiểm thử tích hợp, Finance/Settlement theo phạm vi được giao và bằng chứng nghiệm thu. **House Store operation thuộc TV2/business owner, ngoài phạm vi vận hành của TV5**; TV5 chỉ kiểm tra tác động tới Finance và đối soát khi phù hợp.
+
 ## Trạng thái thực tế
 
 | Hạng mục | Trạng thái xác minh | Căn cứ và giới hạn |
@@ -32,7 +34,7 @@ phân loại **PASS**, **FAIL**, **NOT_RUN**, **BLOCKED** hoặc **WAITING_REVIE
 ## Điều kiện thay đổi trạng thái
 
 1. PR phụ thuộc được merge hợp lệ vào `main`, CI/checks tại SHA tích hợp PASS và reviewers bắt buộc hoàn tất.
-2. TV1–TV4 xác nhận các contract Auth, Catalog, Checkout, Inventory, Fulfillment/COD theo ownership.
+2. TV2 xác nhận Auth/Gateway/frontend shared và Catalog, TV3 xác nhận Checkout/Order, TV4 xác nhận Inventory/Fulfillment/COD; TV5 phụ trách QA, kiểm thử tích hợp, bằng chứng nghiệm thu và review tác động Finance/Settlement trong phạm vi được giao. Auth/Gateway do TV2 viết vẫn cần reviewer độc lập theo #141.
 3. Mọi phạm vi ngoài demo local phải có quyết định business riêng cho Finance/COD/Settlement; các gate mặc định fail-closed chỉ được bật trong scope đã ký.
 4. TV5 chạy UAT hai Store trên môi trường Docker/volume/data giả cô lập, công bố evidence gắn với full SHA main.
 
