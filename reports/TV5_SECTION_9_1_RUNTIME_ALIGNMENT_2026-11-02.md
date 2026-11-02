@@ -1,7 +1,7 @@
 # Phụ lục TV5 — đối chiếu §9.1 với runtime và bằng chứng
 
 Ngày đối chiếu: 02/11/2026 (UTC+07).  Nguồn nhánh tích hợp được kiểm tra: `origin/main` tại
-`9ca80006fce359a96862a93a42b5d0fa631f85a7` (đã merge #140, #141, #143, #144, #145 và #148); các PR còn mở được đối chiếu riêng tại HEAD ghi bên dưới.
+`b17cd89c128077ac61af1d478a2552d4091db0a5` (đã merge #140, #141, #143, #144, #145, #147, #148 và #149); các PR còn mở được đối chiếu riêng tại HEAD ghi bên dưới.
 
 ## Phạm vi và giới hạn nguồn
 
@@ -16,12 +16,12 @@ TV5 chỉ phụ trách QA, kiểm thử tích hợp, Finance/Settlement theo ph�
 
 | Hạng mục | Trạng thái xác minh | Căn cứ và giới hạn |
 | --- | --- | --- |
-| Product/Category | **MERGED / UAT PENDING** | PR #140 V7 slug/status và PR #143 Product đã merge vào `main@9ca8000`; CI của PR không thay nghiệm thu tích hợp hai Store. |
+| Product/Category | **MERGED / UAT PENDING** | PR #140 V7 slug/status và PR #143 Product đã merge vào `main@b17cd89`; CI của PR không thay nghiệm thu tích hợp hai Store. |
 | Product Review (F15) | **MERGED / UAT PENDING** | Rule 1–5 sao, buyer/delivered, unique `(order_id, product_id)` và reason ẩn review từ PR #148/V8 đã nằm trên main. Chưa có bằng chứng UAT cuối tại full SHA này cho toàn bộ F15; không báo production PASS. |
-| Cart/Checkout/Order/Inventory | **PARTIAL / WAITING_REVIEW** | PR #145 durable draft/journal V5 đã merge vào `main@9ca8000`; PR #147 (`b4e869d`) còn mở với `overallStatus`, lỗi checkout theo item và clear cart. Hai fixture UNKNOWN, retention PII production và kiểm thử tổ hợp sau #147 vẫn chưa có nghiệm thu cuối. CI nhánh hoặc merge #145 không thay bằng chứng UAT hai Store. |
+| Cart/Checkout/Order/Inventory | **MERGED / UAT PENDING** | PR #145 durable draft/journal V5 và PR #147 (`b4e869d`) gồm `overallStatus`, lỗi checkout theo item và clear cart đã merge vào `main@b17cd89`. Hai fixture UNKNOWN, retention PII production, raw evidence 10 ca do TV2 báo và UAT tích hợp trên SHA merge vẫn chưa được TV5 nghiệm thu. CI nhánh không thay bằng chứng UAT hai Store. |
 | COD/Fulfillment | **PARTIAL / OWNER_CONFIRMATION** | PR #144 đã merge vào main; merge và demo evidence chưa xác nhận toàn bộ COD/Fulfillment production policy. Cần owner TV2/TV3/TV4 xác nhận luồng đang mở. |
 | Finance/Settlement (F16) | **DEMO-ONLY DECISION / PRODUCTION BLOCKED** | `docs/project-report/M01_FINANCE_DECISION.md` ghi TV2 đã chọn MD01–MD10 cho bản nộp/demo local và MD09 chỉ cho phép hai gate trong `.env.demo` local; đó không phải phê duyệt production hay evidence E2E cuối. House Store operation và quyết định phạm vi kinh doanh thuộc TV2/người phê duyệt nghiệp vụ, ngoài quyền TV5 tự chốt; TV5 chỉ đối chiếu tác động fee 5%/0% trong F16. UAT cô lập #146 giữ gate OFF; không bật `--approved-finance-policy` hay kết luận settlement production PASS từ quyết định demo. |
-| UAT hai Store / Issue #18 | **BLOCKED / NOT_RUN** | #146 chỉ rehearsal với hai gates OFF, không chạy Checkout; UAT cuối cần stack/runner riêng được TV2/business owner duyệt cho đúng SHA, tài nguyên và phạm vi gate. #147 và quyết định owner/business còn mở. Không suy UAT PASS từ mock, unit test, CI nhánh hoặc demo stack. |
+| UAT hai Store / Issue #18 | **BLOCKED / NOT_RUN** | #146 chỉ rehearsal với hai gates OFF, không chạy Checkout; UAT cuối cần stack/runner riêng được TV2/business owner duyệt cho đúng SHA, tài nguyên và phạm vi gate. #147 đã merge nhưng CI/main UAT tại SHA merge cùng quyết định owner/business vẫn cần kiểm chứng. Không suy UAT PASS từ mock, unit test, CI nhánh hoặc demo stack. |
 | UAT rehearsal | **PASS (tooling only)** | PR #146: `Start-IsolatedUat.ps1 -ConfigOnly` dùng env/secrets/volume project riêng, gates Finance/Inventory OFF. Đây chỉ chứng minh cô lập cấu hình, không phải UAT nghiệp vụ hay production readiness. |
 
 ## Thay thế câu khẳng định không có bằng chứng
@@ -49,6 +49,6 @@ phân loại **PASS**, **FAIL**, **NOT_RUN**, **BLOCKED** hoặc **WAITING_REVIE
 ## Evidence truy vết
 
 - `scripts/qa/uat/Start-IsolatedUat.ps1`, `scripts/qa/uat/Stop-IsolatedUat.ps1` — rehearsal cô lập, không dùng volume chung.
-- PR #140, #141, #143, #144, #145 và #148 đã merge vào `main@9ca8000`; PR #147 `b4e869d` còn mở tại lần đối chiếu này. #145 merge không tự chứng minh hai fixture UNKNOWN hoặc retention PII production đã được nghiệm thu.
+- PR #140, #141, #143, #144, #145, #147, #148 và #149 đã merge vào `main@b17cd89`; test TV5 chọn lọc đã chạy ở main `9ca8000`, chưa chạy lại trên SHA merge mới. #145 merge không tự chứng minh hai fixture UNKNOWN hoặc retention PII production đã được nghiệm thu.
 - `docs/project-report/M01_FINANCE_DECISION.md` ghi quyết định cho bản nộp/demo local; `docs/TV5_M01_HUMAN_DECISION_PACKET.md` là gói đề xuất lịch sử. Không dùng hai tài liệu để suy ra production sign-off.
 - Issue #18 — UAT final giữ **BLOCKED/NOT_RUN** cho đến khi các điều kiện trên đạt.

@@ -1,6 +1,6 @@
 # TV5 — ghi nhớ thuyết trình giữa kỳ 03/11/2026
 
-Kiểm thử độc lập ngày 02/11/2026 trên main `9ca80006fce359a96862a93a42b5d0fa631f85a7`; GitHub main sau đó lên `db0e3c76e0e5354b3d19a10c37588f351ce1e71c` khi #149 merge. Không suy kết quả test cũ là lượt chạy mới ở db0e3c7. Đây là câu trả lời ngắn để trình bày, không thay biên bản nghiệm thu. Nguồn chi tiết và trạng thái test nằm trong [phụ lục §9.1](TV5_SECTION_9_1_RUNTIME_ALIGNMENT_2026-11-02.md) và [ma trận UAT](../tests/TV5_UAT.md).
+Kiểm thử độc lập ngày 02/11/2026 trên main `9ca80006fce359a96862a93a42b5d0fa631f85a7`; GitHub main sau đó lên `b17cd89c128077ac61af1d478a2552d4091db0a5` khi #149 và #147 merge. Không suy kết quả test cũ là lượt chạy mới ở b17cd89. Đây là câu trả lời ngắn để trình bày, không thay biên bản nghiệm thu. Nguồn chi tiết và trạng thái test nằm trong [phụ lục §9.1](TV5_SECTION_9_1_RUNTIME_ALIGNMENT_2026-11-02.md) và [ma trận UAT](../tests/TV5_UAT.md).
 
 1. **Em phụ trách gì?** Em phụ trách Product Review F15, kiểm tra Finance/Settlement F16, QA tích hợp và tài liệu bằng chứng. Phần vận hành House Store do TV2/business owner phụ trách; em chỉ kiểm tra tác động Finance/đối soát ([ownership](../docs/OWNERSHIP.md), [phụ lục §9.1](TV5_SECTION_9_1_RUNTIME_ALIGNMENT_2026-11-02.md)).
 
@@ -14,8 +14,8 @@ Kiểm thử độc lập ngày 02/11/2026 trên main `9ca80006fce359a96862a93a4
 
 6. **Một lỗi em phát hiện và xử lý?** Em phát hiện hồ sơ chạy thử ở #142 ghi 54 PASS/5 FAIL nhưng không giữ log gốc, SHA/lệnh và ánh xạ ca, nên không thể dùng làm bằng chứng QA. TV2 đã hạ tài liệu và mô tả PR thành `NOT_VERIFIED`; em kiểm lại rồi [APPROVED scoped #142](https://github.com/duyxl56785/Project_HK5/pull/142#pullrequestreview-5738338921), không công nhận 54 PASS/5 FAIL là QA evidence.
 
-7. **Việc nào đã hoàn thành?** F15 #148, bàn giao ownership #141 và Checkout draft #145 đã merge; em đã cập nhật ma trận QA và kiểm chứng chọn lọc trên main mới. Đây là hoàn thành các phần đã nêu, không phải xác nhận mọi chức năng production hoặc UAT hai Store ([main](https://github.com/duyxl56785/Project_HK5/commit/9ca80006fce359a96862a93a42b5d0fa631f85a7)).
+7. **Việc nào đã hoàn thành?** F15 #148, ownership #141, Checkout draft #145 và tích hợp #147 đã merge; em đã cập nhật ma trận QA và kiểm chứng chọn lọc trên main mới. Đây là hoàn thành các phần đã nêu, không phải xác nhận mọi chức năng production hoặc UAT hai Store ([main](https://github.com/duyxl56785/Project_HK5/commit/9ca80006fce359a96862a93a42b5d0fa631f85a7)).
 
-8. **Còn chờ ai?** TV2 cần review bản sửa P2 của #146 và cung cấp raw artifacts cho 10 ca live do TV2 báo PASS ở #147; TV3 chưa xác minh độc lập các ca đó. TV2/TV3/TV4 và owner DB cần chốt #147, hai fixture UNKNOWN và retention/PII production của #145; business owner phải duyệt UAT/Finance production riêng; [Issue #18](https://github.com/duyxl56785/Project_HK5/issues/18) vẫn `BLOCKED/NOT_RUN` cho UAT cuối.
+8. **Còn chờ ai?** TV2 cần review bản sửa P2 của #146 và cung cấp raw artifacts cho 10 ca live do TV2 báo PASS ở #147; TV3 chưa xác minh độc lập các ca đó. TV2/TV3/TV4 và owner DB cần chốt hai fixture UNKNOWN, raw acceptance của #147 và retention/PII production của #145; business owner phải duyệt UAT/Finance production riêng; [Issue #18](https://github.com/duyxl56785/Project_HK5/issues/18) vẫn `BLOCKED/NOT_RUN` cho UAT cuối.
 
 **Giới hạn evidence:** raw Gradle logs/JUnit của lượt TV5 ở worktree local `.verification/tv5-midterm-main-20261102/`, chưa phải artifact release. CI xanh và các test chọn lọc không chứng minh protected live E2E hai Store hoặc Finance production.
