@@ -1,0 +1,110 @@
+# SELECTED task/build lines only; raw log retained locally and SHA256 recorded.
+> Task :security-common:compileJava UP-TO-DATE
+> Task :order-service:compileJava UP-TO-DATE
+> Task :order-service:processResources UP-TO-DATE
+> Task :order-service:classes UP-TO-DATE
+> Task :order-service:resolveMainClassName UP-TO-DATE
+> Task :security-common:processResources UP-TO-DATE
+> Task :security-common:classes UP-TO-DATE
+> Task :security-common:jar UP-TO-DATE
+> Task :order-service:bootJar UP-TO-DATE
+> Task :order-service:jar UP-TO-DATE
+> Task :order-service:compileTestJava UP-TO-DATE
+> Task :order-service:processTestResources NO-SOURCE
+> Task :order-service:testClasses UP-TO-DATE
+> Task :order-service:test UP-TO-DATE
+> Task :order-service:postgresIntegrationTest UP-TO-DATE
+> Task :cart-service:compileJava UP-TO-DATE
+> Task :cart-service:processResources UP-TO-DATE
+> Task :cart-service:classes UP-TO-DATE
+> Task :cart-service:resolveMainClassName UP-TO-DATE
+> Task :cart-service:bootJar UP-TO-DATE
+> Task :cart-service:jar UP-TO-DATE
+> Task :auth-service:compileJava UP-TO-DATE
+> Task :auth-service:processResources UP-TO-DATE
+> Task :auth-service:classes UP-TO-DATE
+> Task :auth-service:jar UP-TO-DATE
+> Task :cart-service:compileTestJava UP-TO-DATE
+> Task :cart-service:processTestResources NO-SOURCE
+> Task :cart-service:testClasses UP-TO-DATE
+> Task :cart-service:test UP-TO-DATE
+> Task :cart-service:postgresIntegrationTest UP-TO-DATE
+> Task :inventory-service:compileJava UP-TO-DATE
+> Task :inventory-service:processResources UP-TO-DATE
+> Task :inventory-service:classes UP-TO-DATE
+> Task :inventory-service:resolveMainClassName UP-TO-DATE
+> Task :inventory-service:bootJar UP-TO-DATE
+> Task :inventory-service:jar UP-TO-DATE
+> Task :inventory-service:compileTestJava UP-TO-DATE
+> Task :inventory-service:processTestResources NO-SOURCE
+> Task :inventory-service:testClasses UP-TO-DATE
+> Task :inventory-service:test UP-TO-DATE
+> Task :inventory-service:postgresIntegrationTest UP-TO-DATE
+> Task :api-gateway:compileJava UP-TO-DATE
+> Task :api-gateway:processResources UP-TO-DATE
+> Task :api-gateway:classes UP-TO-DATE
+> Task :api-gateway:resolveMainClassName UP-TO-DATE
+> Task :api-gateway:bootJar UP-TO-DATE
+> Task :api-gateway:jar UP-TO-DATE
+> Task :api-gateway:assemble UP-TO-DATE
+> Task :api-gateway:compileTestJava UP-TO-DATE
+> Task :api-gateway:processTestResources NO-SOURCE
+> Task :api-gateway:testClasses UP-TO-DATE
+> Task :api-gateway:test UP-TO-DATE
+> Task :api-gateway:check UP-TO-DATE
+> Task :api-gateway:build UP-TO-DATE
+> Task :auth-service:resolveMainClassName UP-TO-DATE
+> Task :auth-service:bootJar UP-TO-DATE
+> Task :auth-service:assemble UP-TO-DATE
+> Task :auth-service:compileTestJava UP-TO-DATE
+> Task :auth-service:processTestResources UP-TO-DATE
+> Task :auth-service:testClasses UP-TO-DATE
+> Task :auth-service:test
+> Task :auth-service:check
+> Task :auth-service:build
+> Task :cart-service:assemble UP-TO-DATE
+> Task :cart-service:check UP-TO-DATE
+> Task :cart-service:build UP-TO-DATE
+> Task :config-server:compileJava FROM-CACHE
+> Task :config-server:processResources
+> Task :config-server:classes
+> Task :config-server:resolveMainClassName
+> Task :config-server:bootJar
+> Task :config-server:jar
+> Task :config-server:assemble
+> Task :config-server:compileTestJava NO-SOURCE
+> Task :config-server:processTestResources NO-SOURCE
+> Task :config-server:testClasses UP-TO-DATE
+> Task :config-server:test NO-SOURCE
+> Task :config-server:check UP-TO-DATE
+> Task :config-server:build
+> Task :discovery-server:compileJava FROM-CACHE
+> Task :discovery-server:processResources
+> Task :discovery-server:classes
+> Task :discovery-server:resolveMainClassName
+> Task :discovery-server:bootJar
+> Task :discovery-server:jar
+> Task :discovery-server:assemble
+> Task :discovery-server:compileTestJava NO-SOURCE
+> Task :discovery-server:processTestResources NO-SOURCE
+> Task :discovery-server:testClasses UP-TO-DATE
+> Task :discovery-server:test NO-SOURCE
+> Task :discovery-server:check UP-TO-DATE
+> Task :discovery-server:build
+> Task :inventory-service:assemble UP-TO-DATE
+> Task :inventory-service:check UP-TO-DATE
+> Task :inventory-service:build UP-TO-DATE
+> Task :notification-service:compileJava FROM-CACHE
+> Task :notification-service:processResources
+> Task :notification-service:classes
+> Task :notification-service:resolveMainClassName
+> Task :notification-service:bootJar
+> Task :notification-service:jar
+> Task :notification-service:assemble
+> Task :notification-service:compileTestJava
+> Task :notification-service:processTestResources NO-SOURCE
+> Task :notification-service:testClasses
+> Task :notification-service:test
+> Task :notification-service:test FAILED
+BUILD FAILED in 1m 47s
+59 actionable tasks: 15 executed, 3 from cache, 41 up-to-date
