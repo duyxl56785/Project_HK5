@@ -1,0 +1,62 @@
+[
+  {
+    "cwd": "/workspace/tv3-final-main-145-147/backend",
+    "setup": "source /workspace/.setup/java-proxy.sh",
+    "command": "env -u DOCKER_HOST -u DOCKER_CONTEXT -u DOCKER_TLS -u DOCKER_TLS_VERIFY -u DOCKER_CERT_PATH DOCKER_HOST=unix:///var/run/docker.sock ./gradlew --init-script /tmp/tv3-master-final-20261102/build-output.init.gradle :order-service:compileJava :cart-service:compileJava :inventory-service:compileJava :order-service:test :order-service:postgresIntegrationTest :cart-service:test :cart-service:postgresIntegrationTest :inventory-service:test :inventory-service:postgresIntegrationTest build --rerun-tasks --continue --no-parallel --max-workers=1 --no-daemon --console=plain",
+    "exit": 0,
+    "log": "/tmp/tv3-master-final-20261102/backend.log",
+    "note": "All 88 tasks executed; output only redirected to /tmp, no demo JAR overwrite."
+  },
+  {
+    "cwd": "/workspace/tv3-final-main-145-147/backend",
+    "setup": "source /workspace/.setup/java-proxy.sh",
+    "command": "env -u DOCKER_HOST -u DOCKER_CONTEXT -u DOCKER_TLS -u DOCKER_TLS_VERIFY -u DOCKER_CERT_PATH DOCKER_HOST=unix:///var/run/docker.sock ./gradlew --init-script /tmp/tv3-master-final-20261102/cart-probe.init.gradle :cart-service:postgresIntegrationTest --tests '*CartClearOwnerPostgresIT' --no-parallel --max-workers=1 --no-daemon --console=plain",
+    "exit": 0,
+    "log": "/tmp/tv3-master-final-20261102/cart-probe-cache.log",
+    "note": "Task was FROM-CACHE; not claimed as fresh execution. Reran below."
+  },
+  {
+    "cwd": "/workspace/tv3-final-main-145-147/backend",
+    "setup": "source /workspace/.setup/java-proxy.sh",
+    "command": "env -u DOCKER_HOST -u DOCKER_CONTEXT -u DOCKER_TLS -u DOCKER_TLS_VERIFY -u DOCKER_CERT_PATH DOCKER_HOST=unix:///var/run/docker.sock ./gradlew --init-script /tmp/tv3-master-final-20261102/cart-probe.init.gradle :cart-service:postgresIntegrationTest --tests '*CartClearOwnerPostgresIT' --rerun-tasks --no-parallel --max-workers=1 --no-daemon --console=plain",
+    "exit": 0,
+    "log": "/tmp/tv3-master-final-20261102/cart-probe.log",
+    "note": "Fresh actual PostgreSQL execution, four tests; separate from full build."
+  },
+  {
+    "cwd": "/workspace/tv3-final-main-145-147/frontend",
+    "command": "npm run typecheck",
+    "exit": 0,
+    "note": "Temporary node_modules symlink to an existing byte-identical package/lock runtime; only own symlink removed."
+  },
+  {
+    "cwd": "/workspace/tv3-final-main-145-147",
+    "command": "node --test --test-reporter=spec --test-reporter-destination=/tmp/tv3-master-final-20261102/acceptance-contract.log --test-reporter=junit --test-reporter-destination=/tmp/tv3-master-final-20261102/acceptance-contract.xml frontend/src/features/checkout/acceptance/negative-refusal-contract.test.mjs",
+    "exit": 0,
+    "note": "Eight assertion-unit tests; no HTTP, database or browser."
+  },
+  {
+    "cwd": "/workspace/tv3-final-main-145-147/frontend",
+    "command": "TV3_NEG_BASE_URL=http://localhost:15173 TV3_NEG_PROJECT=tv3-live-master-20261102 TV3_NEG_EVIDENCE=/tmp/tv3-master-final-20261102/discovery-only TV3_NEG_REFUSAL_CONTRACT=itemized147 node /tmp/tv3-live-acceptance-145-20261101/node-runtime/node_modules/@playwright/test/cli.js test --config src/features/checkout/acceptance/negative.live.config.mjs --list",
+    "exit": 1,
+    "note": "Initial discovery tooling error: CLI and imports came from two runtime locations. No live execution."
+  },
+  {
+    "cwd": "/workspace/tv3-final-main-145-147/frontend",
+    "command": "TV3_NEG_BASE_URL=http://localhost:15173 TV3_NEG_PROJECT=tv3-live-master-20261102 TV3_NEG_EVIDENCE=/tmp/tv3-master-final-20261102/discovery-only TV3_NEG_REFUSAL_CONTRACT=itemized147 node /tmp/tv3-pr145-sync-20261102/node-runtime/node_modules/@playwright/test/cli.js test --config src/features/checkout/acceptance/negative.live.config.mjs --list",
+    "exit": 0,
+    "note": "Corrected to one runtime. Discovery only; six listed, zero executed. URL is a discovery placeholder, not a started stack."
+  },
+  {
+    "cwd": "/workspace/tv3-t1t2-main-integration",
+    "command": "node --test frontend/src/features/checkout/acceptance/negative-refusal-contract.test.mjs",
+    "exit": 0,
+    "note": "Same eight tests, byte-identical source on TV3 branch; not eight additional independent cases."
+  },
+  {
+    "cwd": "/workspace/tv3-t1t2-main-integration",
+    "command": "npm --prefix frontend run typecheck",
+    "exit": 0,
+    "note": "TV3 branch after test-only cherry-pick; no backend source changed."
+  }
+]

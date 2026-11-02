@@ -97,3 +97,17 @@ stock changes/restoration use the Seller stock API. Existing seed Products are n
 edited. Only this run's unclaimed Cart items are removed through public APIs;
 unknown claims are never released. Read the recorded fixture side effects before
 running; this suite must not be aimed at production or another member's data.
+
+### Error contract for the final integrated source
+
+Set `TV3_NEG_REFUSAL_CONTRACT=itemized147` when the approved deployed source
+contains #147. Price, stock and inactive-Product cases then require exact
+`CHECKOUT_ITEMS_REJECTED` and `{productId, reason}` entries. Use `legacy145`
+(the backwards-compatible default) only for a verified deployment without #147.
+The suite does not auto-detect or weaken the expected contract. Replay/body and
+Cart item mismatch errors retain their non-itemized assertions in both modes.
+
+The new assertion helper has isolated Node tests; these are protocol assertion
+tests, not live acceptance. Historical live results above remain tied to their
+original source. Live runs on the final combined source remain NOT_RUN until an
+owner-approved isolated stack/fixtures for that exact source are available.

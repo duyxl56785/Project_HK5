@@ -1,0 +1,116 @@
+{
+  "executionPlace": "CODEX TERMINAL — Linux",
+  "head": "351fb032bf2c6931a6ce5720940aa3d7169c5e80",
+  "tree": "0204df6929f31d2f903c3798702e1cc51921e383",
+  "main": "d446577d2f9268f2212a4ee214ff3d805ee7a1d9",
+  "pr145BeforePublication": "81ad9f7712a6fd1d59798c6b7d58e06a0095033f",
+  "pr147": "cb576a6894d88304097862dc2ee7c25373903084",
+  "backendInputsUnchangedDuringRun": true,
+  "backendRunStartedAtParent": "3dd5980f71ccce5b05ab518e39bc1e661f956c45",
+  "focused": [
+    {
+      "service": "order-service",
+      "task": "test",
+      "tests": 171,
+      "passed": 171,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "service": "order-service",
+      "task": "postgresIntegrationTest",
+      "tests": 113,
+      "passed": 113,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "service": "cart-service",
+      "task": "test",
+      "tests": 13,
+      "passed": 13,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "service": "cart-service",
+      "task": "postgresIntegrationTest",
+      "tests": 13,
+      "passed": 13,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "service": "inventory-service",
+      "task": "test",
+      "tests": 27,
+      "passed": 27,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "service": "inventory-service",
+      "task": "postgresIntegrationTest",
+      "tests": 19,
+      "passed": 19,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "focusedAlreadyIncludedInBackendTotal": true,
+  "backend": {
+    "tests": 1741,
+    "passed": 1725,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 16,
+    "reportFiles": 116
+  },
+  "cartProbe": {
+    "tests": 4,
+    "passed": 4,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "acceptanceAssertionUnit": {
+    "passed": 8,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "frontendTypecheckExit": 0,
+  "playwrightDiscovery": {
+    "exit": 0,
+    "discovered": 6,
+    "liveExecuted": 0
+  },
+  "environment": {
+    "java": "21.0.8+9",
+    "gradle": "8.10",
+    "docker": "28.4.0",
+    "node": "24.19.0",
+    "postgres": [
+      "16.15",
+      "16.6"
+    ]
+  },
+  "liveOnCandidate": {
+    "executed": 0,
+    "passed": 0,
+    "failed": 0,
+    "status": "NOT_RUN/BLOCKED",
+    "reason": "User confirmed no owner approval for a new separate stack at this integrated source."
+  },
+  "p1PatchStatus": "WAITING_OWNER_ACCEPTANCE; source verified in isolated integration only",
+  "p1PatchSHA256": "125718f965fe0db570cca9e927584a7b0e22c9bfdf93074f848d5da408ca846b",
+  "overallDisposition": "BLOCKED_OWNER",
+  "sourceRegressionDisposition": "FIXED_VERIFIED",
+  "productionFilesChangedThisSession": []
+}

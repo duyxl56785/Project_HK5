@@ -1,0 +1,19 @@
+{
+  "tests": 4,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "passed": 4,
+  "reportFiles": 1,
+  "tasks": [
+    {
+      "path": "cart-probe-builds/cart-service/test-results/postgresIntegrationTest/TEST-com.projecthk5.cartservice.integration.CartClearOwnerPostgresIT.xml",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 4
+    }
+  ],
+  "skippedCases": []
+}

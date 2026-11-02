@@ -1,4 +1,5 @@
 import { test, expect, request } from '@playwright/test';
+import { assertCheckoutRefusal } from './negative-refusal-contract.mjs';
 import { execFileSync } from 'node:child_process';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
@@ -15,6 +16,8 @@ const project = required('TV3_NEG_PROJECT');
 if (!/^tv3-live-[a-z0-9-]+$/.test(project)) throw new Error('Isolated TV3 demo required');
 const evidence = resolve(required('TV3_NEG_EVIDENCE'));
 const label = randomUUID().slice(0, 8);
+const refusalContract = process.env.TV3_NEG_REFUSAL_CONTRACT ?? 'legacy145';
+if (!['legacy145', 'itemized147'].includes(refusalContract)) throw new Error('Unknown negative acceptance contract');
 const sha = value => createHash('sha256').update(JSON.stringify(value)).digest('hex');
 const literal = value => "'" + String(value).replaceAll("'", "''") + "'";
 const docker = ['--host=unix:///var/run/docker.sock'];
@@ -120,7 +123,7 @@ async function snapshot(phase) {
   save(`${phase}.json`, result);
   return result;
 }
-async function rejected(name, body, key, expectedMessage, kind = 'preflight') {
+async function rejected(name, body, key, expectedMessage, kind = 'preflight', expectedItem) {
   const before = await snapshot('before');
   const response = await api('/api/orders', customer, 'POST', body, key);
   const after = await snapshot('after');
@@ -132,7 +135,8 @@ async function rejected(name, body, key, expectedMessage, kind = 'preflight') {
     journalDelta: after.order.journals.filter(x => !before.order.journals.some(b => b.operation_id === x.operation_id)),
     draftDelta: after.order.drafts.length - before.order.drafts.length });
   expect(response.status).toBe(409);
-  expect(response.data.message).toContain(expectedMessage);
+  assertCheckoutRefusal(response.data, { contract: refusalContract,
+    legacyMessage: expectedMessage, item: expectedItem });
   expect(after.order.orderCount).toBe(before.order.orderCount);
   expect(after.order.sellerOrderCount).toBe(before.order.sellerOrderCount);
   expect(after.order.orders).toEqual(before.order.orders);
@@ -216,13 +220,15 @@ test('catalog-price changed since Cart rejects before Inventory', async () => {
   expect(current.unitPrice).toBe('11000');
   save('price-fixture.json', { productId: current.id, status: current.status, currentPrice: current.unitPrice,
     cartPrice: (await cart()).items.find(i => i.productId === current.id).unitPriceSnapshot });
-  await rejected('Catalog repriced after Cart', body, randomUUID(), 'Product price changed since adding to cart');
+  await rejected('Catalog repriced after Cart', body, randomUUID(), 'Product price changed since adding to cart', 'preflight',
+    { productId: lines[1].productId, reason: 'PRICE_CHANGED' });
 });
 test('insufficient-stock two Store batch rejects without partial reservation', async () => {
   const body = bodyFor(await fillCart(2));
   const originalStock = (await ok(`/api/seller/products/${lines[1].productId}`, seller2)).available;
   await ok(`/api/seller/products/${lines[1].productId}/stock`, seller2, 'PUT', { available: 1 });
-  try { await rejected('Insufficient second Store stock', body, randomUUID(), 'Not enough stock', 'stock'); }
+  try { await rejected('Insufficient second Store stock', body, randomUUID(), 'Not enough stock', 'stock',
+    { productId: lines[1].productId, reason: 'OUT_OF_STOCK' }); }
   finally {
     // Restore only this run's synthetic Product available stock through its actual owner API.
     await ok(`/api/seller/products/${lines[1].productId}/stock`, seller2, 'PUT', { available: originalStock });
@@ -233,5 +239,6 @@ test('product-inactive one unsellable Store line rejects the whole Checkout', as
   const current = (await ok(`/api/seller/products/${lines[1].productId}`, seller2)).product;
   const inactive = await ok(`/api/seller/products/${current.id}/deactivate`, seller2, 'POST', { expectedVersion: current.version });
   expect(inactive.product.status).toBe('INACTIVE');
-  await rejected('Inactive Product after Cart', body, randomUUID(), 'Product, seller or store not available');
+  await rejected('Inactive Product after Cart', body, randomUUID(), 'Product, seller or store not available', 'preflight',
+    { productId: lines[1].productId, reason: 'PRODUCT_UNAVAILABLE' });
 });

@@ -1,0 +1,17 @@
+> Task :security-common:compileJava
+> Task :auth-service:compileJava
+> Task :auth-service:processResources
+> Task :auth-service:classes
+> Task :auth-service:jar
+> Task :cart-service:compileJava
+> Task :cart-service:processResources
+> Task :cart-service:classes
+> Task :cart-service:compileTestJava
+> Task :cart-service:processTestResources NO-SOURCE
+> Task :cart-service:testClasses
+> Task :security-common:processResources
+> Task :security-common:classes
+> Task :security-common:jar
+> Task :cart-service:postgresIntegrationTest
+BUILD SUCCESSFUL in 29s
+10 actionable tasks: 10 executed

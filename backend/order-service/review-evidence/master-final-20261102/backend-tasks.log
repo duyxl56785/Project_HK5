@@ -1,0 +1,164 @@
+> Task :security-common:compileJava
+> Task :order-service:compileJava
+> Task :cart-service:compileJava
+> Task :inventory-service:compileJava
+> Task :order-service:processResources
+> Task :order-service:classes
+> Task :order-service:resolveMainClassName
+> Task :security-common:processResources
+> Task :security-common:classes
+> Task :security-common:jar
+> Task :order-service:bootJar
+> Task :order-service:jar
+> Task :order-service:compileTestJava
+> Task :order-service:processTestResources NO-SOURCE
+> Task :order-service:testClasses
+> Task :order-service:test
+> Task :order-service:postgresIntegrationTest
+> Task :order-service:postgresIntegrationTest
+> Task :cart-service:processResources
+> Task :cart-service:classes
+> Task :cart-service:resolveMainClassName
+> Task :cart-service:bootJar
+> Task :cart-service:jar
+> Task :auth-service:compileJava
+> Task :auth-service:processResources
+> Task :auth-service:classes
+> Task :auth-service:jar
+> Task :cart-service:compileTestJava
+> Task :cart-service:processTestResources NO-SOURCE
+> Task :cart-service:testClasses
+> Task :cart-service:test
+> Task :cart-service:postgresIntegrationTest
+> Task :inventory-service:processResources
+> Task :inventory-service:classes
+> Task :inventory-service:resolveMainClassName
+> Task :inventory-service:bootJar
+> Task :inventory-service:jar
+> Task :inventory-service:compileTestJava
+> Task :inventory-service:processTestResources NO-SOURCE
+> Task :inventory-service:testClasses
+> Task :inventory-service:test
+> Task :inventory-service:postgresIntegrationTest
+> Task :api-gateway:compileJava
+> Task :api-gateway:processResources
+> Task :api-gateway:classes
+> Task :api-gateway:resolveMainClassName
+> Task :api-gateway:bootJar
+> Task :api-gateway:jar
+> Task :api-gateway:assemble
+> Task :api-gateway:compileTestJava
+> Task :api-gateway:processTestResources NO-SOURCE
+> Task :api-gateway:testClasses
+> Task :api-gateway:test
+> Task :api-gateway:check
+> Task :api-gateway:build
+> Task :auth-service:resolveMainClassName
+> Task :auth-service:bootJar
+> Task :auth-service:assemble
+> Task :auth-service:compileTestJava
+> Task :auth-service:processTestResources
+> Task :auth-service:testClasses
+> Task :auth-service:test
+> Task :auth-service:check
+> Task :auth-service:build
+> Task :cart-service:assemble
+> Task :cart-service:check
+> Task :cart-service:build
+> Task :config-server:compileJava
+> Task :config-server:processResources
+> Task :config-server:classes
+> Task :config-server:resolveMainClassName
+> Task :config-server:bootJar
+> Task :config-server:jar
+> Task :config-server:assemble
+> Task :config-server:compileTestJava NO-SOURCE
+> Task :config-server:processTestResources NO-SOURCE
+> Task :config-server:testClasses UP-TO-DATE
+> Task :config-server:test NO-SOURCE
+> Task :config-server:check UP-TO-DATE
+> Task :config-server:build
+> Task :discovery-server:compileJava
+> Task :discovery-server:processResources
+> Task :discovery-server:classes
+> Task :discovery-server:resolveMainClassName
+> Task :discovery-server:bootJar
+> Task :discovery-server:jar
+> Task :discovery-server:assemble
+> Task :discovery-server:compileTestJava NO-SOURCE
+> Task :discovery-server:processTestResources NO-SOURCE
+> Task :discovery-server:testClasses UP-TO-DATE
+> Task :discovery-server:test NO-SOURCE
+> Task :discovery-server:check UP-TO-DATE
+> Task :discovery-server:build
+> Task :inventory-service:assemble
+> Task :inventory-service:check
+> Task :inventory-service:build
+> Task :notification-service:compileJava
+> Task :notification-service:processResources
+> Task :notification-service:classes
+> Task :notification-service:resolveMainClassName
+> Task :notification-service:bootJar
+> Task :notification-service:jar
+> Task :notification-service:assemble
+> Task :notification-service:compileTestJava
+> Task :notification-service:processTestResources NO-SOURCE
+> Task :notification-service:testClasses
+> Task :notification-service:test
+> Task :notification-service:check
+> Task :notification-service:build
+> Task :order-service:assemble
+> Task :order-service:check
+> Task :order-service:build
+> Task :product-service:compileJava
+> Task :product-service:processResources
+> Task :product-service:classes
+> Task :product-service:resolveMainClassName
+> Task :product-service:bootJar
+> Task :product-service:jar
+> Task :product-service:assemble
+> Task :product-service:compileTestJava
+> Task :product-service:processTestResources
+> Task :product-service:testClasses
+> Task :product-service:test
+> Task :product-service:integrationTest
+> Task :product-service:check
+> Task :product-service:build
+> Task :security-common:resolveMainClassName
+> Task :security-common:bootJar SKIPPED
+> Task :security-common:assemble
+> Task :security-common:compileTestJava
+> Task :security-common:processTestResources NO-SOURCE
+> Task :security-common:testClasses
+> Task :security-common:test
+> Task :security-common:check
+> Task :security-common:build
+> Task :seller-service:compileJava
+> Task :seller-service:processResources
+> Task :seller-service:classes
+> Task :seller-service:resolveMainClassName
+> Task :seller-service:bootJar
+> Task :seller-service:jar
+> Task :seller-service:assemble
+> Task :seller-service:compileTestJava
+> Task :seller-service:processTestResources
+> Task :seller-service:testClasses
+> Task :seller-service:test
+> Task :seller-service:integrationTest
+> Task :seller-service:check
+> Task :seller-service:build
+> Task :user-service:compileJava
+> Task :user-service:processResources
+> Task :user-service:classes
+> Task :user-service:resolveMainClassName
+> Task :user-service:bootJar
+> Task :user-service:jar
+> Task :user-service:assemble
+> Task :user-service:compileTestJava
+> Task :user-service:processTestResources
+> Task :user-service:testClasses
+> Task :user-service:test
+> Task :user-service:check
+> Task :user-service:build
+BUILD SUCCESSFUL in 9m 5s
+88 actionable tasks: 88 executed

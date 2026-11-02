@@ -1,0 +1,13 @@
+{
+  "head": "351fb032bf2c6931a6ce5720940aa3d7169c5e80",
+  "tree": "0204df6929f31d2f903c3798702e1cc51921e383",
+  "previousCandidate": "3dd5980f71ccce5b05ab518e39bc1e661f956c45",
+  "backendInputsByteIdenticalToPreviousCandidate": true,
+  "sourceChanges": {
+    "frontend/src/features/checkout/acceptance/README.md": "d22668f1c1c15c469360106422e3b8ffe1995713fb3e31ea94fd3704a490d506",
+    "frontend/src/features/checkout/acceptance/negative-refusal-contract.mjs": "c31cb1565b1f5951c779acb5a0fd1b2c34536995d43274f2cb6fe7203a3b1663",
+    "frontend/src/features/checkout/acceptance/negative-refusal-contract.test.mjs": "c3420f9be67399a1587254c2f42e5ae1f51ce4d70a68f78b09ad109efa04f6e4",
+    "frontend/src/features/checkout/acceptance/negative.live.spec.mjs": "89568c25f9ea91c22f7295e534d2c4f1f36e407dc94cec9941d949f3217a107b"
+  },
+  "setupNote": "Initial frontend syntax/stage command used backend cwd and failed before modifying files. Retried from repository root. Backend Gradle command used correct backend cwd; backend inputs never changed."
+}
