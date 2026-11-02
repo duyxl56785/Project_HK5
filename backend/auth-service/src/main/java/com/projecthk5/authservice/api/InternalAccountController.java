@@ -31,13 +31,16 @@ public class InternalAccountController {
     public record Claim(@NotNull List<String> roles) {}
     public record Reservation(boolean granted, UUID id) {}
 
-    /** A revocation is acknowledged only once no write under the old role can still commit. */
+    /**
+     * Acknowledged only once no write checked under the old state can still commit. A suspended Seller keeps
+     * the role, so a grant closes the fence too; a write stopped by a harmless change retries through refresh.
+     */
     @PutMapping("/{accountId}/roles/SELLER")
     public AuthController.AccountResponse sellerRole(@RequestHeader(value = InternalTokens.HEADER, required = false) String token,
                                                      @PathVariable UUID accountId, @Valid @RequestBody RoleChange change) {
         InternalTokens.require(sellerToken, token);
         var account = AuthController.AccountResponse.of(auth.changeSellerRole(accountId, change.granted(), change.revision()));
-        if (!change.granted()) reservations.closeAll(accountId);
+        reservations.closeAll(accountId);
         return account;
     }
 
