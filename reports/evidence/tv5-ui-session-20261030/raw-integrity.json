@@ -1,0 +1,50 @@
+{
+  "kind": "DERIVED raw integrity checks, no production or financial acceptance",
+  "verified": [
+    {
+      "path": ".verification/tv5-ui-20261028/audit30-session-red/runtime.log",
+      "sha256": "82c5ee209a7e2ff17e7ec2ffc692c3e2528022e7c20ddd53430583c391944704",
+      "bytes": 3244
+    },
+    {
+      "path": ".verification/tv5-ui-20261028/audit30-session-red-corrected/runtime.log",
+      "sha256": "bdc1e4cbf5be3f981ab646679431cc3cd4d0194a04c81af1cec0a5d15aad2421",
+      "bytes": 8231
+    },
+    {
+      "path": ".verification/tv5-ui-20261028/audit30-session-green/runtime.log",
+      "sha256": "b38029cbde39e96e780b4b3fd024ff6682f5e630649864fbe0cd867b4ee27863",
+      "bytes": 8691
+    },
+    {
+      "path": ".verification/tv5-ui-20261028/audit30-typecheck/runtime.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": ".verification/tv5-ui-20261028/audit30-browser/runtime.log",
+      "sha256": "0bcf30e602be72d4581e63b3b66bf9f0b597175e1a33a1c5cc9323085a091e56",
+      "bytes": 3798
+    },
+    {
+      "path": ".verification/tv5-ui-20261028/audit30-build/runtime.log",
+      "sha256": "dcf9192c4d621fde402504133f438fac82354cfa5900063cb166597548263f6c",
+      "bytes": 328
+    },
+    {
+      "path": ".verification/tv5-ui-20261028/audit30-preview-build/runtime.log",
+      "sha256": "79c0d76234956d0ddfaee1fd1e07fde964a5c1c68fb992125ece3be697b9205a",
+      "bytes": 620
+    },
+    {
+      "path": ".verification/tv5-ui-20261028/audit30-committed-unit/runtime.log",
+      "sha256": "f2c02786f2586ac31173cc8a0880c19d2fcbe3057954e760fc4a1eb6e36da74c",
+      "bytes": 8696
+    },
+    {
+      "path": ".verification/tv5-ui-20261028/audit30-committed-browser/runtime.log",
+      "sha256": "ba5cf2fcb9df0b686328f2e5b28c5697366f142bb394ff7a18967322eb1a6685",
+      "bytes": 3796
+    }
+  ]
+}

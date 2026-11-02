@@ -1,0 +1,135 @@
+{
+  "kind": "DERIVED actual TV5 frontend execution; raw log private byte-preserved",
+  "label": "audit30-committed-browser",
+  "branch": "codex/tv5-finance-qa-ui",
+  "head": "6ab0f3f29b5cb7d8cea14cebe60656cd744b2498",
+  "base": "91e1a6c",
+  "command": [
+    "C:/Program Files/nodejs/node.exe",
+    "--test",
+    "--test-concurrency=1",
+    "src/features/finance/Workspace.browser.mjs"
+  ],
+  "startedUtc": "2026-10-30T03:46:44.619528+00:00",
+  "completedUtc": "2026-10-30T03:46:55.809447+00:00",
+  "environment": {
+    "platform": "win32",
+    "node": "v22.23.3"
+  },
+  "exitCode": 0,
+  "counts": {
+    "tests": 18,
+    "pass": 18,
+    "fail": 0,
+    "skipped": 0
+  },
+  "log": ".verification/tv5-ui-20261028/audit30-committed-browser/runtime.log",
+  "logSHA256": "ba5cf2fcb9df0b686328f2e5b28c5697366f142bb394ff7a18967322eb1a6685",
+  "sourceManifest": [
+    {
+      "path": "frontend/src/features/finance/components.tsx",
+      "sha256": "1d5252b3bf6db8d408f8c06074868272e7c0d32183322c2616fee409afbbd31a"
+    },
+    {
+      "path": "frontend/src/features/finance/data/pr-audit.json",
+      "sha256": "8c630e358735ae1718815f46642a5571adc25cb61b902367de99132e39df8628"
+    },
+    {
+      "path": "frontend/src/features/finance/data/provenance.json",
+      "sha256": "a311ab996de549c6bb1d210a4096669c63fe9c873935a524feef4f0e6fe49b10"
+    },
+    {
+      "path": "frontend/src/features/finance/data/qa-runs.json",
+      "sha256": "7aad92978d936b27f4dd781854efd3a248e1f310afe2d0119d67e245ccf31f8d"
+    },
+    {
+      "path": "frontend/src/features/finance/EvidenceViews.tsx",
+      "sha256": "039dfbbae9b69d68c906f4cb60e0a9383a530161d0a7e5f99f1ec29e37ab324f"
+    },
+    {
+      "path": "frontend/src/features/finance/FinanceWorkspace.tsx",
+      "sha256": "d135684fb8c595ea08a1e1b08cec442c60393a7a73a8e6f4ab79043541d9a4dd"
+    },
+    {
+      "path": "frontend/src/features/finance/fixtures.ts",
+      "sha256": "dd1ab4f217bb65bd51fc46dfabccd8ecba4d9928b2cb547d7b5536807137b5d6"
+    },
+    {
+      "path": "frontend/src/features/finance/index.ts",
+      "sha256": "ed58786978a53c969740ed42734cb0d6ce7ccecdb2f59cc8659c2b2cbd1daa4f"
+    },
+    {
+      "path": "frontend/src/features/finance/preview/index.html",
+      "sha256": "a4b2d7c05ab169949dfb9cfe7578ae9f92ea923cd536dbdee762c0c02164ea8c"
+    },
+    {
+      "path": "frontend/src/features/finance/preview/main.tsx",
+      "sha256": "473be8974baff7c9a94eb376c9f077863d177c2eac886c4d0b978895369e9f9a"
+    },
+    {
+      "path": "frontend/src/features/finance/preview/preview.css",
+      "sha256": "dd3ae36fc18ec53440ff9eb4501273d0ebd1cf467ee6b34dad23dffc7661be79"
+    },
+    {
+      "path": "frontend/src/features/finance/README.md",
+      "sha256": "afa96b4d7843e576be543d0674428c6d143b6198ca35d56f563178c6dbcd9cf6"
+    },
+    {
+      "path": "frontend/src/features/finance/recorded/pr-audit.json",
+      "sha256": "8c630e358735ae1718815f46642a5571adc25cb61b902367de99132e39df8628"
+    },
+    {
+      "path": "frontend/src/features/finance/recorded/provenance.json",
+      "sha256": "a311ab996de549c6bb1d210a4096669c63fe9c873935a524feef4f0e6fe49b10"
+    },
+    {
+      "path": "frontend/src/features/finance/recorded/qa-runs.json",
+      "sha256": "7aad92978d936b27f4dd781854efd3a248e1f310afe2d0119d67e245ccf31f8d"
+    },
+    {
+      "path": "frontend/src/features/finance/TransactionViews.tsx",
+      "sha256": "c5e55424358b936b46d8d98dc4b6a7fd474ba360b258c5233ae455b649bc1136"
+    },
+    {
+      "path": "frontend/src/features/finance/vite.finance.config.ts",
+      "sha256": "31ca96e54cf3aad042a069cbdee4468a23c2b5f5fe7df576f106a135aa0e5704"
+    },
+    {
+      "path": "frontend/src/features/finance/Workspace.browser.mjs",
+      "sha256": "67d25a4f7732af015d0ec89974fa14485520ad69642276c205abc2a1f6448e8a"
+    },
+    {
+      "path": "frontend/src/features/finance/workspace.css",
+      "sha256": "206d9132e7dc8637101edd2b3e31b580e61251818cb965661f97d9642520bb76"
+    },
+    {
+      "path": "frontend/src/features/finance/Workspace.dom.mjs",
+      "sha256": "c83df10e00b8b9bd9ac4e2058c863b58e1518ff067ba5f7189c7577db21045c2"
+    },
+    {
+      "path": "frontend/src/features/finance/workspaceAdapter.ts",
+      "sha256": "9687f829475c1db95760f1144d713649d4163cdbc2df560d655291a3e540d23b"
+    },
+    {
+      "path": "frontend/src/features/finance/workspaceModel.test.mjs",
+      "sha256": "e8a80db6cf2b0cd072f19a1840f0d3940bdc69123d8d3b95c7a57a3ec5773561"
+    },
+    {
+      "path": "frontend/src/features/finance/workspaceModel.ts",
+      "sha256": "7dbfa45a3a278b1d9b989bb09e0b96fcc93bbc3bc2b41b4b5968e08a2b91b305"
+    },
+    {
+      "path": "frontend/src/features/finance/workspaceTypes.ts",
+      "sha256": "109ba940d08024cd4d82b9b720790da40927a9b4e27587bbad4895cef91005c6"
+    },
+    {
+      "path": "frontend/src/features/finance/WorkspaceView.test.mjs",
+      "sha256": "340523f47e542dc815f05cab5118e4e7029dc4832586119530cf13db2d11d830"
+    },
+    {
+      "path": "frontend/src/features/finance/WorkspaceView.tsx",
+      "sha256": "e4bd7c8f29fee0792839ef2736aaf00dfda45f6275c53273d9647ed37d15644b"
+    }
+  ],
+  "scope": "Local isolated UI/fixtures or recorded QA/PR metadata; not production Finance/API/Auth/E2E"
+}

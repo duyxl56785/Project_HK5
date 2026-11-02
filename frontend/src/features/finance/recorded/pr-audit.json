@@ -1,0 +1,483 @@
+{
+  "complete": true,
+  "errors": [],
+  "generatedAtUtc": "2026-10-28T01:16:23.926791+00:00",
+  "PRs": [
+    {
+      "number": 69,
+      "title": "feat(inventory): add reservation ownership ledger candidate",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/69",
+      "author": "phamthecuong2022006-alt",
+      "state": "open",
+      "draft": false,
+      "head": "b7e4b427525689d5685419644352efafd9fe78e3",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": "lexuanbao258-collab",
+          "state": "APPROVED",
+          "head": "4eeeb3843f2795168ca03cdd3cd2e8be9f825ec6",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/69#pullrequestreview-5622479895",
+          "submittedAt": "2026-10-23T00:17:49Z"
+        }
+      ],
+      "unresolvedThreads": [],
+      "ci": "SUCCESS",
+      "observedGateSignals": []
+    },
+    {
+      "number": 80,
+      "title": "feat(tv1-auth): start HS256 JWT and current-account authority foundation",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/80",
+      "author": "lexuanbao258-collab",
+      "state": "open",
+      "draft": false,
+      "head": "00c962c037b4191642f2ce857109945be3e35177",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": "duyxl56785",
+          "state": "CHANGES_REQUESTED",
+          "head": "dfdc8143c4a86cdfce8eefc9a98e1b07126da41d",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/80#pullrequestreview-5643354815",
+          "submittedAt": "2026-10-25T13:17:26Z"
+        }
+      ],
+      "unresolvedThreads": [],
+      "ci": "SUCCESS",
+      "observedGateSignals": [
+        "CHANGES_REQUESTED"
+      ]
+    },
+    {
+      "number": 85,
+      "title": "feat(seller): prepare guarded Seller Store own-read HTTP slice",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/85",
+      "author": "duyxl56785",
+      "state": "open",
+      "draft": true,
+      "head": "fc39c7100caa7ffb49f9baa27b18dde595b54d1f",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [],
+      "unresolvedThreads": [],
+      "ci": "SUCCESS",
+      "observedGateSignals": [
+        "DRAFT",
+        "REVIEW_REQUIRED"
+      ]
+    },
+    {
+      "number": 87,
+      "title": "feat(product): implement internal validated image storage",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/87",
+      "author": "duyxl56785",
+      "state": "open",
+      "draft": false,
+      "head": "7f2c6b2fc45055635b2fcf7d3b05bba4a854465a",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": "nguyenminhduy090-alt",
+          "state": "APPROVED",
+          "head": "7f2c6b2fc45055635b2fcf7d3b05bba4a854465a",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/87#pullrequestreview-5671228181",
+          "submittedAt": "2026-10-27T17:04:29Z"
+        },
+        {
+          "author": "lexuanbao258-collab",
+          "state": "APPROVED",
+          "head": "7f2c6b2fc45055635b2fcf7d3b05bba4a854465a",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/87#pullrequestreview-5664616699",
+          "submittedAt": "2026-10-27T09:09:58Z"
+        }
+      ],
+      "unresolvedThreads": [],
+      "ci": "SUCCESS",
+      "observedGateSignals": []
+    },
+    {
+      "number": 95,
+      "title": "feat(tv2): add Product management UI with domain validation",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/95",
+      "author": "duyxl56785",
+      "state": "open",
+      "draft": false,
+      "head": "5374b51477afeafe2f0a955802939e4c9e385cb1",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": "lexuanbao258-collab",
+          "state": "APPROVED",
+          "head": "5374b51477afeafe2f0a955802939e4c9e385cb1",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/95#pullrequestreview-5643263935",
+          "submittedAt": "2026-10-25T12:49:55Z"
+        }
+      ],
+      "unresolvedThreads": [],
+      "ci": "NO_CHECKS",
+      "observedGateSignals": []
+    },
+    {
+      "number": 98,
+      "title": "feat(tv4): add fulfillment Store ownership guard",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/98",
+      "author": "phamthecuong2022006-alt",
+      "state": "open",
+      "draft": true,
+      "head": "d53e2a96833e246482c504879cd6d646dca82bf5",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [],
+      "unresolvedThreads": [],
+      "ci": "SUCCESS",
+      "observedGateSignals": [
+        "DRAFT",
+        "REVIEW_REQUIRED"
+      ]
+    },
+    {
+      "number": 99,
+      "title": "test(tv5): verify two-Store financial rollback and concurrent replay",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/99",
+      "author": "nguyenminhduy090-alt",
+      "state": "open",
+      "draft": false,
+      "head": "931feee45ac3f17293a4f200c604010fce63bf39",
+      "mergeable": true,
+      "requestedReviewers": [
+        "tranvanchinhbg2006-alt",
+        "phamthecuong2022006-alt"
+      ],
+      "effectiveReviews": [
+        {
+          "author": "duyxl56785",
+          "state": "APPROVED",
+          "head": "931feee45ac3f17293a4f200c604010fce63bf39",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/99#pullrequestreview-5670898290",
+          "submittedAt": "2026-10-27T16:41:47Z"
+        },
+        {
+          "author": "tranvanchinhbg2006-alt",
+          "state": "APPROVED",
+          "head": "446ae44da90832df534b6e37150f26a71f2adf25",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/99#pullrequestreview-5661298914",
+          "submittedAt": "2026-10-27T01:43:58Z"
+        }
+      ],
+      "unresolvedThreads": [],
+      "ci": "SUCCESS",
+      "observedGateSignals": []
+    },
+    {
+      "number": 101,
+      "title": "test(tv1-auth): verify runtime bootstrap and account security gates",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/101",
+      "author": "lexuanbao258-collab",
+      "state": "open",
+      "draft": false,
+      "head": "e45cede29435bbce553cb244cb956493cb98c26b",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [],
+      "unresolvedThreads": [],
+      "ci": "SUCCESS",
+      "observedGateSignals": []
+    },
+    {
+      "number": 102,
+      "title": "feat(tv1-auth): prepare inert transactional account/session core",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/102",
+      "author": "lexuanbao258-collab",
+      "state": "open",
+      "draft": false,
+      "head": "36ad517174ef3911bf794ef4ac568647cd9eb4eb",
+      "mergeable": true,
+      "requestedReviewers": [
+        "duyxl56785"
+      ],
+      "effectiveReviews": [
+        {
+          "author": "duyxl56785",
+          "state": "CHANGES_REQUESTED",
+          "head": "62d7a9a7f743e4c6818d3adeb3674941a742f53c",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/102#pullrequestreview-5653210933",
+          "submittedAt": "2026-10-26T14:04:28Z"
+        }
+      ],
+      "unresolvedThreads": [],
+      "ci": "SUCCESS",
+      "observedGateSignals": [
+        "CHANGES_REQUESTED"
+      ]
+    },
+    {
+      "number": 103,
+      "title": "test(tv5): compose Product lifecycle Catalog and Checkout preflight in PostgreSQL",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/103",
+      "author": "nguyenminhduy090-alt",
+      "state": "open",
+      "draft": false,
+      "head": "e7d894848b1415121f02ee551d070c7f03fdb241",
+      "mergeable": true,
+      "requestedReviewers": [
+        "tranvanchinhbg2006-alt",
+        "duyxl56785"
+      ],
+      "effectiveReviews": [
+        {
+          "author": "duyxl56785",
+          "state": "CHANGES_REQUESTED",
+          "head": "6d99953af6ab813f85e52277717152c07d798fb1",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/103#pullrequestreview-5663764170",
+          "submittedAt": "2026-10-27T07:55:58Z"
+        }
+      ],
+      "unresolvedThreads": [
+        {
+          "id": "PRRT_kwDOVGqk_M6wlznB",
+          "path": "tests/integration/ProductCatalogCompositionPostgresTest.java",
+          "line": 194,
+          "outdated": false,
+          "author": "duyxl56785",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/103#discussion_r4386233829"
+        }
+      ],
+      "ci": "NO_CHECKS",
+      "observedGateSignals": [
+        "CHANGES_REQUESTED",
+        "UNRESOLVED_THREADS"
+      ]
+    },
+    {
+      "number": 105,
+      "title": "feat(tv1): prepare gated frontend router and API client (Phase C, refs #8)",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/105",
+      "author": "lexuanbao258-collab",
+      "state": "open",
+      "draft": false,
+      "head": "09c26c784d82dfc275e4ae8f0ce0b2a458ec4490",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": "duyxl56785",
+          "state": "APPROVED",
+          "head": "09c26c784d82dfc275e4ae8f0ce0b2a458ec4490",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/105#pullrequestreview-5663275182",
+          "submittedAt": "2026-10-27T06:53:56Z"
+        }
+      ],
+      "unresolvedThreads": [],
+      "ci": "SUCCESS",
+      "observedGateSignals": []
+    },
+    {
+      "number": 106,
+      "title": "feat(tv3): map Catalog SKUs to immutable Inventory RESERVE intent (Refs #3 #10 #16)",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/106",
+      "author": "tranvanchinhbg2006-alt",
+      "state": "open",
+      "draft": true,
+      "head": "b7aabdb852192890149b02cfe6a010613065d7e0",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": "duyxl56785",
+          "state": "APPROVED",
+          "head": "b7aabdb852192890149b02cfe6a010613065d7e0",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/106#pullrequestreview-5663237895",
+          "submittedAt": "2026-10-27T06:49:18Z"
+        }
+      ],
+      "unresolvedThreads": [],
+      "ci": "SUCCESS",
+      "observedGateSignals": [
+        "DRAFT"
+      ]
+    },
+    {
+      "number": 107,
+      "title": "feat(tv3): add customer-scoped PostgreSQL Order History API (Refs #3 #10 #16)",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/107",
+      "author": "tranvanchinhbg2006-alt",
+      "state": "open",
+      "draft": true,
+      "head": "b155f799eaea8e49837d5d2970a78b369d7c0924",
+      "mergeable": true,
+      "requestedReviewers": [
+        "duyxl56785"
+      ],
+      "effectiveReviews": [],
+      "unresolvedThreads": [],
+      "ci": "SUCCESS",
+      "observedGateSignals": [
+        "DRAFT",
+        "REVIEW_REQUIRED"
+      ]
+    },
+    {
+      "number": 108,
+      "title": "feat(tv2): add verified Store-scoped Product owner listing",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/108",
+      "author": "duyxl56785",
+      "state": "open",
+      "draft": false,
+      "head": "8d4186ccf4369c9ac27fd19f49e54c9bc1740a6d",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": "nguyenminhduy090-alt",
+          "state": "APPROVED",
+          "head": "8d4186ccf4369c9ac27fd19f49e54c9bc1740a6d",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/108#pullrequestreview-5671229407",
+          "submittedAt": "2026-10-27T17:04:34Z"
+        },
+        {
+          "author": "lexuanbao258-collab",
+          "state": "APPROVED",
+          "head": "8d4186ccf4369c9ac27fd19f49e54c9bc1740a6d",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/108#pullrequestreview-5664618121",
+          "submittedAt": "2026-10-27T09:10:06Z"
+        }
+      ],
+      "unresolvedThreads": [],
+      "ci": "SUCCESS",
+      "observedGateSignals": []
+    },
+    {
+      "number": 109,
+      "title": "feat(tv2): persist owner-scoped Product image reservations",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/109",
+      "author": "duyxl56785",
+      "state": "open",
+      "draft": false,
+      "head": "cdea2839a6dfb0dd6b9c3f038f192e3080330db4",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": "nguyenminhduy090-alt",
+          "state": "APPROVED",
+          "head": "cdea2839a6dfb0dd6b9c3f038f192e3080330db4",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/109#pullrequestreview-5671230753",
+          "submittedAt": "2026-10-27T17:04:40Z"
+        },
+        {
+          "author": "lexuanbao258-collab",
+          "state": "APPROVED",
+          "head": "cdea2839a6dfb0dd6b9c3f038f192e3080330db4",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/109#pullrequestreview-5665159969",
+          "submittedAt": "2026-10-27T09:53:31Z"
+        }
+      ],
+      "unresolvedThreads": [],
+      "ci": "SUCCESS",
+      "observedGateSignals": []
+    },
+    {
+      "number": 110,
+      "title": "feat(tv2): add isolated Seller Admin and Catalog demo UI",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/110",
+      "author": "duyxl56785",
+      "state": "open",
+      "draft": false,
+      "head": "96886dddb320bf0abf963cfd629581cbc4a5b22e",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [],
+      "unresolvedThreads": [],
+      "ci": "NO_CHECKS",
+      "observedGateSignals": [
+        "REVIEW_REQUIRED"
+      ]
+    },
+    {
+      "number": 111,
+      "title": "docs: cập nhật README theo tiến độ nhóm và hướng dẫn demo TV2",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/111",
+      "author": "duyxl56785",
+      "state": "open",
+      "draft": false,
+      "head": "42b2d2a33b6ed69124988a6dc88e6c0087488e25",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [
+        {
+          "author": "lexuanbao258-collab",
+          "state": "APPROVED",
+          "head": "42b2d2a33b6ed69124988a6dc88e6c0087488e25",
+          "url": "https://github.com/duyxl56785/Project_HK5/pull/111#pullrequestreview-5671415665",
+          "submittedAt": "2026-10-27T17:18:37Z"
+        }
+      ],
+      "unresolvedThreads": [],
+      "ci": "NO_CHECKS",
+      "observedGateSignals": []
+    },
+    {
+      "number": 113,
+      "title": "feat(qa): include all-state PR inventory in read-only audit",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/113",
+      "author": "nguyenminhduy090-alt",
+      "state": "open",
+      "draft": false,
+      "head": "5235aa395e604ba6eb33fe1b6bf2395f30837935",
+      "mergeable": true,
+      "requestedReviewers": [
+        "duyxl56785"
+      ],
+      "effectiveReviews": [],
+      "unresolvedThreads": [],
+      "ci": "NO_CHECKS",
+      "observedGateSignals": [
+        "REVIEW_REQUIRED"
+      ]
+    },
+    {
+      "number": 114,
+      "title": "feat(tv3): Customer Order History UI with real backend HTTP acceptance (Refs #10 #16)",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/114",
+      "author": "tranvanchinhbg2006-alt",
+      "state": "open",
+      "draft": true,
+      "head": "ca755de8faa9490e06066c6321a336b95c36f7ec",
+      "mergeable": true,
+      "requestedReviewers": [],
+      "effectiveReviews": [],
+      "unresolvedThreads": [],
+      "ci": "NO_CHECKS",
+      "observedGateSignals": [
+        "DRAFT",
+        "REVIEW_REQUIRED"
+      ]
+    },
+    {
+      "number": 115,
+      "title": "feat(tv5-ui): add read-only Finance COD Settlement and QA workspace",
+      "url": "https://github.com/duyxl56785/Project_HK5/pull/115",
+      "author": "nguyenminhduy090-alt",
+      "state": "open",
+      "draft": true,
+      "head": "fab892f9d5bc1ef1281659d34123bc67eb8884a5",
+      "mergeable": true,
+      "requestedReviewers": [
+        "lexuanbao258-collab",
+        "duyxl56785"
+      ],
+      "effectiveReviews": [],
+      "unresolvedThreads": [],
+      "ci": "NO_CHECKS",
+      "observedGateSignals": [
+        "DRAFT",
+        "REVIEW_REQUIRED"
+      ]
+    }
+  ]
+}
