@@ -1,0 +1,214 @@
+{
+  "groups": {
+    "api-gateway:test": {
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 5
+    },
+    "auth-service:test": {
+      "tests": 45,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 11,
+      "passed": 34
+    },
+    "cart-service:postgresIntegrationTest": {
+      "tests": 13,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 13
+    },
+    "cart-service:test": {
+      "tests": 13,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 13
+    },
+    "inventory-service:postgresIntegrationTest": {
+      "tests": 19,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 19
+    },
+    "inventory-service:test": {
+      "tests": 27,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 27
+    },
+    "notification-service:test": {
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 2
+    },
+    "order-service:postgresIntegrationTest": {
+      "tests": 113,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 113
+    },
+    "order-service:test": {
+      "tests": 171,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 171
+    },
+    "product-service:integrationTest": {
+      "tests": 312,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 312
+    },
+    "product-service:test": {
+      "tests": 584,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 584
+    },
+    "security-common:test": {
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 5
+    },
+    "seller-service:integrationTest": {
+      "tests": 140,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 140
+    },
+    "seller-service:test": {
+      "tests": 250,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 250
+    },
+    "user-service:test": {
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 5,
+      "passed": 0
+    }
+  },
+  "totals": {
+    "tests": 1704,
+    "passed": 1688,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 16
+  },
+  "skippedCases": [
+    {
+      "task": "auth-service:test",
+      "class": "com.projecthk5.authservice.DatabaseReadinessTest",
+      "case": "migrationProfileMigratesWithSeparateRoleAndRuntimeJpaValidates()",
+      "reason": "Existing source gate TV1_DATABASE_TESTS not enabled/provisioned in this local command"
+    },
+    {
+      "task": "auth-service:test",
+      "class": "com.projecthk5.authservice.EmailInventoryTest",
+      "case": "existingDatabaseInventoryIsReadOnly()",
+      "reason": "AUTH_EMAIL_INVENTORY_JDBC_URL unset"
+    },
+    {
+      "task": "auth-service:test",
+      "class": "com.projecthk5.authservice.service.SellerRoleRevisionDatabaseTest",
+      "case": "replayOfTheCurrentRevisionChangesNothing()",
+      "reason": "Existing source gate TV1_DATABASE_TESTS not enabled/provisioned in this local command"
+    },
+    {
+      "task": "auth-service:test",
+      "class": "com.projecthk5.authservice.service.SellerRoleRevisionDatabaseTest",
+      "case": "reservationReflectsTheAccountRightNow()",
+      "reason": "Existing source gate TV1_DATABASE_TESTS not enabled/provisioned in this local command"
+    },
+    {
+      "task": "auth-service:test",
+      "class": "com.projecthk5.authservice.service.SellerRoleRevisionDatabaseTest",
+      "case": "disabledAccountCannotReserve()",
+      "reason": "Existing source gate TV1_DATABASE_TESTS not enabled/provisioned in this local command"
+    },
+    {
+      "task": "auth-service:test",
+      "class": "com.projecthk5.authservice.service.SellerRoleRevisionDatabaseTest",
+      "case": "revocationAbortsReservedWritesThroughTheirService()",
+      "reason": "Existing source gate TV1_DATABASE_TESTS not enabled/provisioned in this local command"
+    },
+    {
+      "task": "auth-service:test",
+      "class": "com.projecthk5.authservice.service.SellerRoleRevisionDatabaseTest",
+      "case": "staleGrantCannotUndoANewerRevocation()",
+      "reason": "Existing source gate TV1_DATABASE_TESTS not enabled/provisioned in this local command"
+    },
+    {
+      "task": "auth-service:test",
+      "class": "com.projecthk5.authservice.service.SellerRoleRevisionDatabaseTest",
+      "case": "revocationAndReservationNeverInterleave()",
+      "reason": "Existing source gate TV1_DATABASE_TESTS not enabled/provisioned in this local command"
+    },
+    {
+      "task": "auth-service:test",
+      "class": "com.projecthk5.authservice.service.SellerRoleRevisionDatabaseTest",
+      "case": "reinstatementWithANewerRevisionGrantsAgain()",
+      "reason": "Existing source gate TV1_DATABASE_TESTS not enabled/provisioned in this local command"
+    },
+    {
+      "task": "auth-service:test",
+      "class": "com.projecthk5.authservice.service.SellerRoleRevisionDatabaseTest",
+      "case": "concurrentOutOfOrderDeliveriesConvergeOnTheHighestRevision()",
+      "reason": "Existing source gate TV1_DATABASE_TESTS not enabled/provisioned in this local command"
+    },
+    {
+      "task": "auth-service:test",
+      "class": "com.projecthk5.authservice.service.SellerRoleRevisionDatabaseTest",
+      "case": "unreachableServiceKeepsTheReservationSoTheRelayRetries()",
+      "reason": "Existing source gate TV1_DATABASE_TESTS not enabled/provisioned in this local command"
+    },
+    {
+      "task": "user-service:test",
+      "class": "com.projecthk5.userservice.DatabaseReadinessTest",
+      "case": "migrationProfileMigratesWithSeparateRoleAndRuntimeJpaValidates()",
+      "reason": "Existing source gate TV1_DATABASE_TESTS not enabled/provisioned in this local command"
+    },
+    {
+      "task": "user-service:test",
+      "class": "com.projecthk5.userservice.profile.AddressBookDatabaseTest",
+      "case": "updateCanMoveTheDefaultWithoutHittingTheUniqueIndex()",
+      "reason": "Existing source gate TV1_DATABASE_TESTS not enabled/provisioned in this local command"
+    },
+    {
+      "task": "user-service:test",
+      "class": "com.projecthk5.userservice.profile.AddressBookDatabaseTest",
+      "case": "firstAddressBecomesDefaultAndANewDefaultReplacesIt()",
+      "reason": "Existing source gate TV1_DATABASE_TESTS not enabled/provisioned in this local command"
+    },
+    {
+      "task": "user-service:test",
+      "class": "com.projecthk5.userservice.profile.AddressBookDatabaseTest",
+      "case": "anotherAccountCannotSeeChangeOrDeleteAnAddress()",
+      "reason": "Existing source gate TV1_DATABASE_TESTS not enabled/provisioned in this local command"
+    },
+    {
+      "task": "user-service:test",
+      "class": "com.projecthk5.userservice.profile.AddressBookDatabaseTest",
+      "case": "addressBookStopsAtTenEntries()",
+      "reason": "Existing source gate TV1_DATABASE_TESTS not enabled/provisioned in this local command"
+    }
+  ]
+}

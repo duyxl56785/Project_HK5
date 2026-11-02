@@ -1,0 +1,17 @@
+{
+  "demoContainers": 15,
+  "unchangedIdsRunningStartRestartMountSets": true,
+  "otherPreexistingWorktreesPreserved": 16,
+  "oldLocalPatchWorktreeUntouched": true,
+  "productionFlagsChanged": false,
+  "liveAcceptanceExecuted": 0,
+  "historicalLiveStatus": "3 PASS / 2 UNKNOWN NOT_RUN-BLOCKED unchanged",
+  "OrderMigrationsSha256": {
+    "V5__checkout_order_drafts.sql": "accf738954d56913a892769a31cafb1f43d220fd9b14e8549de7b9ce6c5ab536",
+    "V1__checkout_baseline.sql": "cf6ec292654dcf99b75780a7218f504c0e5138ee387680fadbd4a652d91f65a8",
+    "V2__inventory_operation_journal.sql": "79677b00969581e4b5114375661c8de74573c2020348768a42599dfe45433772",
+    "V3__fulfillment_cod_shipping_outbox.sql": "40ae570614c03e5486893b5179e61f41fe1394c8a465787a24c7df0b27764412",
+    "V4__write_fence_abort.sql": "781ede820402afe95d983f2aafcd863ef9e726e4f9e3bf5ccd43b7a8ca1bd6cc"
+  },
+  "mainOnlyFrontendFilesPreservedWithoutManualEdits": true
+}

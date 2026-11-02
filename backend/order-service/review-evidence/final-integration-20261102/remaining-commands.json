@@ -1,0 +1,41 @@
+[
+  {
+    "label": "cart-claim-probe",
+    "cwd": "/workspace/tv3-final-main-145-147/backend",
+    "command": [
+      "./gradlew",
+      "--init-script",
+      "/tmp/tv3-final-integration-20261102/cart-probe.init.gradle",
+      ":cart-service:postgresIntegrationTest",
+      "--tests",
+      "*CartClearOwnerPostgresIT",
+      "--no-parallel",
+      "--max-workers=1",
+      "--no-daemon",
+      "--console=plain"
+    ],
+    "exit": 0
+  },
+  {
+    "label": "tv3-sync-regression",
+    "cwd": "/workspace/tv3-t1t2-main-integration/backend",
+    "command": [
+      "./gradlew",
+      "--init-script",
+      "/tmp/tv3-final-integration-20261102/tv3-sync-output.init.gradle",
+      ":order-service:test",
+      ":order-service:postgresIntegrationTest",
+      ":cart-service:test",
+      ":cart-service:postgresIntegrationTest",
+      ":inventory-service:test",
+      ":inventory-service:postgresIntegrationTest",
+      "--rerun-tasks",
+      "--continue",
+      "--no-parallel",
+      "--max-workers=1",
+      "--no-daemon",
+      "--console=plain"
+    ],
+    "exit": 0
+  }
+]

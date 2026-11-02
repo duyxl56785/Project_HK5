@@ -1,0 +1,18 @@
+# Selected task/build lines only. Raw local log preserved and SHA256 recorded.
+> Task :security-common:compileJava FROM-CACHE
+> Task :auth-service:compileJava FROM-CACHE
+> Task :auth-service:processResources
+> Task :auth-service:classes
+> Task :auth-service:jar
+> Task :cart-service:compileJava FROM-CACHE
+> Task :cart-service:processResources
+> Task :cart-service:classes
+> Task :cart-service:compileTestJava FROM-CACHE
+> Task :cart-service:processTestResources NO-SOURCE
+> Task :cart-service:testClasses UP-TO-DATE
+> Task :security-common:processResources
+> Task :security-common:classes
+> Task :security-common:jar
+> Task :cart-service:postgresIntegrationTest
+BUILD SUCCESSFUL in 27s
+10 actionable tasks: 6 executed, 4 from cache

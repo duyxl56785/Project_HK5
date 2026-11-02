@@ -1,0 +1,674 @@
+[
+  {
+    "path": "backend-builds/api-gateway/test-results/test/TEST-com.projecthk5.gateway.GatewayRoutingTest.xml",
+    "sha256": "27fcc7c71f47692c4441edbfe81e2e812e518d2b23f99ee2f61d3442a85da7de"
+  },
+  {
+    "path": "backend-builds/auth-service/test-results/test/TEST-com.projecthk5.authservice.AuthPersistenceTest.xml",
+    "sha256": "3be8bff9efeb010c210f500e302afe56f94da86db2a8fd927e15d821c80125a8"
+  },
+  {
+    "path": "backend-builds/auth-service/test-results/test/TEST-com.projecthk5.authservice.DatabaseReadinessTest.xml",
+    "sha256": "e3d6c41bfaf486ed68939f9d2d8805cd1991b63b363e2b7a04f820081f4ac5f0"
+  },
+  {
+    "path": "backend-builds/auth-service/test-results/test/TEST-com.projecthk5.authservice.EmailInventoryTest.xml",
+    "sha256": "eee314c3c14185246cf653da1ba9881db0c9513a975c34951887b3f38cc5fece"
+  },
+  {
+    "path": "backend-builds/auth-service/test-results/test/TEST-com.projecthk5.authservice.EmailNormalizationTest.xml",
+    "sha256": "6d535c8eb21846b5fe08be8ad03f78d60ed01e4408dc3e3e51704570fbb249a8"
+  },
+  {
+    "path": "backend-builds/auth-service/test-results/test/TEST-com.projecthk5.authservice.Hs256DependencyTest.xml",
+    "sha256": "7bd966da3da5cf19091a3724f5f5aefc75d8f50b86a409a69dcf28075a0a8551"
+  },
+  {
+    "path": "backend-builds/auth-service/test-results/test/TEST-com.projecthk5.authservice.api.InternalAccountControllerTest.xml",
+    "sha256": "6ed88eeaaf92cf65070ade9bdc756ea709e43bc5e9517451a7a34a0fb633f670"
+  },
+  {
+    "path": "backend-builds/auth-service/test-results/test/TEST-com.projecthk5.authservice.service.SellerRoleRevisionDatabaseTest.xml",
+    "sha256": "c36c6bb9f6cf81e6ee7adc83b790ab0e09460eb2c4045234c9f6f061a69dc989"
+  },
+  {
+    "path": "backend-builds/cart-service/test-results/postgresIntegrationTest/TEST-com.projecthk5.cartservice.integration.CartPostgres16IT.xml",
+    "sha256": "9b4ecb5c45a1e51d762d22e588e37523af82da8ad182c6a52ef0ef4b124f41ec"
+  },
+  {
+    "path": "backend-builds/cart-service/test-results/postgresIntegrationTest/TEST-com.projecthk5.cartservice.integration.HttpSellerRevocationWriteFencePostgresIT.xml",
+    "sha256": "07559b96549142fda10aafab282ae6bd188ea309426b91a15839f1e0c66f2b55"
+  },
+  {
+    "path": "backend-builds/cart-service/test-results/postgresIntegrationTest/TEST-com.projecthk5.cartservice.integration.WriteFencePostgres16IT.xml",
+    "sha256": "6d0ce8a052aff8faf65fd82b2b08e25c486649efab24b0b3a60b2a4ea1572941"
+  },
+  {
+    "path": "backend-builds/cart-service/test-results/test/TEST-com.projecthk5.cartservice.security.ContractJwtDecoderTest.xml",
+    "sha256": "f76b416ff3c329adaf52f2033d076535eb1a92eeb72c82411a5f99280d3761a6"
+  },
+  {
+    "path": "backend-builds/cart-service/test-results/test/TEST-com.projecthk5.cartservice.service.CartServiceTest.xml",
+    "sha256": "a5fa4682e583482889e42e4267318874b8d75a1bb7666d9b9591253718e3e57b"
+  },
+  {
+    "path": "backend-builds/inventory-service/test-results/postgresIntegrationTest/TEST-com.projecthk5.inventoryservice.InventoryPostgresIntegrationTest.xml",
+    "sha256": "ba016d5c5750cc9e84221f696e43fc5c3ae6ab0abf30dba498c2029aeb1a842e"
+  },
+  {
+    "path": "backend-builds/inventory-service/test-results/postgresIntegrationTest/TEST-com.projecthk5.inventoryservice.integration.InventoryInitializePostgresIT.xml",
+    "sha256": "31313e810814998380de45f9e9f70a27cd4a6d101d145b0d9eaa81ae82ba4b60"
+  },
+  {
+    "path": "backend-builds/inventory-service/test-results/postgresIntegrationTest/TEST-com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT.xml",
+    "sha256": "7bb494d521a2db68548ac53efa6ca9695f160bdc122fd977a5a99de6d566b25a"
+  },
+  {
+    "path": "backend-builds/inventory-service/test-results/postgresIntegrationTest/TEST-com.projecthk5.inventoryservice.integration.InventorySchemaPostgresIT.xml",
+    "sha256": "ff854d30b8fdc5e3b11d1a76c76f231c0dfecb592f52f2cf2a102055a72ca08b"
+  },
+  {
+    "path": "backend-builds/inventory-service/test-results/test/TEST-com.projecthk5.inventoryservice.api.InventoryRequestValidationTest.xml",
+    "sha256": "ca6a88cb4f8dd352efee7375a5e4816938f48f7d7a21bd69441423928fe6e88a"
+  },
+  {
+    "path": "backend-builds/inventory-service/test-results/test/TEST-com.projecthk5.inventoryservice.model.InventoryItemTest.xml",
+    "sha256": "9e16aa2803e87e3705ee3a15f7c5dc6a6ebaa502787104049c93c51f83c3a310"
+  },
+  {
+    "path": "backend-builds/inventory-service/test-results/test/TEST-com.projecthk5.inventoryservice.security.InventoryInternalTokenFilterTest.xml",
+    "sha256": "ca8bc72237e656d919a965086c5f6e609ded1ac173261e17e93b68d812747f3b"
+  },
+  {
+    "path": "backend-builds/inventory-service/test-results/test/TEST-com.projecthk5.inventoryservice.security.InventoryOrderPairGateTest.xml",
+    "sha256": "566de810303b6bec55197bd5ba3a23aa031ddd1cf340224b14c92cda04cb64e6"
+  },
+  {
+    "path": "backend-builds/inventory-service/test-results/test/TEST-com.projecthk5.inventoryservice.service.InventoryOperationServiceTest.xml",
+    "sha256": "69ddc847ca564b8473cb53c0ed76e3e075295805d7ad353267d6fc4f5e84bda1"
+  },
+  {
+    "path": "backend-builds/notification-service/test-results/test/TEST-com.projecthk5.notificationservice.web.OrderEventKafkaIT.xml",
+    "sha256": "5f6de036a52b30ffd532d5a14365c239e1cd6cc6d9479a38f2309466e0975006"
+  },
+  {
+    "path": "backend-builds/order-service/test-results/postgresIntegrationTest/TEST-com.projecthk5.orderservice.finance.FinanceDurabilityPostgresIT.xml",
+    "sha256": "2e2a001004418aeaae857c0fc0825235d62c07fe7a1366d47ea4c7086f01394e"
+  },
+  {
+    "path": "backend-builds/order-service/test-results/postgresIntegrationTest/TEST-com.projecthk5.orderservice.finance.FinanceSnapshotPostgresIT.xml",
+    "sha256": "71e02197296de06e6868ab637c2d86437b859acabfd7e457dc03519820d83ffe"
+  },
+  {
+    "path": "backend-builds/order-service/test-results/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.CheckoutDraftPostgresIT.xml",
+    "sha256": "ad97b20169c506fa84a1ad318ee4b38e858a0c32bdf223dfc7253a6ef7a1859a"
+  },
+  {
+    "path": "backend-builds/order-service/test-results/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.CheckoutInventoryBoundaryPostgresIT.xml",
+    "sha256": "4e9be7e97688a4cd71ef9a01087c60f70216922860130e5fa54d1dad58ae988b"
+  },
+  {
+    "path": "backend-builds/order-service/test-results/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT.xml",
+    "sha256": "cef90cbd6416140ea859c8458222f6d8efa7756c005c46d88965bfc299038ac1"
+  },
+  {
+    "path": "backend-builds/order-service/test-results/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.CheckoutReplayPostgresIT.xml",
+    "sha256": "9b1ba5f2bcd60eecb7deb3b668a1a2204b01cf37f4fd5e4ef2a684a3e0446f1b"
+  },
+  {
+    "path": "backend-builds/order-service/test-results/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.CheckoutScannerPostgresIT.xml",
+    "sha256": "159972d1619799760d450808209e0b20a736f84836a085f3cfe9a5c2e7cf4fa1"
+  },
+  {
+    "path": "backend-builds/order-service/test-results/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.FulfillmentPostgres16IT.xml",
+    "sha256": "6d451e2ec9dae5e5effa01820a60ec3b66a456961a141065f11c18c27ff26b79"
+  },
+  {
+    "path": "backend-builds/order-service/test-results/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.InventoryOperationJournalPostgres16IT.xml",
+    "sha256": "b3f61bb71e7d8ac433db04d5bc185ac953ae66fa966e23fad0affc7486f72749"
+  },
+  {
+    "path": "backend-builds/order-service/test-results/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.OrderPostgres16IT.xml",
+    "sha256": "4da83a6c751f71248103e61ab3b0c13beca369d5037df16769db93367754d671"
+  },
+  {
+    "path": "backend-builds/order-service/test-results/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.SellerWriteFencePostgresIT.xml",
+    "sha256": "2b4c33ccdf246d57ce0962bbb8989b9ac59050a1e414d397377dcfaefc33f564"
+  },
+  {
+    "path": "backend-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.api.SellerOrderControllerTest.xml",
+    "sha256": "88f964092631a56e1ae719dfeb2e7d4e654a7e45d85a9179aa275e0de52c3091"
+  },
+  {
+    "path": "backend-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest.xml",
+    "sha256": "749a5ec4a6391903a5c8efc8944533907a2e3542a55f0f9d9ec850e757dee7fc"
+  },
+  {
+    "path": "backend-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.domain.CheckoutRulesTest.xml",
+    "sha256": "69179d4a08a6b75efb0c4a3d5feddb854a6f16eff8e2d36fe23c63aab0c8e136"
+  },
+  {
+    "path": "backend-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.domain.InventoryOperationIntentTest.xml",
+    "sha256": "476ccfcdd9199349063efee47170df6461119da6a9ab84920b10cdce47d3b06c"
+  },
+  {
+    "path": "backend-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.domain.OrderAmountStorageBoundsTest.xml",
+    "sha256": "9491b1c7006e07481fd63cd80ed1ef20543083f18d1c9488e420a10cc1e431ed"
+  },
+  {
+    "path": "backend-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.entity.OrderOverallStatusTest.xml",
+    "sha256": "b8738928b4b2819306858b60bc7280d8d4d73ad64efe3fb4a6c66447430db74e"
+  },
+  {
+    "path": "backend-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.entity.SellerOrderTest.xml",
+    "sha256": "2685b9a602394dd2be41f119547ac949b8e1f905c505b7ab9ecae81d37601dd3"
+  },
+  {
+    "path": "backend-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.finance.FinanceCheckoutPreflightTest.xml",
+    "sha256": "f121380e4b02d981d4fa8afda1a8f2f9078789a6dd9325edbf785afd567bc74b"
+  },
+  {
+    "path": "backend-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.finance.FinanceConsumerParityTest.xml",
+    "sha256": "868c86f5797de51d388c15716468361ec89a9b4441ef09f52d569973ef1ccffb"
+  },
+  {
+    "path": "backend-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.finance.FinancePolicyConfigurationTest.xml",
+    "sha256": "61ce9cfd5d715d98203df186335cb2066215246f093b4dabf92dbf6bf0a2b512"
+  },
+  {
+    "path": "backend-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest.xml",
+    "sha256": "6e1b7f8b9f457c26a0fb6b44ec49fda906fc2852801e5aa9b8456d49f695a2df"
+  },
+  {
+    "path": "backend-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.finance.FinanceRulesTest.xml",
+    "sha256": "3792314704b207a37da0ab8edad59d6322fe00d45691a11a5e73e569ced1027e"
+  },
+  {
+    "path": "backend-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.fulfillment.SellerOrderLifecycleTest.xml",
+    "sha256": "e32b0f81299da255e72d6a62b30b793ca08d7e92ec1beb98cc645a290dbf7e08"
+  },
+  {
+    "path": "backend-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.security.ContractJwtDecoderTest.xml",
+    "sha256": "1f5b16e3dbd685a8d88511724a88ea7a749db01c2ef22213a6436d9806edb657"
+  },
+  {
+    "path": "backend-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.security.JwtEnvironmentConfigurationTest.xml",
+    "sha256": "e3c31a51bb50b289b6848dddee33ad4f4d8b411d1bb1cdf182a78a39e9154819"
+  },
+  {
+    "path": "backend-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.service.CheckoutServiceTest.xml",
+    "sha256": "1a8319848b041ba25b35deaf102a2cee569118fcde31f8e900ca70f741aaac57"
+  },
+  {
+    "path": "backend-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.service.FinanceReportTest.xml",
+    "sha256": "5357e91e5a1470dcceb624e5c4d246d726e463bc9d0f96daeb1c08c4c6fc692b"
+  },
+  {
+    "path": "backend-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.service.FulfillmentServiceTest.xml",
+    "sha256": "1e7aea1e841f955a87b98b19d9bd8f08f304593866dbf89260e60a9edcecd3e7"
+  },
+  {
+    "path": "backend-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.service.IdempotencyCoordinatorTest.xml",
+    "sha256": "8880bebfc43b4b76cc5eb5f62893b06362c53cf182c103525fc84eb67e0b48b5"
+  },
+  {
+    "path": "backend-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.service.InventoryOperationCallerTest.xml",
+    "sha256": "66bf5608ed92c136f96333b30f88fc9accc33053ea0fc51132d5bff21ab8cf1a"
+  },
+  {
+    "path": "backend-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.service.OutboxRelayTest.xml",
+    "sha256": "009bcaf92c35564594ebbf8c011864b0de557a42486964fceec2d99b24d1d238"
+  },
+  {
+    "path": "backend-builds/product-service/test-results/integrationTest/TEST-com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest.xml",
+    "sha256": "d2f97371d9b19e3a017819ebbebe13247dbd633b10fa2d76887a44aa1d9990e7"
+  },
+  {
+    "path": "backend-builds/product-service/test-results/integrationTest/TEST-com.projecthk5.productservice.catalog.ProductCatalogSearchIntegrationTest.xml",
+    "sha256": "c797a835b8f36889a4e20f46f4ea22dea5c3de2bba7452370a00282d3dcb5d9a"
+  },
+  {
+    "path": "backend-builds/product-service/test-results/integrationTest/TEST-com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceIntegrationTest.xml",
+    "sha256": "2b568e95930042b087d89f41956cbbdb79e4bfd4a859caf52e782f89a7e31610"
+  },
+  {
+    "path": "backend-builds/product-service/test-results/integrationTest/TEST-com.projecthk5.productservice.category.CategoryIntegrationTest.xml",
+    "sha256": "7e8b4d55f2f134173993b661b698a85c8af5d2f432250773a43226edb752c620"
+  },
+  {
+    "path": "backend-builds/product-service/test-results/integrationTest/TEST-com.projecthk5.productservice.category.CategorySlugMigrationPostgresTest.xml",
+    "sha256": "ac69160a3233027a563f67e850b9f79652065c3b3b0cd919128c78cd20761d94"
+  },
+  {
+    "path": "backend-builds/product-service/test-results/integrationTest/TEST-com.projecthk5.productservice.category.CategorySlugStatusIntegrationTest.xml",
+    "sha256": "ce00395376114af142dece6705976060489b328adc53e93dfc78ea37c2a4d5b8"
+  },
+  {
+    "path": "backend-builds/product-service/test-results/integrationTest/TEST-com.projecthk5.productservice.image.ProductImageMetadataServiceIntegrationTest.xml",
+    "sha256": "f49e8e6effcb0248dd231e03e958acdbf85d30cc16fcdc1f377e7e6cf5b7e852"
+  },
+  {
+    "path": "backend-builds/product-service/test-results/integrationTest/TEST-com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest.xml",
+    "sha256": "77549b8f36b9d477e1c4c6e7a76a75b3f2bb0502f3de7a4c7d0c01f62e7912c9"
+  },
+  {
+    "path": "backend-builds/product-service/test-results/integrationTest/TEST-com.projecthk5.productservice.product.ProductApplicationServiceIntegrationTest.xml",
+    "sha256": "1a010e652f60f5c175e56d841eb7aa89f9fb17b53d7fac9ed8af6132b437c8ca"
+  },
+  {
+    "path": "backend-builds/product-service/test-results/integrationTest/TEST-com.projecthk5.productservice.product.ProductOwnerListIntegrationTest.xml",
+    "sha256": "55719d3b6f1667ecffaf585753cb4f26341d77e2af213466ec814c5c7861f894"
+  },
+  {
+    "path": "backend-builds/product-service/test-results/integrationTest/TEST-com.projecthk5.productservice.product.http.ProductManagementHandlerIntegrationTest.xml",
+    "sha256": "7d1c21dcc8c1de12259520d647d7756ee76fae175b57bf6fce8efc7a53e10406"
+  },
+  {
+    "path": "backend-builds/product-service/test-results/integrationTest/TEST-com.projecthk5.productservice.product.persistence.ProductMigrationPostgresTest.xml",
+    "sha256": "d6467baed2dc068569e803ff1d9833c31713cf2c4ba8be17686756cbe68b6976"
+  },
+  {
+    "path": "backend-builds/product-service/test-results/integrationTest/TEST-com.projecthk5.productservice.product.persistence.ProductPersistenceIntegrationTest.xml",
+    "sha256": "46ca8b91b7a0a8e58cbb06ee4d050168ded1683ee860867dd8ed4614f945d699"
+  },
+  {
+    "path": "backend-builds/product-service/test-results/integrationTest/TEST-com.projecthk5.productservice.web.SellerProductWriteFenceIntegrationTest.xml",
+    "sha256": "3bc545532fe82ffcb6352c0bd2fb31112380efc806407e8d3dbbbdad83deb5ed"
+  },
+  {
+    "path": "backend-builds/product-service/test-results/test/TEST-com.projecthk5.productservice.catalog.CatalogBatchValidatorTest.xml",
+    "sha256": "7e9359e8ea2cd32ea794c3a3737b7c704e5e5567db380522bebb69bddd7fe0c6"
+  },
+  {
+    "path": "backend-builds/product-service/test-results/test/TEST-com.projecthk5.productservice.catalog.CatalogSearchQueryTest.xml",
+    "sha256": "9570a50688faf0b6d7a1d400bde5ad27a598b09a0056abb240d61e2a3f082f0d"
+  },
+  {
+    "path": "backend-builds/product-service/test-results/test/TEST-com.projecthk5.productservice.catalog.ProductCatalogSnapshotSourceTest.xml",
+    "sha256": "e1e90f42f2d366c9a8cb53b31d4dabd08448157cd2c4c00122e62844d5bd75e0"
+  },
+  {
+    "path": "backend-builds/product-service/test-results/test/TEST-com.projecthk5.productservice.category.CategoryControllerTest.xml",
+    "sha256": "eee483ba2f5d886d2e33761ab42c1e6195cb932d93a98d1dd18eb78ddb75585a"
+  },
+  {
+    "path": "backend-builds/product-service/test-results/test/TEST-com.projecthk5.productservice.category.CategorySecurityTest.xml",
+    "sha256": "f9c7617213e4c39619ceb8d6faa9ca34ee8b7bbe6de720167933455d9f89d3d0"
+  },
+  {
+    "path": "backend-builds/product-service/test-results/test/TEST-com.projecthk5.productservice.category.CategoryServiceTest.xml",
+    "sha256": "68343c1f268127126ba393b7def4e58e660b38a3fd472718a78ce28e4b4ae1c5"
+  },
+  {
+    "path": "backend-builds/product-service/test-results/test/TEST-com.projecthk5.productservice.image.LocalFileSystemImageStorageTest.xml",
+    "sha256": "63fde00cab2d1555541ecda2f5df1a423d8f555d9d9c5466153e7e9838451741"
+  },
+  {
+    "path": "backend-builds/product-service/test-results/test/TEST-com.projecthk5.productservice.image.ProductImageMetadataServiceTest.xml",
+    "sha256": "794a696ae1cf6e1702ce1ea7dde701070e6684d2d210e386d713646abf30ab1d"
+  },
+  {
+    "path": "backend-builds/product-service/test-results/test/TEST-com.projecthk5.productservice.image.ProductImageValidatorTest.xml",
+    "sha256": "8a898997857a6993bb58fe3ddec105cbdbc6050b9d728ac668b7ae3626bd3330"
+  },
+  {
+    "path": "backend-builds/product-service/test-results/test/TEST-com.projecthk5.productservice.product.ProductApplicationServiceTest.xml",
+    "sha256": "5225c6cb5bf90b6f921ba9ca701accddc5b8c50301c02100085f777f009a3ab9"
+  },
+  {
+    "path": "backend-builds/product-service/test-results/test/TEST-com.projecthk5.productservice.product.ProductLifecycleServiceTest.xml",
+    "sha256": "61040a652b128750cb9d7d76e3c644d08c94a2c59e3f4ba0140c034b6c2d7f8f"
+  },
+  {
+    "path": "backend-builds/product-service/test-results/test/TEST-com.projecthk5.productservice.product.ProductListingValidationTest.xml",
+    "sha256": "da371cab6846d57b8b1b2b01190a2f67f78fbccc87a995d8e94f40a93f443724"
+  },
+  {
+    "path": "backend-builds/product-service/test-results/test/TEST-com.projecthk5.productservice.product.ProductOwnerListTest.xml",
+    "sha256": "0098a79837b1d31d14de3e486d0c7d449d9db6ae1306b754b9fe58f6b1f1fead"
+  },
+  {
+    "path": "backend-builds/product-service/test-results/test/TEST-com.projecthk5.productservice.product.ProductPriceTest.xml",
+    "sha256": "988784377ecd89e70b9718fb93f8fb92a95695be31dfa7834ea432f3fcf3e7d3"
+  },
+  {
+    "path": "backend-builds/product-service/test-results/test/TEST-com.projecthk5.productservice.product.Week1CatalogFixtureTest.xml",
+    "sha256": "97cddb60ab0c3f0610aef13322a75e16cd2c870d225b508b106d7d736e200c3d"
+  },
+  {
+    "path": "backend-builds/product-service/test-results/test/TEST-com.projecthk5.productservice.product.http.ProductManagementHandlerTest.xml",
+    "sha256": "f9ccd57d615897b70f4f154061f28879fae474e99fd9e3f28cac98ce3c34089b"
+  },
+  {
+    "path": "backend-builds/product-service/test-results/test/TEST-com.projecthk5.productservice.product.http.ProductManagementJsonTest.xml",
+    "sha256": "31965698e58d8888c4666775bbaf5b1a059e9dc7838ff0a798707bee64fe8e14"
+  },
+  {
+    "path": "backend-builds/product-service/test-results/test/TEST-com.projecthk5.productservice.product.persistence.ProductEntityTest.xml",
+    "sha256": "76820ec16fd8f8e0402ad907a4f56b97685c12556f30a95ec0c12c5a50cbea55"
+  },
+  {
+    "path": "backend-builds/product-service/test-results/test/TEST-com.projecthk5.productservice.product.persistence.ProductPersistenceAdapterTest.xml",
+    "sha256": "339f3ffe42c1922b2bd860af78ba250f6cc0a23c1553d1f9e086f871d8007ef4"
+  },
+  {
+    "path": "backend-builds/product-service/test-results/test/TEST-com.projecthk5.productservice.review.ReviewRulesBoundaryTest.xml",
+    "sha256": "75fe379beee813b72a587de19d3c9f8cfc834d1f42044c44eb510a631a32b8bb"
+  },
+  {
+    "path": "backend-builds/product-service/test-results/test/TEST-com.projecthk5.productservice.review.ReviewRulesTest.xml",
+    "sha256": "a131e51f09d8f9f86e1180e979b0f61578b5a13ac3c0b81d3befa5fae43c0570"
+  },
+  {
+    "path": "backend-builds/product-service/test-results/test/TEST-com.projecthk5.productservice.security.ProductServiceSecurityTest.xml",
+    "sha256": "306cfc0c9d0505e365eede06859744038accc19e50d36493488264b5a686214d"
+  },
+  {
+    "path": "backend-builds/product-service/test-results/test/TEST-com.projecthk5.productservice.web.CatalogCacheTest.xml",
+    "sha256": "68877929e06b2d203dcf0c48bb9452f5b3791f70337fb625aba0254881b81b43"
+  },
+  {
+    "path": "backend-builds/security-common/test-results/test/TEST-com.projecthk5.security.CurrentAuthorityFilterTest.xml",
+    "sha256": "881966979bdbd87b08e5e1e56f6678f85e728e10a02e0b760930665302687fd5"
+  },
+  {
+    "path": "backend-builds/seller-service/test-results/integrationTest/TEST-com.projecthk5.sellerservice.seller.SellerPersistenceIntegrationTest.xml",
+    "sha256": "3d212b1b83f79c8dec90ac7570a5059677ed76a9f07cf151c4eb582090eeb071"
+  },
+  {
+    "path": "backend-builds/seller-service/test-results/integrationTest/TEST-com.projecthk5.sellerservice.store.SellerHistoryBackfillPostgresTest.xml",
+    "sha256": "194523b8becad79e8b701e5a04f4f62a4fcffecdc067cf4791683cd963c19261"
+  },
+  {
+    "path": "backend-builds/seller-service/test-results/integrationTest/TEST-com.projecthk5.sellerservice.store.StorePersistenceIntegrationTest.xml",
+    "sha256": "1196b613fa88b7011ff57215ff66a1002afa5d922bcf21b1597127a3eca98dd2"
+  },
+  {
+    "path": "backend-builds/seller-service/test-results/integrationTest/TEST-com.projecthk5.sellerservice.store.StoreProductFactsIntegrationTest.xml",
+    "sha256": "9ec7e832fcbdeb08be53bbb8bf51b8efd68849489a12197f3df242aa3f68a547"
+  },
+  {
+    "path": "backend-builds/seller-service/test-results/integrationTest/TEST-com.projecthk5.sellerservice.store.StoreSchemaProposalPostgresTest.xml",
+    "sha256": "8cb7789e24a2908ecff3a48bcf0a705ff113c66248e132934e6960f6f32fba3d"
+  },
+  {
+    "path": "backend-builds/seller-service/test-results/integrationTest/TEST-com.projecthk5.sellerservice.store.SuspendedSellerRoleBackfillPostgresTest.xml",
+    "sha256": "6d8c036cfb7a9e20097b381f1936d6d977e2862a719fa049c07544186a4f432a"
+  },
+  {
+    "path": "backend-builds/seller-service/test-results/test/TEST-com.projecthk5.sellerservice.http.CanonicalVersionTest.xml",
+    "sha256": "fb8fcbe16ee4cfddc380e6ccca96dde273d9a806f2d869e6b4befe8a14ec6844"
+  },
+  {
+    "path": "backend-builds/seller-service/test-results/test/TEST-com.projecthk5.sellerservice.http.SellerStoreJsonTest.xml",
+    "sha256": "28b51c6cadc235e6f773bd08c2e42c83b308295069ca73d1005f3325cbcc1b86"
+  },
+  {
+    "path": "backend-builds/seller-service/test-results/test/TEST-com.projecthk5.sellerservice.http.SellerStoreResponsesTest.xml",
+    "sha256": "492def42bf754a5ac65f1cec9ffddc01c9893c480f4c87cfda101878f3650bc9"
+  },
+  {
+    "path": "backend-builds/seller-service/test-results/test/TEST-com.projecthk5.sellerservice.seller.domain.SellerApplicationTest.xml",
+    "sha256": "0b36bb7804ecec4093d4e595b80b9e66382bf412b37bec46768fa131081f8bfa"
+  },
+  {
+    "path": "backend-builds/seller-service/test-results/test/TEST-com.projecthk5.sellerservice.seller.entity.SellerProfileTest.xml",
+    "sha256": "5631e4f92ae4277f1001d97e429fb489bc1a2e98ddf182ee7e7f9f2e87bbdc9f"
+  },
+  {
+    "path": "backend-builds/seller-service/test-results/test/TEST-com.projecthk5.sellerservice.seller.service.SellerInputsTest.xml",
+    "sha256": "52666230f5bf731f971eac6187d599ff103e79d5d27f72155d2a4b7965a4f4aa"
+  },
+  {
+    "path": "backend-builds/seller-service/test-results/test/TEST-com.projecthk5.sellerservice.seller.service.SellerLifecycleServiceTest.xml",
+    "sha256": "b5d55d220e3470fee435fc2b5883d1cb534811df9017bc5233177b4ba3c6fdb6"
+  },
+  {
+    "path": "backend-builds/seller-service/test-results/test/TEST-com.projecthk5.sellerservice.seller.service.SellerPersistenceServiceTest.xml",
+    "sha256": "e01f67357516d894aad10597fd78c874665f44644d515a902da13ea81a493931"
+  },
+  {
+    "path": "backend-builds/seller-service/test-results/test/TEST-com.projecthk5.sellerservice.store.StoreEntityTest.xml",
+    "sha256": "040e7ed07cdee7f678473866939bf08a757c3f545a29c82a18a45b6658716405"
+  },
+  {
+    "path": "backend-builds/seller-service/test-results/test/TEST-com.projecthk5.sellerservice.store.StoreInputsServiceTest.xml",
+    "sha256": "449328632bce91edc4ca8de045129143f7696489175c629b64234392b7eccd3e"
+  },
+  {
+    "path": "backend-builds/seller-service/test-results/test/TEST-com.projecthk5.sellerservice.store.StoreInputsTest.xml",
+    "sha256": "a2759d761f2a3e873fd36cae0b5c4497326feafd5898572dfc48841b4d239afd"
+  },
+  {
+    "path": "backend-builds/seller-service/test-results/test/TEST-com.projecthk5.sellerservice.store.StoreLifecycleServiceTest.xml",
+    "sha256": "67c43db05fefa797d97388523ad61f50dd57b164a6446bf5df44c95dfbc09c21"
+  },
+  {
+    "path": "backend-builds/seller-service/test-results/test/TEST-com.projecthk5.sellerservice.store.StoreOwnedFactsTest.xml",
+    "sha256": "5002c8574f5761276817704571910fbb56ac085c5412bade0b40d724c795bebf"
+  },
+  {
+    "path": "backend-builds/seller-service/test-results/test/TEST-com.projecthk5.sellerservice.web.SellerControllerTest.xml",
+    "sha256": "7e928bf98c98c2c35acb7a09809899597298260dd1ed046d92f5fad5d8aa7e0b"
+  },
+  {
+    "path": "backend-builds/user-service/test-results/test/TEST-com.projecthk5.userservice.DatabaseReadinessTest.xml",
+    "sha256": "9e3d8e3987286ed4eacee87d175e0b6cddf5b20c0f2dfda0eaa6b394342b2c8e"
+  },
+  {
+    "path": "backend-builds/user-service/test-results/test/TEST-com.projecthk5.userservice.profile.AddressBookDatabaseTest.xml",
+    "sha256": "977094be60cbfb439c57404fe68e6ec33db54d8baa2e17417098ded96cc95eaa"
+  },
+  {
+    "path": "tv3-sync-builds/cart-service/test-results/postgresIntegrationTest/TEST-com.projecthk5.cartservice.integration.CartPostgres16IT.xml",
+    "sha256": "cb2aea685359e838419fe901601269e3448f71d5e8d54f8cc11c17eff9ece441"
+  },
+  {
+    "path": "tv3-sync-builds/cart-service/test-results/postgresIntegrationTest/TEST-com.projecthk5.cartservice.integration.HttpSellerRevocationWriteFencePostgresIT.xml",
+    "sha256": "c8449599c5ff8f167cc698229afd2f729f965a8f176cb5f01cb0a5b5a2bfad8c"
+  },
+  {
+    "path": "tv3-sync-builds/cart-service/test-results/postgresIntegrationTest/TEST-com.projecthk5.cartservice.integration.WriteFencePostgres16IT.xml",
+    "sha256": "8a678d4081bf87724280e68f0bfb1055815b73564760b02bd819a36250af4c39"
+  },
+  {
+    "path": "tv3-sync-builds/cart-service/test-results/test/TEST-com.projecthk5.cartservice.security.ContractJwtDecoderTest.xml",
+    "sha256": "707d3408080874cf36f3caf5cbaf7fd0d92deb57a0141644c77ff6b2b404844c"
+  },
+  {
+    "path": "tv3-sync-builds/cart-service/test-results/test/TEST-com.projecthk5.cartservice.service.CartServiceTest.xml",
+    "sha256": "5644ee94ccaf21c0f08b2a9c2a31adc9ba349eccd70aa4341813ce5de088e5b5"
+  },
+  {
+    "path": "tv3-sync-builds/inventory-service/test-results/postgresIntegrationTest/TEST-com.projecthk5.inventoryservice.InventoryPostgresIntegrationTest.xml",
+    "sha256": "42d5a902eaa5cc3e85587992a15b511e0f88c0ed607be75b45c0c9c87c79961b"
+  },
+  {
+    "path": "tv3-sync-builds/inventory-service/test-results/postgresIntegrationTest/TEST-com.projecthk5.inventoryservice.integration.InventoryInitializePostgresIT.xml",
+    "sha256": "b324a5578f2ff287cd439d4a33b67b924563b65c6f6fd7f6476fc038594d95d9"
+  },
+  {
+    "path": "tv3-sync-builds/inventory-service/test-results/postgresIntegrationTest/TEST-com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT.xml",
+    "sha256": "084b5fc2cfe9fdfcd5e84f1990d347ffc7c37c4052a2c0c7f6f0a183a79677fc"
+  },
+  {
+    "path": "tv3-sync-builds/inventory-service/test-results/postgresIntegrationTest/TEST-com.projecthk5.inventoryservice.integration.InventorySchemaPostgresIT.xml",
+    "sha256": "d57b6e74dd763af1f32336b03da11828ed0b5b933f4681ca32e3a32f76627f6a"
+  },
+  {
+    "path": "tv3-sync-builds/inventory-service/test-results/test/TEST-com.projecthk5.inventoryservice.api.InventoryRequestValidationTest.xml",
+    "sha256": "3686dc5cbd95c8898562537068743e214ae748187fbe5a7b7741bbccc1dae9a8"
+  },
+  {
+    "path": "tv3-sync-builds/inventory-service/test-results/test/TEST-com.projecthk5.inventoryservice.model.InventoryItemTest.xml",
+    "sha256": "d450e4a4d13e51528940ae1bdcc64336a9b870d7958e15e92ccccf758cb425dc"
+  },
+  {
+    "path": "tv3-sync-builds/inventory-service/test-results/test/TEST-com.projecthk5.inventoryservice.security.InventoryInternalTokenFilterTest.xml",
+    "sha256": "2d26fff6fd05c530c366d1ffe301c6ac6d91c2cd44ba2c68cba09cb5e041bf2d"
+  },
+  {
+    "path": "tv3-sync-builds/inventory-service/test-results/test/TEST-com.projecthk5.inventoryservice.security.InventoryOrderPairGateTest.xml",
+    "sha256": "2e95e12aba43c64213b1e56141a6d016e5d5829a64ea03f02474ac478137533f"
+  },
+  {
+    "path": "tv3-sync-builds/inventory-service/test-results/test/TEST-com.projecthk5.inventoryservice.service.InventoryOperationServiceTest.xml",
+    "sha256": "09039e749584ab36e8b229670a33e645c89b15eab342a7758d588dc6ef10a774"
+  },
+  {
+    "path": "tv3-sync-builds/order-service/test-results/postgresIntegrationTest/TEST-com.projecthk5.orderservice.finance.FinanceDurabilityPostgresIT.xml",
+    "sha256": "8ca5a45e2716416fa53b7e35261105073780046e0bc205d4b69c1e3428a36231"
+  },
+  {
+    "path": "tv3-sync-builds/order-service/test-results/postgresIntegrationTest/TEST-com.projecthk5.orderservice.finance.FinanceSnapshotPostgresIT.xml",
+    "sha256": "d11098ea25f03e041a29a63a161ca517fdc0ea810b8b458a5228b35e07847a4c"
+  },
+  {
+    "path": "tv3-sync-builds/order-service/test-results/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.CheckoutDraftPostgresIT.xml",
+    "sha256": "58def2bca7e8e768d5f4e55ee52189ec109b13ad4dac8ca3d96c9bd99304f7ce"
+  },
+  {
+    "path": "tv3-sync-builds/order-service/test-results/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.CheckoutInventoryBoundaryPostgresIT.xml",
+    "sha256": "065632562f7bc8bea084ad6b0a78b6265f3cfaf5986bb96614356ca10bee478a"
+  },
+  {
+    "path": "tv3-sync-builds/order-service/test-results/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT.xml",
+    "sha256": "05dadf00b7924da30fb5fa03934d1715b54840875b945df8787937288fca6595"
+  },
+  {
+    "path": "tv3-sync-builds/order-service/test-results/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.CheckoutReplayPostgresIT.xml",
+    "sha256": "3e7ca2e2d9390680f9ee08788392c1c3c3ad0c014416f815679c627f162e38f2"
+  },
+  {
+    "path": "tv3-sync-builds/order-service/test-results/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.CheckoutScannerPostgresIT.xml",
+    "sha256": "9005f848bebc3d8499df54bf66b8285206ed5aa2d458052e5e047d17f25b9958"
+  },
+  {
+    "path": "tv3-sync-builds/order-service/test-results/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.FulfillmentPostgres16IT.xml",
+    "sha256": "4f18d1d5afa768939dc05daf0188afa1e15af890af9e1f75d250f22f333b7735"
+  },
+  {
+    "path": "tv3-sync-builds/order-service/test-results/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.InventoryOperationJournalPostgres16IT.xml",
+    "sha256": "3d31ff48ffff340f53608a3e5c8fb5ab4a32ec5c2b995d0b9c2405f78bc1fe98"
+  },
+  {
+    "path": "tv3-sync-builds/order-service/test-results/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.OrderPostgres16IT.xml",
+    "sha256": "f5bde98c9fa9b271c069e2d1d4b985b1f0e2872a37407dbdc551326008bd3406"
+  },
+  {
+    "path": "tv3-sync-builds/order-service/test-results/postgresIntegrationTest/TEST-com.projecthk5.orderservice.integration.SellerWriteFencePostgresIT.xml",
+    "sha256": "3675d47cdbe6af8f06586c3b139d9db27de3f8762d3eba24dd70f290f5c2509a"
+  },
+  {
+    "path": "tv3-sync-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.api.SellerOrderControllerTest.xml",
+    "sha256": "ed6e1ee94fe9c688c6549867f116985ced2fcc9ec0c25b6f8de43ca00fefb04c"
+  },
+  {
+    "path": "tv3-sync-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest.xml",
+    "sha256": "a56c9f206f9e9301c0dd00aa2f1a6769900f91847bae88cc17995722c6dfd622"
+  },
+  {
+    "path": "tv3-sync-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.domain.CheckoutRulesTest.xml",
+    "sha256": "56130c3a7eb76bffc5744c3eba98a1f962f665125834dd1693acd2fc80c45c7d"
+  },
+  {
+    "path": "tv3-sync-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.domain.InventoryOperationIntentTest.xml",
+    "sha256": "06fdbbd0b3d3a90b3ced553c2807b00879e5be6d69ba2e19a0fad60245a21bfe"
+  },
+  {
+    "path": "tv3-sync-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.domain.OrderAmountStorageBoundsTest.xml",
+    "sha256": "d81657891dbbde8f7ea71296b2d94694e44f3f0a86fc17308982bed8568009af"
+  },
+  {
+    "path": "tv3-sync-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.entity.SellerOrderTest.xml",
+    "sha256": "32efba5ac1122efb433eaa9a2f34622d5255ce6f0eecc292946159d5d569a165"
+  },
+  {
+    "path": "tv3-sync-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.finance.FinanceCheckoutPreflightTest.xml",
+    "sha256": "7ac42a33479d3b2b7fd98b5a7b4a532a006fc6f2c40f2a917e773e3f8112ebce"
+  },
+  {
+    "path": "tv3-sync-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.finance.FinanceConsumerParityTest.xml",
+    "sha256": "835848c95dc895f43a2ae2cd52864d461c996072eff11cc73b5185af37ada06f"
+  },
+  {
+    "path": "tv3-sync-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.finance.FinancePolicyConfigurationTest.xml",
+    "sha256": "ad783612b48a4b1b9f4792537f775d431749207aa633a8120f2c2cd2b8c179f1"
+  },
+  {
+    "path": "tv3-sync-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest.xml",
+    "sha256": "1f6a2a4f94d0171eac3eeb2998357133eed2995509be0fb652b042872e014fd9"
+  },
+  {
+    "path": "tv3-sync-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.finance.FinanceRulesTest.xml",
+    "sha256": "4b7bbf079d50df571145564d3c19f6d224a92078ab73d5d0d585be43a1baf14b"
+  },
+  {
+    "path": "tv3-sync-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.fulfillment.SellerOrderLifecycleTest.xml",
+    "sha256": "3790323acc723e0dec582dcf5321cd447dcc9b727ac5524e0a0bfc0baca03e74"
+  },
+  {
+    "path": "tv3-sync-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.security.ContractJwtDecoderTest.xml",
+    "sha256": "426b864820fb148820a953ec2f40611dd618840d9051de707fa7870bc2ac74e7"
+  },
+  {
+    "path": "tv3-sync-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.security.JwtEnvironmentConfigurationTest.xml",
+    "sha256": "a481e3eeea2c79297eb1202e2e31656ad0ab7f7a6d0dc237ccd2b6c1fdc65ad5"
+  },
+  {
+    "path": "tv3-sync-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.service.CheckoutServiceTest.xml",
+    "sha256": "7a160891fdd5a71aef97ac9d2cf961c3e1a56e8ce60bfccb3e9eba0df076ad48"
+  },
+  {
+    "path": "tv3-sync-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.service.FinanceReportTest.xml",
+    "sha256": "3268aad8bd8e90f72057bcae0ea2bd46d27b5abdc671b8de6748b1daca1c092e"
+  },
+  {
+    "path": "tv3-sync-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.service.FulfillmentServiceTest.xml",
+    "sha256": "f8562d24fc9e586b8619dedeb92aa13cef522e35d5d43887d931be7ed041a17a"
+  },
+  {
+    "path": "tv3-sync-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.service.IdempotencyCoordinatorTest.xml",
+    "sha256": "e9817c71789d8ab7600cb585bca02bff7e1f52623527f3affce6b8c54312b050"
+  },
+  {
+    "path": "tv3-sync-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.service.InventoryOperationCallerTest.xml",
+    "sha256": "36e30e033417358466630b1d9dcbd639f3b433694ad9df91d87f3a2044588ddd"
+  },
+  {
+    "path": "tv3-sync-builds/order-service/test-results/test/TEST-com.projecthk5.orderservice.service.OutboxRelayTest.xml",
+    "sha256": "2dfd4fec0164e8c8617eca5e8d15a35423c2d82f0555b3e4c09c61a18811af2a"
+  },
+  {
+    "path": "cart-probe-builds/cart-service/test-results/postgresIntegrationTest/TEST-com.projecthk5.cartservice.integration.CartClearOwnerPostgresIT.xml",
+    "sha256": "eb76ed3ec38180a885fed69b80a638cfa590d24fc669516b552eda1a55ed59d3"
+  },
+  {
+    "path": "owner-fix-compile.log",
+    "sha256": "be78d634eaba484cd08610fef208b8f69fdf2fafb451915144d1dc033b7b2313"
+  },
+  {
+    "path": "backend.log",
+    "sha256": "f109a54689f75c85b806804f9eec7cc0fb7a58616dd8610d09f45a4986ff84c5"
+  },
+  {
+    "path": "backend-final-main.log",
+    "sha256": "88291a1fd63eea8b85082eb32799fd83f91ee49325582b9c4d1448d906568faa"
+  },
+  {
+    "path": "cart-claim-probe.log",
+    "sha256": "d92baed5aa0afa3d8c0d73221af205617eb1bdaa2b2b334109e673b49d150040"
+  },
+  {
+    "path": "tv3-sync-regression.log",
+    "sha256": "c0da5a4ad8fadb3083088fbf09938c4030c95561d79f208d62f970541609e00c"
+  },
+  {
+    "path": "integrated-final-typecheck.log",
+    "sha256": "65c2e0c46abb8dc0e34cef894508edfb7274a9f85bc18ea7ce55e689ace338a7"
+  },
+  {
+    "path": "tv3-sync-final-typecheck.log",
+    "sha256": "65c2e0c46abb8dc0e34cef894508edfb7274a9f85bc18ea7ce55e689ace338a7"
+  }
+]

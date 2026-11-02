@@ -1,0 +1,21 @@
+{
+  "main": "b2dd17ed4d1b4f5ebc536649dc08eb30fae4902a",
+  "PR145": "9dbd7815299960c5b3474977c8bed7f5c54ff8c5",
+  "PR147": "cb576a6894d88304097862dc2ee7c25373903084",
+  "supersededPR147": "a1f2409dfe567effb20dcecfbafb755bf08e872d",
+  "baselineTree": "38021a76d202c68f7fc3a9e9d32c9218035761fb",
+  "conflictResolution": "Keep PreparedOrder and problem helper together; incoming cb576 SKU-only error contract kept.",
+  "testTree": "29772fac0b944f9943f2838745bced98f9a73901",
+  "extraChangedFiles": {
+    "backend/order-service/src/main/java/com/projecthk5/orderservice/ports/InventoryHttpAdapter.java": "1fca59d7e6e7eb23b0d1686184c933513d4f4e010368f2fe2bcf5705d0c5f2ab",
+    "backend/order-service/src/main/java/com/projecthk5/orderservice/service/CheckoutService.java": "5f97f718824191d9e41a5ec86b853cad3c0a1a6f35d510f249dc36a2d1fddcfe",
+    "backend/order-service/src/test/java/com/projecthk5/orderservice/integration/CheckoutInventoryBoundaryPostgresIT.java": "657f20d62414cb7f86543ee227597aab29109c6c2265ff3e6d7ea1eb2e74f595"
+  },
+  "previousMain": "e9b98c704886347699e88bd72ac9f0978fe27ef4",
+  "note": "Order/Cart/Inventory source unchanged after merge of main Product/Category140; final build reruns changed Product tests, retains unchanged reports once. Local assembly6681806 had old baseline staged only; exact patch remained unstaged, never lost, and is now included in this tested index tree.",
+  "localCandidateCommit": "ee8c59ca4dc65c385bfe13f4b94fc7ea190fae10",
+  "localCandidateTree": "29772fac0b944f9943f2838745bced98f9a73901",
+  "tv3MainSyncCommit": "28f487ccb511b8e873e3de287f8a64d499cc5b80",
+  "tv3MainSyncTree": "1f5ae8a6dea64305cc1cde8c55a56eb649fa6937",
+  "tv3MainSyncDoesNotContainPR147": true
+}

@@ -1,0 +1,6 @@
+allprojects { p ->
+ p.layout.buildDirectory.set(new File('/tmp/tv3-final-integration-20261102/cart-probe-builds',p.path==':'?'root':p.path.substring(1).replace(':','/')))
+}
+gradle.projectsEvaluated {
+ gradle.rootProject.project(':cart-service').sourceSets.test.java.srcDir('/tmp/tv3-final-integration-20261102/cart-probe-source')
+}
