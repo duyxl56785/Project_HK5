@@ -78,6 +78,9 @@ class StoreSchemaProposalPostgresTest {
             assertTrue(rows.next());
             assertEquals("6", rows.getString(1));
             assertEquals("V6__seller_status_history.sql", rows.getString(2));
+            assertTrue(rows.next());
+            assertEquals("7", rows.getString(1));
+            assertEquals("V7__resend_suspended_seller_role.sql", rows.getString(2));
             assertFalse(rows.next());
         }
     }
