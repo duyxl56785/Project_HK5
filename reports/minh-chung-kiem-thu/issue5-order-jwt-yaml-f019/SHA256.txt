@@ -1,0 +1,2 @@
+cf938f326ba025f4f4b910c4fcbb315fa8d086a1da5f07631509834f660f90c8  gradle.log
+300e9a646a9f5f69ea8f0807e3a88c358737b5d1a424f898943f37e6cffaed31  TEST-JwtEnvironmentConfigurationTest.xml
