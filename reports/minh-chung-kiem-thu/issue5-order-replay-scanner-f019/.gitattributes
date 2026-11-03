@@ -1,0 +1,2 @@
+gradle.log -text
+TEST-*.xml -text
