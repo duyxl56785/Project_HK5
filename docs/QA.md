@@ -1,3 +1,5 @@
+> **Checkpoint mới 03/11/2026:** [TV5 W4 QA handoff](../reports/TV5_W4_QA_HANDOFF_2026-11-03.md) ghi selected Review/Finance **85 unit + 46 PostgreSQL PASS** và rehearsal Docker/Flyway/seed PASS tại source `main@f0190e54a18b263df5b5cc0e9f7987873d30617e`; UAT cuối #18 vẫn NOT_RUN/BLOCKED. M01/MD09 chỉ được ký cho demo local, Finance/COD/Settlement production chưa được duyệt; R06/UNKNOWN/Return còn chờ owner. House Store operation thuộc TV2/business owner, ngoài phạm vi TV5. Các checkpoint bên dưới là lịch sử theo ngày ghi, không còn là trạng thái mới nhất.
+
 > **LaterAuthdelta23/10:** [P2/PR80 and diagnostic82:4PASS/1FAIL](../reports/TV5_REVIEW_ACCEPTANCE_2026-10-23.md#8-later-auth-pr80--diagnostic82-delta--p2-remains-open-not-a-green-fix). TV1ownerfix pending; no broadgreen claim.
 
 > **Current23/10checkpoint:** [63PR/allreviewers/currentQA and ownerhuman decisions](../reports/TV5_REVIEW_ACCEPTANCE_2026-10-23.md). Prior22/10snapshots below retain history;69oldCRsuperseded,68/70/73/75MERGED. M01PENDING,FinanceproductionBLOCKED.

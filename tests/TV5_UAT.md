@@ -1,5 +1,7 @@
 # TV5 — QA matrix và UAT hai Store
 
+> **Cập nhật 03/11/2026:** [Bảng QA W4 và evidence TV5](../reports/TV5_W4_QA_HANDOFF_2026-11-03.md) bổ sung 85 selected unit PASS, 46 selected PostgreSQL PASS và rehearsal môi trường cô lập PASS tại `main@f0190e54a18b263df5b5cc0e9f7987873d30617e`. Không đánh dấu UAT cuối PASS: #69 readiness, R06 và hai UNKNOWN còn gate. Ma trận R06 lịch sử bên dưới giữ oracle 1000 cho đến khi TV2/product-business owner chốt 1000 hay 2000 ở #154; kết quả TV2 nhận comment 1001 là FAIL theo oracle hiện hành, không tự đổi yêu cầu. Return/Refund QA cases trong báo cáo W4 đều NOT_RUN/BLOCKED_OWNER.
+
 Refs #5, #18. Ma trận bên dưới là **snapshot kế hoạch tuần 1 ngày 15/10/2026**; câu “main còn scaffold” và các trạng thái NOT_RUN trong bản lịch sử không mô tả source hiện tại. Không tự đổi ô kết quả lịch sử thành PASS khi thiếu evidence live.
 
 ## Gate hiện tại, đối chiếu 02/11/2026

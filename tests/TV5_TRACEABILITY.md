@@ -1,3 +1,5 @@
+> **Checkpoint mới 03/11/2026:** [TV5 W4 QA handoff](../reports/TV5_W4_QA_HANDOFF_2026-11-03.md) là nguồn cho lượt chạy mới trên `main@f0190e54a18b263df5b5cc0e9f7987873d30617e`: 85 selected unit + 46 selected PostgreSQL PASS, rehearsal Docker/8 DB/seed PASS. Chúng không thay UAT cuối #18 hoặc hai fixture UNKNOWN (NOT_RUN). [M01/MD09](../docs/project-report/M01_FINANCE_DECISION.md) đã được chốt **chỉ cho demo local**; các dòng M01 PENDING cũ bên dưới là checkpoint lịch sử, không cấp quyền production Finance. House Store operation thuộc TV2/business owner; TV5 chỉ kiểm tác động phí/settlement. R06 1000-vs-2000 và Return/Refund còn chờ owner.
+
 > **LaterAuthdelta23/10:** [P2/PR80 and diagnostic82:4PASS/1FAIL](../reports/TV5_REVIEW_ACCEPTANCE_2026-10-23.md#8-later-auth-pr80--diagnostic82-delta--p2-remains-open-not-a-green-fix). TV1ownerfix pending; no broadgreen claim.
 
 > **Current23/10checkpoint:** [63PR/allreviewers/currentQA and ownerhuman decisions](../reports/TV5_REVIEW_ACCEPTANCE_2026-10-23.md). Prior22/10snapshots below retain history;69oldCRsuperseded,68/70/73/75MERGED. M01PENDING,FinanceproductionBLOCKED.
