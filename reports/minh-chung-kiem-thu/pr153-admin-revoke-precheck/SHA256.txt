@@ -1,0 +1,2 @@
+a2b335e51b6f99009aa2ca209aea39363ee4db0d8d44885c9882da1e465eb772  gradle.log
+824b827783d3a7840402ee3ab1fd61d290595401ddbef96366d70326bba39e87  TEST-CurrentAuthorityFilterTest.xml
