@@ -18,6 +18,6 @@
 | frontend/src/features/reviews, finance | TV5 | TV5 |
 | docs/QA.md, reports/ | TV5 | TV5 và TV2 khi nghiệm thu |
 
-**Từ 01/11/2026:** TV1 Lê Xuân Bảo rời dự án, TV2 nhận toàn bộ phần việc và quyền quyết định của TV1. Review, quyết định và bằng chứng đã ghi tên TV1 giữ nguyên, tài liệu lịch sử không đổi nghĩa. Issue #1, #8, #14 giữ nguyên người được gán để lưu lịch sử. PR Auth hoặc Gateway do TV2 viết cần một thành viên khác review.
+**Từ 01/11/2026:** TV1 Lê Xuân Bảo rời dự án, TV2 nhận toàn bộ phần việc và quyền quyết định của TV1. Review, quyết định và bằng chứng đã ghi tên TV1 giữ nguyên, tài liệu lịch sử không đổi nghĩa. Issue #1, #8, #14 giữ nguyên người được gán để lưu lịch sử. PR Auth hoặc Gateway do TV2 viết cần một thành viên khác review. Từ tuần 4, TV1 chỉ nhận các việc ghi trong #153 và #158. Ownership và quyền quyết định còn lại vẫn thuộc TV2.
 
 **Quy tắc:** Đường dẫn trên chỉ để tổ chức công việc. Mọi chỉnh sửa API, entity dùng chung, migration, trạng thái enum, router và API client phải báo trước qua Issue/PR. Không tự động coi mọi thư mục là độc quyền: business ownership quan trọng hơn đường dẫn.
