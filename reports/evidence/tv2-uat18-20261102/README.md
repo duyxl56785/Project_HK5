@@ -84,6 +84,8 @@ Lượt cuối chạy trên stack mới.
 
 `SHA256SUMS` có hash từng file, trừ chính nó và README. Log giữ nguyên byte, có đường dẫn máy cục bộ và khoảng trắng cuối dòng. Đã quét toàn bộ file so với 23 giá trị trong `.env.demo` và mẫu JWT, Bearer: 0 khớp.
 
+Hash tính trên byte Git blob. Kiểm bằng `git -c core.autocrlf=false archive` rồi `sha256sum -c`, không kiểm trên bản checkout Windows vì Git có thể đổi LF thành CRLF. Bản đầu (`3a5e438`) ghi nhầm hash bản CRLF của `tooling/gaps.mjs` (`bf8c71…`); TV5 phát hiện ở #165, đã sửa thành hash blob `97d148…`. Nội dung file không đổi.
+
 `tooling/` là script tạm, không thuộc suite chính thức: `gaps.mjs`, `run.mjs`, `order-history.cjs`, `docker-shim.cjs`. Oracle của gap script là HTTP qua site và `select` trên PostgreSQL. Image: chỉ ghi frontend trong `images.txt`, jar Java bind-mount từ source trên, hash jar `NOT_RUN`.
 
 Teardown: 0 container, 0 volume `uat18`, `hk5-demo_pgdemo` và `hk5-demo_productimages` còn nguyên.
