@@ -1,0 +1,17 @@
+.tv4-fulfillment { color: #243042; }
+.tv4-fulfillment header { margin-bottom: 20px; }
+.tv4-fulfillment__eyebrow { color: #0f766e; font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+.tv4-fulfillment h2 { margin: 8px 0; font-size: clamp(24px, 3vw, 34px); }
+.tv4-fulfillment p { color: #64748b; line-height: 1.6; }
+.tv4-fulfillment__list { display: grid; gap: 14px; }
+.tv4-fulfillment__order, .tv4-fulfillment__notice { border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; background: #fff; }
+.tv4-fulfillment__order-head { display: flex; align-items: start; justify-content: space-between; gap: 12px; }
+.tv4-fulfillment__order h3 { margin: 6px 0 14px; }
+.tv4-fulfillment__status { border-radius: 999px; padding: 5px 10px; background: #e0f2fe; color: #075985; font-size: 12px; font-weight: 700; white-space: nowrap; }
+.tv4-fulfillment dl { display: flex; gap: 28px; margin: 0 0 16px; }
+.tv4-fulfillment dt { color: #64748b; font-size: 12px; }
+.tv4-fulfillment dd { margin: 3px 0 0; font-weight: 600; }
+.tv4-fulfillment__actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.tv4-fulfillment__actions button, .tv4-fulfillment__notice button { border: 0; border-radius: 8px; padding: 9px 12px; color: #fff; background: #b64f2c; cursor: pointer; font: inherit; }
+.tv4-fulfillment__actions button:disabled { cursor: wait; opacity: .6; }
+.tv4-fulfillment__locked { margin: 0; font-size: 13px; }

@@ -1,0 +1,9 @@
+.tv4-seller-operations { color: #243042; }
+.tv4-seller-operations > header { margin-bottom: 18px; }
+.tv4-seller-operations__eyebrow { color: #0f766e; font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+.tv4-seller-operations h1 { margin: 8px 0; font-size: clamp(28px, 4vw, 40px); }
+.tv4-seller-operations > header p { color: #64748b; line-height: 1.6; }
+.tv4-seller-operations__tabs { display: flex; gap: 8px; margin-bottom: 28px; border-bottom: 1px solid #e2e8f0; }
+.tv4-seller-operations__tabs button { border: 0; border-bottom: 3px solid transparent; padding: 10px 14px; color: #475569; background: transparent; cursor: pointer; font: inherit; font-weight: 700; }
+.tv4-seller-operations__tabs button[aria-selected="true"] { border-bottom-color: #b64f2c; color: #9a3412; }
+.tv4-seller-operations__tabs button:focus-visible { outline: 2px solid #0f766e; outline-offset: -2px; }
