@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.projecthk5.orderservice.service.InventoryOperationCallerTest" tests="12" skipped="0" failures="0" errors="0" timestamp="2026-11-03T01:27:49" hostname="MDUY-LECO" time="0.032">
+  <properties/>
+  <testcase name="multiSkuTimeoutPreservesRequestAndQuarantinesFurtherDispatch()" classname="com.projecthk5.orderservice.service.InventoryOperationCallerTest" time="0.012"/>
+  <testcase name="wireAdapterHasNoBroadCredentialOrExtraOperationType()" classname="com.projecthk5.orderservice.service.InventoryOperationCallerTest" time="0.002"/>
+  <testcase name="staleTimeoutCannotOverwriteNewerAttemptState()" classname="com.projecthk5.orderservice.service.InventoryOperationCallerTest" time="0.002"/>
+  <testcase name="unknownRemainsQuarantinedWithoutAnotherSend()" classname="com.projecthk5.orderservice.service.InventoryOperationCallerTest" time="0.001"/>
+  <testcase name="concurrentInFlightIsNotSentAgainAndConfirmedReplayDoesNotResend()" classname="com.projecthk5.orderservice.service.InventoryOperationCallerTest" time="0.001"/>
+  <testcase name="successConfirmsOnlyExactMatchingResponseAndPersistedRequest()" classname="com.projecthk5.orderservice.service.InventoryOperationCallerTest" time="0.002"/>
+  <testcase name="staleReplyCannotReportConfirmedAfterItsClaimWasLost()" classname="com.projecthk5.orderservice.service.InventoryOperationCallerTest" time="0.002"/>
+  <testcase name="multiSkuMismatchedProviderSkuSetRecordsUnknownRatherThanConfirming()" classname="com.projecthk5.orderservice.service.InventoryOperationCallerTest" time="0.001"/>
+  <testcase name="multiSkuReleaseCandidateDisabledTransportDoesNotConfirmOrChangeIntent()" classname="com.projecthk5.orderservice.service.InventoryOperationCallerTest" time="0.001"/>
+  <testcase name="knownDefinitiveAtomicRejectionMustNotBeRetried()" classname="com.projecthk5.orderservice.service.InventoryOperationCallerTest" time="0.001"/>
+  <testcase name="mismatchedOrDuplicateProviderResponseIsUnknownNotSuccess()" classname="com.projecthk5.orderservice.service.InventoryOperationCallerTest" time="0.0"/>
+  <testcase name="disabledTransportIsProvablyNotSentAndRemainsPending()" classname="com.projecthk5.orderservice.service.InventoryOperationCallerTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

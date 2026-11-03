@@ -1,0 +1,41 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.10/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :order-service:processResources
+> Task :order-service:processTestResources NO-SOURCE
+> Task :security-common:compileJava
+> Task :security-common:processResources
+> Task :security-common:classes
+> Task :security-common:jar
+> Task :order-service:compileJava
+> Task :order-service:classes
+> Task :order-service:compileTestJava
+> Task :order-service:testClasses
+
+> Task :order-service:postgresIntegrationTest FAILED
+
+CheckoutDraftPostgresIT > initializationError FAILED
+    java.lang.IllegalStateException at DockerClientProviderStrategy.java:277
+
+CheckoutInventoryJournalPostgresIT > initializationError FAILED
+    java.lang.IllegalStateException at DockerClientProviderStrategy.java:232
+ORDER_PG16_TEST_SUMMARY tests=2 passed=0 failed=2 skipped=0
+
+2 tests completed, 2 failed
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':order-service:postgresIntegrationTest'.
+> There were failing tests. See the report at: file:///D:/CMC%20Uni/5%20Ky%20Dong/WEB/BCK%20WEB/Project_HK5/.verification/tv5-pr145-qa-20261103/backend/order-service/build/reports/tests/postgresIntegrationTest/index.html
+
+* Try:
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+> Run with --scan to get full insights.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+
+For more on this, please refer to https://docs.gradle.org/8.10/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+BUILD FAILED in 27s
+7 actionable tasks: 7 executed
