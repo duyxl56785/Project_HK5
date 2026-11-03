@@ -27,6 +27,6 @@ Gói TV2 ở commit `3a5e4381843f2f10e9e81a49d384c6d1d6212c7e`, chạy tại `ma
 
 ## Bảo toàn minh chứng
 
-`SHA256SUMS` bên cạnh ghi hash của **byte file local được đưa vào commit**. `.gitattributes` giữ log/XML ở dạng byte gốc để Git không đổi CRLF khi checkout. Không chỉnh sửa raw log hoặc JUnit XML. Không có ảnh chụp UAT vì UAT chưa chạy; ảnh Testcontainers FAIL của lượt trước ở thư mục `pr145-testcontainers-init-fail/` trên main.
+`SHA256SUMS` bên cạnh chỉ ghi hash của **raw log và JUnit XML**; không gồm README hoặc `.gitattributes` vì Git archive có thể xuất chúng theo CRLF trên Windows. `.gitattributes` giữ log/XML ở dạng byte gốc để Git không đổi CRLF khi checkout. Không chỉnh sửa raw log hoặc JUnit XML. Không có ảnh chụp UAT vì UAT chưa chạy; ảnh Testcontainers FAIL của lượt trước ở thư mục `pr145-testcontainers-init-fail/` trên main.
 
 `git diff --cached --check` mặc định báo trailing whitespace trên XML/log sinh ra với CRLF; đó là byte gốc được giữ để SHA256 khớp. Kiểm riêng README, manifest và `.gitattributes` bằng `git diff --cached --check -- <ba file>` sạch; kiểm toàn bộ với `core.whitespace=-blank-at-eol` cũng sạch. Không sửa raw evidence chỉ để xóa cảnh báo định dạng.
