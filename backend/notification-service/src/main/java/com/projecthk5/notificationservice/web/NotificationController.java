@@ -56,8 +56,10 @@ public class NotificationController {
         if (req.eventKey() != null && notifications.existsByEventKey(req.eventKey())) return;
         try {
             notifications.saveAndFlush(new Notification(req.recipient(), req.type(), req.title(), req.message(), req.link(), req.eventKey()));
-        } catch (DataIntegrityViolationException concurrentDuplicate) {
-            // Unique event_key: a concurrent redelivery already stored it.
+        } catch (DataIntegrityViolationException failure) {
+            // saveAndFlush's repository transaction has rolled back. Verify a committed winner
+            // before acknowledging; other constraint failures must reach Kafka retry/DLT.
+            if (req.eventKey() == null || !notifications.existsByEventKey(req.eventKey())) throw failure;
         }
     }
 
