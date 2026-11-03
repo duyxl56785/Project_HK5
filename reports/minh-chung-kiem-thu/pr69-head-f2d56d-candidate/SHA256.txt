@@ -1,0 +1,2 @@
+a0c5e911d04bd93ed1e4a25ddab25cd831ca329eade1560284cea05be5911368  gradle.log
+2c60a517ac635ff4f01ab334a9a8470946b7630c12bc11a9cf388403d215e904  TEST-InventoryReservationLedgerCandidatePostgresIT.xml
