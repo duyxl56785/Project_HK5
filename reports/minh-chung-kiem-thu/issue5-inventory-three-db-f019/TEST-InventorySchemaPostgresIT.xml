@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.projecthk5.inventoryservice.integration.InventorySchemaPostgresIT" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-11-03T15:06:56" hostname="MDUY-LECO" time="0.205">
+  <properties/>
+  <testcase name="forwardMigrationSchemaValidatesAndHashRoundTripsThroughJpa()" classname="com.projecthk5.inventoryservice.integration.InventorySchemaPostgresIT" time="0.029"/>
+  <testcase name="upgradingExistingV1PreservesHashLedgerAndStockAndV1Checksum()" classname="com.projecthk5.inventoryservice.integration.InventorySchemaPostgresIT" time="0.175"/>
+  <system-out><![CDATA[2026-11-03T22:06:56.327+07:00  INFO 27400 --- [inventory-service] [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.projecthk5.inventoryservice.integration.InventorySchemaPostgresIT]: InventorySchemaPostgresIT does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-11-03T22:06:56.329+07:00  INFO 27400 --- [inventory-service] [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.projecthk5.inventoryservice.InventoryServiceApplication for test class com.projecthk5.inventoryservice.integration.InventorySchemaPostgresIT
+2026-11-03T22:06:56.381+07:00  INFO 27400 --- [inventory-service] [    Test worker] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://localhost:56694/test (PostgreSQL 16.15)
+2026-11-03T22:06:56.389+07:00  INFO 27400 --- [inventory-service] [    Test worker] o.f.core.internal.database.base.Schema   : Creating schema "upgrade_v1_67d8e14d_6d6d_49c5_96a0_7a6a3f315092" ...
+2026-11-03T22:06:56.393+07:00  INFO 27400 --- [inventory-service] [    Test worker] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table "upgrade_v1_67d8e14d_6d6d_49c5_96a0_7a6a3f315092"."flyway_schema_history" ...
+2026-11-03T22:06:56.428+07:00  INFO 27400 --- [inventory-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Current version of schema "upgrade_v1_67d8e14d_6d6d_49c5_96a0_7a6a3f315092": null
+2026-11-03T22:06:56.434+07:00  INFO 27400 --- [inventory-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "upgrade_v1_67d8e14d_6d6d_49c5_96a0_7a6a3f315092" to version "1 - inventory"
+2026-11-03T22:06:56.451+07:00  INFO 27400 --- [inventory-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Successfully applied 1 migration to schema "upgrade_v1_67d8e14d_6d6d_49c5_96a0_7a6a3f315092", now at version v1 (execution time 00:00.011s)
+2026-11-03T22:06:56.476+07:00  INFO 27400 --- [inventory-service] [    Test worker] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://localhost:56694/test (PostgreSQL 16.15)
+2026-11-03T22:06:56.488+07:00  INFO 27400 --- [inventory-service] [    Test worker] o.f.core.internal.command.DbValidate     : Successfully validated 3 migrations (execution time 00:00.006s)
+2026-11-03T22:06:56.505+07:00  INFO 27400 --- [inventory-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Current version of schema "upgrade_v1_67d8e14d_6d6d_49c5_96a0_7a6a3f315092": 1
+2026-11-03T22:06:56.510+07:00  INFO 27400 --- [inventory-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "upgrade_v1_67d8e14d_6d6d_49c5_96a0_7a6a3f315092" to version "2 - request hash varchar"
+2026-11-03T22:06:56.524+07:00  INFO 27400 --- [inventory-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Successfully applied 1 migration to schema "upgrade_v1_67d8e14d_6d6d_49c5_96a0_7a6a3f315092", now at version v2 (execution time 00:00.007s)
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
