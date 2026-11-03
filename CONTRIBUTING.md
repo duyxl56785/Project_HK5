@@ -21,7 +21,7 @@
 
 | Người | Tài khoản GitHub | Khu vực chính | Trách nhiệm review khi liên quan |
 |---|---|---|---|
-| **TV1 — Lê Xuân Bảo** | `lexuanbao258-collab` | Phần việc đã chuyển cho TV2 từ 01/11/2026; từ tuần 4 nhận #153, #158, xem `docs/OWNERSHIP.md` | Không còn |
+| **TV1 — Lê Xuân Bảo** | `lexuanbao258-collab` | Phần việc và ownership đã bàn giao cho TV2 từ 01/11/2026. Từ tuần 4 chỉ làm #153, #158, không giữ ownership; xem `docs/OWNERSHIP.md` | Không còn; PR của TV1 cho #153, #158 do TV2 review |
 | **TV2 — Nguyễn Văn Duy** | `duyxl56785` | Seller, Store, Category, Product catalog/ảnh/kiểm duyệt; Auth, User, Gateway, Docker, cấu hình, UI/layout/router/API client dùng chung | Catalog, trạng thái sản phẩm, seller status, API product; mọi thay đổi hạ tầng, auth, CI (nếu bổ sung), frontend shared |
 | **TV3 — Trần Văn Chính** | `tranvanchinhbg2006-alt` | Cart, Checkout, tạo đơn tổng/đơn con, idempotency | API checkout, order creation, cart claim, giá/snapshot đơn |
 | **TV4 — Phạm Thế Cường** | `phamthecuong2022006-alt` | Inventory, SellerOrder fulfillment, COD, Notification, outbox/retry liên quan | Tồn kho, chuyển trạng thái đơn, hoàn kho, COD, event status |
