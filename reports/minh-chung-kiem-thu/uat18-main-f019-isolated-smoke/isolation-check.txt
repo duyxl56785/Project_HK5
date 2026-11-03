@@ -1,0 +1,27 @@
+source_sha=f0190e54a18b263df5b5cc0e9f7987873d30617e
+project=hk5-uat-tv5-20261103a
+inventory_gate_off=True
+finance_gate_off=True
+containers:
+hk5-uat-tv5-20261103a-frontend-1 | Up About a minute | 127.0.0.1:5174->80/tcp
+hk5-uat-tv5-20261103a-api-gateway-1 | Up About a minute | 127.0.0.1:18081->8080/tcp
+hk5-uat-tv5-20261103a-auth-service-1 | Up About a minute | 
+hk5-uat-tv5-20261103a-seller-service-1 | Up About a minute | 
+hk5-uat-tv5-20261103a-product-service-1 | Up About a minute | 
+hk5-uat-tv5-20261103a-cart-service-1 | Up About a minute | 
+hk5-uat-tv5-20261103a-order-service-1 | Up About a minute | 
+hk5-uat-tv5-20261103a-notification-service-1 | Up About a minute | 
+hk5-uat-tv5-20261103a-user-service-1 | Up About a minute | 
+hk5-uat-tv5-20261103a-inventory-service-1 | Up About a minute | 
+hk5-uat-tv5-20261103a-config-server-1 | Up About a minute (healthy) | 
+hk5-uat-tv5-20261103a-postgres-1 | Up About a minute (healthy) | 5432/tcp
+hk5-uat-tv5-20261103a-discovery-server-1 | Up About a minute (healthy) | 
+hk5-uat-tv5-20261103a-redis-1 | Up About a minute (healthy) | 6379/tcp
+hk5-uat-tv5-20261103a-kafka-1 | Up About a minute (healthy) | 9092/tcp
+volumes:
+hk5-uat-tv5-20261103a-pgdemo owner=hk5-uat-tv5-20261103a
+hk5-uat-tv5-20261103a-productimages owner=hk5-uat-tv5-20261103a
+older_tv5_volumes_preserved:
+tv5-w1-gates-20261017142049_pgdev
+tv5-w1-gates-20261017152512_pgdev
+verified_older_volume_count=2 names=tv5-w1-gates-20261017142049_pgdev,tv5-w1-gates-20261017152512_pgdev

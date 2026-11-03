@@ -1,0 +1,357 @@
+Generated isolated UAT env and 23 secret files.
+Note: D:\CMC Uni\5 Ky Dong\WEB\BCK WEB\Project_HK5\.verification\tv5-main-f019-20261103\backend\cart-service\src\main\java\com\projecthk5\cartservice\security\ResourceSecurityConfig.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+ Image hk5-uat-tv5-20261103a-frontend Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 685B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 289B 0.0s done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/nginx:1.27-alpine
+#3 ...
+
+#4 [auth] library/node:pull token for registry-1.docker.io
+#4 DONE 0.0s
+
+#5 [auth] library/nginx:pull token for registry-1.docker.io
+#5 DONE 0.0s
+
+#6 [internal] load metadata for docker.io/library/node:22-alpine
+#6 DONE 2.7s
+
+#3 [internal] load metadata for docker.io/library/nginx:1.27-alpine
+#3 DONE 2.7s
+
+#7 [internal] load .dockerignore
+#7 transferring context: 113B 0.0s done
+#7 DONE 0.0s
+
+#8 [internal] load build context
+#8 DONE 0.0s
+
+#9 [stage-1 1/3] FROM docker.io/library/nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10
+#9 resolve docker.io/library/nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10 0.1s done
+#9 DONE 0.1s
+
+#10 [build 1/6] FROM docker.io/library/node:22-alpine@sha256:fe4f6d74e20370acb04ad889077d14d0f64a9c8ea6a42bc60cddf1e844699914
+#10 resolve docker.io/library/node:22-alpine@sha256:fe4f6d74e20370acb04ad889077d14d0f64a9c8ea6a42bc60cddf1e844699914
+#10 resolve docker.io/library/node:22-alpine@sha256:fe4f6d74e20370acb04ad889077d14d0f64a9c8ea6a42bc60cddf1e844699914 0.1s done
+#10 DONE 0.1s
+
+#8 [internal] load build context
+#8 transferring context: 1.14MB 0.3s done
+#8 DONE 0.3s
+
+#11 [build 2/6] WORKDIR /app
+#11 CACHED
+
+#12 [build 3/6] COPY package.json package-lock.json ./
+#12 DONE 0.1s
+
+#13 [build 4/6] RUN npm ci
+#13 58.50 
+#13 58.50 added 108 packages, and audited 109 packages in 58s
+#13 58.50 
+#13 58.50 20 packages are looking for funding
+#13 58.50   run `npm fund` for details
+#13 58.51 
+#13 58.51 1 moderate severity vulnerability
+#13 58.51 
+#13 58.51 To address all issues, run:
+#13 58.51   npm audit fix
+#13 58.51 
+#13 58.51 Run `npm audit` for details.
+#13 58.51 npm notice
+#13 58.51 npm notice New major version of npm available! 10.9.9 -> 12.2.1
+#13 58.51 npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+#13 58.51 npm notice To update run: npm install -g npm@12.2.1
+#13 58.51 npm notice
+#13 DONE 58.6s
+
+#14 [build 5/6] COPY . .
+#14 DONE 0.3s
+
+#15 [build 6/6] RUN npm run build
+#15 0.424 
+#15 0.424 > hk5-marketplace-frontend@0.1.0 build
+#15 0.424 > tsc -b && vite build
+#15 0.424 
+#15 4.416 vite v6.4.4 building for production...
+#15 4.464 transforming...
+#15 5.389 node_modules/zod/v4/core/regexes.js (74:0): A comment
+#15 5.389 
+#15 5.389 "/** Anchors a pattern source. The interpolation lives here rather than at the call site because
+#15 5.389  * esbuild will not drop a `@__PURE__` call whose own argument interpolates a variable, but it
+#15 5.389  * will drop `anchor(dateSource)`. Keeping it inline pinned `date` into every bundle. */"
+#15 5.389 
+#15 5.389 in "node_modules/zod/v4/core/regexes.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+#15 5.397 node_modules/zod/v4/core/util.js (400:0): A comment
+#15 5.397 
+#15 5.397 "// Wrapped in a `@__PURE__` IIFE: esbuild never tree-shakes a top-level initializer that contains a member access on `Number`, so the bare object literal survived into every bundle."
+#15 5.397 
+#15 5.397 in "node_modules/zod/v4/core/util.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+#15 6.218 ✓ 228 modules transformed.
+#15 6.345 rendering chunks...
+#15 6.445 computing gzip size...
+#15 6.458 dist/index.html                                                    0.90 kB │ gzip:   0.57 kB
+#15 6.458 dist/assets/be-vietnam-pro-vietnamese-400-normal-BuGn0gnm.woff     6.57 kB
+#15 6.458 dist/assets/be-vietnam-pro-vietnamese-600-normal-DkpCIyan.woff     6.88 kB
+#15 6.458 dist/assets/be-vietnam-pro-vietnamese-500-normal-CfdwVo8-.woff     6.88 kB
+#15 6.458 dist/assets/be-vietnam-pro-vietnamese-700-normal-By_5yT39.woff     6.89 kB
+#15 6.458 dist/assets/be-vietnam-pro-latin-ext-400-normal-DYBYyMQr.woff      8.90 kB
+#15 6.458 dist/assets/be-vietnam-pro-latin-ext-700-normal-4Hjo2OtD.woff      9.19 kB
+#15 6.458 dist/assets/be-vietnam-pro-latin-ext-500-normal-CK0UkkKf.woff      9.20 kB
+#15 6.458 dist/assets/be-vietnam-pro-latin-ext-600-normal-BeUwKxhG.woff      9.22 kB
+#15 6.458 dist/assets/be-vietnam-pro-vietnamese-400-normal-CRcqvyg1.woff2   11.53 kB
+#15 6.458 dist/assets/be-vietnam-pro-vietnamese-500-normal-DREgrEoJ.woff2   12.17 kB
+#15 6.458 dist/assets/be-vietnam-pro-vietnamese-600-normal-nyU-ZL2p.woff2   12.18 kB
+#15 6.459 dist/assets/be-vietnam-pro-vietnamese-700-normal-Csr0PCuG.woff2   12.47 kB
+#15 6.459 dist/assets/be-vietnam-pro-latin-ext-400-normal-CiZNW1ec.woff2    13.06 kB
+#15 6.459 dist/assets/TUI-001-DgJrEf5L.jpg                                  13.43 kB
+#15 6.459 dist/assets/be-vietnam-pro-latin-ext-500-normal-h0Fp6aX0.woff2    13.55 kB
+#15 6.459 dist/assets/be-vietnam-pro-latin-ext-600-normal-BNd8euf0.woff2    13.61 kB
+#15 6.459 dist/assets/be-vietnam-pro-latin-ext-700-normal-C8_gqRu2.woff2    13.85 kB
+#15 6.459 dist/assets/be-vietnam-pro-latin-400-normal-bXgqVju9.woff         16.43 kB
+#15 6.459 dist/assets/be-vietnam-pro-latin-700-normal-C2EtzaOi.woff         16.91 kB
+#15 6.459 dist/assets/be-vietnam-pro-latin-500-normal-BJkVuMHw.woff         17.00 kB
+#15 6.459 dist/assets/be-vietnam-pro-latin-600-normal-5IO4e7bK.woff         17.02 kB
+#15 6.459 dist/assets/AO-002-Da2f_aPY.jpg                                   19.79 kB
+#15 6.459 dist/assets/be-vietnam-pro-latin-400-normal-PpnXBOrz.woff2        21.17 kB
+#15 6.459 dist/assets/NON-001-1cutt8Cu.jpg                                  21.66 kB
+#15 6.459 dist/assets/be-vietnam-pro-latin-500-normal-B6LVzGNe.woff2        21.89 kB
+#15 6.459 dist/assets/be-vietnam-pro-latin-600-normal-BZDkUTrt.woff2        22.03 kB
+#15 6.459 dist/assets/be-vietnam-pro-latin-700-normal-DlW1Zbsh.woff2        22.15 kB
+#15 6.459 dist/assets/QUAN-001-DHZioJQR.jpg                                 24.81 kB
+#15 6.459 dist/assets/SACH-002-BOCG7y2v.jpg                                 69.91 kB
+#15 6.459 dist/assets/TP-001-_h_jBE2B.jpg                                   77.96 kB
+#15 6.459 dist/assets/CheckoutPage-DE3N7QqC.css                              1.43 kB │ gzip:   0.59 kB
+#15 6.459 dist/assets/CartPage-CR4BOZKr.css                                  2.05 kB │ gzip:   0.77 kB
+#15 6.459 dist/assets/SellerHomePage-BR8Tx9_f.css                            2.84 kB │ gzip:   0.86 kB
+#15 6.459 dist/assets/CatalogPage-HFIB9wid.css                               3.97 kB │ gzip:   1.16 kB
+#15 6.459 dist/assets/index-DJ6G_TQ_.css                                    31.80 kB │ gzip:   6.90 kB
+#15 6.459 dist/assets/StorePage-EWRDHFD4.js                                  0.40 kB │ gzip:   0.30 kB
+#15 6.459 dist/assets/forms-P6xIyQcr.js                                      1.24 kB │ gzip:   0.77 kB
+#15 6.459 dist/assets/FinanceTable-CFYZXA5M.js                               1.38 kB │ gzip:   0.61 kB
+#15 6.459 dist/assets/AuthPages-kDmES0j6.js                                  1.89 kB │ gzip:   0.98 kB
+#15 6.459 dist/assets/cartModel-CfiHSLOX.js                                  2.22 kB │ gzip:   0.99 kB
+#15 6.459 dist/assets/SellerOrdersPage-DzA1oa0G.js                           2.87 kB │ gzip:   1.34 kB
+#15 6.459 dist/assets/ProductPage-DGvZwgkD.js                                3.39 kB │ gzip:   1.45 kB
+#15 6.459 dist/assets/AccountPage-DCKhYaQ6.js                                4.04 kB │ gzip:   1.46 kB
+#15 6.459 dist/assets/CartPage-CeMff4oh.js                                   4.29 kB │ gzip:   1.72 kB
+#15 6.459 dist/assets/OrdersPage-BNqB5HHM.js                                 4.49 kB │ gzip:   1.83 kB
+#15 6.459 dist/assets/HomePage-BcT1oBw-.js                                   5.45 kB │ gzip:   2.44 kB
+#15 6.459 dist/assets/SellerProductsPage-qg3l54W1.js                         7.64 kB │ gzip:   2.67 kB
+#15 6.459 dist/assets/SellerHomePage-B_ltMJ9m.js                             8.98 kB │ gzip:   3.29 kB
+#15 6.459 dist/assets/CheckoutPage-DmpBdb7i.js                              10.01 kB │ gzip:   4.05 kB
+#15 6.459 dist/assets/CatalogPage-BjEhejEX.js                               10.55 kB │ gzip:   3.93 kB
+#15 6.459 dist/assets/AdminPages-Eh2kBtTH.js                                13.57 kB │ gzip:   3.74 kB
+#15 6.459 dist/assets/schemas-BrwVpw8v.js                                  127.92 kB │ gzip:  39.07 kB
+#15 6.459 dist/assets/index-BglRlWG3.js                                    322.32 kB │ gzip: 101.77 kB
+#15 6.460 ✓ built in 2.02s
+#15 DONE 6.5s
+
+#16 [stage-1 2/3] COPY nginx.conf /etc/nginx/conf.d/default.conf
+#16 CACHED
+
+#17 [stage-1 3/3] COPY --from=build /app/dist /usr/share/nginx/html
+#17 DONE 0.1s
+
+#18 exporting to image
+#18 exporting layers
+#18 exporting layers 0.2s done
+#18 exporting manifest sha256:b6f542d374dfdf527be9e8ebb4823711904615d3f5955648dd2f6f6d3b388612 0.0s done
+#18 exporting config sha256:8b6bbfe1042d92805fc03dd8fdbcac5e0bf509e97379f7b17186136760a56ccd 0.0s done
+#18 exporting attestation manifest sha256:0ce6d5efc4c2ad6056bfe9f4b3b284b4cdf8ce55b13381d08c1a5e4e998e4f96
+#18 exporting attestation manifest sha256:0ce6d5efc4c2ad6056bfe9f4b3b284b4cdf8ce55b13381d08c1a5e4e998e4f96 0.0s done
+#18 exporting manifest list sha256:6b497505f2dfaa96465f13f42f9eb6105bc11d313407c8e3bf87e5fd147e728c 0.0s done
+#18 naming to docker.io/library/hk5-uat-tv5-20261103a-frontend:latest done
+#18 unpacking to docker.io/library/hk5-uat-tv5-20261103a-frontend:latest 0.1s done
+#18 DONE 0.5s
+
+#19 resolving provenance for metadata file
+#19 DONE 0.0s
+ Image hk5-uat-tv5-20261103a-frontend Built 
+ Network hk5-uat-tv5-20261103a_default Creating 
+ Volume hk5-uat-tv5-20261103a-productimages Creating 
+ Volume hk5-uat-tv5-20261103a-pgdemo Creating 
+ Volume hk5-uat-tv5-20261103a-productimages Creating 
+ Network hk5-uat-tv5-20261103a_default Creating 
+ Volume hk5-uat-tv5-20261103a-pgdemo Creating 
+ Volume hk5-uat-tv5-20261103a-productimages Created 
+ Volume hk5-uat-tv5-20261103a-productimages Created 
+ Volume hk5-uat-tv5-20261103a-pgdemo Created 
+ Volume hk5-uat-tv5-20261103a-pgdemo Created 
+ Network hk5-uat-tv5-20261103a_default Created 
+ Network hk5-uat-tv5-20261103a_default Created 
+ Container hk5-uat-tv5-20261103a-postgres-1 Creating 
+ Container hk5-uat-tv5-20261103a-kafka-1 Creating 
+ Container hk5-uat-tv5-20261103a-discovery-server-1 Creating 
+ Container hk5-uat-tv5-20261103a-redis-1 Creating 
+ Container hk5-uat-tv5-20261103a-kafka-1 Created 
+ Container hk5-uat-tv5-20261103a-discovery-server-1 Created 
+ Container hk5-uat-tv5-20261103a-config-server-1 Creating 
+ Container hk5-uat-tv5-20261103a-redis-1 Created 
+ Container hk5-uat-tv5-20261103a-postgres-1 Created 
+ Container hk5-uat-tv5-20261103a-config-server-1 Created 
+ Container hk5-uat-tv5-20261103a-user-service-1 Creating 
+ Container hk5-uat-tv5-20261103a-inventory-service-1 Creating 
+ Container hk5-uat-tv5-20261103a-seller-service-1 Creating 
+ Container hk5-uat-tv5-20261103a-auth-service-1 Creating 
+ Container hk5-uat-tv5-20261103a-product-service-1 Creating 
+ Container hk5-uat-tv5-20261103a-notification-service-1 Creating 
+ Container hk5-uat-tv5-20261103a-order-service-1 Creating 
+ Container hk5-uat-tv5-20261103a-cart-service-1 Creating 
+ Container hk5-uat-tv5-20261103a-inventory-service-1 Created 
+ Container hk5-uat-tv5-20261103a-notification-service-1 Created 
+ Container hk5-uat-tv5-20261103a-user-service-1 Created 
+ Container hk5-uat-tv5-20261103a-cart-service-1 Created 
+ Container hk5-uat-tv5-20261103a-product-service-1 Created 
+ Container hk5-uat-tv5-20261103a-seller-service-1 Created 
+ Container hk5-uat-tv5-20261103a-order-service-1 Created 
+ Container hk5-uat-tv5-20261103a-auth-service-1 Created 
+ Container hk5-uat-tv5-20261103a-api-gateway-1 Creating 
+ Container hk5-uat-tv5-20261103a-api-gateway-1 Created 
+ Container hk5-uat-tv5-20261103a-frontend-1 Creating 
+ Container hk5-uat-tv5-20261103a-frontend-1 Created 
+ Container hk5-uat-tv5-20261103a-kafka-1 Starting 
+ Container hk5-uat-tv5-20261103a-postgres-1 Starting 
+ Container hk5-uat-tv5-20261103a-discovery-server-1 Starting 
+ Container hk5-uat-tv5-20261103a-redis-1 Starting 
+ Container hk5-uat-tv5-20261103a-kafka-1 Started 
+ Container hk5-uat-tv5-20261103a-postgres-1 Started 
+ Container hk5-uat-tv5-20261103a-discovery-server-1 Started 
+ Container hk5-uat-tv5-20261103a-discovery-server-1 Waiting 
+ Container hk5-uat-tv5-20261103a-redis-1 Started 
+ Container hk5-uat-tv5-20261103a-discovery-server-1 Healthy 
+ Container hk5-uat-tv5-20261103a-config-server-1 Starting 
+ Container hk5-uat-tv5-20261103a-config-server-1 Started 
+ Container hk5-uat-tv5-20261103a-redis-1 Waiting 
+ Container hk5-uat-tv5-20261103a-postgres-1 Waiting 
+ Container hk5-uat-tv5-20261103a-postgres-1 Waiting 
+ Container hk5-uat-tv5-20261103a-config-server-1 Waiting 
+ Container hk5-uat-tv5-20261103a-redis-1 Waiting 
+ Container hk5-uat-tv5-20261103a-config-server-1 Waiting 
+ Container hk5-uat-tv5-20261103a-postgres-1 Waiting 
+ Container hk5-uat-tv5-20261103a-config-server-1 Waiting 
+ Container hk5-uat-tv5-20261103a-config-server-1 Waiting 
+ Container hk5-uat-tv5-20261103a-postgres-1 Waiting 
+ Container hk5-uat-tv5-20261103a-kafka-1 Waiting 
+ Container hk5-uat-tv5-20261103a-kafka-1 Waiting 
+ Container hk5-uat-tv5-20261103a-redis-1 Waiting 
+ Container hk5-uat-tv5-20261103a-redis-1 Waiting 
+ Container hk5-uat-tv5-20261103a-config-server-1 Waiting 
+ Container hk5-uat-tv5-20261103a-kafka-1 Waiting 
+ Container hk5-uat-tv5-20261103a-kafka-1 Waiting 
+ Container hk5-uat-tv5-20261103a-config-server-1 Waiting 
+ Container hk5-uat-tv5-20261103a-redis-1 Waiting 
+ Container hk5-uat-tv5-20261103a-postgres-1 Waiting 
+ Container hk5-uat-tv5-20261103a-postgres-1 Waiting 
+ Container hk5-uat-tv5-20261103a-kafka-1 Waiting 
+ Container hk5-uat-tv5-20261103a-kafka-1 Waiting 
+ Container hk5-uat-tv5-20261103a-config-server-1 Waiting 
+ Container hk5-uat-tv5-20261103a-config-server-1 Waiting 
+ Container hk5-uat-tv5-20261103a-redis-1 Waiting 
+ Container hk5-uat-tv5-20261103a-kafka-1 Waiting 
+ Container hk5-uat-tv5-20261103a-redis-1 Waiting 
+ Container hk5-uat-tv5-20261103a-kafka-1 Waiting 
+ Container hk5-uat-tv5-20261103a-postgres-1 Waiting 
+ Container hk5-uat-tv5-20261103a-redis-1 Waiting 
+ Container hk5-uat-tv5-20261103a-postgres-1 Waiting 
+ Container hk5-uat-tv5-20261103a-postgres-1 Healthy 
+ Container hk5-uat-tv5-20261103a-postgres-1 Healthy 
+ Container hk5-uat-tv5-20261103a-postgres-1 Healthy 
+ Container hk5-uat-tv5-20261103a-kafka-1 Healthy 
+ Container hk5-uat-tv5-20261103a-postgres-1 Healthy 
+ Container hk5-uat-tv5-20261103a-redis-1 Healthy 
+ Container hk5-uat-tv5-20261103a-redis-1 Healthy 
+ Container hk5-uat-tv5-20261103a-kafka-1 Healthy 
+ Container hk5-uat-tv5-20261103a-redis-1 Healthy 
+ Container hk5-uat-tv5-20261103a-kafka-1 Healthy 
+ Container hk5-uat-tv5-20261103a-kafka-1 Healthy 
+ Container hk5-uat-tv5-20261103a-redis-1 Healthy 
+ Container hk5-uat-tv5-20261103a-redis-1 Healthy 
+ Container hk5-uat-tv5-20261103a-postgres-1 Healthy 
+ Container hk5-uat-tv5-20261103a-postgres-1 Healthy 
+ Container hk5-uat-tv5-20261103a-redis-1 Healthy 
+ Container hk5-uat-tv5-20261103a-kafka-1 Healthy 
+ Container hk5-uat-tv5-20261103a-redis-1 Healthy 
+ Container hk5-uat-tv5-20261103a-kafka-1 Healthy 
+ Container hk5-uat-tv5-20261103a-kafka-1 Healthy 
+ Container hk5-uat-tv5-20261103a-postgres-1 Healthy 
+ Container hk5-uat-tv5-20261103a-redis-1 Healthy 
+ Container hk5-uat-tv5-20261103a-kafka-1 Healthy 
+ Container hk5-uat-tv5-20261103a-postgres-1 Healthy 
+ Container hk5-uat-tv5-20261103a-config-server-1 Healthy 
+ Container hk5-uat-tv5-20261103a-seller-service-1 Starting 
+ Container hk5-uat-tv5-20261103a-config-server-1 Healthy 
+ Container hk5-uat-tv5-20261103a-order-service-1 Starting 
+ Container hk5-uat-tv5-20261103a-config-server-1 Healthy 
+ Container hk5-uat-tv5-20261103a-inventory-service-1 Starting 
+ Container hk5-uat-tv5-20261103a-config-server-1 Healthy 
+ Container hk5-uat-tv5-20261103a-product-service-1 Starting 
+ Container hk5-uat-tv5-20261103a-config-server-1 Healthy 
+ Container hk5-uat-tv5-20261103a-user-service-1 Starting 
+ Container hk5-uat-tv5-20261103a-config-server-1 Healthy 
+ Container hk5-uat-tv5-20261103a-notification-service-1 Starting 
+ Container hk5-uat-tv5-20261103a-config-server-1 Healthy 
+ Container hk5-uat-tv5-20261103a-cart-service-1 Starting 
+ Container hk5-uat-tv5-20261103a-config-server-1 Healthy 
+ Container hk5-uat-tv5-20261103a-auth-service-1 Starting 
+ Container hk5-uat-tv5-20261103a-seller-service-1 Started 
+ Container hk5-uat-tv5-20261103a-order-service-1 Started 
+ Container hk5-uat-tv5-20261103a-inventory-service-1 Started 
+ Container hk5-uat-tv5-20261103a-product-service-1 Started 
+ Container hk5-uat-tv5-20261103a-user-service-1 Started 
+ Container hk5-uat-tv5-20261103a-notification-service-1 Started 
+ Container hk5-uat-tv5-20261103a-cart-service-1 Started 
+ Container hk5-uat-tv5-20261103a-auth-service-1 Started 
+ Container hk5-uat-tv5-20261103a-kafka-1 Waiting 
+ Container hk5-uat-tv5-20261103a-redis-1 Waiting 
+ Container hk5-uat-tv5-20261103a-postgres-1 Waiting 
+ Container hk5-uat-tv5-20261103a-config-server-1 Waiting 
+ Container hk5-uat-tv5-20261103a-kafka-1 Healthy 
+ Container hk5-uat-tv5-20261103a-redis-1 Healthy 
+ Container hk5-uat-tv5-20261103a-postgres-1 Healthy 
+ Container hk5-uat-tv5-20261103a-config-server-1 Healthy 
+ Container hk5-uat-tv5-20261103a-api-gateway-1 Starting 
+ Container hk5-uat-tv5-20261103a-api-gateway-1 Started 
+ Container hk5-uat-tv5-20261103a-frontend-1 Starting 
+ Container hk5-uat-tv5-20261103a-frontend-1 Started 
+ Container hk5-uat-tv5-20261103a-discovery-server-1 Waiting 
+ Container hk5-uat-tv5-20261103a-frontend-1 Waiting 
+ Container hk5-uat-tv5-20261103a-product-service-1 Waiting 
+ Container hk5-uat-tv5-20261103a-kafka-1 Waiting 
+ Container hk5-uat-tv5-20261103a-user-service-1 Waiting 
+ Container hk5-uat-tv5-20261103a-config-server-1 Waiting 
+ Container hk5-uat-tv5-20261103a-seller-service-1 Waiting 
+ Container hk5-uat-tv5-20261103a-api-gateway-1 Waiting 
+ Container hk5-uat-tv5-20261103a-redis-1 Waiting 
+ Container hk5-uat-tv5-20261103a-order-service-1 Waiting 
+ Container hk5-uat-tv5-20261103a-auth-service-1 Waiting 
+ Container hk5-uat-tv5-20261103a-cart-service-1 Waiting 
+ Container hk5-uat-tv5-20261103a-notification-service-1 Waiting 
+ Container hk5-uat-tv5-20261103a-inventory-service-1 Waiting 
+ Container hk5-uat-tv5-20261103a-postgres-1 Waiting 
+ Container hk5-uat-tv5-20261103a-api-gateway-1 Healthy 
+ Container hk5-uat-tv5-20261103a-frontend-1 Healthy 
+ Container hk5-uat-tv5-20261103a-postgres-1 Healthy 
+ Container hk5-uat-tv5-20261103a-cart-service-1 Healthy 
+ Container hk5-uat-tv5-20261103a-inventory-service-1 Healthy 
+ Container hk5-uat-tv5-20261103a-order-service-1 Healthy 
+ Container hk5-uat-tv5-20261103a-redis-1 Healthy 
+ Container hk5-uat-tv5-20261103a-config-server-1 Healthy 
+ Container hk5-uat-tv5-20261103a-kafka-1 Healthy 
+ Container hk5-uat-tv5-20261103a-auth-service-1 Healthy 
+ Container hk5-uat-tv5-20261103a-notification-service-1 Healthy 
+ Container hk5-uat-tv5-20261103a-discovery-server-1 Healthy 
+ Container hk5-uat-tv5-20261103a-user-service-1 Healthy 
+ Container hk5-uat-tv5-20261103a-seller-service-1 Healthy 
+ Container hk5-uat-tv5-20261103a-product-service-1 Healthy 
+Seeded fake customer, admin and three sellers across three UAT Stores from the isolated env file.
+Isolated UAT rehearsal stack is ready: project=hk5-uat-tv5-20261103a gateway=http://127.0.0.1:18081 frontend=http://127.0.0.1:5174
+Finance and Inventory pair gates are OFF. This is a local rehearsal environment, not final UAT.
+PASS isolated infrastructure, database bootstrap/Flyway history, and fake two-Store seed for project hk5-uat-tv5-20261103a.
+NOT_UAT_FINAL: Finance and Inventory pair gates remain OFF; no checkout/COD/settlement acceptance was exercised.

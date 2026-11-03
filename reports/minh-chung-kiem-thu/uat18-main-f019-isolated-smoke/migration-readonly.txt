@@ -1,0 +1,10 @@
+source_sha=f0190e54a18b263df5b5cc0e9f7987873d30617e
+query=SELECT count(*), max(installed_rank) FROM flyway_schema_history WHERE success=true;
+auth_db 4|4
+user_db 2|2
+seller_db 7|7
+product_db 8|8
+inventory_db 2|2
+cart_db 2|2
+order_db 5|5
+notification_db 2|2
