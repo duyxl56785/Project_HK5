@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest" tests="33" skipped="0" failures="0" errors="0" timestamp="2026-11-03T14:05:58" hostname="MDUY-LECO" time="1.497">
+  <properties/>
+  <testcase name="proposalDoesNotBecomeAnAppliedProductFlywayMigration()" classname="com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest" time="0.036"/>
+  <testcase name="candidateExactLookupPreservesCaseCompositionAndInternalSpaces()" classname="com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest" time="0.06"/>
+  <testcase name="concurrentDifferentStoresCannotCommitTheSameSku()" classname="com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest" time="0.05"/>
+  <testcase name="exactSkuMappingAndDecimalPricePersistWithoutCaseFoldingOrRounding()" classname="com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest" time="0.037"/>
+  <testcase name="rollbackRestoresPriceVersionAndUpdateTimestampTogether()" classname="com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest" time="0.038"/>
+  <testcase name="[1] price=0" classname="com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest" time="0.034"/>
+  <testcase name="[2] price=-1" classname="com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest" time="0.025"/>
+  <testcase name="[3] price=NaN" classname="com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest" time="0.027"/>
+  <testcase name="[4] price=Infinity" classname="com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest" time="0.023"/>
+  <testcase name="[5] price=-Infinity" classname="com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest" time="0.023"/>
+  <testcase name="[1] prefix=true" classname="com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest" time="0.087"/>
+  <testcase name="[2] prefix=false" classname="com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest" time="0.075"/>
+  <testcase name="runtimeFlywayRevalidationLeavesCandidateOutsideMigrationHistory()" classname="com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest" time="0.175"/>
+  <testcase name="versionAndTimestampsAreDurableAndUpdatesRetainSku()" classname="com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest" time="0.056"/>
+  <testcase name="categoryReferencePreventsDeletionAndUnknownCategoryInsert()" classname="com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest" time="0.027"/>
+  <testcase name="concurrentCompareAndSetCannotOverwriteTheSameVersionTwice()" classname="com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest" time="0.067"/>
+  <testcase name="globalSkuIsUniqueAcrossDifferentStoreReferences()" classname="com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest" time="0.025"/>
+  <testcase name="[1] productFirst=true" classname="com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest" time="0.06"/>
+  <testcase name="[2] productFirst=false" classname="com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest" time="0.056"/>
+  <testcase name="[1] conflict=UNIQUE" classname="com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest" time="0.053"/>
+  <testcase name="[2] conflict=FK" classname="com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest" time="0.055"/>
+  <testcase name="oversizedSkuCannotBeSilentlyTruncatedBeforeBoundaryValidation()" classname="com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest" time="0.065"/>
+  <testcase name="rollbackDoesNotLeaveCandidateProductBehind()" classname="com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest" time="0.04"/>
+  <testcase name="[1] assignment=version=-1" classname="com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest" time="0.03"/>
+  <testcase name="[2] assignment=version=NULL" classname="com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest" time="0.026"/>
+  <testcase name="[3] assignment=status='UNKNOWN'" classname="com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest" time="0.028"/>
+  <testcase name="[4] assignment=inventory_sku=''" classname="com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest" time="0.027"/>
+  <testcase name="[5] assignment=inventory_sku=' padded '" classname="com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest" time="0.026"/>
+  <testcase name="[6] assignment=currency=' '" classname="com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest" time="0.025"/>
+  <testcase name="[7] assignment=store_reference=' '" classname="com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest" time="0.032"/>
+  <testcase name="[8] assignment=created_at=NULL" classname="com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest" time="0.025"/>
+  <testcase name="[9] assignment=updated_at=NULL" classname="com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest" time="0.027"/>
+  <testcase name="[10] assignment=updated_at=created_at-interval '1 second'" classname="com.projecthk5.productservice.catalog.CatalogSchemaProposalPostgresTest" time="0.027"/>
+  <system-out><![CDATA[21:05:56.203 [Test worker] INFO tc.postgres:16.6-alpine -- Creating container for image: postgres:16.6-alpine
+21:05:56.328 [Test worker] INFO tc.postgres:16.6-alpine -- Container postgres:16.6-alpine is starting: 91b1884dc8f34b5b695e885efee9b1585f219a60866253b244159e47d40f6c98
+21:05:58.363 [Test worker] INFO tc.postgres:16.6-alpine -- Container postgres:16.6-alpine started in PT2.1597183S
+21:05:58.363 [Test worker] INFO tc.postgres:16.6-alpine -- Container is started (JDBC URL: jdbc:postgresql://localhost:57230/test?loggerLevel=OFF)
+21:05:58.390 [Test worker] INFO org.flywaydb.core.FlywayExecutor -- Database: jdbc:postgresql://localhost:57230/test (PostgreSQL 16.6)
+21:05:58.403 [Test worker] INFO org.flywaydb.core.internal.schemahistory.JdbcTableSchemaHistory -- Schema history table "public"."flyway_schema_history" does not exist yet
+21:05:58.405 [Test worker] INFO org.flywaydb.core.internal.command.DbValidate -- Successfully validated 9 migrations (execution time 00:00.007s)
+21:05:58.413 [Test worker] INFO org.flywaydb.core.internal.schemahistory.JdbcTableSchemaHistory -- Creating Schema History table "public"."flyway_schema_history" ...
+21:05:58.434 [Test worker] INFO org.flywaydb.core.internal.command.DbMigrate -- Current version of schema "public": << Empty Schema >>
+21:05:58.437 [Test worker] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema "public" to version "1 - create categories"
+21:05:58.454 [Test worker] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema "public" to version "2 - create products"
+21:05:58.479 [Test worker] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema "public" to version "3 - create product image reservations"
+21:05:58.496 [Test worker] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema "public" to version "4 - details images reviews"
+21:05:58.514 [Test worker] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema "public" to version "5 - write fence abort"
+21:05:58.523 [Test worker] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema "public" to version "6 - reviewable items"
+21:05:58.532 [Test worker] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema "public" to version "7 - category slug status"
+21:05:58.546 [Test worker] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema "public" to version "8 - review hidden reason"
+21:05:58.554 [Test worker] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema "public" to version "9 - review comment max 1000"
+21:05:58.561 [Test worker] INFO org.flywaydb.core.internal.command.DbMigrate -- Successfully applied 9 migrations to schema "public", now at version v9 (execution time 00:00.058s)
+21:05:59.149 [Test worker] INFO org.flywaydb.core.FlywayExecutor -- Database: jdbc:postgresql://localhost:57230/test (PostgreSQL 16.6)
+21:05:59.163 [Test worker] INFO org.flywaydb.core.internal.command.DbValidate -- Successfully validated 9 migrations (execution time 00:00.008s)
+21:05:59.198 [Test worker] INFO org.flywaydb.core.internal.command.DbValidate -- Successfully validated 9 migrations (execution time 00:00.008s)
+21:05:59.212 [Test worker] INFO org.flywaydb.core.internal.command.DbMigrate -- Current version of schema "public": 9
+21:05:59.213 [Test worker] INFO org.flywaydb.core.internal.command.DbMigrate -- Schema "public" is up to date. No migration necessary.
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
