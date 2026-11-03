@@ -47,7 +47,7 @@ public class ModerationController {
     public record ModerationRequest(@NotBlank String expectedVersion, @Size(max = 500) String reason) {}
     public record AdminProduct(ProductManagementResponse product, String storeName, String reviewReason) {}
     public record ReviewRequest(@NotNull UUID orderId, @NotNull UUID productId, @Min(1) @Max(5) int rating,
-                                @Size(max = 2000) String comment) {}
+                                @Size(max = 1000) String comment) {}
     public record HideRequest(String reason) {}
     public record ReviewView(UUID id, UUID orderId, UUID productId, String productName, int rating, String comment,
                              boolean hidden, String hiddenReason, Instant createdAt) {}
