@@ -1,0 +1,2 @@
+c0ec33a09c34efd2d0936a68abb413ce6c1e4cc744d362c72e853aa09f061608  gradle.log
+f79fde7cc330bc8b469660a2bb1e5b2c627addb3ec7b6884be334f21b94ffc48  TEST-SellerPersistenceIntegrationTest.xml
