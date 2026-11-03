@@ -32,6 +32,48 @@ class InventoryReservationLedgerCandidatePostgresIT extends InventoryPostgresSup
     @Autowired JdbcTemplate sql;
     @Autowired PlatformTransactionManager transactions;
 
+    @ParameterizedTest
+    @ValueSource(booleans = {true, false})
+    void lookupCannotTreatAnUncommittedReserveAsACompletedOutcome(boolean commit) throws Exception {
+        String sku = initialize("lookup-visibility", 10);
+        var reserve = request(id("lookup-key"), id("lookup-reservation"), id("lookup-store"),
+                id("lookup-seller"), id("lookup-order"), InventoryOperationType.RESERVE, line(sku, 4));
+        CountDownLatch applied = new CountDownLatch(1);
+        CountDownLatch finish = new CountDownLatch(1);
+        ExecutorService worker = Executors.newSingleThreadExecutor();
+        try {
+            Future<?> mutation = worker.submit(() -> new TransactionTemplate(transactions).executeWithoutResult(tx -> {
+                ledger.apply(reserve);
+                applied.countDown();
+                await(finish);
+                if (!commit) tx.setRollbackOnly();
+            }));
+            assertTrue(applied.await(15, TimeUnit.SECONDS));
+            // A different transaction sees neither the pending ledger row nor its stock writes.
+            assertEquals("UNKNOWN", ledger.lookup(reserve.operationId(), reserve.reservationId()).status());
+            assertEquals(10, inventory.getBalance(sku).availableQuantity());
+            finish.countDown();
+            mutation.get(20, TimeUnit.SECONDS);
+            var outcome = ledger.lookup(reserve.operationId(), reserve.reservationId());
+            assertEquals(commit ? "COMMITTED" : "UNKNOWN", outcome.status());
+            assertEquals(commit ? 6 : 10, inventory.getBalance(sku).availableQuantity());
+            assertEquals(commit ? 4 : 0, inventory.getBalance(sku).reservedQuantity());
+            if (commit) {
+                assertEquals(List.of(line(sku, 4)), outcome.items());
+                assertTrue(ledger.apply(reserve).replayed());
+                assertEquals(6, inventory.getBalance(sku).availableQuantity());
+            } else {
+                assertEquals(0, sql.queryForObject("SELECT count(*) FROM inventory_reservation WHERE reservation_id = ?",
+                        Integer.class, reserve.reservationId()));
+                assertTrue(outcome.items().isEmpty());
+            }
+        } finally {
+            finish.countDown();
+            worker.shutdownNow();
+            assertTrue(worker.awaitTermination(15, TimeUnit.SECONDS));
+        }
+    }
+
     @Test void twoStoresWithSameSkuKeepIndependentOwnerBudgetsAndLookupSurvivesLostResponse() {
         String sku = initialize("shared-store-sku", 12);
         var storeAReserve = request("reserve-a", "reservation-a", "store-a", "seller-a", "seller-order-a",
