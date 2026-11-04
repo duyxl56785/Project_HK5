@@ -60,6 +60,14 @@ PR [#152](https://github.com/duyxl56785/Project_HK5/pull/152#pullrequestreview-5
 
 Không tạo test mock để gọi các hàng này PASS khi contract chưa có. Return/Refund hiện không phải luồng hoàn tiền thật theo [#155](https://github.com/duyxl56785/Project_HK5/issues/155)/[#156](https://github.com/duyxl56785/Project_HK5/issues/156).
 
+### Bổ sung TV5 04/11 — phản hồi đề xuất Return của TV3, chưa ký policy
+
+[TV3 RFC và bốn quyết định cần chốt](https://github.com/duyxl56785/Project_HK5/issues/155#issuecomment-6634090137) đã xác nhận `main@c1ac4d4e5dd450d5d3fc3d6a8267cb5b45f32d48` chưa có Return API/state/table. `FulfillmentService.settle` khóa `SellerOrder` bằng `lockById`, kiểm DELIVERED, COD COLLECTED và chưa settled, nhưng **không có return guard**. Đây là khoảng trống triển khai cần chốt contract trước khi viết assertion hay migration.
+
+**TV5 đề xuất để business owner/TV2/TV3/TV4 ký hoặc sửa:** full-SellerOrder return trong 7 ngày UTC sau `deliveredAt`, chỉ buyer thật, chưa settled. Cho phép COD **COLLECTED nhưng chưa SETTLED** gửi yêu cầu Return; ghi nhận cash receipt thật vẫn là sự kiện độc lập, không tự hoàn tiền. Từ khi tạo `REQUESTED`, khóa settlement; tiếp tục khóa tại `APPROVED` và `RECEIVED`. Chỉ xét settlement lại sau `REJECTED` đã đóng/audit, và không còn Return đang mở. Return và settle phải khóa **cùng SellerOrder row** trước khi kiểm return/settled, cùng một transaction; race chỉ được tạo một outcome hợp lệ. Snapshot tiền gốc bất biến; mọi refund/reversal nếu được duyệt phải là bản ghi riêng và idempotent. Không dùng Inventory RELEASE sau DISPATCHED; TV4 quyết định receipt và operationId bền vững cho stock INCREASE sau khi thật sự nhận hàng.
+
+Đây là **PENDING BUSINESS/OWNER APPROVAL**, không phải chữ ký Finance production. TV2/business owner cần xác nhận cutoff 7 ngày, phạm vi COD, quyền Seller/Admin, error envelope và việc `collectCod` trong lúc Return mở; TV3 chốt API/DB/idempotency/row-lock; TV4 chốt lifecycle/restock; TV5 sau đó viết/chạy PostgreSQL race RET-04/RET-06 và Store isolation. Cho đến lúc ấy RET-01..06 **NOT_RUN/BLOCKED_OWNER**, #155/#156/#157 chưa đạt; không bật Finance flag.
+
 ## 5. UNKNOWN và thứ tự mở gate
 
 TV3 đã chấp nhận giao thức C06 có điều kiện; PR #152 ghi timeout proxy là candidate, claim-conflict `BLOCKED_DESIGN`. TV4 phải có fault thật và provider receipt, TV2 duyệt exact source/Compose project/ports/runner, TV5 duyệt evidence/PII và xác minh không đổi operationId, không auto retry/RELEASE/CONSUME, không xóa response/Cart lock sớm. [Minh chứng TV5](minh-chung-kiem-thu/pr145-testcontainers-init-fail/) là lỗi Testcontainers **trước khi Docker được khôi phục**, không phải ảnh hai UNKNOWN. Hai ca vẫn **NOT_RUN**; smoke mới không chạy chúng.

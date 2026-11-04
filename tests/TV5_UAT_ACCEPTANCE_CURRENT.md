@@ -6,6 +6,8 @@ Refs [#5](https://github.com/duyxl56785/Project_HK5/issues/5), [#18](https://git
 
 Trên cùng main `c1ac4d4`, [smoke Compose/Flyway/seed cô lập](../reports/minh-chung-kiem-thu/issue18-main-c1ac-isolated-smoke/) **PASS** và cleanup tài nguyên riêng **PASS**; cờ Inventory pair/Finance OFF. Không chạy các bước nghiệp vụ U01–U14 hoặc UAT cuối.
 
+Tại [#170 HEAD f90754d](../reports/minh-chung-kiem-thu/pr170-f907-replay-red/), probe fake-loopback TV5 tái hiện **RED 0 PASS/1 FAIL**: cùng tuple bị proxy forward hai lần. Đây là lỗi fixture preparation, không phải kết quả live UNKNOWN. [TV3 Return RFC](https://github.com/duyxl56785/Project_HK5/issues/155#issuecomment-6634090137) mới là đề xuất; [TV5 Finance/QA recommendation](../reports/TV5_W4_QA_HANDOFF_2026-11-03.md) vẫn PENDING owner/business, nên U13 tiếp tục NOT_RUN.
+
 | ID / requirement | Preconditions và bước thực hiện khi đủ gate | Expected result | Actual result hiện tại | Full baseline SHA | Raw evidence hiện có / còn thiếu | Owner | Final UAT status |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | U01 Auth/JWT/RBAC, login/logout | Main CI xanh; Customer/Seller/Admin giả; login, logout, token hết hạn, role sai, Seller revoke rồi gọi API lại | 401/403 đúng, revoke có hiệu lực trên request hiện hành, không side effect | Chưa chạy qua stack final | `f0190e54a18b263df5b5cc0e9f7987873d30617e` | [Preflight JWT YAML](../reports/minh-chung-kiem-thu/issue5-order-jwt-yaml-f019/) không chứng minh live revoke; #153 còn gate | TV2 Auth + TV5 QA | BLOCKED |
