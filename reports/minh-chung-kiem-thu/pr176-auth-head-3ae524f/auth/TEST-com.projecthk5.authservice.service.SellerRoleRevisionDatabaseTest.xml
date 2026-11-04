@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.projecthk5.authservice.service.SellerRoleRevisionDatabaseTest" tests="9" skipped="9" failures="0" errors="0" timestamp="2026-11-04T14:56:15" hostname="MDUY-LECO" time="0.003">
+  <properties/>
+  <testcase name="replayOfTheCurrentRevisionChangesNothing()" classname="com.projecthk5.authservice.service.SellerRoleRevisionDatabaseTest" time="0.001">
+    <skipped/>
+  </testcase>
+  <testcase name="reservationReflectsTheAccountRightNow()" classname="com.projecthk5.authservice.service.SellerRoleRevisionDatabaseTest" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="disabledAccountCannotReserve()" classname="com.projecthk5.authservice.service.SellerRoleRevisionDatabaseTest" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="revocationAbortsReservedWritesThroughTheirService()" classname="com.projecthk5.authservice.service.SellerRoleRevisionDatabaseTest" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="staleGrantCannotUndoANewerRevocation()" classname="com.projecthk5.authservice.service.SellerRoleRevisionDatabaseTest" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="revocationAndReservationNeverInterleave()" classname="com.projecthk5.authservice.service.SellerRoleRevisionDatabaseTest" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="reinstatementWithANewerRevisionGrantsAgain()" classname="com.projecthk5.authservice.service.SellerRoleRevisionDatabaseTest" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="concurrentOutOfOrderDeliveriesConvergeOnTheHighestRevision()" classname="com.projecthk5.authservice.service.SellerRoleRevisionDatabaseTest" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="unreachableServiceKeepsTheReservationSoTheRelayRetries()" classname="com.projecthk5.authservice.service.SellerRoleRevisionDatabaseTest" time="0.0">
+    <skipped/>
+  </testcase>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
