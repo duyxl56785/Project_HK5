@@ -23,6 +23,14 @@ test('timeout, FAIL và thiếu test evidence không thể PASS', async () => {
     assert.match(await readFile(path.join(root,run.id,'SHA256SUMS.txt'),'utf8'),/report\.json/);
   }
 });
+test('Docker không hoạt động thì PostgreSQL BLOCKED_ENV và command không chạy', async () => {
+  let invoked=false;
+  const runner=new Runner({root:await mkdtemp(path.join(tmpdir(),'soopi-qa-')),docker:async()=>false,exec:async()=>{invoked=true;return {code:0,output:''};}});
+  const run=await runner.start(['F15-POSTGRES']);
+  while(runner.runs.get(run.id).status==='RUNNING') await new Promise(resolve=>setTimeout(resolve,20));
+  assert.equal(runner.runs.get(run.id).suites[0].status,'BLOCKED_ENV');
+  assert.equal(invoked,false);
+});
 test('TAP/JUnit có số kiểm thử và export escape dữ liệu', () => {
   assert.deepEqual(countEvidence('tap','# tests 2\n# pass 1\n# fail 1\n# skipped 0'),{tests:2,pass:1,fail:1,skip:0});
   assert.equal(countEvidence('tap','BUILD SUCCESSFUL'),null);
