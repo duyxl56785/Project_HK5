@@ -111,6 +111,8 @@ services:
       AUTH_DB_HOST: postgres
       ALLOWED_ORIGINS: ${ALLOWED_ORIGINS}
       ADMIN_BOOTSTRAP_EMAIL: ${ADMIN_BOOTSTRAP_EMAIL}
+      # Only these peers may set X-Forwarded-For for the login/register throttle: Gateway, then nginx.
+      HK5_TRUSTED_PROXIES: ${HK5_NET_PREFIX:-172.30.250}.10,${HK5_NET_PREFIX:-172.30.250}.11
     secrets:
       - AUTH_DB_PASSWORD
       - AUTH_MIGRATION_PASSWORD
@@ -250,6 +252,9 @@ services:
     volumes: ["../backend/api-gateway/build/libs/api-gateway-0.1.0-SNAPSHOT.jar:/app/app.jar:ro"]
     ports:
       - "127.0.0.1:18080:8080"
+    networks:
+      default:
+        ipv4_address: ${HK5_NET_PREFIX:-172.30.250}.10
     environment:
       CONFIG_SERVER_URL: http://config-server:8888
       ALLOWED_ORIGINS: ${ALLOWED_ORIGINS}
@@ -268,6 +273,19 @@ services:
     depends_on: [api-gateway]
     ports:
       - "127.0.0.1:5173:80"
+    networks:
+      default:
+        ipv4_address: ${HK5_NET_PREFIX:-172.30.250}.11
+
+# Fixed addresses let Auth trust exactly the Gateway and nginx as proxies (HK5_TRUSTED_PROXIES).
+# Set HK5_NET_PREFIX (e.g. 172.30.251) when another stack already uses this /24.
+networks:
+  default:
+    ipam:
+      config:
+        - subnet: ${HK5_NET_PREFIX:-172.30.250}.0/24
+          # Dynamic addresses stay in .128-.255, so the fixed proxy addresses below are never taken.
+          ip_range: ${HK5_NET_PREFIX:-172.30.250}.128/25
 
 secrets:
   ADMIN_BOOTSTRAP_PASSWORD:

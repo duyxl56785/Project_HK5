@@ -16,6 +16,8 @@ Lệnh này tạo `.env.demo` với secret ngẫu nhiên nếu chưa có, ghi t�
 
 Truy cập `http://localhost:5173`. Nginx phục vụ bản build của frontend và chuyển `/api` tới gateway. Chỉ Nginx và gateway (`127.0.0.1:18080`) được mở ra máy; các service khác, PostgreSQL, Kafka, Redis, Eureka và Config Server chỉ nằm trong mạng Docker.
 
+Mạng Docker dùng `172.30.250.0/24`: gateway cố định `.10`, Nginx `.11`. Auth chỉ tin `X-Forwarded-For` từ hai địa chỉ này (`HK5_TRUSTED_PROXIES`) khi giới hạn đăng nhập/đăng ký theo IP người dùng. Nếu dải này trùng mạng khác trên máy, đặt `HK5_NET_PREFIX` (ví dụ `172.30.252`) rồi chạy lại `docker compose ... down` và `up`.
+
 Khi sửa giao diện, dừng container `frontend` rồi dùng Vite trên cùng cổng:
 
 ```bash

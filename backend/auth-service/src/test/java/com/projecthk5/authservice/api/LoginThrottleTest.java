@@ -19,7 +19,9 @@ class LoginThrottleTest {
     private final MutableClock clock = new MutableClock();
     private final LoginThrottle throttle = new LoginThrottle(clock);
     private final AuthService auth = mock(AuthService.class);
-    private final AuthController controller = new AuthController(auth, throttle, ORIGIN);
+    // Only the Gateway and nginx are proxies; any other internal peer is a client.
+    private static final String PROXIES = "10.0.0.5, 172.18.0.4";
+    private final AuthController controller = new AuthController(auth, throttle, ORIGIN, PROXIES);
 
     @Test
     void failuresFromOneClientCannotLockTheVictimOutFromAnother() {
@@ -56,7 +58,7 @@ class LoginThrottleTest {
     }
 
     @Test
-    void clientAddressSkipsOurProxiesAndIgnoresHeadersFromPublicPeers() {
+    void clientAddressSkipsOnlyConfiguredProxiesAndIgnoresHeadersFromAnyOtherPeer() {
         assertEquals("10.0.0.5", address("10.0.0.5", null));
         // Browser -> nginx (overwrites the header) -> Gateway (appends nginx) -> Auth.
         assertEquals("203.0.113.7", address("10.0.0.5", "203.0.113.7, 172.18.0.4"));
@@ -64,16 +66,37 @@ class LoginThrottleTest {
         assertEquals("203.0.113.7", address("10.0.0.5", "8.8.8.8, 203.0.113.7"));
         // A public peer is the client itself; its header is not trusted.
         assertEquals("198.51.100.9", address("198.51.100.9", "8.8.8.8"));
+        // Another container on the private network is not a proxy: its forged header is ignored.
+        assertEquals("172.18.0.9", address("172.18.0.9", "8.8.8.8"));
+        assertEquals("127.0.0.1", address("127.0.0.1", "8.8.8.8"));
+        // An unlisted private hop between our proxies and the client is the client.
+        assertEquals("172.18.0.9", address("10.0.0.5", "8.8.8.8, 172.18.0.9"));
         // Names are never resolved; fall back to the last trusted hop.
         assertEquals("10.0.0.5", address("10.0.0.5", "evil.example"));
         assertEquals("fd00::1", address("10.0.0.5", "fd00::1"));
     }
 
-    private static String address(String peer, String forwarded) {
+    @Test
+    void withoutConfiguredProxiesOnlyLoopbackIsTrusted() {
+        var local = new AuthController(auth, throttle, ORIGIN, "");
+        assertEquals("203.0.113.7", address(local, "127.0.0.1", "203.0.113.7"));
+        assertEquals("10.0.0.5", address(local, "10.0.0.5", "203.0.113.7"));
+    }
+
+    @Test
+    void invalidProxyEntryFailsStartup() {
+        assertThrows(IllegalArgumentException.class, () -> new AuthController(auth, throttle, ORIGIN, "gateway.internal"));
+    }
+
+    private String address(String peer, String forwarded) {
+        return address(controller, peer, forwarded);
+    }
+
+    private static String address(AuthController target, String peer, String forwarded) {
         var request = new MockHttpServletRequest();
         request.setRemoteAddr(peer);
         if (forwarded != null) request.addHeader("X-Forwarded-For", forwarded);
-        return AuthController.clientAddress(request);
+        return target.clientAddress(request);
     }
 
     @Test

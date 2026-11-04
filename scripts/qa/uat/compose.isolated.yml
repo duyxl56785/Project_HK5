@@ -7,10 +7,29 @@ services:
   api-gateway:
     ports: !override
       - "127.0.0.1:${HK5_UAT_GATEWAY_PORT:?Set HK5_UAT_GATEWAY_PORT}:8080"
+    networks:
+      default:
+        ipv4_address: ${HK5_UAT_NET_PREFIX:-172.30.251}.10
 
   frontend:
     ports: !override
       - "127.0.0.1:${HK5_UAT_FRONTEND_PORT:?Set HK5_UAT_FRONTEND_PORT}:80"
+    networks:
+      default:
+        ipv4_address: ${HK5_UAT_NET_PREFIX:-172.30.251}.11
+
+  # A separate /24 so the rehearsal can run next to the shared demo stack.
+  auth-service:
+    environment:
+      HK5_TRUSTED_PROXIES: ${HK5_UAT_NET_PREFIX:-172.30.251}.10,${HK5_UAT_NET_PREFIX:-172.30.251}.11
+
+networks:
+  default:
+    ipam:
+      config: !override
+        - subnet: ${HK5_UAT_NET_PREFIX:-172.30.251}.0/24
+          # Dynamic addresses stay in .128-.255, so the fixed proxy addresses below are never taken.
+          ip_range: ${HK5_UAT_NET_PREFIX:-172.30.251}.128/25
 
 volumes:
   # Explicit names make it possible to inspect and remove only the disposable UAT resources.
