@@ -56,21 +56,36 @@ public class WriteReservations {
     /** Empty when the account is gone, not ACTIVE, or no longer holds every claimed role. */
     @Transactional
     public Optional<UUID> reserve(String subject, Collection<String> claimed, String serviceUrl) {
-        UUID accountId;
-        try {
-            accountId = UUID.fromString(subject);
-        } catch (IllegalArgumentException malformed) {
-            return Optional.empty();
-        }
+        UUID accountId = accountId(subject);
+        if (accountId == null) return Optional.empty();
         return accounts.findSharedById(accountId)
-                .filter(account -> AuthService.ACTIVE.equals(account.getStatus()))
-                .filter(account -> account.getRoles().stream().map(Account.Role::name).toList().containsAll(claimed))
+                .filter(account -> current(account, claimed))
                 .map(account -> {
                     UUID id = UUID.randomUUID();
                     jdbc.update("insert into write_reservations (id, account_id, service_url) values (?, ?, ?)",
                             id, accountId, serviceUrl);
                     return id;
                 });
+    }
+
+    /** Read-only twin of {@link #reserve}: a read cannot commit anything, so no reservation or lock is needed. */
+    @Transactional(readOnly = true)
+    public boolean holds(String subject, Collection<String> claimed) {
+        UUID accountId = accountId(subject);
+        return accountId != null && accounts.findById(accountId).filter(account -> current(account, claimed)).isPresent();
+    }
+
+    private static UUID accountId(String subject) {
+        try {
+            return UUID.fromString(subject);
+        } catch (IllegalArgumentException malformed) {
+            return null;
+        }
+    }
+
+    private static boolean current(Account account, Collection<String> claimed) {
+        return AuthService.ACTIVE.equals(account.getStatus())
+                && account.getRoles().stream().map(Account.Role::name).toList().containsAll(claimed);
     }
 
     public void release(UUID id) {

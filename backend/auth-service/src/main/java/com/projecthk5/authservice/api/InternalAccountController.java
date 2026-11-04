@@ -51,6 +51,13 @@ public class InternalAccountController {
                 .map(id -> new Reservation(true, id)).orElseGet(() -> new Reservation(false, null));
     }
 
+    @PostMapping("/{accountId}/authority-checks")
+    public Reservation check(@RequestHeader(value = InternalTokens.HEADER, required = false) String token,
+                             @PathVariable String accountId, @Valid @RequestBody Claim claim) {
+        reservations.callerOf(token);
+        return new Reservation(reservations.holds(accountId, claim.roles()), null);
+    }
+
     @DeleteMapping("/write-reservations/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void release(@RequestHeader(value = InternalTokens.HEADER, required = false) String token, @PathVariable UUID id) {
