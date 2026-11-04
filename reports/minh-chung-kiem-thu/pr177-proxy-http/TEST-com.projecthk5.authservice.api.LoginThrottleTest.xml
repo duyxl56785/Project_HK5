@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.projecthk5.authservice.api.LoginThrottleTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-11-04T14:50:43" hostname="DESKTOP-1E75HAV" time="0.413">
+  <properties/>
+  <testcase name="invalidProxyEntryFailsStartup()" classname="com.projecthk5.authservice.api.LoginThrottleTest" time="0.074"/>
+  <testcase name="registrationIsLimitedPerClientNotPerGateway()" classname="com.projecthk5.authservice.api.LoginThrottleTest" time="0.253"/>
+  <testcase name="oneClientGuessingManyEmailsIsStopped()" classname="com.projecthk5.authservice.api.LoginThrottleTest" time="0.051"/>
+  <testcase name="clientAddressSkipsOnlyConfiguredProxiesAndIgnoresHeadersFromAnyOtherPeer()" classname="com.projecthk5.authservice.api.LoginThrottleTest" time="0.002"/>
+  <testcase name="failuresFromOneClientCannotLockTheVictimOutFromAnother()" classname="com.projecthk5.authservice.api.LoginThrottleTest" time="0.008"/>
+  <testcase name="withoutConfiguredProxiesOnlyLoopbackIsTrusted()" classname="com.projecthk5.authservice.api.LoginThrottleTest" time="0.001"/>
+  <testcase name="expiredWindowsAreDroppedSoRandomKeysCannotGrowMemoryForever()" classname="com.projecthk5.authservice.api.LoginThrottleTest" time="0.012"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[WARNING: A Java agent has been loaded dynamically (C:\Users\ADMIN\.gradle\caches\modules-2\files-2.1\net.bytebuddy\byte-buddy-agent\1.14.19\154da3a65b4f4a909d3e5bdec55d1b2b4cbb6ce1\byte-buddy-agent-1.14.19.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+]]></system-err>
+</testsuite>

@@ -1,0 +1,7 @@
+Unable to find image 'node:22-alpine' locally
+22-alpine: Pulling from library/node
+Digest: sha256:fe4f6d74e20370acb04ad889077d14d0f64a9c8ea6a42bc60cddf1e844699914
+Status: Downloaded newer image for node:22-alpine
+{"label":"private-forged","statuses":[401,401,401,401,401,401,401,401,401,401,429],"result":"PASS"}
+{"label":"private-register","statuses":[201,201,201,201,201,201,201,201,201,201,429],"result":"PASS"}
+{"mode":"private-peer","requests":22,"result":"PASS","syntheticOnly":true}
