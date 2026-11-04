@@ -79,7 +79,7 @@ TV3 đã chấp nhận giao thức C06 có điều kiện; PR #152 ghi timeout p
 1. **Vì sao 85 unit PASS chưa đủ nghiệm thu?** Chúng không chứng minh HTTP/JWT, PostgreSQL concurrent uniqueness, cross-service event hay hai Store live.
 2. **Vì sao Finance chỉ settle sau DELIVERED và COD PAID?** Đây là điều kiện trong `FinanceRules`/MD06; cần kiểm atomic unique settlement trên DB và current authorization, không suy từ boolean helper.
 3. **Timeout Inventory có nghĩa thất bại chưa?** Chưa. Giữ cùng operationId/payload, UNKNOWN quarantined và đối soát theo provider receipt; không blind RELEASE/CONSUME.
-4. **R06 đã đi đến đâu?** TV2 chốt 1000 đơn vị UTF-16 ở #154; #166 triển khai nhưng TV5 tìm thấy hồi quy Admin với review cũ >1000 và bàn giao #167 có RED/GREEN PostgreSQL. Cần TV2 tích hợp, CI đúng HEAD và kiểm Admin revoke #153 trước khi nghiệm thu R06 đầy đủ.
+4. **R06 đã đi đến đâu?** TV2 chốt 1000 đơn vị UTF-16 ở #154; #166 đã tích hợp bản sửa #167 và merge. Trên `main@c1ac4d4`, TV5 chạy 2 unit + 1 PostgreSQL PASS cho giới hạn/migration legacy; Admin revoke live #153 và F15 hai Store vẫn chưa được nghiệm thu.
 5. **TV5 có vận hành House Store không?** Không; TV2/business owner sở hữu operation. TV5 kiểm phí 0%/snapshot khi business mở phạm vi.
 
-**Trạng thái bàn giao:** TV5 đã làm xong các preflight độc lập có log/receipt ở đúng source SHA. #18/#157 và toàn bộ UAT cuối vẫn OPEN/PARTIAL cho đến khi owner xử lý #69, R06, Return contract, retention/UNKNOWN và CI main; không tick DONE bằng selected test.
+**Trạng thái bàn giao 04/11:** TV5 đã lưu preflight độc lập ở đúng source SHA; #69 và #166/R06 đã vào main, nhưng kết quả hẹp không thay final UAT. #18/#157 vẫn OPEN/PARTIAL đến khi Return contract, retention/UNKNOWN, Auth revoke, Finance policy và CI của SHA nghiệm thu đạt; không tick DONE bằng selected test.
