@@ -57,7 +57,7 @@ class CatalogSchemaProposalPostgresTest {
              var rows = statement.executeQuery("SELECT string_agg(version, ',' ORDER BY installed_rank)"
                      + " FROM flyway_schema_history WHERE success AND version IS NOT NULL")) {
             assertTrue(rows.next());
-            assertEquals("1,2,3,4,5,6,7,8", rows.getString(1), "Only Category V1, Product V2, image reservations V3, details V4, write fence V5, reviewable items V6, category slug V7 and review hidden reason V8 are migrations");
+            assertEquals("1,2,3,4,5,6,7,8,9", rows.getString(1), "Only Category V1, Product V2, image reservations V3, details V4, write fence V5, reviewable items V6, category slug V7, review hidden reason V8 and review comment limit V9 are migrations");
         }
         try (Connection connection = connect(); var statement = connection.createStatement();
              var rows = statement.executeQuery("SELECT count(*) FROM flyway_schema_history"
@@ -142,9 +142,9 @@ class CatalogSchemaProposalPostgresTest {
                 .locations("classpath:db/migration").load();
         runtime.validate();
         assertEquals(0, runtime.migrate().migrationsExecuted);
-        assertEquals(java.util.List.of("1", "2", "3", "4", "5", "6", "7", "8"), java.util.Arrays.stream(runtime.info().applied())
+        assertEquals(java.util.List.of("1", "2", "3", "4", "5", "6", "7", "8", "9"), java.util.Arrays.stream(runtime.info().applied())
                 .map(migration -> migration.getVersion().toString()).toList());
-        assertEquals("8", runtime.info().current().getVersion().toString());
+        assertEquals("9", runtime.info().current().getVersion().toString());
     }
 
     @ParameterizedTest

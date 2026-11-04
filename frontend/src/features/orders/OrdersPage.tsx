@@ -24,7 +24,7 @@ interface CustomerOrder {
   readonly id: string; readonly status: string; readonly overallStatus: string; readonly total: number; readonly createdAt: string;
   readonly shipping: Shipping | null; readonly storeOrders: readonly StoreOrder[];
 }
-const reviewSchema = z.object({ rating: z.number().int().min(1).max(5), comment: optionalText('Nhận xét', 2000) });
+const reviewSchema = z.object({ rating: z.number().int().min(1).max(5), comment: optionalText('Nhận xét', 1000) });
 type ReviewInput = z.infer<typeof reviewSchema>;
 interface MyReview { readonly orderId: string; readonly productId: string }
 
