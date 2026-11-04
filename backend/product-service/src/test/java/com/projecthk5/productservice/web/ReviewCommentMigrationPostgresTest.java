@@ -62,6 +62,21 @@ class ReviewCommentMigrationPostgresTest {
                 assertTrue(row.next());
                 assertEquals(1001, row.getInt(1));
             }
+            try (var statement = connection.createStatement()) {
+                assertEquals(1, statement.executeUpdate("UPDATE product_reviews SET hidden = TRUE, hidden_reason = 'moderated' WHERE id = '" + older + "'"));
+                assertEquals(1, statement.executeUpdate("UPDATE product_reviews SET comment = comment WHERE id = '" + older + "'"));
+            }
+            try (var row = connection.createStatement().executeQuery("SELECT hidden, hidden_reason, char_length(comment) FROM product_reviews WHERE id = '" + older + "'")) {
+                assertTrue(row.next());
+                assertTrue(row.getBoolean(1));
+                assertEquals("moderated", row.getString(2));
+                assertEquals(1001, row.getInt(3));
+            }
+            try (var statement = connection.prepareStatement("UPDATE product_reviews SET comment = ? WHERE id = ?")) {
+                statement.setString(1, "a".repeat(1002));
+                statement.setObject(2, older);
+                assertEquals("23514", assertThrows(SQLException.class, statement::executeUpdate).getSQLState());
+            }
             assertNotNull(review(connection, "a".repeat(1000)));
             assertNotNull(review(connection, null));
             assertEquals("23514", assertThrows(SQLException.class, () -> review(connection, "a".repeat(1001))).getSQLState());

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest" tests="30" skipped="0" failures="0" errors="0" timestamp="2026-11-03T14:06:10" hostname="MDUY-LECO" time="1.277">
+  <properties/>
+  <testcase name="upgradeFromCategoryV1PreservesDataAndValidatesAllProductionMigrations()" classname="com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest" time="0.837"/>
+  <testcase name="operationAndPendingContentHaveIndependentUniqueConstraints()" classname="com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest" time="0.025"/>
+  <testcase name="foreignKeyRestrictsMissingProductAndProductDeletion()" classname="com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest" time="0.015"/>
+  <testcase name="productionMigrationCreatesReservationTable()" classname="com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest" time="0.056"/>
+  <testcase name="[1] changes=size_bytes=0" classname="com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest" time="0.019"/>
+  <testcase name="[2] changes=size_bytes=2097153" classname="com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest" time="0.014"/>
+  <testcase name="[3] changes=width=0" classname="com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest" time="0.012"/>
+  <testcase name="[4] changes=height=8193" classname="com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest" time="0.01"/>
+  <testcase name="[5] changes=width=8192,height=8192" classname="com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest" time="0.011"/>
+  <testcase name="[6] changes=media_type='image/gif'" classname="com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest" time="0.01"/>
+  <testcase name="[7] changes=content_sha256='NOT-A-HASH'" classname="com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest" time="0.011"/>
+  <testcase name="[8] changes=version=-1" classname="com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest" time="0.011"/>
+  <testcase name="directSqlCannotCreateSixthPendingImageOrReuseSlot()" classname="com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest" time="0.017"/>
+  <testcase name="[1] column=id" classname="com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest" time="0.015"/>
+  <testcase name="[2] column=product_id" classname="com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest" time="0.009"/>
+  <testcase name="[3] column=operation_id" classname="com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest" time="0.022"/>
+  <testcase name="[1] changes=display_order=NULL" classname="com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest" time="0.009"/>
+  <testcase name="[2] changes=state='CANCELLED',display_order=NULL" classname="com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest" time="0.015"/>
+  <testcase name="[3] changes=cancelled_at=created_at" classname="com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest" time="0.018"/>
+  <testcase name="[1] key=../object.png" classname="com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest" time="0.012"/>
+  <testcase name="[2] key=/private/absolute.png" classname="com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest" time="0.009"/>
+  <testcase name="[3] key=known-object" classname="com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest" time="0.009"/>
+  <testcase name="cancellationReleasesSlotAndContentButRetainsOperationTombstone()" classname="com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest" time="0.013"/>
+  <testcase name="[1] column=content_sha256" classname="com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest" time="0.01"/>
+  <testcase name="[2] column=media_type" classname="com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest" time="0.008"/>
+  <testcase name="[3] column=size_bytes" classname="com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest" time="0.008"/>
+  <testcase name="[4] column=width" classname="com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest" time="0.008"/>
+  <testcase name="[5] column=height" classname="com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest" time="0.008"/>
+  <testcase name="[6] column=created_at" classname="com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest" time="0.009"/>
+  <testcase name="cancellationIsTerminalAndCannotReassignDisplayOrder()" classname="com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest" time="0.012"/>
+  <system-out><![CDATA[21:06:00.594 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest]: ProductImageMetadataSchemaIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+21:06:00.694 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.projecthk5.productservice.ProductServiceApplication for test class com.projecthk5.productservice.image.persistence.ProductImageMetadataSchemaIntegrationTest
+21:06:00.765 [Test worker] INFO tc.postgres:16.6-alpine -- Creating container for image: postgres:16.6-alpine
+21:06:00.878 [Test worker] INFO tc.postgres:16.6-alpine -- Container postgres:16.6-alpine is starting: 4ddb351a4cb15d3d7c8e4c2c30eb09844d2514e406942060ac87033b7c2a75cf
+21:06:02.799 [Test worker] INFO tc.postgres:16.6-alpine -- Container postgres:16.6-alpine started in PT2.0336435S
+21:06:02.799 [Test worker] INFO tc.postgres:16.6-alpine -- Container is started (JDBC URL: jdbc:postgresql://localhost:57339/test?loggerLevel=OFF)
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.5)
+
+2026-11-03T21:06:03.095+07:00  INFO 35668 --- [product-service] [    Test worker] roductImageMetadataSchemaIntegrationTest : Starting ProductImageMetadataSchemaIntegrationTest using Java 21.0.7 with PID 35668 (started by Minh Duy in D:\CMC Uni\5 Ky Dong\WEB\BCK WEB\Project_HK5\.verification\tv5-pr166-review-20261103\backend\product-service)
+2026-11-03T21:06:03.096+07:00  INFO 35668 --- [product-service] [    Test worker] roductImageMetadataSchemaIntegrationTest : No active profile set, falling back to 1 default profile: "default"
+2026-11-03T21:06:04.073+07:00  INFO 35668 --- [product-service] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-11-03T21:06:04.074+07:00  INFO 35668 --- [product-service] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-11-03T21:06:04.228+07:00  INFO 35668 --- [product-service] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 144 ms. Found 6 JPA repository interfaces.
+2026-11-03T21:06:04.244+07:00  INFO 35668 --- [product-service] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-11-03T21:06:04.245+07:00  INFO 35668 --- [product-service] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-11-03T21:06:04.263+07:00  INFO 35668 --- [product-service] [    Test worker] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.projecthk5.productservice.category.CategoryRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-11-03T21:06:04.263+07:00  INFO 35668 --- [product-service] [    Test worker] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.projecthk5.productservice.image.persistence.ProductImageMetadataRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-11-03T21:06:04.263+07:00  INFO 35668 --- [product-service] [    Test worker] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.projecthk5.productservice.product.persistence.ProductRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-11-03T21:06:04.263+07:00  INFO 35668 --- [product-service] [    Test worker] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.projecthk5.productservice.web.DetailsRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-11-03T21:06:04.263+07:00  INFO 35668 --- [product-service] [    Test worker] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.projecthk5.productservice.web.ImageRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-11-03T21:06:04.264+07:00  INFO 35668 --- [product-service] [    Test worker] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.projecthk5.productservice.web.ReviewRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-11-03T21:06:04.264+07:00  INFO 35668 --- [product-service] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 10 ms. Found 0 Redis repository interfaces.
+2026-11-03T21:06:04.495+07:00  INFO 35668 --- [product-service] [    Test worker] o.s.cloud.context.scope.GenericScope     : BeanFactory id=96c230fe-abd5-3f3b-8ec0-d85116b5de02
+2026-11-03T21:06:05.013+07:00  INFO 35668 --- [product-service] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-11-03T21:06:05.063+07:00  INFO 35668 --- [product-service] [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@77f95e19
+2026-11-03T21:06:05.066+07:00  INFO 35668 --- [product-service] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-11-03T21:06:05.094+07:00  INFO 35668 --- [product-service] [    Test worker] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://localhost:57339/test (PostgreSQL 16.6)
+2026-11-03T21:06:05.116+07:00  INFO 35668 --- [product-service] [    Test worker] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table "public"."flyway_schema_history" does not exist yet
+2026-11-03T21:06:05.117+07:00  INFO 35668 --- [product-service] [    Test worker] o.f.core.internal.command.DbValidate     : Successfully validated 9 migrations (execution time 00:00.011s)
+2026-11-03T21:06:05.130+07:00  INFO 35668 --- [product-service] [    Test worker] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table "public"."flyway_schema_history" ...
+2026-11-03T21:06:05.164+07:00  INFO 35668 --- [product-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Current version of schema "public": << Empty Schema >>
+2026-11-03T21:06:05.169+07:00  INFO 35668 --- [product-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "1 - create categories"
+2026-11-03T21:06:05.194+07:00  INFO 35668 --- [product-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "2 - create products"
+2026-11-03T21:06:05.224+07:00  INFO 35668 --- [product-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "3 - create product image reservations"
+2026-11-03T21:06:05.247+07:00  INFO 35668 --- [product-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "4 - details images reviews"
+2026-11-03T21:06:05.271+07:00  INFO 35668 --- [product-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "5 - write fence abort"
+2026-11-03T21:06:05.283+07:00  INFO 35668 --- [product-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "6 - reviewable items"
+2026-11-03T21:06:05.296+07:00  INFO 35668 --- [product-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "7 - category slug status"
+2026-11-03T21:06:05.311+07:00  INFO 35668 --- [product-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "8 - review hidden reason"
+2026-11-03T21:06:05.321+07:00  INFO 35668 --- [product-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "9 - review comment max 1000"
+2026-11-03T21:06:05.331+07:00  INFO 35668 --- [product-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Successfully applied 9 migrations to schema "public", now at version v9 (execution time 00:00.080s)
+2026-11-03T21:06:05.465+07:00  INFO 35668 --- [product-service] [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-11-03T21:06:05.538+07:00  INFO 35668 --- [product-service] [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2026-11-03T21:06:05.572+07:00  INFO 35668 --- [product-service] [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-11-03T21:06:05.843+07:00  INFO 35668 --- [product-service] [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-11-03T21:06:06.828+07:00  INFO 35668 --- [product-service] [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-11-03T21:06:06.869+07:00  INFO 35668 --- [product-service] [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-11-03T21:06:07.256+07:00  INFO 35668 --- [product-service] [    Test worker] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-11-03T21:06:09.304+07:00  INFO 35668 --- [product-service] [    Test worker] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoints beneath base path '/actuator'
+2026-11-03T21:06:10.104+07:00  INFO 35668 --- [product-service] [    Test worker] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestTemplate.
+2026-11-03T21:06:10.139+07:00  WARN 35668 --- [product-service] [    Test worker] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2026-11-03T21:06:10.223+07:00  INFO 35668 --- [product-service] [    Test worker] roductImageMetadataSchemaIntegrationTest : Started ProductImageMetadataSchemaIntegrationTest in 7.369 seconds (process running for 19.095)
+2026-11-03T21:06:10.722+07:00  INFO 35668 --- [product-service] [    Test worker] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://localhost:57339/test (PostgreSQL 16.6)
+2026-11-03T21:06:10.732+07:00  INFO 35668 --- [product-service] [    Test worker] o.f.core.internal.database.base.Schema   : Creating schema "image_upgrade_cfeeb9578df64736944bdee832407cf0" ...
+2026-11-03T21:06:10.737+07:00  INFO 35668 --- [product-service] [    Test worker] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table "image_upgrade_cfeeb9578df64736944bdee832407cf0"."flyway_schema_history" ...
+2026-11-03T21:06:10.767+07:00  INFO 35668 --- [product-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Current version of schema "image_upgrade_cfeeb9578df64736944bdee832407cf0": null
+2026-11-03T21:06:10.771+07:00  INFO 35668 --- [product-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "image_upgrade_cfeeb9578df64736944bdee832407cf0" to version "1 - create categories"
+2026-11-03T21:06:10.784+07:00  INFO 35668 --- [product-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Successfully applied 1 migration to schema "image_upgrade_cfeeb9578df64736944bdee832407cf0", now at version v1 (execution time 00:00.007s)
+2026-11-03T21:06:10.808+07:00  INFO 35668 --- [product-service] [    Test worker] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://localhost:57339/test (PostgreSQL 16.6)
+2026-11-03T21:06:10.828+07:00  INFO 35668 --- [product-service] [    Test worker] o.f.core.internal.command.DbValidate     : Successfully validated 10 migrations (execution time 00:00.010s)
+2026-11-03T21:06:10.846+07:00  INFO 35668 --- [product-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Current version of schema "image_upgrade_cfeeb9578df64736944bdee832407cf0": 1
+2026-11-03T21:06:10.851+07:00  INFO 35668 --- [product-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "image_upgrade_cfeeb9578df64736944bdee832407cf0" to version "2 - create products"
+2026-11-03T21:06:10.879+07:00  INFO 35668 --- [product-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Successfully applied 1 migration to schema "image_upgrade_cfeeb9578df64736944bdee832407cf0", now at version v2 (execution time 00:00.020s)
+2026-11-03T21:06:10.902+07:00  INFO 35668 --- [product-service] [    Test worker] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://localhost:57339/test (PostgreSQL 16.6)
+2026-11-03T21:06:10.920+07:00  INFO 35668 --- [product-service] [    Test worker] o.f.core.internal.command.DbValidate     : Successfully validated 10 migrations (execution time 00:00.011s)
+2026-11-03T21:06:10.936+07:00  INFO 35668 --- [product-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Current version of schema "image_upgrade_cfeeb9578df64736944bdee832407cf0": 2
+2026-11-03T21:06:10.941+07:00  INFO 35668 --- [product-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "image_upgrade_cfeeb9578df64736944bdee832407cf0" to version "3 - create product image reservations"
+2026-11-03T21:06:10.966+07:00  INFO 35668 --- [product-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "image_upgrade_cfeeb9578df64736944bdee832407cf0" to version "4 - details images reviews"
+2026-11-03T21:06:10.988+07:00  INFO 35668 --- [product-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "image_upgrade_cfeeb9578df64736944bdee832407cf0" to version "5 - write fence abort"
+2026-11-03T21:06:11.001+07:00  INFO 35668 --- [product-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "image_upgrade_cfeeb9578df64736944bdee832407cf0" to version "6 - reviewable items"
+2026-11-03T21:06:11.014+07:00  INFO 35668 --- [product-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "image_upgrade_cfeeb9578df64736944bdee832407cf0" to version "7 - category slug status"
+2026-11-03T21:06:11.033+07:00  INFO 35668 --- [product-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "image_upgrade_cfeeb9578df64736944bdee832407cf0" to version "8 - review hidden reason"
+2026-11-03T21:06:11.044+07:00  INFO 35668 --- [product-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "image_upgrade_cfeeb9578df64736944bdee832407cf0" to version "9 - review comment max 1000"
+2026-11-03T21:06:11.054+07:00  INFO 35668 --- [product-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Successfully applied 7 migrations to schema "image_upgrade_cfeeb9578df64736944bdee832407cf0", now at version v9 (execution time 00:00.054s)
+2026-11-03T21:06:11.083+07:00  INFO 35668 --- [product-service] [    Test worker] o.f.core.internal.command.DbValidate     : Successfully validated 10 migrations (execution time 00:00.010s)
+2026-11-03T21:06:11.243+07:00  INFO 35668 --- [product-service] [    Test worker] o.f.core.internal.command.DbValidate     : Successfully validated 9 migrations (execution time 00:00.007s)
+]]></system-out>
+  <system-err><![CDATA[WARNING: A Java agent has been loaded dynamically (C:\Users\Admin\.gradle\caches\modules-2\files-2.1\net.bytebuddy\byte-buddy-agent\1.14.19\154da3a65b4f4a909d3e5bdec55d1b2b4cbb6ce1\byte-buddy-agent-1.14.19.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+]]></system-err>
+</testsuite>

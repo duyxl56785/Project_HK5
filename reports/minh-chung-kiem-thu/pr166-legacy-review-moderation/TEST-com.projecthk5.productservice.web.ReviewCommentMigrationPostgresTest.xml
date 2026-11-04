@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.projecthk5.productservice.web.ReviewCommentMigrationPostgresTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-11-03T14:05:55" hostname="MDUY-LECO" time="0.733">
+  <properties/>
+  <testcase name="keepsOlderLongCommentsAndChecksNewOnesInUtf16Units()" classname="com.projecthk5.productservice.web.ReviewCommentMigrationPostgresTest" time="0.733"/>
+  <system-out><![CDATA[21:05:52.365 [Test worker] INFO org.testcontainers.images.PullPolicy -- Image pull policy will be performed by: DefaultPullPolicy()
+21:05:52.371 [Test worker] INFO org.testcontainers.utility.ImageNameSubstitutor -- Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+21:05:52.513 [Test worker] INFO org.testcontainers.dockerclient.DockerClientProviderStrategy -- Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+21:05:52.700 [Test worker] INFO org.testcontainers.dockerclient.DockerClientProviderStrategy -- Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
+21:05:52.701 [Test worker] INFO org.testcontainers.DockerClientFactory -- Docker host IP address is localhost
+21:05:52.718 [Test worker] INFO org.testcontainers.DockerClientFactory -- Connected to docker: 
+  Server Version: 29.8.1
+  API Version: 1.56
+  Operating System: Docker Desktop (containerized)
+  Total Memory: 7571 MB
+21:05:52.719 [Test worker] WARN org.testcontainers.utility.ResourceReaper -- 
+********************************************************************************
+Ryuk has been disabled. This can cause unexpected behavior in your environment.
+********************************************************************************
+21:05:52.722 [Test worker] INFO org.testcontainers.DockerClientFactory -- Checking the system...
+21:05:52.722 [Test worker] INFO org.testcontainers.DockerClientFactory -- ✔︎ Docker server version should be at least 1.6.0
+21:05:52.841 [Test worker] INFO tc.postgres:16.6-alpine -- Creating container for image: postgres:16.6-alpine
+21:05:53.097 [Test worker] INFO tc.postgres:16.6-alpine -- Container postgres:16.6-alpine is starting: 8dff5fd9aaf84e87b4f0e56770486a45914a0d21d5fc4d02e389aa20117d5045
+21:05:55.037 [Test worker] INFO tc.postgres:16.6-alpine -- Container postgres:16.6-alpine started in PT2.1956204S
+21:05:55.038 [Test worker] INFO tc.postgres:16.6-alpine -- Container is started (JDBC URL: jdbc:postgresql://localhost:57219/test?loggerLevel=OFF)
+21:05:55.320 [Test worker] INFO org.flywaydb.core.FlywayExecutor -- Database: jdbc:postgresql://localhost:57219/test (PostgreSQL 16.6)
+21:05:55.359 [Test worker] INFO org.flywaydb.core.internal.schemahistory.JdbcTableSchemaHistory -- Schema history table "public"."flyway_schema_history" does not exist yet
+21:05:55.361 [Test worker] INFO org.flywaydb.core.internal.command.DbValidate -- Successfully validated 9 migrations (execution time 00:00.019s)
+21:05:55.377 [Test worker] INFO org.flywaydb.core.internal.schemahistory.JdbcTableSchemaHistory -- Creating Schema History table "public"."flyway_schema_history" ...
+21:05:55.429 [Test worker] INFO org.flywaydb.core.internal.command.DbMigrate -- Current version of schema "public": << Empty Schema >>
+21:05:55.437 [Test worker] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema "public" to version "1 - create categories"
+21:05:55.466 [Test worker] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema "public" to version "2 - create products"
+21:05:55.495 [Test worker] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema "public" to version "3 - create product image reservations"
+21:05:55.519 [Test worker] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema "public" to version "4 - details images reviews"
+21:05:55.541 [Test worker] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema "public" to version "5 - write fence abort"
+21:05:55.553 [Test worker] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema "public" to version "6 - reviewable items"
+21:05:55.568 [Test worker] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema "public" to version "7 - category slug status"
+21:05:55.585 [Test worker] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema "public" to version "8 - review hidden reason"
+21:05:55.598 [Test worker] INFO org.flywaydb.core.internal.command.DbMigrate -- Successfully applied 8 migrations to schema "public", now at version v8 (execution time 00:00.072s)
+21:05:55.642 [Test worker] INFO org.flywaydb.core.FlywayExecutor -- Database: jdbc:postgresql://localhost:57219/test (PostgreSQL 16.6)
+21:05:55.662 [Test worker] INFO org.flywaydb.core.internal.command.DbValidate -- Successfully validated 9 migrations (execution time 00:00.010s)
+21:05:55.678 [Test worker] INFO org.flywaydb.core.internal.command.DbMigrate -- Current version of schema "public": 8
+21:05:55.682 [Test worker] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema "public" to version "9 - review comment max 1000"
+21:05:55.695 [Test worker] INFO org.flywaydb.core.internal.command.DbMigrate -- Successfully applied 1 migration to schema "public", now at version v9 (execution time 00:00.006s)
+21:05:55.744 [Test worker] INFO org.flywaydb.core.FlywayExecutor -- Database: jdbc:postgresql://localhost:57219/test (PostgreSQL 16.6)
+21:05:55.760 [Test worker] INFO org.flywaydb.core.internal.command.DbValidate -- Successfully validated 9 migrations (execution time 00:00.009s)
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
