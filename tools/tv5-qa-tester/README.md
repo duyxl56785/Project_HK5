@@ -16,6 +16,8 @@ npm run dev
 
 Mở `http://127.0.0.1:4318`. Cần Node.js 22+, Java 21 cho backend và Docker local đang chạy cho hai suite PostgreSQL. `npm run dev` phục vụ bản `dist` mới nhất sau `npm run build`.
 
+Suite `FRONTEND` dùng dependency riêng của `frontend/`. Nếu chưa cài trong checkout đang chạy, runner báo `BLOCKED_ENV`. Cài từ lockfile bằng `cd ../../frontend; npm ci` rồi quay lại thư mục tool. Không tự động cài dependency khi bấm Run All Safe.
+
 ## Chạy và xem lỗi
 
 Chọn module rồi tick suite. Bấm **Run Selected** hoặc **Run All Safe Tests**. Run All Safe chỉ chạy các unit suite không cần database. Hai PostgreSQL suite cần chọn riêng; công cụ kiểm tra Docker local trước khi chạy và báo `BLOCKED_ENV` nếu không có. `QA-UI` chạy Playwright trên chính dashboard đang mở và lưu ảnh của **mọi** test PASS/FAIL. Các suite LIVE-SECURITY, UNKNOWN và FINANCE-PRODUCTION bị khóa. Không nạp `.env.demo`, không brute force và không gửi request tới môi trường ngoài localhost.

@@ -37,7 +37,7 @@ export const suites = Object.freeze([
     source: 'backend/cart-service/src/test/java/com/projecthk5/cartservice/service/CartServiceTest.java',
     command: gradle('cart-service', 'test', ['*CartServiceTest']) },
   { id: 'FRONTEND', module: 'Frontend/Security', title: 'React DOM, validation và UI unit tests', expected: 'Node TAP tests hiện có đạt; không phải live E2E', safeAll: true, timeoutMs: 180000,
-    source: 'frontend/src/**/*.test.mjs', command: nodeTests },
+    source: 'frontend/src/**/*.test.mjs', requiresFrontendDeps: true, command: nodeTests },
   { id: 'QA-UI', module: 'QA Tool', title: 'Playwright dashboard và screenshot thực tế', expected: 'Dashboard hoạt động và mỗi Playwright test có screenshot', safeAll: false, timeoutMs: 120000,
     source: 'tools/tv5-qa-tester/ui/dashboard.spec.mjs', command: { executable: 'node', cwd: 'tools/tv5-qa-tester', args: ['node_modules/@playwright/test/cli.js', 'test', '--reporter=line'], evidence: 'playwright' } },
   { id: 'QA-UI-DIAGNOSTIC', module: 'QA Tool', title: 'Chẩn đoán ảnh FAIL có chủ đích', expected: 'Một assertion chẩn đoán thất bại; runner phải ghi FAIL và chụp ảnh thật', safeAll: false, timeoutMs: 30000,

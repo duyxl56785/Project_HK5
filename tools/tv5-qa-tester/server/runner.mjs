@@ -1,6 +1,6 @@
 import { spawn } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
+import { access, mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { byId, safeIds, suites } from './catalog.mjs';
@@ -113,6 +113,10 @@ export class Runner {
       const suite = byId.get(row.id);
       if (suite.disabledReason) { row.status = 'BLOCKED'; row.actual = suite.disabledReason; continue; }
       if (suite.requiresDocker && !(await this.docker())) { row.status = 'BLOCKED_ENV'; row.actual = 'Docker local không hoạt động hoặc context không cục bộ'; continue; }
+      if (suite.requiresFrontendDeps) {
+        try { await access(path.join(repoDir, 'frontend/node_modules/vite/package.json')); }
+        catch { row.status = 'BLOCKED_ENV'; row.actual = 'Thiếu frontend dependencies; chạy npm ci trong frontend của worktree này'; continue; }
+      }
       row.status = 'RUNNING'; row.startedAt = new Date().toISOString();
       const started = Date.now();
       const cmd = suite.command;
