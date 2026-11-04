@@ -43,14 +43,7 @@ public class AuthController {
         List<String> entries = Arrays.stream(proxies.split(",")).map(String::trim).filter(s -> !s.isEmpty()).toList();
         // Unset: only a proxy in this same host/container (local dev) may speak for the client.
         this.trustedProxies = (entries.isEmpty() ? List.of("127.0.0.1", "::1") : entries).stream()
-                .map(AuthController::proxyMatcher).toList();
-    }
-
-    private static IpAddressMatcher proxyMatcher(String entry) {
-        String[] parts = entry.split("/", 2);
-        if (!IP_LITERAL.matcher(parts[0]).matches() || (parts.length == 2 && !parts[1].matches("[0-9]{1,3}")))
-            throw new IllegalArgumentException("HK5_TRUSTED_PROXIES accepts IP addresses or CIDR ranges only");
-        return new IpAddressMatcher(entry);
+                .map(IpAddressMatcher::new).toList(); // rejects host names, so startup never does DNS
     }
 
     public record RegisterRequest(@NotBlank @Email @Size(max = 254) String email, @NotBlank @Size(min = 12, max = 128) String password) {}
