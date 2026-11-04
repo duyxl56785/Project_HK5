@@ -28,7 +28,8 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 @Tag("postgres-integration")
 @Testcontainers
-@SpringBootTest(properties = {"app.checkout.reconcile-scan-ms=86400000", "app.checkout.draft-purge-ms=86400000"})
+@SpringBootTest(properties = {"app.checkout.reconcile-scan-ms=86400000", "app.checkout.draft-purge-ms=86400000",
+        "app.checkout.draft-purge-enabled=true"})
 class CheckoutDraftRetentionPostgresIT {
     @Container static final PostgreSQLContainer<?> PG = new PostgreSQLContainer<>("postgres:16-alpine");
     @DynamicPropertySource static void properties(DynamicPropertyRegistry r) {
