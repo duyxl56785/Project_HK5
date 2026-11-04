@@ -1,0 +1,55 @@
+{
+  "id": "2026-11-04T20-56-28-828Z-aa0fff261f5e4e9c4110c38e33861bde88c88756-cd5b20a1",
+  "sha": "aa0fff261f5e4e9c4110c38e33861bde88c88756",
+  "timestamp": "2026-11-04T20:56:28.829Z",
+  "environment": {
+    "platform": "win32",
+    "node": "v22.23.3",
+    "localhost": true
+  },
+  "status": "FAIL",
+  "suites": [
+    {
+      "id": "QA-UI",
+      "status": "PASS",
+      "expected": "Dashboard hoạt động và mỗi Playwright test có screenshot",
+      "actual": "PASS: exit 0, 2 test, 2 PASS, 0 FAIL, 0 SKIP",
+      "startedAt": "2026-11-04T20:56:28.832Z",
+      "durationMs": 1570,
+      "counts": {
+        "tests": 2,
+        "pass": 2,
+        "fail": 0,
+        "skip": 0
+      },
+      "exitCode": 0,
+      "log": "QA-UI.log",
+      "junit": [],
+      "screenshots": [
+        "screenshots/2026-11-04T20-56-28-828Z-aa0fff261f5e4e9c4110c38e33861bde88c88756-cd5b20a1/QA-UI/dashboard-chi-goi-suite-allowlist-passed.png",
+        "screenshots/2026-11-04T20-56-28-828Z-aa0fff261f5e4e9c4110c38e33861bde88c88756-cd5b20a1/QA-UI/dashboard-hien-thi-suite-va-gates-passed.png"
+      ]
+    },
+    {
+      "id": "QA-UI-DIAGNOSTIC",
+      "status": "FAIL",
+      "expected": "Một assertion chẩn đoán thất bại; runner phải ghi FAIL và chụp ảnh thật",
+      "actual": "FAIL: exit 1, 1 test, 0 PASS, 1 FAIL, 0 SKIP",
+      "startedAt": "2026-11-04T20:56:30.404Z",
+      "durationMs": 6296,
+      "counts": {
+        "tests": 1,
+        "pass": 0,
+        "fail": 1,
+        "skip": 0
+      },
+      "exitCode": 1,
+      "log": "QA-UI-DIAGNOSTIC.log",
+      "junit": [],
+      "screenshots": [
+        "screenshots/2026-11-04T20-56-28-828Z-aa0fff261f5e4e9c4110c38e33861bde88c88756-cd5b20a1/QA-UI-DIAGNOSTIC/diagnostic-co-y-fail-de-kiem-tra-anh-failed.png"
+      ]
+    }
+  ],
+  "finishedAt": "2026-11-04T20:56:36.702Z"
+}
