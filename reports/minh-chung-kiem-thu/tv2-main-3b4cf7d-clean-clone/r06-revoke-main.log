@@ -1,0 +1,15 @@
+A1 admin GET /api/admin/accounts (before)                  200 
+A2 admin POST /api/categories (before)                     201 
+DB  admin status -> DISABLED
+UPDATE 1
+A3 same admin token GET /api/admin/accounts (after)        401 AUTH_ACCESS_INVALID
+A4 same admin token POST /api/categories (after)           401 AUTH_ACCESS_INVALID
+A5 same admin token GET /api/admin/products (after, read)  200 
+A6 admin re-login (after)                                  401 AUTH_INVALID_CREDENTIALS
+DB  admin status -> ACTIVE
+UPDATE 1
+S1 seller GET /api/seller/products (before)                200 
+S2 admin disables seller1 via API                          200 
+S3 same seller token POST /api/seller/products (after, write) 401 AUTH_ACCESS_INVALID
+S4 same seller token GET /api/seller/products (after, read) 200 
+S5 admin re-enables seller1                                200 
