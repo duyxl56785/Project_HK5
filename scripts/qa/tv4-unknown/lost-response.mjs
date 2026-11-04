@@ -10,6 +10,7 @@ export function lostResponseHandler({ target, operationId, bodySha256, onReceipt
   if (url.protocol !== 'http:' || url.hostname !== '127.0.0.1' || url.username || url.password
       || url.search || url.hash || !operationId || !/^[a-f0-9]{64}$/.test(bodySha256)
       || typeof onReceipt !== 'function') throw new Error('An exact loopback target and tuple receipt are required');
+  let attempted = false;
   return async (req, res) => {
     if (req.method !== 'POST' || req.url !== url.pathname) {
       res.writeHead(400).end();
@@ -34,6 +35,8 @@ export function lostResponseHandler({ target, operationId, bodySha256, onReceipt
         res.writeHead(400).end();
         return;
       }
+      if (attempted) { res.destroy(); return; }
+      attempted = true;
       const headers = { ...req.headers, host: url.host, connection: 'close', 'content-length': body.length };
       delete headers['transfer-encoding'];
       const upstream = http.request(url, { method: 'POST', headers }, response => {
@@ -41,11 +44,13 @@ export function lostResponseHandler({ target, operationId, bodySha256, onReceipt
         let bytes = 0;
         response.on('data', chunk => { bytes += chunk.length; digest.update(chunk); });
         response.on('error', () => res.destroy());
-        response.on('end', () => {
+        response.on('end', async () => {
           try {
             // This is transport evidence ONLY. It is not proof of a database COMMIT.
-            onReceipt({ operationId, bodySha256, upstreamStatus: response.statusCode,
+            await onReceipt({ operationId, bodySha256, upstreamStatus: response.statusCode,
               responseSha256: digest.digest('hex'), responseBytes: bytes, responseSuppressed: true });
+          } catch {
+            console.error('UNKNOWN_PROXY_EVIDENCE_MISSING: receipt callback failed; provider commit unverified');
           } finally {
             // Do not synthesize HTTP 409/500 or issue any retry/compensation request.
             res.destroy();
