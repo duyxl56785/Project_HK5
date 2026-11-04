@@ -26,7 +26,7 @@ Kết quả phân biệt PASS, FAIL, SKIP, BLOCKED, BLOCKED_ENV, NOT_RUN, TIMEOU
 
 Mỗi lần chạy có timestamp và full Git SHA, thư mục riêng tại `reports/minh-chung-kiem-thu/tv5-qa-tool/<run-id>/`. Ảnh Playwright tại `reports/minh-chung-kiem-thu/tv5-qa-tool/screenshots/<run-id>/`. Có raw log, JUnit XML (khi Gradle tạo thật), `report.html`, `report.json`, `report.csv`, `SHA256SUMS.txt`. Dùng **Xem bằng chứng** để xem ảnh; **Mở thư mục bằng chứng** mở đúng thư mục run local; **Export Evidence** tải ZIP gồm báo cáo, log, XML và ảnh. API chỉ cho truy cập các run/file thuộc evidence root, không nhận path hoặc shell command tùy ý. Các raw artifact có chuỗi trông giống secret bị giữ ngoài thư mục bằng chứng.
 
-Ảnh Playwright là ảnh chụp trình duyệt thật trong test, không phải ảnh tổng hợp. Nếu Playwright Chromium chưa cài, suite FAIL/BLOCKED tùy lỗi và không được coi là PASS. Trước khi chia sẻ ZIP, TV5 vẫn phải kiểm tra thủ công nội dung ngoài bộ lọc secret tự động.
+Ảnh Playwright là ảnh chụp trình duyệt thật trong test, không phải ảnh tổng hợp. Suite thủ công `QA-UI-DIAGNOSTIC` tạo **một assertion cố ý FAIL** để xác minh screenshot lỗi và báo cáo FAIL; đây là self-test của công cụ, không phải lỗi sản phẩm. Nếu Playwright Chromium chưa cài, suite FAIL/BLOCKED tùy lỗi và không được coi là PASS. Trước khi chia sẻ ZIP, TV5 vẫn phải kiểm tra thủ công nội dung ngoài bộ lọc secret tự động.
 
 ## Tự kiểm tra công cụ và demo
 

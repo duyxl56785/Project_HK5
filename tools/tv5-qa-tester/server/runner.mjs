@@ -3,7 +3,7 @@ import { createHash } from 'node:crypto';
 import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { byId, safeIds } from './catalog.mjs';
+import { byId, safeIds, suites } from './catalog.mjs';
 import { renderHtml, renderCsv } from './report.mjs';
 
 export const toolDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -90,7 +90,7 @@ export class Runner {
   }
   async start(ids) {
     if (this.active) throw new Error('Một lần chạy đang hoạt động; không chạy đồng thời database suites.');
-    if (!Array.isArray(ids) || !ids.length || ids.length > 13 || ids.some(id => typeof id !== 'string' || !byId.has(id))) throw new Error('Chỉ được chọn ID trong allowlist.');
+    if (!Array.isArray(ids) || !ids.length || ids.length > suites.length || ids.some(id => typeof id !== 'string' || !byId.has(id)) || new Set(ids).size !== ids.length) throw new Error('Chỉ được chọn ID trong allowlist.');
     const sha = await gitSha();
     const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
     const id = `${timestamp}-${sha}-${crypto.randomUUID().slice(0, 8)}`;
@@ -117,7 +117,7 @@ export class Runner {
       const started = Date.now();
       const cmd = suite.command;
       if (cmd.evidence === 'playwright') await mkdir(screenshotDir, { recursive: true });
-      const result = await this.exec(cmd.executable, cmd.args, { cwd: path.join(repoDir, cmd.cwd), timeoutMs: suite.timeoutMs, envExtra: cmd.evidence === 'playwright' ? { SOOPI_QA_SCREENSHOT_DIR: screenshotDir } : {},
+      const result = await this.exec(cmd.executable, cmd.args, { cwd: path.join(repoDir, cmd.cwd), timeoutMs: suite.timeoutMs, envExtra: { ...(cmd.envExtra ?? {}), ...(cmd.evidence === 'playwright' ? { SOOPI_QA_SCREENSHOT_DIR: screenshotDir } : {}) },
         onChild: child => { if (this.active) this.active.child = child; }, wasCancelled: () => this.active?.cancelled ?? false });
       row.durationMs = Date.now() - started;
       const log = Buffer.from(result.output ?? '', 'utf8');
