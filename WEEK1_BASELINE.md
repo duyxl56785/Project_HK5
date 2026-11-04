@@ -2,7 +2,8 @@
 
 - **Owner:** Phạm Thế Cường (TV4)
 - **Phạm vi:** Inventory, SellerOrder fulfillment/COD trong `order-service`, Notification/outbox consumer.
-- **Trạng thái:** `PARTIAL` — tài liệu baseline và contract draft đã chuẩn bị; chưa có bằng chứng runtime cho các luồng nghiệp vụ TV4.
+- **Trạng thái baseline ban đầu:** `PARTIAL` — tài liệu baseline và contract draft đã chuẩn bị; bảng quan sát bên dưới phản ánh lượt kiểm tra ban đầu.
+- **Cập nhật tiến độ:** bằng chứng chạy module Inventory hiện tại được ghi trong `WEEK1_TEST_BASELINE.md` và `WEEK1_HANDOFF.md`; baseline này không thay thế trạng thái test mới.
 - **Phạm vi kiểm tra:** snapshot source ZIP ban đầu và trạng thái repository hiện tại không được đánh đồng. Snapshot ban đầu thiếu Gradle Wrapper; reviewer xác nhận Wrapper đã có trên `main` từ PR #22, commit `230d760`. Vì vậy, thiếu Wrapper **không còn là blocker hiện tại**.
 - **Giới hạn:** Chưa tuyên bố contract đã được nhóm phê duyệt. Những điểm liên quan checkout cần TV3 review; COD/settlement cần TV5 review; security cần TV1 review.
 

@@ -32,8 +32,10 @@ abstract class InventoryPostgresSupport {
         properties.add("spring.datasource.username", PG::getUsername);
         properties.add("spring.datasource.password", PG::getPassword);
         properties.add("spring.datasource.hikari.maximum-pool-size", () -> 6);
+        // Candidate ledger migrations are opt-in for integration tests; production defaults to db/migration only.
+        properties.add("spring.flyway.locations", () -> "classpath:db/migration,classpath:db/candidate-migration");
         properties.add("inventory.internal-token", () -> TOKEN);
-        // ddl-auto=validate and Flyway are loaded unchanged from production application.yml.
+        // Flyway enabled and ddl-auto=validate remain production settings; only candidate migration discovery is test-opt-in.
     }
 
     static String id(String prefix) { return prefix + "-" + UUID.randomUUID(); }
