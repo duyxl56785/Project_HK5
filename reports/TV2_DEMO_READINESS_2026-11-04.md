@@ -49,3 +49,9 @@ The first command restored Inventory test results from cache; those are not coun
 - **Claim-conflict:** BLOCKED_DESIGN; no genuine contention generator has been accepted. No fake 409, production monkey-patch, row deletion, new operation ID or blind RELEASE/CONSUME.
 
 Next sequence: receive independent review decisions, finish/review the isolated runner and fixture oracles, then run the approved full React→Gateway→backend→PostgreSQL UAT on the exact integrated main SHA and retain receipts. Until then Issue #18 remains OPEN/PARTIAL; no production gates, retention jobs or shared-stack fault tests are enabled by these merges.
+
+## Follow-up: isolated configuration preparation
+
+Main CI runs 41772246477 and 41772246436 subsequently completed SUCCESS; this does not include the two gated UNKNOWN acceptance cases. [Draft #175](https://github.com/duyxl56785/Project_HK5/pull/175), commit `4ca06352368f2cf610bde5fc1dd3cc9886e08c28`, adds four preparation files on #170 without modifying the helper or existing UAT scripts. **11 Node tests PASS / 0 FAIL / 0 SKIPPED**, exit 0, including the four fake loopback harness cases. Docker Compose config-only verification at that committed source passed isolated volume/secret bindings, two loopback ports, pair OFF, original Order transport and proxy network namespace; no containers were started.
+
+Prepared plans always deny execution. Static review identified and corrected a checkout-path boundary defect, with regression coverage for `..runtime` and the primary checkout's shared-secret tree. TV3/TV4/TV5 review has been requested on #175; no hosted checks were reported there at publication. This is **not** the approved execution/teardown runner, live lost-response or provider COMMIT evidence. Exact tuple/oracles, independent case approval, claim-conflict design and final UAT remain BLOCKED/NOT_RUN. No aggregate checklist is completed by these preparation tests.
