@@ -51,7 +51,7 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<AccountResponse> register(HttpServletRequest http, @Valid @RequestBody RegisterRequest req) {
         requireBrowserOrigin(http);
-        throttle.check("register:" + http.getRemoteAddr());
+        throttle.check("register:" + clientAddress(http));
         Account account = auth.register(req.email(), req.password());
         return noStore(ResponseEntity.created(URI.create("/api/auth/me"))).body(AccountResponse.of(account));
     }
@@ -59,13 +59,18 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<TokenResponse> login(HttpServletRequest http, @Valid @RequestBody LoginRequest req) {
         requireBrowserOrigin(http);
-        String key = "login:" + Account.normalizeEmail(req.email());
+        // Keyed by email and client together: failures from one client cannot lock the owner out elsewhere.
+        String client = clientAddress(http);
+        String key = "login:" + Account.normalizeEmail(req.email()) + "|" + client;
+        String clientKey = "login-client:" + client;
+        throttle.check(clientKey);
         throttle.check(key);
         AuthService.Session session;
         try {
             session = auth.login(req.email(), req.password());
         } catch (ApiException failed) {
             throttle.recordFailure(key);
+            throttle.recordFailure(clientKey);
             throw failed;
         }
         throttle.reset(key);
@@ -114,6 +119,39 @@ public class AuthController {
 
     private static ResponseEntity.HeadersBuilder<?> noStore(ResponseEntity.HeadersBuilder<?> builder) {
         return builder.header(HttpHeaders.CACHE_CONTROL, "no-store").header(HttpHeaders.PRAGMA, "no-cache");
+    }
+
+    private static final java.util.regex.Pattern IP_LITERAL = java.util.regex.Pattern.compile("[0-9.]{7,15}|[0-9A-Fa-f:.]{2,45}");
+
+    /**
+     * Client address behind the proxy chain (browser, nginx, Gateway), like Tomcat's RemoteIpValve: hops on
+     * private or loopback networks are our proxies, so walk X-Forwarded-For right to left and take the first
+     * public address. A public socket peer is the client itself and any header it sent is ignored.
+     */
+    static String clientAddress(HttpServletRequest http) {
+        String client = http.getRemoteAddr();
+        String forwarded = http.getHeader("X-Forwarded-For");
+        if (forwarded == null || !internal(client)) return client;
+        String[] hops = forwarded.split(",");
+        for (int i = hops.length - 1; i >= 0; i--) {
+            String hop = hops[i].trim();
+            if (!IP_LITERAL.matcher(hop).matches()) return client; // never resolve names written by a client
+            client = hop;
+            if (!internal(hop)) return hop;
+        }
+        return client;
+    }
+
+    private static boolean internal(String address) {
+        if (address == null || !IP_LITERAL.matcher(address).matches()) return false;
+        try {
+            var ip = java.net.InetAddress.getByName(address); // literal only, so no DNS lookup
+            byte[] raw = ip.getAddress();
+            return ip.isLoopbackAddress() || ip.isSiteLocalAddress() || ip.isLinkLocalAddress()
+                    || (raw.length == 16 && (raw[0] & 0xfe) == 0xfc);
+        } catch (java.net.UnknownHostException malformed) {
+            return false;
+        }
     }
 
     /** OD-05: cookie-bearing auth calls need an allowlisted Origin plus X-CSRF-Protection: 1. */
