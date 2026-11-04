@@ -47,6 +47,15 @@ test('changed operation/payload never reaches harness', async t => {
   assert.equal(calls, 0);
 });
 
+test('malformed or non-object JSON is rejected clearly without reaching harness', async t => {
+  let calls = 0;
+  const target = await server(t, (_req, res) => { calls++; res.end(); });
+  const proxy = await server(t, lostResponseHandler({ target, operationId: 'fake-reserve-1', bodySha256: sha256(body), onReceipt() {} }));
+  assert.equal(await send(proxy, '{'), 400);
+  assert.equal(await send(proxy, 'null'), 400);
+  assert.equal(calls, 0);
+});
+
 test('reject non-loopback targets and missing tuple evidence before creating handler', () => {
   for (const target of ['http://example.com/x', 'http://localhost/x', 'http://127.0.0.1@evil.invalid/x']) {
     assert.throws(() => lostResponseHandler({ target, operationId: 'fake-reserve-1', bodySha256: sha256(body), onReceipt() {} }));

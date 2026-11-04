@@ -25,6 +25,9 @@ until separately authorized. No automatic cleanup or volume deletion is included
 
 - Fake fixtures only. Record source and fixture SHA, before/after request timestamps,
   proxy receipt and redacted logs. Do not store tokens or shipping PII.
+- If the upstream connection errors or times out before its response is consumed,
+  `onReceipt` is intentionally not called: **no receipt means no evidence**. Stop;
+  do not infer a provider outcome, create a replacement operation ID or issue RELEASE.
 - Read-only provider transaction: operationId/type/canonical fingerprint and exact
   SKU quantities, stock available/reserved before and after; committed row and stock
   delta must match. A transport 200 or operationId string alone is insufficient.

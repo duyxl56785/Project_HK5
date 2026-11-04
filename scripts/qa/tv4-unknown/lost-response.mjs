@@ -24,7 +24,13 @@ export function lostResponseHandler({ target, operationId, bodySha256, onReceipt
         chunks.push(chunk);
       }
       const body = Buffer.concat(chunks);
-      if (sha256(body) !== bodySha256 || JSON.parse(body).operationId !== operationId) {
+      let request;
+      try { request = JSON.parse(body); } catch {
+        res.writeHead(400).end();
+        return;
+      }
+      if (!request || typeof request !== 'object' || Array.isArray(request)
+          || sha256(body) !== bodySha256 || request.operationId !== operationId) {
         res.writeHead(400).end();
         return;
       }
