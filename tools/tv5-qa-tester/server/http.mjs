@@ -51,10 +51,10 @@ export function createServer({ runner = new Runner(), uiDir = path.join(toolDir,
         try { await stat(screenshotDir); zip.directory(screenshotDir, `${archive[1]}/screenshots`); } catch {}
         await zip.finalize(); return;
       }
-      const screenshot = url.pathname.match(/^\/api\/screenshots\/([a-zA-Z0-9-]+)\/([a-zA-Z0-9_.-]+\.png)$/);
+      const screenshot = url.pathname.match(/^\/api\/screenshots\/([a-zA-Z0-9-]+)\/([A-Z0-9-]+)\/([a-zA-Z0-9_.-]+\.png)$/);
       if (req.method === 'GET' && screenshot) {
         if (!runner.runs.has(screenshot[1])) return send(res, 404, {error:'Không tìm thấy run'});
-        const data = await readFile(safeFile(path.join(runner.root, 'screenshots', screenshot[1]), screenshot[2]));
+        const data = await readFile(safeFile(path.join(runner.root, 'screenshots', screenshot[1], screenshot[2]), screenshot[3]));
         res.writeHead(200, { 'Content-Type':'image/png', 'X-Content-Type-Options':'nosniff', 'Cache-Control':'no-store' }); return res.end(data);
       }
       if (req.method === 'GET' && evidence) {

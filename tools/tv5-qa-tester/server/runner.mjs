@@ -107,7 +107,6 @@ export class Runner {
   async process(report) {
     const dir = path.join(this.root, report.id);
     await mkdir(path.join(dir, 'junit'), { recursive: true });
-    const screenshotDir = path.join(this.root, 'screenshots', report.id);
     for (const row of report.suites) {
       if (this.active?.cancelled) break;
       const suite = byId.get(row.id);
@@ -120,6 +119,7 @@ export class Runner {
       row.status = 'RUNNING'; row.startedAt = new Date().toISOString();
       const started = Date.now();
       const cmd = suite.command;
+      const screenshotDir = path.join(this.root, 'screenshots', report.id, row.id);
       if (cmd.evidence === 'playwright') await mkdir(screenshotDir, { recursive: true });
       const result = await this.exec(cmd.executable, cmd.args, { cwd: path.join(repoDir, cmd.cwd), timeoutMs: suite.timeoutMs, envExtra: { ...(cmd.envExtra ?? {}), ...(cmd.evidence === 'playwright' ? { SOOPI_QA_SCREENSHOT_DIR: screenshotDir } : {}) },
         onChild: child => { if (this.active) this.active.child = child; }, wasCancelled: () => this.active?.cancelled ?? false });
@@ -143,7 +143,7 @@ export class Runner {
         }
       } else row.evidenceWarning = 'Raw log/XML chứa chuỗi giống secret; không lưu artifact.';
       if (cmd.evidence === 'playwright') {
-        row.screenshots = (await readdir(screenshotDir)).filter(name => /^[a-zA-Z0-9_.-]+\.png$/.test(name)).map(name => `screenshots/${report.id}/${name}`);
+        row.screenshots = (await readdir(screenshotDir)).filter(name => /^[a-zA-Z0-9_.-]+\.png$/.test(name)).map(name => `screenshots/${report.id}/${row.id}/${name}`);
         if (row.screenshots.length !== row.counts?.tests) {
           if (row.status === 'PASS') row.status = 'FAIL';
           row.actual += '; thiếu screenshot của một hoặc nhiều test';

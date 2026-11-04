@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtemp, readFile } from 'node:fs/promises';
+import { mkdir, mkdtemp, readFile, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { Runner, countEvidence } from './runner.mjs';
@@ -36,6 +36,21 @@ test('Playwright không có screenshot thì không PASS dù process báo passed'
   const run=await runner.start(['QA-UI']);
   while(runner.runs.get(run.id).status==='RUNNING') await new Promise(resolve=>setTimeout(resolve,20));
   assert.equal(runner.runs.get(run.id).suites[0].status,'FAIL');
+});
+test('hai Playwright suite trong một run không đếm ảnh của nhau', async () => {
+  const root=await mkdtemp(path.join(tmpdir(),'soopi-qa-'));
+  const runner=new Runner({root,exec:async(_exe,_args,options)=>{
+    const dir=options.envExtra.SOOPI_QA_SCREENSHOT_DIR;
+    await mkdir(dir,{recursive:true});
+    if(dir.endsWith('QA-UI-DIAGNOSTIC')) { await writeFile(path.join(dir,'fail-failed.png'),'PNG'); return {code:1,output:'1 failed (1s)',timedOut:false}; }
+    await writeFile(path.join(dir,'a-passed.png'),'PNG'); await writeFile(path.join(dir,'b-passed.png'),'PNG');
+    return {code:0,output:'2 passed (1s)',timedOut:false};
+  }});
+  const run=await runner.start(['QA-UI','QA-UI-DIAGNOSTIC']);
+  while(runner.runs.get(run.id).status==='RUNNING') await new Promise(resolve=>setTimeout(resolve,20));
+  const [pass,fail]=runner.runs.get(run.id).suites;
+  assert.equal(pass.status,'PASS'); assert.equal(pass.screenshots.length,2);
+  assert.equal(fail.status,'FAIL'); assert.equal(fail.screenshots.length,1);
 });
 test('TAP/JUnit có số kiểm thử và export escape dữ liệu', () => {
   assert.deepEqual(countEvidence('tap','# tests 2\n# pass 1\n# fail 1\n# skipped 0'),{tests:2,pass:1,fail:1,skip:0});
