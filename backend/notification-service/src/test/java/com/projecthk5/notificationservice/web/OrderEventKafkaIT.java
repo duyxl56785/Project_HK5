@@ -2,6 +2,7 @@ package com.projecthk5.notificationservice.web;
 
 import static org.awaitility.Awaitility.await;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -43,6 +44,18 @@ class OrderEventKafkaIT {
     @Autowired KafkaTemplate<Object, Object> kafka;
     @Autowired ConsumerFactory<?, ?> consumers;
     @Autowired JdbcTemplate sql;
+    @Autowired NotificationController notifications;
+
+    @Test
+    void failedInsertIsNotAcknowledgedAsDuplicate() {
+        String key = "invalid-" + UUID.randomUUID();
+        var invalid = new NotificationController.Create("account-1", "ORDER_ACCEPTED", null, "m", null, key);
+        assertThrows(org.springframework.dao.DataIntegrityViolationException.class, () -> notifications.store(invalid));
+        assertEquals(0, rows(key));
+        // A valid redelivery with the same key can subsequently be persisted.
+        notifications.store(new NotificationController.Create("account-1", "ORDER_ACCEPTED", "t", "m", null, key));
+        assertEquals(1, rows(key));
+    }
 
     private int rows(String key) {
         return sql.queryForObject("select count(*) from notifications where event_key = ?", Integer.class, key);
