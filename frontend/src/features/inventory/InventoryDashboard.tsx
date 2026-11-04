@@ -56,7 +56,7 @@ export function InventoryDashboard({ state }: InventoryDashboardProps) {
   }
 
   return <section className="tv4-inventory" aria-labelledby={`${id}-title`} aria-busy={state.status === 'loading'}>
-    <header><span className="tv4-inventory__eyebrow">TV4 · Inventory</span>
+    <header><span className="tv4-inventory__eyebrow">Inventory</span>
       <h2 id={`${id}-title`}>Tồn kho cửa hàng</h2>
       <p>Chỉ hiển thị dữ liệu Inventory đã được xác thực. Điều chỉnh tồn kho chưa mở vì API/quyền chưa được phê duyệt.</p>
     </header>
