@@ -32,6 +32,8 @@ app:
   checkout:
     stale-seconds: ${HK5_CHECKOUT_STALE_SECONDS:600}
     reconcile-scan-ms: ${HK5_CHECKOUT_RECONCILE_SCAN_MS:60000}
+    # Retention is an operational opt-in. Keep drafts until retention/audit controls are approved.
+    draft-purge-enabled: ${HK5_CHECKOUT_DRAFT_PURGE_ENABLED:false}
     draft-retention: ${HK5_CHECKOUT_DRAFT_RETENTION:P7D}
     draft-purge-ms: ${HK5_CHECKOUT_DRAFT_PURGE_MS:3600000}
   security:

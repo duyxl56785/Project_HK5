@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 /**
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Component;
  * FAILED, PROCESSING, NEEDS_RECONCILIATION and any attempt with an unsettled journal row are never purged.
  */
 @Component
+@ConditionalOnProperty(name = "app.checkout.draft-purge-enabled", havingValue = "true")
 public class CheckoutDraftRetention {
     private static final Logger log = LoggerFactory.getLogger(CheckoutDraftRetention.class);
     private final JdbcTemplate db;
