@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
  * is older than the retention window. A successful same-key replay reads the Order, never the draft.
  * Attempts, Orders, outbox and the Inventory journal are kept as idempotency/recovery evidence.
  * FAILED, PROCESSING, NEEDS_RECONCILIATION and any attempt with an unsettled journal row are never purged.
+ * The schedule is opt-in: it stays OFF until the DB owner approves grants/audit/backup for the environment.
  */
 @Component
 public class CheckoutDraftRetention {
@@ -22,18 +23,22 @@ public class CheckoutDraftRetention {
     private final JdbcTemplate db;
     private final Duration retention;
     private final int batchSize;
+    private final boolean enabled;
 
     public CheckoutDraftRetention(JdbcTemplate db,
             @Value("${app.checkout.draft-retention:P7D}") Duration retention,
-            @Value("${app.checkout.draft-purge-batch:500}") int batchSize) {
+            @Value("${app.checkout.draft-purge-batch:500}") int batchSize,
+            @Value("${app.checkout.draft-purge-enabled:false}") boolean enabled) {
         if (retention.compareTo(Duration.ofDays(1)) < 0) throw new IllegalArgumentException("Unsafe draft retention");
         if (batchSize < 1 || batchSize > 5000) throw new IllegalArgumentException("Unsafe draft purge batch");
-        this.db = db; this.retention = retention; this.batchSize = batchSize;
+        this.db = db; this.retention = retention; this.batchSize = batchSize; this.enabled = enabled;
     }
 
     @Scheduled(fixedDelayString = "${app.checkout.draft-purge-ms:3600000}",
         initialDelayString = "${app.checkout.draft-purge-ms:3600000}")
-    public void purgeExpired() { purgeBefore(Instant.now().minus(retention)); }
+    public void purgeExpired() {
+        if (enabled) purgeBefore(Instant.now().minus(retention));
+    }
 
     /** Each batch commits on its own so a long backlog never holds locks for the whole run. */
     public int purgeBefore(Instant deadline) {

@@ -104,9 +104,20 @@ class CheckoutDraftRetentionPostgresIT {
         }
     }
 
+    @Test void scheduledPurgeIsOffByDefaultAndOptInStillOnlyRemovesExpiredSuccess() {
+        Placed expired = place("default-off-" + UUID.randomUUID(), "key", null, Instant.now().minus(Duration.ofDays(8)));
+        Placed recent = place("default-off-" + UUID.randomUUID(), "key", null, Instant.now().minus(Duration.ofDays(6)));
+        retention.purgeExpired(); // application default: HK5_CHECKOUT_DRAFT_PURGE_ENABLED unset
+        assertEquals(1, count("select count(*) from checkout_order_drafts where checkout_attempt_id=?", expired.attempt));
+
+        new CheckoutDraftRetention(sql, Duration.ofDays(7), 500, true).purgeExpired();
+        assertEquals(0, count("select count(*) from checkout_order_drafts where checkout_attempt_id=?", expired.attempt));
+        assertEquals(1, count("select count(*) from checkout_order_drafts where checkout_attempt_id=?", recent.attempt));
+    }
+
     @Test void retentionShorterThanOneDayIsRejected() {
-        assertThrows(IllegalArgumentException.class, () -> new CheckoutDraftRetention(sql, Duration.ofHours(23), 500));
-        assertThrows(IllegalArgumentException.class, () -> new CheckoutDraftRetention(sql, Duration.ofDays(7), 0));
+        assertThrows(IllegalArgumentException.class, () -> new CheckoutDraftRetention(sql, Duration.ofHours(23), 500, true));
+        assertThrows(IllegalArgumentException.class, () -> new CheckoutDraftRetention(sql, Duration.ofDays(7), 0, true));
     }
 
     private record Placed(UUID attempt, UUID order) {}
