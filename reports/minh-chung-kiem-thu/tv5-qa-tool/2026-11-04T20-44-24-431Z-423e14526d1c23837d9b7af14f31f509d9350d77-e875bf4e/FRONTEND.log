@@ -1,0 +1,622 @@
+TAP version 13
+# node:internal/modules/package_json_reader:314
+#   throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+#         ^
+# Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'react' imported from D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-qa-dashboard-20261105\\frontend\\src\\features\\cart\\CartView.test.mjs
+#     at Object.getPackageJSONURL (node:internal/modules/package_json_reader:314:9)
+#     at packageResolve (node:internal/modules/esm/resolve:772:81)
+#     at moduleResolve (node:internal/modules/esm/resolve:859:18)
+#     at defaultResolve (node:internal/modules/esm/resolve:989:11)
+#     at \#cachedDefaultResolve (node:internal/modules/esm/loader:747:20)
+#     at ModuleLoader.resolve (node:internal/modules/esm/loader:724:38)
+#     at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:320:38)
+#     at ModuleJob._link (node:internal/modules/esm/module_job:182:49) {
+#   code: 'ERR_MODULE_NOT_FOUND'
+# }
+# Node.js v22.23.3
+# Subtest: src\\features\\cart\\CartView.test.mjs
+not ok 1 - src\\features\\cart\\CartView.test.mjs
+  ---
+  duration_ms: 63.5989
+  type: 'test'
+  location: 'D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-qa-dashboard-20261105\\frontend\\src\\features\\cart\\CartView.test.mjs:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: two Store groups preserve exact revision and amount without JS floating point
+ok 2 - two Store groups preserve exact revision and amount without JS floating point
+  ---
+  duration_ms: 1.0571
+  type: 'test'
+  ...
+# Subtest: multiple products in same Store and Seller render one Store group
+ok 3 - multiple products in same Store and Seller render one Store group
+  ---
+  duration_ms: 0.1584
+  type: 'test'
+  ...
+# Subtest: conflicting Store to Seller or Seller to Store mapping fails closed
+ok 4 - conflicting Store to Seller or Seller to Store mapping fails closed
+  ---
+  duration_ms: 0.2077
+  type: 'test'
+  ...
+# Subtest: duplicates, malformed or padded identifiers fail without partial group
+ok 5 - duplicates, malformed or padded identifiers fail without partial group
+  ---
+  duration_ms: 0.1597
+  type: 'test'
+  ...
+# Subtest: money uses exact decimal minor units and forbids silent rounding
+ok 6 - money uses exact decimal minor units and forbids silent rounding
+  ---
+  duration_ms: 0.1763
+  type: 'test'
+  ...
+# Subtest: line and aggregate overflow rejected before displaying calculated totals
+ok 7 - line and aggregate overflow rejected before displaying calculated totals
+  ---
+  duration_ms: 0.1247
+  type: 'test'
+  ...
+# Subtest: quantity, claims and revisions are strictly validated
+ok 8 - quantity, claims and revisions are strictly validated
+  ---
+  duration_ms: 0.2108
+  type: 'test'
+  ...
+# Subtest: source input is neither mutated nor trusted for extra private fields
+ok 9 - source input is neither mutated nor trusted for extra private fields
+  ---
+  duration_ms: 0.2341
+  type: 'test'
+  ...
+# node:internal/modules/package_json_reader:314
+#   throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+#         ^
+# Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'react' imported from D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-qa-dashboard-20261105\\frontend\\src\\features\\catalog\\CategoryBrowser.test.mjs
+#     at Object.getPackageJSONURL (node:internal/modules/package_json_reader:314:9)
+#     at packageResolve (node:internal/modules/esm/resolve:772:81)
+#     at moduleResolve (node:internal/modules/esm/resolve:859:18)
+#     at defaultResolve (node:internal/modules/esm/resolve:989:11)
+#     at \#cachedDefaultResolve (node:internal/modules/esm/loader:747:20)
+#     at ModuleLoader.resolve (node:internal/modules/esm/loader:724:38)
+#     at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:320:38)
+#     at ModuleJob._link (node:internal/modules/esm/module_job:182:49) {
+#   code: 'ERR_MODULE_NOT_FOUND'
+# }
+# Node.js v22.23.3
+# Subtest: src\\features\\catalog\\CategoryBrowser.test.mjs
+not ok 3 - src\\features\\catalog\\CategoryBrowser.test.mjs
+  ---
+  duration_ms: 52.4008
+  type: 'test'
+  location: 'D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-qa-dashboard-20261105\\frontend\\src\\features\\catalog\\CategoryBrowser.test.mjs:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: empty category collection is valid
+ok 11 - empty category collection is valid
+  ---
+  duration_ms: 1.0914
+  type: 'test'
+  ...
+# Subtest: one root retains the exact DTO and accessible position
+ok 12 - one root retains the exact DTO and accessible position
+  ---
+  duration_ms: 0.2194
+  type: 'test'
+  ...
+# Subtest: multiple roots preserve backend order and sibling positions
+ok 13 - multiple roots preserve backend order and sibling positions
+  ---
+  duration_ms: 0.1847
+  type: 'test'
+  ...
+# Subtest: unordered parent/child records become a complete preorder hierarchy
+ok 14 - unordered parent/child records become a complete preorder hierarchy
+  ---
+  duration_ms: 0.1736
+  type: 'test'
+  ...
+# Subtest: input objects and arrays are never changed or normalized
+ok 15 - input objects and arrays are never changed or normalized
+  ---
+  duration_ms: 0.1661
+  type: 'test'
+  ...
+# Subtest: inconsistent input fails as a whole: duplicate IDs
+ok 16 - inconsistent input fails as a whole: duplicate IDs
+  ---
+  duration_ms: 0.0874
+  type: 'test'
+  ...
+# Subtest: inconsistent input fails as a whole: missing parent
+ok 17 - inconsistent input fails as a whole: missing parent
+  ---
+  duration_ms: 0.1272
+  type: 'test'
+  ...
+# Subtest: inconsistent input fails as a whole: self-parent
+ok 18 - inconsistent input fails as a whole: self-parent
+  ---
+  duration_ms: 0.0476
+  type: 'test'
+  ...
+# Subtest: inconsistent input fails as a whole: cycle without roots
+ok 19 - inconsistent input fails as a whole: cycle without roots
+  ---
+  duration_ms: 0.2026
+  type: 'test'
+  ...
+# Subtest: inconsistent input fails as a whole: cycle beside valid root
+ok 20 - inconsistent input fails as a whole: cycle beside valid root
+  ---
+  duration_ms: 0.7622
+  type: 'test'
+  ...
+# Subtest: inconsistent input fails as a whole: null collection
+ok 21 - inconsistent input fails as a whole: null collection
+  ---
+  duration_ms: 0.0926
+  type: 'test'
+  ...
+# Subtest: inconsistent input fails as a whole: non-array collection
+ok 22 - inconsistent input fails as a whole: non-array collection
+  ---
+  duration_ms: 0.039
+  type: 'test'
+  ...
+# Subtest: inconsistent input fails as a whole: null record
+ok 23 - inconsistent input fails as a whole: null record
+  ---
+  duration_ms: 0.0294
+  type: 'test'
+  ...
+# Subtest: inconsistent input fails as a whole: wrong ID type
+ok 24 - inconsistent input fails as a whole: wrong ID type
+  ---
+  duration_ms: 0.0262
+  type: 'test'
+  ...
+# Subtest: inconsistent input fails as a whole: blank name
+ok 25 - inconsistent input fails as a whole: blank name
+  ---
+  duration_ms: 0.0258
+  type: 'test'
+  ...
+# Subtest: inconsistent input fails as a whole: missing parent field
+ok 26 - inconsistent input fails as a whole: missing parent field
+  ---
+  duration_ms: 0.0268
+  type: 'test'
+  ...
+# Subtest: a deep hierarchy is built without recursive stack growth
+ok 27 - a deep hierarchy is built without recursive stack growth
+  ---
+  duration_ms: 9.5948
+  type: 'test'
+  ...
+# Subtest: search is case-insensitive and retains all ancestors without changing names
+ok 28 - search is case-insensitive and retains all ancestors without changing names
+  ---
+  duration_ms: 0.3054
+  type: 'test'
+  ...
+# Subtest: search with no match returns no rows; blank query restores all rows
+ok 29 - search with no match returns no rows; blank query restores all rows
+  ---
+  duration_ms: 0.2196
+  type: 'test'
+  ...
+# Subtest: filtered sibling positions and branch flags describe the filtered tree
+ok 30 - filtered sibling positions and branch flags describe the filtered tree
+  ---
+  duration_ms: 0.1847
+  type: 'test'
+  ...
+# Subtest: collapsed and expanded branches never reveal hidden descendants
+ok 31 - collapsed and expanded branches never reveal hidden descendants
+  ---
+  duration_ms: 0.1381
+  type: 'test'
+  ...
+# node:internal/modules/package_json_reader:314
+#   throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+#         ^
+# Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'react' imported from D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-qa-dashboard-20261105\\frontend\\src\\features\\checkout\\CheckoutCodView.dom.test.mjs
+#     at Object.getPackageJSONURL (node:internal/modules/package_json_reader:314:9)
+#     at packageResolve (node:internal/modules/esm/resolve:772:81)
+#     at moduleResolve (node:internal/modules/esm/resolve:859:18)
+#     at defaultResolve (node:internal/modules/esm/resolve:989:11)
+#     at \#cachedDefaultResolve (node:internal/modules/esm/loader:747:20)
+#     at ModuleLoader.resolve (node:internal/modules/esm/loader:724:38)
+#     at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:320:38)
+#     at ModuleJob._link (node:internal/modules/esm/module_job:182:49) {
+#   code: 'ERR_MODULE_NOT_FOUND'
+# }
+# Node.js v22.23.3
+# Subtest: src\\features\\checkout\\CheckoutCodView.dom.test.mjs
+not ok 5 - src\\features\\checkout\\CheckoutCodView.dom.test.mjs
+  ---
+  duration_ms: 51.4127
+  type: 'test'
+  location: 'D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-qa-dashboard-20261105\\frontend\\src\\features\\checkout\\CheckoutCodView.dom.test.mjs:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# node:internal/modules/package_json_reader:314
+#   throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+#         ^
+# Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'react' imported from D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-qa-dashboard-20261105\\frontend\\src\\features\\checkout\\CheckoutCodView.test.mjs
+#     at Object.getPackageJSONURL (node:internal/modules/package_json_reader:314:9)
+#     at packageResolve (node:internal/modules/esm/resolve:772:81)
+#     at moduleResolve (node:internal/modules/esm/resolve:859:18)
+#     at defaultResolve (node:internal/modules/esm/resolve:989:11)
+#     at \#cachedDefaultResolve (node:internal/modules/esm/loader:747:20)
+#     at ModuleLoader.resolve (node:internal/modules/esm/loader:724:38)
+#     at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:320:38)
+#     at ModuleJob._link (node:internal/modules/esm/module_job:182:49) {
+#   code: 'ERR_MODULE_NOT_FOUND'
+# }
+# Node.js v22.23.3
+# Subtest: src\\features\\checkout\\CheckoutCodView.test.mjs
+not ok 6 - src\\features\\checkout\\CheckoutCodView.test.mjs
+  ---
+  duration_ms: 51.8365
+  type: 'test'
+  location: 'D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-qa-dashboard-20261105\\frontend\\src\\features\\checkout\\CheckoutCodView.test.mjs:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: 147 accepts exactly the declared product and stock reason
+ok 34 - 147 accepts exactly the declared product and stock reason
+  ---
+  duration_ms: 0.9635
+  type: 'test'
+  ...
+# Subtest: 147 cannot pass with the old generic refusal
+ok 35 - 147 cannot pass with the old generic refusal
+  ---
+  duration_ms: 0.7156
+  type: 'test'
+  ...
+# Subtest: 147 rejects a different product identity
+ok 36 - 147 rejects a different product identity
+  ---
+  duration_ms: 0.4863
+  type: 'test'
+  ...
+# Subtest: 147 rejects an invented stock reason or missing item list
+ok 37 - 147 rejects an invented stock reason or missing item list
+  ---
+  duration_ms: 0.6115
+  type: 'test'
+  ...
+# Subtest: 147 does not silently discard extra refused products
+ok 38 - 147 does not silently discard extra refused products
+  ---
+  duration_ms: 0.2582
+  type: 'test'
+  ...
+# Subtest: 145 retains its explicitly selected legacy contract
+ok 39 - 145 retains its explicitly selected legacy contract
+  ---
+  duration_ms: 0.1563
+  type: 'test'
+  ...
+# Subtest: payload mismatch remains non-itemized under both contracts
+ok 40 - payload mismatch remains non-itemized under both contracts
+  ---
+  duration_ms: 0.1465
+  type: 'test'
+  ...
+# Subtest: unknown contract fails closed
+ok 41 - unknown contract fails closed
+  ---
+  duration_ms: 0.1212
+  type: 'test'
+  ...
+# node:internal/modules/package_json_reader:314
+#   throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+#         ^
+# Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'vite' imported from D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-qa-dashboard-20261105\\frontend\\src\\features\\checkout\\checkoutApi.test.mjs
+#     at Object.getPackageJSONURL (node:internal/modules/package_json_reader:314:9)
+#     at packageResolve (node:internal/modules/esm/resolve:772:81)
+#     at moduleResolve (node:internal/modules/esm/resolve:859:18)
+#     at defaultResolve (node:internal/modules/esm/resolve:989:11)
+#     at \#cachedDefaultResolve (node:internal/modules/esm/loader:747:20)
+#     at ModuleLoader.resolve (node:internal/modules/esm/loader:724:38)
+#     at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:320:38)
+#     at ModuleJob._link (node:internal/modules/esm/module_job:182:49) {
+#   code: 'ERR_MODULE_NOT_FOUND'
+# }
+# Node.js v22.23.3
+# Subtest: src\\features\\checkout\\checkoutApi.test.mjs
+not ok 8 - src\\features\\checkout\\checkoutApi.test.mjs
+  ---
+  duration_ms: 52.171
+  type: 'test'
+  location: 'D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-qa-dashboard-20261105\\frontend\\src\\features\\checkout\\checkoutApi.test.mjs:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: two-Store expectedItems never invents SKU, price or a new idempotency key
+ok 43 - two-Store expectedItems never invents SKU, price or a new idempotency key
+  ---
+  duration_ms: 1.4499
+  type: 'test'
+  ...
+# Subtest: invalid key, untrusted Cart and in-progress claim fail without request
+ok 44 - invalid key, untrusted Cart and in-progress claim fail without request
+  ---
+  duration_ms: 0.3475
+  type: 'test'
+  ...
+# Subtest: unknown from provider blocks all automatic repeat submissions
+ok 45 - unknown from provider blocks all automatic repeat submissions
+  ---
+  duration_ms: 0.1628
+  type: 'test'
+  ...
+# Subtest: network failure is UNKNOWN and does not retry, mutate key or signal success
+ok 46 - network failure is UNKNOWN and does not retry, mutate key or signal success
+  ---
+  duration_ms: 0.1378
+  type: 'test'
+  ...
+# Subtest: two concurrent clicks execute exactly one checkout request
+ok 47 - two concurrent clicks execute exactly one checkout request
+  ---
+  duration_ms: 0.1334
+  type: 'test'
+  ...
+# node:internal/modules/package_json_reader:314
+#   throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+#         ^
+# Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'react' imported from D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-qa-dashboard-20261105\\frontend\\src\\features\\finance\\Workspace.dom.mjs
+#     at Object.getPackageJSONURL (node:internal/modules/package_json_reader:314:9)
+#     at packageResolve (node:internal/modules/esm/resolve:772:81)
+#     at moduleResolve (node:internal/modules/esm/resolve:859:18)
+#     at defaultResolve (node:internal/modules/esm/resolve:989:11)
+#     at \#cachedDefaultResolve (node:internal/modules/esm/loader:747:20)
+#     at ModuleLoader.resolve (node:internal/modules/esm/loader:724:38)
+#     at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:320:38)
+#     at ModuleJob._link (node:internal/modules/esm/module_job:182:49) {
+#   code: 'ERR_MODULE_NOT_FOUND'
+# }
+# Node.js v22.23.3
+# Subtest: src\\features\\finance\\Workspace.dom.test.mjs
+not ok 10 - src\\features\\finance\\Workspace.dom.test.mjs
+  ---
+  duration_ms: 55.1532
+  type: 'test'
+  location: 'D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-qa-dashboard-20261105\\frontend\\src\\features\\finance\\Workspace.dom.test.mjs:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# node:internal/modules/package_json_reader:314
+#   throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+#         ^
+# Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'react' imported from D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-qa-dashboard-20261105\\frontend\\src\\features\\finance\\WorkspaceView.test.mjs
+#     at Object.getPackageJSONURL (node:internal/modules/package_json_reader:314:9)
+#     at packageResolve (node:internal/modules/esm/resolve:772:81)
+#     at moduleResolve (node:internal/modules/esm/resolve:859:18)
+#     at defaultResolve (node:internal/modules/esm/resolve:989:11)
+#     at \#cachedDefaultResolve (node:internal/modules/esm/loader:747:20)
+#     at ModuleLoader.resolve (node:internal/modules/esm/loader:724:38)
+#     at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:320:38)
+#     at ModuleJob._link (node:internal/modules/esm/module_job:182:49) {
+#   code: 'ERR_MODULE_NOT_FOUND'
+# }
+# Node.js v22.23.3
+# Subtest: src\\features\\finance\\WorkspaceView.test.mjs
+not ok 11 - src\\features\\finance\\WorkspaceView.test.mjs
+  ---
+  duration_ms: 55.5081
+  type: 'test'
+  location: 'D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-qa-dashboard-20261105\\frontend\\src\\features\\finance\\WorkspaceView.test.mjs:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# node:internal/modules/package_json_reader:314
+#   throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+#         ^
+# Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'vite' imported from D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-qa-dashboard-20261105\\frontend\\src\\features\\finance\\workspaceModel.test.mjs
+#     at Object.getPackageJSONURL (node:internal/modules/package_json_reader:314:9)
+#     at packageResolve (node:internal/modules/esm/resolve:772:81)
+#     at moduleResolve (node:internal/modules/esm/resolve:859:18)
+#     at defaultResolve (node:internal/modules/esm/resolve:989:11)
+#     at \#cachedDefaultResolve (node:internal/modules/esm/loader:747:20)
+#     at ModuleLoader.resolve (node:internal/modules/esm/loader:724:38)
+#     at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:320:38)
+#     at ModuleJob._link (node:internal/modules/esm/module_job:182:49) {
+#   code: 'ERR_MODULE_NOT_FOUND'
+# }
+# Node.js v22.23.3
+# Subtest: src\\features\\finance\\workspaceModel.test.mjs
+not ok 12 - src\\features\\finance\\workspaceModel.test.mjs
+  ---
+  duration_ms: 50.4442
+  type: 'test'
+  location: 'D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-qa-dashboard-20261105\\frontend\\src\\features\\finance\\workspaceModel.test.mjs:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# node:internal/modules/package_json_reader:314
+#   throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+#         ^
+# Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'react' imported from D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-qa-dashboard-20261105\\frontend\\src\\features\\seller\\SellerStoreOverview.test.mjs
+#     at Object.getPackageJSONURL (node:internal/modules/package_json_reader:314:9)
+#     at packageResolve (node:internal/modules/esm/resolve:772:81)
+#     at moduleResolve (node:internal/modules/esm/resolve:859:18)
+#     at defaultResolve (node:internal/modules/esm/resolve:989:11)
+#     at \#cachedDefaultResolve (node:internal/modules/esm/loader:747:20)
+#     at ModuleLoader.resolve (node:internal/modules/esm/loader:724:38)
+#     at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:320:38)
+#     at ModuleJob._link (node:internal/modules/esm/module_job:182:49) {
+#   code: 'ERR_MODULE_NOT_FOUND'
+# }
+# Node.js v22.23.3
+# Subtest: src\\features\\seller\\SellerStoreOverview.test.mjs
+not ok 13 - src\\features\\seller\\SellerStoreOverview.test.mjs
+  ---
+  duration_ms: 57.1034
+  type: 'test'
+  location: 'D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-qa-dashboard-20261105\\frontend\\src\\features\\seller\\SellerStoreOverview.test.mjs:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: canonical decimal versions remain exact beyond JS safe integer range
+ok 52 - canonical decimal versions remain exact beyond JS safe integer range
+  ---
+  duration_ms: 0.9335
+  type: 'test'
+  ...
+# Subtest: noncanonical, numeric and overflowing versions fail without normalization
+ok 53 - noncanonical, numeric and overflowing versions fail without normalization
+  ---
+  duration_ms: 0.1656
+  type: 'test'
+  ...
+# Subtest: all four actual Seller statuses are supported
+ok 54 - all four actual Seller statuses are supported
+  ---
+  duration_ms: 0.1485
+  type: 'test'
+  ...
+# Subtest: unknown and client role strings are not Seller statuses
+ok 55 - unknown and client role strings are not Seller statuses
+  ---
+  duration_ms: 0.0962
+  type: 'test'
+  ...
+# Subtest: private/unknown fields never enter the display projection
+ok 56 - private/unknown fields never enter the display projection
+  ---
+  duration_ms: 0.6576
+  type: 'test'
+  ...
+# Subtest: frozen input is not mutated and the display model owns its copies
+ok 57 - frozen input is not mutated and the display model owns its copies
+  ---
+  duration_ms: 0.1796
+  type: 'test'
+  ...
+# Subtest: only explicit null represents a proven absent Store
+ok 58 - only explicit null represents a proven absent Store
+  ---
+  duration_ms: 0.2113
+  type: 'test'
+  ...
+# Subtest: cross-Seller Store data rejects the entire overview
+ok 59 - cross-Seller Store data rejects the entire overview
+  ---
+  duration_ms: 0.1249
+  type: 'test'
+  ...
+# Subtest: malformed Seller data cannot create a ready overview
+ok 60 - malformed Seller data cannot create a ready overview
+  ---
+  duration_ms: 0.3078
+  type: 'test'
+  ...
+# Subtest: Store identities, boolean and version are required
+ok 61 - Store identities, boolean and version are required
+  ---
+  duration_ms: 0.2821
+  type: 'test'
+  ...
+# Subtest: Store names and slugs retain source values and existing length boundaries
+ok 62 - Store names and slugs retain source values and existing length boundaries
+  ---
+  duration_ms: 0.1776
+  type: 'test'
+  ...
+# Subtest: closed Store and unapproved Seller are displayed facts, not a selling grant
+ok 63 - closed Store and unapproved Seller are displayed facts, not a selling grant
+  ---
+  duration_ms: 0.0751
+  type: 'test'
+  ...
+# Subtest: canonical versions reject trailing line terminators rather than matching before them
+ok 64 - canonical versions reject trailing line terminators rather than matching before them
+  ---
+  duration_ms: 0.5057
+  type: 'test'
+  ...
+# Subtest: UUID display keys reject trailing line terminators even when the relationship matches
+ok 65 - UUID display keys reject trailing line terminators even when the relationship matches
+  ---
+  duration_ms: 0.1187
+  type: 'test'
+  ...
+# Subtest: Store slug rejects trailing line terminators
+ok 66 - Store slug rejects trailing line terminators
+  ---
+  duration_ms: 0.1079
+  type: 'test'
+  ...
+# node:internal/modules/package_json_reader:314
+#   throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+#         ^
+# Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'vite' imported from D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-qa-dashboard-20261105\\frontend\\src\\shared\\api.test.mjs
+#     at Object.getPackageJSONURL (node:internal/modules/package_json_reader:314:9)
+#     at packageResolve (node:internal/modules/esm/resolve:772:81)
+#     at moduleResolve (node:internal/modules/esm/resolve:859:18)
+#     at defaultResolve (node:internal/modules/esm/resolve:989:11)
+#     at \#cachedDefaultResolve (node:internal/modules/esm/loader:747:20)
+#     at ModuleLoader.resolve (node:internal/modules/esm/loader:724:38)
+#     at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:320:38)
+#     at ModuleJob._link (node:internal/modules/esm/module_job:182:49) {
+#   code: 'ERR_MODULE_NOT_FOUND'
+# }
+# Node.js v22.23.3
+# Subtest: src\\shared\\api.test.mjs
+not ok 15 - src\\shared\\api.test.mjs
+  ---
+  duration_ms: 50.6603
+  type: 'test'
+  location: 'D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-qa-dashboard-20261105\\frontend\\src\\shared\\api.test.mjs:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+1..67
+# tests 67
+# suites 0
+# pass 57
+# fail 10
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 998.6457
