@@ -61,6 +61,8 @@ docker compose --env-file .env.demo -f docker/compose.demo.yml down
 
 Thêm `-v` vào lệnh trên để xóa cả volume database. Khi tạo lại `.env.demo` bằng `node scripts/demo/gen-env.mjs --force`, phải xóa volume vì mật khẩu database đã đổi.
 
+Clone thứ hai trên cùng máy sinh secret mới nhưng vẫn dùng tên project `hk5-demo`, nên sẽ gặp volume cũ và service báo `password authentication failed`, `up.mjs` chờ hết 4 phút. Đặt tên project riêng cho mọi lệnh của clone đó, ví dụ `COMPOSE_PROJECT_NAME=hk5-clean node scripts/demo/up.mjs ...`, và chỉ chạy một stack mỗi lúc vì cổng `5173`/`18080` dùng chung.
+
 ## Kiểm thử
 
 ```bash

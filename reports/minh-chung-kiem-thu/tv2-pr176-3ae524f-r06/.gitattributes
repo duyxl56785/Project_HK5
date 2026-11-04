@@ -1,0 +1,2 @@
+# Raw evidence: keep exact bytes so SHA256SUMS matches the committed blob.
+*.log -text
