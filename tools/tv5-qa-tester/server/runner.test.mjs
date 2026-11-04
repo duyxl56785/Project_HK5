@@ -31,6 +31,12 @@ test('Docker không hoạt động thì PostgreSQL BLOCKED_ENV và command khôn
   assert.equal(runner.runs.get(run.id).suites[0].status,'BLOCKED_ENV');
   assert.equal(invoked,false);
 });
+test('Playwright không có screenshot thì không PASS dù process báo passed', async () => {
+  const runner=new Runner({root:await mkdtemp(path.join(tmpdir(),'soopi-qa-')),exec:async()=>({code:0,output:'2 passed (1s)',timedOut:false})});
+  const run=await runner.start(['QA-UI']);
+  while(runner.runs.get(run.id).status==='RUNNING') await new Promise(resolve=>setTimeout(resolve,20));
+  assert.equal(runner.runs.get(run.id).suites[0].status,'FAIL');
+});
 test('TAP/JUnit có số kiểm thử và export escape dữ liệu', () => {
   assert.deepEqual(countEvidence('tap','# tests 2\n# pass 1\n# fail 1\n# skipped 0'),{tests:2,pass:1,fail:1,skip:0});
   assert.equal(countEvidence('tap','BUILD SUCCESSFUL'),null);

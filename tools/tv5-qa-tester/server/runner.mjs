@@ -144,7 +144,10 @@ export class Runner {
       } else row.evidenceWarning = 'Raw log/XML chứa chuỗi giống secret; không lưu artifact.';
       if (cmd.evidence === 'playwright') {
         row.screenshots = (await readdir(screenshotDir)).filter(name => /^[a-zA-Z0-9_.-]+\.png$/.test(name)).map(name => `screenshots/${report.id}/${name}`);
-        if (row.screenshots.length !== row.counts?.tests) { row.status = 'NOT_RUN'; row.actual += '; thiếu screenshot của một hoặc nhiều test'; }
+        if (row.screenshots.length !== row.counts?.tests) {
+          if (row.status === 'PASS') row.status = 'FAIL';
+          row.actual += '; thiếu screenshot của một hoặc nhiều test';
+        }
       }
     }
     report.status = report.suites.some(s => s.status === 'FAIL') ? 'FAIL' : report.suites.some(s => s.status === 'TIMEOUT') ? 'TIMEOUT' : report.suites.some(s => s.status === 'CANCELLED') ? 'CANCELLED' : report.suites.every(s => s.status === 'PASS') ? 'PASS' : 'PARTIAL';
