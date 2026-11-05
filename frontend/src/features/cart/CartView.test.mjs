@@ -22,7 +22,7 @@ const view = (state, actions = {}) => renderToStaticMarkup(createElement(CartVie
 test('two Store groups show exact total and accessible quantity labels', () => {
   const html = view({ status: 'ready', snapshot }, { onQuantityChange() {}, onRemove() {} });
   assert.match(html, /store-A/); assert.match(html, /store-B/);
-  assert.match(html, /35\.000,00/);
+  assert.match(html, /35\.000 ₫/);
   assert.match(html, /Số lượng/); assert.match(html, /Xóa/);
   assert.doesNotMatch(html, /Checkout thành công|Thanh toán thành công/);
 });
@@ -45,11 +45,11 @@ test('invalid snapshot renders no stale partial store items', () => {
   const invalid = { ...snapshot, items: [{ ...snapshot.items[0] }, { ...snapshot.items[1], sellerId: 'seller-A' }] };
   const html = view({ status: 'ready', snapshot: invalid });
   assert.match(html, /Dữ liệu giỏ hàng không nhất quán/);
-  assert.doesNotMatch(html, /Áo thun|Sách|35\.000,00/);
+  assert.doesNotMatch(html, /Áo thun|Sách|35\.000 ₫/);
 });
 test('non-ready states never render stale Cart data or private source fields', () => {
   for (const status of ['loading', 'empty', 'unauthorized', 'unavailable', 'error']) {
     const html = view({ status, snapshot: { ...snapshot, token: 'PRIVATE_TOKEN' } });
-    assert.doesNotMatch(html, /Áo thun|Sách|PRIVATE_TOKEN|35\.000,00/);
+    assert.doesNotMatch(html, /Áo thun|Sách|PRIVATE_TOKEN|35\.000 ₫/);
   }
 });

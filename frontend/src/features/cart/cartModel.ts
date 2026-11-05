@@ -34,7 +34,9 @@ export function renderMinorUnits(minor: bigint): string {
   if (minor < 0n || minor > MAX_MINOR) throw new RangeError('Invalid monetary snapshot');
   const digits = minor.toString().padStart(3, '0');
   const integral = digits.slice(0, -2).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-  return integral + ',' + digits.slice(-2);
+  const fraction = digits.slice(-2);
+  // Match money() elsewhere: VND has no subunit in practice, so ",00" is dropped; a real fraction is kept.
+  return integral + (fraction === '00' ? '' : ',' + fraction) + ' ₫';
 }
 
 /** Fail closed on conflicting Cart identity, invalid money or overflow. No network calls. */
