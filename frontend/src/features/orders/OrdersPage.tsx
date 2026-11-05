@@ -85,7 +85,8 @@ function StoreOrderCard({ order, reviewed, existingReturn, returnsLoading, retur
       <button type="button" className="btn btn--danger" disabled={cancel.isPending} onClick={() => cancel.mutate(undefined)}>Hủy đơn của cửa hàng này</button>
     </div>}
     <ErrorNote error={cancel.error} />
-    <ReturnRequestPanel orderId={order.orderId} storeOrderId={order.id}
+    <ReturnRequestPanel key={`${order.id}:${existingReturn?.requestId ?? 'none'}:${existingReturn?.status ?? 'none'}`}
+      orderId={order.orderId} storeOrderId={order.id}
       status={order.status} deliveredAt={order.deliveredAt} settledAt={order.settledAt}
       existing={existingReturn} loading={returnsLoading} loadError={returnsError} />
   </article>;
