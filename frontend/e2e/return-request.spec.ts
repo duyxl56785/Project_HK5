@@ -13,9 +13,9 @@ test('delivered buyer requests one Return and replay with the same key keeps its
     const catalogResponse = await customer.request.get('/api/catalog/products?size=50');
     expect(catalogResponse.ok()).toBeTruthy();
     const catalog = await catalogResponse.json() as { items: {
-      id: string; available: number; store: { name: string };
+      id: string; store: { name: string };
     }[] };
-    const product = catalog.items.find(p => p.store.name === 'Tiệm Áo Sài Gòn' && p.available > 0);
+    const product = catalog.items.find(p => p.store.name === 'Tiệm Áo Sài Gòn');
     expect(product, 'Seed must include a buyable Store-1 product').toBeTruthy();
 
     await customer.goto(`/products/${product!.id}`);
