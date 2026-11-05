@@ -1,0 +1,6 @@
+
+Running 2 tests using 1 worker
+
+[1/2] ui\dashboard.spec.mjs:13:1 › dashboard-hien-thi-suite-va-gates
+[2/2] ui\dashboard.spec.mjs:21:1 › dashboard-chi-goi-suite-allowlist
+  2 passed (1.8s)

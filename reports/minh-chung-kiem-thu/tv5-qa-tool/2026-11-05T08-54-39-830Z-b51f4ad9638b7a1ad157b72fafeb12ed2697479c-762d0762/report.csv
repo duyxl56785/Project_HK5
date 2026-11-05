@@ -1,0 +1,3 @@
+id,status,expected,actual,durationMs,sha,environment
+"F15-RULES","PASS","Review rules và giới hạn 1000 UTF-16 đạt","PASS: exit 0, 18 test, 18 PASS, 0 FAIL, 0 SKIP","19046","b51f4ad9638b7a1ad157b72fafeb12ed2697479c","{""platform"":""win32"",""node"":""v22.23.3"",""localhost"":true}"
+"QA-UI","PASS","Dashboard hoạt động và mỗi Playwright test có screenshot","PASS: exit 0, 2 test, 2 PASS, 0 FAIL, 0 SKIP","2503","b51f4ad9638b7a1ad157b72fafeb12ed2697479c","{""platform"":""win32"",""node"":""v22.23.3"",""localhost"":true}"
