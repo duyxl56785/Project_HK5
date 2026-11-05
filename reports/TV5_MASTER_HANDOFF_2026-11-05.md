@@ -6,15 +6,15 @@ Main fetched: `00426dc3d933d02ec9545be7aea43b8a448f0829`. Live API authenticated
 
 | PR | Author | HEAD | CI | Requested reviewers | Effective review / SHA | Blocker/gate | TV5 đã làm |
 |---|---|---|---|---|---|---|---|
-| #152 | duyxl56785 | `edc6a17021e0960a9b8763bb06758300b2bfd9de` | NO_CHECKS | phamthecuong2022006-alt | nguyenminhduy090-alt:APPROVED@edc6a17 | owner integration review | TV5 APPROVED docs only |
-| #165 | nguyenminhduy090-alt | `c1a7a7f05988e2e40af3cd0bf790c39e4069ad84` | SUCCESS | duyxl56785 | None | REVIEW_REQUIRED | new Return oracle/raw evidence; existing reviewer retained |
-| #169 | phamthecuong2022006-alt | `436358a10f0fc8f7c9f36f5002cae47ad099558d` | SUCCESS | None | None | DRAFT, REVIEW_REQUIRED | draft candidate; no TV5 request |
-| #170 | phamthecuong2022006-alt | `2ddc0f3d5283d6a1cc985fa203c8d0d380bc164a` | NO_CHECKS | None | nguyenminhduy090-alt:APPROVED@2ddc0f3 | DRAFT | 12 fake-loopback PASS; P2 fixed; TV5 APPROVED preparation |
-| #173 | phamthecuong2022006-alt | `7ce40eb3f868bb840fddc01a6b166dc630a5d4e7` | SUCCESS | tranvanchinhbg2006-alt | None | MERGE_CONFLICT | TV5 COMMENTED superseded by merged #171 |
-| #175 | duyxl56785 | `4ca06352368f2cf610bde5fc1dd3cc9886e08c28` | NO_CHECKS | phamthecuong2022006-alt | tranvanchinhbg2006-alt:APPROVED@4ca0635, nguyenminhduy090-alt:APPROVED@4ca0635 | DRAFT | prior TV5 approval unchanged |
-| #177 | duyxl56785 | `18b20a6f775124dc2e9c9196b61c3d378407e1ff` | SUCCESS | lexuanbao258-collab | nguyenminhduy090-alt:APPROVED@18b20a6, lexuanbao258-collab:CHANGES_REQUESTED@eb3a207 | CHANGES_REQUESTED | prior TV5 head approval unchanged |
-| #179 | nguyenminhduy090-alt | `844c6f310c4d9adca696e4d519e44f8bbe17bc26` | NO_CHECKS | duyxl56785 | None | REVIEW_REQUIRED | 6 self-tests/build PASS; Selected/All Safe PASS; R06 fix b51f4ad |
-| #180 | tranvanchinhbg2006-alt | `66f3edbc921e599372fe0a2668b8e643c7d4d696` | SUCCESS | duyxl56785, phamthecuong2022006-alt | nguyenminhduy090-alt:APPROVED@66f3edb | owner integration review | 4 unit +18 PG PASS; TV5 scoped APPROVED |
+| #152 | duyxl56785 | `edc6a17021e0960a9b8763bb06758300b2bfd9de` | NO_CHECKS | phamthecuong2022006-alt | nguyenminhduy090-alt:APPROVED@edc6a17 | owner integration review | See action/evidence table below |
+| #165 | nguyenminhduy090-alt | `8900712098f1ff202901eedba09be18ddfe79aff` | PENDING | duyxl56785 | No approval | REVIEW_REQUIRED, CI_PENDING | See action/evidence table below |
+| #169 | phamthecuong2022006-alt | `436358a10f0fc8f7c9f36f5002cae47ad099558d` | SUCCESS | None | No approval | DRAFT, REVIEW_REQUIRED | See action/evidence table below |
+| #170 | phamthecuong2022006-alt | `2ddc0f3d5283d6a1cc985fa203c8d0d380bc164a` | NO_CHECKS | None | nguyenminhduy090-alt:APPROVED@2ddc0f3 | DRAFT | See action/evidence table below |
+| #173 | phamthecuong2022006-alt | `7ce40eb3f868bb840fddc01a6b166dc630a5d4e7` | SUCCESS | tranvanchinhbg2006-alt | No approval | MERGE_CONFLICT | See action/evidence table below |
+| #175 | duyxl56785 | `4ca06352368f2cf610bde5fc1dd3cc9886e08c28` | NO_CHECKS | phamthecuong2022006-alt | tranvanchinhbg2006-alt:APPROVED@4ca0635, nguyenminhduy090-alt:APPROVED@4ca0635 | DRAFT | See action/evidence table below |
+| #177 | duyxl56785 | `18b20a6f775124dc2e9c9196b61c3d378407e1ff` | SUCCESS | lexuanbao258-collab | nguyenminhduy090-alt:APPROVED@18b20a6, lexuanbao258-collab:CHANGES_REQUESTED@eb3a207 | CHANGES_REQUESTED | See action/evidence table below |
+| #179 | nguyenminhduy090-alt | `7cf05ea9cc3025b5646ea4a67ee012de4b081731` | NO_CHECKS | duyxl56785 | No approval | REVIEW_REQUIRED | See action/evidence table below |
+| #180 | tranvanchinhbg2006-alt | `66f3edbc921e599372fe0a2668b8e643c7d4d696` | SUCCESS | phamthecuong2022006-alt | nguyenminhduy090-alt:APPROVED@66f3edb | owner integration review | See action/evidence table below |
 
 ## Bảng 2 — Công việc TV5 và phụ thuộc
 
@@ -68,3 +68,12 @@ Phát hiện/sửa lỗi TV5 tool: F15 title/expected nói R06 nhưng allowlist 
 Kiểm timeline trước khi bổ sung reviewer #169/#170: điều kiện giữ quyết định trước đó được kích hoạt, không request lại. #169 vẫn thiếu reviewer ở snapshot; TV5 không đảo quyết định đã gỡ/request/review trước đó. Báo cáo metadata có thể thay đổi sau snapshot; các review URL/source SHA là immutable provenance.
 
 Rerun at b51f4ad: **F15 18 PASS (16 rules +2 R06), QA-UI 2 PASS**, two actual screenshots inspected; raw receipts committed/pushed as **7cf05ea** on #179. No other tests rerun on evidence-only head.
+
+
+### Publication receipt
+
+Evidence/oracle commit **8900712098f1ff202901eedba09be18ddfe79aff** pushed to existing #165; Soopi code **b51f4ad9638b7a1ad157b72fafeb12ed2697479c** and raw receipts **7cf05ea9cc3025b5646ea4a67ee012de4b081731** pushed to existing #179. Final table uses post-push snapshot at 08:57:33 UTC: #165 CI PENDING, no FAIL observed; #179 NO_CHECKS. Both retain requested duyxl56785. Raw evidence: 13/13 manifest entries matched committed Git blob SHA256, not only working tree.
+
+Reviewer clarification after timeline/review readback: #169/#170 have zero duyxl56785 removals, zero current requests, **one formal review event at current head** each (COMMENTED scope is omitted by the audit's effective-opinionated-review column). Therefore do not re-request solely because requested list is empty. #169 lacks approval, not proof that nobody reviewed it. This supersedes earlier wording about missing reviewer; no reviewer request was added.
+
+Issues read back after checkpoint comments: #162 0/6, #157 3/6, #18 1/4, #12 43/75, #5 141/219. New comments: #165/6653881238, #179/6653881887, #157/6653882491, #18/6653883118, #5/6653883695, #12/6653884555. No checkbox mutation, close or merge.
