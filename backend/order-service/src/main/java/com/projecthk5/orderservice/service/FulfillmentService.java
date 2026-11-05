@@ -30,16 +30,30 @@ public class FulfillmentService {
 
     private final SellerOrderRepository sellerOrders;
     private final OrderEvents events;
+    private final ReturnRequestService returns;
     private final Clock clock;
 
+    /** Spring production wiring always includes the Return settlement guard. */
     @Autowired
+    public FulfillmentService(SellerOrderRepository sellerOrders, OrderEvents events,
+                              ReturnRequestService returns) {
+        this(sellerOrders, events, Clock.systemUTC(), returns);
+    }
+
+    /** Retained for existing pure unit tests; production uses the annotated constructor. */
     public FulfillmentService(SellerOrderRepository sellerOrders, OrderEvents events) {
-        this(sellerOrders, events, Clock.systemUTC());
+        this(sellerOrders, events, Clock.systemUTC(), null);
     }
 
     FulfillmentService(SellerOrderRepository sellerOrders, OrderEvents events, Clock clock) {
+        this(sellerOrders, events, clock, null);
+    }
+
+    private FulfillmentService(SellerOrderRepository sellerOrders, OrderEvents events, Clock clock,
+                               ReturnRequestService returns) {
         this.sellerOrders = sellerOrders;
         this.events = events;
+        this.returns = returns;
         this.clock = clock;
     }
 
@@ -104,6 +118,13 @@ public class FulfillmentService {
     @Transactional
     public SellerOrder settle(String adminId, UUID sellerOrderId) {
         SellerOrder so = lock(sellerOrderId);
+        // Return creation locks exactly this SellerOrder row before inserting an active Return.
+        // The guard and settle write are thus ordered by the same database row lock.
+        // collectCod deliberately remains permitted while a Return is open: cash was received.
+        if (returns != null && returns.hasBlockingReturnForSellerOrder(sellerOrderId)) {
+            throw ApiException.conflict("SETTLEMENT_RETURN_OPEN",
+                    "A pending or received Return blocks settlement");
+        }
         try {
             so.settle(adminId, clock.instant());
         } catch (IllegalStateException invalid) {
