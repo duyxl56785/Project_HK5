@@ -1,11 +1,11 @@
 -- TV3 W4 #155: buyer Return MVP, separate from SellerOrder fulfillment and CheckoutDraft retention.
 -- Full SellerOrder only; no refund, no reverse shipping, no blind Inventory RELEASE/restock.
 -- Match Java String.length() / browser maxLength: non-BMP emoji count as two UTF-16 units.
-CREATE FUNCTION hk5_order_return_utf16_length(value text) RETURNS integer
-LANGUAGE sql IMMUTABLE STRICT PARALLEL SAFE AS $
-    SELECT COALESCE(sum(CASE WHEN ascii(substr(value, n, 1)) > 65535 THEN 2 ELSE 1 END), 0)::integer
-    FROM generate_series(1, char_length(value)) AS n;
-$;
+CREATE FUNCTION hk5_order_return_utf16_length(input_text text) RETURNS integer
+LANGUAGE sql IMMUTABLE STRICT PARALLEL SAFE AS $return_utf16$
+    SELECT COALESCE(sum(CASE WHEN ascii(substr(input_text, n, 1)) > 65535 THEN 2 ELSE 1 END), 0)::integer
+    FROM generate_series(1, char_length(input_text)) AS n;
+$return_utf16$;
 
 CREATE TABLE return_requests (
     id uuid PRIMARY KEY,
