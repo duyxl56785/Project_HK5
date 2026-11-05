@@ -85,12 +85,8 @@ public class ReturnRequestService {
 
         Instant now = clock.instant();
         Instant delivered = sellerOrder.getDeliveredAt();
-        if (!"COD".equals(order.getPaymentMethod())
-                || sellerOrder.getStatus() != SellerOrderLifecycle.Status.DELIVERED
-                || sellerOrder.getSettledAt() != null
-                || sellerOrder.getCodStatus() == SellerOrder.CodStatus.VOID
-                || delivered == null || now.isBefore(delivered)
-                || now.isAfter(delivered.plus(WINDOW))) {
+        if (!eligible(order.getPaymentMethod(), sellerOrder.getStatus(), sellerOrder.getCodStatus(),
+                delivered, sellerOrder.getSettledAt(), now)) {
             throw ApiException.conflict("RETURN_NOT_ELIGIBLE", "Return is unavailable for this Store order");
         }
         if (hasBlockingReturnForSellerOrder(storeOrderId)) {
@@ -156,14 +152,23 @@ public class ReturnRequestService {
                 + "where customer_id=? and idempotency_key=?", String.class, customerId, key).strip();
     }
 
-    private static void requireKey(String key) {
+    /** Pure business rule for deterministic unit cutoff/Finance tests. */
+    static boolean eligible(String paymentMethod, SellerOrderLifecycle.Status status,
+                            SellerOrder.CodStatus cod, Instant delivered, Instant settled, Instant now) {
+        return "COD".equals(paymentMethod) && status == SellerOrderLifecycle.Status.DELIVERED
+                && settled == null && cod != SellerOrder.CodStatus.VOID
+                && delivered != null && now != null && !now.isBefore(delivered)
+                && !now.isAfter(delivered.plus(WINDOW));
+    }
+
+    static void requireKey(String key) {
         if (key == null || key.isBlank() || key.length() > 128 || !key.equals(key.trim())
                 || key.chars().anyMatch(Character::isISOControl)) {
             throw ApiException.badRequest("VALIDATION_FAILED", "Idempotency-Key must be 1-128 valid characters");
         }
     }
 
-    private static String normalizeReason(String raw) {
+    static String normalizeReason(String raw) {
         if (raw == null) throw ApiException.badRequest("VALIDATION_FAILED", "Return reason is required");
         String result = raw.strip();
         if (result.isBlank() || result.length() > 500 || result.chars().anyMatch(c -> (Character.isISOControl(c) && c != 10 && c != 13 && c != 9))) {
@@ -172,7 +177,7 @@ public class ReturnRequestService {
         return result;
     }
 
-    private static String fingerprint(UUID orderId, UUID storeOrderId, String reason) {
+    static String fingerprint(UUID orderId, UUID storeOrderId, String reason) {
         String value = "customer-return-v1|" + orderId + "|" + storeOrderId + "|" + reason.length() + ":" + reason;
         try {
             return HexFormat.of().formatHex(MessageDigest.getInstance("SHA-256")
