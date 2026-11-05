@@ -163,6 +163,36 @@ class FulfillmentPostgres16IT {
     }
 
     @Test
+    void concurrentSettlementPaysOneSellerOrderOnlyOnce() throws Exception {
+        for (String action : new String[]{"accept", "prepare", "ready", "dispatch", "deliver"}) {
+            act("owner-1", so1, action, null, 200);
+        }
+        mvc.perform(post("/api/admin/store-orders/{id}/cod-collected", so1.getId())
+                .with(as("admin", "ADMIN"))).andExpect(status().isOk());
+
+        ExecutorService pool = Executors.newFixedThreadPool(2);
+        CountDownLatch start = new CountDownLatch(1);
+        try {
+            Callable<Integer> settle = () -> {
+                start.await();
+                return mvc.perform(post("/api/admin/store-orders/{id}/settle", so1.getId())
+                        .with(as("admin", "ADMIN"))).andReturn().getResponse().getStatus();
+            };
+            Future<Integer> first = pool.submit(settle), second = pool.submit(settle);
+            start.countDown();
+            List<Integer> results = List.of(first.get(30, TimeUnit.SECONDS), second.get(30, TimeUnit.SECONDS));
+            assertTrue(results.contains(200) && results.contains(409), results.toString());
+            assertEquals(1, outbox(so1, "\"SETTLED\""));
+            assertNotNull(sql.queryForObject("select settled_at from seller_orders where id=?", java.sql.Timestamp.class, so1.getId()));
+            mvc.perform(get("/api/seller/finance").with(as("owner-1", "SELLER")))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.totals.settledNet").value(190000));
+        } finally {
+            pool.shutdownNow();
+        }
+    }
+
+    @Test
     void suspendedSellerFinishesOpenOrdersButTakesNothingNewAndSeesNoFinance() throws Exception {
         act("owner-1", so1, "accept", null, 200);
         when(stores.managedBy("owner-1")).thenReturn(suspended(store1, "owner-1"));

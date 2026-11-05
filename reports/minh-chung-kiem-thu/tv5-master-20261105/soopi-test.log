@@ -1,0 +1,50 @@
+
+> soopi-tv5-qa-tester@0.1.0 test
+> node --test server/*.test.mjs
+
+TAP version 13
+# Subtest: allowlist từ chối executable bất kỳ và suite đang bị khóa
+ok 1 - allowlist từ chối executable bất kỳ và suite đang bị khóa
+  ---
+  duration_ms: 165.8759
+  type: 'test'
+  ...
+# Subtest: timeout, FAIL và thiếu test evidence không thể PASS
+ok 2 - timeout, FAIL và thiếu test evidence không thể PASS
+  ---
+  duration_ms: 232.6405
+  type: 'test'
+  ...
+# Subtest: Docker không hoạt động thì PostgreSQL BLOCKED_ENV và command không chạy
+ok 3 - Docker không hoạt động thì PostgreSQL BLOCKED_ENV và command không chạy
+  ---
+  duration_ms: 77.2636
+  type: 'test'
+  ...
+# Subtest: Playwright không có screenshot thì không PASS dù process báo passed
+ok 4 - Playwright không có screenshot thì không PASS dù process báo passed
+  ---
+  duration_ms: 78.8281
+  type: 'test'
+  ...
+# Subtest: hai Playwright suite trong một run không đếm ảnh của nhau
+ok 5 - hai Playwright suite trong một run không đếm ảnh của nhau
+  ---
+  duration_ms: 76.5012
+  type: 'test'
+  ...
+# Subtest: TAP/JUnit có số kiểm thử và export escape dữ liệu
+ok 6 - TAP/JUnit có số kiểm thử và export escape dữ liệu
+  ---
+  duration_ms: 1.2024
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 702.9749

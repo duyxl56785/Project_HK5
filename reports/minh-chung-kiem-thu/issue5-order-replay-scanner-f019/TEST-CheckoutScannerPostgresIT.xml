@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.projecthk5.orderservice.integration.CheckoutScannerPostgresIT" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-03T14:57:21" hostname="MDUY-LECO" time="0.228">
+  <properties/>
+  <testcase name="startupDoesNotRunTheScanBeforeOneInterval()" classname="com.projecthk5.orderservice.integration.CheckoutScannerPostgresIT" time="0.003"/>
+  <testcase name="[1] competing=scanner" classname="com.projecthk5.orderservice.integration.CheckoutScannerPostgresIT" time="0.114"/>
+  <testcase name="[2] competing=failure-handler" classname="com.projecthk5.orderservice.integration.CheckoutScannerPostgresIT" time="0.061"/>
+  <testcase name="scanFlagsOnlyStaleProcessingAndIsRepeatable()" classname="com.projecthk5.orderservice.integration.CheckoutScannerPostgresIT" time="0.016"/>
+  <testcase name="scannerWinningBeforeWriterKeepsOrderAndOutboxRolledBack()" classname="com.projecthk5.orderservice.integration.CheckoutScannerPostgresIT" time="0.03"/>
+  <system-out><![CDATA[2026-11-03T21:57:16.719+07:00  INFO 23532 --- [order-service] [    Test worker] tc.postgres:16-alpine                    : Creating container for image: postgres:16-alpine
+2026-11-03T21:57:16.843+07:00  INFO 23532 --- [order-service] [    Test worker] tc.postgres:16-alpine                    : Container postgres:16-alpine is starting: 7f54f6859345290677c1d9c3af52bd080faadab1c3d2fc01822a54b56b54b9ce
+2026-11-03T21:57:17.381+07:00  WARN 23532 --- [order-service] [   scheduling-1] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@614d01b (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-11-03T21:57:17.383+07:00  WARN 23532 --- [order-service] [   scheduling-1] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@1b68367c (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-11-03T21:57:17.384+07:00  WARN 23532 --- [order-service] [   scheduling-1] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@716003a4 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-11-03T21:57:17.384+07:00  WARN 23532 --- [order-service] [   scheduling-1] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@1a184de1 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-11-03T21:57:17.384+07:00  WARN 23532 --- [order-service] [   scheduling-1] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@2347bfa4 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-11-03T21:57:17.385+07:00  WARN 23532 --- [order-service] [   scheduling-1] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@71b9cf1a (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-11-03T21:57:17.385+07:00  WARN 23532 --- [order-service] [   scheduling-1] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@620040d3 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-11-03T21:57:17.386+07:00  WARN 23532 --- [order-service] [   scheduling-1] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@43b2471b (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-11-03T21:57:17.386+07:00  WARN 23532 --- [order-service] [   scheduling-1] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@7c7cef93 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-11-03T21:57:17.386+07:00  WARN 23532 --- [order-service] [   scheduling-1] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@35c72f32 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-11-03T21:57:18.820+07:00  INFO 23532 --- [order-service] [    Test worker] tc.postgres:16-alpine                    : Container postgres:16-alpine started in PT2.100452S
+2026-11-03T21:57:18.820+07:00  INFO 23532 --- [order-service] [    Test worker] tc.postgres:16-alpine                    : Container is started (JDBC URL: jdbc:postgresql://localhost:55099/test?loggerLevel=OFF)
+2026-11-03T21:57:18.822+07:00  INFO 23532 --- [order-service] [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.projecthk5.orderservice.integration.CheckoutScannerPostgresIT]: CheckoutScannerPostgresIT does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-11-03T21:57:18.824+07:00  INFO 23532 --- [order-service] [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.projecthk5.orderservice.OrderServiceApplication for test class com.projecthk5.orderservice.integration.CheckoutScannerPostgresIT
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.5)
+
+2026-11-03T21:57:18.870+07:00  INFO 23532 --- [order-service] [    Test worker] c.p.o.i.CheckoutScannerPostgresIT        : Starting CheckoutScannerPostgresIT using Java 21.0.7 with PID 23532 (started by Minh Duy in D:\CMC Uni\5 Ky Dong\WEB\BCK WEB\Project_HK5\.verification\tv5-main-f019-20261103\backend\order-service)
+2026-11-03T21:57:18.870+07:00  INFO 23532 --- [order-service] [    Test worker] c.p.o.i.CheckoutScannerPostgresIT        : No active profile set, falling back to 1 default profile: "default"
+2026-11-03T21:57:19.915+07:00  INFO 23532 --- [order-service] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-11-03T21:57:19.935+07:00  INFO 23532 --- [order-service] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 19 ms. Found 4 JPA repository interfaces.
+2026-11-03T21:57:19.991+07:00  INFO 23532 --- [order-service] [    Test worker] o.s.cloud.context.scope.GenericScope     : BeanFactory id=b3b99249-dd87-31a7-951d-7d4adc43e3df
+2026-11-03T21:57:20.073+07:00  INFO 23532 --- [order-service] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2026-11-03T21:57:20.093+07:00  INFO 23532 --- [order-service] [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection org.postgresql.jdbc.PgConnection@fb8adcf
+2026-11-03T21:57:20.094+07:00  INFO 23532 --- [order-service] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2026-11-03T21:57:20.096+07:00  INFO 23532 --- [order-service] [    Test worker] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://localhost:55099/test (PostgreSQL 16.15)
+2026-11-03T21:57:20.111+07:00  INFO 23532 --- [order-service] [    Test worker] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table "public"."flyway_schema_history" does not exist yet
+2026-11-03T21:57:20.112+07:00  INFO 23532 --- [order-service] [    Test worker] o.f.core.internal.command.DbValidate     : Successfully validated 5 migrations (execution time 00:00.008s)
+2026-11-03T21:57:20.123+07:00  INFO 23532 --- [order-service] [    Test worker] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table "public"."flyway_schema_history" ...
+2026-11-03T21:57:20.152+07:00  INFO 23532 --- [order-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Current version of schema "public": << Empty Schema >>
+2026-11-03T21:57:20.157+07:00  INFO 23532 --- [order-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "1 - checkout baseline"
+2026-11-03T21:57:20.189+07:00  INFO 23532 --- [order-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "2 - inventory operation journal"
+2026-11-03T21:57:20.209+07:00  INFO 23532 --- [order-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "3 - fulfillment cod shipping outbox"
+2026-11-03T21:57:20.235+07:00  INFO 23532 --- [order-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "4 - write fence abort"
+2026-11-03T21:57:20.247+07:00  INFO 23532 --- [order-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "5 - checkout order drafts"
+2026-11-03T21:57:20.260+07:00  INFO 23532 --- [order-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Successfully applied 5 migrations to schema "public", now at version v5 (execution time 00:00.059s)
+2026-11-03T21:57:20.293+07:00  INFO 23532 --- [order-service] [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-11-03T21:57:20.295+07:00  INFO 23532 --- [order-service] [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-11-03T21:57:20.305+07:00  INFO 23532 --- [order-service] [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-11-03T21:57:20.410+07:00  INFO 23532 --- [order-service] [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-11-03T21:57:20.427+07:00  INFO 23532 --- [order-service] [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-11-03T21:57:20.899+07:00  INFO 23532 --- [order-service] [    Test worker] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-11-03T21:57:21.069+07:00  INFO 23532 --- [order-service] [    Test worker] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestTemplate.
+2026-11-03T21:57:21.088+07:00  WARN 23532 --- [order-service] [    Test worker] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2026-11-03T21:57:21.109+07:00  INFO 23532 --- [order-service] [    Test worker] c.p.o.i.CheckoutScannerPostgresIT        : Started CheckoutScannerPostgresIT in 2.283 seconds (process running for 23.23)
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

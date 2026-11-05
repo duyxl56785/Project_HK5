@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.projecthk5.authservice.AuthPersistenceTest" tests="28" skipped="0" failures="0" errors="0" timestamp="2026-11-04T14:56:07" hostname="MDUY-LECO" time="6.597">
+  <properties/>
+  <testcase name="refreshConstraintsEnforceHashFamilyParentAndAbsoluteExpiry()" classname="com.projecthk5.authservice.AuthPersistenceTest" time="0.109"/>
+  <testcase name="allJavaStripCharactersAreRejectedAtSqlEmailBoundaries()" classname="com.projecthk5.authservice.AuthPersistenceTest" time="0.054"/>
+  <testcase name="tokenConsumptionAndChildInsertRollbackTogether()" classname="com.projecthk5.authservice.AuthPersistenceTest" time="0.069"/>
+  <testcase name="schemaRejectsInvalidRolesEmailsAndMissingAccount()" classname="com.projecthk5.authservice.AuthPersistenceTest" time="0.075"/>
+  <testcase name="accountPersistsNormalizedEmailRolesAndDurableTaskAtomically()" classname="com.projecthk5.authservice.AuthPersistenceTest" time="0.066"/>
+  <testcase name="[1] logout=false" classname="com.projecthk5.authservice.AuthPersistenceTest" time="0.545"/>
+  <testcase name="[2] logout=true" classname="com.projecthk5.authservice.AuthPersistenceTest" time="0.541"/>
+  <testcase name="canonicalUnicodeIsNotRestrictedToAsciiOrCaseFolded()" classname="com.projecthk5.authservice.AuthPersistenceTest" time="0.05"/>
+  <testcase name="familyLockBlocksOtherTransactionAndLogoutPreventsConsumption()" classname="com.projecthk5.authservice.AuthPersistenceTest" time="0.329"/>
+  <testcase name="rawUnicodeAliasCannotBypassDatabaseNormalization()" classname="com.projecthk5.authservice.AuthPersistenceTest" time="0.088"/>
+  <testcase name="accountRolesAndProvisioningRollbackTogether()" classname="com.projecthk5.authservice.AuthPersistenceTest" time="0.022"/>
+  <testcase name="consumeKeepsFamilyLockUntilCallerCommits()" classname="com.projecthk5.authservice.AuthPersistenceTest" time="0.031"/>
+  <testcase name="committedDataSurvivesApplicationRestartWithRuntimeFlywayDisabled()" classname="com.projecthk5.authservice.AuthPersistenceTest" time="0.816"/>
+  <testcase name="twoRotationsSerializeAndReuseCanRevokeCommittedChild()" classname="com.projecthk5.authservice.AuthPersistenceTest" time="0.051"/>
+  <testcase name="postgresConstraintRejectsExactlyJavaLowercaseChangingScalars()" classname="com.projecthk5.authservice.AuthPersistenceTest" time="0.362"/>
+  <testcase name="[1] prefix=ascii" classname="com.projecthk5.authservice.AuthPersistenceTest" time="0.032"/>
+  <testcase name="[2] prefix=É" classname="com.projecthk5.authservice.AuthPersistenceTest" time="0.031"/>
+  <testcase name="[3] prefix=İ" classname="com.projecthk5.authservice.AuthPersistenceTest" time="0.032"/>
+  <testcase name="[4] prefix=ΟΣ" classname="com.projecthk5.authservice.AuthPersistenceTest" time="0.029"/>
+  <testcase name="[5] prefix=&#x10400;" classname="com.projecthk5.authservice.AuthPersistenceTest" time="0.032"/>
+  <testcase name="[1] duplicate=false" classname="com.projecthk5.authservice.AuthPersistenceTest" time="0.377"/>
+  <testcase name="[2] duplicate=true" classname="com.projecthk5.authservice.AuthPersistenceTest" time="0.346"/>
+  <testcase name="runtimeHasOnlyExplicitBusinessDmlAndCannotTouchSchemaHistory()" classname="com.projecthk5.authservice.AuthPersistenceTest" time="0.089"/>
+  <testcase name="migrationRerunsAndValidatesWithRuntimeDdlDisabled()" classname="com.projecthk5.authservice.AuthPersistenceTest" time="0.113"/>
+  <testcase name="migrationRejectsWrongActorBeforeCreatingBusinessTables()" classname="com.projecthk5.authservice.AuthPersistenceTest" time="0.011"/>
+  <testcase name="unicodeDuplicateLookupAndCanonicalSqlInsertUseSameUniqueKey()" classname="com.projecthk5.authservice.AuthPersistenceTest" time="0.106"/>
+  <testcase name="consumptionRequiresActiveUnexpiredTokenAndTransaction()" classname="com.projecthk5.authservice.AuthPersistenceTest" time="0.025"/>
+  <testcase name="committedDataSurvivesPostgresRestart()" classname="com.projecthk5.authservice.AuthPersistenceTest" time="2.134"/>
+  <system-out><![CDATA[14:55:58.358 [Test worker] INFO org.testcontainers.images.PullPolicy -- Image pull policy will be performed by: DefaultPullPolicy()
+14:55:58.361 [Test worker] INFO org.testcontainers.utility.ImageNameSubstitutor -- Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+14:55:58.511 [Test worker] INFO org.testcontainers.dockerclient.DockerClientProviderStrategy -- Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+14:55:58.746 [Test worker] INFO org.testcontainers.dockerclient.DockerClientProviderStrategy -- Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
+14:55:58.746 [Test worker] INFO org.testcontainers.DockerClientFactory -- Docker host IP address is localhost
+14:55:58.765 [Test worker] INFO org.testcontainers.DockerClientFactory -- Connected to docker: 
+  Server Version: 29.8.1
+  API Version: 1.56
+  Operating System: Docker Desktop (containerized)
+  Total Memory: 7571 MB
+14:55:58.766 [Test worker] WARN org.testcontainers.utility.ResourceReaper -- 
+********************************************************************************
+Ryuk has been disabled. This can cause unexpected behavior in your environment.
+********************************************************************************
+14:55:58.770 [Test worker] INFO org.testcontainers.DockerClientFactory -- Checking the system...
+14:55:58.770 [Test worker] INFO org.testcontainers.DockerClientFactory -- ✔︎ Docker server version should be at least 1.6.0
+14:55:58.879 [Test worker] INFO tc.postgres:16 -- Creating container for image: postgres:16
+14:55:59.223 [Test worker] INFO tc.postgres:16 -- Container postgres:16 is starting: 9b2aa108ed22273a5a0f3ed30afb68035472c9744032d1907d85e9843df81620
+14:56:01.140 [Test worker] INFO tc.postgres:16 -- Container postgres:16 started in PT2.2601593S
+14:56:01.141 [Test worker] INFO tc.postgres:16 -- Container is started (JDBC URL: jdbc:postgresql://localhost:53573/postgres?loggerLevel=OFF)
+14:56:01.679 [Test worker] INFO org.flywaydb.core.FlywayExecutor -- Database: jdbc:postgresql://localhost:53573/auth_db (PostgreSQL 16.15)
+14:56:01.712 [Test worker] INFO org.flywaydb.core.internal.schemahistory.JdbcTableSchemaHistory -- Schema history table "public"."flyway_schema_history" does not exist yet
+14:56:01.714 [Test worker] INFO org.flywaydb.core.internal.command.DbValidate -- Successfully validated 4 migrations (execution time 00:00.015s)
+14:56:01.726 [Test worker] INFO org.flywaydb.core.internal.schemahistory.JdbcTableSchemaHistory -- Creating Schema History table "public"."flyway_schema_history" ...
+14:56:01.783 [Test worker] INFO org.flywaydb.core.internal.command.DbMigrate -- Current version of schema "public": << Empty Schema >>
+14:56:01.796 [Test worker] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema "public" to version "1 - auth persistence"
+14:56:01.917 [Test worker] INFO org.flywaydb.core.internal.command.DbMigrate -- Successfully applied 1 migration to schema "public", now at version v1 (execution time 00:00.100s)
+14:56:01.973 [Test worker] INFO org.flywaydb.core.internal.command.DbValidate -- Successfully validated 4 migrations (execution time 00:00.005s)
+POSTGRES_REPRO: PostgreSQL 16.15 (Debian 16.15-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit; lc_ctype=en_US.utf8
+V1_REPRO input=U+0061 U+0073 U+0063 U+0069 U+0069 U+0040 U+0065 U+0078 U+0061 U+006D U+0070 U+006C U+0065 U+002E U+0069 U+006E U+0076 U+0061 U+006C U+0069 U+0064 java=U+0061 U+0073 U+0063 U+0069 U+0069 U+0040 U+0065 U+0078 U+0061 U+006D U+0070 U+006C U+0065 U+002E U+0069 U+006E U+0076 U+0061 U+006C U+0069 U+0064 pg_C=U+0061 U+0073 U+0063 U+0069 U+0069 U+0040 U+0065 U+0078 U+0061 U+006D U+0070 U+006C U+0065 U+002E U+0069 U+006E U+0076 U+0061 U+006C U+0069 U+0064 V1_check=true
+V1_REPRO input=U+00C9 U+0040 U+0065 U+0078 U+0061 U+006D U+0070 U+006C U+0065 U+002E U+0069 U+006E U+0076 U+0061 U+006C U+0069 U+0064 java=U+00E9 U+0040 U+0065 U+0078 U+0061 U+006D U+0070 U+006C U+0065 U+002E U+0069 U+006E U+0076 U+0061 U+006C U+0069 U+0064 pg_C=U+00C9 U+0040 U+0065 U+0078 U+0061 U+006D U+0070 U+006C U+0065 U+002E U+0069 U+006E U+0076 U+0061 U+006C U+0069 U+0064 V1_check=true
+V1_REPRO duplicate Java key admitted by SQL UNIQUE: U+00E9 U+0040 U+0065 U+0078 U+0061 U+006D U+0070 U+006C U+0065 U+002E U+0069 U+006E U+0076 U+0061 U+006C U+0069 U+0064
+V1_REPRO input=U+0130 U+0040 U+0065 U+0078 U+0061 U+006D U+0070 U+006C U+0065 U+002E U+0069 U+006E U+0076 U+0061 U+006C U+0069 U+0064 java=U+0069 U+0307 U+0040 U+0065 U+0078 U+0061 U+006D U+0070 U+006C U+0065 U+002E U+0069 U+006E U+0076 U+0061 U+006C U+0069 U+0064 pg_C=U+0130 U+0040 U+0065 U+0078 U+0061 U+006D U+0070 U+006C U+0065 U+002E U+0069 U+006E U+0076 U+0061 U+006C U+0069 U+0064 V1_check=true
+V1_REPRO duplicate Java key admitted by SQL UNIQUE: U+0069 U+0307 U+0040 U+0065 U+0078 U+0061 U+006D U+0070 U+006C U+0065 U+002E U+0069 U+006E U+0076 U+0061 U+006C U+0069 U+0064
+V1_REPRO input=U+039F U+03A3 U+0040 U+0065 U+0078 U+0061 U+006D U+0070 U+006C U+0065 U+002E U+0069 U+006E U+0076 U+0061 U+006C U+0069 U+0064 java=U+03BF U+03C2 U+0040 U+0065 U+0078 U+0061 U+006D U+0070 U+006C U+0065 U+002E U+0069 U+006E U+0076 U+0061 U+006C U+0069 U+0064 pg_C=U+039F U+03A3 U+0040 U+0065 U+0078 U+0061 U+006D U+0070 U+006C U+0065 U+002E U+0069 U+006E U+0076 U+0061 U+006C U+0069 U+0064 V1_check=true
+V1_REPRO duplicate Java key admitted by SQL UNIQUE: U+03BF U+03C2 U+0040 U+0065 U+0078 U+0061 U+006D U+0070 U+006C U+0065 U+002E U+0069 U+006E U+0076 U+0061 U+006C U+0069 U+0064
+V1_REPRO input=U+10400 U+0040 U+0065 U+0078 U+0061 U+006D U+0070 U+006C U+0065 U+002E U+0069 U+006E U+0076 U+0061 U+006C U+0069 U+0064 java=U+10428 U+0040 U+0065 U+0078 U+0061 U+006D U+0070 U+006C U+0065 U+002E U+0069 U+006E U+0076 U+0061 U+006C U+0069 U+0064 pg_C=U+10400 U+0040 U+0065 U+0078 U+0061 U+006D U+0070 U+006C U+0065 U+002E U+0069 U+006E U+0076 U+0061 U+006C U+0069 U+0064 V1_check=true
+V1_REPRO duplicate Java key admitted by SQL UNIQUE: U+10428 U+0040 U+0065 U+0078 U+0061 U+006D U+0070 U+006C U+0065 U+002E U+0069 U+006E U+0076 U+0061 U+006C U+0069 U+0064
+V1_REPRO input=U+001C U+0078 U+0040 U+0065 U+0078 U+0061 U+006D U+0070 U+006C U+0065 U+002E U+0069 U+006E U+0076 U+0061 U+006C U+0069 U+0064 java=U+0078 U+0040 U+0065 U+0078 U+0061 U+006D U+0070 U+006C U+0065 U+002E U+0069 U+006E U+0076 U+0061 U+006C U+0069 U+0064 pg_C=U+001C U+0078 U+0040 U+0065 U+0078 U+0061 U+006D U+0070 U+006C U+0065 U+002E U+0069 U+006E U+0076 U+0061 U+006C U+0069 U+0064 V1_check=true
+V1_REPRO duplicate Java key admitted by SQL UNIQUE: U+0078 U+0040 U+0065 U+0078 U+0061 U+006D U+0070 U+006C U+0065 U+002E U+0069 U+006E U+0076 U+0061 U+006C U+0069 U+0064
+V1_REPRO input=U+2003 U+0078 U+0040 U+0065 U+0078 U+0061 U+006D U+0070 U+006C U+0065 U+002E U+0069 U+006E U+0076 U+0061 U+006C U+0069 U+0064 java=U+0078 U+0040 U+0065 U+0078 U+0061 U+006D U+0070 U+006C U+0065 U+002E U+0069 U+006E U+0076 U+0061 U+006C U+0069 U+0064 pg_C=U+2003 U+0078 U+0040 U+0065 U+0078 U+0061 U+006D U+0070 U+006C U+0065 U+002E U+0069 U+006E U+0076 U+0061 U+006C U+0069 U+0064 V1_check=false
+14:56:02.065 [Test worker] INFO org.flywaydb.core.FlywayExecutor -- Database: jdbc:postgresql://localhost:53573/auth_db (PostgreSQL 16.15)
+14:56:02.079 [Test worker] INFO org.flywaydb.core.internal.command.DbValidate -- Successfully validated 4 migrations (execution time 00:00.006s)
+14:56:02.096 [Test worker] INFO org.flywaydb.core.internal.command.DbMigrate -- Current version of schema "public": 1
+14:56:02.102 [Test worker] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema "public" to version "2 - enforce java21 email canonical form"
+14:56:02.123 [Test worker] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema "public" to version "3 - seller role revision"
+14:56:02.141 [Test worker] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema "public" to version "4 - write reservations"
+14:56:02.174 [Test worker] INFO org.flywaydb.core.internal.command.DbMigrate -- Successfully applied 3 migrations to schema "public", now at version v4 (execution time 00:00.031s)
+2026-11-04T14:56:02.628Z  INFO 13200 --- [auth-service] [    Test worker] w.o.g.p.i.worker.GradleWorkerMain        : Starting GradleWorkerMain using Java 21.0.7 with PID 13200 (started by Minh Duy in D:\CMC Uni\5 Ky Dong\WEB\BCK WEB\Project_HK5\.verification\tv5-pr176-review-20261104\backend\auth-service)
+2026-11-04T14:56:02.633Z  INFO 13200 --- [auth-service] [    Test worker] w.o.g.p.i.worker.GradleWorkerMain        : The following 1 profile is active: "migration"
+2026-11-04T14:56:03.401Z  INFO 13200 --- [auth-service] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-11-04T14:56:03.555Z  INFO 13200 --- [auth-service] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 147 ms. Found 4 JPA repository interfaces.
+2026-11-04T14:56:03.715Z  INFO 13200 --- [auth-service] [    Test worker] o.s.cloud.context.scope.GenericScope     : BeanFactory id=4a577af6-969c-3821-a2c2-99892c371945
+2026-11-04T14:56:04.133Z  INFO 13200 --- [auth-service] [    Test worker] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://localhost:53573/auth_db (PostgreSQL 16.15)
+2026-11-04T14:56:04.147Z  INFO 13200 --- [auth-service] [    Test worker] o.f.core.internal.command.DbValidate     : Successfully validated 4 migrations (execution time 00:00.007s)
+2026-11-04T14:56:04.163Z  INFO 13200 --- [auth-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Current version of schema "public": 4
+2026-11-04T14:56:04.164Z  INFO 13200 --- [auth-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Schema "public" is up to date. No migration necessary.
+2026-11-04T14:56:04.259Z  INFO 13200 --- [auth-service] [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-11-04T14:56:04.332Z  INFO 13200 --- [auth-service] [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2026-11-04T14:56:04.371Z  INFO 13200 --- [auth-service] [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-11-04T14:56:04.660Z  INFO 13200 --- [auth-service] [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-11-04T14:56:04.690Z  INFO 13200 --- [auth-service] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-11-04T14:56:04.708Z  INFO 13200 --- [auth-service] [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@4fce655d
+2026-11-04T14:56:04.709Z  INFO 13200 --- [auth-service] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-11-04T14:56:05.598Z  INFO 13200 --- [auth-service] [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-11-04T14:56:05.637Z  INFO 13200 --- [auth-service] [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-11-04T14:56:05.979Z  INFO 13200 --- [auth-service] [    Test worker] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-11-04T14:56:07.099Z  INFO 13200 --- [auth-service] [    Test worker] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestTemplate.
+2026-11-04T14:56:07.140Z  WARN 13200 --- [auth-service] [    Test worker] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2026-11-04T14:56:07.204Z  INFO 13200 --- [auth-service] [    Test worker] w.o.g.p.i.worker.GradleWorkerMain        : Started GradleWorkerMain in 4.953 seconds (process running for 9.56)
+V1_TO_V2_UPGRADE: 5 ASCII/Unicode account IDs/emails preserved; V1 checksum validated
+2026-11-04T14:56:07.406Z  WARN 13200 --- [auth-service] [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Error: 0, SQLState: 23505
+2026-11-04T14:56:07.406Z ERROR 13200 --- [auth-service] [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : ERROR: duplicate key value violates unique constraint "refresh_tokens_token_hash_key"
+  Detail: Key (token_hash)=(861b9ce6f8574051a2e936ceb77b18243e31d531c4de4768880770461a5d1d8a) already exists.
+2026-11-04T14:56:07.413Z  WARN 13200 --- [auth-service] [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Error: 0, SQLState: 23514
+2026-11-04T14:56:07.413Z ERROR 13200 --- [auth-service] [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : ERROR: new row for relation "refresh_families" violates check constraint "refresh_family_lifetime"
+  Detail: Failing row contains (3933d6dd-19e2-4005-a310-a6480fc4993d, 7684da0c-f6af-4cf5-9dac-73afbc7c18ba, 2026-11-04 14:56:07.41125+00, 2026-11-11 14:56:08.41125+00, null).
+2026-11-04T14:56:07.415Z  WARN 13200 --- [auth-service] [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Error: 0, SQLState: 23505
+2026-11-04T14:56:07.415Z ERROR 13200 --- [auth-service] [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : ERROR: duplicate key value violates unique constraint "refresh_tokens_one_root_idx"
+  Detail: Key (family_id)=(a7ed1d4d-babd-49d1-ab5c-4c2132e52c0d) already exists.
+2026-11-04T14:56:07.419Z  WARN 13200 --- [auth-service] [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Error: 0, SQLState: 23503
+2026-11-04T14:56:07.419Z ERROR 13200 --- [auth-service] [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : ERROR: insert or update on table "refresh_tokens" violates foreign key constraint "refresh_tokens_parent_id_family_id_fkey"
+  Detail: Key (parent_id, family_id)=(a6cde2a0-5240-4cd7-a0e0-666e47614020, a7ed1d4d-babd-49d1-ab5c-4c2132e52c0d) is not present in table "refresh_tokens".
+2026-11-04T14:56:07.421Z  WARN 13200 --- [auth-service] [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Error: 0, SQLState: 23503
+2026-11-04T14:56:07.421Z ERROR 13200 --- [auth-service] [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : ERROR: insert or update on table "refresh_tokens" violates foreign key constraint "refresh_tokens_family_id_expires_at_fkey"
+  Detail: Key (family_id, expires_at)=(a7ed1d4d-babd-49d1-ab5c-4c2132e52c0d, 2026-11-11 14:56:08.371426+00) is not present in table "refresh_families".
+2026-11-04T14:56:07.423Z  WARN 13200 --- [auth-service] [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Error: 0, SQLState: 23514
+2026-11-04T14:56:07.424Z ERROR 13200 --- [auth-service] [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : ERROR: new row for relation "refresh_tokens" violates check constraint "refresh_tokens_token_hash_check"
+  Detail: Failing row contains (70254424-794f-4b05-9f7d-2ec7af25d55b, a7ed1d4d-babd-49d1-ab5c-4c2132e52c0d, raw-token-is-not-a-sha256-hash, 0d7a3f6a-2c55-47d7-95c1-55c0ed3274e2, 2026-11-04 14:56:07.422639+00, 2026-11-11 14:56:07.371426+00, null, null).
+2026-11-04T14:56:07.431Z  WARN 13200 --- [auth-service] [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Error: 0, SQLState: 23505
+2026-11-04T14:56:07.431Z ERROR 13200 --- [auth-service] [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : ERROR: duplicate key value violates unique constraint "refresh_tokens_parent_id_key"
+  Detail: Key (parent_id)=(0d7a3f6a-2c55-47d7-95c1-55c0ed3274e2) already exists.
+2026-11-04T14:56:09.348Z  INFO 13200 --- [auth-service] [    Test worker] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-11-04T14:56:09.349Z  INFO 13200 --- [auth-service] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-11-04T14:56:09.353Z  INFO 13200 --- [auth-service] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-11-04T14:56:09.384Z  INFO 13200 --- [auth-service] [    Test worker] w.o.g.p.i.worker.GradleWorkerMain        : Starting GradleWorkerMain using Java 21.0.7 with PID 13200 (started by Minh Duy in D:\CMC Uni\5 Ky Dong\WEB\BCK WEB\Project_HK5\.verification\tv5-pr176-review-20261104\backend\auth-service)
+2026-11-04T14:56:09.384Z  INFO 13200 --- [auth-service] [    Test worker] w.o.g.p.i.worker.GradleWorkerMain        : No active profile set, falling back to 1 default profile: "default"
+2026-11-04T14:56:09.566Z  INFO 13200 --- [auth-service] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-11-04T14:56:09.579Z  INFO 13200 --- [auth-service] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 12 ms. Found 4 JPA repository interfaces.
+2026-11-04T14:56:09.602Z  INFO 13200 --- [auth-service] [    Test worker] o.s.cloud.context.scope.GenericScope     : BeanFactory id=a2b19da8-6723-36cf-a68d-f114eee55036
+2026-11-04T14:56:09.672Z  INFO 13200 --- [auth-service] [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-11-04T14:56:09.676Z  INFO 13200 --- [auth-service] [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-11-04T14:56:09.684Z  INFO 13200 --- [auth-service] [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-11-04T14:56:09.684Z  INFO 13200 --- [auth-service] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2026-11-04T14:56:09.695Z  INFO 13200 --- [auth-service] [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection org.postgresql.jdbc.PgConnection@bdb4bfe
+2026-11-04T14:56:09.695Z  INFO 13200 --- [auth-service] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2026-11-04T14:56:09.761Z  INFO 13200 --- [auth-service] [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-11-04T14:56:09.771Z  INFO 13200 --- [auth-service] [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-11-04T14:56:10.095Z  INFO 13200 --- [auth-service] [    Test worker] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestTemplate.
+2026-11-04T14:56:10.112Z  WARN 13200 --- [auth-service] [    Test worker] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2026-11-04T14:56:10.129Z  INFO 13200 --- [auth-service] [    Test worker] w.o.g.p.i.worker.GradleWorkerMain        : Started GradleWorkerMain in 0.772 seconds (process running for 12.486)
+V2_UNICODE_SCALAR_PARITY: 1433 changing scalars; all scalar values checked
+2026-11-04T14:56:10.570Z  WARN 13200 --- [auth-service] [pool-6-thread-2] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Error: 0, SQLState: 23505
+2026-11-04T14:56:10.571Z ERROR 13200 --- [auth-service] [pool-6-thread-2] o.h.engine.jdbc.spi.SqlExceptionHelper   : ERROR: duplicate key value violates unique constraint "accounts_email_key"
+  Detail: Key (email)=(asciib4896c12-923f-4b56-9b55-2a4b55b13da7@example.invalid) already exists.
+2026-11-04T14:56:10.601Z  WARN 13200 --- [auth-service] [pool-7-thread-2] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Error: 0, SQLState: 23505
+2026-11-04T14:56:10.601Z ERROR 13200 --- [auth-service] [pool-7-thread-2] o.h.engine.jdbc.spi.SqlExceptionHelper   : ERROR: duplicate key value violates unique constraint "accounts_email_key"
+  Detail: Key (email)=(é50cc9a2f-2264-4c7d-a3d7-5c70f5119360@example.invalid) already exists.
+2026-11-04T14:56:10.632Z  WARN 13200 --- [auth-service] [pool-8-thread-1] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Error: 0, SQLState: 23505
+2026-11-04T14:56:10.632Z ERROR 13200 --- [auth-service] [pool-8-thread-1] o.h.engine.jdbc.spi.SqlExceptionHelper   : ERROR: duplicate key value violates unique constraint "accounts_email_key"
+  Detail: Key (email)=(i̇b4316d57-b1af-4633-af5e-47522409026e@example.invalid) already exists.
+2026-11-04T14:56:10.664Z  WARN 13200 --- [auth-service] [pool-9-thread-1] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Error: 0, SQLState: 23505
+2026-11-04T14:56:10.664Z ERROR 13200 --- [auth-service] [pool-9-thread-1] o.h.engine.jdbc.spi.SqlExceptionHelper   : ERROR: duplicate key value violates unique constraint "accounts_email_key"
+  Detail: Key (email)=(οσ058f951a-9209-4a75-be2a-8579a43b1404@example.invalid) already exists.
+2026-11-04T14:56:10.695Z  WARN 13200 --- [auth-service] [ool-10-thread-1] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Error: 0, SQLState: 23505
+2026-11-04T14:56:10.695Z ERROR 13200 --- [auth-service] [ool-10-thread-1] o.h.engine.jdbc.spi.SqlExceptionHelper   : ERROR: duplicate key value violates unique constraint "accounts_email_key"
+  Detail: Key (email)=(]]>&#x10428;<![CDATA[a821b38e-0463-4017-aa09-5132530c0272@example.invalid) already exists.
+2026-11-04T14:56:10.738Z  INFO 13200 --- [auth-service] [    Test worker] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://localhost:53573/auth_db (PostgreSQL 16.15)
+2026-11-04T14:56:10.745Z  INFO 13200 --- [auth-service] [    Test worker] o.f.core.internal.database.base.Schema   : Creating schema "legacy_probe_false" ...
+2026-11-04T14:56:10.747Z  INFO 13200 --- [auth-service] [    Test worker] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table "legacy_probe_false"."flyway_schema_history" ...
+2026-11-04T14:56:10.797Z  INFO 13200 --- [auth-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Current version of schema "legacy_probe_false": null
+2026-11-04T14:56:10.805Z  INFO 13200 --- [auth-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "legacy_probe_false" to version "1 - auth persistence"
+2026-11-04T14:56:10.921Z  INFO 13200 --- [auth-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Successfully applied 1 migration to schema "legacy_probe_false", now at version v1 (execution time 00:00.106s)
+LEGACY_FIXTURE_READ_ONLY_EMAIL_INVENTORY: Inventory[total=1, noncanonical=[5c09744b-d608-4d56-9c16-d976d3713592], unicodeNoncanonical=[5c09744b-d608-4d56-9c16-d976d3713592], duplicateCanonicalGroups=[]]
+2026-11-04T14:56:10.964Z  INFO 13200 --- [auth-service] [    Test worker] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://localhost:53573/auth_db (PostgreSQL 16.15)
+2026-11-04T14:56:10.972Z  INFO 13200 --- [auth-service] [    Test worker] o.f.core.internal.command.DbValidate     : Successfully validated 5 migrations (execution time 00:00.004s)
+2026-11-04T14:56:10.984Z  INFO 13200 --- [auth-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Current version of schema "legacy_probe_false": 1
+2026-11-04T14:56:10.987Z  INFO 13200 --- [auth-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "legacy_probe_false" to version "2 - enforce java21 email canonical form"
+2026-11-04T14:56:10.997Z ERROR 13200 --- [auth-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Migration of schema "legacy_probe_false" to version "2 - enforce java21 email canonical form" failed! Changes successfully rolled back.
+2026-11-04T14:56:11.016Z  INFO 13200 --- [auth-service] [    Test worker] o.f.core.internal.command.DbValidate     : Successfully validated 5 migrations (execution time 00:00.004s)
+V2_LEGACY_CONFLICT: duplicate=false; migration rejected; all IDs/emails preserved; Flyway remains V1
+2026-11-04T14:56:11.113Z  INFO 13200 --- [auth-service] [    Test worker] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://localhost:53573/auth_db (PostgreSQL 16.15)
+2026-11-04T14:56:11.119Z  INFO 13200 --- [auth-service] [    Test worker] o.f.core.internal.database.base.Schema   : Creating schema "legacy_probe_true" ...
+2026-11-04T14:56:11.122Z  INFO 13200 --- [auth-service] [    Test worker] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table "legacy_probe_true"."flyway_schema_history" ...
+2026-11-04T14:56:11.165Z  INFO 13200 --- [auth-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Current version of schema "legacy_probe_true": null
+2026-11-04T14:56:11.168Z  INFO 13200 --- [auth-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "legacy_probe_true" to version "1 - auth persistence"
+2026-11-04T14:56:11.276Z  INFO 13200 --- [auth-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Successfully applied 1 migration to schema "legacy_probe_true", now at version v1 (execution time 00:00.097s)
+LEGACY_FIXTURE_READ_ONLY_EMAIL_INVENTORY: Inventory[total=2, noncanonical=[b3d52682-5c7d-48cd-ae92-5f71d355ab84], unicodeNoncanonical=[b3d52682-5c7d-48cd-ae92-5f71d355ab84], duplicateCanonicalGroups=[[b3d52682-5c7d-48cd-ae92-5f71d355ab84, d2cd81d2-c965-4313-8ee1-9dfa6780b190]]]
+2026-11-04T14:56:11.317Z  INFO 13200 --- [auth-service] [    Test worker] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://localhost:53573/auth_db (PostgreSQL 16.15)
+2026-11-04T14:56:11.326Z  INFO 13200 --- [auth-service] [    Test worker] o.f.core.internal.command.DbValidate     : Successfully validated 5 migrations (execution time 00:00.004s)
+2026-11-04T14:56:11.338Z  INFO 13200 --- [auth-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Current version of schema "legacy_probe_true": 1
+2026-11-04T14:56:11.341Z  INFO 13200 --- [auth-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "legacy_probe_true" to version "2 - enforce java21 email canonical form"
+2026-11-04T14:56:11.348Z ERROR 13200 --- [auth-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Migration of schema "legacy_probe_true" to version "2 - enforce java21 email canonical form" failed! Changes successfully rolled back.
+2026-11-04T14:56:11.366Z  INFO 13200 --- [auth-service] [    Test worker] o.f.core.internal.command.DbValidate     : Successfully validated 5 migrations (execution time 00:00.004s)
+V2_LEGACY_CONFLICT: duplicate=true; migration rejected; all IDs/emails preserved; Flyway remains V1
+2026-11-04T14:56:11.551Z  INFO 13200 --- [auth-service] [    Test worker] o.f.core.internal.command.DbValidate     : Successfully validated 4 migrations (execution time 00:00.004s)
+2026-11-04T14:56:11.575Z  INFO 13200 --- [auth-service] [    Test worker] o.f.core.internal.command.DbValidate     : Successfully validated 4 migrations (execution time 00:00.004s)
+2026-11-04T14:56:11.586Z  INFO 13200 --- [auth-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Current version of schema "public": 4
+2026-11-04T14:56:11.586Z  INFO 13200 --- [auth-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Schema "public" is up to date. No migration necessary.
+2026-11-04T14:56:11.674Z  WARN 13200 --- [auth-service] [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Error: 0, SQLState: 23505
+2026-11-04T14:56:11.674Z ERROR 13200 --- [auth-service] [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : ERROR: duplicate key value violates unique constraint "accounts_email_key"
+  Detail: Key (email)=(éf2102d2b-31e7-4fe6-9e20-3ec5ae322ead@example.invalid) already exists.
+2026-11-04T14:56:11.693Z  WARN 13200 --- [auth-service] [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Error: 0, SQLState: 23505
+2026-11-04T14:56:11.693Z ERROR 13200 --- [auth-service] [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : ERROR: duplicate key value violates unique constraint "accounts_email_key"
+  Detail: Key (email)=(i̇7dce5894-9b7b-463c-8635-be7d5fa3161c@example.invalid) already exists.
+2026-11-04T14:56:11.715Z  WARN 13200 --- [auth-service] [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Error: 0, SQLState: 23505
+2026-11-04T14:56:11.715Z ERROR 13200 --- [auth-service] [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : ERROR: duplicate key value violates unique constraint "accounts_email_key"
+  Detail: Key (email)=(οσ29e29a73-425b-4449-b1b6-eda6f8b34dbb@example.invalid) already exists.
+2026-11-04T14:56:11.735Z  WARN 13200 --- [auth-service] [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Error: 0, SQLState: 23505
+2026-11-04T14:56:11.735Z ERROR 13200 --- [auth-service] [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : ERROR: duplicate key value violates unique constraint "accounts_email_key"
+  Detail: Key (email)=(]]>&#x10428;<![CDATA[c0d6d1d7-4ef8-4430-81b5-6ba5ef4b3d7d@example.invalid) already exists.
+2026-11-04T14:56:11.754Z  WARN 13200 --- [auth-service] [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Error: 0, SQLState: 23505
+2026-11-04T14:56:11.755Z ERROR 13200 --- [auth-service] [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : ERROR: duplicate key value violates unique constraint "accounts_email_key"
+  Detail: Key (email)=(ß53c641e7-d5c3-48e8-9668-74726b262a4a@example.invalid) already exists.
+2026-11-04T14:56:11.805Z  INFO 13200 --- [auth-service] [    Test worker] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-11-04T14:56:11.805Z  INFO 13200 --- [auth-service] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown initiated...
+2026-11-04T14:56:11.807Z  INFO 13200 --- [auth-service] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown completed.
+2026-11-04T14:56:13.182Z  INFO 13200 --- [auth-service] [    Test worker] w.o.g.p.i.worker.GradleWorkerMain        : Starting GradleWorkerMain using Java 21.0.7 with PID 13200 (started by Minh Duy in D:\CMC Uni\5 Ky Dong\WEB\BCK WEB\Project_HK5\.verification\tv5-pr176-review-20261104\backend\auth-service)
+2026-11-04T14:56:13.183Z  INFO 13200 --- [auth-service] [    Test worker] w.o.g.p.i.worker.GradleWorkerMain        : No active profile set, falling back to 1 default profile: "default"
+2026-11-04T14:56:13.342Z  INFO 13200 --- [auth-service] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-11-04T14:56:13.353Z  INFO 13200 --- [auth-service] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 10 ms. Found 4 JPA repository interfaces.
+2026-11-04T14:56:13.378Z  INFO 13200 --- [auth-service] [    Test worker] o.s.cloud.context.scope.GenericScope     : BeanFactory id=a2b19da8-6723-36cf-a68d-f114eee55036
+2026-11-04T14:56:13.424Z  INFO 13200 --- [auth-service] [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-11-04T14:56:13.426Z  INFO 13200 --- [auth-service] [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-11-04T14:56:13.433Z  INFO 13200 --- [auth-service] [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-11-04T14:56:13.433Z  INFO 13200 --- [auth-service] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Starting...
+2026-11-04T14:56:13.444Z  INFO 13200 --- [auth-service] [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-3 - Added connection org.postgresql.jdbc.PgConnection@426bbfb4
+2026-11-04T14:56:13.444Z  INFO 13200 --- [auth-service] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Start completed.
+2026-11-04T14:56:13.505Z  INFO 13200 --- [auth-service] [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-11-04T14:56:13.516Z  INFO 13200 --- [auth-service] [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-11-04T14:56:13.817Z  INFO 13200 --- [auth-service] [    Test worker] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestTemplate.
+2026-11-04T14:56:13.833Z  WARN 13200 --- [auth-service] [    Test worker] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2026-11-04T14:56:13.840Z  INFO 13200 --- [auth-service] [    Test worker] w.o.g.p.i.worker.GradleWorkerMain        : Started GradleWorkerMain in 0.68 seconds (process running for 16.197)
+2026-11-04T14:56:13.854Z  INFO 13200 --- [auth-service] [    Test worker] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://localhost:53710/auth_db (PostgreSQL 16.15)
+2026-11-04T14:56:13.865Z  INFO 13200 --- [auth-service] [    Test worker] o.f.core.internal.command.DbValidate     : Successfully validated 4 migrations (execution time 00:00.004s)
+2026-11-04T14:56:13.893Z  INFO 13200 --- [auth-service] [    Test worker] o.f.core.internal.command.DbValidate     : Successfully validated 4 migrations (execution time 00:00.005s)
+2026-11-04T14:56:13.907Z  INFO 13200 --- [auth-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Current version of schema "public": 4
+2026-11-04T14:56:13.907Z  INFO 13200 --- [auth-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Schema "public" is up to date. No migration necessary.
+2026-11-04T14:56:13.926Z  INFO 13200 --- [auth-service] [    Test worker] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-11-04T14:56:13.927Z  INFO 13200 --- [auth-service] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown initiated...
+2026-11-04T14:56:13.967Z  INFO 13200 --- [auth-service] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown completed.
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

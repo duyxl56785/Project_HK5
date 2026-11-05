@@ -1,0 +1,367 @@
+TAP version 13
+# Subtest: harness receives exact request once; proxy loses actual response without a synthetic error
+not ok 1 - harness receives exact request once; proxy loses actual response without a synthetic error
+  ---
+  duration_ms: 24.1216
+  type: 'test'
+  location: 'D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-master-20261105\\pr170\\scripts\\qa\\tv4-unknown\\lost-response.test.mjs:26:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      Comparison {
+    +   code: 'EACCES'
+    -   code: 'ECONNRESET'
+      }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    code: 'ECONNRESET'
+  actual:
+  error: 'connect EACCES 127.0.0.1:59358'
+  stack: |-
+    TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+  operator: 'rejects'
+  stack: |-
+    process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    async TestContext.<anonymous> (file:///D:/CMC%20Uni/5%20Ky%20Dong/WEB/BCK%20WEB/Project_HK5/.verification/tv5-master-20261105/pr170/scripts/qa/tv4-unknown/lost-response.test.mjs:35:3)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: changed operation/payload never reaches harness
+not ok 2 - changed operation/payload never reaches harness
+  ---
+  duration_ms: 4.5425
+  type: 'test'
+  location: 'D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-master-20261105\\pr170\\scripts\\qa\\tv4-unknown\\lost-response.test.mjs:43:1'
+  failureType: 'testCodeFailure'
+  error: 'connect EACCES 127.0.0.1:59361'
+  code: 'EACCES'
+  stack: |-
+    TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+  ...
+# Subtest: malformed or non-object JSON is rejected clearly without reaching harness
+not ok 3 - malformed or non-object JSON is rejected clearly without reaching harness
+  ---
+  duration_ms: 2.6153
+  type: 'test'
+  location: 'D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-master-20261105\\pr170\\scripts\\qa\\tv4-unknown\\lost-response.test.mjs:52:1'
+  failureType: 'testCodeFailure'
+  error: 'connect EACCES 127.0.0.1:59364'
+  code: 'EACCES'
+  stack: |-
+    TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+  ...
+# Subtest: reject non-loopback targets and missing tuple evidence before creating handler
+ok 4 - reject non-loopback targets and missing tuple evidence before creating handler
+  ---
+  duration_ms: 0.4623
+  type: 'test'
+  ...
+# Subtest: sequential replay never forwards the approved tuple a second time
+not ok 5 - sequential replay never forwards the approved tuple a second time
+  ---
+  duration_ms: 8.0305
+  type: 'test'
+  location: 'D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-master-20261105\\pr170\\scripts\\qa\\tv4-unknown\\lost-response.test.mjs:68:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      Comparison {
+    +   code: 'EACCES'
+    -   code: 'ECONNRESET'
+      }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    code: 'ECONNRESET'
+  actual:
+  error: 'connect EACCES 127.0.0.1:59367'
+  stack: |-
+    TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+  operator: 'rejects'
+  stack: |-
+    process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    async TestContext.<anonymous> (file:///D:/CMC%20Uni/5%20Ky%20Dong/WEB/BCK%20WEB/Project_HK5/.verification/tv5-master-20261105/pr170/scripts/qa/tv4-unknown/lost-response.test.mjs:77:31)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: concurrent duplicate bodies share one atomic admission while upstream is pending
+not ok 6 - concurrent duplicate bodies share one atomic admission while upstream is pending
+  ---
+  duration_ms: 5.3558
+  type: 'test'
+  location: 'D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-master-20261105\\pr170\\scripts\\qa\\tv4-unknown\\lost-response.test.mjs:82:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'EACCES'
+    - 'ECONNRESET'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'ECONNRESET'
+  actual: 'EACCES'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/CMC%20Uni/5%20Ky%20Dong/WEB/BCK%20WEB/Project_HK5/.verification/tv5-master-20261105/pr170/scripts/qa/tv4-unknown/lost-response.test.mjs:103:12)
+    process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: sync receipt failure is reported without crashing the process or reopening admission
+not ok 7 - sync receipt failure is reported without crashing the process or reopening admission
+  ---
+  duration_ms: 79.9488
+  type: 'test'
+  location: 'D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-master-20261105\\pr170\\scripts\\qa\\tv4-unknown\\lost-response.test.mjs:110:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Command failed: C:\Program Files\nodejs\node.exe --input-type=module -e 
+          import http from 'node:http';
+          import { once } from 'node:events';
+          import assert from 'node:assert/strict';
+          import { lostResponseHandler, sha256 } from "file:///D:/CMC%20Uni/5%20Ky%20Dong/WEB/BCK%20WEB/Project_HK5/.verification/tv5-master-20261105/pr170/scripts/qa/tv4-unknown/lost-response.mjs";
+          const body = "{\"operationId\":\"fake-reserve-1\",\"type\":\"RESERVE\",\"items\":[{\"sku\":\"fake-sku\",\"quantity\":1}]}";
+          let calls = 0;
+          const upstream = http.createServer((req, res) => { calls++; req.resume(); res.end('real response'); });
+          upstream.listen(0, '127.0.0.1'); await once(upstream, 'listening');
+          const proxy = http.createServer(lostResponseHandler({
+            target: 'http://127.0.0.1:' + upstream.address().port + "/internal/inventory/operations",
+            operationId: 'fake-reserve-1', bodySha256: sha256(body),
+            onReceipt:  () => { throw new Error('sensitive-callback-details'); }
+          }));
+          proxy.listen(0, '127.0.0.1'); await once(proxy, 'listening');
+          const send = () => new Promise((resolve, reject) => {
+            const req = http.request({ hostname: '127.0.0.1', port: proxy.address().port, path: "/internal/inventory/operations",
+              method: 'POST' }, res => { res.resume(); res.on('end', () => resolve(res.statusCode)); });
+            req.on('error', reject); req.end(body);
+          });
+          await assert.rejects(send(), { code: 'ECONNRESET' });
+          await assert.rejects(send(), { code: 'ECONNRESET' });
+          assert.equal(calls, 1);
+          proxy.closeAllConnections(); upstream.closeAllConnections();
+          await Promise.all([new Promise(resolve => proxy.close(resolve)), new Promise(resolve => upstream.close(resolve))]);
+          console.log('CALLBACK_FAILURE_SURVIVED');
+        
+    node:internal/modules/run_main:123
+        triggerUncaughtException(
+        ^
+    
+    AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      Comparison {
+    +   code: 'EACCES'
+    -   code: 'ECONNRESET'
+      }
+    
+        at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+        at async file:///D:/CMC%20Uni/5%20Ky%20Dong/WEB/BCK%20WEB/Project_HK5/.verification/tv5-master-20261105/pr170/[eval1]:21:7 {
+      generatedMessage: true,
+      code: 'ERR_ASSERTION',
+      actual: Error: connect EACCES 127.0.0.1:59380
+          at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16) {
+        errno: -4092,
+        code: 'EACCES',
+        syscall: 'connect',
+        address: '127.0.0.1',
+        port: 59380
+      },
+      expected: { code: 'ECONNRESET' },
+      operator: 'rejects',
+      diff: 'simple'
+    }
+    
+    Node.js v22.23.3
+    
+  code: 1
+  stack: |-
+    process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    async file:///D:/CMC%20Uni/5%20Ky%20Dong/WEB/BCK%20WEB/Project_HK5/.verification/tv5-master-20261105/pr170/[eval1]:21:7 {
+    genericNodeError (node:internal/errors:983:15)
+    wrappedFn (node:internal/errors:537:14)
+    ChildProcess.exithandler (node:child_process:417:12)
+    ChildProcess.emit (node:events:519:28)
+    maybeClose (node:internal/child_process:1101:16)
+    ChildProcess._handle.onexit (node:internal/child_process:304:5)
+  ...
+# Subtest: async receipt failure is reported without crashing the process or reopening admission
+not ok 8 - async receipt failure is reported without crashing the process or reopening admission
+  ---
+  duration_ms: 76.2141
+  type: 'test'
+  location: 'D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-master-20261105\\pr170\\scripts\\qa\\tv4-unknown\\lost-response.test.mjs:110:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Command failed: C:\Program Files\nodejs\node.exe --input-type=module -e 
+          import http from 'node:http';
+          import { once } from 'node:events';
+          import assert from 'node:assert/strict';
+          import { lostResponseHandler, sha256 } from "file:///D:/CMC%20Uni/5%20Ky%20Dong/WEB/BCK%20WEB/Project_HK5/.verification/tv5-master-20261105/pr170/scripts/qa/tv4-unknown/lost-response.mjs";
+          const body = "{\"operationId\":\"fake-reserve-1\",\"type\":\"RESERVE\",\"items\":[{\"sku\":\"fake-sku\",\"quantity\":1}]}";
+          let calls = 0;
+          const upstream = http.createServer((req, res) => { calls++; req.resume(); res.end('real response'); });
+          upstream.listen(0, '127.0.0.1'); await once(upstream, 'listening');
+          const proxy = http.createServer(lostResponseHandler({
+            target: 'http://127.0.0.1:' + upstream.address().port + "/internal/inventory/operations",
+            operationId: 'fake-reserve-1', bodySha256: sha256(body),
+            onReceipt: async () => { throw new Error('sensitive-callback-details'); }
+          }));
+          proxy.listen(0, '127.0.0.1'); await once(proxy, 'listening');
+          const send = () => new Promise((resolve, reject) => {
+            const req = http.request({ hostname: '127.0.0.1', port: proxy.address().port, path: "/internal/inventory/operations",
+              method: 'POST' }, res => { res.resume(); res.on('end', () => resolve(res.statusCode)); });
+            req.on('error', reject); req.end(body);
+          });
+          await assert.rejects(send(), { code: 'ECONNRESET' });
+          await assert.rejects(send(), { code: 'ECONNRESET' });
+          assert.equal(calls, 1);
+          proxy.closeAllConnections(); upstream.closeAllConnections();
+          await Promise.all([new Promise(resolve => proxy.close(resolve)), new Promise(resolve => upstream.close(resolve))]);
+          console.log('CALLBACK_FAILURE_SURVIVED');
+        
+    node:internal/modules/run_main:123
+        triggerUncaughtException(
+        ^
+    
+    AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      Comparison {
+    +   code: 'EACCES'
+    -   code: 'ECONNRESET'
+      }
+    
+        at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+        at async file:///D:/CMC%20Uni/5%20Ky%20Dong/WEB/BCK%20WEB/Project_HK5/.verification/tv5-master-20261105/pr170/[eval1]:21:7 {
+      generatedMessage: true,
+      code: 'ERR_ASSERTION',
+      actual: Error: connect EACCES 127.0.0.1:59383
+          at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16) {
+        errno: -4092,
+        code: 'EACCES',
+        syscall: 'connect',
+        address: '127.0.0.1',
+        port: 59383
+      },
+      expected: { code: 'ECONNRESET' },
+      operator: 'rejects',
+      diff: 'simple'
+    }
+    
+    Node.js v22.23.3
+    
+  code: 1
+  stack: |-
+    process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    async file:///D:/CMC%20Uni/5%20Ky%20Dong/WEB/BCK%20WEB/Project_HK5/.verification/tv5-master-20261105/pr170/[eval1]:21:7 {
+    genericNodeError (node:internal/errors:983:15)
+    wrappedFn (node:internal/errors:537:14)
+    ChildProcess.exithandler (node:child_process:417:12)
+    ChildProcess.emit (node:events:519:28)
+    maybeClose (node:internal/child_process:1101:16)
+    ChildProcess._handle.onexit (node:internal/child_process:304:5)
+  ...
+# Subtest: timeout records no receipt and never permits a second upstream attempt
+not ok 9 - timeout records no receipt and never permits a second upstream attempt
+  ---
+  duration_ms: 4.931
+  type: 'test'
+  location: 'D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-master-20261105\\pr170\\scripts\\qa\\tv4-unknown\\lost-response.test.mjs:145:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      Comparison {
+    +   code: 'EACCES'
+    -   code: 'ECONNRESET'
+      }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    code: 'ECONNRESET'
+  actual:
+  error: 'connect EACCES 127.0.0.1:59386'
+  stack: |-
+    TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+  operator: 'rejects'
+  stack: |-
+    process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    async TestContext.<anonymous> (file:///D:/CMC%20Uni/5%20Ky%20Dong/WEB/BCK%20WEB/Project_HK5/.verification/tv5-master-20261105/pr170/scripts/qa/tv4-unknown/lost-response.test.mjs:158:3)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: malformed JSON and wrong fingerprints do not consume the one valid admission
+not ok 10 - malformed JSON and wrong fingerprints do not consume the one valid admission
+  ---
+  duration_ms: 3.0014
+  type: 'test'
+  location: 'D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-master-20261105\\pr170\\scripts\\qa\\tv4-unknown\\lost-response.test.mjs:164:1'
+  failureType: 'testCodeFailure'
+  error: 'connect EACCES 127.0.0.1:59389'
+  code: 'EACCES'
+  stack: |-
+    TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+  ...
+# Subtest: operation ID must match even when the request fingerprint matches
+not ok 11 - operation ID must match even when the request fingerprint matches
+  ---
+  duration_ms: 2.2259
+  type: 'test'
+  location: 'D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-master-20261105\\pr170\\scripts\\qa\\tv4-unknown\\lost-response.test.mjs:178:1'
+  failureType: 'testCodeFailure'
+  error: 'connect EACCES 127.0.0.1:59392'
+  code: 'EACCES'
+  stack: |-
+    TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+  ...
+# Subtest: incomplete upstream response is not a receipt and does not reopen admission
+not ok 12 - incomplete upstream response is not a receipt and does not reopen admission
+  ---
+  duration_ms: 2.4231
+  type: 'test'
+  location: 'D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-master-20261105\\pr170\\scripts\\qa\\tv4-unknown\\lost-response.test.mjs:188:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      Comparison {
+    +   code: 'EACCES'
+    -   code: 'ECONNRESET'
+      }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    code: 'ECONNRESET'
+  actual:
+  error: 'connect EACCES 127.0.0.1:59395'
+  stack: |-
+    TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+  operator: 'rejects'
+  stack: |-
+    process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    async TestContext.<anonymous> (file:///D:/CMC%20Uni/5%20Ky%20Dong/WEB/BCK%20WEB/Project_HK5/.verification/tv5-master-20261105/pr170/scripts/qa/tv4-unknown/lost-response.test.mjs:197:3)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 1
+# fail 11
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 330.5678

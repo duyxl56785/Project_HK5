@@ -1,0 +1,35 @@
+import http from 'node:http';
+import { once } from 'node:events';
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { lostResponseHandler, sha256 } from './scripts/qa/tv4-unknown/lost-response.mjs';
+
+const body = JSON.stringify({ operationId: 'fake-reserve-1', type: 'RESERVE', items: [{ sku: 'fake-sku', quantity: 1 }] });
+async function listen(t, handler) {
+  const server = http.createServer(handler);
+  server.listen(0, '127.0.0.1');
+  await once(server, 'listening');
+  t.after(() => new Promise(resolve => { server.closeAllConnections(); server.close(resolve); }));
+  return `http://127.0.0.1:${server.address().port}/internal/inventory/operations`;
+}
+async function send(url) {
+  await new Promise((resolve, reject) => {
+    const request = http.request(url, { method: 'POST' }, response => { response.resume(); response.on('end', resolve); });
+    request.on('error', reject);
+    request.end(body);
+  });
+}
+
+test('matching second request must not reach upstream again', async t => {
+  let upstreamCalls = 0;
+  const target = await listen(t, async (request, response) => {
+    for await (const _chunk of request) { /* drain fake payload */ }
+    upstreamCalls++;
+    response.writeHead(200).end('{"fake":true}');
+  });
+  const proxy = await listen(t, lostResponseHandler({ target, operationId: 'fake-reserve-1',
+    bodySha256: sha256(body), onReceipt() {} }));
+  await assert.rejects(send(proxy), { code: 'ECONNRESET' });
+  await assert.rejects(send(proxy), { code: 'ECONNRESET' });
+  assert.equal(upstreamCalls, 1, 'proxy may forward the matching operation only once');
+});

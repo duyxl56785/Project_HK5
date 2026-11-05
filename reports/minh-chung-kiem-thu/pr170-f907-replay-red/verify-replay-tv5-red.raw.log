@@ -1,0 +1,33 @@
+TAP version 13
+# Subtest: matching second request must not reach upstream again
+not ok 1 - matching second request must not reach upstream again
+  ---
+  duration_ms: 47.0252
+  type: 'test'
+  location: 'D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-pr170-f90754-20261104\\verify-replay-tv5.mjs:23:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    proxy may forward the matching operation only once
+    
+    2 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 2
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/CMC%20Uni/5%20Ky%20Dong/WEB/BCK%20WEB/Project_HK5/.verification/tv5-pr170-f90754-20261104/verify-replay-tv5.mjs:34:10)
+    process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 132.8154

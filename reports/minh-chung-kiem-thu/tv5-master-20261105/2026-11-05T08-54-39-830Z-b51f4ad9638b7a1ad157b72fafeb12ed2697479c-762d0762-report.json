@@ -1,0 +1,55 @@
+{
+  "id": "2026-11-05T08-54-39-830Z-b51f4ad9638b7a1ad157b72fafeb12ed2697479c-762d0762",
+  "sha": "b51f4ad9638b7a1ad157b72fafeb12ed2697479c",
+  "timestamp": "2026-11-05T08:54:39.831Z",
+  "environment": {
+    "platform": "win32",
+    "node": "v22.23.3",
+    "localhost": true
+  },
+  "status": "PASS",
+  "suites": [
+    {
+      "id": "F15-RULES",
+      "status": "PASS",
+      "expected": "Review rules và giới hạn 1000 UTF-16 đạt",
+      "actual": "PASS: exit 0, 18 test, 18 PASS, 0 FAIL, 0 SKIP",
+      "startedAt": "2026-11-05T08:54:39.834Z",
+      "durationMs": 19046,
+      "counts": {
+        "tests": 18,
+        "pass": 18,
+        "fail": 0,
+        "skip": 0
+      },
+      "exitCode": 0,
+      "log": "F15-RULES.log",
+      "junit": [
+        "junit/F15-RULES-TEST-com.projecthk5.productservice.review.ReviewRulesTest.xml",
+        "junit/F15-RULES-TEST-com.projecthk5.productservice.web.ReviewCommentLimitTest.xml"
+      ]
+    },
+    {
+      "id": "QA-UI",
+      "status": "PASS",
+      "expected": "Dashboard hoạt động và mỗi Playwright test có screenshot",
+      "actual": "PASS: exit 0, 2 test, 2 PASS, 0 FAIL, 0 SKIP",
+      "startedAt": "2026-11-05T08:54:58.886Z",
+      "durationMs": 2503,
+      "counts": {
+        "tests": 2,
+        "pass": 2,
+        "fail": 0,
+        "skip": 0
+      },
+      "exitCode": 0,
+      "log": "QA-UI.log",
+      "junit": [],
+      "screenshots": [
+        "screenshots/2026-11-05T08-54-39-830Z-b51f4ad9638b7a1ad157b72fafeb12ed2697479c-762d0762/QA-UI/dashboard-chi-goi-suite-allowlist-passed.png",
+        "screenshots/2026-11-05T08-54-39-830Z-b51f4ad9638b7a1ad157b72fafeb12ed2697479c-762d0762/QA-UI/dashboard-hien-thi-suite-va-gates-passed.png"
+      ]
+    }
+  ],
+  "finishedAt": "2026-11-05T08:55:01.391Z"
+}

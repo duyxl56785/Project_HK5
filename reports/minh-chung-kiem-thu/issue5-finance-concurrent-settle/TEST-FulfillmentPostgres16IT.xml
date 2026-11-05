@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.projecthk5.orderservice.integration.FulfillmentPostgres16IT" tests="10" skipped="0" failures="0" errors="0" timestamp="2026-11-04T00:37:21" hostname="MDUY-LECO" time="1.074">
+  <properties/>
+  <testcase name="customerSeesOnlyOwnOrdersWithShippingAndStoreSplit()" classname="com.projecthk5.orderservice.integration.FulfillmentPostgres16IT" time="0.389"/>
+  <testcase name="concurrentSettlementPaysOneSellerOrderOnlyOnce()" classname="com.projecthk5.orderservice.integration.FulfillmentPostgres16IT" time="0.253"/>
+  <testcase name="sellerListsAndActsOnlyOnOwnStore()" classname="com.projecthk5.orderservice.integration.FulfillmentPostgres16IT" time="0.053"/>
+  <testcase name="fullCodFlowWritesSideEffectsAndFinance()" classname="com.projecthk5.orderservice.integration.FulfillmentPostgres16IT" time="0.097"/>
+  <testcase name="concurrentAcceptsApplyOnceUnderRowLock()" classname="com.projecthk5.orderservice.integration.FulfillmentPostgres16IT" time="0.029"/>
+  <testcase name="databaseRejectsCodCollectionBeforeDelivery()" classname="com.projecthk5.orderservice.integration.FulfillmentPostgres16IT" time="0.024"/>
+  <testcase name="rolesAreEnforcedPerRoute()" classname="com.projecthk5.orderservice.integration.FulfillmentPostgres16IT" time="0.03"/>
+  <testcase name="suspendedSellerFinishesOpenOrdersButTakesNothingNewAndSeesNoFinance()" classname="com.projecthk5.orderservice.integration.FulfillmentPostgres16IT" time="0.104"/>
+  <testcase name="customerCancelAndSellerRejectReleaseStockAndCloseOrder()" classname="com.projecthk5.orderservice.integration.FulfillmentPostgres16IT" time="0.066"/>
+  <testcase name="financeFailsClosedWhenSellerFactsAreUnavailable()" classname="com.projecthk5.orderservice.integration.FulfillmentPostgres16IT" time="0.017"/>
+  <system-out><![CDATA[07:37:02.642 [Test worker] INFO org.testcontainers.images.PullPolicy -- Image pull policy will be performed by: DefaultPullPolicy()
+07:37:02.646 [Test worker] INFO org.testcontainers.utility.ImageNameSubstitutor -- Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+07:37:02.790 [Test worker] INFO org.testcontainers.dockerclient.DockerClientProviderStrategy -- Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+07:37:03.002 [Test worker] INFO org.testcontainers.dockerclient.DockerClientProviderStrategy -- Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
+07:37:03.003 [Test worker] INFO org.testcontainers.DockerClientFactory -- Docker host IP address is localhost
+07:37:03.010 [Test worker] INFO org.testcontainers.DockerClientFactory -- Connected to docker: 
+  Server Version: 29.8.1
+  API Version: 1.56
+  Operating System: Docker Desktop (containerized)
+  Total Memory: 7571 MB
+07:37:03.028 [Test worker] INFO tc.testcontainers/ryuk:0.7.0 -- Creating container for image: testcontainers/ryuk:0.7.0
+07:37:07.458 [Test worker] INFO tc.testcontainers/ryuk:0.7.0 -- Container testcontainers/ryuk:0.7.0 is starting: 44330469d110ca483ded44ae548c3f9e915b9784730e241c4ec272f5fc981b68
+07:37:07.882 [Test worker] INFO tc.testcontainers/ryuk:0.7.0 -- Container testcontainers/ryuk:0.7.0 started in PT4.8539784S
+07:37:07.886 [Test worker] INFO org.testcontainers.utility.RyukResourceReaper -- Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+07:37:07.886 [Test worker] INFO org.testcontainers.DockerClientFactory -- Checking the system...
+07:37:07.886 [Test worker] INFO org.testcontainers.DockerClientFactory -- ✔︎ Docker server version should be at least 1.6.0
+07:37:07.887 [Test worker] INFO tc.postgres:16-alpine -- Creating container for image: postgres:16-alpine
+07:37:08.024 [Test worker] INFO tc.postgres:16-alpine -- Container postgres:16-alpine is starting: 2f6a725370448b6ef42edd56f93dea6c281428863a23d88d368a75070e97839a
+07:37:10.196 [Test worker] INFO tc.postgres:16-alpine -- Container postgres:16-alpine started in PT2.3095474S
+07:37:10.197 [Test worker] INFO tc.postgres:16-alpine -- Container is started (JDBC URL: jdbc:postgresql://localhost:59837/test?loggerLevel=OFF)
+07:37:10.264 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.projecthk5.orderservice.integration.FulfillmentPostgres16IT]: FulfillmentPostgres16IT does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+07:37:10.355 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.projecthk5.orderservice.OrderServiceApplication for test class com.projecthk5.orderservice.integration.FulfillmentPostgres16IT
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.5)
+
+2026-11-04T07:37:11.702+07:00  INFO 31124 --- [order-service] [    Test worker] c.p.o.i.FulfillmentPostgres16IT          : Starting FulfillmentPostgres16IT using Java 21.0.7 with PID 31124 (started by Minh Duy in D:\CMC Uni\5 Ky Dong\WEB\BCK WEB\Project_HK5\.verification\tv5-main-f019-20261103\backend\order-service)
+2026-11-04T07:37:11.703+07:00  INFO 31124 --- [order-service] [    Test worker] c.p.o.i.FulfillmentPostgres16IT          : No active profile set, falling back to 1 default profile: "default"
+2026-11-04T07:37:12.528+07:00  INFO 31124 --- [order-service] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-11-04T07:37:12.660+07:00  INFO 31124 --- [order-service] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 126 ms. Found 4 JPA repository interfaces.
+2026-11-04T07:37:12.884+07:00  INFO 31124 --- [order-service] [    Test worker] o.s.cloud.context.scope.GenericScope     : BeanFactory id=5774574f-eee8-3ee1-a00c-da1e8d2dfdf3
+2026-11-04T07:37:14.792+07:00  INFO 31124 --- [order-service] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-11-04T07:37:14.941+07:00  INFO 31124 --- [order-service] [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@11d557a5
+2026-11-04T07:37:14.943+07:00  INFO 31124 --- [order-service] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-11-04T07:37:14.975+07:00  INFO 31124 --- [order-service] [    Test worker] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://localhost:59837/test (PostgreSQL 16.15)
+2026-11-04T07:37:15.015+07:00  INFO 31124 --- [order-service] [    Test worker] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table "public"."flyway_schema_history" does not exist yet
+2026-11-04T07:37:15.018+07:00  INFO 31124 --- [order-service] [    Test worker] o.f.core.internal.command.DbValidate     : Successfully validated 5 migrations (execution time 00:00.018s)
+2026-11-04T07:37:15.035+07:00  INFO 31124 --- [order-service] [    Test worker] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table "public"."flyway_schema_history" ...
+2026-11-04T07:37:15.084+07:00  INFO 31124 --- [order-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Current version of schema "public": << Empty Schema >>
+2026-11-04T07:37:15.095+07:00  INFO 31124 --- [order-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "1 - checkout baseline"
+2026-11-04T07:37:15.146+07:00  INFO 31124 --- [order-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "2 - inventory operation journal"
+2026-11-04T07:37:15.167+07:00  INFO 31124 --- [order-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "3 - fulfillment cod shipping outbox"
+2026-11-04T07:37:15.199+07:00  INFO 31124 --- [order-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "4 - write fence abort"
+2026-11-04T07:37:15.214+07:00  INFO 31124 --- [order-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "5 - checkout order drafts"
+2026-11-04T07:37:15.234+07:00  INFO 31124 --- [order-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Successfully applied 5 migrations to schema "public", now at version v5 (execution time 00:00.067s)
+2026-11-04T07:37:15.454+07:00  INFO 31124 --- [order-service] [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-11-04T07:37:15.531+07:00  INFO 31124 --- [order-service] [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2026-11-04T07:37:15.566+07:00  INFO 31124 --- [order-service] [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-11-04T07:37:15.692+07:00  INFO 31124 --- [order-service] [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-11-04T07:37:16.489+07:00  INFO 31124 --- [order-service] [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-11-04T07:37:16.528+07:00  INFO 31124 --- [order-service] [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-11-04T07:37:16.850+07:00  INFO 31124 --- [order-service] [    Test worker] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-11-04T07:37:19.039+07:00  INFO 31124 --- [order-service] [    Test worker] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-11-04T07:37:19.739+07:00  INFO 31124 --- [order-service] [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-11-04T07:37:19.739+07:00  INFO 31124 --- [order-service] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-11-04T07:37:19.740+07:00  INFO 31124 --- [order-service] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2026-11-04T07:37:20.760+07:00  INFO 31124 --- [order-service] [    Test worker] o.s.cloud.commons.util.InetUtils         : Cannot determine local hostname
+2026-11-04T07:37:20.770+07:00  INFO 31124 --- [order-service] [    Test worker] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestTemplate.
+2026-11-04T07:37:20.808+07:00  WARN 31124 --- [order-service] [    Test worker] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2026-11-04T07:37:20.882+07:00  INFO 31124 --- [order-service] [    Test worker] c.p.o.i.FulfillmentPostgres16IT          : Started FulfillmentPostgres16IT in 10.423 seconds (process running for 19.186)
+2026-11-04T07:37:21.668+07:00  WARN 31124 --- [order-service] [    Test worker] org.hibernate.orm.query                  : HHH90003004: firstResult/maxResults specified with collection fetch; applying in memory
+2026-11-04T07:37:21.691+07:00  WARN 31124 --- [order-service] [    Test worker] org.hibernate.orm.query                  : HHH90003004: firstResult/maxResults specified with collection fetch; applying in memory
+2026-11-04T07:37:21.974+07:00  WARN 31124 --- [order-service] [    Test worker] org.hibernate.orm.query                  : HHH90003004: firstResult/maxResults specified with collection fetch; applying in memory
+]]></system-out>
+  <system-err><![CDATA[WARNING: A Java agent has been loaded dynamically (C:\Users\Admin\.gradle\caches\modules-2\files-2.1\net.bytebuddy\byte-buddy-agent\1.14.19\154da3a65b4f4a909d3e5bdec55d1b2b4cbb6ce1\byte-buddy-agent-1.14.19.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+]]></system-err>
+</testsuite>

@@ -1,0 +1,49 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.10/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :notification-service:processResources
+> Task :notification-service:processTestResources NO-SOURCE
+> Task :security-common:compileJava
+> Task :security-common:processResources
+> Task :security-common:classes
+> Task :security-common:jar
+> Task :notification-service:compileJava
+> Task :notification-service:classes
+> Task :notification-service:compileTestJava
+> Task :notification-service:testClasses
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+2026-11-03T22:44:46.118+07:00  INFO 18424 --- [notification-service] [ntainer#0-0-C-1] k.c.c.i.ConsumerRebalanceListenerInvoker : [Consumer clientId=consumer-notification-service-1, groupId=notification-service] Revoke previously assigned partitions order.placed.v1-0, seller-order.status-changed.v1-0
+2026-11-03T22:44:46.119+07:00  INFO 18424 --- [notification-service] [ntainer#0-0-C-1] o.s.k.l.KafkaMessageListenerContainer    : notification-service: partitions revoked: [order.placed.v1-0, seller-order.status-changed.v1-0]
+2026-11-03T22:44:46.119+07:00  INFO 18424 --- [notification-service] [ntainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notification-service-1, groupId=notification-service] Resetting generation and member id due to: consumer pro-actively leaving the group
+2026-11-03T22:44:46.119+07:00  INFO 18424 --- [notification-service] [ntainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notification-service-1, groupId=notification-service] Request joining group due to: consumer pro-actively leaving the group
+2026-11-03T22:44:46.119+07:00  INFO 18424 --- [notification-service] [ntainer#0-0-C-1] o.a.k.c.c.internals.LegacyKafkaConsumer  : [Consumer clientId=consumer-notification-service-1, groupId=notification-service] Unsubscribed all topics or patterns and assigned partitions
+2026-11-03T22:44:46.120+07:00  INFO 18424 --- [notification-service] [ntainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notification-service-1, groupId=notification-service] Resetting generation and member id due to: consumer pro-actively leaving the group
+2026-11-03T22:44:46.120+07:00  INFO 18424 --- [notification-service] [ntainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notification-service-1, groupId=notification-service] Request joining group due to: consumer pro-actively leaving the group
+2026-11-03T22:44:49.726+07:00  INFO 18424 --- [notification-service] [ntainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notification-service-1, groupId=notification-service] Node 1 disconnected.
+2026-11-03T22:44:49.726+07:00  INFO 18424 --- [notification-service] [vice-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=notification-service-producer-1] Node 1 disconnected.
+2026-11-03T22:44:49.726+07:00  INFO 18424 --- [notification-service] [ntainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notification-service-1, groupId=notification-service] Cancelled in-flight API_VERSIONS request with correlation id 31 due to node 1 being disconnected (elapsed time since creation: 3638ms, elapsed time since send: 3638ms, request timeout: 30000ms)
+2026-11-03T22:44:49.726+07:00  INFO 18424 --- [notification-service] [vice-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=notification-service-producer-1] Cancelled in-flight API_VERSIONS request with correlation id 15 due to node 1 being disconnected (elapsed time since creation: 4096ms, elapsed time since send: 4096ms, request timeout: 30000ms)
+2026-11-03T22:44:49.726+07:00  INFO 18424 --- [notification-service] [ntainer#0-0-C-1] o.apache.kafka.common.metrics.Metrics    : Metrics scheduler closed
+2026-11-03T22:44:49.726+07:00  INFO 18424 --- [notification-service] [ntainer#0-0-C-1] o.apache.kafka.common.metrics.Metrics    : Closing reporter org.apache.kafka.common.metrics.JmxReporter
+2026-11-03T22:44:49.726+07:00  INFO 18424 --- [notification-service] [ntainer#0-0-C-1] o.apache.kafka.common.metrics.Metrics    : Closing reporter org.apache.kafka.common.telemetry.internals.ClientTelemetryReporter
+2026-11-03T22:44:49.726+07:00  INFO 18424 --- [notification-service] [ntainer#0-0-C-1] o.apache.kafka.common.metrics.Metrics    : Metrics reporters closed
+2026-11-03T22:44:49.728+07:00  INFO 18424 --- [notification-service] [ntainer#0-0-C-1] o.a.kafka.common.utils.AppInfoParser     : App info kafka.consumer for consumer-notification-service-1 unregistered
+2026-11-03T22:44:49.730+07:00  INFO 18424 --- [notification-service] [ntainer#0-0-C-1] o.s.k.l.KafkaMessageListenerContainer    : notification-service: Consumer stopped
+2026-11-03T22:44:49.731+07:00  INFO 18424 --- [notification-service] [ionShutdownHook] o.a.k.clients.producer.KafkaProducer     : [Producer clientId=notification-service-producer-1] Closing the Kafka producer with timeoutMillis = 30000 ms.
+2026-11-03T22:44:49.733+07:00  INFO 18424 --- [notification-service] [ionShutdownHook] o.apache.kafka.common.metrics.Metrics    : Metrics scheduler closed
+2026-11-03T22:44:49.733+07:00  INFO 18424 --- [notification-service] [ionShutdownHook] o.apache.kafka.common.metrics.Metrics    : Closing reporter org.apache.kafka.common.metrics.JmxReporter
+2026-11-03T22:44:49.733+07:00  INFO 18424 --- [notification-service] [ionShutdownHook] o.apache.kafka.common.metrics.Metrics    : Closing reporter org.apache.kafka.common.telemetry.internals.ClientTelemetryReporter
+2026-11-03T22:44:49.733+07:00  INFO 18424 --- [notification-service] [ionShutdownHook] o.apache.kafka.common.metrics.Metrics    : Metrics reporters closed
+2026-11-03T22:44:49.733+07:00  INFO 18424 --- [notification-service] [ionShutdownHook] o.a.kafka.common.utils.AppInfoParser     : App info kafka.producer for notification-service-producer-1 unregistered
+2026-11-03T22:44:49.738+07:00  INFO 18424 --- [notification-service] [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-11-03T22:44:49.748+07:00  INFO 18424 --- [notification-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-11-03T22:44:49.750+07:00  INFO 18424 --- [notification-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+> Task :notification-service:test
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.10/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 45s
+7 actionable tasks: 7 executed
