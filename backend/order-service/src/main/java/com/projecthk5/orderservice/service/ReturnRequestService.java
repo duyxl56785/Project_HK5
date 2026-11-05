@@ -157,7 +157,7 @@ public class ReturnRequestService {
     private static String normalizeReason(String raw) {
         if (raw == null) throw ApiException.badRequest("VALIDATION_FAILED", "Return reason is required");
         String result = raw.strip();
-        if (result.isBlank() || result.length() > 500 || result.chars().anyMatch(Character::isISOControl)) {
+        if (result.isBlank() || result.length() > 500 || result.chars().anyMatch(c -> (Character.isISOControl(c) && c != 10 && c != 13 && c != 9))) {
             throw ApiException.badRequest("VALIDATION_FAILED", "Return reason must contain 1-500 UTF-16 units");
         }
         return result;
