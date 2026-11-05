@@ -248,4 +248,156 @@ class FulfillmentPostgres16IT {
     void databaseRejectsCodCollectionBeforeDelivery() {
         assertThrows(Exception.class, () -> sql.update("update seller_orders set cod_status='COLLECTED' where id=?", so2.getId()));
     }
+
+    // #155 RET-01/02/04/06: These tests run MockMvc + real PostgreSQL16 with StoreDirectory
+    // mocked. They are NOT full Gateway/Inventory/React E2E or a refund authorization.
+    private void delivered(String owner, SellerOrder order) throws Exception {
+        for (String action : new String[]{"accept", "prepare", "ready", "dispatch", "deliver"}) {
+            act(owner, order, action, null, 200);
+        }
+    }
+
+    private org.springframework.test.web.servlet.ResultActions requestReturn(SellerOrder sellerOrder,
+            String buyer, String key, String reason) throws Exception {
+        return mvc.perform(post("/api/orders/{id}/store-orders/{storeId}/returns",
+                order.getId(), sellerOrder.getId())
+                .with(as(buyer, "CUSTOMER"))
+                .header("Idempotency-Key", key)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"reason\":\"" + reason + "\"}"));
+    }
+
+    private int returnRows(SellerOrder sellerOrder) {
+        return sql.queryForObject("select count(*) from return_requests where seller_order_id=?",
+                Integer.class, sellerOrder.getId());
+    }
+
+    @Test
+    void buyerReturnIsScopedToOneDeliveredStoreOrderAndReadBack() throws Exception {
+        delivered("owner-1", so1);
+        requestReturn(so1, "wrong-buyer", "wrong-key", "Hang khong dung")
+                .andExpect(status().isNotFound());
+        requestReturn(so2, customer, "too-early", "Hang khong dung")
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.code").value("RETURN_NOT_ELIGIBLE"));
+        mvc.perform(post("/api/orders/{id}/store-orders/{store}/returns", order.getId(), so1.getId())
+                .with(as("owner-1", "SELLER")).header("Idempotency-Key", "not-a-buyer")
+                .contentType(MediaType.APPLICATION_JSON).content("{\"reason\":\"Wrong role\"}"))
+                .andExpect(status().isForbidden());
+
+        requestReturn(so1, customer, "key-one", "Hang khong dung")
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.status").value("REQUESTED"))
+                .andExpect(jsonPath("$.storeOrderId").value(so1.getId().toString()));
+        assertEquals(1, returnRows(so1));
+        assertEquals(0, returnRows(so2));
+        assertEquals(0, outbox(so1, "\"RELEASE\""));
+        assertEquals(1, outbox(so1, "RETURN_REQUESTED"));
+
+        mvc.perform(get("/api/orders/{id}/returns", order.getId()).with(as(customer, "CUSTOMER")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].reason").value("Hang khong dung"))
+                .andExpect(jsonPath("$[0].status").value("REQUESTED"));
+        mvc.perform(get("/api/orders/{id}/returns", order.getId())
+                .with(as("wrong-buyer", "CUSTOMER"))).andExpect(status().isNotFound());
+    }
+
+    @Test
+    void duplicateReturnKeyReplaysStableRequestWithoutExtraOutbox() throws Exception {
+        delivered("owner-1", so1);
+        requestReturn(so1, customer, "same-key", "Sai kich co").andExpect(status().isCreated());
+        UUID originalId = sql.queryForObject("select id from return_requests where seller_order_id=?",
+                UUID.class, so1.getId());
+
+        requestReturn(so1, customer, "same-key", "Sai kich co")
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.requestId").value(originalId.toString()));
+        requestReturn(so1, customer, "same-key", "Khac ly do")
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.code").value("RETURN_IDEMPOTENCY_MISMATCH"));
+        requestReturn(so1, customer, "different-key", "Sai kich co")
+                .andExpect(status().isConflict());
+        delivered("owner-2", so2);
+        requestReturn(so2, customer, "same-key", "Sai kich co")
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.code").value("RETURN_IDEMPOTENCY_MISMATCH"));
+        assertEquals(1, returnRows(so1));
+        assertEquals(0, returnRows(so2));
+        assertEquals(1, outbox(so1, "RETURN_REQUESTED"));
+    }
+
+    @Test
+    void returnTimeWindowAndValidationFailClosed() throws Exception {
+        delivered("owner-1", so1);
+        sql.update("update seller_orders set delivered_at=? where id=?",
+                java.sql.Timestamp.from(java.time.Instant.now().minus(java.time.Duration.ofDays(8))), so1.getId());
+        requestReturn(so1, customer, "expired-key", "Qua ngay")
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.code").value("RETURN_NOT_ELIGIBLE"));
+        assertEquals(0, returnRows(so1));
+        requestReturn(so1, customer, "invalid-key", "")
+                .andExpect(status().isBadRequest());
+        mvc.perform(post("/api/orders/{id}/store-orders/{store}/returns", order.getId(), so1.getId())
+                .with(as(customer, "CUSTOMER")).contentType(MediaType.APPLICATION_JSON)
+                .content("{\"reason\":\"ok\"}"))
+                .andExpect(status().isBadRequest());
+        assertEquals(0, returnRows(so1));
+    }
+
+    @Test
+    void pendingReturnBlocksSettlementButCollectCodStillRecordsCash() throws Exception {
+        delivered("owner-1", so1);
+        requestReturn(so1, customer, "guard-key", "Tra hang")
+                .andExpect(status().isCreated());
+        mvc.perform(post("/api/admin/store-orders/{id}/cod-collected", so1.getId())
+                .with(as("admin", "ADMIN"))).andExpect(status().isOk());
+        mvc.perform(post("/api/admin/store-orders/{id}/settle", so1.getId())
+                .with(as("admin", "ADMIN")))
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.code").value("SETTLEMENT_RETURN_OPEN"));
+        assertEquals(0, outbox(so1, "\"SETTLED\""));
+        delivered("owner-2", so2);
+        mvc.perform(post("/api/admin/store-orders/{id}/cod-collected", so2.getId())
+                .with(as("admin", "ADMIN"))).andExpect(status().isOk());
+        mvc.perform(post("/api/admin/store-orders/{id}/settle", so2.getId())
+                .with(as("admin", "ADMIN"))).andExpect(status().isOk());
+        assertEquals(1, outbox(so2, "\"SETTLED\""));
+    }
+
+    @Test
+    void concurrentReturnAndSettlementCannotBothCommit() throws Exception {
+        delivered("owner-1", so1);
+        mvc.perform(post("/api/admin/store-orders/{id}/cod-collected", so1.getId())
+                .with(as("admin", "ADMIN"))).andExpect(status().isOk());
+        ExecutorService pool = Executors.newFixedThreadPool(2);
+        CountDownLatch start = new CountDownLatch(1);
+        try {
+            Callable<Integer> buyer = () -> {
+                start.await();
+                return requestReturn(so1, customer, "racing-key", "Tra hang")
+                        .andReturn().getResponse().getStatus();
+            };
+            Callable<Integer> finance = () -> {
+                start.await();
+                return mvc.perform(post("/api/admin/store-orders/{id}/settle", so1.getId())
+                        .with(as("admin", "ADMIN"))).andReturn().getResponse().getStatus();
+            };
+            Future<Integer> first = pool.submit(buyer), second = pool.submit(finance);
+            start.countDown();
+            int resultBuyer = first.get(30, TimeUnit.SECONDS);
+            int resultFinance = second.get(30, TimeUnit.SECONDS);
+            assertTrue((resultBuyer == 201 && resultFinance == 409)
+                    || (resultBuyer == 409 && resultFinance == 200),
+                    "Return and settle cannot both win: " + resultBuyer + "/" + resultFinance);
+
+            int active = sql.queryForObject("select count(*) from return_requests "
+                    + "where seller_order_id=? and status='REQUESTED'", Integer.class, so1.getId());
+            int settled = sql.queryForObject("select count(*) from seller_orders "
+                    + "where id=? and settled_at is not null", Integer.class, so1.getId());
+            assertEquals(1, active + settled);
+            assertEquals(settled, outbox(so1, "\"SETTLED\""));
+        } finally {
+            pool.shutdownNow();
+        }
+    }
 }
