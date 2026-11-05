@@ -121,3 +121,42 @@ test('lost response never mints a different Idempotency-Key or changes original 
     await view.close();
   }
 });
+
+test('a lost response can replay its frozen request after the seven-day deadline', async () => {
+  const originalFetch = globalThis.fetch;
+  const originalNow = Date.now;
+  const start = Date.parse('2026-11-05T12:00:00Z');
+  let now = start;
+  Date.now = () => now;
+  const calls = [];
+  globalThis.fetch = async (path, options) => {
+    calls.push({ path: String(path), key: options.headers['Idempotency-Key'], body: String(options.body) });
+    if (calls.length === 1) {
+      // The server may have committed while eligible, but its reply arrives after the cutoff.
+      now += 2000;
+      throw new Error('simulated response loss across deadline');
+    }
+    return new Response(JSON.stringify({ requestId: 'cccccccc-cccc-4ccc-8ccc-cccccccccccc',
+      ...ids, status: 'REQUESTED', reason: 'Hàng lỗi', requestedAt: new Date(start).toISOString() }), {
+      status: 200, headers: { 'Content-Type': 'application/json' },
+    });
+  };
+  const view = await mounted({ ...eligible(),
+    deliveredAt: new Date(start - 7 * 86400000 + 1000).toISOString() });
+  try {
+    await view.type('Hàng lỗi');
+    await view.click();
+    assert.equal(calls.length, 1);
+    assert.ok(view.host.querySelector('button'), 'Frozen same-key replay must remain available after expiry');
+    assert.match(view.host.textContent, /Thử lại cùng mã yêu cầu/);
+    assert.equal(view.host.querySelector('textarea').disabled, true);
+    await view.click();
+    assert.equal(calls.length, 2);
+    assert.deepEqual(calls[1], calls[0]);
+    assert.match(view.host.textContent, /Đã gửi yêu cầu/);
+  } finally {
+    await view.close();
+    globalThis.fetch = originalFetch;
+    Date.now = originalNow;
+  }
+});

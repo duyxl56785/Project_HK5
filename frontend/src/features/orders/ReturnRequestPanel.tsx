@@ -60,7 +60,9 @@ export function ReturnRequestPanel({ orderId, storeOrderId, deliveredAt, settled
 
   if (settledAt) return <p className="muted">Đơn đã đối soát, không còn đủ điều kiện yêu cầu trả hàng.</p>;
   if (!deliveredAt || !Number.isFinite(Date.parse(deliveredAt))) return null;
-  if (Date.now() > Date.parse(deliveredAt) + 7 * 24 * 60 * 60 * 1000) {
+  // The deadline gates new requests, not replay of a potentially committed request.
+  // Preserve the frozen key/body and let the server return its authoritative outcome.
+  if (!submittedPayload.current && Date.now() > Date.parse(deliveredAt) + 7 * 24 * 60 * 60 * 1000) {
     return <p className="muted">Đã quá 7 ngày kể từ khi giao hàng.</p>;
   }
 
