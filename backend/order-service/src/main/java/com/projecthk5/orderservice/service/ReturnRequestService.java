@@ -164,7 +164,7 @@ public class ReturnRequestService {
     }
 
     private static String fingerprint(UUID orderId, UUID storeOrderId, String reason) {
-        String value = "customer-return-v1\u0000" + orderId + "\u0000" + storeOrderId + "\u0000" + reason;
+        String value = "customer-return-v1|" + orderId + "|" + storeOrderId + "|" + reason.length() + ":" + reason;
         try {
             return HexFormat.of().formatHex(MessageDigest.getInstance("SHA-256")
                     .digest(value.getBytes(StandardCharsets.UTF_8)));
