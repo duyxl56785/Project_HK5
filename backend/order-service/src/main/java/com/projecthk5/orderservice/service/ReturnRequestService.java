@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -97,12 +98,20 @@ public class ReturnRequestService {
         }
 
         UUID requestId = UUID.randomUUID();
-        db.update("insert into return_requests "
-                    + "(id,order_id,seller_order_id,customer_id,idempotency_key,request_fingerprint,"
-                    + "reason,status,requested_at,updated_at) "
-                    + "values (?,?,?,?,?,?,?,'REQUESTED',?,?)",
-                requestId, orderId, storeOrderId, customerId, key, fingerprint,
-                reason, java.sql.Timestamp.from(now), java.sql.Timestamp.from(now));
+        try {
+            db.update("insert into return_requests "
+                        + "(id,order_id,seller_order_id,customer_id,idempotency_key,request_fingerprint,"
+                        + "reason,status,requested_at,updated_at) "
+                        + "values (?,?,?,?,?,?,?,'REQUESTED',?,?)",
+                    requestId, orderId, storeOrderId, customerId, key, fingerprint,
+                    reason, java.sql.Timestamp.from(now), java.sql.Timestamp.from(now));
+        } catch (DataIntegrityViolationException concurrent) {
+            // The unique(customer,key) arbiter also protects concurrent same-key calls
+            // against two different SellerOrders (which take different row locks).
+            // Never leak SQL details or return a 500; rollback this whole transaction.
+            throw ApiException.conflict("RETURN_IDEMPOTENCY_MISMATCH",
+                    "Idempotency-Key already used or an active Return exists");
+        }
 
         // Transactional outbox: notify only the right Store and never include shipping/PII.
         events.notifyStore(sellerOrder, "RETURN_REQUESTED", "Khách hàng yêu cầu trả hàng",
