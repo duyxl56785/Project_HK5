@@ -461,6 +461,30 @@ class FulfillmentPostgres16IT {
     }
 
     @Test
+    void databaseRejectsWrongRootOrderAndDuplicateActiveReturn() throws Exception {
+        Order unrelatedRoot = orders.saveAndFlush(new Order(UUID.randomUUID(), "another-customer"));
+        // Both FK targets exist. The composite FK must still reject a cross-Order
+        // SellerOrder reference, including from a future non-HTTP integration.
+        assertThrows(org.springframework.dao.DataIntegrityViolationException.class, () -> sql.update(
+                "insert into return_requests (id,order_id,seller_order_id,customer_id,idempotency_key,"
+                + "request_fingerprint,reason,status,requested_at,updated_at) "
+                + "values (?,?,?,?,?,?,?,'REQUESTED',now(),now())",
+                UUID.randomUUID(), unrelatedRoot.getId(), so1.getId(), customer,
+                "wrong-root", "a".repeat(64), "valid"));
+
+        delivered("owner-1", so1);
+        requestReturn(so1, customer, "primary-return", "Damaged item")
+                .andExpect(status().isCreated());
+        assertThrows(org.springframework.dao.DataIntegrityViolationException.class, () -> sql.update(
+                "insert into return_requests (id,order_id,seller_order_id,customer_id,idempotency_key,"
+                + "request_fingerprint,reason,status,requested_at,updated_at) "
+                + "values (?,?,?,?,?,?,?,'REQUESTED',now(),now())",
+                UUID.randomUUID(), order.getId(), so1.getId(), customer,
+                "second-active", "b".repeat(64), "Second request"));
+        assertEquals(1, returnRows(so1));
+    }
+
+    @Test
     void concurrentReuseOfOneCustomerKeyAcrossTwoStoresCreatesOnlyOneRequest() throws Exception {
         delivered("owner-1", so1);
         delivered("owner-2", so2);
