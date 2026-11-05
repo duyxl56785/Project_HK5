@@ -53,7 +53,10 @@ async function mounted(props) {
   });
   const type = async text => act(async () => {
     const input = host.querySelector('textarea');
-    input.value = text;
+    // Native setter avoids React's value tracker swallowing synthetic input events.
+    const setter = Object.getOwnPropertyDescriptor(environment.HTMLTextAreaElement.prototype, 'value')?.set;
+    assert.ok(setter);
+    setter.call(input, text);
     input.dispatchEvent(new environment.Event('input', { bubbles: true }));
     input.dispatchEvent(new environment.Event('change', { bubbles: true }));
   });
