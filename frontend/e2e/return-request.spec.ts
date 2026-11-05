@@ -53,7 +53,8 @@ test('delivered buyer requests one Return and replay with the same key keeps its
     const created = await first.json() as { requestId: string; storeOrderId: string; status: string };
     expect(created.requestId).toMatch(/^[0-9a-f-]{36}$/);
     expect(created.status).toBe('REQUESTED');
-    const headers = wire.headers();
+    // Read authorization only inside the test process; never log or persist it.
+    const headers = await wire.allHeaders();
     expect(headers.authorization).toMatch(/^Bearer /);
     expect(headers['idempotency-key']).toBeTruthy();
 
