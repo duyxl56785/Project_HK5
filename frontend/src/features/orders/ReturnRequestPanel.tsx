@@ -51,7 +51,7 @@ export function ReturnRequestPanel({ orderId, storeOrderId, deliveredAt, settled
   if (loadError) return <div className="note note--error" role="alert">
     Không thể kiểm tra trạng thái trả hàng. Hãy tải lại trang trước khi gửi yêu cầu.
   </div>;
-  if (existing) return <section className="stack" aria-label="Trạng thái yêu cầu trả hàng">
+  if (existing && existing.status !== 'REJECTED') return <section className="stack" aria-label="Trạng thái yêu cầu trả hàng">
     <div className="row row--wrap"><strong>Yêu cầu trả hàng</strong> <Badge value={existing.status} /></div>
     <small className="muted">Đã gửi: {dateTime(existing.requestedAt)}</small>
     <p className="muted">Lý do: {existing.reason}</p>
@@ -65,6 +65,7 @@ export function ReturnRequestPanel({ orderId, storeOrderId, deliveredAt, settled
   }
 
   return <section className="stack" aria-label="Yêu cầu trả hàng">
+    {existing?.status === 'REJECTED' && <p className="muted">Yêu cầu trước đã bị từ chối. Bạn có thể gửi yêu cầu mới nếu còn trong thời hạn 7 ngày.</p>}
     <h3>Yêu cầu trả hàng</h3>
     <p className="muted">Chỉ yêu cầu trả toàn bộ đơn của cửa hàng này trong 7 ngày sau khi nhận.
       Chưa có hoàn tiền tự động.</p>
