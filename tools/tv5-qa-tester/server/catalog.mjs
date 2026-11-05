@@ -11,7 +11,7 @@ const nodeTests = { executable: 'node', cwd: 'frontend',
 export const suites = Object.freeze([
   { id: 'F15-RULES', module: 'F15 Review', title: 'Điều kiện buyer, rating và R06', expected: 'Review rules và giới hạn 1000 UTF-16 đạt', safeAll: true, timeoutMs: 180000,
     source: 'backend/product-service/src/test/java/com/projecthk5/productservice/review/',
-    command: gradle('product-service', 'test', ['*ReviewRulesTest']) },
+    command: gradle('product-service', 'test', ['*ReviewRulesTest', '*ReviewCommentLimitTest']) },
   { id: 'F15-POSTGRES', module: 'F15 Review', title: 'Migration review legacy trên PostgreSQL', expected: 'Migration và Admin moderation legacy đạt trên PostgreSQL', safeAll: false, requiresDocker: true, timeoutMs: 240000,
     source: 'backend/product-service/src/test/java/com/projecthk5/productservice/web/ReviewCommentMigrationPostgresTest.java',
     command: gradle('product-service', 'integrationTest', ['*ReviewCommentMigrationPostgresTest']) },
