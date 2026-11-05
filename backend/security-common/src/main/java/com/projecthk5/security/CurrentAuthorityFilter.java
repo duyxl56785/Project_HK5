@@ -19,11 +19,11 @@ import org.springframework.web.filter.OncePerRequestFilter;
 /**
  * A JWT outlives its account state by up to its TTL, so every write reserves itself with Auth, which
  * re-checks the account. Auth can then stop the write through {@link WriteFence} if authority is revoked.
- * Fails closed: if Auth cannot answer, the write gets 503.
- * shortcut: reads still trust the token until it expires, add reads here if that window matters.
+ * Reads re-check the account too, without a reservation, so a revoked token stops at its next read.
+ * Fails closed: if Auth cannot answer, the request gets 503.
  */
 public class CurrentAuthorityFilter extends OncePerRequestFilter {
-    private static final Set<String> READS = Set.of("GET", "HEAD", "OPTIONS");
+    private static final Set<String> READS = Set.of("GET", "HEAD");
 
     public record Reservation(boolean granted, UUID id) {}
 
@@ -39,16 +39,18 @@ public class CurrentAuthorityFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (READS.contains(request.getMethod()) || !request.getRequestURI().startsWith("/api/")
+        if ("OPTIONS".equals(request.getMethod()) || !request.getRequestURI().startsWith("/api/")
                 || !(authentication instanceof JwtAuthenticationToken jwt)) {
             chain.doFilter(request, response);
             return;
         }
+        boolean read = READS.contains(request.getMethod());
         List<String> claimed = jwt.getToken().getClaimAsStringList("roles");
         Reservation reservation = null;
         if (claimed != null) {
             try {
-                reservation = auth.post().uri("/internal/accounts/{id}/write-reservations", jwt.getName())
+                reservation = auth.post().uri(read ? "/internal/accounts/{id}/authority-checks"
+                                : "/internal/accounts/{id}/write-reservations", jwt.getName())
                         .header(InternalTokens.HEADER, token).body(Map.of("roles", claimed))
                         .retrieve().body(Reservation.class);
             } catch (RestClientException | IllegalArgumentException unavailable) {
@@ -64,6 +66,10 @@ public class CurrentAuthorityFilter extends OncePerRequestFilter {
             // 401 sends the client through refresh, which issues a token with the current roles or ends the session.
             response.setHeader("WWW-Authenticate", "Bearer realm=\"smart-ecommerce\", error=\"invalid_token\"");
             JwtResourceServer.write(response, 401, "AUTH_ACCESS_INVALID", "Access token no longer matches the account");
+            return;
+        }
+        if (read) {
+            chain.doFilter(request, response);
             return;
         }
         WriteFence.enter(reservation.id());

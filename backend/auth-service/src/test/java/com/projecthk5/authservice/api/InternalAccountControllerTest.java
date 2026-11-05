@@ -43,4 +43,14 @@ class InternalAccountControllerTest {
         org.junit.jupiter.api.Assertions.assertThrows(RuntimeException.class, () -> controller.sellerRole(
                 "wrong", UUID.randomUUID(), new InternalAccountController.RoleChange(true, 3L)));
     }
+
+    @Test
+    void readCheckAnswersFromTheCurrentAccountWithoutReserving() {
+        when(reservations.holds("account-1", java.util.List.of("ADMIN"))).thenReturn(false);
+        var answer = controller.check("pair-token", "account-1", new InternalAccountController.Claim(java.util.List.of("ADMIN")));
+        org.junit.jupiter.api.Assertions.assertFalse(answer.granted());
+        org.junit.jupiter.api.Assertions.assertNull(answer.id());
+        org.mockito.Mockito.verify(reservations).callerOf("pair-token");
+        org.mockito.Mockito.verify(reservations, org.mockito.Mockito.never()).reserve(any(), any(), any());
+    }
 }

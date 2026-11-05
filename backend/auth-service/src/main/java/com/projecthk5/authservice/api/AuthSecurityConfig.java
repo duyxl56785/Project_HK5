@@ -30,7 +30,9 @@ public class AuthSecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/auth/register", "/api/auth/login",
                                 "/api/auth/refresh", "/api/auth/logout").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/internal/accounts/*/roles/SELLER").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/internal/accounts/*/write-reservations").permitAll()
+                        // Pair-token checked in InternalAccountController, not by JWT.
+                        .requestMatchers(HttpMethod.POST, "/internal/accounts/*/write-reservations",
+                                "/internal/accounts/*/authority-checks").permitAll()
                         .requestMatchers(HttpMethod.DELETE, "/internal/accounts/write-reservations/*").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/auth/me").authenticated()
                         .requestMatchers("/api/admin/accounts/**").hasRole("ADMIN")

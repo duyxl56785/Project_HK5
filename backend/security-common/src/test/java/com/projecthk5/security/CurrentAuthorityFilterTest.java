@@ -19,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class CurrentAuthorityFilterTest {
     private static final String GRANTED = "{\"granted\":true,\"id\":\"11111111-1111-1111-1111-111111111111\"}";
     private final List<String> released = new ArrayList<>();
+    private final List<String> checked = new ArrayList<>();
     private HttpServer auth;
 
     @AfterEach
@@ -56,9 +57,32 @@ class CurrentAuthorityFilterTest {
     }
 
     @Test
-    void readsAndInternalRoutesSkipTheCheck() throws Exception {
+    void currentReadProceedsWithoutReservation() throws Exception {
+        auth = stub("{\"granted\":true}", 200, 204);
+        assertEquals(200, run(new CurrentAuthorityFilter(url(), "pair"), "GET", "/api/seller/products").getStatus());
+        assertEquals(List.of("/internal/accounts/account-1/authority-checks"), checked);
+        assertTrue(released.isEmpty());
+    }
+
+    @Test
+    void revokedAuthorityRejectsTheNextRead() throws Exception {
+        auth = stub("{\"granted\":false}", 200, 204);
+        var response = run(new CurrentAuthorityFilter(url(), "pair"), "GET", "/api/admin/orders");
+        assertEquals(401, response.getStatus());
+        assertTrue(response.getContentAsString().contains("AUTH_ACCESS_INVALID"));
+    }
+
+    @Test
+    void readFailsClosedWhenAuthIsUnavailable() throws Exception {
+        var refused = run(new CurrentAuthorityFilter("http://127.0.0.1:1", "pair"), "GET", "/api/seller/products");
+        assertEquals(503, refused.getStatus());
+        assertTrue(refused.getContentAsString().contains("AUTH_AUTHORITY_UNAVAILABLE"));
+    }
+
+    @Test
+    void preflightAndInternalRoutesSkipTheCheck() throws Exception {
         var unreachable = new CurrentAuthorityFilter("http://127.0.0.1:1", "pair");
-        assertEquals(200, run(unreachable, "GET", "/api/seller/products").getStatus());
+        assertEquals(200, run(unreachable, "OPTIONS", "/api/seller/products").getStatus());
         assertEquals(200, run(unreachable, "POST", "/internal/notifications").getStatus());
     }
 
@@ -81,7 +105,9 @@ class CurrentAuthorityFilterTest {
                 exchange.close();
                 return;
             }
-            assertEquals("/internal/accounts/account-1/write-reservations", exchange.getRequestURI().getPath());
+            String path = exchange.getRequestURI().getPath();
+            if (path.endsWith("/authority-checks")) checked.add(path);
+            else assertEquals("/internal/accounts/account-1/write-reservations", path);
             byte[] bytes = body.getBytes(StandardCharsets.UTF_8);
             exchange.getResponseHeaders().add("Content-Type", "application/json");
             exchange.sendResponseHeaders(status, bytes.length);
