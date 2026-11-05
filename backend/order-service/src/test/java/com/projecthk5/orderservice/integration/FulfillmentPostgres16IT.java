@@ -248,4 +248,268 @@ class FulfillmentPostgres16IT {
     void databaseRejectsCodCollectionBeforeDelivery() {
         assertThrows(Exception.class, () -> sql.update("update seller_orders set cod_status='COLLECTED' where id=?", so2.getId()));
     }
+
+    // #155 RET-01/02/04/06: These tests run MockMvc + real PostgreSQL16 with StoreDirectory
+    // mocked. They are NOT full Gateway/Inventory/React E2E or a refund authorization.
+    private void delivered(String owner, SellerOrder order) throws Exception {
+        for (String action : new String[]{"accept", "prepare", "ready", "dispatch", "deliver"}) {
+            act(owner, order, action, null, 200);
+        }
+    }
+
+    private org.springframework.test.web.servlet.ResultActions requestReturn(SellerOrder sellerOrder,
+            String buyer, String key, String reason) throws Exception {
+        return mvc.perform(post("/api/orders/{id}/store-orders/{storeId}/returns",
+                order.getId(), sellerOrder.getId())
+                .with(as(buyer, "CUSTOMER"))
+                .header("Idempotency-Key", key)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"reason\":\"" + reason + "\"}"));
+    }
+
+    private int returnRows(SellerOrder sellerOrder) {
+        return sql.queryForObject("select count(*) from return_requests where seller_order_id=?",
+                Integer.class, sellerOrder.getId());
+    }
+
+    @Test
+    void buyerReturnIsScopedToOneDeliveredStoreOrderAndReadBack() throws Exception {
+        delivered("owner-1", so1);
+        requestReturn(so1, "wrong-buyer", "wrong-key", "Hang khong dung")
+                .andExpect(status().isNotFound());
+        requestReturn(so2, customer, "too-early", "Hang khong dung")
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.code").value("RETURN_NOT_ELIGIBLE"));
+        mvc.perform(post("/api/orders/{id}/store-orders/{store}/returns", order.getId(), so1.getId())
+                .with(as("owner-1", "SELLER")).header("Idempotency-Key", "not-a-buyer")
+                .contentType(MediaType.APPLICATION_JSON).content("{\"reason\":\"Wrong role\"}"))
+                .andExpect(status().isForbidden());
+
+        requestReturn(so1, customer, "key-one", "Hang khong dung")
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.status").value("REQUESTED"))
+                .andExpect(jsonPath("$.storeOrderId").value(so1.getId().toString()));
+        assertEquals(1, returnRows(so1));
+        assertEquals(0, returnRows(so2));
+        assertEquals(0, outbox(so1, "\"RELEASE\""));
+        assertEquals(1, outbox(so1, "RETURN_REQUESTED"));
+
+        mvc.perform(get("/api/orders/{id}/returns", order.getId()).with(as(customer, "CUSTOMER")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].reason").value("Hang khong dung"))
+                .andExpect(jsonPath("$[0].status").value("REQUESTED"));
+        mvc.perform(get("/api/orders/{id}/returns", order.getId())
+                .with(as("wrong-buyer", "CUSTOMER"))).andExpect(status().isNotFound());
+    }
+
+    @Test
+    void duplicateReturnKeyReplaysStableRequestWithoutExtraOutbox() throws Exception {
+        delivered("owner-1", so1);
+        requestReturn(so1, customer, "same-key", "Sai kich co").andExpect(status().isCreated());
+        UUID originalId = sql.queryForObject("select id from return_requests where seller_order_id=?",
+                UUID.class, so1.getId());
+
+        requestReturn(so1, customer, "same-key", "Sai kich co")
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.requestId").value(originalId.toString()));
+        requestReturn(so1, customer, "same-key", "Khac ly do")
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.code").value("RETURN_IDEMPOTENCY_MISMATCH"));
+        requestReturn(so1, customer, "different-key", "Sai kich co")
+                .andExpect(status().isConflict());
+        delivered("owner-2", so2);
+        requestReturn(so2, customer, "same-key", "Sai kich co")
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.code").value("RETURN_IDEMPOTENCY_MISMATCH"));
+        assertEquals(1, returnRows(so1));
+        assertEquals(0, returnRows(so2));
+        assertEquals(1, outbox(so1, "RETURN_REQUESTED"));
+    }
+
+    @Test
+    void returnTimeWindowAndValidationFailClosed() throws Exception {
+        delivered("owner-1", so1);
+        sql.update("update seller_orders set delivered_at=? where id=?",
+                java.sql.Timestamp.from(java.time.Instant.now().minus(java.time.Duration.ofDays(8))), so1.getId());
+        requestReturn(so1, customer, "expired-key", "Qua ngay")
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.code").value("RETURN_NOT_ELIGIBLE"));
+        assertEquals(0, returnRows(so1));
+        requestReturn(so1, customer, "invalid-key", "")
+                .andExpect(status().isBadRequest());
+        mvc.perform(post("/api/orders/{id}/store-orders/{store}/returns", order.getId(), so1.getId())
+                .with(as(customer, "CUSTOMER")).contentType(MediaType.APPLICATION_JSON)
+                .content("{\"reason\":\"ok\"}"))
+                .andExpect(status().isBadRequest());
+        assertEquals(0, returnRows(so1));
+    }
+
+    @Test
+    void pendingReturnBlocksSettlementButCollectCodStillRecordsCash() throws Exception {
+        delivered("owner-1", so1);
+        requestReturn(so1, customer, "guard-key", "Tra hang")
+                .andExpect(status().isCreated());
+        mvc.perform(post("/api/admin/store-orders/{id}/cod-collected", so1.getId())
+                .with(as("admin", "ADMIN"))).andExpect(status().isOk());
+        mvc.perform(post("/api/admin/store-orders/{id}/settle", so1.getId())
+                .with(as("admin", "ADMIN")))
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.code").value("SETTLEMENT_RETURN_OPEN"));
+        assertEquals(0, outbox(so1, "\"SETTLED\""));
+        delivered("owner-2", so2);
+        mvc.perform(post("/api/admin/store-orders/{id}/cod-collected", so2.getId())
+                .with(as("admin", "ADMIN"))).andExpect(status().isOk());
+        mvc.perform(post("/api/admin/store-orders/{id}/settle", so2.getId())
+                .with(as("admin", "ADMIN"))).andExpect(status().isOk());
+        assertEquals(1, outbox(so2, "\"SETTLED\""));
+    }
+
+    @Test
+    void concurrentReturnAndSettlementCannotBothCommit() throws Exception {
+        delivered("owner-1", so1);
+        mvc.perform(post("/api/admin/store-orders/{id}/cod-collected", so1.getId())
+                .with(as("admin", "ADMIN"))).andExpect(status().isOk());
+        ExecutorService pool = Executors.newFixedThreadPool(2);
+        CountDownLatch start = new CountDownLatch(1);
+        try {
+            Callable<Integer> buyer = () -> {
+                start.await();
+                return requestReturn(so1, customer, "racing-key", "Tra hang")
+                        .andReturn().getResponse().getStatus();
+            };
+            Callable<Integer> finance = () -> {
+                start.await();
+                return mvc.perform(post("/api/admin/store-orders/{id}/settle", so1.getId())
+                        .with(as("admin", "ADMIN"))).andReturn().getResponse().getStatus();
+            };
+            Future<Integer> first = pool.submit(buyer), second = pool.submit(finance);
+            start.countDown();
+            int resultBuyer = first.get(30, TimeUnit.SECONDS);
+            int resultFinance = second.get(30, TimeUnit.SECONDS);
+            assertTrue((resultBuyer == 201 && resultFinance == 409)
+                    || (resultBuyer == 409 && resultFinance == 200),
+                    "Return and settle cannot both win: " + resultBuyer + "/" + resultFinance);
+
+            int active = sql.queryForObject("select count(*) from return_requests "
+                    + "where seller_order_id=? and status='REQUESTED'", Integer.class, so1.getId());
+            int settled = sql.queryForObject("select count(*) from seller_orders "
+                    + "where id=? and settled_at is not null", Integer.class, so1.getId());
+            assertEquals(1, active + settled);
+            assertEquals(settled, outbox(so1, "\"SETTLED\""));
+        } finally {
+            pool.shutdownNow();
+        }
+    }
+
+    @Test
+    void utf16ReasonDatabaseBoundaryAndReplayAfterExpiry() throws Exception {
+        assertEquals(2, sql.queryForObject("select hk5_order_return_utf16_length(?)",
+                Integer.class, "😀"));
+        assertEquals(1, sql.queryForObject("select hk5_order_return_utf16_length(?)",
+                Integer.class, "á"));
+        // Direct SQL must also reject >500 UTF-16 units, not only controller validation.
+        assertThrows(org.springframework.dao.DataIntegrityViolationException.class, () -> sql.update(
+                "insert into return_requests (id,order_id,seller_order_id,customer_id,idempotency_key,"
+                + "request_fingerprint,reason,status,requested_at,updated_at) "
+                + "values (?,?,?,?,?,?,?,'REQUESTED',now(),now())",
+                UUID.randomUUID(), order.getId(), so1.getId(), customer, "direct-invalid",
+                "a".repeat(64), "😀".repeat(251)));
+        delivered("owner-1", so1);
+        requestReturn(so1, customer, "expiry-replay", "Hop le").andExpect(status().isCreated());
+        UUID id = sql.queryForObject("select id from return_requests where seller_order_id=?",
+                UUID.class, so1.getId());
+        // A previously accepted idempotency key must replay the same durable result
+        // even after the delivery deadline; new keys must not create a Return then.
+        sql.update("update seller_orders set delivered_at=? where id=?",
+                java.sql.Timestamp.from(java.time.Instant.now().minus(java.time.Duration.ofDays(9))), so1.getId());
+        requestReturn(so1, customer, "expiry-replay", "Hop le")
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.requestId").value(id.toString()));
+        requestReturn(so1, customer, "late-new-key", "Hop le").andExpect(status().isConflict());
+        assertEquals(1, returnRows(so1));
+        mvc.perform(post("/api/orders/{id}/store-orders/{storeId}/returns", order.getId(), so1.getId())
+                .with(as(customer, "CUSTOMER")).header("Idempotency-Key", "emoji-too-long")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"reason\":\"" + "😀".repeat(251) + "\"}"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void rejectedReturnAllowsNewReturnAndReceivedStillBlocksSettlement() throws Exception {
+        delivered("owner-1", so1);
+        requestReturn(so1, customer, "first-return", "Size").andExpect(status().isCreated());
+        // TV4 will implement the authenticated Seller transitions. Only this isolated
+        // DB test simulates a verified Seller's REJECTED/RECEIVED state for guard contract.
+        sql.update("update return_requests set status='REJECTED', reviewed_by='owner-1', "
+                + "reviewed_at=now(), updated_at=now() where seller_order_id=?", so1.getId());
+        requestReturn(so1, customer, "second-return", "Wrong color")
+                .andExpect(status().isCreated());
+        assertEquals(2, returnRows(so1));
+        sql.update("update return_requests set status='APPROVED', reviewed_by='owner-1', "
+                + "reviewed_at=now(), updated_at=now() "
+                + "where seller_order_id=? and status='REQUESTED'", so1.getId());
+        sql.update("update return_requests set status='RECEIVED', received_by='owner-1', "
+                + "received_at=now(), updated_at=now() "
+                + "where seller_order_id=? and status='APPROVED'", so1.getId());
+        mvc.perform(post("/api/admin/store-orders/{id}/cod-collected", so1.getId())
+                .with(as("admin", "ADMIN"))).andExpect(status().isOk());
+        mvc.perform(post("/api/admin/store-orders/{id}/settle", so1.getId())
+                .with(as("admin", "ADMIN"))).andExpect(status().isConflict())
+                .andExpect(jsonPath("$.code").value("SETTLEMENT_RETURN_OPEN"));
+        assertEquals(0, outbox(so1, "\"RELEASE\""));
+        assertEquals(0, outbox(so1, "\"SETTLED\""));
+    }
+
+    @Test
+    void databaseRejectsWrongRootOrderAndDuplicateActiveReturn() throws Exception {
+        Order unrelatedRoot = orders.saveAndFlush(new Order(UUID.randomUUID(), "another-customer"));
+        // Both FK targets exist. The composite FK must still reject a cross-Order
+        // SellerOrder reference, including from a future non-HTTP integration.
+        assertThrows(org.springframework.dao.DataIntegrityViolationException.class, () -> sql.update(
+                "insert into return_requests (id,order_id,seller_order_id,customer_id,idempotency_key,"
+                + "request_fingerprint,reason,status,requested_at,updated_at) "
+                + "values (?,?,?,?,?,?,?,'REQUESTED',now(),now())",
+                UUID.randomUUID(), unrelatedRoot.getId(), so1.getId(), customer,
+                "wrong-root", "a".repeat(64), "valid"));
+
+        delivered("owner-1", so1);
+        requestReturn(so1, customer, "primary-return", "Damaged item")
+                .andExpect(status().isCreated());
+        assertThrows(org.springframework.dao.DataIntegrityViolationException.class, () -> sql.update(
+                "insert into return_requests (id,order_id,seller_order_id,customer_id,idempotency_key,"
+                + "request_fingerprint,reason,status,requested_at,updated_at) "
+                + "values (?,?,?,?,?,?,?,'REQUESTED',now(),now())",
+                UUID.randomUUID(), order.getId(), so1.getId(), customer,
+                "second-active", "b".repeat(64), "Second request"));
+        assertEquals(1, returnRows(so1));
+    }
+
+    @Test
+    void concurrentReuseOfOneCustomerKeyAcrossTwoStoresCreatesOnlyOneRequest() throws Exception {
+        delivered("owner-1", so1);
+        delivered("owner-2", so2);
+        ExecutorService pool = Executors.newFixedThreadPool(2);
+        CountDownLatch start = new CountDownLatch(1);
+        try {
+            Callable<Integer> one = () -> {
+                start.await();
+                return requestReturn(so1, customer, "cross-store-race", "Ly do")
+                        .andReturn().getResponse().getStatus();
+            };
+            Callable<Integer> two = () -> {
+                start.await();
+                return requestReturn(so2, customer, "cross-store-race", "Ly do")
+                        .andReturn().getResponse().getStatus();
+            };
+            Future<Integer> a = pool.submit(one), b = pool.submit(two);
+            start.countDown();
+            int resultA = a.get(30, TimeUnit.SECONDS), resultB = b.get(30, TimeUnit.SECONDS);
+            assertTrue((resultA == 201 && resultB == 409) || (resultA == 409 && resultB == 201),
+                    "Global customer key must have one winner: " + resultA + "/" + resultB);
+            assertEquals(1, returnRows(so1) + returnRows(so2));
+            assertEquals(1, outbox(so1, "RETURN_REQUESTED") + outbox(so2, "RETURN_REQUESTED"));
+        } finally {
+            pool.shutdownNow();
+        }
+    }
 }

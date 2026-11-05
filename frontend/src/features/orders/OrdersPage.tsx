@@ -7,6 +7,8 @@ import { z } from 'zod';
 import { api } from '../../shared/api';
 import { optionalText } from '../../shared/forms';
 import { Badge, dateTime, ErrorNote, Loaded, money, shortId, useAction } from '../../shared/ui';
+import { ReturnRequestPanel } from './ReturnRequestPanel';
+import type { ReturnView } from './ReturnRequestPanel';
 
 export interface OrderItem {
   readonly productId: string; readonly name: string | null; readonly sku: string | null; readonly quantity: number;
@@ -60,7 +62,10 @@ function ReviewForm({ orderId, productId }: { readonly orderId: string; readonly
   </form>;
 }
 
-function StoreOrderCard({ order, reviewed }: { readonly order: StoreOrder; readonly reviewed: ReadonlySet<string> }) {
+function StoreOrderCard({ order, reviewed, existingReturn, returnsLoading, returnsError }: {
+  readonly order: StoreOrder; readonly reviewed: ReadonlySet<string>;
+  readonly existingReturn: ReturnView | undefined; readonly returnsLoading: boolean; readonly returnsError: unknown;
+}) {
   const [reason, setReason] = useState('');
   const cancel = useAction(() => api(`/api/orders/${order.orderId}/store-orders/${order.id}/cancel`, { method: 'POST', body: { reason } }), ['orders', 'order']);
   return <article className="panel stack">
@@ -80,6 +85,10 @@ function StoreOrderCard({ order, reviewed }: { readonly order: StoreOrder; reado
       <button type="button" className="btn btn--danger" disabled={cancel.isPending} onClick={() => cancel.mutate(undefined)}>Hủy đơn của cửa hàng này</button>
     </div>}
     <ErrorNote error={cancel.error} />
+    <ReturnRequestPanel key={`${order.id}:${existingReturn?.requestId ?? 'none'}:${existingReturn?.status ?? 'none'}`}
+      orderId={order.orderId} storeOrderId={order.id}
+      status={order.status} deliveredAt={order.deliveredAt} settledAt={order.settledAt}
+      existing={existingReturn} loading={returnsLoading} loadError={returnsError} />
   </article>;
 }
 
@@ -87,13 +96,18 @@ export function OrderDetailPage() {
   const { id = '' } = useParams();
   const order = useQuery({ queryKey: ['order', id], queryFn: () => api<CustomerOrder>(`/api/orders/${id}`) });
   const mine = useQuery({ queryKey: ['my-reviews'], queryFn: () => api<MyReview[]>('/api/reviews/mine') });
+  // Exactly one scoped GET for all Store Return states; no cross-buyer data is surfaced.
+  const returns = useQuery({ queryKey: ['order-returns', id],
+    queryFn: () => api<ReturnView[]>(`/api/orders/${id}/returns`), enabled: Boolean(id) });
   const reviewed = new Set(mine.data?.map((r) => `${r.orderId}:${r.productId}`));
   return <Loaded query={order}>{(o) => <div className="stack">
     <Link to="/orders">← Đơn hàng của tôi</Link>
     <div className="row row--between"><h1>Đơn #{shortId(o.id)}</h1><Badge value={o.overallStatus} /></div>
     <p className="muted">Đặt lúc {dateTime(o.createdAt)} · Thanh toán khi nhận hàng (COD)</p>
     {o.shipping && <p>Giao đến: <strong>{o.shipping.name}</strong> · {o.shipping.phone}<br />{o.shipping.address}</p>}
-    {o.storeOrders.map((s) => <StoreOrderCard key={s.id} order={s} reviewed={reviewed} />)}
+    {o.storeOrders.map((s) => <StoreOrderCard key={s.id} order={s} reviewed={reviewed}
+      existingReturn={returns.data?.find((item) => item.storeOrderId === s.id)}
+      returnsLoading={returns.isPending} returnsError={returns.error} />)}
     <p className="price price--large">Tổng cộng: {money(payable(o))}</p>
   </div>}</Loaded>;
 }

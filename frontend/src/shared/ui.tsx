@@ -57,7 +57,7 @@ const labels: Record<string, string> = {
   PENDING: 'Chờ thu', COLLECTED: 'Đã thu', VOID: 'Không thu',
   PROCESSING: 'Đang xử lý', COMPLETED: 'Hoàn tất',
   PENDING_REVIEW: 'Chờ duyệt', APPROVED: 'Đã duyệt', SUSPENDED: 'Tạm ngừng', DRAFT: 'Bản nháp', ACTIVE: 'Đang bán',
-  INACTIVE: 'Ngừng bán', ARCHIVED: 'Lưu trữ',
+  INACTIVE: 'Ngừng bán', ARCHIVED: 'Lưu trữ', REQUESTED: 'Đã yêu cầu trả', RECEIVED: 'Đã nhận hàng trả',
 };
 
 export function Badge({ value }: { readonly value: string }) {
