@@ -400,4 +400,56 @@ class FulfillmentPostgres16IT {
             pool.shutdownNow();
         }
     }
+
+    @Test
+    void utf16ReasonDatabaseBoundaryAndReplayAfterExpiry() throws Exception {
+        assertEquals(2, sql.queryForObject("select hk5_order_return_utf16_length(?)",
+                Integer.class, "😀"));
+        assertEquals(1, sql.queryForObject("select hk5_order_return_utf16_length(?)",
+                Integer.class, "á"));
+        delivered("owner-1", so1);
+        requestReturn(so1, customer, "expiry-replay", "Hop le").andExpect(status().isCreated());
+        UUID id = sql.queryForObject("select id from return_requests where seller_order_id=?",
+                UUID.class, so1.getId());
+        // A previously accepted idempotency key must replay the same durable result
+        // even after the delivery deadline; new keys must not create a Return then.
+        sql.update("update seller_orders set delivered_at=? where id=?",
+                java.sql.Timestamp.from(java.time.Instant.now().minus(java.time.Duration.ofDays(9))), so1.getId());
+        requestReturn(so1, customer, "expiry-replay", "Hop le")
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.requestId").value(id.toString()));
+        requestReturn(so1, customer, "late-new-key", "Hop le").andExpect(status().isConflict());
+        assertEquals(1, returnRows(so1));
+        mvc.perform(post("/api/orders/{id}/store-orders/{storeId}/returns", order.getId(), so1.getId())
+                .with(as(customer, "CUSTOMER")).header("Idempotency-Key", "emoji-too-long")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"reason\":\"" + "😀".repeat(251) + "\"}"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void rejectedReturnAllowsNewReturnAndReceivedStillBlocksSettlement() throws Exception {
+        delivered("owner-1", so1);
+        requestReturn(so1, customer, "first-return", "Size").andExpect(status().isCreated());
+        // TV4 will implement the authenticated Seller transitions. Only this isolated
+        // DB test simulates a verified Seller's REJECTED/RECEIVED state for guard contract.
+        sql.update("update return_requests set status='REJECTED', reviewed_by='owner-1', "
+                + "reviewed_at=now(), updated_at=now() where seller_order_id=?", so1.getId());
+        requestReturn(so1, customer, "second-return", "Wrong color")
+                .andExpect(status().isCreated());
+        assertEquals(2, returnRows(so1));
+        sql.update("update return_requests set status='APPROVED', reviewed_by='owner-1', "
+                + "reviewed_at=now(), updated_at=now() "
+                + "where seller_order_id=? and status='REQUESTED'", so1.getId());
+        sql.update("update return_requests set status='RECEIVED', received_by='owner-1', "
+                + "received_at=now(), updated_at=now() "
+                + "where seller_order_id=? and status='APPROVED'", so1.getId());
+        mvc.perform(post("/api/admin/store-orders/{id}/cod-collected", so1.getId())
+                .with(as("admin", "ADMIN"))).andExpect(status().isOk());
+        mvc.perform(post("/api/admin/store-orders/{id}/settle", so1.getId())
+                .with(as("admin", "ADMIN"))).andExpect(status().isConflict())
+                .andExpect(jsonPath("$.code").value("SETTLEMENT_RETURN_OPEN"));
+        assertEquals(0, outbox(so1, "\"RELEASE\""));
+        assertEquals(0, outbox(so1, "\"SETTLED\""));
+    }
 }
