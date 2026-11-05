@@ -408,7 +408,7 @@ class FulfillmentPostgres16IT {
         assertEquals(1, sql.queryForObject("select hk5_order_return_utf16_length(?)",
                 Integer.class, "á"));
         // Direct SQL must also reject >500 UTF-16 units, not only controller validation.
-        assertThrows(Exception.class, () -> sql.update(
+        assertThrows(org.springframework.dao.DataIntegrityViolationException.class, () -> sql.update(
                 "insert into return_requests (id,order_id,seller_order_id,customer_id,idempotency_key,"
                 + "request_fingerprint,reason,status,requested_at,updated_at) "
                 + "values (?,?,?,?,?,?,?,'REQUESTED',now(),now())",
