@@ -7,10 +7,17 @@ LANGUAGE sql IMMUTABLE STRICT PARALLEL SAFE AS $return_utf16$
     FROM generate_series(1, char_length(input_text)) AS n;
 $return_utf16$;
 
+-- Composite owner FK: the Store order must really belong to this root Order, even
+-- for direct SQL writers and later Seller/Inventory integrations.
+ALTER TABLE seller_orders
+    ADD CONSTRAINT uq_seller_orders_return_owner UNIQUE (id, order_id);
+
 CREATE TABLE return_requests (
     id uuid PRIMARY KEY,
     order_id uuid NOT NULL REFERENCES orders(id),
-    seller_order_id uuid NOT NULL REFERENCES seller_orders(id),
+    seller_order_id uuid NOT NULL,
+    CONSTRAINT fk_return_seller_order_owner
+        FOREIGN KEY (seller_order_id, order_id) REFERENCES seller_orders(id, order_id),
     customer_id varchar(200) NOT NULL,
     idempotency_key varchar(128) NOT NULL,
     request_fingerprint char(64) NOT NULL CHECK (request_fingerprint ~ '^[0-9a-f]{64}$'),
