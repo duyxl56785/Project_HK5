@@ -407,6 +407,13 @@ class FulfillmentPostgres16IT {
                 Integer.class, "😀"));
         assertEquals(1, sql.queryForObject("select hk5_order_return_utf16_length(?)",
                 Integer.class, "á"));
+        // Direct SQL must also reject >500 UTF-16 units, not only controller validation.
+        assertThrows(Exception.class, () -> sql.update(
+                "insert into return_requests (id,order_id,seller_order_id,customer_id,idempotency_key,"
+                + "request_fingerprint,reason,status,requested_at,updated_at) "
+                + "values (?,?,?,?,?,?,?,'REQUESTED',now(),now())",
+                UUID.randomUUID(), order.getId(), so1.getId(), customer, "direct-invalid",
+                "a".repeat(64), "😀".repeat(251)));
         delivered("owner-1", so1);
         requestReturn(so1, customer, "expiry-replay", "Hop le").andExpect(status().isCreated());
         UUID id = sql.queryForObject("select id from return_requests where seller_order_id=?",
