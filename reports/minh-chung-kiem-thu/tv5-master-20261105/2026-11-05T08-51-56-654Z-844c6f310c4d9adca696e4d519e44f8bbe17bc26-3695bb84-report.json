@@ -1,0 +1,166 @@
+{
+  "id": "2026-11-05T08-51-56-654Z-844c6f310c4d9adca696e4d519e44f8bbe17bc26-3695bb84",
+  "sha": "844c6f310c4d9adca696e4d519e44f8bbe17bc26",
+  "timestamp": "2026-11-05T08:51:56.654Z",
+  "environment": {
+    "platform": "win32",
+    "node": "v22.23.3",
+    "localhost": true
+  },
+  "status": "PASS",
+  "suites": [
+    {
+      "id": "F15-RULES",
+      "status": "PASS",
+      "expected": "Review rules và giới hạn 1000 UTF-16 đạt",
+      "actual": "PASS: exit 0, 16 test, 16 PASS, 0 FAIL, 0 SKIP",
+      "startedAt": "2026-11-05T08:51:56.655Z",
+      "durationMs": 18777,
+      "counts": {
+        "tests": 16,
+        "pass": 16,
+        "fail": 0,
+        "skip": 0
+      },
+      "exitCode": 0,
+      "log": "F15-RULES.log",
+      "junit": [
+        "junit/F15-RULES-TEST-com.projecthk5.productservice.review.ReviewRulesTest.xml"
+      ]
+    },
+    {
+      "id": "F16-RULES",
+      "status": "PASS",
+      "expected": "Rules 5%/0%, bounds và gate fail-closed đạt trong unit tests",
+      "actual": "PASS: exit 0, 15 test, 15 PASS, 0 FAIL, 0 SKIP",
+      "startedAt": "2026-11-05T08:52:15.436Z",
+      "durationMs": 17183,
+      "counts": {
+        "tests": 15,
+        "pass": 15,
+        "fail": 0,
+        "skip": 0
+      },
+      "exitCode": 0,
+      "log": "F16-RULES.log",
+      "junit": [
+        "junit/F16-RULES-TEST-com.projecthk5.orderservice.finance.FinanceRulesTest.xml"
+      ]
+    },
+    {
+      "id": "SEC-JWT",
+      "status": "PASS",
+      "expected": "Spring YAML JWT assertions đạt",
+      "actual": "PASS: exit 0, 2 test, 2 PASS, 0 FAIL, 0 SKIP",
+      "startedAt": "2026-11-05T08:52:32.622Z",
+      "durationMs": 19711,
+      "counts": {
+        "tests": 2,
+        "pass": 2,
+        "fail": 0,
+        "skip": 0
+      },
+      "exitCode": 0,
+      "log": "SEC-JWT.log",
+      "junit": [
+        "junit/SEC-JWT-TEST-com.projecthk5.orderservice.security.JwtEnvironmentConfigurationTest.xml"
+      ]
+    },
+    {
+      "id": "SEC-RBAC",
+      "status": "PASS",
+      "expected": "Unit assertions về current authority đạt",
+      "actual": "PASS: exit 0, 5 test, 5 PASS, 0 FAIL, 0 SKIP",
+      "startedAt": "2026-11-05T08:52:52.338Z",
+      "durationMs": 11825,
+      "counts": {
+        "tests": 5,
+        "pass": 5,
+        "fail": 0,
+        "skip": 0
+      },
+      "exitCode": 0,
+      "log": "SEC-RBAC.log",
+      "junit": [
+        "junit/SEC-RBAC-TEST-com.projecthk5.security.CurrentAuthorityFilterTest.xml"
+      ]
+    },
+    {
+      "id": "CATALOG",
+      "status": "PASS",
+      "expected": "Catalog batch/price validation đạt",
+      "actual": "PASS: exit 0, 100 test, 100 PASS, 0 FAIL, 0 SKIP",
+      "startedAt": "2026-11-05T08:53:04.168Z",
+      "durationMs": 19858,
+      "counts": {
+        "tests": 100,
+        "pass": 100,
+        "fail": 0,
+        "skip": 0
+      },
+      "exitCode": 0,
+      "log": "CATALOG.log",
+      "junit": [
+        "junit/CATALOG-TEST-com.projecthk5.productservice.catalog.CatalogBatchValidatorTest.xml",
+        "junit/CATALOG-TEST-com.projecthk5.productservice.product.ProductPriceTest.xml"
+      ]
+    },
+    {
+      "id": "INVENTORY",
+      "status": "PASS",
+      "expected": "Unit assertions về operation và input đạt",
+      "actual": "PASS: exit 0, 9 test, 9 PASS, 0 FAIL, 0 SKIP",
+      "startedAt": "2026-11-05T08:53:24.033Z",
+      "durationMs": 18163,
+      "counts": {
+        "tests": 9,
+        "pass": 9,
+        "fail": 0,
+        "skip": 0
+      },
+      "exitCode": 0,
+      "log": "INVENTORY.log",
+      "junit": [
+        "junit/INVENTORY-TEST-com.projecthk5.inventoryservice.api.InventoryRequestValidationTest.xml",
+        "junit/INVENTORY-TEST-com.projecthk5.inventoryservice.service.InventoryOperationServiceTest.xml"
+      ]
+    },
+    {
+      "id": "CART-ORDER",
+      "status": "PASS",
+      "expected": "Cart/Checkout unit assertions đạt",
+      "actual": "PASS: exit 0, 10 test, 10 PASS, 0 FAIL, 0 SKIP",
+      "startedAt": "2026-11-05T08:53:42.201Z",
+      "durationMs": 17700,
+      "counts": {
+        "tests": 10,
+        "pass": 10,
+        "fail": 0,
+        "skip": 0
+      },
+      "exitCode": 0,
+      "log": "CART-ORDER.log",
+      "junit": [
+        "junit/CART-ORDER-TEST-com.projecthk5.cartservice.service.CartServiceTest.xml"
+      ]
+    },
+    {
+      "id": "FRONTEND",
+      "status": "PASS",
+      "expected": "Node TAP tests hiện có đạt; không phải live E2E",
+      "actual": "PASS: exit 0, 157 test, 157 PASS, 0 FAIL, 0 SKIP",
+      "startedAt": "2026-11-05T08:53:59.907Z",
+      "durationMs": 10931,
+      "counts": {
+        "tests": 157,
+        "pass": 157,
+        "fail": 0,
+        "skip": 0
+      },
+      "exitCode": 0,
+      "log": "FRONTEND.log",
+      "junit": []
+    }
+  ],
+  "finishedAt": "2026-11-05T08:54:10.839Z"
+}

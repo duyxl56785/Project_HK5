@@ -41,3 +41,21 @@ Các chức năng P1 **U06 Review F15, U07–U08 Finance/Settlement và Notifica
 2. Giữ `hk5-demo`, `pgdev`, `redisdev`, `.vs/` và `reports/tv5-m01-local/`; không xóa/prune/reset chúng. Tách Compose project/volume mới; redaction trước công bố, raw log/JUnit/ảnh màn hình thật và SHA256 theo từng ca.
 3. Với UNKNOWN, [TV2 đã duyệt thông số stack hẹp](https://github.com/duyxl56785/Project_HK5/pull/152#issuecomment-6619444913) nhưng `Start-IsolatedUat.ps1` chỉ nhận tên `hk5-uat-*` và ép hai cờ OFF; đề xuất `hk5-unknown-*`/bật pair chỉ được triển khai qua **runner/overlay riêng được review**, không sửa script shared hoặc chạy tắt. TV3 chỉ [chốt tuple/oracle ở mức thiết kế](https://github.com/duyxl56785/Project_HK5/pull/170#pullrequestreview-5754561736); TV4 phải xác minh provider COMMIT receipt; TV5 duyệt từng fixture trước khi chạy. PR #171 purge draft thành công 7 ngày đang review, không được xóa attempt UNKNOWN.
 4. Ghi `PASS/FAIL` chỉ sau thao tác thực tế với request/DB/stock/money/receipt; `BLOCKED` khi thiếu contract/owner/runner; `NOT_RUN` khi chưa thực thi. Chỉ tick Issue #18/#5 khi **toàn bộ** mệnh đề của checkbox được chứng minh, không cộng số test ở các SHA/branch khác thành release total.
+
+
+## Oracle Return theo quyết định TV2 ngày 05/11/2026
+
+[Policy đã ký](https://github.com/duyxl56785/Project_HK5/issues/155#issuecomment-6650087223) thay trạng thái PENDING business của đề xuất 04/11 **cho bản nộp Return MVP**, không mở Finance production. Main quan sát mới `00426dc3d933d02ec9545be7aea43b8a448f0829`; #180 chưa merge tại lúc kiểm tra. Không dùng baseline lịch sử phía trên làm run SHA mới.
+
+TV5 chạy trên **PR #180 exact HEAD `66f3edbc921e599372fe0a2668b8e643c7d4d696`**, Java 21.0.7, Gradle 8.10, PostgreSQL16 Testcontainers: unit Return exit0; `FulfillmentPostgres16IT` **18 PASS/0 FAIL/0 SKIP**, exit0. [Raw XML/log/SHA256](../reports/minh-chung-kiem-thu/tv5-master-20261105/). Đây là MockMvc + PostgreSQL thật, Store/provider mocks theo test; local live E2E NOT_RUN. Hosted CI #180 là nguồn riêng, không cộng số test.
+
+| Oracle | Policy và evidence hiện hành | Còn thiếu |
+|---|---|---|
+| RET-01 | Buyer đúng Order/Store, DELIVERED COD chưa settled, 7 ngày UTC inclusive; reason 1–500 UTF-16. PG owner/cutoff/SQL constraints PASS | Main integration và live actor HTTP |
+| RET-02 | Same customer/key/normalized body trả cùng request; đổi body/Store 409; PG replay sau cutoff và concurrent cross-Store key PASS | Restart/live receipt |
+| RET-03 | Seller của Store duyệt/từ chối/nhận; Admin chỉ xem, sai owner 404 | TV4 Seller routes/transitions và TV2 Admin read-only, live RBAC |
+| RET-04 | REQUESTED/APPROVED/RECEIVED chặn settle; REJECTED bỏ chặn; collectCod vẫn cho phép. Create và settle cùng lock SellerOrder; PG race và block/unblock PASS | TV4 integration review; main final UAT |
+| RET-05 | Chỉ restock sau RECEIVED, durable operationId/dedup; không RELEASE hàng đã CONSUME | TV4 stock-once implementation/receipt/replay/restart, NOT_RUN |
+| RET-06 | Đã settled bị từ chối; không refund/reversal tự động hoặc sửa money snapshot. PG guard PASS trong phạm vi này | Chính sách/implementation refund riêng nếu mở rộng; Store report/live acceptance |
+
+UNKNOWN #170 tại `2ddc0f3d5283d6a1cc985fa203c8d0d380bc164a`: TV5 independent **12/12 PASS**, loopback fake only. P2 forward lặp đã sửa trong vòng đời handler, không durable sau restart. Lượt sandbox ban đầu EACCES 1 PASS/11 FAIL được giữ nguyên; retry được phép exit0. Không thay bằng kết quả live UNKNOWN. #152 packet giữ execution NOT_GRANTED; #175 chỉ preparation default-OFF, cần sync parent/retest. Claim-conflict BLOCKED_DESIGN; lost-response NOT_RUN/BLOCKED_OWNER vì thiếu runner/stop đã review, actual tuple/waiver và provider COMMIT/stock receipt. Final UAT #18 vẫn BLOCKED.
