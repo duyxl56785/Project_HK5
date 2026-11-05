@@ -459,4 +459,33 @@ class FulfillmentPostgres16IT {
         assertEquals(0, outbox(so1, "\"RELEASE\""));
         assertEquals(0, outbox(so1, "\"SETTLED\""));
     }
+
+    @Test
+    void concurrentReuseOfOneCustomerKeyAcrossTwoStoresCreatesOnlyOneRequest() throws Exception {
+        delivered("owner-1", so1);
+        delivered("owner-2", so2);
+        ExecutorService pool = Executors.newFixedThreadPool(2);
+        CountDownLatch start = new CountDownLatch(1);
+        try {
+            Callable<Integer> one = () -> {
+                start.await();
+                return requestReturn(so1, customer, "cross-store-race", "Ly do")
+                        .andReturn().getResponse().getStatus();
+            };
+            Callable<Integer> two = () -> {
+                start.await();
+                return requestReturn(so2, customer, "cross-store-race", "Ly do")
+                        .andReturn().getResponse().getStatus();
+            };
+            Future<Integer> a = pool.submit(one), b = pool.submit(two);
+            start.countDown();
+            int resultA = a.get(30, TimeUnit.SECONDS), resultB = b.get(30, TimeUnit.SECONDS);
+            assertTrue((resultA == 201 && resultB == 409) || (resultA == 409 && resultB == 201),
+                    "Global customer key must have one winner: " + resultA + "/" + resultB);
+            assertEquals(1, returnRows(so1) + returnRows(so2));
+            assertEquals(1, outbox(so1, "RETURN_REQUESTED") + outbox(so2, "RETURN_REQUESTED"));
+        } finally {
+            pool.shutdownNow();
+        }
+    }
 }
