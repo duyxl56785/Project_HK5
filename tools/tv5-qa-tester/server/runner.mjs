@@ -13,11 +13,25 @@ const forbidden = /(?:-----BEGIN [A-Z ]*PRIVATE KEY-----|gh[pousr]_[A-Za-z0-9_]{
 const sha256 = data => createHash('sha256').update(data).digest('hex');
 const cleanEnv = extra => ({ ...Object.fromEntries(Object.entries(process.env).filter(([key]) => /^(?:PATH|Path|PATHEXT|SystemRoot|SYSTEMROOT|TEMP|TMP|JAVA_HOME|GRADLE_USER_HOME|APPDATA|LOCALAPPDATA|USERPROFILE|HOME|CI|LANG|LC_ALL)$/.test(key))), ...extra });
 
+export function terminateProcessTree(child, { platform = process.platform, spawnProcess = spawn } = {}) {
+  if (!child || child.exitCode !== null || child.signalCode !== null) return false;
+  if (platform !== 'win32' || !Number.isSafeInteger(child.pid) || child.pid <= 0 || child.pid === process.pid) {
+    child.kill();
+    return true;
+  }
+  // The Gradle wrapper starts JVM/Testcontainers children. Stop only the tree of this spawned PID.
+  const killer = spawnProcess('taskkill', ['/PID', String(child.pid), '/T', '/F'], { shell: false, windowsHide: true, stdio: 'ignore' });
+  const fallback = () => { if (child.exitCode === null && child.signalCode === null) child.kill(); };
+  killer.once('error', fallback);
+  killer.once('close', code => { if (code !== 0) fallback(); });
+  return true;
+}
+
 export function execute(executable, args, options = {}) {
   return new Promise(resolve => {
     let output = '', timedOut = false, cancelled = false;
     const child = spawn(executable, args, { cwd: options.cwd, env: cleanEnv(options.envExtra), shell: false, windowsHide: true });
-    const timer = setTimeout(() => { timedOut = true; child.kill(); }, options.timeoutMs ?? 180000);
+    const timer = setTimeout(() => { timedOut = true; terminateProcessTree(child); }, options.timeoutMs ?? 180000);
     options.onChild?.(child);
     for (const stream of [child.stdout, child.stderr]) stream?.on('data', chunk => { output += chunk.toString(); options.onOutput?.(chunk.toString()); });
     child.on('error', error => { output += `\nProcess error: ${error.message}`; });
@@ -102,7 +116,7 @@ export class Runner {
   async runSafe() { return this.start(safeIds); }
   cancel(id) {
     if (this.active?.id !== id) return false;
-    this.active.cancelled = true; this.active.child?.kill(); return true;
+    this.active.cancelled = true; terminateProcessTree(this.active.child); return true;
   }
   async process(report) {
     const dir = path.join(this.root, report.id);
@@ -116,6 +130,7 @@ export class Runner {
         try { await access(path.join(repoDir, 'frontend/node_modules/vite/package.json')); }
         catch { row.status = 'BLOCKED_ENV'; row.actual = 'Thiếu frontend dependencies; chạy npm ci trong frontend của worktree này'; continue; }
       }
+      if (this.active?.cancelled) break;
       row.status = 'RUNNING'; row.startedAt = new Date().toISOString();
       const started = Date.now();
       const cmd = suite.command;

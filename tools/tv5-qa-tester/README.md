@@ -22,7 +22,7 @@ Suite `FRONTEND` dùng dependency riêng của `frontend/`. Nếu chưa cài tro
 
 Chọn module rồi tick suite. Bấm **Run Selected** hoặc **Run All Safe Tests**. Run All Safe chỉ chạy các unit suite không cần database. Hai PostgreSQL suite cần chọn riêng; công cụ kiểm tra Docker local trước khi chạy và báo `BLOCKED_ENV` nếu không có. `QA-UI` chạy Playwright trên chính dashboard đang mở và lưu ảnh của **mọi** test PASS/FAIL. Các suite LIVE-SECURITY, UNKNOWN và FINANCE-PRODUCTION bị khóa. Không nạp `.env.demo`, không brute force và không gửi request tới môi trường ngoài localhost.
 
-Kết quả phân biệt PASS, FAIL, SKIP, BLOCKED, BLOCKED_ENV, NOT_RUN, TIMEOUT và CANCELLED. Nếu tiến trình kết thúc nhưng không có TAP/JUnit hoặc ảnh Playwright tương ứng, runner không báo PASS. Nút Hủy dừng tiến trình hiện tại, các suite tiếp theo giữ NOT_RUN. Chạy một lần tại một thời điểm để tránh tranh chấp database.
+Kết quả phân biệt PASS, FAIL, SKIP, BLOCKED, BLOCKED_ENV, NOT_RUN, TIMEOUT và CANCELLED. Nếu tiến trình kết thúc nhưng không có TAP/JUnit hoặc ảnh Playwright tương ứng, runner không báo PASS. Nút Hủy dừng tiến trình hiện tại; trên Windows runner dùng `taskkill /T /F` chỉ với PID vừa spawn để dừng cả JVM con, và fallback về `child.kill()` nếu lệnh lỗi. Các suite tiếp theo giữ NOT_RUN. Không chạy hai lượt cùng lúc để tránh tranh chấp database. Nếu Testcontainers đã tạo tài nguyên riêng, kiểm tra và dọn tài nguyên của chính lượt chạy sau khi hủy; công cụ không xóa Docker volume hoặc dữ liệu dùng chung.
 
 ## Bằng chứng và xuất báo cáo
 
