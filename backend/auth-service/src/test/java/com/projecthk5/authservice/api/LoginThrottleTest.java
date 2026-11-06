@@ -48,7 +48,7 @@ class LoginThrottleTest {
         when(auth.register(anyString(), anyString())).thenAnswer(call -> new com.projecthk5.authservice.persistence.Account(
                 java.util.UUID.randomUUID(), call.getArgument(0), "hash", AuthService.ACTIVE,
                 java.util.Set.of(com.projecthk5.authservice.persistence.Account.Role.CUSTOMER), Instant.now()));
-        for (int i = 0; i < LoginThrottle.LIMIT; i++) {
+        for (int i = 0; i < LoginThrottle.REGISTER_LIMIT; i++) {
             String email = "new" + i + "@example.com";
             assertDoesNotThrow(() -> register(email, "203.0.113.7"));
         }
