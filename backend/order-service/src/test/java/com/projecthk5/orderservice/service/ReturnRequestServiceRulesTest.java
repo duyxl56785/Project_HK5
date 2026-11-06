@@ -74,4 +74,13 @@ class ReturnRequestServiceRulesTest {
         assertThrows(ApiException.class, () -> ReturnRequestService.normalizeReason("  "));
         assertThrows(ApiException.class, () -> ReturnRequestService.normalizeReason("a".repeat(501)));
     }
+
+    @Test
+    void receiptReferenceIsRequiredAndCanonicalBeforeSellerCanConfirmPhysicalReceipt() {
+        assertEquals("warehouse-receipt-42", ReturnRequestService.normalizeReceiptReference("  warehouse-receipt-42  "));
+        assertThrows(ApiException.class, () -> ReturnRequestService.normalizeReceiptReference(null));
+        assertThrows(ApiException.class, () -> ReturnRequestService.normalizeReceiptReference("  "));
+        assertThrows(ApiException.class, () -> ReturnRequestService.normalizeReceiptReference("a".repeat(129)));
+        assertThrows(ApiException.class, () -> ReturnRequestService.normalizeReceiptReference("line\nbreak"));
+    }
 }
