@@ -9,6 +9,7 @@ const nodeTests = { executable: 'node', cwd: 'frontend',
   args: ['--test', '--test-concurrency=1', 'src/**/*.test.mjs'], evidence: 'tap' };
 
 export const suites = Object.freeze([
+  {id:'WEBSITE-SMOKE',module:'Website localhost',title:'Catalog, đăng ký/đăng nhập, RBAC và responsive',expected:'Gateway/public API HTTP200; register/login/logout/duplicate và RBAC đúng; ảnh/metadata không chứa secret',safeAll:false,timeoutMs:180000,source:'tools/tv5-qa-tester/website/smoke.spec.mjs',command:{executable:'node',cwd:'tools/tv5-qa-tester',args:['node_modules/@playwright/test/cli.js','test','--config=playwright.website.config.mjs','--reporter=line'],evidence:'playwright'}},
   { id: 'F15-RULES', module: 'F15 Review', title: 'Điều kiện buyer, rating và R06', expected: 'Review rules và giới hạn 1000 UTF-16 đạt', safeAll: true, timeoutMs: 180000,
     source: 'backend/product-service/src/test/java/com/projecthk5/productservice/review/',
     command: gradle('product-service', 'test', ['*ReviewRulesTest', '*ReviewCommentLimitTest']) },

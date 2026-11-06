@@ -22,7 +22,7 @@ export function createServer({ runner = new Runner(), uiDir = path.join(toolDir,
     const url = new URL(req.url, `http://${host}`);
     try {
       if (req.method === 'GET' && url.pathname === '/api/suites') return send(res, 200, suites.map(publicSuite));
-      if (req.method === 'GET' && url.pathname === '/api/history') return send(res, 200, [...runner.runs.values()].reverse());
+      if (req.method === 'GET' && url.pathname === '/api/history') return send(res, 200, [...runner.runs.values()].sort((a,b)=>String(b.timestamp??b.id).localeCompare(String(a.timestamp??a.id))));
       if (req.method === 'POST' && url.pathname === '/api/runs') { const { suiteIds, safeAll } = await jsonBody(req); return send(res, 202, safeAll ? await runner.runSafe() : await runner.start(suiteIds)); }
       const run = url.pathname.match(/^\/api\/runs\/([a-zA-Z0-9-]+)(?:\/(cancel))?$/);
       if (run) {
@@ -39,7 +39,7 @@ export function createServer({ runner = new Runner(), uiDir = path.join(toolDir,
         child.on('error',()=>{}); child.unref();
         return send(res, 200, {opened:true});
       }
-      const evidence = url.pathname.match(/^\/api\/evidence\/([a-zA-Z0-9-]+)\/([a-zA-Z0-9-]+(?:\/[a-zA-Z0-9_.-]+)?)$/);
+      const evidence = url.pathname.match(/^\/api\/evidence\/([a-zA-Z0-9-]+)\/([a-zA-Z0-9_.-]+(?:\/[a-zA-Z0-9_.-]+)?)$/);
       const archive = url.pathname.match(/^\/api\/evidence\/([a-zA-Z0-9-]+)\/export$/);
       if (req.method === 'GET' && archive) {
         if (!runner.runs.has(archive[1])) return send(res, 404, {error:'Không tìm thấy run'});
@@ -48,7 +48,7 @@ export function createServer({ runner = new Runner(), uiDir = path.join(toolDir,
         zip.on('error', () => res.destroy()); zip.pipe(res);
         zip.directory(path.join(runner.root, archive[1]), archive[1]);
         const screenshotDir = path.join(runner.root, 'screenshots', archive[1]);
-        try { await stat(screenshotDir); zip.directory(screenshotDir, `${archive[1]}/screenshots`); } catch {}
+        try { await stat(screenshotDir); zip.directory(screenshotDir, `${archive[1]}/screenshots/${archive[1]}`); } catch {}
         await zip.finalize(); return;
       }
       const screenshot = url.pathname.match(/^\/api\/screenshots\/([a-zA-Z0-9-]+)\/([A-Z0-9-]+)\/([a-zA-Z0-9_.-]+\.png)$/);

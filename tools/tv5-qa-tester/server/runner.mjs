@@ -5,6 +5,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { byId, safeIds, suites } from './catalog.mjs';
 import { renderHtml, renderCsv } from './report.mjs';
+import { diagnose, redact } from './diagnostics.mjs';
 
 export const toolDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 export const repoDir = path.resolve(toolDir, '../..');
@@ -98,19 +99,29 @@ export class Runner {
     try {
       for (const entry of await readdir(this.root, {withFileTypes:true})) {
         if (!entry.isDirectory() || entry.name === 'screenshots') continue;
-        try { const report=JSON.parse(await readFile(path.join(this.root,entry.name,'report.json'),'utf8')); if (report.id===entry.name) this.runs.set(report.id,report); } catch {}
+        try { const report=JSON.parse(await readFile(path.join(this.root,entry.name,'report.json'),'utf8')); if (report.id===entry.name) {
+          if(report.status==='RUNNING') {report.status='INTERRUPTED';report.recoveryNote='Máy chủ đã khởi động lại; không có tiến trình nào được tiếp quản. Raw history giữ nguyên.';for(const row of report.suites)if(row.status==='RUNNING')row.status='INTERRUPTED';}
+          this.runs.set(report.id,report);
+        } } catch {}
       }
     } catch {}
   }
   async start(ids) {
     if (this.active) throw new Error('Một lần chạy đang hoạt động; không chạy đồng thời database suites.');
     if (!Array.isArray(ids) || !ids.length || ids.length > suites.length || ids.some(id => typeof id !== 'string' || !byId.has(id)) || new Set(ids).size !== ids.length) throw new Error('Chỉ được chọn ID trong allowlist.');
-    const sha = await gitSha();
+    this.active = { id:null, child:null, cancelled:false };
+    let sha;
+    try { sha = await gitSha(); } catch(error) {this.active=null;throw error;}
     const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
     const id = `${timestamp}-${sha}-${crypto.randomUUID().slice(0, 8)}`;
     const report = { id, sha, timestamp: new Date().toISOString(), environment: { platform: process.platform, node: process.version, localhost: true }, status: 'RUNNING', suites: ids.map(key => ({ id: key, status: 'NOT_RUN', expected: byId.get(key).expected, actual: 'Chưa chạy' })) };
     this.runs.set(id, report); this.active = { id, child: null, cancelled: false };
-    this.process(report).finally(() => { this.active = null; });
+    this.process(report).catch(async error=>{
+      const row=report.suites.find(r=>r.status==='RUNNING')??report.suites[0];row.status='FAIL';row.actual='Runner exception: không thể hoàn thành kiểm thử';
+      row.bugs=diagnose(row,byId.get(row.id),report,String(error));report.status='FAIL';report.finishedAt=new Date().toISOString();
+      try {await mkdir(path.join(this.root,id),{recursive:true});row.log='runner-error.log';await writeFile(path.join(this.root,id,row.log),redact(error.stack??error));}catch{}
+      try {await this.persist(report);}catch {report.persistenceError='Không ghi được evidence; không được coi kết quả là VERIFIED';}
+    }).finally(() => { if(this.active?.id===id)this.active = null; });
     return report;
   }
   async runSafe() { return this.start(safeIds); }
@@ -121,17 +132,19 @@ export class Runner {
   async process(report) {
     const dir = path.join(this.root, report.id);
     await mkdir(path.join(dir, 'junit'), { recursive: true });
+    await this.persist(report);
     for (const row of report.suites) {
       if (this.active?.cancelled) break;
       const suite = byId.get(row.id);
-      if (suite.disabledReason) { row.status = 'BLOCKED'; row.actual = suite.disabledReason; continue; }
-      if (suite.requiresDocker && !(await this.docker())) { row.status = 'BLOCKED_ENV'; row.actual = 'Docker local không hoạt động hoặc context không cục bộ'; continue; }
+      if (suite.disabledReason) { row.status = 'BLOCKED'; row.actual = suite.disabledReason; row.bugs=diagnose(row,suite,report);continue; }
+      if (suite.requiresDocker && !(await this.docker())) { row.status = 'BLOCKED_ENV'; row.actual = 'Docker local không hoạt động hoặc context không cục bộ'; row.bugs=diagnose(row,suite,report);continue; }
       if (suite.requiresFrontendDeps) {
         try { await access(path.join(repoDir, 'frontend/node_modules/vite/package.json')); }
         catch { row.status = 'BLOCKED_ENV'; row.actual = 'Thiếu frontend dependencies; chạy npm ci trong frontend của worktree này'; continue; }
       }
       if (this.active?.cancelled) break;
       row.status = 'RUNNING'; row.startedAt = new Date().toISOString();
+      await this.persist(report);
       const started = Date.now();
       const cmd = suite.command;
       const screenshotDir = path.join(this.root, 'screenshots', report.id, row.id);
@@ -144,7 +157,7 @@ export class Runner {
       const xmlTexts = await Promise.all(xmlPaths.map(file => readFile(file, 'utf8')));
       row.counts = countEvidence(cmd.evidence, result.output ?? '', xmlTexts);
       row.exitCode = result.code;
-      row.status = result.cancelled ? 'CANCELLED' : result.timedOut ? 'TIMEOUT' : result.code !== 0 ? 'FAIL' : row.counts?.fail ? 'FAIL' : row.counts?.tests ? 'PASS' : 'NOT_RUN';
+      row.status = (result.cancelled||this.active?.cancelled) ? 'CANCELLED' : result.timedOut ? 'TIMEOUT' : result.code !== 0 ? 'FAIL' : row.counts?.fail ? 'FAIL' : row.counts?.tests && row.counts.skip===row.counts.tests ? 'SKIP' : row.counts?.tests ? 'PASS' : 'NOT_RUN';
       row.actual = `${row.status}: exit ${result.code}, ${row.counts?.tests ?? 0} test, ${row.counts?.pass ?? 0} PASS, ${row.counts?.fail ?? 0} FAIL, ${row.counts?.skip ?? 0} SKIP`;
       if (!forbidden.test(log.toString()) && !xmlTexts.some(forbidden.test.bind(forbidden))) {
         const logName = `${row.id}.log`;
@@ -156,24 +169,32 @@ export class Runner {
           await writeFile(path.join(dir, 'junit', name), await readFile(xmlPaths[n]));
           row.junit.push(`junit/${name}`);
         }
-      } else row.evidenceWarning = 'Raw log/XML chứa chuỗi giống secret; không lưu artifact.';
+      } else {row.evidenceWarning = 'Raw log/XML chứa chuỗi giống secret; không lưu artifact.'; if(row.status==='PASS')row.status='BLOCKED';}
       if (cmd.evidence === 'playwright') {
         row.screenshots = (await readdir(screenshotDir)).filter(name => /^[a-zA-Z0-9_.-]+\.png$/.test(name)).map(name => `screenshots/${report.id}/${row.id}/${name}`);
-        if (row.screenshots.length !== row.counts?.tests) {
+        row.metadata=(await readdir(screenshotDir)).filter(name=>/^[a-zA-Z0-9_.-]+\.json$/.test(name)).map(name=>`screenshots/${report.id}/${row.id}/${name}`);
+        for(const name of row.metadata){const entries=JSON.parse(await readFile(path.join(this.root,name),'utf8'));const issue=entries.find(e=>e.kind==='network'||e.kind==='pageerror'||e.status>=500);if(issue){row.endpoint=issue.endpoint;row.httpStatus=issue.status;}}
+        if (row.screenshots.length !== (row.counts?.tests??0)-(row.counts?.skip??0)) {
           if (row.status === 'PASS') row.status = 'FAIL';
           row.actual += '; thiếu screenshot của một hoặc nhiều test';
         }
       }
+      row.bugs=diagnose(row,suite,report,result.output??'');
+      await this.persist(report);
     }
-    report.status = report.suites.some(s => s.status === 'FAIL') ? 'FAIL' : report.suites.some(s => s.status === 'TIMEOUT') ? 'TIMEOUT' : report.suites.some(s => s.status === 'CANCELLED') ? 'CANCELLED' : report.suites.every(s => s.status === 'PASS') ? 'PASS' : 'PARTIAL';
+    report.status = this.active?.cancelled?'CANCELLED':report.suites.some(s => s.status === 'FAIL') ? 'FAIL' : report.suites.some(s => s.status === 'TIMEOUT') ? 'TIMEOUT' : report.suites.some(s => s.status === 'CANCELLED') ? 'CANCELLED' : report.suites.every(s => s.status === 'SKIP')?'SKIP':report.suites.every(s => s.status === 'PASS') ? 'PASS' : 'PARTIAL';
     report.finishedAt = new Date().toISOString();
+    await this.persist(report);
+  }
+  async persist(report) {
+    const dir=path.join(this.root,report.id);await mkdir(dir,{recursive:true});
     await writeFile(path.join(dir, 'report.json'), JSON.stringify(report, null, 2));
     await writeFile(path.join(dir, 'report.html'), renderHtml(report));
     await writeFile(path.join(dir, 'report.csv'), renderCsv(report));
     const files = ['report.json', 'report.html', 'report.csv', ...report.suites.flatMap(s => [s.log, ...(s.junit ?? [])]).filter(Boolean)];
     const hashes = [];
     for (const file of files) hashes.push(`${sha256(await readFile(path.join(dir, file)))}  ${file}`);
-    for (const screenshot of report.suites.flatMap(s => s.screenshots ?? [])) hashes.push(`${sha256(await readFile(path.join(this.root, screenshot)))}  ${screenshot}`);
+    for (const screenshot of report.suites.flatMap(s => [...(s.screenshots ?? []),...(s.metadata??[])])) hashes.push(`${sha256(await readFile(path.join(this.root, screenshot)))}  ${screenshot}`);
     await writeFile(path.join(dir, 'SHA256SUMS.txt'), hashes.join('\n') + '\n');
   }
 }

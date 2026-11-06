@@ -41,3 +41,11 @@ npm run dev
 Trong cửa sổ PowerShell thứ hai, chọn `QA-UI` → **Run Selected** để chụp ảnh dashboard thật. Sau đó chọn `F15-RULES` hoặc `F16-RULES`, xem expected/actual, raw log và JUnit. Chọn `FINANCE-PRODUCTION` để trình bày trạng thái BLOCKED. Xuất HTML/JSON/CSV/ZIP và đối chiếu SHA256. Không dùng ảnh hoặc unit PASS để tuyên bố UAT Issue #18 đã hoàn tất.
 
 Không tự bật integration flags, không dùng shared Docker volume, không chạy migration lên dữ liệu thật. Các kịch bản JWT hết hạn, session revoke, XSS HTTP, rate limiting, Store isolation live, Review legacy PostgreSQL và Finance settlement production chỉ được nghiệm thu khi môi trường/contract tương ứng được phê duyệt.
+
+## Chẩn đoán website và báo lỗi tự động
+
+`WEBSITE-SMOKE` là suite chọn riêng, chỉ trỏ `http://localhost:5173`: public Catalog/Store, responsive 375px, đăng ký/login/logout bằng tài khoản giả mới, duplicate email, invalid JWT và Customer RBAC. Cần stack local riêng đã seed; không tự bật Inventory/Finance hoặc khởi động Docker. Suite không kiểm Checkout/COD/Return production. Nếu backend chưa chạy, giữ FAIL/ENVIRONMENT_FAILURE cùng endpoint và hướng kiểm tra gateway, không suy lỗi business.
+
+Dashboard/report JSON/HTML/CSV chứa bug ID, module, HTTP/code, severity, expected/actual, nguồn test, stack đã lọc, nguyên nhân nghi ngờ/đã xác minh và hướng xử lý. Phân loại tự động là triage, chưa xác nhận nguyên nhân ứng dụng. Raw logs và XML qua bộ lọc secret; screenshot Playwright che input/email, metadata chỉ giữ path/status và lỗi console/network đã lọc, không ghi header/body/cookie. ZIP chứa đường dẫn khớp manifest, bao gồm screenshot và metadata; báo cáo hoàn chỉnh chỉ dùng sau terminal status.
+
+Server lưu checkpoint khi run bắt đầu và sau từng suite. Reload dashboard tiếp quản đúng run đang chạy; restart server đánh dấu RUNNING cũ thành INTERRUPTED trong bộ nhớ, giữ nguyên report/raw artifact lịch sử. Hủy hợp lệ là CANCELLED, toàn bộ test bỏ qua là SKIP; các trạng thái này không tự chứng minh lỗi sản phẩm. Hai request đồng thời chỉ một request nhận được khóa chạy.
