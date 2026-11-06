@@ -1,0 +1,32 @@
+
+Running 3 tests using 1 worker
+
+
+
+(node:29428) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/3] ui\dashboard.spec.mjs:13:1 › dashboard-hien-thi-suite-va-gates
+[2/3] ui\dashboard.spec.mjs:21:1 › dashboard-chi-goi-suite-allowlist
+[3/3] ui\dashboard.spec.mjs:29:1 › dashboard-chan-doan-tieng-viet-khong-thuc-thi-html
+  1) ui\dashboard.spec.mjs:29:1 › dashboard-chan-doan-tieng-viet-khong-thuc-thi-html ───────────────
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      30 |  await page.route('**/api/history',route=>route.fulfill({json:[{id:'fixture-display-only',sha:'a'.repeat(40),timestamp:'2026-11-06T00:00:00Z',status:'FAIL',environment:{fixture:true},suites:[{id:'WEBSITE-SMOKE',status:'FAIL',expected:'HTTP200',actual:'ECONNREFUSED',bugs:[{id:'BUG-display-fixture',title:'Không kết nối được API local',module:'Website localhost',endpoint:'/api/stores',code:'ECONNREFUSED',type:'ENVIRONMENT_FAILURE',severity:'P1',verifiedCause:null,suspectedCause:'<img src=x onerror=window.soopiXss=1>',remediation:'Kiểm tra gateway 127.0.0.1:18080',owner:'TV5 QA',stackTrace:'ECONNREFUSED'}]}]}]}));
+      31 |  await page.goto('/');await expect(page.getByRole('heading',{name:'Không kết nối được API local'})).toBeVisible();await expect(page.getByText(/API: \/api\/stores/)).toBeVisible();await expect(page.getByText('Chưa đủ bằng chứng')).toBeVisible();expect(await page.evaluate(()=>window.soopiXss)).toBeUndefined();
+    > 32 |  await page.setViewportSize({width:375,height:812});expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+         |                                                                                                                                       ^
+      33 | });
+      34 |
+      35 | // Opt-in diagnostic proving that a real Playwright assertion failure also saves a screenshot.
+        at D:\CMC Uni\5 Ky Dong\WEB\BCK WEB\Project_HK5\.verification\tv5-qa-dashboard-20261105\tools\tv5-qa-tester\ui\dashboard.spec.mjs:32:135
+
+    Error Context: test-results\dashboard-dashboard-chan-doan-tieng-viet-khong-thuc-thi-html\error-context.md
+
+
+  1 failed
+    ui\dashboard.spec.mjs:29:1 › dashboard-chan-doan-tieng-viet-khong-thuc-thi-html ────────────────
+  2 passed (2.2s)

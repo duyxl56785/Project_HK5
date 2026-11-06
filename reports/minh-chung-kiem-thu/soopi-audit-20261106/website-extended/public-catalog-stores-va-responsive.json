@@ -1,0 +1,11 @@
+[
+  {
+    "kind": "network",
+    "endpoint": "/assets/CatalogPage-HFIB9wid.css",
+    "code": "net::ERR_NO_BUFFER_SPACE"
+  },
+  {
+    "kind": "console",
+    "message": "Failed to load resource: net::ERR_NO_BUFFER_SPACE"
+  }
+]

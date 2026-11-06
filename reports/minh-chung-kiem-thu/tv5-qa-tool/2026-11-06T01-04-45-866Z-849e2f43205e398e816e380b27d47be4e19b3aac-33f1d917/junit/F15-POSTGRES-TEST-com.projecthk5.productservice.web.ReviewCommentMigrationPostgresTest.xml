@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.projecthk5.productservice.web.ReviewCommentMigrationPostgresTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-11-06T01:05:48" hostname="MDUY-LECO" time="0.767">
+  <properties/>
+  <testcase name="keepsOlderLongCommentsAndChecksNewOnesInUtf16Units()" classname="com.projecthk5.productservice.web.ReviewCommentMigrationPostgresTest" time="0.767"/>
+  <system-out><![CDATA[08:05:44.085 [Test worker] INFO org.testcontainers.images.PullPolicy -- Image pull policy will be performed by: DefaultPullPolicy()
+08:05:44.090 [Test worker] INFO org.testcontainers.utility.ImageNameSubstitutor -- Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+08:05:44.273 [Test worker] INFO org.testcontainers.dockerclient.DockerClientProviderStrategy -- Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+08:05:44.514 [Test worker] INFO org.testcontainers.dockerclient.DockerClientProviderStrategy -- Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
+08:05:44.515 [Test worker] INFO org.testcontainers.DockerClientFactory -- Docker host IP address is localhost
+08:05:44.536 [Test worker] INFO org.testcontainers.DockerClientFactory -- Connected to docker: 
+  Server Version: 29.8.1
+  API Version: 1.56
+  Operating System: Docker Desktop (containerized)
+  Total Memory: 7571 MB
+08:05:44.719 [Test worker] INFO tc.testcontainers/ryuk:0.7.0 -- Creating container for image: testcontainers/ryuk:0.7.0
+08:05:44.893 [Test worker] INFO org.testcontainers.utility.RegistryAuthLocator -- Credential helper/store (docker-credential-desktop) does not have credentials for https://index.docker.io/v1/
+08:05:45.101 [Test worker] INFO tc.testcontainers/ryuk:0.7.0 -- Container testcontainers/ryuk:0.7.0 is starting: 2ec357314110a1e9e28e34ef4514d17c81b609229efb69db4c8fcff929dcb9c3
+08:05:45.667 [Test worker] INFO tc.testcontainers/ryuk:0.7.0 -- Container testcontainers/ryuk:0.7.0 started in PT0.948125S
+08:05:45.672 [Test worker] INFO org.testcontainers.utility.RyukResourceReaper -- Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+08:05:45.672 [Test worker] INFO org.testcontainers.DockerClientFactory -- Checking the system...
+08:05:45.672 [Test worker] INFO org.testcontainers.DockerClientFactory -- ✔︎ Docker server version should be at least 1.6.0
+08:05:45.673 [Test worker] INFO tc.postgres:16.6-alpine -- Creating container for image: postgres:16.6-alpine
+08:05:45.854 [Test worker] INFO tc.postgres:16.6-alpine -- Container postgres:16.6-alpine is starting: 1b8a07c07b656c56f917d9c3752623fe0cd2ffe31b555f2a590e63c92c6d1b05
+08:05:48.818 [Test worker] INFO tc.postgres:16.6-alpine -- Container postgres:16.6-alpine started in PT3.1450989S
+08:05:48.818 [Test worker] INFO tc.postgres:16.6-alpine -- Container is started (JDBC URL: jdbc:postgresql://localhost:49215/test?loggerLevel=OFF)
+08:05:49.141 [Test worker] INFO org.flywaydb.core.FlywayExecutor -- Database: jdbc:postgresql://localhost:49215/test (PostgreSQL 16.6)
+08:05:49.182 [Test worker] INFO org.flywaydb.core.internal.schemahistory.JdbcTableSchemaHistory -- Schema history table "public"."flyway_schema_history" does not exist yet
+08:05:49.184 [Test worker] INFO org.flywaydb.core.internal.command.DbValidate -- Successfully validated 9 migrations (execution time 00:00.019s)
+08:05:49.199 [Test worker] INFO org.flywaydb.core.internal.schemahistory.JdbcTableSchemaHistory -- Creating Schema History table "public"."flyway_schema_history" ...
+08:05:49.246 [Test worker] INFO org.flywaydb.core.internal.command.DbMigrate -- Current version of schema "public": << Empty Schema >>
+08:05:49.253 [Test worker] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema "public" to version "1 - create categories"
+08:05:49.281 [Test worker] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema "public" to version "2 - create products"
+08:05:49.309 [Test worker] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema "public" to version "3 - create product image reservations"
+08:05:49.328 [Test worker] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema "public" to version "4 - details images reviews"
+08:05:49.353 [Test worker] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema "public" to version "5 - write fence abort"
+08:05:49.366 [Test worker] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema "public" to version "6 - reviewable items"
+08:05:49.379 [Test worker] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema "public" to version "7 - category slug status"
+08:05:49.396 [Test worker] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema "public" to version "8 - review hidden reason"
+08:05:49.410 [Test worker] INFO org.flywaydb.core.internal.command.DbMigrate -- Successfully applied 8 migrations to schema "public", now at version v8 (execution time 00:00.071s)
+08:05:49.453 [Test worker] INFO org.flywaydb.core.FlywayExecutor -- Database: jdbc:postgresql://localhost:49215/test (PostgreSQL 16.6)
+08:05:49.471 [Test worker] INFO org.flywaydb.core.internal.command.DbValidate -- Successfully validated 9 migrations (execution time 00:00.011s)
+08:05:49.490 [Test worker] INFO org.flywaydb.core.internal.command.DbMigrate -- Current version of schema "public": 8
+08:05:49.495 [Test worker] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema "public" to version "9 - review comment max 1000"
+08:05:49.510 [Test worker] INFO org.flywaydb.core.internal.command.DbMigrate -- Successfully applied 1 migration to schema "public", now at version v9 (execution time 00:00.007s)
+08:05:49.558 [Test worker] INFO org.flywaydb.core.FlywayExecutor -- Database: jdbc:postgresql://localhost:49215/test (PostgreSQL 16.6)
+08:05:49.574 [Test worker] INFO org.flywaydb.core.internal.command.DbValidate -- Successfully validated 9 migrations (execution time 00:00.009s)
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

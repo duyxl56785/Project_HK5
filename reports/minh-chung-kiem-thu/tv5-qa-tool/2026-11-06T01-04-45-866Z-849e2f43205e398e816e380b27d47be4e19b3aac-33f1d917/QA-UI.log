@@ -1,0 +1,57 @@
+
+Running 2 tests using 1 worker
+
+[1/2] ui\dashboard.spec.mjs:13:1 › dashboard-hien-thi-suite-va-gates
+  1) ui\dashboard.spec.mjs:13:1 › dashboard-hien-thi-suite-va-gates ────────────────────────────────
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('F15-RULES')
+    Expected: visible
+    Error: strict mode violation: getByText('F15-RULES') resolved to 2 elements:
+        1) <b>F15-RULES</b> aka locator('span').filter({ hasText: 'F15-RULES · Điều kiện buyer,' }).locator('b')
+        2) <b>F15-RULES</b> aka getByText('F15-RULES').nth(1)
+
+    Call log:
+      - Expect "toBeVisible" getByText('F15-RULES') with timeout 5000ms
+      - waiting for getByText('F15-RULES')
+
+
+      14 |   await page.goto('/');
+      15 |   await expect(page.getByRole('heading',{name:'Soopi TV5 QA Tester'})).toBeVisible();
+    > 16 |   await expect(page.getByText('F15-RULES')).toBeVisible();
+         |                                             ^
+      17 |   await expect(page.getByText('FINANCE-PRODUCTION')).toBeVisible();
+      18 |   await expect(page.getByText('BLOCKED_OWNER: Finance/Return production policy chưa được ký.')).toBeVisible();
+      19 | });
+        at D:\CMC Uni\5 Ky Dong\WEB\BCK WEB\Project_HK5\.verification\tv5-qa-dashboard-20261105\tools\tv5-qa-tester\ui\dashboard.spec.mjs:16:45
+
+    Error Context: test-results\dashboard-dashboard-hien-thi-suite-va-gates\error-context.md
+
+
+[2/2] ui\dashboard.spec.mjs:21:1 › dashboard-chi-goi-suite-allowlist
+  2) ui\dashboard.spec.mjs:21:1 › dashboard-chi-goi-suite-allowlist ────────────────────────────────
+
+    Error: locator.click: Error: strict mode violation: getByText('F15-RULES') resolved to 2 elements:
+        1) <b>F15-RULES</b> aka locator('span').filter({ hasText: 'F15-RULES · Điều kiện buyer,' }).locator('b')
+        2) <b>F15-RULES</b> aka getByText('F15-RULES').nth(1)
+
+    Call log:
+      - waiting for getByText('F15-RULES')
+
+
+      21 | test('dashboard-chi-goi-suite-allowlist', async ({page}) => {
+      22 |   await page.goto('/');
+    > 23 |   await page.getByText('F15-RULES').click();
+         |                                     ^
+      24 |   await expect(page.getByRole('button',{name:'Run Selected'})).toBeEnabled();
+      25 |   await expect(page.getByRole('button',{name:'Run All Safe Tests'})).toBeVisible();
+      26 | });
+        at D:\CMC Uni\5 Ky Dong\WEB\BCK WEB\Project_HK5\.verification\tv5-qa-dashboard-20261105\tools\tv5-qa-tester\ui\dashboard.spec.mjs:23:37
+
+    Error Context: test-results\dashboard-dashboard-chi-goi-suite-allowlist\error-context.md
+
+
+  2 failed
+    ui\dashboard.spec.mjs:13:1 › dashboard-hien-thi-suite-va-gates ─────────────────────────────────
+    ui\dashboard.spec.mjs:21:1 › dashboard-chi-goi-suite-allowlist ─────────────────────────────────
