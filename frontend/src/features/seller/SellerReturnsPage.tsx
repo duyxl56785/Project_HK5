@@ -12,6 +12,7 @@ export interface SellerReturn {
 
 function Row({ item }: { readonly item: SellerReturn }) {
   const [receipt, setReceipt] = useState('');
+  const [confirmReject, setConfirmReject] = useState(false);
   const client = useQueryClient();
   const act = useAction(({ action, body }: { action: string; body?: { receiptReference: string } }) =>
     api(`/api/seller/returns/${item.requestId}/${action}`, { method: 'POST', body }), ['seller-returns', 'seller-orders']);
@@ -25,7 +26,14 @@ function Row({ item }: { readonly item: SellerReturn }) {
     {item.receiptReference && <p className="muted">Mã nhận hàng: {item.receiptReference} · {item.receivedAt && dateTime(item.receivedAt)}</p>}
     {item.status === 'REQUESTED' && <div className="row row--wrap">
       <button type="button" className="btn btn--primary" disabled={act.isPending} onClick={() => run('approve')}>Đồng ý trả hàng</button>
-      <button type="button" className="btn" disabled={act.isPending} onClick={() => run('reject')}>Từ chối</button>
+      {confirmReject
+        // REJECTED is final and unblocks settlement, so it takes a second, explicit click.
+        ? <>
+          <span role="alert">Từ chối là không đổi lại được và cho phép sàn thanh toán đơn này.</span>
+          <button type="button" className="btn" disabled={act.isPending} onClick={() => run('reject')}>Xác nhận từ chối</button>
+          <button type="button" className="btn" disabled={act.isPending} onClick={() => setConfirmReject(false)}>Hủy</button>
+        </>
+        : <button type="button" className="btn" disabled={act.isPending} onClick={() => setConfirmReject(true)}>Từ chối</button>}
     </div>}
     {item.status === 'APPROVED' && <div className="row row--wrap">
       <input aria-label="Mã nhận hàng" placeholder="Mã vận đơn hoặc phiếu nhận" maxLength={128} value={receipt}

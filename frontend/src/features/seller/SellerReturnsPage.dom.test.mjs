@@ -86,6 +86,27 @@ test('REQUESTED offers approve/reject; APPROVED needs a receipt reference to rec
   } finally { await view.close(); }
 });
 
+test('reject needs a second explicit click and can be cancelled', async () => {
+  const view = await mounted(call => call.method === 'GET'
+    ? json([row('11111111-1111-4111-8111-111111111111', 'REQUESTED')])
+    : json(row('11111111-1111-4111-8111-111111111111', 'REJECTED')));
+  try {
+    await until(() => view.button('Từ chối'));
+    await view.click('Từ chối');
+    assert.equal(view.calls.filter(c => c.method === 'POST').length, 0);
+    assert.match(view.host.textContent, /không đổi lại được/);
+    await view.click('Hủy');
+    assert.ok(view.button('Từ chối'));
+    assert.equal(view.button('Xác nhận từ chối'), undefined);
+
+    await view.click('Từ chối');
+    await view.click('Xác nhận từ chối');
+    await until(() => view.calls.some(c => c.method === 'POST'));
+    assert.equal(view.calls.find(c => c.method === 'POST').path,
+      '/api/seller/returns/11111111-1111-4111-8111-111111111111/reject');
+  } finally { await view.close(); }
+});
+
 test('409 after a lost response re-reads the list instead of leaving stale buttons', async () => {
   const view = await mounted((call, calls) => {
     if (call.method === 'POST') return json({ code: 'RETURN_INVALID_TRANSITION', message: 'Action approve is not allowed from APPROVED' }, 409);
