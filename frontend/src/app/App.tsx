@@ -38,6 +38,7 @@ const OrdersPage = page(orderPages, 'OrdersPage');
 const SellerHomePage = page(() => import('../features/seller/SellerHomePage'), 'SellerHomePage');
 const SellerFinancePage = page(sellerOrderPages, 'SellerFinancePage');
 const SellerOrdersPage = page(sellerOrderPages, 'SellerOrdersPage');
+const SellerReturnsPage = page(() => import('../features/seller/SellerReturnsPage'), 'SellerReturnsPage');
 const SellerProductPage = page(sellerProductPages, 'SellerProductPage');
 const SellerProductsPage = page(sellerProductPages, 'SellerProductsPage');
 
@@ -100,7 +101,7 @@ function Layout() {
       <nav className="topbar__strip" aria-label="Điều hướng chính">
         {has('CUSTOMER') && <NavLink to="/orders">Đơn hàng</NavLink>}
         {!has('ADMIN') && <NavLink to="/seller" end>Kênh người bán</NavLink>}
-        {has('SELLER') && <><NavLink to="/seller/products">Sản phẩm</NavLink><NavLink to="/seller/orders">Đơn cửa hàng</NavLink><NavLink to="/seller/finance">Tài chính</NavLink></>}
+        {has('SELLER') && <><NavLink to="/seller/products">Sản phẩm</NavLink><NavLink to="/seller/orders">Đơn cửa hàng</NavLink><NavLink to="/seller/returns">Trả hàng</NavLink><NavLink to="/seller/finance">Tài chính</NavLink></>}
         {has('ADMIN') && <>
           <NavLink to="/admin/sellers">Người bán</NavLink><NavLink to="/admin/products">Sản phẩm</NavLink>
           <NavLink to="/admin/categories">Danh mục</NavLink><NavLink to="/admin/reviews">Đánh giá</NavLink>
@@ -153,6 +154,7 @@ export function App() {
       <Route path="seller/products/new" element={guarded('SELLER', <SellerProductPage />)} />
       <Route path="seller/products/:id" element={guarded('SELLER', <SellerProductPage />)} />
       <Route path="seller/orders" element={guarded('SELLER', <SellerOrdersPage />)} />
+      <Route path="seller/returns" element={guarded('SELLER', <SellerReturnsPage />)} />
       <Route path="seller/finance" element={guarded('SELLER', <SellerFinancePage />)} />
       <Route path="admin/sellers" element={guarded('ADMIN', <AdminSellersPage />)} />
       <Route path="admin/products" element={guarded('ADMIN', <AdminProductsPage />)} />
