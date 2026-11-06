@@ -2,7 +2,7 @@ export const redact = value => String(value ?? '').replace(/[A-Z0-9._%+-]+@[A-Z0
   .replace(/Bearer\s+\S+/gi,'Bearer [ẩn]').replace(/eyJ[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+/g,'[JWT ẩn]')
   .replace(/((?:password|token|cookie|authorization|secret)\s*[=:]\s*)[^\s,;]+/gi,'$1[ẩn]');
 export function diagnose(row,suite,report,output='') {
- if (row.status==='PASS'||row.status==='SKIP'||row.status==='NOT_RUN')return [];
+ if (['PASS','SKIP','NOT_RUN','CANCELLED'].includes(row.status))return [];
  const refused=/ECONNREFUSED|ERR_CONNECTION_REFUSED/i.test(output); const infrastructure=/EACCES|EPERM|ENOENT|executable doesn't exist/i.test(output);
  const blocked=row.status.startsWith('BLOCKED');
  const type=refused||row.status==='BLOCKED_ENV'?'ENVIRONMENT_FAILURE':blocked?'BLOCKED_DEPENDENCY':infrastructure||['TIMEOUT','INTERRUPTED','CANCELLED'].includes(row.status)?'TEST_INFRA_FAILURE':'APPLICATION_BUG';

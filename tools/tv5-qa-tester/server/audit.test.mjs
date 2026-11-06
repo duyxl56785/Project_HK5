@@ -42,3 +42,6 @@ test('chẩn đoán ECONNREFUSED không bịa root cause và không lộ credent
  assert.equal(bug.type,'ENVIRONMENT_FAILURE');assert.equal(bug.endpoint,'/api/stores');assert.match(bug.verifiedCause,/chưa xác minh/);assert.ok(!bug.stackTrace.includes('local-sensitive-value'));
  assert.ok(!redact('a@personal.example Bearer abcdef eyJhbGciOi.xxxx.yyyy').includes('personal.example'));
 });
+test('hủy hợp lệ không tự tạo bug ứng dụng',()=>{
+ assert.deepEqual(diagnose({status:'CANCELLED'},{},{},''),[]);
+});
