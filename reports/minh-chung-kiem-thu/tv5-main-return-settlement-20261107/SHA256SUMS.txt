@@ -1,0 +1,1 @@
+4b5eb02d33d74b4def8c72fce79cd19619d67ef1dd9ac46ef991060c97d32f50 *TEST-com.projecthk5.orderservice.integration.FulfillmentPostgres16IT.xml
