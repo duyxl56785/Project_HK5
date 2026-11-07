@@ -25,6 +25,7 @@ const AdminCategoriesPage = page(adminPages, 'AdminCategoriesPage');
 const AdminFinancePage = page(adminPages, 'AdminFinancePage');
 const AdminOrdersPage = page(adminPages, 'AdminOrdersPage');
 const AdminProductsPage = page(adminPages, 'AdminProductsPage');
+const AdminReturnsPage = page(adminPages, 'AdminReturnsPage');
 const AdminReviewsPage = page(adminPages, 'AdminReviewsPage');
 const AdminSellersPage = page(adminPages, 'AdminSellersPage');
 const CartPage = page(() => import('../features/cart/CartPage'), 'CartPage');
@@ -104,7 +105,7 @@ function Layout() {
         {has('ADMIN') && <>
           <NavLink to="/admin/sellers">Người bán</NavLink><NavLink to="/admin/products">Sản phẩm</NavLink>
           <NavLink to="/admin/categories">Danh mục</NavLink><NavLink to="/admin/reviews">Đánh giá</NavLink>
-          <NavLink to="/admin/accounts">Tài khoản</NavLink><NavLink to="/admin/orders">COD</NavLink><NavLink to="/admin/finance">Tài chính</NavLink>
+          <NavLink to="/admin/accounts">Tài khoản</NavLink><NavLink to="/admin/orders">COD</NavLink><NavLink to="/admin/returns">Trả hàng</NavLink><NavLink to="/admin/finance">Tài chính</NavLink>
         </>}
         <span className="grow" />
         {account ? <>
@@ -160,6 +161,7 @@ export function App() {
       <Route path="admin/reviews" element={guarded('ADMIN', <AdminReviewsPage />)} />
       <Route path="admin/accounts" element={guarded('ADMIN', <AdminAccountsPage />)} />
       <Route path="admin/orders" element={guarded('ADMIN', <AdminOrdersPage />)} />
+      <Route path="admin/returns" element={guarded('ADMIN', <AdminReturnsPage />)} />
       <Route path="admin/finance" element={guarded('ADMIN', <AdminFinancePage />)} />
       <Route path="*" element={<p>Không tìm thấy trang. <Link to="/">Về trang chủ</Link></p>} />
     </Route>
