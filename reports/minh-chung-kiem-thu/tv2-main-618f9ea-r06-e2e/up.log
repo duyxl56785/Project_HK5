@@ -1,0 +1,296 @@
+Wrote D:\monhoc\CNPM\project_hk5\.worktrees\retrole\.env.demo. Admin login: admin@hk5.local (password in .env.demo).
+ Image hk5-retrole-frontend Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 589B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 289B 0.0s done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/nginx:1.27-alpine
+#3 ...
+
+#4 [internal] load metadata for docker.io/library/node:22-alpine
+#4 DONE 0.2s
+
+#3 [internal] load metadata for docker.io/library/nginx:1.27-alpine
+#3 DONE 1.9s
+
+#5 [internal] load .dockerignore
+#5 transferring context: 113B 0.0s done
+#5 DONE 0.0s
+
+#6 [stage-1 1/3] FROM docker.io/library/nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10
+#6 resolve docker.io/library/nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10 0.0s done
+#6 DONE 0.0s
+
+#7 [build 1/6] FROM docker.io/library/node:22-alpine@sha256:fe4f6d74e20370acb04ad889077d14d0f64a9c8ea6a42bc60cddf1e844699914
+#7 resolve docker.io/library/node:22-alpine@sha256:fe4f6d74e20370acb04ad889077d14d0f64a9c8ea6a42bc60cddf1e844699914 0.0s done
+#7 DONE 0.0s
+
+#8 [internal] load build context
+#8 transferring context: 1.16MB 0.1s done
+#8 DONE 0.1s
+
+#9 [build 3/6] COPY package.json package-lock.json ./
+#9 CACHED
+
+#10 [build 2/6] WORKDIR /app
+#10 CACHED
+
+#11 [build 4/6] RUN npm ci
+#11 CACHED
+
+#12 [build 5/6] COPY . .
+#12 DONE 0.2s
+
+#13 [build 6/6] RUN npm run build
+#13 0.665 
+#13 0.665 > hk5-marketplace-frontend@0.1.0 build
+#13 0.665 > tsc -b && vite build
+#13 0.665 
+#13 6.331 vite v6.4.4 building for production...
+#13 6.412 transforming...
+#13 7.620 node_modules/zod/v4/core/util.js (400:0): A comment
+#13 7.620 
+#13 7.620 "// Wrapped in a `@__PURE__` IIFE: esbuild never tree-shakes a top-level initializer that contains a member access on `Number`, so the bare object literal survived into every bundle."
+#13 7.620 
+#13 7.620 in "node_modules/zod/v4/core/util.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+#13 7.623 node_modules/zod/v4/core/regexes.js (74:0): A comment
+#13 7.623 
+#13 7.623 "/** Anchors a pattern source. The interpolation lives here rather than at the call site because
+#13 7.623  * esbuild will not drop a `@__PURE__` call whose own argument interpolates a variable, but it
+#13 7.623  * will drop `anchor(dateSource)`. Keeping it inline pinned `date` into every bundle. */"
+#13 7.623 
+#13 7.623 in "node_modules/zod/v4/core/regexes.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+#13 8.556 ✓ 229 modules transformed.
+#13 8.706 rendering chunks...
+#13 8.833 computing gzip size...
+#13 8.856 dist/index.html                                                    0.90 kB │ gzip:   0.57 kB
+#13 8.856 dist/assets/be-vietnam-pro-vietnamese-400-normal-BuGn0gnm.woff     6.57 kB
+#13 8.856 dist/assets/be-vietnam-pro-vietnamese-600-normal-DkpCIyan.woff     6.88 kB
+#13 8.856 dist/assets/be-vietnam-pro-vietnamese-500-normal-CfdwVo8-.woff     6.88 kB
+#13 8.856 dist/assets/be-vietnam-pro-vietnamese-700-normal-By_5yT39.woff     6.89 kB
+#13 8.856 dist/assets/be-vietnam-pro-latin-ext-400-normal-DYBYyMQr.woff      8.90 kB
+#13 8.856 dist/assets/be-vietnam-pro-latin-ext-700-normal-4Hjo2OtD.woff      9.19 kB
+#13 8.856 dist/assets/be-vietnam-pro-latin-ext-500-normal-CK0UkkKf.woff      9.20 kB
+#13 8.856 dist/assets/be-vietnam-pro-latin-ext-600-normal-BeUwKxhG.woff      9.22 kB
+#13 8.856 dist/assets/be-vietnam-pro-vietnamese-400-normal-CRcqvyg1.woff2   11.53 kB
+#13 8.856 dist/assets/be-vietnam-pro-vietnamese-500-normal-DREgrEoJ.woff2   12.17 kB
+#13 8.856 dist/assets/be-vietnam-pro-vietnamese-600-normal-nyU-ZL2p.woff2   12.18 kB
+#13 8.856 dist/assets/be-vietnam-pro-vietnamese-700-normal-Csr0PCuG.woff2   12.47 kB
+#13 8.856 dist/assets/be-vietnam-pro-latin-ext-400-normal-CiZNW1ec.woff2    13.06 kB
+#13 8.856 dist/assets/TUI-001-DgJrEf5L.jpg                                  13.43 kB
+#13 8.856 dist/assets/be-vietnam-pro-latin-ext-500-normal-h0Fp6aX0.woff2    13.55 kB
+#13 8.856 dist/assets/be-vietnam-pro-latin-ext-600-normal-BNd8euf0.woff2    13.61 kB
+#13 8.856 dist/assets/be-vietnam-pro-latin-ext-700-normal-C8_gqRu2.woff2    13.85 kB
+#13 8.856 dist/assets/be-vietnam-pro-latin-400-normal-bXgqVju9.woff         16.43 kB
+#13 8.856 dist/assets/be-vietnam-pro-latin-700-normal-C2EtzaOi.woff         16.91 kB
+#13 8.856 dist/assets/be-vietnam-pro-latin-500-normal-BJkVuMHw.woff         17.00 kB
+#13 8.856 dist/assets/be-vietnam-pro-latin-600-normal-5IO4e7bK.woff         17.02 kB
+#13 8.856 dist/assets/AO-002-Da2f_aPY.jpg                                   19.79 kB
+#13 8.856 dist/assets/be-vietnam-pro-latin-400-normal-PpnXBOrz.woff2        21.17 kB
+#13 8.856 dist/assets/NON-001-1cutt8Cu.jpg                                  21.66 kB
+#13 8.856 dist/assets/be-vietnam-pro-latin-500-normal-B6LVzGNe.woff2        21.89 kB
+#13 8.856 dist/assets/be-vietnam-pro-latin-600-normal-BZDkUTrt.woff2        22.03 kB
+#13 8.856 dist/assets/be-vietnam-pro-latin-700-normal-DlW1Zbsh.woff2        22.15 kB
+#13 8.856 dist/assets/QUAN-001-DHZioJQR.jpg                                 24.81 kB
+#13 8.856 dist/assets/SACH-002-BOCG7y2v.jpg                                 69.91 kB
+#13 8.856 dist/assets/TP-001-_h_jBE2B.jpg                                   77.96 kB
+#13 8.856 dist/assets/CheckoutPage-DE3N7QqC.css                              1.43 kB │ gzip:   0.59 kB
+#13 8.856 dist/assets/CartPage-CR4BOZKr.css                                  2.05 kB │ gzip:   0.77 kB
+#13 8.856 dist/assets/SellerHomePage-BR8Tx9_f.css                            2.84 kB │ gzip:   0.86 kB
+#13 8.856 dist/assets/CatalogPage-HFIB9wid.css                               3.97 kB │ gzip:   1.16 kB
+#13 8.856 dist/assets/index-DJ6G_TQ_.css                                    31.80 kB │ gzip:   6.90 kB
+#13 8.856 dist/assets/StorePage-B2Z3GGVo.js                                  0.40 kB │ gzip:   0.30 kB
+#13 8.856 dist/assets/forms-DNgwhZ5h.js                                      1.24 kB │ gzip:   0.77 kB
+#13 8.856 dist/assets/FinanceTable-BnC8dlfB.js                               1.38 kB │ gzip:   0.61 kB
+#13 8.856 dist/assets/AuthPages-LZts6ccn.js                                  1.89 kB │ gzip:   0.98 kB
+#13 8.856 dist/assets/cartModel-DINgoB8h.js                                  2.24 kB │ gzip:   1.01 kB
+#13 8.857 dist/assets/SellerOrdersPage-NZxxNmvt.js                           2.87 kB │ gzip:   1.34 kB
+#13 8.857 dist/assets/ProductPage-C6QQgmtJ.js                                3.39 kB │ gzip:   1.45 kB
+#13 8.857 dist/assets/AccountPage-BhkRHHJC.js                                4.04 kB │ gzip:   1.46 kB
+#13 8.857 dist/assets/CartPage-CoMS4Fr8.js                                   4.29 kB │ gzip:   1.72 kB
+#13 8.857 dist/assets/HomePage-CFGjav9b.js                                   5.45 kB │ gzip:   2.45 kB
+#13 8.857 dist/assets/SellerProductsPage-BrKq8_bN.js                         7.64 kB │ gzip:   2.67 kB
+#13 8.857 dist/assets/OrdersPage-BcsGuP-s.js                                 7.98 kB │ gzip:   2.99 kB
+#13 8.857 dist/assets/SellerHomePage-Dgdpj5bt.js                             8.98 kB │ gzip:   3.29 kB
+#13 8.857 dist/assets/CheckoutPage-D7EKbrbR.js                              10.01 kB │ gzip:   4.05 kB
+#13 8.857 dist/assets/CatalogPage-CNPsgj2K.js                               10.55 kB │ gzip:   3.93 kB
+#13 8.857 dist/assets/AdminPages-KybrVxIC.js                                14.74 kB │ gzip:   3.94 kB
+#13 8.857 dist/assets/schemas-hHv-Baup.js                                  127.92 kB │ gzip:  39.07 kB
+#13 8.857 dist/assets/index-DUKSnHVA.js                                    322.54 kB │ gzip: 101.82 kB
+#13 8.858 ✓ built in 2.50s
+#13 DONE 8.9s
+
+#14 [stage-1 2/3] COPY nginx.conf /etc/nginx/conf.d/default.conf
+#14 CACHED
+
+#15 [stage-1 3/3] COPY --from=build /app/dist /usr/share/nginx/html
+#15 DONE 0.1s
+
+#16 exporting to image
+#16 exporting layers
+#16 exporting layers 0.4s done
+#16 exporting manifest sha256:f8223d9464383bd42f08d9bb7f70f149e3ac037650daba3b150ef4eb5831dede 0.1s done
+#16 exporting config sha256:aca1172ee3bd4dcd8f02422b3165a47d2478ba73cfbd0efd28149dda34ab88fe 0.1s done
+#16 exporting attestation manifest sha256:0f9d39ad4394cbf39183a58564cd0417accbdb8efb05bc890dfa7a831bb7db30 0.1s done
+#16 exporting manifest list sha256:82a7707e4099319ccb8adb3f2a2d902a679656d0dc9e8235bb99debdf8eab162
+#16 exporting manifest list sha256:82a7707e4099319ccb8adb3f2a2d902a679656d0dc9e8235bb99debdf8eab162 0.0s done
+#16 naming to docker.io/library/hk5-retrole-frontend:latest 0.0s done
+#16 unpacking to docker.io/library/hk5-retrole-frontend:latest 0.1s done
+#16 DONE 0.9s
+
+#17 resolving provenance for metadata file
+#17 DONE 0.0s
+ Image hk5-retrole-frontend Built 
+ Network hk5-retrole_default Creating 
+ Volume hk5-retrole_productimages Creating 
+ Volume hk5-retrole_pgdemo Creating 
+ Volume hk5-retrole_productimages Creating 
+ Volume hk5-retrole_pgdemo Creating 
+ Network hk5-retrole_default Creating 
+ Volume hk5-retrole_pgdemo Created 
+ Volume hk5-retrole_pgdemo Created 
+ Volume hk5-retrole_productimages Created 
+ Volume hk5-retrole_productimages Created 
+ Network hk5-retrole_default Created 
+ Network hk5-retrole_default Created 
+ Container hk5-retrole-kafka-1 Creating 
+ Container hk5-retrole-postgres-1 Creating 
+ Container hk5-retrole-redis-1 Creating 
+ Container hk5-retrole-discovery-server-1 Creating 
+ Container hk5-retrole-discovery-server-1 Created 
+ Container hk5-retrole-config-server-1 Creating 
+ Container hk5-retrole-redis-1 Created 
+ Container hk5-retrole-kafka-1 Created 
+ Container hk5-retrole-postgres-1 Created 
+ Container hk5-retrole-config-server-1 Created 
+ Container hk5-retrole-auth-service-1 Creating 
+ Container hk5-retrole-order-service-1 Creating 
+ Container hk5-retrole-notification-service-1 Creating 
+ Container hk5-retrole-product-service-1 Creating 
+ Container hk5-retrole-user-service-1 Creating 
+ Container hk5-retrole-inventory-service-1 Creating 
+ Container hk5-retrole-seller-service-1 Creating 
+ Container hk5-retrole-cart-service-1 Creating 
+ Container hk5-retrole-inventory-service-1 Created 
+ Container hk5-retrole-notification-service-1 Created 
+ Container hk5-retrole-auth-service-1 Created 
+ Container hk5-retrole-api-gateway-1 Creating 
+ Container hk5-retrole-order-service-1 Created 
+ Container hk5-retrole-cart-service-1 Created 
+ Container hk5-retrole-user-service-1 Created 
+ Container hk5-retrole-product-service-1 Created 
+ Container hk5-retrole-seller-service-1 Created 
+ Container hk5-retrole-api-gateway-1 Created 
+ Container hk5-retrole-frontend-1 Creating 
+ Container hk5-retrole-frontend-1 Created 
+ Container hk5-retrole-discovery-server-1 Starting 
+ Container hk5-retrole-redis-1 Starting 
+ Container hk5-retrole-kafka-1 Starting 
+ Container hk5-retrole-postgres-1 Starting 
+ Container hk5-retrole-discovery-server-1 Started 
+ Container hk5-retrole-discovery-server-1 Waiting 
+ Container hk5-retrole-redis-1 Started 
+ Container hk5-retrole-kafka-1 Started 
+ Container hk5-retrole-postgres-1 Started 
+ Container hk5-retrole-discovery-server-1 Healthy 
+ Container hk5-retrole-config-server-1 Starting 
+ Container hk5-retrole-config-server-1 Started 
+ Container hk5-retrole-postgres-1 Waiting 
+ Container hk5-retrole-config-server-1 Waiting 
+ Container hk5-retrole-config-server-1 Waiting 
+ Container hk5-retrole-postgres-1 Waiting 
+ Container hk5-retrole-config-server-1 Waiting 
+ Container hk5-retrole-kafka-1 Waiting 
+ Container hk5-retrole-config-server-1 Waiting 
+ Container hk5-retrole-kafka-1 Waiting 
+ Container hk5-retrole-kafka-1 Waiting 
+ Container hk5-retrole-postgres-1 Waiting 
+ Container hk5-retrole-config-server-1 Waiting 
+ Container hk5-retrole-kafka-1 Waiting 
+ Container hk5-retrole-redis-1 Waiting 
+ Container hk5-retrole-redis-1 Waiting 
+ Container hk5-retrole-redis-1 Waiting 
+ Container hk5-retrole-postgres-1 Waiting 
+ Container hk5-retrole-kafka-1 Waiting 
+ Container hk5-retrole-redis-1 Waiting 
+ Container hk5-retrole-postgres-1 Waiting 
+ Container hk5-retrole-redis-1 Waiting 
+ Container hk5-retrole-postgres-1 Waiting 
+ Container hk5-retrole-config-server-1 Waiting 
+ Container hk5-retrole-config-server-1 Waiting 
+ Container hk5-retrole-kafka-1 Waiting 
+ Container hk5-retrole-kafka-1 Waiting 
+ Container hk5-retrole-postgres-1 Waiting 
+ Container hk5-retrole-redis-1 Waiting 
+ Container hk5-retrole-redis-1 Waiting 
+ Container hk5-retrole-config-server-1 Waiting 
+ Container hk5-retrole-postgres-1 Waiting 
+ Container hk5-retrole-kafka-1 Waiting 
+ Container hk5-retrole-redis-1 Waiting 
+ Container hk5-retrole-kafka-1 Healthy 
+ Container hk5-retrole-redis-1 Healthy 
+ Container hk5-retrole-postgres-1 Healthy 
+ Container hk5-retrole-postgres-1 Healthy 
+ Container hk5-retrole-postgres-1 Healthy 
+ Container hk5-retrole-postgres-1 Healthy 
+ Container hk5-retrole-postgres-1 Healthy 
+ Container hk5-retrole-redis-1 Healthy 
+ Container hk5-retrole-redis-1 Healthy 
+ Container hk5-retrole-kafka-1 Healthy 
+ Container hk5-retrole-kafka-1 Healthy 
+ Container hk5-retrole-kafka-1 Healthy 
+ Container hk5-retrole-redis-1 Healthy 
+ Container hk5-retrole-postgres-1 Healthy 
+ Container hk5-retrole-redis-1 Healthy 
+ Container hk5-retrole-kafka-1 Healthy 
+ Container hk5-retrole-redis-1 Healthy 
+ Container hk5-retrole-kafka-1 Healthy 
+ Container hk5-retrole-kafka-1 Healthy 
+ Container hk5-retrole-kafka-1 Healthy 
+ Container hk5-retrole-postgres-1 Healthy 
+ Container hk5-retrole-redis-1 Healthy 
+ Container hk5-retrole-postgres-1 Healthy 
+ Container hk5-retrole-redis-1 Healthy 
+ Container hk5-retrole-config-server-1 Healthy 
+ Container hk5-retrole-auth-service-1 Starting 
+ Container hk5-retrole-config-server-1 Healthy 
+ Container hk5-retrole-inventory-service-1 Starting 
+ Container hk5-retrole-config-server-1 Healthy 
+ Container hk5-retrole-product-service-1 Starting 
+ Container hk5-retrole-config-server-1 Healthy 
+ Container hk5-retrole-order-service-1 Starting 
+ Container hk5-retrole-config-server-1 Healthy 
+ Container hk5-retrole-user-service-1 Starting 
+ Container hk5-retrole-config-server-1 Healthy 
+ Container hk5-retrole-cart-service-1 Starting 
+ Container hk5-retrole-config-server-1 Healthy 
+ Container hk5-retrole-seller-service-1 Starting 
+ Container hk5-retrole-config-server-1 Healthy 
+ Container hk5-retrole-notification-service-1 Starting 
+ Container hk5-retrole-auth-service-1 Started 
+ Container hk5-retrole-config-server-1 Waiting 
+ Container hk5-retrole-kafka-1 Waiting 
+ Container hk5-retrole-redis-1 Waiting 
+ Container hk5-retrole-postgres-1 Waiting 
+ Container hk5-retrole-inventory-service-1 Started 
+ Container hk5-retrole-redis-1 Healthy 
+ Container hk5-retrole-postgres-1 Healthy 
+ Container hk5-retrole-kafka-1 Healthy 
+ Container hk5-retrole-config-server-1 Healthy 
+ Container hk5-retrole-api-gateway-1 Starting 
+ Container hk5-retrole-product-service-1 Started 
+ Container hk5-retrole-order-service-1 Started 
+ Container hk5-retrole-user-service-1 Started 
+ Container hk5-retrole-cart-service-1 Started 
+ Container hk5-retrole-seller-service-1 Started 
+ Container hk5-retrole-notification-service-1 Started 
+ Container hk5-retrole-api-gateway-1 Started 
+ Container hk5-retrole-frontend-1 Starting 
+ Container hk5-retrole-frontend-1 Started 
+Seeded customer@hk5.local, seller1@hk5.local, seller2@hk5.local, seller3@hk5.local (password: SEED_PASSWORD in .env.demo).
+Admin: admin@hk5.local (password: ADMIN_BOOTSTRAP_PASSWORD in .env.demo).
+Ready: http://localhost:5173
