@@ -6,6 +6,7 @@ import com.projecthk5.orderservice.ports.StoreDirectory;
 import com.projecthk5.orderservice.repository.SellerOrderRepository;
 import com.projecthk5.orderservice.service.FinanceReport;
 import com.projecthk5.orderservice.service.FulfillmentService;
+import com.projecthk5.orderservice.service.ReturnRequestService;
 import com.projecthk5.security.Actor;
 import com.projecthk5.security.ApiException;
 import jakarta.validation.Valid;
@@ -25,17 +26,21 @@ public class SellerOrderController {
     private final StoreDirectory stores;
     private final OrderViews views;
     private final FinanceReport finance;
+    private final ReturnRequestService returns;
 
     public SellerOrderController(SellerOrderRepository sellerOrders, FulfillmentService fulfillment,
-                                 StoreDirectory stores, OrderViews views, FinanceReport finance) {
+                                 StoreDirectory stores, OrderViews views, FinanceReport finance,
+                                 ReturnRequestService returns) {
         this.sellerOrders = sellerOrders;
         this.fulfillment = fulfillment;
         this.stores = stores;
         this.views = views;
         this.finance = finance;
+        this.returns = returns;
     }
 
     public record ActionRequest(@Size(max = 500) String reason) {}
+    public record ReturnActionRequest(@Size(max = 128) String receiptReference) {}
 
     @GetMapping("/orders")
     @Transactional(readOnly = true)
@@ -62,6 +67,22 @@ public class SellerOrderController {
         requireAllowed(store.sellerApproved(), action);
         SellerOrder so = fulfillment.sellerAction(store.storeId(), id, action, body == null ? null : body.reason());
         return forSeller(store, views.stores(List.of(so)).get(0));
+    }
+
+    /** Seller Return actions are Store-scoped and deliberately separate from fulfillment actions. */
+    @GetMapping("/returns")
+    @Transactional(readOnly = true)
+    public List<ReturnRequestService.SellerReturnView> returns() {
+        return returns.forStore(myStore().storeId());
+    }
+
+    @PostMapping("/returns/{id}/{action}")
+    @Transactional
+    public ReturnRequestService.SellerReturnView returnAction(@PathVariable UUID id, @PathVariable String action,
+            @Valid @RequestBody(required = false) ReturnActionRequest body) {
+        StoreDirectory.Store store = myStore();
+        return returns.sellerAction(store.storeId(), Actor.require("SELLER").id(), id, action,
+                body == null ? null : body.receiptReference());
     }
 
     @GetMapping("/finance")
