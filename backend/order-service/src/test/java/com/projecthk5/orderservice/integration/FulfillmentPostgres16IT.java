@@ -340,6 +340,32 @@ class FulfillmentPostgres16IT {
     }
 
     @Test
+    void adminReadsReturnsButOnlyAdminAndUnknownIdIs404() throws Exception {
+        delivered("owner-1", so1);
+        requestReturn(so1, customer, "admin-view", "Hang loi").andExpect(status().isCreated());
+        UUID id = sql.queryForObject("select id from return_requests where seller_order_id=?", UUID.class, so1.getId());
+
+        mvc.perform(get("/api/admin/returns").with(as("admin", "ADMIN")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[?(@.requestId=='" + id + "')].storeId").value(so1.getStoreId()))
+                .andExpect(jsonPath("$[?(@.requestId=='" + id + "')].status").value("REQUESTED"));
+        mvc.perform(get("/api/admin/returns?status=REJECTED").with(as("admin", "ADMIN")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[?(@.requestId=='" + id + "')]").isEmpty());
+        mvc.perform(get("/api/admin/returns?status=BOGUS").with(as("admin", "ADMIN")))
+                .andExpect(status().isBadRequest());
+        mvc.perform(get("/api/admin/returns/{id}", id).with(as("admin", "ADMIN")))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.reason").value("Hang loi"));
+        mvc.perform(get("/api/admin/returns/{id}", UUID.randomUUID()).with(as("admin", "ADMIN")))
+                .andExpect(status().isNotFound()).andExpect(jsonPath("$.code").value("RETURN_NOT_FOUND"));
+        mvc.perform(get("/api/admin/returns").with(as("owner-1", "SELLER"))).andExpect(status().isForbidden());
+        mvc.perform(get("/api/admin/returns/{id}", id).with(as(customer, "CUSTOMER"))).andExpect(status().isForbidden());
+        // Read-only: no Admin write route for Return exists.
+        mvc.perform(post("/api/admin/returns/{id}", id).with(as("admin", "ADMIN")))
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
     void duplicateReturnKeyReplaysStableRequestWithoutExtraOutbox() throws Exception {
         delivered("owner-1", so1);
         requestReturn(so1, customer, "same-key", "Sai kich co").andExpect(status().isCreated());

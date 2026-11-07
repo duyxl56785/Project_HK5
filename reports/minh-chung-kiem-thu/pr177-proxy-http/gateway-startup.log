@@ -1,0 +1,108 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.5)
+
+2026-11-04T14:47:14.985Z  INFO 1 --- [api-gateway] [           main] c.p.gateway.ApiGatewayApplication        : Starting ApiGatewayApplication v0.1.0-SNAPSHOT using Java 21.0.13 with PID 1 (/app/app.jar started by root in /)
+2026-11-04T14:47:14.996Z  INFO 1 --- [api-gateway] [           main] c.p.gateway.ApiGatewayApplication        : No active profile set, falling back to 1 default profile: "default"
+2026-11-04T14:47:15.563Z  INFO 1 --- [api-gateway] [           main] o.s.c.c.c.ConfigServerConfigDataLoader   : Fetching config from server at : http://config-server:8888
+2026-11-04T14:47:15.564Z  INFO 1 --- [api-gateway] [           main] o.s.c.c.c.ConfigServerConfigDataLoader   : Located environment: name=api-gateway, profiles=[default], label=null, version=null, state=null
+2026-11-04T14:47:23.702Z  INFO 1 --- [api-gateway] [           main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=1283d758-5b06-3d5e-8021-f15e3363633e
+2026-11-04T14:47:31.668Z  INFO 1 --- [api-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [After]
+2026-11-04T14:47:31.669Z  INFO 1 --- [api-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Before]
+2026-11-04T14:47:31.669Z  INFO 1 --- [api-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Between]
+2026-11-04T14:47:31.669Z  INFO 1 --- [api-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Cookie]
+2026-11-04T14:47:31.669Z  INFO 1 --- [api-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Header]
+2026-11-04T14:47:31.669Z  INFO 1 --- [api-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Host]
+2026-11-04T14:47:31.669Z  INFO 1 --- [api-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Method]
+2026-11-04T14:47:31.669Z  INFO 1 --- [api-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Path]
+2026-11-04T14:47:31.669Z  INFO 1 --- [api-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Query]
+2026-11-04T14:47:31.670Z  INFO 1 --- [api-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [ReadBody]
+2026-11-04T14:47:31.670Z  INFO 1 --- [api-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [RemoteAddr]
+2026-11-04T14:47:31.670Z  INFO 1 --- [api-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [XForwardedRemoteAddr]
+2026-11-04T14:47:31.670Z  INFO 1 --- [api-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Weight]
+2026-11-04T14:47:31.670Z  INFO 1 --- [api-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [CloudFoundryRouteService]
+2026-11-04T14:47:33.866Z  INFO 1 --- [api-gateway] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoints beneath base path '/actuator'
+2026-11-04T14:47:37.018Z  INFO 1 --- [api-gateway] [           main] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestTemplate.
+2026-11-04T14:47:37.287Z  WARN 1 --- [api-gateway] [           main] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2026-11-04T14:47:37.607Z  INFO 1 --- [api-gateway] [           main] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
+2026-11-04T14:47:37.932Z  INFO 1 --- [api-gateway] [           main] com.netflix.discovery.DiscoveryClient    : Initializing Eureka in region us-east-1
+2026-11-04T14:47:37.977Z  INFO 1 --- [api-gateway] [           main] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-11-04T14:47:38.051Z  INFO 1 --- [api-gateway] [           main] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+2026-11-04T14:47:38.051Z  INFO 1 --- [api-gateway] [           main] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+2026-11-04T14:47:38.052Z  INFO 1 --- [api-gateway] [           main] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+2026-11-04T14:47:38.052Z  INFO 1 --- [api-gateway] [           main] com.netflix.discovery.DiscoveryClient    : Application is null : false
+2026-11-04T14:47:38.052Z  INFO 1 --- [api-gateway] [           main] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+2026-11-04T14:47:38.052Z  INFO 1 --- [api-gateway] [           main] com.netflix.discovery.DiscoveryClient    : Application version is -1: true
+2026-11-04T14:47:38.052Z  INFO 1 --- [api-gateway] [           main] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+2026-11-04T14:47:41.899Z  INFO 1 --- [api-gateway] [           main] com.netflix.discovery.DiscoveryClient    : The response status is 200
+2026-11-04T14:47:41.905Z  INFO 1 --- [api-gateway] [           main] com.netflix.discovery.DiscoveryClient    : Starting heartbeat executor: renew interval is: 5
+2026-11-04T14:47:41.939Z  INFO 1 --- [api-gateway] [           main] c.n.discovery.InstanceInfoReplicator     : InstanceInfoReplicator onDemand update allowed rate per min is 4
+2026-11-04T14:47:41.944Z  INFO 1 --- [api-gateway] [           main] com.netflix.discovery.DiscoveryClient    : Discovery Client initialized at timestamp 1793803661943 with initial instances count: 0
+2026-11-04T14:47:41.955Z  INFO 1 --- [api-gateway] [           main] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application API-GATEWAY with eureka with status UP
+2026-11-04T14:47:41.957Z  INFO 1 --- [api-gateway] [           main] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1793803661957, current=UP, previous=STARTING]
+2026-11-04T14:47:41.966Z  INFO 1 --- [api-gateway] [foReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_API-GATEWAY/d0511f6aef8e:api-gateway:8080: registering service...
+2026-11-04T14:47:43.084Z  INFO 1 --- [api-gateway] [foReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_API-GATEWAY/d0511f6aef8e:api-gateway:8080 - registration status: 204
+2026-11-04T14:47:43.250Z  INFO 1 --- [api-gateway] [           main] o.s.b.web.embedded.netty.NettyWebServer  : Netty started on port 8080 (http)
+2026-11-04T14:47:43.251Z  INFO 1 --- [api-gateway] [           main] .s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 8080
+2026-11-04T14:47:43.359Z  INFO 1 --- [api-gateway] [           main] c.p.gateway.ApiGatewayApplication        : Started ApiGatewayApplication in 37.988 seconds (process running for 41.976)
+2026-11-04T14:47:46.906Z  INFO 1 --- [api-gateway] [reshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+2026-11-04T14:47:46.906Z  INFO 1 --- [api-gateway] [reshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+2026-11-04T14:47:46.907Z  INFO 1 --- [api-gateway] [reshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+2026-11-04T14:47:46.907Z  INFO 1 --- [api-gateway] [reshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Application is null : false
+2026-11-04T14:47:46.907Z  INFO 1 --- [api-gateway] [reshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+2026-11-04T14:47:46.907Z  INFO 1 --- [api-gateway] [reshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Application version is -1: false
+2026-11-04T14:47:46.907Z  INFO 1 --- [api-gateway] [reshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+2026-11-04T14:47:46.920Z  INFO 1 --- [api-gateway] [reshExecutor-%d] com.netflix.discovery.DiscoveryClient    : The response status is 200
+2026-11-04T14:47:52.019Z  INFO 1 --- [api-gateway] [reshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+2026-11-04T14:47:52.019Z  INFO 1 --- [api-gateway] [reshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+2026-11-04T14:47:52.019Z  INFO 1 --- [api-gateway] [reshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+2026-11-04T14:47:52.019Z  INFO 1 --- [api-gateway] [reshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Application is null : false
+2026-11-04T14:47:52.019Z  INFO 1 --- [api-gateway] [reshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+2026-11-04T14:47:52.019Z  INFO 1 --- [api-gateway] [reshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Application version is -1: false
+2026-11-04T14:47:52.020Z  INFO 1 --- [api-gateway] [reshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+2026-11-04T14:47:52.032Z  INFO 1 --- [api-gateway] [reshExecutor-%d] com.netflix.discovery.DiscoveryClient    : The response status is 200
+2026-11-04T14:47:57.169Z  INFO 1 --- [api-gateway] [reshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+2026-11-04T14:47:57.173Z  INFO 1 --- [api-gateway] [reshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+2026-11-04T14:47:57.173Z  INFO 1 --- [api-gateway] [reshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+2026-11-04T14:47:57.173Z  INFO 1 --- [api-gateway] [reshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Application is null : false
+2026-11-04T14:47:57.173Z  INFO 1 --- [api-gateway] [reshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+2026-11-04T14:47:57.173Z  INFO 1 --- [api-gateway] [reshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Application version is -1: false
+2026-11-04T14:47:57.173Z  INFO 1 --- [api-gateway] [reshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+2026-11-04T14:47:57.227Z  INFO 1 --- [api-gateway] [reshExecutor-%d] com.netflix.discovery.DiscoveryClient    : The response status is 200
+2026-11-04T14:48:02.423Z  INFO 1 --- [api-gateway] [reshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+2026-11-04T14:48:02.423Z  INFO 1 --- [api-gateway] [reshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+2026-11-04T14:48:02.423Z  INFO 1 --- [api-gateway] [reshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+2026-11-04T14:48:02.424Z  INFO 1 --- [api-gateway] [reshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Application is null : false
+2026-11-04T14:48:02.424Z  INFO 1 --- [api-gateway] [reshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+2026-11-04T14:48:02.424Z  INFO 1 --- [api-gateway] [reshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Application version is -1: false
+2026-11-04T14:48:02.424Z  INFO 1 --- [api-gateway] [reshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+2026-11-04T14:48:02.654Z  INFO 1 --- [api-gateway] [reshExecutor-%d] com.netflix.discovery.DiscoveryClient    : The response status is 200
+2026-11-04T14:48:03.581Z ERROR 1 --- [api-gateway] [or-http-epoll-2] a.w.r.e.AbstractErrorWebExceptionHandler : [034871bf-1]  500 Server Error for HTTP POST "/api/auth/login"
+
+io.netty.channel.AbstractChannel$AnnotatedConnectException: finishConnect(..) failed: Connection refused: auth-service/172.30.252.137:8101
+	Suppressed: reactor.core.publisher.FluxOnAssembly$OnAssemblyException: 
+Error has been observed at the following site(s):
+	*__checkpoint ⇢ org.springframework.cloud.gateway.filter.WeightCalculatorWebFilter [DefaultWebFilterChain]
+	*__checkpoint ⇢ HTTP POST "/api/auth/login" [ExceptionHandlingWebHandler]
+Original Stack Trace:
+Caused by: java.net.ConnectException: finishConnect(..) failed: Connection refused
+	at io.netty.channel.unix.Errors.newConnectException0(Errors.java:166) ~[netty-transport-native-unix-common-4.1.114.Final.jar!/:4.1.114.Final]
+	at io.netty.channel.unix.Errors.handleConnectErrno(Errors.java:131) ~[netty-transport-native-unix-common-4.1.114.Final.jar!/:4.1.114.Final]
+	at io.netty.channel.unix.Socket.finishConnect(Socket.java:359) ~[netty-transport-native-unix-common-4.1.114.Final.jar!/:4.1.114.Final]
+	at io.netty.channel.epoll.AbstractEpollChannel$AbstractEpollUnsafe.doFinishConnect(AbstractEpollChannel.java:715) ~[netty-transport-classes-epoll-4.1.114.Final.jar!/:4.1.114.Final]
+	at io.netty.channel.epoll.AbstractEpollChannel$AbstractEpollUnsafe.finishConnect(AbstractEpollChannel.java:692) ~[netty-transport-classes-epoll-4.1.114.Final.jar!/:4.1.114.Final]
+	at io.netty.channel.epoll.AbstractEpollChannel$AbstractEpollUnsafe.epollOutReady(AbstractEpollChannel.java:567) ~[netty-transport-classes-epoll-4.1.114.Final.jar!/:4.1.114.Final]
+	at io.netty.channel.epoll.EpollEventLoop.processReady(EpollEventLoop.java:491) ~[netty-transport-classes-epoll-4.1.114.Final.jar!/:4.1.114.Final]
+	at io.netty.channel.epoll.EpollEventLoop.run(EpollEventLoop.java:399) ~[netty-transport-classes-epoll-4.1.114.Final.jar!/:4.1.114.Final]
+	at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:997) ~[netty-common-4.1.114.Final.jar!/:4.1.114.Final]
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74) ~[netty-common-4.1.114.Final.jar!/:4.1.114.Final]
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30) ~[netty-common-4.1.114.Final.jar!/:4.1.114.Final]
+	at java.base/java.lang.Thread.run(Unknown Source) ~[na:na]
+
+2026-11-04T14:52:38.041Z  INFO 1 --- [api-gateway] [rap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration

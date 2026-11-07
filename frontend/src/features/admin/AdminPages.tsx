@@ -215,6 +215,29 @@ export function AdminOrdersPage() {
   </div>;
 }
 
+interface AdminReturn {
+  readonly requestId: string; readonly orderId: string; readonly storeOrderId: string; readonly storeId: string;
+  readonly status: string; readonly reason: string; readonly requestedAt: string;
+}
+
+/** Read-only (#154/#155): the Seller approves/receives; Admin only oversees. */
+export function AdminReturnsPage() {
+  const [status, setStatus] = useState('');
+  const list = useQuery({ queryKey: ['admin-returns', status], queryFn: () => api<AdminReturn[]>(`/api/admin/returns${status && `?status=${status}`}`) });
+  return <div className="stack">
+    <h1>Yêu cầu trả hàng</h1>
+    <p className="muted">Chỉ xem. Cửa hàng duyệt và nhận hàng trả; sàn không hoàn tiền tự động.
+      Yêu cầu chưa đóng chặn thanh toán cho cửa hàng.</p>
+    <StatusFilter value={status} options={['REQUESTED', 'APPROVED', 'REJECTED', 'RECEIVED']} onChange={setStatus} allLabel="Tất cả" />
+    <Loaded query={list} empty={(rows) => rows.length === 0}>{(rows) => <table className="table" tabIndex={0}>
+      <thead><tr><th>Đơn</th><th>Cửa hàng</th><th>Trạng thái</th><th>Lý do</th><th>Gửi lúc</th></tr></thead>
+      <tbody>{rows.map((r) => <tr key={r.requestId}>
+        <td>#{shortId(r.orderId)}</td><td>{r.storeId}</td><td><Badge value={r.status} /></td>
+        <td>{r.reason}</td><td>{dateTime(r.requestedAt)}</td>
+      </tr>)}</tbody></table>}</Loaded>
+  </div>;
+}
+
 interface Dead { readonly id: string; readonly topic: string; readonly attempts: number; readonly lastError: string | null; readonly createdAt: string }
 
 export function AdminFinancePage() {

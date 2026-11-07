@@ -48,7 +48,7 @@ spring:
           predicates: ["Path=/api/cart,/api/cart/**"]
         - id: order
           uri: ${ORDER_URL:http://localhost:8107}
-          predicates: ["Path=/api/orders,/api/orders/**,/api/seller/orders,/api/seller/orders/**,/api/seller/finance,/api/seller/returns,/api/seller/returns/**,/api/admin/store-orders,/api/admin/store-orders/**,/api/admin/finance,/api/admin/outbox/**"]
+          predicates: ["Path=/api/orders,/api/orders/**,/api/seller/orders,/api/seller/orders/**,/api/seller/finance,/api/seller/returns,/api/seller/returns/**,/api/admin/store-orders,/api/admin/store-orders/**,/api/admin/finance,/api/admin/outbox/**,/api/admin/returns,/api/admin/returns/**"]
         - id: notification
           uri: ${NOTIFICATION_URL:http://localhost:8108}
           predicates: ["Path=/api/notifications,/api/notifications/**"]

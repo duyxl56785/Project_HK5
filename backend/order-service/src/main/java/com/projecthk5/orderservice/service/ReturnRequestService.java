@@ -231,6 +231,36 @@ public class ReturnRequestService {
         return raw;
     }
 
+    public record AdminReturnView(UUID requestId, UUID orderId, UUID storeOrderId, String storeId,
+                                  String status, String reason, Instant requestedAt) {}
+
+    private static final java.util.Set<String> STATUSES = java.util.Set.of("REQUESTED", "APPROVED", "REJECTED", "RECEIVED");
+    private static final String ADMIN_SELECT = "select r.id,r.order_id,r.seller_order_id,s.store_id,r.status,r.reason,"
+            + "r.requested_at from return_requests r join seller_orders s on s.id=r.seller_order_id ";
+
+    /** Admin read-only oversight (#154): newest 200, optional status filter. No Admin write exists. */
+    @Transactional(readOnly = true)
+    public List<AdminReturnView> admin(String status) {
+        if (status == null || status.isBlank()) {
+            return db.query(ADMIN_SELECT + "order by r.requested_at desc limit 200", ReturnRequestService::adminRow);
+        }
+        if (!STATUSES.contains(status)) throw ApiException.badRequest("VALIDATION_FAILED", "Unknown return status");
+        return db.query(ADMIN_SELECT + "where r.status=? order by r.requested_at desc limit 200",
+                ReturnRequestService::adminRow, status);
+    }
+
+    @Transactional(readOnly = true)
+    public AdminReturnView adminOne(UUID requestId) {
+        return db.query(ADMIN_SELECT + "where r.id=?", ReturnRequestService::adminRow, requestId).stream()
+                .findFirst().orElseThrow(() -> ApiException.notFound("RETURN_NOT_FOUND", "Return request not found"));
+    }
+
+    private static AdminReturnView adminRow(java.sql.ResultSet rs, int i) throws java.sql.SQLException {
+        return new AdminReturnView(rs.getObject("id", UUID.class), rs.getObject("order_id", UUID.class),
+                rs.getObject("seller_order_id", UUID.class), rs.getString("store_id"), rs.getString("status"),
+                rs.getString("reason"), rs.getTimestamp("requested_at").toInstant());
+    }
+
     private ReturnView findByCustomerKey(String customerId, String key) {
         return db.query("select id,order_id,seller_order_id,status,reason,requested_at "
                 + "from return_requests where customer_id=? and idempotency_key=?",
