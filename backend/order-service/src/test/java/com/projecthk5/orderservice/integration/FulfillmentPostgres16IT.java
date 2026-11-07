@@ -279,6 +279,30 @@ class FulfillmentPostgres16IT {
         assertThrows(Exception.class, () -> sql.update("update seller_orders set cod_status='COLLECTED' where id=?", so2.getId()));
     }
 
+    @Test
+    void databaseRequiresNonblankReceiptOnlyForReceivedReturn() throws Exception {
+        delivered("owner-1", so1);
+        requestReturn(so1, customer, "receipt-db-guard", "Receipt guard").andExpect(status().isCreated());
+        UUID returnId = sql.queryForObject("select id from return_requests where seller_order_id=?", UUID.class, so1.getId());
+
+        // Direct SQL must not bypass the API's receipt normalization.  The seller-review fields
+        // satisfy V6 so each failure isolates the V8 receipt invariant.
+        for (String invalid : new String[]{null, "", " \t\n "}) {
+            assertThrows(org.springframework.dao.DataIntegrityViolationException.class, () -> sql.update(
+                    "update return_requests set status='RECEIVED',reviewed_by='owner-1',reviewed_at=now(),"
+                            + "received_by='owner-1',received_at=now(),receipt_reference=?,updated_at=now() where id=?",
+                    invalid, returnId));
+            assertEquals("REQUESTED", sql.queryForObject("select status from return_requests where id=?", String.class, returnId));
+        }
+        assertThrows(org.springframework.dao.DataIntegrityViolationException.class, () -> sql.update(
+                "update return_requests set receipt_reference='wrong-state' where id=?", returnId));
+
+        assertEquals(1, sql.update("update return_requests set status='RECEIVED',reviewed_by='owner-1',reviewed_at=now(),"
+                        + "received_by='owner-1',received_at=now(),receipt_reference='receipt-db-8',updated_at=now() where id=?",
+                returnId));
+        assertEquals("RECEIVED", sql.queryForObject("select status from return_requests where id=?", String.class, returnId));
+    }
+
     // #155 RET-01/02/04/06: These tests run MockMvc + real PostgreSQL16 with StoreDirectory
     // mocked. They are NOT full Gateway/Inventory/React E2E or a refund authorization.
     private void delivered(String owner, SellerOrder order) throws Exception {
