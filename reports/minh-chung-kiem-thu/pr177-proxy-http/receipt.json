@@ -1,0 +1,102 @@
+{
+  "sourceSha": "66ff9838ec5b2555167bcb598ff91b8d4bd39517",
+  "project": "hk5-uat-tv2-auth-20261104b",
+  "gateway": "127.0.0.1:18083",
+  "frontend": "127.0.0.1:5176",
+  "network": "hk5-uat-tv2-auth-20261104b_default",
+  "ipam": [
+    {
+      "Subnet": "172.30.252.0/24",
+      "IPRange": "172.30.252.128/25",
+      "Gateway": "172.30.252.128"
+    }
+  ],
+  "services": [
+    {
+      "Name": "hk5-uat-tv2-auth-20261104b-cart-service-1",
+      "IPv4Address": "172.30.252.134/24"
+    },
+    {
+      "Name": "hk5-uat-tv2-auth-20261104b-seller-service-1",
+      "IPv4Address": "172.30.252.138/24"
+    },
+    {
+      "Name": "hk5-uat-tv2-auth-20261104b-postgres-1",
+      "IPv4Address": "172.30.252.130/24"
+    },
+    {
+      "Name": "hk5-uat-tv2-auth-20261104b-inventory-service-1",
+      "IPv4Address": "172.30.252.141/24"
+    },
+    {
+      "Name": "hk5-uat-tv2-auth-20261104b-order-service-1",
+      "IPv4Address": "172.30.252.140/24"
+    },
+    {
+      "Name": "hk5-uat-tv2-auth-20261104b-user-service-1",
+      "IPv4Address": "172.30.252.139/24"
+    },
+    {
+      "Name": "hk5-uat-tv2-auth-20261104b-notification-service-1",
+      "IPv4Address": "172.30.252.135/24"
+    },
+    {
+      "Name": "hk5-uat-tv2-auth-20261104b-discovery-server-1",
+      "IPv4Address": "172.30.252.132/24"
+    },
+    {
+      "Name": "hk5-uat-tv2-auth-20261104b-kafka-1",
+      "IPv4Address": "172.30.252.129/24"
+    },
+    {
+      "Name": "hk5-uat-tv2-auth-20261104b-config-server-1",
+      "IPv4Address": "172.30.252.133/24"
+    },
+    {
+      "Name": "hk5-uat-tv2-auth-20261104b-auth-service-1",
+      "IPv4Address": "172.30.252.137/24"
+    },
+    {
+      "Name": "hk5-uat-tv2-auth-20261104b-api-gateway-1",
+      "IPv4Address": "172.30.252.10/24"
+    },
+    {
+      "Name": "hk5-uat-tv2-auth-20261104b-redis-1",
+      "IPv4Address": "172.30.252.131/24"
+    },
+    {
+      "Name": "hk5-uat-tv2-auth-20261104b-frontend-1",
+      "IPv4Address": "172.30.252.11/24"
+    },
+    {
+      "Name": "hk5-uat-tv2-auth-20261104b-product-service-1",
+      "IPv4Address": "172.30.252.136/24"
+    }
+  ],
+  "privateProbeImage": "node:22-alpine@sha256:fe4f6d74e20370acb04ad889077d14d0f64a9c8ea6a42bc60cddf1e844699914",
+  "hostHttpCases": 4,
+  "hostHttpRequests": 44,
+  "privateHttpCases": 2,
+  "privateHttpRequests": 22,
+  "authUnitTests": 7,
+  "durableSyntheticRegisteredAccounts": 20,
+  "flywayVersions": [
+    "1",
+    "2",
+    "3",
+    "4"
+  ],
+  "inventoryPairEnabled": false,
+  "financePolicyApproved": false,
+  "productionApproval": false,
+  "jars": [
+    {
+      "sha256": "c2b1173978c3516d1b8145f65847388b9c71b2a31b1787f907c94c277bc42890",
+      "name": "auth-service-0.1.0-SNAPSHOT.jar"
+    },
+    {
+      "sha256": "be695a5016c7ec5129f16dcafc6b5ba9490c7f750e37bcc4a4659a2299eee318",
+      "name": "api-gateway-0.1.0-SNAPSHOT.jar"
+    }
+  ]
+}

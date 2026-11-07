@@ -7,6 +7,7 @@ import com.projecthk5.orderservice.repository.OutboxEventRepository;
 import com.projecthk5.orderservice.repository.SellerOrderRepository;
 import com.projecthk5.orderservice.service.FinanceReport;
 import com.projecthk5.orderservice.service.FulfillmentService;
+import com.projecthk5.orderservice.service.ReturnRequestService;
 import com.projecthk5.security.Actor;
 import java.time.Instant;
 import java.util.List;
@@ -24,14 +25,17 @@ public class AdminOrderController {
     private final OrderViews views;
     private final FinanceReport finance;
     private final OutboxEventRepository outbox;
+    private final ReturnRequestService returns;
 
     public AdminOrderController(SellerOrderRepository sellerOrders, FulfillmentService fulfillment, OrderViews views,
-                                FinanceReport finance, OutboxEventRepository outbox) {
+                                FinanceReport finance, OutboxEventRepository outbox,
+                                ReturnRequestService returns) {
         this.sellerOrders = sellerOrders;
         this.fulfillment = fulfillment;
         this.views = views;
         this.finance = finance;
         this.outbox = outbox;
+        this.returns = returns;
     }
 
     public record DeadEvent(UUID id, String topic, UUID aggregateId, int attempts, String lastError, Instant createdAt) {}
@@ -70,5 +74,18 @@ public class AdminOrderController {
         Actor.require("ADMIN");
         return outbox.findDead().stream().map((OutboxEvent e) -> new DeadEvent(e.getId(), e.getTopic(), e.getAggregateId(),
                 e.getAttempts(), e.getLastError(), e.getCreatedAt())).toList();
+    }
+
+    /** Read-only Return oversight; Seller (TV4) owns approve/reject/receive. */
+    @GetMapping("/returns")
+    public List<ReturnRequestService.AdminReturnView> returns(@RequestParam(required = false) String status) {
+        Actor.require("ADMIN");
+        return returns.admin(status);
+    }
+
+    @GetMapping("/returns/{id}")
+    public ReturnRequestService.AdminReturnView returnRequest(@PathVariable UUID id) {
+        Actor.require("ADMIN");
+        return returns.adminOne(id);
     }
 }

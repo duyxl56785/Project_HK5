@@ -1,0 +1,5 @@
+{"label":"nginx-legitimate","statuses":[401,401,401,401,401,401,401,401,401,401,429],"result":"PASS"}
+{"label":"nginx-forged","statuses":[401,401,401,401,401,401,401,401,401,401,429],"result":"PASS"}
+{"label":"gateway-forged","statuses":[401,401,401,401,401,401,401,401,401,401,429],"result":"PASS"}
+{"label":"nginx-register","statuses":[201,201,201,201,201,201,201,201,201,201,429],"result":"PASS"}
+{"mode":"host","requests":44,"result":"PASS","syntheticOnly":true}

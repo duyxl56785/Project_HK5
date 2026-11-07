@@ -1,0 +1,20 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: nginx-legitimate attempt 1: unexpected status
+
+500 !== 401
+
+    at window (file:///D:/monhoc/CNPM/project_hk5/.worktrees/throttle/reports/minh-chung-kiem-thu/pr177-proxy-http/probe.mjs:29:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async file:///D:/monhoc/CNPM/project_hk5/.worktrees/throttle/reports/minh-chung-kiem-thu/pr177-proxy-http/probe.mjs:41:3 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 500,
+  expected: 401,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.21.0
