@@ -1,0 +1,28 @@
+
+> hk5-marketplace-frontend@0.1.0 e2e
+> playwright test
+
+
+Running 19 tests using 1 worker
+
+  ok  1 e2e\access.spec.ts:4:1 › forms validate in the browser before calling the API (662ms)
+  ok  2 e2e\access.spec.ts:17:1 › a guest is sent to login and returned to the page (1.4s)
+  ok  3 e2e\access.spec.ts:26:1 › a wrong password shows the server error (1.3s)
+  ok  4 e2e\access.spec.ts:38:1 › a customer cannot open seller or admin pages (923ms)
+  ok  5 e2e\access.spec.ts:46:1 › an admin hides a category from the public tree only (3.0s)
+  ok  6 e2e\access.spec.ts:66:1 › an admin locks an account, ending its session, and unlocks it (3.6s)
+  ok  7 e2e\access.spec.ts:95:1 › a signed-in customer is not sent to login while the session is restoring (2.5s)
+  ok  8 e2e\access.spec.ts:109:1 › a page chunk that fails to load offers a reload instead of a blank app (635ms)
+  ok  9 e2e\access.spec.ts:118:1 › the home banner holds its slide while the pointer is on it (11.6s)
+  ok 10 e2e\access.spec.ts:129:1 › a guest page does not ask for a session it never had (230ms)
+  ok 11 e2e\access.spec.ts:137:1 › a refresh outage does not end the session on the next load (834ms)
+  ok 12 e2e\access.spec.ts:147:1 › a deep link and a refresh both load the app (258ms)
+  ok 13 e2e\cart-refusal.spec.ts:18:1 › clearing the Cart asks first, and a closed Store is named on its own line (6.7s)
+  ok 14 e2e\order-journey.spec.ts:4:1 › an order goes from checkout to delivery, review, COD and payout (8.3s)
+  ok 15 e2e\return-access.spec.ts:16:1 › Return APIs refuse the wrong role and anonymous callers (2.0s)
+  ok 16 e2e\return-request.spec.ts:9:1 › delivered buyer requests one Return and replay with the same key keeps its ID (5.7s)
+  ok 17 e2e\review-moderation.spec.ts:5:1 › an admin hides a review with a reason and shows it again (2.2s)
+  ok 18 e2e\seller-onboarding.spec.ts:4:1 › an applicant is rejected, resubmits, opens a store and gets a product on sale (8.7s)
+  ok 19 e2e\two-store-order.spec.ts:8:1 › one customer order splits into two store orders and reserves stock in both (15.1s)
+
+  19 passed (1.3m)
