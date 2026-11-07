@@ -2,10 +2,10 @@ import assert from 'node:assert/strict';
 import { after, before, beforeEach, test } from 'node:test';
 import { createServer } from 'vite';
 
-let vite, mayHaveSession, refreshSession, setAccessToken;
+let vite, api, mayHaveSession, refreshSession, setAccessToken;
 before(async () => {
   vite = await createServer({ server: { middlewareMode: true, hmr: false, watch: null }, optimizeDeps: { noDiscovery: true }, logLevel: 'silent' });
-  ({ mayHaveSession, refreshSession, setAccessToken } = await vite.ssrLoadModule('/src/shared/api.ts'));
+  ({ api, mayHaveSession, refreshSession, setAccessToken } = await vite.ssrLoadModule('/src/shared/api.ts'));
 });
 after(() => { delete globalThis.localStorage; return vite?.close(); });
 
@@ -55,4 +55,20 @@ test('blocked storage falls back to trying a refresh', () => {
   globalThis.localStorage = { getItem() { throw new Error('blocked'); }, setItem() { throw new Error('blocked'); }, removeItem() { throw new Error('blocked'); } };
   assert.doesNotThrow(() => setAccessToken('token'));
   assert.equal(mayHaveSession(), true);
+});
+
+test('rate limit shows a Vietnamese message with the wait from Retry-After', async () => {
+  const limited = (headers) => { globalThis.fetch = async () => new Response(
+    JSON.stringify({ code: 'AUTH_RATE_LIMITED', message: 'Too many attempts, try again later' }),
+    { status: 429, headers: { 'Content-Type': 'application/json', ...headers } }); };
+  limited({ 'Retry-After': '61' });
+  await assert.rejects(api('/api/auth/register', { method: 'POST', body: {} }), (error) => {
+    assert.equal(error.status, 429);
+    assert.equal(error.code, 'AUTH_RATE_LIMITED');
+    assert.equal(error.message, 'Bạn thao tác quá nhiều lần. Vui lòng thử lại sau 2 phút.');
+    return true;
+  });
+  limited({});
+  await assert.rejects(api('/api/auth/register', { method: 'POST', body: {} }),
+    { message: 'Bạn thao tác quá nhiều lần. Vui lòng thử lại sau ít phút.' });
 });
