@@ -61,3 +61,8 @@ TV5 chạy trên **PR #180 exact HEAD `66f3edbc921e599372fe0a2668b8e643c7d4d696`
 | RET-06 | Đã settled bị từ chối; không refund/reversal tự động hoặc sửa money snapshot. PG guard PASS trong phạm vi này | Chính sách/implementation refund riêng nếu mở rộng; Store report/live acceptance |
 
 UNKNOWN #170 tại `2ddc0f3d5283d6a1cc985fa203c8d0d380bc164a`: TV5 independent **12/12 PASS**, loopback fake only. P2 forward lặp đã sửa trong vòng đời handler, không durable sau restart. Lượt sandbox ban đầu EACCES 1 PASS/11 FAIL được giữ nguyên; retry được phép exit0. Không thay bằng kết quả live UNKNOWN. #152 packet giữ execution NOT_GRANTED; #175 chỉ preparation default-OFF, cần sync parent/retest. Claim-conflict BLOCKED_DESIGN; lost-response NOT_RUN/BLOCKED_OWNER vì thiếu runner/stop đã review, actual tuple/waiver và provider COMMIT/stock receipt. Final UAT #18 vẫn BLOCKED.
+
+
+## Gate hiện hành 07/11/2026
+
+Main hiện hành618f9ea8f723d607454397012cd5613ca199f660 đã nhận180/181. Return–Settlement **20PG PASS** có [XML/hash](../reports/minh-chung-kiem-thu/tv5-main-return-settlement-20261107/), không chạy lại khi source không đổi. AdminReturn đã tích hợp; SellerReturn182 chưa nhận183 và còn conflict/V7nonblank.185 cùngHEADe0eb9aa vẫn cần fixture độc lập.179 cùngHEAD2a2c4e4,186d83b974 chờreview. Không dùng ma trận historical baseline phía trên làm runSHA hiện tại. Hai UNKNOWN vẫn blocker; không cấp quyền fault execution. FinalUAT NOT_RUN/BLOCKED. [Nội dung bản nộpTV5](../docs/project-report/TV5_REPORT_CONTENT.md) và B.1–B.5 đã đối chiếu, cần finalreceipt trước kết luận.
