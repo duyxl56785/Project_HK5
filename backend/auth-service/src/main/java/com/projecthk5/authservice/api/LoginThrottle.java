@@ -8,7 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 /**
- * Fixed-window limiter per 5 minutes: 10 attempts per key, 50 failed logins per client address.
+ * Fixed-window limiter per 5 minutes: 10 attempts per key, 20 registrations and 50 failed logins per client address.
+ * A one-machine demo puts every browser and the seed script behind one address, hence 20 not 10.
  * Expired windows are dropped once the map grows, so unique keys cannot hold memory forever.
  * shortcut: in-memory per instance, move to Redis when Auth runs more than one replica.
  */
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Component;
 public class LoginThrottle {
     static final int LIMIT = 10;
     static final int CLIENT_LIMIT = 50;
+    static final int REGISTER_LIMIT = 20;
     static final long WINDOW_SECONDS = 300;
     static final int SWEEP_AT = 10_000;
     private final Map<String, Window> windows = new ConcurrentHashMap<>();
@@ -30,7 +32,8 @@ public class LoginThrottle {
     public void check(String key) {
         long now = clock.instant().getEpochSecond();
         Window w = windows.get(key);
-        int limit = key.startsWith("login-client:") ? CLIENT_LIMIT : LIMIT;
+        int limit = key.startsWith("login-client:") ? CLIENT_LIMIT
+                : key.startsWith("register:") ? REGISTER_LIMIT : LIMIT;
         if (w != null && now - w.start() < WINDOW_SECONDS && w.count() >= limit) {
             long retry = WINDOW_SECONDS - (now - w.start());
             throw new RateLimited(retry);

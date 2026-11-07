@@ -38,6 +38,11 @@ export const CSRF = { 'X-CSRF-Protection': '1' };
 
 async function failure(response: Response): Promise<ApiError> {
   const body = await response.json().catch(() => null) as { code?: string; message?: string; items?: ApiError['items'] } | null;
+  if (response.status === 429) {
+    const seconds = Number(response.headers.get('Retry-After'));
+    const wait = Number.isFinite(seconds) && seconds > 0 ? `${Math.ceil(seconds / 60)} phút` : 'ít phút';
+    return new ApiError(429, body?.code ?? 'RATE_LIMITED', `Bạn thao tác quá nhiều lần. Vui lòng thử lại sau ${wait}.`);
+  }
   return new ApiError(response.status, body?.code ?? 'REQUEST_FAILED', body?.message ?? 'Yêu cầu không thành công', body?.items);
 }
 
