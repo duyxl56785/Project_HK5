@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.projecthk5.productservice.product.ProductPriceTest" tests="46" skipped="0" failures="0" errors="0" timestamp="2026-11-04T20:50:15" hostname="MDUY-LECO" time="0.046">
+  <properties/>
+  <testcase name="[1] value=1" classname="com.projecthk5.productservice.product.ProductPriceTest" time="0.003"/>
+  <testcase name="[2] value=1.00000" classname="com.projecthk5.productservice.product.ProductPriceTest" time="0.001"/>
+  <testcase name="[3] value=10.0000" classname="com.projecthk5.productservice.product.ProductPriceTest" time="0.0"/>
+  <testcase name="[4] value=999999999" classname="com.projecthk5.productservice.product.ProductPriceTest" time="0.001"/>
+  <testcase name="[5] value=1000000000.00" classname="com.projecthk5.productservice.product.ProductPriceTest" time="0.0"/>
+  <testcase name="[6] value=1E+9" classname="com.projecthk5.productservice.product.ProductPriceTest" time="0.0"/>
+  <testcase name="[1] value=null" classname="com.projecthk5.productservice.product.ProductPriceTest" time="0.002"/>
+  <testcase name="[2] value=0" classname="com.projecthk5.productservice.product.ProductPriceTest" time="0.001"/>
+  <testcase name="[3] value=-1" classname="com.projecthk5.productservice.product.ProductPriceTest" time="0.001"/>
+  <testcase name="[4] value=0.01" classname="com.projecthk5.productservice.product.ProductPriceTest" time="0.0"/>
+  <testcase name="[5] value=1.01" classname="com.projecthk5.productservice.product.ProductPriceTest" time="0.0"/>
+  <testcase name="[6] value=1000000000.01" classname="com.projecthk5.productservice.product.ProductPriceTest" time="0.0"/>
+  <testcase name="[7] value=1000000001" classname="com.projecthk5.productservice.product.ProductPriceTest" time="0.001"/>
+  <testcase name="[8] value=1E+10" classname="com.projecthk5.productservice.product.ProductPriceTest" time="0.001"/>
+  <testcase name="[1] value=null" classname="com.projecthk5.productservice.product.ProductPriceTest" time="0.001"/>
+  <testcase name="[2] value=" classname="com.projecthk5.productservice.product.ProductPriceTest" time="0.001"/>
+  <testcase name="[3] value=0" classname="com.projecthk5.productservice.product.ProductPriceTest" time="0.001"/>
+  <testcase name="[4] value=00" classname="com.projecthk5.productservice.product.ProductPriceTest" time="0.001"/>
+  <testcase name="[5] value=01" classname="com.projecthk5.productservice.product.ProductPriceTest" time="0.001"/>
+  <testcase name="[6] value=0001" classname="com.projecthk5.productservice.product.ProductPriceTest" time="0.0"/>
+  <testcase name="[7] value=-1" classname="com.projecthk5.productservice.product.ProductPriceTest" time="0.0"/>
+  <testcase name="[8] value=+1" classname="com.projecthk5.productservice.product.ProductPriceTest" time="0.001"/>
+  <testcase name="[9] value=1.0" classname="com.projecthk5.productservice.product.ProductPriceTest" time="0.0"/>
+  <testcase name="[10] value=1.00" classname="com.projecthk5.productservice.product.ProductPriceTest" time="0.0"/>
+  <testcase name="[11] value=1E+2" classname="com.projecthk5.productservice.product.ProductPriceTest" time="0.0"/>
+  <testcase name="[12] value=1e2" classname="com.projecthk5.productservice.product.ProductPriceTest" time="0.001"/>
+  <testcase name="[13] value= 1" classname="com.projecthk5.productservice.product.ProductPriceTest" time="0.0"/>
+  <testcase name="[14] value=1 " classname="com.projecthk5.productservice.product.ProductPriceTest" time="0.001"/>
+  <testcase name="[15] value=&#9;1" classname="com.projecthk5.productservice.product.ProductPriceTest" time="0.0"/>
+  <testcase name="[16] value=1&#10;" classname="com.projecthk5.productservice.product.ProductPriceTest" time="0.0"/>
+  <testcase name="[17] value= 1" classname="com.projecthk5.productservice.product.ProductPriceTest" time="0.001"/>
+  <testcase name="[18] value=1 " classname="com.projecthk5.productservice.product.ProductPriceTest" time="0.0"/>
+  <testcase name="[19] value=１" classname="com.projecthk5.productservice.product.ProductPriceTest" time="0.001"/>
+  <testcase name="[20] value=١" classname="com.projecthk5.productservice.product.ProductPriceTest" time="0.0"/>
+  <testcase name="[21] value=1000000001" classname="com.projecthk5.productservice.product.ProductPriceTest" time="0.001"/>
+  <testcase name="[22] value=10000000000" classname="com.projecthk5.productservice.product.ProductPriceTest" time="0.001"/>
+  <testcase name="canonicalParserAcceptsBothLimits()" classname="com.projecthk5.productservice.product.ProductPriceTest" time="0.0"/>
+  <testcase name="[1] currency=null" classname="com.projecthk5.productservice.product.ProductPriceTest" time="0.003"/>
+  <testcase name="[2] currency=" classname="com.projecthk5.productservice.product.ProductPriceTest" time="0.001"/>
+  <testcase name="[3] currency=USD" classname="com.projecthk5.productservice.product.ProductPriceTest" time="0.0"/>
+  <testcase name="[4] currency=vnd" classname="com.projecthk5.productservice.product.ProductPriceTest" time="0.001"/>
+  <testcase name="[5] currency=Vnd" classname="com.projecthk5.productservice.product.ProductPriceTest" time="0.001"/>
+  <testcase name="[6] currency= VND" classname="com.projecthk5.productservice.product.ProductPriceTest" time="0.001"/>
+  <testcase name="[7] currency=VND " classname="com.projecthk5.productservice.product.ProductPriceTest" time="0.001"/>
+  <testcase name="[8] currency=VND&#10;" classname="com.projecthk5.productservice.product.ProductPriceTest" time="0.0"/>
+  <testcase name="[9] currency= VND" classname="com.projecthk5.productservice.product.ProductPriceTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

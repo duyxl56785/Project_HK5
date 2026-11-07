@@ -1,0 +1,2 @@
+id,status,expected,actual,durationMs,sha,environment
+"FRONTEND","PASS","Node TAP tests hiện có đạt; không phải live E2E","PASS: exit 0, 157 test, 157 PASS, 0 FAIL, 0 SKIP","10093","423e14526d1c23837d9b7af14f31f509d9350d77","{""platform"":""win32"",""node"":""v22.23.3"",""localhost"":true}"

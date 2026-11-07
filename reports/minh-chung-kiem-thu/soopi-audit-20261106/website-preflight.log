@@ -1,0 +1,11 @@
+
+Running 3 tests using 1 worker
+
+
+
+(node:18308) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/3] website\smoke.spec.mjs:20:1 › public-catalog-stores-va-responsive
+[2/3] website\smoke.spec.mjs:25:1 › register-login-logout-validation-va-duplicate
+[3/3] website\smoke.spec.mjs:37:1 › dang-nhap-sai-thong-bao-loi-va-xss-safe
+  3 passed (3.9s)

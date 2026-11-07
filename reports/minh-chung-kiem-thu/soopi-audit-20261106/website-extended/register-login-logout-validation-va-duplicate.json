@@ -1,0 +1,57 @@
+[
+  {
+    "kind": "http",
+    "endpoint": "/api/auth/register",
+    "status": 201
+  },
+  {
+    "kind": "http",
+    "endpoint": "/api/auth/login",
+    "status": 200
+  },
+  {
+    "kind": "http",
+    "endpoint": "/api/notifications/unread-count",
+    "status": 200
+  },
+  {
+    "kind": "http",
+    "endpoint": "/api/cart",
+    "status": 200
+  },
+  {
+    "kind": "http",
+    "endpoint": "/api/auth/logout",
+    "status": 204
+  },
+  {
+    "kind": "http",
+    "endpoint": "/api/auth/login",
+    "status": 200
+  },
+  {
+    "kind": "http",
+    "endpoint": "/api/notifications/unread-count",
+    "status": 200
+  },
+  {
+    "kind": "http",
+    "endpoint": "/api/cart",
+    "status": 200
+  },
+  {
+    "kind": "http",
+    "endpoint": "/api/auth/refresh",
+    "status": 200
+  },
+  {
+    "kind": "http",
+    "endpoint": "/api/notifications/unread-count",
+    "status": 200
+  },
+  {
+    "kind": "http",
+    "endpoint": "/api/cart",
+    "status": 200
+  }
+]

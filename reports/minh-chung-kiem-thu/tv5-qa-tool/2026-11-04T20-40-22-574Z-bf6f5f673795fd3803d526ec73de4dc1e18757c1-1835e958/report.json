@@ -1,0 +1,35 @@
+{
+  "id": "2026-11-04T20-40-22-574Z-bf6f5f673795fd3803d526ec73de4dc1e18757c1-1835e958",
+  "sha": "bf6f5f673795fd3803d526ec73de4dc1e18757c1",
+  "timestamp": "2026-11-04T20:40:22.574Z",
+  "environment": {
+    "platform": "win32",
+    "node": "v22.23.3",
+    "localhost": true
+  },
+  "status": "PASS",
+  "suites": [
+    {
+      "id": "QA-UI",
+      "status": "PASS",
+      "expected": "Dashboard hoạt động và mỗi Playwright test có screenshot",
+      "actual": "PASS: exit 0, 2 test, 2 PASS, 0 FAIL, 0 SKIP",
+      "startedAt": "2026-11-04T20:40:22.574Z",
+      "durationMs": 1582,
+      "counts": {
+        "tests": 2,
+        "pass": 2,
+        "fail": 0,
+        "skip": 0
+      },
+      "exitCode": 0,
+      "log": "QA-UI.log",
+      "junit": [],
+      "screenshots": [
+        "screenshots/2026-11-04T20-40-22-574Z-bf6f5f673795fd3803d526ec73de4dc1e18757c1-1835e958/dashboard-chi-goi-suite-allowlist-passed.png",
+        "screenshots/2026-11-04T20-40-22-574Z-bf6f5f673795fd3803d526ec73de4dc1e18757c1-1835e958/dashboard-hien-thi-suite-va-gates-passed.png"
+      ]
+    }
+  ],
+  "finishedAt": "2026-11-04T20:40:24.157Z"
+}

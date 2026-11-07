@@ -1,0 +1,183 @@
+{
+  "id": "2026-11-06T01-04-45-866Z-849e2f43205e398e816e380b27d47be4e19b3aac-33f1d917",
+  "sha": "849e2f43205e398e816e380b27d47be4e19b3aac",
+  "timestamp": "2026-11-06T01:04:45.867Z",
+  "environment": {
+    "platform": "win32",
+    "node": "v22.23.3",
+    "localhost": true
+  },
+  "status": "FAIL",
+  "suites": [
+    {
+      "id": "WEBSITE-SMOKE",
+      "status": "PASS",
+      "expected": "Gateway/public API HTTP200; register/login/logout/duplicate và RBAC đúng; ảnh/metadata không chứa secret",
+      "actual": "PASS: exit 0, 3 test, 3 PASS, 0 FAIL, 0 SKIP",
+      "startedAt": "2026-11-06T01:04:45.876Z",
+      "durationMs": 4002,
+      "counts": {
+        "tests": 3,
+        "pass": 3,
+        "fail": 0,
+        "skip": 0
+      },
+      "exitCode": 0,
+      "log": "WEBSITE-SMOKE.log",
+      "junit": [],
+      "screenshots": [
+        "screenshots/2026-11-06T01-04-45-866Z-849e2f43205e398e816e380b27d47be4e19b3aac-33f1d917/WEBSITE-SMOKE/dang-nhap-sai-thong-bao-loi-va-xss-safe-passed.png",
+        "screenshots/2026-11-06T01-04-45-866Z-849e2f43205e398e816e380b27d47be4e19b3aac-33f1d917/WEBSITE-SMOKE/public-catalog-stores-va-responsive-passed.png",
+        "screenshots/2026-11-06T01-04-45-866Z-849e2f43205e398e816e380b27d47be4e19b3aac-33f1d917/WEBSITE-SMOKE/register-login-logout-validation-va-duplicate-passed.png"
+      ],
+      "metadata": [
+        "screenshots/2026-11-06T01-04-45-866Z-849e2f43205e398e816e380b27d47be4e19b3aac-33f1d917/WEBSITE-SMOKE/dang-nhap-sai-thong-bao-loi-va-xss-safe.json",
+        "screenshots/2026-11-06T01-04-45-866Z-849e2f43205e398e816e380b27d47be4e19b3aac-33f1d917/WEBSITE-SMOKE/public-catalog-stores-va-responsive.json",
+        "screenshots/2026-11-06T01-04-45-866Z-849e2f43205e398e816e380b27d47be4e19b3aac-33f1d917/WEBSITE-SMOKE/register-login-logout-validation-va-duplicate.json"
+      ],
+      "bugs": []
+    },
+    {
+      "id": "F15-RULES",
+      "status": "PASS",
+      "expected": "Review rules và giới hạn 1000 UTF-16 đạt",
+      "actual": "PASS: exit 0, 18 test, 18 PASS, 0 FAIL, 0 SKIP",
+      "startedAt": "2026-11-06T01:04:49.895Z",
+      "durationMs": 19453,
+      "counts": {
+        "tests": 18,
+        "pass": 18,
+        "fail": 0,
+        "skip": 0
+      },
+      "exitCode": 0,
+      "log": "F15-RULES.log",
+      "junit": [
+        "junit/F15-RULES-TEST-com.projecthk5.productservice.review.ReviewRulesTest.xml",
+        "junit/F15-RULES-TEST-com.projecthk5.productservice.web.ReviewCommentLimitTest.xml"
+      ],
+      "bugs": []
+    },
+    {
+      "id": "F16-RULES",
+      "status": "PASS",
+      "expected": "Rules 5%/0%, bounds và gate fail-closed đạt trong unit tests",
+      "actual": "PASS: exit 0, 15 test, 15 PASS, 0 FAIL, 0 SKIP",
+      "startedAt": "2026-11-06T01:05:09.372Z",
+      "durationMs": 16717,
+      "counts": {
+        "tests": 15,
+        "pass": 15,
+        "fail": 0,
+        "skip": 0
+      },
+      "exitCode": 0,
+      "log": "F16-RULES.log",
+      "junit": [
+        "junit/F16-RULES-TEST-com.projecthk5.orderservice.finance.FinanceRulesTest.xml"
+      ],
+      "bugs": []
+    },
+    {
+      "id": "F15-POSTGRES",
+      "status": "PASS",
+      "expected": "Migration và Admin moderation legacy đạt trên PostgreSQL",
+      "actual": "PASS: exit 0, 1 test, 1 PASS, 0 FAIL, 0 SKIP",
+      "startedAt": "2026-11-06T01:05:27.008Z",
+      "durationMs": 23775,
+      "counts": {
+        "tests": 1,
+        "pass": 1,
+        "fail": 0,
+        "skip": 0
+      },
+      "exitCode": 0,
+      "log": "F15-POSTGRES.log",
+      "junit": [
+        "junit/F15-POSTGRES-TEST-com.projecthk5.productservice.web.ReviewCommentMigrationPostgresTest.xml"
+      ],
+      "bugs": []
+    },
+    {
+      "id": "F16-POSTGRES",
+      "status": "PASS",
+      "expected": "Selected PostgreSQL assertions đạt; StoreDirectory vẫn là mock trong test này",
+      "actual": "PASS: exit 0, 9 test, 9 PASS, 0 FAIL, 0 SKIP",
+      "startedAt": "2026-11-06T01:05:51.329Z",
+      "durationMs": 33098,
+      "counts": {
+        "tests": 9,
+        "pass": 9,
+        "fail": 0,
+        "skip": 0
+      },
+      "exitCode": 0,
+      "log": "F16-POSTGRES.log",
+      "junit": [
+        "junit/F16-POSTGRES-TEST-com.projecthk5.orderservice.integration.FulfillmentPostgres16IT.xml"
+      ],
+      "bugs": []
+    },
+    {
+      "id": "QA-UI",
+      "status": "FAIL",
+      "expected": "Dashboard hoạt động và mỗi Playwright test có screenshot",
+      "actual": "FAIL: exit 1, 2 test, 0 PASS, 2 FAIL, 0 SKIP",
+      "startedAt": "2026-11-06T01:06:24.459Z",
+      "durationMs": 2488,
+      "counts": {
+        "tests": 2,
+        "pass": 0,
+        "fail": 2,
+        "skip": 0
+      },
+      "exitCode": 1,
+      "log": "QA-UI.log",
+      "junit": [],
+      "screenshots": [
+        "screenshots/2026-11-06T01-04-45-866Z-849e2f43205e398e816e380b27d47be4e19b3aac-33f1d917/QA-UI/dashboard-chi-goi-suite-allowlist-failed.png",
+        "screenshots/2026-11-06T01-04-45-866Z-849e2f43205e398e816e380b27d47be4e19b3aac-33f1d917/QA-UI/dashboard-hien-thi-suite-va-gates-failed.png"
+      ],
+      "metadata": [],
+      "bugs": [
+        {
+          "id": "BUG-2026-11-06T01-04-45-866Z-849e2f43205e398e816e380b27d47be4e19b3aac-33f1d917-QA-UI",
+          "title": "Kiểm thử không đạt hoặc thiếu bằng chứng",
+          "module": "QA Tool",
+          "endpoint": null,
+          "httpStatus": null,
+          "code": "FAIL",
+          "type": "APPLICATION_BUG",
+          "severity": "P1",
+          "steps": [
+            "Chọn QA-UI trên QA Tester",
+            "Chạy Run Selected và đối chiếu raw log của run này"
+          ],
+          "expected": "Dashboard hoạt động và mỗi Playwright test có screenshot",
+          "actual": "FAIL: exit 1, 2 test, 0 PASS, 2 FAIL, 0 SKIP",
+          "stackTrace": "    Error: expect(locator).toBeVisible() failed\n    Error: strict mode violation: getByText('F15-RULES') resolved to 2 elements:\n        at D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-qa-dashboard-20261105\\tools\\tv5-qa-tester\\ui\\dashboard.spec.mjs:16:45\n    Error Context: test-results\\dashboard-dashboard-hien-thi-suite-va-gates\\error-context.md\n    Error: locator.click: Error: strict mode violation: getByText('F15-RULES') resolved to 2 elements:\n        at D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-qa-dashboard-20261105\\tools\\tv5-qa-tester\\ui\\dashboard.spec.mjs:23:37\n    Error Context: test-results\\dashboard-dashboard-chi-goi-suite-allowlist\\error-context.md\n  2 failed",
+          "source": "tools/tv5-qa-tester/ui/dashboard.spec.mjs",
+          "suspectedCause": "Cần đối chiếu assertion, cấu hình và log; chưa suy nguyên nhân nghiệp vụ",
+          "verifiedCause": null,
+          "remediation": "Mở raw log và assertion; sửa đúng owner rồi chạy lại cùng suite",
+          "owner": "Owner module (cần triage)",
+          "status": "FAIL",
+          "sha": "849e2f43205e398e816e380b27d47be4e19b3aac",
+          "environment": {
+            "platform": "win32",
+            "node": "v22.23.3",
+            "localhost": true
+          },
+          "timestamp": "2026-11-06T01:06:26.964Z",
+          "screenshots": [
+            "screenshots/2026-11-06T01-04-45-866Z-849e2f43205e398e816e380b27d47be4e19b3aac-33f1d917/QA-UI/dashboard-chi-goi-suite-allowlist-failed.png",
+            "screenshots/2026-11-06T01-04-45-866Z-849e2f43205e398e816e380b27d47be4e19b3aac-33f1d917/QA-UI/dashboard-hien-thi-suite-va-gates-failed.png"
+          ],
+          "rawLog": "QA-UI.log",
+          "junit": []
+        }
+      ]
+    }
+  ],
+  "finishedAt": "2026-11-06T01:06:26.983Z"
+}

@@ -1,0 +1,68 @@
+{
+  "id": "2026-11-06T01-09-30-749Z-6418d8a8ca9ae7a70c7fbf8a2fbeb4007d463839-058381eb",
+  "sha": "6418d8a8ca9ae7a70c7fbf8a2fbeb4007d463839",
+  "timestamp": "2026-11-06T01:09:30.750Z",
+  "environment": {
+    "platform": "win32",
+    "node": "v22.23.3",
+    "localhost": true
+  },
+  "status": "PASS",
+  "suites": [
+    {
+      "id": "WEBSITE-SMOKE",
+      "status": "PASS",
+      "expected": "Gateway/public API HTTP200; register/login/logout/duplicate và RBAC đúng; ảnh/metadata không chứa secret",
+      "actual": "PASS: exit 0, 4 test, 4 PASS, 0 FAIL, 0 SKIP",
+      "startedAt": "2026-11-06T01:09:30.757Z",
+      "durationMs": 4994,
+      "counts": {
+        "tests": 4,
+        "pass": 4,
+        "fail": 0,
+        "skip": 0
+      },
+      "exitCode": 0,
+      "log": "WEBSITE-SMOKE.log",
+      "junit": [],
+      "screenshots": [
+        "screenshots/2026-11-06T01-09-30-749Z-6418d8a8ca9ae7a70c7fbf8a2fbeb4007d463839-058381eb/WEBSITE-SMOKE/cart-hai-store-quantity-remove-va-jwt-het-han-passed.png",
+        "screenshots/2026-11-06T01-09-30-749Z-6418d8a8ca9ae7a70c7fbf8a2fbeb4007d463839-058381eb/WEBSITE-SMOKE/dang-nhap-sai-thong-bao-loi-va-xss-safe-passed.png",
+        "screenshots/2026-11-06T01-09-30-749Z-6418d8a8ca9ae7a70c7fbf8a2fbeb4007d463839-058381eb/WEBSITE-SMOKE/public-catalog-stores-va-responsive-passed.png",
+        "screenshots/2026-11-06T01-09-30-749Z-6418d8a8ca9ae7a70c7fbf8a2fbeb4007d463839-058381eb/WEBSITE-SMOKE/register-login-logout-validation-va-duplicate-passed.png"
+      ],
+      "metadata": [
+        "screenshots/2026-11-06T01-09-30-749Z-6418d8a8ca9ae7a70c7fbf8a2fbeb4007d463839-058381eb/WEBSITE-SMOKE/cart-hai-store-quantity-remove-va-jwt-het-han.json",
+        "screenshots/2026-11-06T01-09-30-749Z-6418d8a8ca9ae7a70c7fbf8a2fbeb4007d463839-058381eb/WEBSITE-SMOKE/dang-nhap-sai-thong-bao-loi-va-xss-safe.json",
+        "screenshots/2026-11-06T01-09-30-749Z-6418d8a8ca9ae7a70c7fbf8a2fbeb4007d463839-058381eb/WEBSITE-SMOKE/public-catalog-stores-va-responsive.json",
+        "screenshots/2026-11-06T01-09-30-749Z-6418d8a8ca9ae7a70c7fbf8a2fbeb4007d463839-058381eb/WEBSITE-SMOKE/register-login-logout-validation-va-duplicate.json"
+      ],
+      "bugs": []
+    },
+    {
+      "id": "QA-UI",
+      "status": "PASS",
+      "expected": "Dashboard hoạt động và mỗi Playwright test có screenshot",
+      "actual": "PASS: exit 0, 3 test, 3 PASS, 0 FAIL, 0 SKIP",
+      "startedAt": "2026-11-06T01:09:35.772Z",
+      "durationMs": 1844,
+      "counts": {
+        "tests": 3,
+        "pass": 3,
+        "fail": 0,
+        "skip": 0
+      },
+      "exitCode": 0,
+      "log": "QA-UI.log",
+      "junit": [],
+      "screenshots": [
+        "screenshots/2026-11-06T01-09-30-749Z-6418d8a8ca9ae7a70c7fbf8a2fbeb4007d463839-058381eb/QA-UI/dashboard-chan-doan-tieng-viet-khong-thuc-thi-html-passed.png",
+        "screenshots/2026-11-06T01-09-30-749Z-6418d8a8ca9ae7a70c7fbf8a2fbeb4007d463839-058381eb/QA-UI/dashboard-chi-goi-suite-allowlist-passed.png",
+        "screenshots/2026-11-06T01-09-30-749Z-6418d8a8ca9ae7a70c7fbf8a2fbeb4007d463839-058381eb/QA-UI/dashboard-hien-thi-suite-va-gates-passed.png"
+      ],
+      "metadata": [],
+      "bugs": []
+    }
+  ],
+  "finishedAt": "2026-11-06T01:09:37.640Z"
+}

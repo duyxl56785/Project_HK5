@@ -1,0 +1,16 @@
+[
+  {
+    "kind": "http",
+    "endpoint": "/api/auth/login",
+    "status": 401
+  },
+  {
+    "kind": "console",
+    "message": "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+  },
+  {
+    "kind": "http",
+    "endpoint": "/api/catalog/products",
+    "status": 200
+  }
+]

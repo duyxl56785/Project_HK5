@@ -1,0 +1,9 @@
+id,status,expected,actual,durationMs,sha,environment,bugs
+"F15-RULES","PASS","Review rules và giới hạn 1000 UTF-16 đạt","PASS: exit 0, 18 test, 18 PASS, 0 FAIL, 0 SKIP","20464","6418d8a8ca9ae7a70c7fbf8a2fbeb4007d463839","{""platform"":""win32"",""node"":""v22.23.3"",""localhost"":true}","[]"
+"F16-RULES","PASS","Rules 5%/0%, bounds và gate fail-closed đạt trong unit tests","PASS: exit 0, 15 test, 15 PASS, 0 FAIL, 0 SKIP","17922","6418d8a8ca9ae7a70c7fbf8a2fbeb4007d463839","{""platform"":""win32"",""node"":""v22.23.3"",""localhost"":true}","[]"
+"SEC-JWT","PASS","Spring YAML JWT assertions đạt","PASS: exit 0, 2 test, 2 PASS, 0 FAIL, 0 SKIP","19556","6418d8a8ca9ae7a70c7fbf8a2fbeb4007d463839","{""platform"":""win32"",""node"":""v22.23.3"",""localhost"":true}","[]"
+"SEC-RBAC","PASS","Unit assertions về current authority đạt","PASS: exit 0, 5 test, 5 PASS, 0 FAIL, 0 SKIP","12403","6418d8a8ca9ae7a70c7fbf8a2fbeb4007d463839","{""platform"":""win32"",""node"":""v22.23.3"",""localhost"":true}","[]"
+"CATALOG","PASS","Catalog batch/price validation đạt","PASS: exit 0, 100 test, 100 PASS, 0 FAIL, 0 SKIP","21002","6418d8a8ca9ae7a70c7fbf8a2fbeb4007d463839","{""platform"":""win32"",""node"":""v22.23.3"",""localhost"":true}","[]"
+"INVENTORY","PASS","Unit assertions về operation và input đạt","PASS: exit 0, 9 test, 9 PASS, 0 FAIL, 0 SKIP","15766","6418d8a8ca9ae7a70c7fbf8a2fbeb4007d463839","{""platform"":""win32"",""node"":""v22.23.3"",""localhost"":true}","[]"
+"CART-ORDER","PASS","Cart/Checkout unit assertions đạt","PASS: exit 0, 10 test, 10 PASS, 0 FAIL, 0 SKIP","16969","6418d8a8ca9ae7a70c7fbf8a2fbeb4007d463839","{""platform"":""win32"",""node"":""v22.23.3"",""localhost"":true}","[]"
+"FRONTEND","PASS","Node TAP tests hiện có đạt; không phải live E2E","PASS: exit 0, 157 test, 157 PASS, 0 FAIL, 0 SKIP","9820","6418d8a8ca9ae7a70c7fbf8a2fbeb4007d463839","{""platform"":""win32"",""node"":""v22.23.3"",""localhost"":true}","[]"

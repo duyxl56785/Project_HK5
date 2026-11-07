@@ -1,0 +1,31 @@
+{
+  "id": "2026-11-04T20-47-30-007Z-423e14526d1c23837d9b7af14f31f509d9350d77-919eae13",
+  "sha": "423e14526d1c23837d9b7af14f31f509d9350d77",
+  "timestamp": "2026-11-04T20:47:30.007Z",
+  "environment": {
+    "platform": "win32",
+    "node": "v22.23.3",
+    "localhost": true
+  },
+  "status": "PASS",
+  "suites": [
+    {
+      "id": "FRONTEND",
+      "status": "PASS",
+      "expected": "Node TAP tests hiện có đạt; không phải live E2E",
+      "actual": "PASS: exit 0, 157 test, 157 PASS, 0 FAIL, 0 SKIP",
+      "startedAt": "2026-11-04T20:47:30.008Z",
+      "durationMs": 10093,
+      "counts": {
+        "tests": 157,
+        "pass": 157,
+        "fail": 0,
+        "skip": 0
+      },
+      "exitCode": 0,
+      "log": "FRONTEND.log",
+      "junit": []
+    }
+  ],
+  "finishedAt": "2026-11-04T20:47:40.102Z"
+}

@@ -1,0 +1,183 @@
+[
+  {
+    "id": "2026-11-06T01-04-45-866Z-849e2f43205e398e816e380b27d47be4e19b3aac-33f1d917",
+    "sha": "849e2f43205e398e816e380b27d47be4e19b3aac",
+    "status": "FAIL",
+    "suites": [
+      [
+        "WEBSITE-SMOKE",
+        "PASS",
+        {
+          "tests": 3,
+          "pass": 3,
+          "fail": 0,
+          "skip": 0
+        }
+      ],
+      [
+        "F15-RULES",
+        "PASS",
+        {
+          "tests": 18,
+          "pass": 18,
+          "fail": 0,
+          "skip": 0
+        }
+      ],
+      [
+        "F16-RULES",
+        "PASS",
+        {
+          "tests": 15,
+          "pass": 15,
+          "fail": 0,
+          "skip": 0
+        }
+      ],
+      [
+        "F15-POSTGRES",
+        "PASS",
+        {
+          "tests": 1,
+          "pass": 1,
+          "fail": 0,
+          "skip": 0
+        }
+      ],
+      [
+        "F16-POSTGRES",
+        "PASS",
+        {
+          "tests": 9,
+          "pass": 9,
+          "fail": 0,
+          "skip": 0
+        }
+      ],
+      [
+        "QA-UI",
+        "FAIL",
+        {
+          "tests": 2,
+          "pass": 0,
+          "fail": 2,
+          "skip": 0
+        }
+      ]
+    ]
+  },
+  {
+    "id": "2026-11-06T01-09-30-749Z-6418d8a8ca9ae7a70c7fbf8a2fbeb4007d463839-058381eb",
+    "sha": "6418d8a8ca9ae7a70c7fbf8a2fbeb4007d463839",
+    "status": "PASS",
+    "suites": [
+      [
+        "WEBSITE-SMOKE",
+        "PASS",
+        {
+          "tests": 4,
+          "pass": 4,
+          "fail": 0,
+          "skip": 0
+        }
+      ],
+      [
+        "QA-UI",
+        "PASS",
+        {
+          "tests": 3,
+          "pass": 3,
+          "fail": 0,
+          "skip": 0
+        }
+      ]
+    ]
+  },
+  {
+    "id": "2026-11-06T01-10-08-300Z-6418d8a8ca9ae7a70c7fbf8a2fbeb4007d463839-841a4591",
+    "sha": "6418d8a8ca9ae7a70c7fbf8a2fbeb4007d463839",
+    "status": "PASS",
+    "suites": [
+      [
+        "F15-RULES",
+        "PASS",
+        {
+          "tests": 18,
+          "pass": 18,
+          "fail": 0,
+          "skip": 0
+        }
+      ],
+      [
+        "F16-RULES",
+        "PASS",
+        {
+          "tests": 15,
+          "pass": 15,
+          "fail": 0,
+          "skip": 0
+        }
+      ],
+      [
+        "SEC-JWT",
+        "PASS",
+        {
+          "tests": 2,
+          "pass": 2,
+          "fail": 0,
+          "skip": 0
+        }
+      ],
+      [
+        "SEC-RBAC",
+        "PASS",
+        {
+          "tests": 5,
+          "pass": 5,
+          "fail": 0,
+          "skip": 0
+        }
+      ],
+      [
+        "CATALOG",
+        "PASS",
+        {
+          "tests": 100,
+          "pass": 100,
+          "fail": 0,
+          "skip": 0
+        }
+      ],
+      [
+        "INVENTORY",
+        "PASS",
+        {
+          "tests": 9,
+          "pass": 9,
+          "fail": 0,
+          "skip": 0
+        }
+      ],
+      [
+        "CART-ORDER",
+        "PASS",
+        {
+          "tests": 10,
+          "pass": 10,
+          "fail": 0,
+          "skip": 0
+        }
+      ],
+      [
+        "FRONTEND",
+        "PASS",
+        {
+          "tests": 157,
+          "pass": 157,
+          "fail": 0,
+          "skip": 0
+        }
+      ]
+    ]
+  }
+]

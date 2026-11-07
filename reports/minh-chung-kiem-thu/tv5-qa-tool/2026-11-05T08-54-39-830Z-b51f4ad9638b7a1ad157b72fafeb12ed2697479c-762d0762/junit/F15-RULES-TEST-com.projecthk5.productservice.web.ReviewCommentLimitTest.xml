@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.projecthk5.productservice.web.ReviewCommentLimitTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-11-05T08:54:58" hostname="MDUY-LECO" time="0.075">
+  <properties/>
+  <testcase name="countsEmojiAsTwoUtf16UnitsLikeTheDatabaseCheck()" classname="com.projecthk5.productservice.web.ReviewCommentLimitTest" time="0.073"/>
+  <testcase name="acceptsExactly1000AndRejects1001()" classname="com.projecthk5.productservice.web.ReviewCommentLimitTest" time="0.001"/>
+  <system-out><![CDATA[15:54:58.437 [Test worker] INFO org.hibernate.validator.internal.util.Version -- HV000001: Hibernate Validator 8.0.1.Final
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

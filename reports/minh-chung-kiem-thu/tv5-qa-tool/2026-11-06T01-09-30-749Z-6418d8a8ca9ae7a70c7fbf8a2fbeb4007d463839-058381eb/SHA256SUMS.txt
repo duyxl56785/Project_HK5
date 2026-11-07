@@ -1,0 +1,16 @@
+80e799d592e51dc7c1c402156e2ad2851830386872d08de64c3e50d3b4730740  report.json
+2d46509d07c9b79300d039909b982b1a52e930f025b02f3e6524f728a83433b4  report.html
+4103ee260ed2987678d1556a61e0da22480cee665181eb63efe0af5a547bedbe  report.csv
+ddb69b3a864a6ddcd5ceadd922310a6c6936b6cd22c214942ef7623f1297cc01  WEBSITE-SMOKE.log
+c44d7b37afb4f51c788b54e2a1c6732f684a6fc7d0391d3f7339a211ce19cc95  QA-UI.log
+83479cfda4a6af1c7a490cb8e183d4903535c752c6e612c4f215b47ed121c75e  screenshots/2026-11-06T01-09-30-749Z-6418d8a8ca9ae7a70c7fbf8a2fbeb4007d463839-058381eb/WEBSITE-SMOKE/cart-hai-store-quantity-remove-va-jwt-het-han-passed.png
+f2daddb585b1f2c4d813369662088190fb5a522738c7cb04fbbaf0c7d3d37659  screenshots/2026-11-06T01-09-30-749Z-6418d8a8ca9ae7a70c7fbf8a2fbeb4007d463839-058381eb/WEBSITE-SMOKE/dang-nhap-sai-thong-bao-loi-va-xss-safe-passed.png
+29684cd63897dbcb5c53116c1187986066b0012d6a2fa0eb1e72134ccdf814b4  screenshots/2026-11-06T01-09-30-749Z-6418d8a8ca9ae7a70c7fbf8a2fbeb4007d463839-058381eb/WEBSITE-SMOKE/public-catalog-stores-va-responsive-passed.png
+480fd7d80eb7df19d2ef84596aef57f075ea0a91c87d1a691c094871136ae56d  screenshots/2026-11-06T01-09-30-749Z-6418d8a8ca9ae7a70c7fbf8a2fbeb4007d463839-058381eb/WEBSITE-SMOKE/register-login-logout-validation-va-duplicate-passed.png
+e025fdc4a109d8ac54a3a76e8329acbd78ea1e86dbb9219bf1139403c4176a66  screenshots/2026-11-06T01-09-30-749Z-6418d8a8ca9ae7a70c7fbf8a2fbeb4007d463839-058381eb/WEBSITE-SMOKE/cart-hai-store-quantity-remove-va-jwt-het-han.json
+84f8f8480a22fdb7bee447a2d34f451050e71986773b562a7b06385db2b17167  screenshots/2026-11-06T01-09-30-749Z-6418d8a8ca9ae7a70c7fbf8a2fbeb4007d463839-058381eb/WEBSITE-SMOKE/dang-nhap-sai-thong-bao-loi-va-xss-safe.json
+4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945  screenshots/2026-11-06T01-09-30-749Z-6418d8a8ca9ae7a70c7fbf8a2fbeb4007d463839-058381eb/WEBSITE-SMOKE/public-catalog-stores-va-responsive.json
+920e08f44e370e34a9f6368ac3a27ec8b0f16b9e8e70aaa287e21533aaa12762  screenshots/2026-11-06T01-09-30-749Z-6418d8a8ca9ae7a70c7fbf8a2fbeb4007d463839-058381eb/WEBSITE-SMOKE/register-login-logout-validation-va-duplicate.json
+1c68984654bf673a6783d7ee72264554895047ff4c8611d9ebfeadbdf36642cc  screenshots/2026-11-06T01-09-30-749Z-6418d8a8ca9ae7a70c7fbf8a2fbeb4007d463839-058381eb/QA-UI/dashboard-chan-doan-tieng-viet-khong-thuc-thi-html-passed.png
+4a5f1e205bd5403c1d11d7e8927742ec4fbf89a4a9020283e844461022b054ab  screenshots/2026-11-06T01-09-30-749Z-6418d8a8ca9ae7a70c7fbf8a2fbeb4007d463839-058381eb/QA-UI/dashboard-chi-goi-suite-allowlist-passed.png
+3342f13d7f7a9c5ce1072585545a8bbaf3a7013b62fcb4550f817186162c364a  screenshots/2026-11-06T01-09-30-749Z-6418d8a8ca9ae7a70c7fbf8a2fbeb4007d463839-058381eb/QA-UI/dashboard-hien-thi-suite-va-gates-passed.png

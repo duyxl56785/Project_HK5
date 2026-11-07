@@ -1,0 +1,3 @@
+id,status,expected,actual,durationMs,sha,environment
+"QA-UI","PASS","Dashboard hoạt động và mỗi Playwright test có screenshot","PASS: exit 0, 2 test, 2 PASS, 0 FAIL, 0 SKIP","1570","aa0fff261f5e4e9c4110c38e33861bde88c88756","{""platform"":""win32"",""node"":""v22.23.3"",""localhost"":true}"
+"QA-UI-DIAGNOSTIC","FAIL","Một assertion chẩn đoán thất bại; runner phải ghi FAIL và chụp ảnh thật","FAIL: exit 1, 1 test, 0 PASS, 1 FAIL, 0 SKIP","6296","aa0fff261f5e4e9c4110c38e33861bde88c88756","{""platform"":""win32"",""node"":""v22.23.3"",""localhost"":true}"

@@ -1,0 +1,952 @@
+TAP version 13
+# Subtest: two Store groups show exact total and accessible quantity labels
+ok 1 - two Store groups show exact total and accessible quantity labels
+  ---
+  duration_ms: 429.4509
+  type: 'test'
+  ...
+# Subtest: Cart claim prevents edit and remove even when callbacks were passed
+ok 2 - Cart claim prevents edit and remove even when callbacks were passed
+  ---
+  duration_ms: 1.0914
+  type: 'test'
+  ...
+# Subtest: clearing is offered only when the Cart can be edited
+ok 3 - clearing is offered only when the Cart can be edited
+  ---
+  duration_ms: 2.3889
+  type: 'test'
+  ...
+# Subtest: unconfigured actions are disabled rather than pretending to call backend
+ok 4 - unconfigured actions are disabled rather than pretending to call backend
+  ---
+  duration_ms: 0.8249
+  type: 'test'
+  ...
+# Subtest: invalid snapshot renders no stale partial store items
+ok 5 - invalid snapshot renders no stale partial store items
+  ---
+  duration_ms: 0.3434
+  type: 'test'
+  ...
+# Subtest: non-ready states never render stale Cart data or private source fields
+ok 6 - non-ready states never render stale Cart data or private source fields
+  ---
+  duration_ms: 1.059
+  type: 'test'
+  ...
+# Subtest: two Store groups preserve exact revision and amount without JS floating point
+ok 7 - two Store groups preserve exact revision and amount without JS floating point
+  ---
+  duration_ms: 1.05
+  type: 'test'
+  ...
+# Subtest: multiple products in same Store and Seller render one Store group
+ok 8 - multiple products in same Store and Seller render one Store group
+  ---
+  duration_ms: 0.1583
+  type: 'test'
+  ...
+# Subtest: conflicting Store to Seller or Seller to Store mapping fails closed
+ok 9 - conflicting Store to Seller or Seller to Store mapping fails closed
+  ---
+  duration_ms: 0.2072
+  type: 'test'
+  ...
+# Subtest: duplicates, malformed or padded identifiers fail without partial group
+ok 10 - duplicates, malformed or padded identifiers fail without partial group
+  ---
+  duration_ms: 0.1519
+  type: 'test'
+  ...
+# Subtest: money uses exact decimal minor units and forbids silent rounding
+ok 11 - money uses exact decimal minor units and forbids silent rounding
+  ---
+  duration_ms: 0.1702
+  type: 'test'
+  ...
+# Subtest: line and aggregate overflow rejected before displaying calculated totals
+ok 12 - line and aggregate overflow rejected before displaying calculated totals
+  ---
+  duration_ms: 0.1189
+  type: 'test'
+  ...
+# Subtest: quantity, claims and revisions are strictly validated
+ok 13 - quantity, claims and revisions are strictly validated
+  ---
+  duration_ms: 0.2426
+  type: 'test'
+  ...
+# Subtest: source input is neither mutated nor trusted for extra private fields
+ok 14 - source input is neither mutated nor trusted for extra private fields
+  ---
+  duration_ms: 0.2312
+  type: 'test'
+  ...
+# Subtest: loading is announced without an empty or usable tree
+ok 15 - loading is announced without an empty or usable tree
+  ---
+  duration_ms: 438.8418
+  type: 'test'
+  ...
+# Subtest: source error has an accessible retry action and no tree
+ok 16 - source error has an accessible retry action and no tree
+  ---
+  duration_ms: 0.7152
+  type: 'test'
+  ...
+# Subtest: a valid empty result has its own state
+ok 17 - a valid empty result has its own state
+  ---
+  duration_ms: 0.4223
+  type: 'test'
+  ...
+# Subtest: invalid duplicate data displays an error instead of a partial tree
+ok 18 - invalid duplicate data displays an error instead of a partial tree
+  ---
+  duration_ms: 0.3819
+  type: 'test'
+  ...
+# Subtest: invalid orphan data displays an error instead of a partial tree
+ok 19 - invalid orphan data displays an error instead of a partial tree
+  ---
+  duration_ms: 0.4023
+  type: 'test'
+  ...
+# Subtest: invalid cycle data displays an error instead of a partial tree
+ok 20 - invalid cycle data displays an error instead of a partial tree
+  ---
+  duration_ms: 0.3318
+  type: 'test'
+  ...
+# Subtest: initial tree shows roots with collapsed branch and explicit ARIA positions
+ok 21 - initial tree shows roots with collapsed branch and explicit ARIA positions
+  ---
+  duration_ms: 1.3295
+  type: 'test'
+  ...
+# Subtest: selection is controlled and can describe a hidden descendant
+ok 22 - selection is controlled and can describe a hidden descendant
+  ---
+  duration_ms: 3.1406
+  type: 'test'
+  ...
+# Subtest: category names are escaped, never interpreted as markup
+ok 23 - category names are escaped, never interpreted as markup
+  ---
+  duration_ms: 0.6601
+  type: 'test'
+  ...
+# Subtest: each browser has distinct labels and search control IDs
+ok 24 - each browser has distinct labels and search control IDs
+  ---
+  duration_ms: 1.3652
+  type: 'test'
+  ...
+# Subtest: empty category collection is valid
+ok 25 - empty category collection is valid
+  ---
+  duration_ms: 1.1223
+  type: 'test'
+  ...
+# Subtest: one root retains the exact DTO and accessible position
+ok 26 - one root retains the exact DTO and accessible position
+  ---
+  duration_ms: 0.2217
+  type: 'test'
+  ...
+# Subtest: multiple roots preserve backend order and sibling positions
+ok 27 - multiple roots preserve backend order and sibling positions
+  ---
+  duration_ms: 0.201
+  type: 'test'
+  ...
+# Subtest: unordered parent/child records become a complete preorder hierarchy
+ok 28 - unordered parent/child records become a complete preorder hierarchy
+  ---
+  duration_ms: 0.1806
+  type: 'test'
+  ...
+# Subtest: input objects and arrays are never changed or normalized
+ok 29 - input objects and arrays are never changed or normalized
+  ---
+  duration_ms: 0.1884
+  type: 'test'
+  ...
+# Subtest: inconsistent input fails as a whole: duplicate IDs
+ok 30 - inconsistent input fails as a whole: duplicate IDs
+  ---
+  duration_ms: 0.088
+  type: 'test'
+  ...
+# Subtest: inconsistent input fails as a whole: missing parent
+ok 31 - inconsistent input fails as a whole: missing parent
+  ---
+  duration_ms: 0.1034
+  type: 'test'
+  ...
+# Subtest: inconsistent input fails as a whole: self-parent
+ok 32 - inconsistent input fails as a whole: self-parent
+  ---
+  duration_ms: 0.0527
+  type: 'test'
+  ...
+# Subtest: inconsistent input fails as a whole: cycle without roots
+ok 33 - inconsistent input fails as a whole: cycle without roots
+  ---
+  duration_ms: 0.2077
+  type: 'test'
+  ...
+# Subtest: inconsistent input fails as a whole: cycle beside valid root
+ok 34 - inconsistent input fails as a whole: cycle beside valid root
+  ---
+  duration_ms: 0.2416
+  type: 'test'
+  ...
+# Subtest: inconsistent input fails as a whole: null collection
+ok 35 - inconsistent input fails as a whole: null collection
+  ---
+  duration_ms: 0.1137
+  type: 'test'
+  ...
+# Subtest: inconsistent input fails as a whole: non-array collection
+ok 36 - inconsistent input fails as a whole: non-array collection
+  ---
+  duration_ms: 0.0441
+  type: 'test'
+  ...
+# Subtest: inconsistent input fails as a whole: null record
+ok 37 - inconsistent input fails as a whole: null record
+  ---
+  duration_ms: 0.0309
+  type: 'test'
+  ...
+# Subtest: inconsistent input fails as a whole: wrong ID type
+ok 38 - inconsistent input fails as a whole: wrong ID type
+  ---
+  duration_ms: 0.0264
+  type: 'test'
+  ...
+# Subtest: inconsistent input fails as a whole: blank name
+ok 39 - inconsistent input fails as a whole: blank name
+  ---
+  duration_ms: 0.0276
+  type: 'test'
+  ...
+# Subtest: inconsistent input fails as a whole: missing parent field
+ok 40 - inconsistent input fails as a whole: missing parent field
+  ---
+  duration_ms: 0.0298
+  type: 'test'
+  ...
+# Subtest: a deep hierarchy is built without recursive stack growth
+ok 41 - a deep hierarchy is built without recursive stack growth
+  ---
+  duration_ms: 10.1904
+  type: 'test'
+  ...
+# Subtest: search is case-insensitive and retains all ancestors without changing names
+ok 42 - search is case-insensitive and retains all ancestors without changing names
+  ---
+  duration_ms: 0.418
+  type: 'test'
+  ...
+# Subtest: search with no match returns no rows; blank query restores all rows
+ok 43 - search with no match returns no rows; blank query restores all rows
+  ---
+  duration_ms: 0.112
+  type: 'test'
+  ...
+# Subtest: filtered sibling positions and branch flags describe the filtered tree
+ok 44 - filtered sibling positions and branch flags describe the filtered tree
+  ---
+  duration_ms: 0.2042
+  type: 'test'
+  ...
+# Subtest: collapsed and expanded branches never reveal hidden descendants
+ok 45 - collapsed and expanded branches never reveal hidden descendants
+  ---
+  duration_ms: 0.1515
+  type: 'test'
+  ...
+# Subtest: a refused Checkout names each line and why
+ok 46 - a refused Checkout names each line and why
+  ---
+  duration_ms: 455.8189
+  type: 'test'
+  ...
+# Subtest: obsolete A confirmation never appears after unauthorized then ready with Cart B/key B
+ok 47 - obsolete A confirmation never appears after unauthorized then ready with Cart B/key B
+  ---
+  duration_ms: 8.3785
+  type: 'test'
+  ...
+# Subtest: same Idempotency-Key cannot be replayed after access or Cart scope changed
+ok 48 - same Idempotency-Key cannot be replayed after access or Cart scope changed
+  ---
+  duration_ms: 4.9866
+  type: 'test'
+  ...
+# Subtest: direct trusted session switch hides obsolete A result even if cart and key match
+ok 49 - direct trusted session switch hides obsolete A result even if cart and key match
+  ---
+  duration_ms: 3.4989
+  type: 'test'
+  ...
+# Subtest: COD preview shows two Store groups, exact total and no assumed monetary policy
+ok 50 - COD preview shows two Store groups, exact total and no assumed monetary policy
+  ---
+  duration_ms: 426.0859
+  type: 'test'
+  ...
+# Subtest: only an explicitly connected handler enables submit button; SSR makes no network call
+ok 51 - only an explicitly connected handler enables submit button; SSR makes no network call
+  ---
+  duration_ms: 0.9883
+  type: 'test'
+  ...
+# Subtest: Claimed cart or malformed key cannot trigger checkout
+ok 52 - Claimed cart or malformed key cannot trigger checkout
+  ---
+  duration_ms: 1.7906
+  type: 'test'
+  ...
+# Subtest: UNKNOWN/reconciliation is prominent and cannot display a confirmed order
+ok 53 - UNKNOWN/reconciliation is prominent and cannot display a confirmed order
+  ---
+  duration_ms: 0.3079
+  type: 'test'
+  ...
+# Subtest: 147 accepts exactly the declared product and stock reason
+ok 54 - 147 accepts exactly the declared product and stock reason
+  ---
+  duration_ms: 1.0249
+  type: 'test'
+  ...
+# Subtest: 147 cannot pass with the old generic refusal
+ok 55 - 147 cannot pass with the old generic refusal
+  ---
+  duration_ms: 0.7321
+  type: 'test'
+  ...
+# Subtest: 147 rejects a different product identity
+ok 56 - 147 rejects a different product identity
+  ---
+  duration_ms: 0.5016
+  type: 'test'
+  ...
+# Subtest: 147 rejects an invented stock reason or missing item list
+ok 57 - 147 rejects an invented stock reason or missing item list
+  ---
+  duration_ms: 0.6288
+  type: 'test'
+  ...
+# Subtest: 147 does not silently discard extra refused products
+ok 58 - 147 does not silently discard extra refused products
+  ---
+  duration_ms: 0.2663
+  type: 'test'
+  ...
+# Subtest: 145 retains its explicitly selected legacy contract
+ok 59 - 145 retains its explicitly selected legacy contract
+  ---
+  duration_ms: 0.1568
+  type: 'test'
+  ...
+# Subtest: payload mismatch remains non-itemized under both contracts
+ok 60 - payload mismatch remains non-itemized under both contracts
+  ---
+  duration_ms: 0.1503
+  type: 'test'
+  ...
+# Subtest: unknown contract fails closed
+ok 61 - unknown contract fails closed
+  ---
+  duration_ms: 0.1258
+  type: 'test'
+  ...
+# Subtest: a refused Checkout keeps the line the server named
+ok 62 - a refused Checkout keeps the line the server named
+  ---
+  duration_ms: 284.5803
+  type: 'test'
+  ...
+# Subtest: network failures and server errors never claim an outcome
+ok 63 - network failures and server errors never claim an outcome
+  ---
+  duration_ms: 0.1535
+  type: 'test'
+  ...
+# Subtest: in-progress and reconciliation conflicts stay unknown
+ok 64 - in-progress and reconciliation conflicts stay unknown
+  ---
+  duration_ms: 0.0996
+  type: 'test'
+  ...
+# Subtest: definite conflicts map to the reason the customer can act on
+ok 65 - definite conflicts map to the reason the customer can act on
+  ---
+  duration_ms: 0.1888
+  type: 'test'
+  ...
+# Subtest: two-Store expectedItems never invents SKU, price or a new idempotency key
+ok 66 - two-Store expectedItems never invents SKU, price or a new idempotency key
+  ---
+  duration_ms: 1.4978
+  type: 'test'
+  ...
+# Subtest: invalid key, untrusted Cart and in-progress claim fail without request
+ok 67 - invalid key, untrusted Cart and in-progress claim fail without request
+  ---
+  duration_ms: 0.3346
+  type: 'test'
+  ...
+# Subtest: unknown from provider blocks all automatic repeat submissions
+ok 68 - unknown from provider blocks all automatic repeat submissions
+  ---
+  duration_ms: 0.1646
+  type: 'test'
+  ...
+# Subtest: network failure is UNKNOWN and does not retry, mutate key or signal success
+ok 69 - network failure is UNKNOWN and does not retry, mutate key or signal success
+  ---
+  duration_ms: 0.1434
+  type: 'test'
+  ...
+# Subtest: two concurrent clicks execute exactly one checkout request
+ok 70 - two concurrent clicks execute exactly one checkout request
+  ---
+  duration_ms: 0.1322
+  type: 'test'
+  ...
+# Subtest: default component denies access and never invents a demo adapter
+ok 71 - default component denies access and never invents a demo adapter
+  ---
+  duration_ms: 774.7923
+  type: 'test'
+  ...
+# Subtest: late result from old Store is discarded, with no synchronous stale frame
+ok 72 - late result from old Store is discarded, with no synchronous stale frame
+  ---
+  duration_ms: 32.5105
+  type: 'test'
+  ...
+# Subtest: a new adapter object with the same ID cannot reuse previous data
+ok 73 - a new adapter object with the same ID cannot reuse previous data
+  ---
+  duration_ms: 22.2271
+  type: 'test'
+  ...
+# Subtest: denied scope never invokes the adapter and removes existing data
+ok 74 - denied scope never invokes the adapter and removes existing data
+  ---
+  duration_ms: 12.9539
+  type: 'test'
+  ...
+# Subtest: dependency errors are sanitized and retry re-reads without stale data
+ok 75 - dependency errors are sanitized and retry re-reads without stale data
+  ---
+  duration_ms: 17.1384
+  type: 'test'
+  ...
+# Subtest: synchronous adapter errors also fail closed without leaking technical details
+ok 76 - synchronous adapter errors also fail closed without leaking technical details
+  ---
+  duration_ms: 4.0886
+  type: 'test'
+  ...
+# Subtest: new session removes ready data and open details even for the same adapter and Store
+ok 77 - new session removes ready data and open details even for the same adapter and Store
+  ---
+  duration_ms: 29.9527
+  type: 'test'
+  ...
+# Subtest: late previous-session response cannot populate the same Store after session invalidation
+ok 78 - late previous-session response cannot populate the same Store after session invalidation
+  ---
+  duration_ms: 12.0932
+  type: 'test'
+  ...
+# Subtest: Finance renders exact amounts, transaction columns and explicit DEMO boundary
+ok 79 - Finance renders exact amounts, transaction columns and explicit DEMO boundary
+  ---
+  duration_ms: 479.0252
+  type: 'test'
+  ...
+# Subtest: loading conceals any stale/attached private rows
+ok 80 - loading conceals any stale/attached private rows
+  ---
+  duration_ms: 1.3061
+  type: 'test'
+  ...
+# Subtest: empty conceals any stale/attached private rows
+ok 81 - empty conceals any stale/attached private rows
+  ---
+  duration_ms: 0.9405
+  type: 'test'
+  ...
+# Subtest: error conceals any stale/attached private rows
+ok 82 - error conceals any stale/attached private rows
+  ---
+  duration_ms: 0.8745
+  type: 'test'
+  ...
+# Subtest: denied conceals any stale/attached private rows
+ok 83 - denied conceals any stale/attached private rows
+  ---
+  duration_ms: 0.9356
+  type: 'test'
+  ...
+# Subtest: blocked conceals any stale/attached private rows
+ok 84 - blocked conceals any stale/attached private rows
+  ---
+  duration_ms: 0.8962
+  type: 'test'
+  ...
+# Subtest: Store scope excludes foreign amounts, options, details and internal QA/PR tabs
+ok 85 - Store scope excludes foreign amounts, options, details and internal QA/PR tabs
+  ---
+  duration_ms: 3.5752
+  type: 'test'
+  ...
+# Subtest: denied scope takes precedence over ready data
+ok 86 - denied scope takes precedence over ready data
+  ---
+  duration_ms: 0.9957
+  type: 'test'
+  ...
+# Subtest: all panels omit financial mutation controls
+ok 87 - all panels omit financial mutation controls
+  ---
+  duration_ms: 12.2016
+  type: 'test'
+  ...
+# Subtest: unknown COD is a display observation, never a new persisted workflow state
+ok 88 - unknown COD is a display observation, never a new persisted workflow state
+  ---
+  duration_ms: 2.8285
+  type: 'test'
+  ...
+# Subtest: React escapes source labels and never serializes extra private fields
+ok 89 - React escapes source labels and never serializes extra private fields
+  ---
+  duration_ms: 3.6248
+  type: 'test'
+  ...
+# Subtest: formats exact integers above the JavaScript safe integer boundary
+ok 90 - formats exact integers above the JavaScript safe integer boundary
+  ---
+  duration_ms: 265.5478
+  type: 'test'
+  ...
+# Subtest: preserves fractional snapshot digits without rounding or inventing policy
+ok 91 - preserves fractional snapshot digits without rounding or inventing policy
+  ---
+  duration_ms: 0.1879
+  type: 'test'
+  ...
+# Subtest: rejects noncanonical money 1.5
+ok 92 - rejects noncanonical money 1.5
+  ---
+  duration_ms: 0.1075
+  type: 'test'
+  ...
+# Subtest: rejects noncanonical money ""
+ok 93 - rejects noncanonical money ""
+  ---
+  duration_ms: 0.0634
+  type: 'test'
+  ...
+# Subtest: rejects noncanonical money "1e3"
+ok 94 - rejects noncanonical money "1e3"
+  ---
+  duration_ms: 0.1298
+  type: 'test'
+  ...
+# Subtest: rejects noncanonical money "01"
+ok 95 - rejects noncanonical money "01"
+  ---
+  duration_ms: 0.0504
+  type: 'test'
+  ...
+# Subtest: rejects noncanonical money " 123"
+ok 96 - rejects noncanonical money " 123"
+  ---
+  duration_ms: 0.09
+  type: 'test'
+  ...
+# Subtest: rejects noncanonical money "NaN"
+ok 97 - rejects noncanonical money "NaN"
+  ---
+  duration_ms: 0.1523
+  type: 'test'
+  ...
+# Subtest: rejects noncanonical money "Infinity"
+ok 98 - rejects noncanonical money "Infinity"
+  ---
+  duration_ms: 0.213
+  type: 'test'
+  ...
+# Subtest: rejects noncanonical money "1.1234567"
+ok 99 - rejects noncanonical money "1.1234567"
+  ---
+  duration_ms: 0.216
+  type: 'test'
+  ...
+# Subtest: rejects noncanonical money "123\\n"
+ok 100 - rejects noncanonical money "123\\n"
+  ---
+  duration_ms: 0.0639
+  type: 'test'
+  ...
+# Subtest: rejects noncanonical money "123\\r\\n"
+ok 101 - rejects noncanonical money "123\\r\\n"
+  ---
+  duration_ms: 0.0416
+  type: 'test'
+  ...
+# Subtest: rejects noncanonical money "123 "
+ok 102 - rejects noncanonical money "123 "
+  ---
+  duration_ms: 0.1189
+  type: 'test'
+  ...
+# Subtest: currency is explicit and never silently defaults or converts
+ok 103 - currency is explicit and never silently defaults or converts
+  ---
+  duration_ms: 0.0882
+  type: 'test'
+  ...
+# Subtest: sum is exact across scales and never uses Number for money
+ok 104 - sum is exact across scales and never uses Number for money
+  ---
+  duration_ms: 0.214
+  type: 'test'
+  ...
+# Subtest: Store scope strips foreign rows before summaries, filters or details
+ok 105 - Store scope strips foreign rows before summaries, filters or details
+  ---
+  duration_ms: 0.6817
+  type: 'test'
+  ...
+# Subtest: missing/denied Store scope never falls back to admin data
+ok 106 - missing/denied Store scope never falls back to admin data
+  ---
+  duration_ms: 0.0855
+  type: 'test'
+  ...
+# Subtest: summary does not count COLLECTED as verified without an evidence reference
+ok 107 - summary does not count COLLECTED as verified without an evidence reference
+  ---
+  duration_ms: 0.2051
+  type: 'test'
+  ...
+# Subtest: PENDING and VOID COD facts never enter collected-evidence totals
+ok 108 - PENDING and VOID COD facts never enter collected-evidence totals
+  ---
+  duration_ms: 0.1073
+  type: 'test'
+  ...
+# Subtest: filter combines literal search, Store, status and inclusive UTC dates
+ok 109 - filter combines literal search, Store, status and inclusive UTC dates
+  ---
+  duration_ms: 1.0924
+  type: 'test'
+  ...
+# Subtest: pagination clamps stale page after a filter changes the dataset
+ok 110 - pagination clamps stale page after a filter changes the dataset
+  ---
+  duration_ms: 0.1754
+  type: 'test'
+  ...
+# Subtest: QA totals belong to one selected run and never aggregate different heads
+ok 111 - QA totals belong to one selected run and never aggregate different heads
+  ---
+  duration_ms: 0.2979
+  type: 'test'
+  ...
+# Subtest: PASS without a safe receipt becomes NOT_RUN, never a green result
+ok 112 - PASS without a safe receipt becomes NOT_RUN, never a green result
+  ---
+  duration_ms: 0.0847
+  type: 'test'
+  ...
+# Subtest: refuses unsafe evidence link javascript
+ok 113 - refuses unsafe evidence link javascript
+  ---
+  duration_ms: 0.0673
+  type: 'test'
+  ...
+# Subtest: refuses unsafe evidence link https
+ok 114 - refuses unsafe evidence link https
+  ---
+  duration_ms: 0.0446
+  type: 'test'
+  ...
+# Subtest: refuses unsafe evidence link https
+ok 115 - refuses unsafe evidence link https
+  ---
+  duration_ms: 0.0379
+  type: 'test'
+  ...
+# Subtest: refuses unsafe evidence link //evil.test
+ok 116 - refuses unsafe evidence link //evil.test
+  ---
+  duration_ms: 0.0468
+  type: 'test'
+  ...
+# Subtest: refuses unsafe evidence link https
+ok 117 - refuses unsafe evidence link https
+  ---
+  duration_ms: 0.0359
+  type: 'test'
+  ...
+# Subtest: incomplete PR audit fails closed without usable READY subset
+ok 118 - incomplete PR audit fails closed without usable READY subset
+  ---
+  duration_ms: 0.3284
+  type: 'test'
+  ...
+# Subtest: imports the existing sanitized CLI schema without exposing extra raw fields
+ok 119 - imports the existing sanitized CLI schema without exposing extra raw fields
+  ---
+  duration_ms: 0.263
+  type: 'test'
+  ...
+# Subtest: renders actual Seller status PENDING_REVIEW as Vietnamese text
+ok 120 - renders actual Seller status PENDING_REVIEW as Vietnamese text
+  ---
+  duration_ms: 424.2231
+  type: 'test'
+  ...
+# Subtest: renders actual Seller status APPROVED as Vietnamese text
+ok 121 - renders actual Seller status APPROVED as Vietnamese text
+  ---
+  duration_ms: 0.5628
+  type: 'test'
+  ...
+# Subtest: renders actual Seller status REJECTED as Vietnamese text
+ok 122 - renders actual Seller status REJECTED as Vietnamese text
+  ---
+  duration_ms: 0.5297
+  type: 'test'
+  ...
+# Subtest: renders actual Seller status SUSPENDED as Vietnamese text
+ok 123 - renders actual Seller status SUSPENDED as Vietnamese text
+  ---
+  duration_ms: 0.4319
+  type: 'test'
+  ...
+# Subtest: renders persisted Store open=true without granting selling permission
+ok 124 - renders persisted Store open=true without granting selling permission
+  ---
+  duration_ms: 0.6341
+  type: 'test'
+  ...
+# Subtest: renders persisted Store open=false without granting selling permission
+ok 125 - renders persisted Store open=false without granting selling permission
+  ---
+  duration_ms: 0.4763
+  type: 'test'
+  ...
+# Subtest: loading has a distinct state and conceals any attached stale data
+ok 126 - loading has a distinct state and conceals any attached stale data
+  ---
+  duration_ms: 0.3864
+  type: 'test'
+  ...
+# Subtest: empty has a distinct state and conceals any attached stale data
+ok 127 - empty has a distinct state and conceals any attached stale data
+  ---
+  duration_ms: 0.3954
+  type: 'test'
+  ...
+# Subtest: unauthorized has a distinct state and conceals any attached stale data
+ok 128 - unauthorized has a distinct state and conceals any attached stale data
+  ---
+  duration_ms: 0.7674
+  type: 'test'
+  ...
+# Subtest: unavailable has a distinct state and conceals any attached stale data
+ok 129 - unavailable has a distinct state and conceals any attached stale data
+  ---
+  duration_ms: 0.4232
+  type: 'test'
+  ...
+# Subtest: error exposes retry, not stale data or backend diagnostic text
+ok 130 - error exposes retry, not stale data or backend diagnostic text
+  ---
+  duration_ms: 0.504
+  type: 'test'
+  ...
+# Subtest: explicit no-Store state does not invent a Store or create action
+ok 131 - explicit no-Store state does not invent a Store or create action
+  ---
+  duration_ms: 0.3918
+  type: 'test'
+  ...
+# Subtest: invalid or cross-Seller source fails without partial private information
+ok 132 - invalid or cross-Seller source fails without partial private information
+  ---
+  duration_ms: 0.6499
+  type: 'test'
+  ...
+# Subtest: ready display never leaks private reason, owner, role or token extras
+ok 133 - ready display never leaks private reason, owner, role or token extras
+  ---
+  duration_ms: 0.4869
+  type: 'test'
+  ...
+# Subtest: display names are escaped instead of interpreted as markup
+ok 134 - display names are escaped instead of interpreted as markup
+  ---
+  duration_ms: 0.4299
+  type: 'test'
+  ...
+# Subtest: multiple instances have unique labelled sections
+ok 135 - multiple instances have unique labelled sections
+  ---
+  duration_ms: 0.9485
+  type: 'test'
+  ...
+# Subtest: canonical decimal versions remain exact beyond JS safe integer range
+ok 136 - canonical decimal versions remain exact beyond JS safe integer range
+  ---
+  duration_ms: 0.9318
+  type: 'test'
+  ...
+# Subtest: noncanonical, numeric and overflowing versions fail without normalization
+ok 137 - noncanonical, numeric and overflowing versions fail without normalization
+  ---
+  duration_ms: 0.1721
+  type: 'test'
+  ...
+# Subtest: all four actual Seller statuses are supported
+ok 138 - all four actual Seller statuses are supported
+  ---
+  duration_ms: 0.1473
+  type: 'test'
+  ...
+# Subtest: unknown and client role strings are not Seller statuses
+ok 139 - unknown and client role strings are not Seller statuses
+  ---
+  duration_ms: 0.0925
+  type: 'test'
+  ...
+# Subtest: private/unknown fields never enter the display projection
+ok 140 - private/unknown fields never enter the display projection
+  ---
+  duration_ms: 0.6511
+  type: 'test'
+  ...
+# Subtest: frozen input is not mutated and the display model owns its copies
+ok 141 - frozen input is not mutated and the display model owns its copies
+  ---
+  duration_ms: 0.1806
+  type: 'test'
+  ...
+# Subtest: only explicit null represents a proven absent Store
+ok 142 - only explicit null represents a proven absent Store
+  ---
+  duration_ms: 0.1378
+  type: 'test'
+  ...
+# Subtest: cross-Seller Store data rejects the entire overview
+ok 143 - cross-Seller Store data rejects the entire overview
+  ---
+  duration_ms: 0.0793
+  type: 'test'
+  ...
+# Subtest: malformed Seller data cannot create a ready overview
+ok 144 - malformed Seller data cannot create a ready overview
+  ---
+  duration_ms: 0.2554
+  type: 'test'
+  ...
+# Subtest: Store identities, boolean and version are required
+ok 145 - Store identities, boolean and version are required
+  ---
+  duration_ms: 0.2817
+  type: 'test'
+  ...
+# Subtest: Store names and slugs retain source values and existing length boundaries
+ok 146 - Store names and slugs retain source values and existing length boundaries
+  ---
+  duration_ms: 0.1724
+  type: 'test'
+  ...
+# Subtest: closed Store and unapproved Seller are displayed facts, not a selling grant
+ok 147 - closed Store and unapproved Seller are displayed facts, not a selling grant
+  ---
+  duration_ms: 0.0768
+  type: 'test'
+  ...
+# Subtest: canonical versions reject trailing line terminators rather than matching before them
+ok 148 - canonical versions reject trailing line terminators rather than matching before them
+  ---
+  duration_ms: 0.0662
+  type: 'test'
+  ...
+# Subtest: UUID display keys reject trailing line terminators even when the relationship matches
+ok 149 - UUID display keys reject trailing line terminators even when the relationship matches
+  ---
+  duration_ms: 0.1198
+  type: 'test'
+  ...
+# Subtest: Store slug rejects trailing line terminators
+ok 150 - Store slug rejects trailing line terminators
+  ---
+  duration_ms: 0.0996
+  type: 'test'
+  ...
+# Subtest: a visitor who never signed in has no session to restore
+ok 151 - a visitor who never signed in has no session to restore
+  ---
+  duration_ms: 268.5141
+  type: 'test'
+  ...
+# Subtest: signing in and out sets and clears the flag
+ok 152 - signing in and out sets and clears the flag
+  ---
+  duration_ms: 0.2995
+  type: 'test'
+  ...
+# Subtest: a failed refresh clears the flag and a successful one keeps it
+ok 153 - a failed refresh clears the flag and a successful one keeps it
+  ---
+  duration_ms: 2.0736
+  type: 'test'
+  ...
+# Subtest: a 503 refresh proves nothing about the cookie, so the next load tries again
+ok 154 - a 503 refresh proves nothing about the cookie, so the next load tries again
+  ---
+  duration_ms: 0.3415
+  type: 'test'
+  ...
+# Subtest: a 403 refresh proves nothing about the cookie, so the next load tries again
+ok 155 - a 403 refresh proves nothing about the cookie, so the next load tries again
+  ---
+  duration_ms: 0.3505
+  type: 'test'
+  ...
+# Subtest: a 500 refresh proves nothing about the cookie, so the next load tries again
+ok 156 - a 500 refresh proves nothing about the cookie, so the next load tries again
+  ---
+  duration_ms: 0.1224
+  type: 'test'
+  ...
+# Subtest: blocked storage falls back to trying a refresh
+ok 157 - blocked storage falls back to trying a refresh
+  ---
+  duration_ms: 0.2337
+  type: 'test'
+  ...
+1..157
+# tests 157
+# suites 0
+# pass 157
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 11397.0363

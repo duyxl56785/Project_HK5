@@ -1,0 +1,31 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.10/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :auth-service:processResources
+> Task :cart-service:processResources
+> Task :cart-service:processTestResources NO-SOURCE
+> Task :security-common:compileJava
+> Task :security-common:processResources
+> Task :security-common:classes
+> Task :security-common:jar
+> Task :auth-service:compileJava
+> Task :auth-service:classes
+
+> Task :cart-service:compileJava
+Note: D:\CMC Uni\5 Ky Dong\WEB\BCK WEB\Project_HK5\.verification\tv5-qa-dashboard-20261105\backend\cart-service\src\main\java\com\projecthk5\cartservice\security\ResourceSecurityConfig.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+
+> Task :cart-service:classes
+> Task :auth-service:jar
+> Task :cart-service:compileTestJava
+> Task :cart-service:testClasses
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+> Task :cart-service:test
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.10/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 16s
+10 actionable tasks: 10 executed

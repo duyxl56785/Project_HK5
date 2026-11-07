@@ -1,0 +1,346 @@
+[
+  {
+    "id": "BUG-001",
+    "title": "Gateway không lắng nghe khi demo chỉ chạy frontend",
+    "module": "API Catalog/Store",
+    "endpoint": "/api/stores; /api/catalog/products",
+    "code": "BUG-001",
+    "type": "ENVIRONMENT_FAILURE",
+    "severity": "P1",
+    "owner": "Vận hành local/TV5",
+    "status": "VERIFIED",
+    "steps": [
+      "Chạy suite regression/server hoặc website nêu trong báo cáo",
+      "Đối chiếu artifact RED/GREEN đúng source"
+    ],
+    "expected": "Hành vi và evidence nhất quán với trạng thái thực",
+    "actual": "Gateway không lắng nghe khi demo chỉ chạy frontend",
+    "verifiedCause": "Vite target localhost:18080 đúng; trước startup không có container chạy, sau startup 15 container Up",
+    "suspectedCause": null,
+    "remediation": "Khởi động project Docker riêng; GET /api/stores và /api/catalog/products HTTP200",
+    "sha": "6418d8a8ca9ae7a70c7fbf8a2fbeb4007d463839",
+    "environment": {
+      "node": "22.23.3",
+      "java": "21.0.7",
+      "docker": "29.8.1",
+      "project": "hk5-soopi-audit-20261106",
+      "flags": "Inventory/Finance OFF"
+    },
+    "timestamp": "2026-11-06",
+    "evidence": "reports/minh-chung-kiem-thu/soopi-audit-20261106",
+    "screenshots": []
+  },
+  {
+    "id": "BUG-002",
+    "title": "Yêu cầu không thành công theo quan sát ban đầu",
+    "module": "Đăng ký",
+    "endpoint": null,
+    "code": "BUG-002",
+    "type": "ENVIRONMENT_FAILURE",
+    "severity": "P1",
+    "owner": "Vận hành local",
+    "status": "NOT_REPRODUCED_AFTER_ENV_FIX",
+    "steps": [
+      "Chạy suite regression/server hoặc website nêu trong báo cáo",
+      "Đối chiếu artifact RED/GREEN đúng source"
+    ],
+    "expected": "Hành vi và evidence nhất quán với trạng thái thực",
+    "actual": "Yêu cầu không thành công theo quan sát ban đầu",
+    "verifiedCause": "Chưa chứng minh lỗi Auth độc lập; không đếm trùng BUG-001",
+    "suspectedCause": null,
+    "remediation": "Đăng ký/login/logout/duplicate/mật khẩu sai đều PASS khi backend chạy",
+    "sha": "6418d8a8ca9ae7a70c7fbf8a2fbeb4007d463839",
+    "environment": {
+      "node": "22.23.3",
+      "java": "21.0.7",
+      "docker": "29.8.1",
+      "project": "hk5-soopi-audit-20261106",
+      "flags": "Inventory/Finance OFF"
+    },
+    "timestamp": "2026-11-06",
+    "evidence": "reports/minh-chung-kiem-thu/soopi-audit-20261106",
+    "screenshots": []
+  },
+  {
+    "id": "BUG-003",
+    "title": "RUNNING/CANCELLED trong lịch sử",
+    "module": "Cancel",
+    "endpoint": null,
+    "code": "BUG-003",
+    "type": "TEST_INFRA_FAILURE",
+    "severity": "INFO",
+    "owner": "TV5",
+    "status": "VALID_STATUS",
+    "steps": [
+      "Chạy suite regression/server hoặc website nêu trong báo cáo",
+      "Đối chiếu artifact RED/GREEN đúng source"
+    ],
+    "expected": "Hành vi và evidence nhất quán với trạng thái thực",
+    "actual": "RUNNING/CANCELLED trong lịch sử",
+    "verifiedCause": "CANCELLED hợp lệ không tự tạo bug; không đếm là lỗi mới",
+    "suspectedCause": null,
+    "remediation": "Bản sửa Windows child tree c52f529 đã có; regression thật cha/cháu PASS",
+    "sha": "6418d8a8ca9ae7a70c7fbf8a2fbeb4007d463839",
+    "environment": {
+      "node": "22.23.3",
+      "java": "21.0.7",
+      "docker": "29.8.1",
+      "project": "hk5-soopi-audit-20261106",
+      "flags": "Inventory/Finance OFF"
+    },
+    "timestamp": "2026-11-06",
+    "evidence": "reports/minh-chung-kiem-thu/soopi-audit-20261106",
+    "screenshots": []
+  },
+  {
+    "id": "BUG-004",
+    "title": "Hai start đồng thời vượt khóa trước await gitSha",
+    "module": "Runner concurrency",
+    "endpoint": null,
+    "code": "BUG-004",
+    "type": "APPLICATION_BUG",
+    "severity": "P1",
+    "owner": "TV5",
+    "status": "FIXED_VERIFIED",
+    "steps": [
+      "Chạy suite regression/server hoặc website nêu trong báo cáo",
+      "Đối chiếu artifact RED/GREEN đúng source"
+    ],
+    "expected": "Hành vi và evidence nhất quán với trạng thái thực",
+    "actual": "Hai start đồng thời vượt khóa trước await gitSha",
+    "verifiedCause": "server/runner.mjs start: active chỉ được set sau await ở baseline",
+    "suspectedCause": null,
+    "remediation": "Giữ khóa trước await; regression chỉ một start được nhận",
+    "sha": "6418d8a8ca9ae7a70c7fbf8a2fbeb4007d463839",
+    "environment": {
+      "node": "22.23.3",
+      "java": "21.0.7",
+      "docker": "29.8.1",
+      "project": "hk5-soopi-audit-20261106",
+      "flags": "Inventory/Finance OFF"
+    },
+    "timestamp": "2026-11-06",
+    "evidence": "reports/minh-chung-kiem-thu/soopi-audit-20261106",
+    "screenshots": []
+  },
+  {
+    "id": "BUG-005",
+    "title": "RUNNING mồ côi và reload không tiếp quản kết quả hiện hành",
+    "module": "Runner/history",
+    "endpoint": null,
+    "code": "BUG-005",
+    "type": "APPLICATION_BUG",
+    "severity": "P1",
+    "owner": "TV5",
+    "status": "FIXED_VERIFIED",
+    "steps": [
+      "Chạy suite regression/server hoặc website nêu trong báo cáo",
+      "Đối chiếu artifact RED/GREEN đúng source"
+    ],
+    "expected": "Hành vi và evidence nhất quán với trạng thái thực",
+    "actual": "RUNNING mồ côi và reload không tiếp quản kết quả hiện hành",
+    "verifiedCause": "hydrate giữ nguyên status RUNNING mà không có child; UI current khởi tạo null",
+    "suspectedCause": null,
+    "remediation": "Checkpoint tiến trình, hydrate INTERRUPTED, dashboard phục hồi run đúng",
+    "sha": "6418d8a8ca9ae7a70c7fbf8a2fbeb4007d463839",
+    "environment": {
+      "node": "22.23.3",
+      "java": "21.0.7",
+      "docker": "29.8.1",
+      "project": "hk5-soopi-audit-20261106",
+      "flags": "Inventory/Finance OFF"
+    },
+    "timestamp": "2026-11-06",
+    "evidence": "reports/minh-chung-kiem-thu/soopi-audit-20261106",
+    "screenshots": []
+  },
+  {
+    "id": "BUG-006",
+    "title": "Toàn bộ skipped được gắn PASS",
+    "module": "Result status",
+    "endpoint": null,
+    "code": "BUG-006",
+    "type": "APPLICATION_BUG",
+    "severity": "P1",
+    "owner": "TV5",
+    "status": "FIXED_VERIFIED",
+    "steps": [
+      "Chạy suite regression/server hoặc website nêu trong báo cáo",
+      "Đối chiếu artifact RED/GREEN đúng source"
+    ],
+    "expected": "Hành vi và evidence nhất quán với trạng thái thực",
+    "actual": "Toàn bộ skipped được gắn PASS",
+    "verifiedCause": "counts.tests>0 được chuyển PASS kể cả pass=0",
+    "suspectedCause": null,
+    "remediation": "Tách SKIP và hiển thị summary",
+    "sha": "6418d8a8ca9ae7a70c7fbf8a2fbeb4007d463839",
+    "environment": {
+      "node": "22.23.3",
+      "java": "21.0.7",
+      "docker": "29.8.1",
+      "project": "hk5-soopi-audit-20261106",
+      "flags": "Inventory/Finance OFF"
+    },
+    "timestamp": "2026-11-06",
+    "evidence": "reports/minh-chung-kiem-thu/soopi-audit-20261106",
+    "screenshots": []
+  },
+  {
+    "id": "BUG-007",
+    "title": "report.html/F15-RULES.log trả404",
+    "module": "Evidence download",
+    "endpoint": null,
+    "code": "BUG-007",
+    "type": "APPLICATION_BUG",
+    "severity": "P1",
+    "owner": "TV5",
+    "status": "FIXED_VERIFIED",
+    "steps": [
+      "Chạy suite regression/server hoặc website nêu trong báo cáo",
+      "Đối chiếu artifact RED/GREEN đúng source"
+    ],
+    "expected": "Hành vi và evidence nhất quán với trạng thái thực",
+    "actual": "report.html/F15-RULES.log trả404",
+    "verifiedCause": "server/http.mjs evidence regex trước sửa không nhận dot trong segment đầu",
+    "suspectedCause": null,
+    "remediation": "Regex nhận dấu chấm ở filename đầu; HTTP download200",
+    "sha": "6418d8a8ca9ae7a70c7fbf8a2fbeb4007d463839",
+    "environment": {
+      "node": "22.23.3",
+      "java": "21.0.7",
+      "docker": "29.8.1",
+      "project": "hk5-soopi-audit-20261106",
+      "flags": "Inventory/Finance OFF"
+    },
+    "timestamp": "2026-11-06",
+    "evidence": "reports/minh-chung-kiem-thu/soopi-audit-20261106",
+    "screenshots": []
+  },
+  {
+    "id": "BUG-008",
+    "title": "exec throw để report RUNNING và Promise rejection",
+    "module": "Runner exception",
+    "endpoint": null,
+    "code": "BUG-008",
+    "type": "APPLICATION_BUG",
+    "severity": "P1",
+    "owner": "TV5",
+    "status": "FIXED_VERIFIED",
+    "steps": [
+      "Chạy suite regression/server hoặc website nêu trong báo cáo",
+      "Đối chiếu artifact RED/GREEN đúng source"
+    ],
+    "expected": "Hành vi và evidence nhất quán với trạng thái thực",
+    "actual": "exec throw để report RUNNING và Promise rejection",
+    "verifiedCause": "process().finally không có catch; không finalize report khi exec throw",
+    "suspectedCause": null,
+    "remediation": "Bắt exception, persist lỗi đã lọc, giải phóng active",
+    "sha": "6418d8a8ca9ae7a70c7fbf8a2fbeb4007d463839",
+    "environment": {
+      "node": "22.23.3",
+      "java": "21.0.7",
+      "docker": "29.8.1",
+      "project": "hk5-soopi-audit-20261106",
+      "flags": "Inventory/Finance OFF"
+    },
+    "timestamp": "2026-11-06",
+    "evidence": "reports/minh-chung-kiem-thu/soopi-audit-20261106",
+    "screenshots": []
+  },
+  {
+    "id": "BUG-009",
+    "title": "Ảnh trong ZIP không khớp đường dẫn manifest",
+    "module": "ZIP",
+    "endpoint": null,
+    "code": "BUG-009",
+    "type": "APPLICATION_BUG",
+    "severity": "P2",
+    "owner": "TV5",
+    "status": "FIXED_VERIFIED",
+    "steps": [
+      "Chạy suite regression/server hoặc website nêu trong báo cáo",
+      "Đối chiếu artifact RED/GREEN đúng source"
+    ],
+    "expected": "Hành vi và evidence nhất quán với trạng thái thực",
+    "actual": "Ảnh trong ZIP không khớp đường dẫn manifest",
+    "verifiedCause": "archive bỏ run-id lồng trong screenshot path nhưng manifest giữ run-id",
+    "suspectedCause": null,
+    "remediation": "Giữ layout tương đối screenshots/run-id/suite; 16 ZIP entries hash khớp",
+    "sha": "6418d8a8ca9ae7a70c7fbf8a2fbeb4007d463839",
+    "environment": {
+      "node": "22.23.3",
+      "java": "21.0.7",
+      "docker": "29.8.1",
+      "project": "hk5-soopi-audit-20261106",
+      "flags": "Inventory/Finance OFF"
+    },
+    "timestamp": "2026-11-06",
+    "evidence": "reports/minh-chung-kiem-thu/soopi-audit-20261106",
+    "screenshots": []
+  },
+  {
+    "id": "BUG-010",
+    "title": "Dashboard diagnostic/evidence tràn ngang 375px",
+    "module": "Responsive",
+    "endpoint": null,
+    "code": "BUG-010",
+    "type": "APPLICATION_BUG",
+    "severity": "P2",
+    "owner": "TV5",
+    "status": "FIXED_VERIFIED",
+    "steps": [
+      "Chạy suite regression/server hoặc website nêu trong báo cáo",
+      "Đối chiếu artifact RED/GREEN đúng source"
+    ],
+    "expected": "Hành vi và evidence nhất quán với trạng thái thực",
+    "actual": "Dashboard diagnostic/evidence tràn ngang 375px",
+    "verifiedCause": "flex item minimum content width đẩy suite badge ra ngoài viewport",
+    "suspectedCause": null,
+    "remediation": "min-width:0, minmax grid, wrap source/path; regression mobile PASS",
+    "sha": "6418d8a8ca9ae7a70c7fbf8a2fbeb4007d463839",
+    "environment": {
+      "node": "22.23.3",
+      "java": "21.0.7",
+      "docker": "29.8.1",
+      "project": "hk5-soopi-audit-20261106",
+      "flags": "Inventory/Finance OFF"
+    },
+    "timestamp": "2026-11-06",
+    "evidence": "reports/minh-chung-kiem-thu/soopi-audit-20261106",
+    "screenshots": [
+      "ui-extended/dashboard-chan-doan-tieng-viet-khong-thuc-thi-html-failed.png",
+      "ui-responsive-green/dashboard-chan-doan-tieng-viet-khong-thuc-thi-html-passed.png"
+    ]
+  },
+  {
+    "id": "BUG-011",
+    "title": "Selector F15-RULES khớp suite và restored result",
+    "module": "Playwright dashboard",
+    "endpoint": null,
+    "code": "BUG-011",
+    "type": "TEST_INFRA_FAILURE",
+    "severity": "P2",
+    "owner": "TV5",
+    "status": "FIXED_VERIFIED",
+    "steps": [
+      "Chạy suite regression/server hoặc website nêu trong báo cáo",
+      "Đối chiếu artifact RED/GREEN đúng source"
+    ],
+    "expected": "Hành vi và evidence nhất quán với trạng thái thực",
+    "actual": "Selector F15-RULES khớp suite và restored result",
+    "verifiedCause": "getByText strict mode trả2 phần tử sau phục hồi current run",
+    "suspectedCause": null,
+    "remediation": "Scope role checkbox, kiểm disabled khi run đang chạy",
+    "sha": "6418d8a8ca9ae7a70c7fbf8a2fbeb4007d463839",
+    "environment": {
+      "node": "22.23.3",
+      "java": "21.0.7",
+      "docker": "29.8.1",
+      "project": "hk5-soopi-audit-20261106",
+      "flags": "Inventory/Finance OFF"
+    },
+    "timestamp": "2026-11-06",
+    "evidence": "reports/minh-chung-kiem-thu/soopi-audit-20261106",
+    "screenshots": []
+  }
+]

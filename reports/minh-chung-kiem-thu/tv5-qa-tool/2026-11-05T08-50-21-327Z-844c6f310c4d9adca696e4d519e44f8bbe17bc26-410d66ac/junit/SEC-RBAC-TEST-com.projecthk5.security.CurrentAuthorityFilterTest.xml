@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.projecthk5.security.CurrentAuthorityFilterTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-05T08:51:31" hostname="MDUY-LECO" time="0.376">
+  <properties/>
+  <testcase name="refusedReservationRejectsTheWrite()" classname="com.projecthk5.security.CurrentAuthorityFilterTest" time="0.341"/>
+  <testcase name="writeProceedsWhenReleaseFails()" classname="com.projecthk5.security.CurrentAuthorityFilterTest" time="0.015"/>
+  <testcase name="authRefusalOrOutageFailsClosed()" classname="com.projecthk5.security.CurrentAuthorityFilterTest" time="0.008"/>
+  <testcase name="readsAndInternalRoutesSkipTheCheck()" classname="com.projecthk5.security.CurrentAuthorityFilterTest" time="0.001"/>
+  <testcase name="reservedWriteProceedsAndIsReleased()" classname="com.projecthk5.security.CurrentAuthorityFilterTest" time="0.008"/>
+  <system-out><![CDATA[15:51:31.845 [Test worker] WARN com.projecthk5.security.CurrentAuthorityFilter -- Write reservation not released, Auth will close it: InternalServerError
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
