@@ -1,0 +1,114 @@
+TAP version 13
+# Subtest: hai POST đồng thời chỉ nhận một run
+not ok 1 - hai POST đồng thời chỉ nhận một run
+  ---
+  duration_ms: 91.089
+  type: 'test'
+  location: 'D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-qa-dashboard-20261105\\tools\\tv5-qa-tester\\server\\audit.test.mjs:10:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    2 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 2
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/CMC%20Uni/5%20Ky%20Dong/WEB/BCK%20WEB/Project_HK5/.verification/tv5-qa-dashboard-20261105/tools/tv5-qa-tester/server/audit.test.mjs:13:9)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: reload server không giữ RUNNING mồ côi và không sửa raw history
+not ok 2 - reload server không giữ RUNNING mồ côi và không sửa raw history
+  ---
+  duration_ms: 6.7583
+  type: 'test'
+  location: 'D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-qa-dashboard-20261105\\tools\\tv5-qa-tester\\server\\audit.test.mjs:16:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'RUNNING'
+    - 'INTERRUPTED'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'INTERRUPTED'
+  actual: 'RUNNING'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/CMC%20Uni/5%20Ky%20Dong/WEB/BCK%20WEB/Project_HK5/.verification/tv5-qa-dashboard-20261105/tools/tv5-qa-tester/server/audit.test.mjs:20:9)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: toàn bộ skipped không được gắn PASS
+not ok 3 - toàn bộ skipped không được gắn PASS
+  ---
+  duration_ms: 65.319
+  type: 'test'
+  location: 'D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-qa-dashboard-20261105\\tools\\tv5-qa-tester\\server\\audit.test.mjs:23:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    'FAIL' !== 'SKIP'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'SKIP'
+  actual: 'FAIL'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/CMC%20Uni/5%20Ky%20Dong/WEB/BCK%20WEB/Project_HK5/.verification/tv5-qa-dashboard-20261105/tools/tv5-qa-tester/server/audit.test.mjs:25:73)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: exec exception được lưu lỗi và giải phóng run thay vì treo
+not ok 4 - exec exception được lưu lỗi và giải phóng run thay vì treo
+  ---
+  duration_ms: 45.3791
+  type: 'test'
+  location: 'D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-qa-dashboard-20261105\\tools\\tv5-qa-tester\\server\\audit.test.mjs:27:1'
+  failureType: 'unhandledRejection'
+  error: 'EACCES process'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    Runner.exec (file:///D:/CMC%20Uni/5%20Ky%20Dong/WEB/BCK%20WEB/Project_HK5/.verification/tv5-qa-dashboard-20261105/tools/tv5-qa-tester/server/audit.test.mjs:28:61)
+    Runner.process (file:///D:/CMC%20Uni/5%20Ky%20Dong/WEB/BCK%20WEB/Project_HK5/.verification/tv5-qa-dashboard-20261105/tools/tv5-qa-tester/server/runner.mjs:139:33)
+  ...
+# Subtest: download raw log và report.html trả đúng file
+not ok 5 - download raw log và report.html trả đúng file
+  ---
+  duration_ms: 49.0133
+  type: 'test'
+  location: 'D:\\CMC Uni\\5 Ky Dong\\WEB\\BCK WEB\\Project_HK5\\.verification\\tv5-qa-dashboard-20261105\\tools\\tv5-qa-tester\\server\\audit.test.mjs:32:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    404 !== 200
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 200
+  actual: 404
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/CMC%20Uni/5%20Ky%20Dong/WEB/BCK%20WEB/Project_HK5/.verification/tv5-qa-dashboard-20261105/tools/tv5-qa-tester/server/audit.test.mjs:36:139)
+    process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 0
+# fail 5
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3112.2746

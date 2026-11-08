@@ -1,0 +1,7 @@
+
+Running 3 tests using 1 worker
+
+[1/3] ui\dashboard.spec.mjs:13:1 › dashboard-hien-thi-suite-va-gates
+[2/3] ui\dashboard.spec.mjs:21:1 › dashboard-chi-goi-suite-allowlist
+[3/3] ui\dashboard.spec.mjs:29:1 › dashboard-chan-doan-tieng-viet-khong-thuc-thi-html
+  3 passed (1.4s)

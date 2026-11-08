@@ -1,0 +1,4 @@
+id,status,expected,actual,durationMs,sha,environment
+"F15-RULES","PASS","Review rules và giới hạn 1000 UTF-16 đạt","PASS: exit 0, 16 test, 16 PASS, 0 FAIL, 0 SKIP","19016","799d81aaac620ddeb81dfbd085a65baade1a3aeb","{""platform"":""win32"",""node"":""v22.23.3"",""localhost"":true}"
+"F16-RULES","PASS","Rules 5%/0%, bounds và gate fail-closed đạt trong unit tests","PASS: exit 0, 15 test, 15 PASS, 0 FAIL, 0 SKIP","15911","799d81aaac620ddeb81dfbd085a65baade1a3aeb","{""platform"":""win32"",""node"":""v22.23.3"",""localhost"":true}"
+"QA-UI","PASS","Dashboard hoạt động và mỗi Playwright test có screenshot","PASS: exit 0, 2 test, 2 PASS, 0 FAIL, 0 SKIP","1589","799d81aaac620ddeb81dfbd085a65baade1a3aeb","{""platform"":""win32"",""node"":""v22.23.3"",""localhost"":true}"

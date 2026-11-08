@@ -1,0 +1,34 @@
+{
+  "id": "2026-11-04T20-40-03-127Z-bf6f5f673795fd3803d526ec73de4dc1e18757c1-8e48e035",
+  "sha": "bf6f5f673795fd3803d526ec73de4dc1e18757c1",
+  "timestamp": "2026-11-04T20:40:03.128Z",
+  "environment": {
+    "platform": "win32",
+    "node": "v22.23.3",
+    "localhost": true
+  },
+  "status": "FAIL",
+  "suites": [
+    {
+      "id": "QA-UI-DIAGNOSTIC",
+      "status": "FAIL",
+      "expected": "Một assertion chẩn đoán thất bại; runner phải ghi FAIL và chụp ảnh thật",
+      "actual": "FAIL: exit 1, 1 test, 0 PASS, 1 FAIL, 0 SKIP",
+      "startedAt": "2026-11-04T20:40:03.131Z",
+      "durationMs": 6303,
+      "counts": {
+        "tests": 1,
+        "pass": 0,
+        "fail": 1,
+        "skip": 0
+      },
+      "exitCode": 1,
+      "log": "QA-UI-DIAGNOSTIC.log",
+      "junit": [],
+      "screenshots": [
+        "screenshots/2026-11-04T20-40-03-127Z-bf6f5f673795fd3803d526ec73de4dc1e18757c1-8e48e035/diagnostic-co-y-fail-de-kiem-tra-anh-failed.png"
+      ]
+    }
+  ],
+  "finishedAt": "2026-11-04T20:40:09.435Z"
+}

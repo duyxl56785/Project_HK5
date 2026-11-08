@@ -1,0 +1,15 @@
+hk5-soopi-audit-20261106-frontend-1 Up 10 minutes 127.0.0.1:5173->80/tcp
+hk5-soopi-audit-20261106-api-gateway-1 Up 10 minutes 127.0.0.1:18080->8080/tcp
+hk5-soopi-audit-20261106-auth-service-1 Up 10 minutes 
+hk5-soopi-audit-20261106-seller-service-1 Up 10 minutes 
+hk5-soopi-audit-20261106-order-service-1 Up 10 minutes 
+hk5-soopi-audit-20261106-product-service-1 Up 10 minutes 
+hk5-soopi-audit-20261106-inventory-service-1 Up 10 minutes 
+hk5-soopi-audit-20261106-cart-service-1 Up 10 minutes 
+hk5-soopi-audit-20261106-notification-service-1 Up 10 minutes 
+hk5-soopi-audit-20261106-user-service-1 Up 10 minutes 
+hk5-soopi-audit-20261106-config-server-1 Up 10 minutes (healthy) 
+hk5-soopi-audit-20261106-postgres-1 Up 11 minutes (healthy) 5432/tcp
+hk5-soopi-audit-20261106-discovery-server-1 Up 11 minutes (healthy) 
+hk5-soopi-audit-20261106-redis-1 Up 11 minutes (healthy) 6379/tcp
+hk5-soopi-audit-20261106-kafka-1 Up 11 minutes (healthy) 9092/tcp

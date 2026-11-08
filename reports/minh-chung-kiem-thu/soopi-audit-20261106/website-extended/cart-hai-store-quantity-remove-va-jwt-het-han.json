@@ -1,0 +1,87 @@
+[
+  {
+    "kind": "http",
+    "endpoint": "/api/auth/register",
+    "status": 201
+  },
+  {
+    "kind": "http",
+    "endpoint": "/api/auth/login",
+    "status": 200
+  },
+  {
+    "kind": "http",
+    "endpoint": "/api/admin/finance",
+    "status": 403
+  },
+  {
+    "kind": "http",
+    "endpoint": "/api/orders",
+    "status": 401
+  },
+  {
+    "kind": "http",
+    "endpoint": "/api/catalog/products?size=50",
+    "status": 200
+  },
+  {
+    "kind": "http",
+    "endpoint": "/api/cart/items",
+    "status": 200
+  },
+  {
+    "kind": "http",
+    "endpoint": "/api/cart/items",
+    "status": 200
+  },
+  {
+    "kind": "http",
+    "endpoint": "/api/cart/items/00510dd0-ef16-404f-aba7-a7b92a624e26",
+    "status": 200
+  },
+  {
+    "kind": "http",
+    "endpoint": "/api/cart/items/00510dd0-ef16-404f-aba7-a7b92a624e26",
+    "status": 400
+  },
+  {
+    "kind": "http",
+    "endpoint": "/api/cart/items/00510dd0-ef16-404f-aba7-a7b92a624e26",
+    "status": 200
+  },
+  {
+    "kind": "http",
+    "endpoint": "/api/cart",
+    "status": 200
+  },
+  {
+    "kind": "http",
+    "endpoint": "/api/auth/login",
+    "status": 200
+  },
+  {
+    "kind": "http",
+    "endpoint": "/api/notifications/unread-count",
+    "status": 200
+  },
+  {
+    "kind": "http",
+    "endpoint": "/api/auth/refresh",
+    "status": 200
+  },
+  {
+    "kind": "http",
+    "endpoint": "/api/notifications/unread-count",
+    "status": 200
+  },
+  {
+    "kind": "http",
+    "endpoint": "/api/cart",
+    "status": 200
+  },
+  {
+    "kind": "http",
+    "endpoint": "/api/cart",
+    "status": 200
+  }
+]

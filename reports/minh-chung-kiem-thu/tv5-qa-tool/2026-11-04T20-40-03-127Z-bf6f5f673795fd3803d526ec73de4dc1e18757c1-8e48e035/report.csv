@@ -1,0 +1,2 @@
+id,status,expected,actual,durationMs,sha,environment
+"QA-UI-DIAGNOSTIC","FAIL","Một assertion chẩn đoán thất bại; runner phải ghi FAIL và chụp ảnh thật","FAIL: exit 1, 1 test, 0 PASS, 1 FAIL, 0 SKIP","6303","bf6f5f673795fd3803d526ec73de4dc1e18757c1","{""platform"":""win32"",""node"":""v22.23.3"",""localhost"":true}"

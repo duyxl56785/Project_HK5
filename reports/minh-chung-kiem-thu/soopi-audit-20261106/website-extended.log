@@ -1,0 +1,15 @@
+
+Running 4 tests using 1 worker
+
+
+
+(node:41000) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/4] website\smoke.spec.mjs:22:1 › public-catalog-stores-va-responsive
+website\smoke.spec.mjs:22:1 › public-catalog-stores-va-responsive
+SOOPI_OBSERVATION {"kind":"network","endpoint":"/assets/CatalogPage-HFIB9wid.css","code":"net::ERR_NO_BUFFER_SPACE"}
+
+[2/4] website\smoke.spec.mjs:27:1 › register-login-logout-validation-va-duplicate
+[3/4] website\smoke.spec.mjs:39:1 › dang-nhap-sai-thong-bao-loi-va-xss-safe
+[4/4] website\smoke.spec.mjs:43:1 › cart-hai-store-quantity-remove-va-jwt-het-han
+  4 passed (7.0s)

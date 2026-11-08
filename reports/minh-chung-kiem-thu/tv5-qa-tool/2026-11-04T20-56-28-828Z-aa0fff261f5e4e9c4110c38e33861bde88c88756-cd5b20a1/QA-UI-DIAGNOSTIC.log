@@ -1,0 +1,31 @@
+
+Running 1 test using 1 worker
+
+[1/1] ui\dashboard.spec.mjs:30:50 › diagnostic-co-y-fail-de-kiem-tra-anh
+  1) ui\dashboard.spec.mjs:30:50 › diagnostic-co-y-fail-de-kiem-tra-anh ────────────────────────────
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: 'Không tồn tại' })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('heading', { name: 'Không tồn tại' }) with timeout 5000ms
+      - waiting for getByRole('heading', { name: 'Không tồn tại' })
+
+
+      30 | if (process.env.SOOPI_QA_VERIFY_FAILURE === '1') test('diagnostic-co-y-fail-de-kiem-tra-anh', async ({page}) => {
+      31 |   await page.goto('/');
+    > 32 |   await expect(page.getByRole('heading',{name:'Không tồn tại'})).toBeVisible();
+         |                                                                  ^
+      33 | });
+      34 |
+        at D:\CMC Uni\5 Ky Dong\WEB\BCK WEB\Project_HK5\.verification\tv5-qa-dashboard-20261105\tools\tv5-qa-tester\ui\dashboard.spec.mjs:32:66
+
+    Error Context: test-results\dashboard-diagnostic-co-y-fail-de-kiem-tra-anh\error-context.md
+
+
+  1 failed
+    ui\dashboard.spec.mjs:30:50 › diagnostic-co-y-fail-de-kiem-tra-anh ─────────────────────────────

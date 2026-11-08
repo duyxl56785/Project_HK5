@@ -1,0 +1,8 @@
+fbdb7b0c9397a91a63f58b9d24071cd2e2af10fa3cf7b36f0c7a5954d66fadb6  report.json
+afa78f289c34d0ce9c2abef0b07dcfa22ad863b265f8ca8e4e1f7e0bd1020b6d  report.html
+ca27c01436a91f3c8da52341bd699e2f50a4d9837ec39a24ae6bf47ee9df24e4  report.csv
+0522818ab60048f4eb15a7bf968c5bdbe3c292c103d8c96e5ff03cfe06e2693f  QA-UI.log
+42bafa390480ba7ebf34dad54b454fdc4c83176c1edd1babaaff0289ce585afc  QA-UI-DIAGNOSTIC.log
+f52fed50f1a6dbdf94f46f3eab832b0b3cbf66b7006e6bb5b3bfd9615eff7c9b  screenshots/2026-11-04T20-56-28-828Z-aa0fff261f5e4e9c4110c38e33861bde88c88756-cd5b20a1/QA-UI/dashboard-chi-goi-suite-allowlist-passed.png
+2e72cfa6d1d9c2f3bf66d46f013a8d09867c66deed950e419d99c73513ec4886  screenshots/2026-11-04T20-56-28-828Z-aa0fff261f5e4e9c4110c38e33861bde88c88756-cd5b20a1/QA-UI/dashboard-hien-thi-suite-va-gates-passed.png
+2e72cfa6d1d9c2f3bf66d46f013a8d09867c66deed950e419d99c73513ec4886  screenshots/2026-11-04T20-56-28-828Z-aa0fff261f5e4e9c4110c38e33861bde88c88756-cd5b20a1/QA-UI-DIAGNOSTIC/diagnostic-co-y-fail-de-kiem-tra-anh-failed.png

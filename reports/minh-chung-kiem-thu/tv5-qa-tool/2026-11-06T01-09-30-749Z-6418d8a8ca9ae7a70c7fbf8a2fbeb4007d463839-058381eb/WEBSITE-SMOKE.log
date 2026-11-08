@@ -1,0 +1,8 @@
+
+Running 4 tests using 1 worker
+
+[1/4] website\smoke.spec.mjs:22:1 › public-catalog-stores-va-responsive
+[2/4] website\smoke.spec.mjs:27:1 › register-login-logout-validation-va-duplicate
+[3/4] website\smoke.spec.mjs:39:1 › dang-nhap-sai-thong-bao-loi-va-xss-safe
+[4/4] website\smoke.spec.mjs:43:1 › cart-hai-store-quantity-remove-va-jwt-het-han
+  4 passed (4.5s)
