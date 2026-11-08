@@ -25,7 +25,7 @@ Nguồn:
 
 **Sơ đồ 1 — Checkout và ranh giới hệ thống (mô tả code, không phải log thực thi):**
 
-~~~mermaid
+```mermaid
 sequenceDiagram
     actor Khach as Khách hàng
     participant UI as React
@@ -52,11 +52,11 @@ sequenceDiagram
         O->>DB: Mark NEEDS_RECONCILIATION
         O-->>UI: 503, CHECKOUT_OUTCOME_UNKNOWN_RECONCILIATION_REQUIRED
     end
-~~~
+```
 
 **Sơ đồ 2 — Idempotency, rollback và UNKNOWN:**
 
-~~~mermaid
+```mermaid
 flowchart TD
     A[Begin attempt theo Customer và Idempotency-Key] --> B{SUCCEEDED?}
     B -- Có --> C[So shipping và trả lại cùng Order]
@@ -68,7 +68,7 @@ flowchart TD
     H --> I[Finalize Cart và Order History]
     G -- Không xác định --> J[Quarantine / NEEDS_RECONCILIATION]
     J --> K[Không tự RELEASE, retry mù hoặc tạo ID mới]
-~~~
+```
 
 
 ### 3. Diễn giải luồng xử lý Checkout theo source
@@ -106,7 +106,8 @@ Nguồn bổ sung: [OrderController](https://github.com/duyxl56785/Project_HK5/b
 | Same-key replay, thay key/body, giá đổi/hết hàng, revision/Product | **PASS trong các case đã chạy** | TV3 6/6 negative Gateway/API tại #145, TV2 owner [10-case final #147](https://github.com/duyxl56785/Project_HK5/pull/147); source integrated main |
 | Order History | **PASS trong demo** | TV2 browser/HTTP History snapshot tại #147, có test UI tích hợp; không thay cho final UAT |
 | CI mới tại HEAD PR #187 (chưa merge) | **3/3 SUCCESS** | [PR #187](https://github.com/duyxl56785/Project_HK5/pull/187) `bc824863`: Hosted PostgreSQL16 **140/140 PASS**, frontend **166/166 PASS**, Playwright qua Gateway cô lập **20/20 PASS**. Đây là SHA PR, **không phải final UAT trên main**. |
-| UNKNOWN claim-conflict thật | **BLOCKED_DESIGN** | Chưa có legitimate fixture/provider COMMIT receipt; không dùng mock làm real contention |\n| UNKNOWN timeout/lost-response thật | **NOT_RUN / BLOCKED_OWNER** | [#170](https://github.com/duyxl56785/Project_HK5/pull/170) mới là preparation; thiếu case-level approval, full tuple và read-only provider oracle |
+| UNKNOWN claim-conflict thật | **BLOCKED_DESIGN** | Chưa có legitimate fixture/provider COMMIT receipt; không dùng mock làm real contention |
+| UNKNOWN timeout/lost-response thật | **NOT_RUN / BLOCKED_OWNER** | [#170](https://github.com/duyxl56785/Project_HK5/pull/170) mới là preparation; thiếu case-level approval, full tuple và read-only provider oracle |
 | Final UAT 2 Seller / 2 Store / 1 Customer / 1 Admin, Finance production | **NOT ACCEPTED** | TV5 [#18](https://github.com/duyxl56785/Project_HK5/issues/18) OPEN; M01, grants/retention và các owner approvals còn độc lập |
 
 **Nhận định:** TV3 đã hoàn thành mã nguồn Checkout COD/Cart/Order/Order History và kiểm chứng chức năng demo nhiều cửa hàng với evidence/CI đã ghi nhận. Chưa có cơ sở để tuyên bố full production readiness hoặc failover/UNKNOWN/Finance UAT cuối. Khi làm video demo cần quay màn hình giỏ 2 Store, xác nhận COD, Order ID + 2 SellerOrders, Order History và tình huống lỗi; dẫn evidence SQL/log thực thay vì số PASS ước lượng.
