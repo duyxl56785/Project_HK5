@@ -1,0 +1,70 @@
+{
+  "timestamp": "2026-11-08T23:02:47.372994+07:00",
+  "pr188Baseline": "b2187441f4ae669f041ae3274cd53f4b7b7e6bf6",
+  "applicationSource": "78de5c08205b41986a5204a8150a9ef810507847",
+  "original351Diff": {
+    "status": "NOT_RUN",
+    "reason": "ORIGINAL_FILE_MISSING",
+    "currentMeasuredSHA256": null
+  },
+  "availableIssueDraftDiff": {
+    "status": "VALIDATED",
+    "commandExit": 1,
+    "temporaryPatchApplyExit": 0,
+    "resultByteIdenticalToPR188Baseline": true,
+    "sha256": "d4b7a371fd5d46fc7595bd6b1894697f8341f717e2db72fbcc161e881b0905a2"
+  },
+  "documentChecks": {
+    "status": "PASS",
+    "localLinksChecked": 22,
+    "missingLocalLinks": [],
+    "jsonValid": true,
+    "secretPatternScan": "PASS",
+    "trackedDiffCheckExit": 0,
+    "applicationSourceChanged": false
+  },
+  "live": {
+    "status": "NOT_RUN",
+    "blocked": "NO_APPROVED_CAPTURE_STACK_AND_FIXTURES",
+    "executed": 0,
+    "passed": 0,
+    "failed": 0,
+    "exit": null,
+    "sqlOracle": "NOT_RUN"
+  },
+  "screenshots": [
+    {
+      "name": "checkout-01-cart-two-stores.png",
+      "status": "NOT_CAPTURED",
+      "sha256": null,
+      "path": null
+    },
+    {
+      "name": "checkout-02-cod-confirmation.png",
+      "status": "NOT_CAPTURED",
+      "sha256": null,
+      "path": null
+    },
+    {
+      "name": "checkout-03-order-success.png",
+      "status": "NOT_CAPTURED",
+      "sha256": null,
+      "path": null
+    },
+    {
+      "name": "checkout-03b-order-history.png",
+      "status": "NOT_CAPTURED",
+      "sha256": null,
+      "path": null
+    },
+    {
+      "name": "checkout-04-db-receipt.png",
+      "status": "NOT_CAPTURED",
+      "sha256": null,
+      "path": null
+    }
+  ],
+  "flagsChanged": false,
+  "issue160Ticked": false,
+  "overall": "PARTIAL_BLOCKED_ORIGINAL_AND_CAPTURE"
+}

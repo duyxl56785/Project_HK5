@@ -4,7 +4,7 @@
 
 ### 1. Mục tiêu và phạm vi chức năng
 
-Checkout được xây dựng cho sàn thương mại điện tử nhiều cửa hàng, hỗ trợ thanh toán **COD (Cash On Delivery)**. Một khách hàng có thể đưa sản phẩm từ nhiều Store vào cùng giỏ, kiểm tra lại giá/khả dụng và gửi **một** lệnh đặt hàng; hệ thống sinh một đơn tổng (`Order`/`MarketplaceOrder`) gắn nhiều đơn con (`SellerOrder`) theo Store. Mỗi đơn lưu snapshot sản phẩm, số lượng, đơn giá và khoản tiền tại thời điểm tạo. Website hiện chưa tích hợp thanh toán online, hoàn tiền tự động hay hợp đồng Finance production đã được phê duyệt.
+Checkout được xây dựng cho sàn thương mại điện tử nhiều cửa hàng, hỗ trợ thanh toán **COD (Cash On Delivery)**. Một khách hàng có thể đưa sản phẩm từ nhiều Store vào cùng giỏ, kiểm tra lại giá/khả dụng và gửi **một** lệnh đặt hàng; hệ thống sinh một đơn tổng `Order` (khái niệm nghiệp vụ MarketplaceOrder, không phải entity/bảng khác) gắn nhiều đơn con (`SellerOrder`) theo Store. Mỗi đơn lưu snapshot sản phẩm, số lượng, đơn giá và khoản tiền tại thời điểm tạo. Website hiện chưa tích hợp thanh toán online, hoàn tiền tự động hay hợp đồng Finance production đã được phê duyệt.
 
 ### 2. Công nghệ và kiến trúc
 
@@ -34,6 +34,7 @@ sequenceDiagram
     participant C as Cart
     participant P as Catalog
     participant J as Durable draft
+    participant L as Inventory journal
     participant I as Inventory
     participant DB as Order PostgreSQL
     Khach->>UI: Xác nhận COD nhiều Store
@@ -43,7 +44,10 @@ sequenceDiagram
     O->>C: Claim Cart theo revision
     O->>P: Xác minh Product, SKU, giá và owner
     O->>J: Commit frozen Order graph và outbox payload
-    O->>I: RESERVE immutable lines
+    O->>L: T1 commit intent, atomic PENDING claim và generation
+    O->>I: RESERVE exact persisted SKU/quantity
+    I-->>O: Kết quả cần xác minh theo operation ID/type/SKU
+    O->>L: T2 ghi outcome theo cùng send generation
     alt Commit được chứng minh
         O->>DB: Lưu Order, SellerOrders, items và outbox
         O->>C: Finalize Cart (có thể retry)
@@ -60,11 +64,14 @@ sequenceDiagram
 flowchart TD
     A[Begin attempt theo Customer và Idempotency-Key] --> B{SUCCEEDED?}
     B -- Có --> C[So shipping và trả lại cùng Order]
-    B -- Không --> D[Claim Cart, so expectedItems, verify Catalog]
+    B -- Không --> N{Attempt vừa tạo và PROCESSING?}
+    N -- Không --> R[409 reconciliation; không tự chạy lại Checkout]
+    N -- Có --> D[Claim Cart, so expectedItems, verify Catalog]
     D --> E[Commit durable Draft trước RESERVE]
     E --> F[Gửi Inventory RESERVE với stable operation ID]
     F --> G{Kết quả chắc chắn?}
     G -- Thành công --> H[Commit Order và outbox]
+    G -- Từ chối chắc chắn không đổi kho --> Q[REJECTED và nhả Cart claim; không tạo đơn một phần]
     H --> I[Finalize Cart và Order History]
     G -- Không xác định --> J[Quarantine / NEEDS_RECONCILIATION]
     J --> K[Không tự RELEASE, retry mù hoặc tạo ID mới]
@@ -80,6 +87,8 @@ flowchart TD
 **Bước 3 — Nhận quyền xử lý lần đặt hàng.** `IdempotencyCoordinator.begin(customerId,key,fingerprint)` tạo hoặc đọc CheckoutAttempt bền vững. Khi attempt đã `SUCCEEDED`, server đọc lại Order theo customer, so cả shipping, trả về Order cũ, không tạo Order/Inventory RESERVE mới; thay key/body không trở thành giao dịch mới một cách âm thầm. Trạng thái chưa xác định cần reconciliation, không coi là chắc chắn thất bại.
 
 **Bước 4 — Đối chiếu giỏ với dữ liệu hiện hành.** `CartPort.claim` dùng key và revision để chống hai Checkout cùng giỏ. Server so `expectedItems` với snapshot Cart; qua Catalog kiểm tra Product, Seller→Store, SKU, giá, quantity, tính tiền bằng `BigDecimal` và kiểm tra giá/giới hạn lưu trữ. Nếu Product bị khóa/thiếu, Store không hợp lệ, stale revision hay giá thay đổi thì yêu cầu bị từ chối với lý do phù hợp, không lặng lẽ loại bỏ một món khỏi giỏ.
+
+Đường chạy hiện tại gọi `CatalogPort.verify(productId)` từng Product qua HTTP. `CatalogCheckoutBatchPreflight` còn trong repository nhưng không được nối vào CheckoutService; không gọi đường đang chạy là batch C01/E01 đã tích hợp. Giá/Seller/Store là snapshot hiện hành lúc đọc, không phải một distributed lock giữ dữ liệu Catalog tới Order commit.
 
 **Bước 5 — Chuẩn bị bản nháp bền vững và dự trữ tồn kho.** Order tổng, SellerOrders và items được gán ID ổn định, snapshot tiền, shipping và outbox payload trước lần gọi Inventory. `CheckoutDraftJournal` lưu graph qua transaction riêng; Inventory `RESERVE` được gửi dựa trên Product/SKU và quantity đã kiểm chứng, không sử dụng map Product↔SKU không đáng tin từ client.
 
@@ -97,14 +106,18 @@ Nguồn bổ sung: [OrderController](https://github.com/duyxl56785/Project_HK5/b
 - **Ownership:** chỉ Customer gốc được checkout/đọc Order theo JWT; fulfillment của từng SellerOrder vẫn theo Seller/Store owner và phân quyền Gateway/backend.
 - **Tiền:** tính bằng `BigDecimal` và kiểm tra giới hạn lưu trữ, không dùng float tùy tiện; quy tắc chính sách tiền COD/Finance production (`M01`) vẫn là gate phê duyệt riêng.
 
+**Ranh giới cần nêu khi bảo vệ:** draft và journal dùng REQUIRES_NEW trước Inventory HTTP; T2 và transaction writer là các commit khác nhau. Writer commit Order/SellerOrders/items, outbox và SUCCEEDED cùng transaction Order DB. Rollback ở writer không tự rollback stock đã commit ở Inventory. Cart release chỉ mở khóa giỏ, khác với Inventory RELEASE; UNKNOWN không bị tự retry, RELEASE hoặc hoàn tất Order.
+
+**Database thực tế:** `orders` → `seller_orders` → `order_items`; `checkout_attempts` unique theo Customer/key; draft V5 và Inventory journal V2 tham chiếu attempt. Giá trị gross/platform_fee được lưu, sellerNet được suy ra từ hiệu; không có cột seller_net hay fee-rate riêng trong SellerOrder. Shipping nằm trong Order/draft nên cần bảo vệ PII; SHA256 của draft phát hiện nội dung lệch, không mã hóa dữ liệu. Chính sách M01 đã chọn cho demo/bản nộp ([quyết định](../M01_FINANCE_DECISION.md)), không cấp phép Finance production.
+
 ### 5. Kiểm thử và kết quả đã có bằng chứng
 
 | Nội dung | Kết quả | Phạm vi/chứng cứ |
 | --- | --- | --- |
 | Multi-Store COD Checkout | **PASS demo lịch sử, không phải final UAT** | TV3 HTTP/SQL tại [#145](https://github.com/duyxl56785/Project_HK5/pull/145); TV2 báo 10 ca tại [#147](https://github.com/duyxl56785/Project_HK5/pull/147), raw receipt riêng của 10 ca vẫn chưa được đối chiếu |
 | One Order + 2 SellerOrders, snapshot tiền | **PASS demo đã ghi** | TV3 frozen SQL Order/SellerOrder/Item snapshots trên app `bf8eb3a`; không gộp với browser History từ HEAD khác thành một lượt UAT duy nhất |
-| Same-key replay, thay key/body, giá đổi/hết hàng, revision/Product | **PASS trong các case đã chạy** | TV3 6/6 negative Gateway/API tại #145, TV2 owner [10-case final #147](https://github.com/duyxl56785/Project_HK5/pull/147); source integrated main |
-| Order History | **PASS trong demo** | TV2 browser/HTTP History snapshot tại #147, có test UI tích hợp; không thay cho final UAT |
+| Same-key replay, đổi body/shipping, expectedItems, giá đổi/hết hàng/Product | **6/6 PASS lịch sử, API-only** | [Raw results/HTTP/SQL](../../../backend/order-service/review-evidence/negative-checkout-20261102/results.json): baseline `99979a75`, app thực chạy `bf8eb3a`; không nhận là chạy mới trên main. Raw receipt riêng cho 10-case TV2 chưa được kiểm đủ nên không cộng vào PASS. |
+| Order History | **Có route/UI và API; lượt demo TV2 riêng chưa xác minh đủ raw evidence tại checkpoint này** | Không suy một lượt History PASS mới từ source hoặc CI xanh. Khi trích demo TV2 cần exact SHA, report và ảnh gốc tương ứng; chưa phải final UAT. |
 | CI mới tại HEAD PR #187 (chưa merge) | **3/3 SUCCESS** | [PR #187](https://github.com/duyxl56785/Project_HK5/pull/187) `bc824863`: Hosted PostgreSQL16 **140/140 PASS**, frontend **166/166 PASS**, Playwright qua Gateway cô lập **20/20 PASS**. Đây là SHA PR, **không phải final UAT trên main**. |
 | UNKNOWN claim-conflict thật | **BLOCKED_DESIGN** | Chưa có legitimate fixture/provider COMMIT receipt; không dùng mock làm real contention |
 | UNKNOWN timeout/lost-response thật | **NOT_RUN / BLOCKED_OWNER** | [#170](https://github.com/duyxl56785/Project_HK5/pull/170) mới là preparation; thiếu case-level approval, full tuple và read-only provider oracle |
@@ -161,6 +174,8 @@ Nguồn bổ sung: [OrderController](https://github.com/duyxl56785/Project_HK5/b
 - Bản này publish để TV2 REVIEW trên nhánh riêng, **chưa merge vào báo cáo chính**. Chỉ tick `[x] Viết phần Checkout trong báo cáo` ở #160 khi TV2 chốt vị trí và ghép nội dung vào tài liệu cuối.
 
 **Checkpoint 08/11:** Seller Return #182 (gồm #183) đã merge; bản sửa P3 đang ở [PR #187](https://github.com/duyxl56785/Project_HK5/pull/187) (CI 3/3 SUCCESS, READY FOR REVIEW, chưa merge). Inventory restock RECEIVED exactly-once, UNKNOWN fault thật, Finance production và final UAT #18 vẫn chưa nghiệm thu.
+
+**Checkpoint Codex Terminal 08/11 — các gate vẫn chưa đủ:** file gốc 351 dòng không có trong filesystem hiện tại nên unified diff A→B là **NOT_RUN / ORIGINAL_FILE_MISSING**; không tái dựng từ trí nhớ để nhận là bản gốc. Docker hoạt động nhưng có 0 container/0 volume và chưa có tám biến fixture `TV3_E2E_*`. Chưa tìm thấy phê duyệt TV2/TV5 cho stack capture cụ thể trong nguồn đã đọc: live two-store **NOT_RUN**, các ảnh **NOT_CAPTURED**, SQL oracle mới **NOT_RUN**. Xem [kết quả và manifest](evidence/20261108/README.md). Không có ảnh giả hoặc flag nào được bật.
 
 ---
 **Truy xuất:** Source căn cứ `main@78de5c08205b41986a5204a8150a9ef810507847`; [bộ ma trận UAT TV5](../../../tests/TV5_UAT_ACCEPTANCE_CURRENT.md) là baseline có trạng thái NOT_RUN/BLOCKED, không tự coi PASS. Bản này được dựng lại từ Issue #160 vì `/workspace/tv3-checkout-project-report-20261107/.../CHECKOUT.md` chỉ có trong phiên Codex; phải đối chiếu với bản Codex 351 dòng trước khi quyết định tài liệu cuối.

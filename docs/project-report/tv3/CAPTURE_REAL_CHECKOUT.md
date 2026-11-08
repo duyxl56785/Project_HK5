@@ -2,6 +2,8 @@
 
 **Trạng thái: PREPARED, NOT_RUN / NOT_CAPTURED.** Tài liệu này là quy trình chuẩn bị an toàn; chưa có ảnh mới được tạo. Liên quan [PR #188](https://github.com/duyxl56785/Project_HK5/pull/188), [Issue #160](https://github.com/duyxl56785/Project_HK5/issues/160) và [TV5 UAT #18](https://github.com/duyxl56785/Project_HK5/issues/18).
 
+**Read-only preflight thực tế 08/11, Codex Terminal:** local Docker 28.4.0/VFS hoạt động; `docker ps -a` và volume list đều rỗng. Cả tám biến bắt buộc cho two-store (base URL, Customer account/password, Products, PG container/user và hai DB) đều chưa được cấp. Đã đọc PR #188 và các bình luận truy cập được của #160/#18, chưa có phê duyệt stack capture xác định source/project/ports/fixtures cùng giới hạn công bố ảnh của TV2/TV5. Đây là `BLOCKED_CAPTURE_STACK_AND_FIXTURES`, **không phải Docker unavailable**. Không chạy test, mở DB, khởi động stack, dùng credential cũ hay bật flags. Không tạo ảnh mới. [Evidence](evidence/20261108/README.md).
+
 ## 1. Điểm đặt ảnh trong báo cáo nhóm
 
 Bản Word `Bao_cao_Smart_ECommerce.docx` (nội dung tổng hợp đến 25/10/2026) có **mục 6 — KẾT QUẢ DEMO WEB/APP**, trang 10: **Hình 6.4. Giỏ hàng và checkout gồm sản phẩm từ hai Store**. Hiện là `[CHÈN ẢNH DEMO THỰC TẾ]`. Báo cáo chỉ có thể dùng ảnh runtime thật, không dùng preview fixture hoặc ảnh giỏ trống.
@@ -31,6 +33,8 @@ Dùng **Codex Chat** đọc source test và tạo bản patch tạm **trong work
 - **Evidence D**: đối chiếu bằng các query chỉ đọc (Order root, SellerOrders, Item snapshots, Inventory operation/stock trước-sau) và viết bảng **đã redacted** với SHA/receipts; không lấy ảnh terminal có chứa secrets. Nếu chưa có quyền DB read-only, ghi `NOT_CAPTURED`.
 
 Dùng `page.screenshot({ path: ..., fullPage: true, mask: [...] })` **chỉ trong private output directory ngoài repository**. Tuyệt đối không bật `trace: 'on'`/video trên test Auth đang giữ token. Giữ các assertion sẵn có và không bỏ kiểm tra stock/replay để đổi lấy ảnh đẹp.
+
+Mask phải phủ PII ở cả form **và Order detail/History sau thành công**, kể cả tên account trong header, shipping name/phone/address và dữ liệu nhận diện khác được TV5 yêu cầu. Tên input thực tế trong source là `Người nhận`, `Số điện thoại`, `Địa chỉ`; đối chiếu DOM tại SHA được duyệt thay vì đoán selector. Sau khi lưu phải xem pixel của ảnh đã mask trước khi công bố; không lưu bản unmasked/trace/network dump vào repository. Evidence D có thể là JSON/Markdown projection đã redacted từ SQL READ ONLY; không bắt buộc tạo ảnh terminal, và không tạo PNG giả từ bảng mẫu để thay receipt thật.
 
 ## 5. Cách chạy khi stack đã được chủ dự án cho phép
 

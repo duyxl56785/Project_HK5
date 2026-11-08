@@ -1,0 +1,36 @@
+{
+  "original351": {
+    "path": "/workspace/tv3-checkout-project-report-20261107/docs/project-report/tv3/CHECKOUT.md",
+    "exists": false,
+    "sha256": null,
+    "expectedLinesFromPriorSession": 351,
+    "priorSessionReportedSHA256": "0fd4d7cb4f4de62fee60ebb1ee20df417fcc19748ba7cdfbdf0d3e6c5e34b087",
+    "priorSHA256VerificationThisSession": "NOT_RUN; original absent"
+  },
+  "pr188Baseline": {
+    "head": "b2187441f4ae669f041ae3274cd53f4b7b7e6bf6",
+    "sha256": "4c200060ca78b5cc7caf44f1ca747fec3e1a8c9a510948fea3c898a24a73b337",
+    "lines": 166,
+    "bytes": 19583
+  },
+  "issue160Draft": {
+    "url": "https://github.com/duyxl56785/Project_HK5/issues/160#issuecomment-6702448960",
+    "sha256": "372b39c9e859de39a9b5ee30d3bd34eaaf2b22e0e42d35936f673f4837d8fe87",
+    "lines": 72
+  },
+  "original351VsPR188": {
+    "status": "NOT_RUN",
+    "reason": "ORIGINAL_FILE_MISSING",
+    "diff": null
+  },
+  "availableSourceDiff": {
+    "name": "issue160-draft-to-pr188-baseline.diff",
+    "format": "unified, zero context",
+    "meaning": "Actual Issue160 draft vs PR188 baseline, NOT original351 comparison"
+  },
+  "initialObservedPR188": {
+    "head": "2eaa7dec356d53369cae7ced5aa635406faf34ed",
+    "sha256": "2395e7d92232d3dd749e04139ed2f967bd5595bbbcbabf7b878f8fc64eadefec",
+    "lines": 165
+  }
+}

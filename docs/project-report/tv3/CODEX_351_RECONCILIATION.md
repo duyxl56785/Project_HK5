@@ -2,6 +2,10 @@
 
 **Trạng thái:** `STRUCTURAL_COMPARISON_DONE` / `EXACT_LINE_DIFF_NOT_RUN` / `ORIGINAL_FILE_INACCESSIBLE`.
 
+**Kiểm tra lại bằng Codex Terminal ngày 08/11/2026:** original path A cũng không tồn tại trong môi trường terminal hiện tại (không chỉ là giới hạn của ChatGPT). Không còn worktree cũ trong `git worktree list`; không tìm thấy bản lưu của A trong các đường dẫn hiện có đã kiểm. Không xóa/reset hay dựng lại A. SHA256 từng được ghi trong phiên trước là `0fd4d7cb4f4de62fee60ebb1ee20df417fcc19748ba7cdfbdf0d3e6c5e34b087`; đây là **historical reference**, không phải checksum vừa đo lại từ A.
+
+Đã fetch PR #188 lúc đầu tại `2eaa7dec356d53369cae7ced5aa635406faf34ed`, sau đó phát hiện owner cập nhật và chuyển sang baseline **`b2187441f4ae669f041ae3274cd53f4b7b7e6bf6`** trước khi tích hợp tài liệu. Snapshot B mới có 166 logical lines, 19583 byte UTF-8, SHA256 `4c200060ca78b5cc7caf44f1ca747fec3e1a8c9a510948fea3c898a24a73b337`. Giữ riêng snapshot ban đầu trong metadata; không ghi đè ba commit caption của owner. Đã lưu [manifest input](evidence/20261108/comparison-inputs.json), [bảng giữ/sửa](evidence/20261108/KEEP_CHANGE.md) và [unified diff giữa hai nguồn thực sự đọc được](evidence/20261108/issue160-draft-to-pr188-baseline.diff): **Issue draft 72 dòng → PR baseline mới**, không phải A 351 dòng → B. Unified diff A→B vẫn **NOT_RUN**, không xuất một diff giả từ file rỗng.
+
 ## 1. Nhận dạng nguồn, không được đánh đồng
 
 | Nguồn | Vị trí / định danh | Tình trạng |
