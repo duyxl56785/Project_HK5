@@ -46,3 +46,18 @@ Trạng thái **PARTIAL**. Báo cáo là hồ sơ đối chiếu và đề xuấ
 | B.5 Admin moderation/COD | TV2 + TV4 + TV1 | Admin verified, DELIVERED rồi PAID, không lộ credential | NOT_RUN |
 
 Tuần1 chỉ thiết kế checklist; thu ảnh live thuộc giai đoạn hệ thống thật đã được tích hợp. Ảnh mock, ảnh sản phẩm hoặc ảnh kiến trúc không thay thế năm evidence này.
+
+
+## Đối chiếu bản nộp TV5 ngày 07/11/2026
+
+Đã đọc lại DOCX V2 ngoài repo và23slide Soopi bằng OOXML, không sửa file gốc hoặc tuyên bố kiểm layout phiên này. Năm TODO B.1–B.5 còn trong source. [Nội dung TV5 đã soạn cho bản nộp và crosswalk slide](../docs/project-report/TV5_REPORT_CONTENT.md) hoàn thành các phần F15/F16, vai trò, QA/security, formal review, lỗi/tool, hướng dẫn demo và tự đánh giá theo evidence. Đây là nội dung sẵn để tích hợp; DOCX/PPTX nguồn chưa được chỉnh và bản nộp chưa sẵn sàng cuối.
+
+| Phụ lục | TODO gốc đã đọc | Nội dung/caption và evidence phải đưa vào bản cuối | Phần hiện có / còn chờ |
+|---|---|---|---|
+| B.1 | Trang chủ và danh sách sản phẩm | Catalog thật, query/filter/viewport, source/runSHA; che session | Có smoke website6418d8a lịch sử; cần ảnh main final, không đổi caption thành finalUAT |
+| B.2 | Giỏ hai Store | Cùng buyer,2Store/quantity/subtotal; trước Checkout, tuple seed | Cart twoStore HTTP smoke có metadata; ảnh cart rỗng không thay ảnh giỏ2Store, cần chụp đúngcase |
+| B.3 | Order tổng và tiến trình đơn con | Một rootOrder/haiSellerOrder, trạng thái từng Store, actor đúng | Cần finalflow Order/Inventory; không dựng screenshot bằng mock hoặc SQL |
+| B.4 | Seller xử lý đơn và doanh thu | Seller đúngStore, commission/net khớp snapshot/DB và policy | #182 chưa nhận183/cònV7+conflict; thiếu finalSeller/Finance receipt |
+| B.5 | Admin duyệt sản phẩm và COD | Admin verified, productmoderation và COD sauDELIVERED, amount/audit | Cần finalmoderation/CODflow;20PGguard không thay ảnhUI |
+
+F02 UC riêng thuộc User/Auth ownerTV2 (tiếp nhậnTV1); chưa tự viết thành contract được duyệt. NFR/load/SLA, trích dẫn ngoài và nhật kýScrum chưa có evidence mới; giữ thiếu thay vì tạo số liệu. #162 là PARTIAL: nội dung TV5 sẵn, ảnh/biên bảnUAT và bản ghép cuối chưa đủ.
