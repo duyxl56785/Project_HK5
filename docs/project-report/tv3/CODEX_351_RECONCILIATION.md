@@ -13,6 +13,20 @@
 
 **Không được ghi "đối chiếu 351/351 dòng PASS"** chỉ từ số dòng hoặc tóm tắt A. Cần chạy diff thực tế khi có quyền đọc A.
 
+## 1.1. Đối chiếu trực tiếp nguồn CÔNG KHAI có đủ văn bản (Issue #160 vs PR #188)
+
+Đã đọc full [bản nháp trong comment #160](https://github.com/duyxl56785/Project_HK5/issues/160#issuecomment-6702448960) và [CHECKOUT.md PR #188](https://github.com/duyxl56785/Project_HK5/pull/188) trong cùng phiên:
+
+| Chỉ số nội dung | Comment nháp Issue #160 | CHECKOUT.md PR #188 sau cập nhật |
+| --- | ---: | ---: |
+| Kích thước văn bản | 9.367 ký tự | 16.993 ký tự |
+| Số dòng | 72 | 166 |
+| Số mục đánh số Markdown | 6 | 9 |
+| Số sơ đồ Mermaid | 0 | 2 |
+| Số ảnh Checkout thật nhúng | 0 | 0 |
+
+**Kết luận giới hạn:** Đây là **so sánh thực tế giữa hai nguồn có quyền đọc**, không phải so file 351 dòng Codex A. Không dùng số dòng hoặc số ký tự để suy chất lượng hay tương đương nội dung A. Ảnh giỏ trống đã bị gỡ sau kiểm tra pixel.
+
 ## 2. Bản đối chiếu theo mục/khả năng (không phải diff từng dòng)
 
 | Hạng mục do Codex báo cáo cho A | Kiểm tra bản B | Kết luận hiện tại |
