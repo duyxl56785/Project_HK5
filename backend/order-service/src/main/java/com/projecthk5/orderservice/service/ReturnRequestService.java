@@ -53,6 +53,14 @@ public class ReturnRequestService {
 
     public record ReturnView(UUID requestId, UUID orderId, UUID storeOrderId,
                              String status, String reason, Instant requestedAt) {}
+    /**
+     * Seller projection deliberately omits the buyer identity and delivery address.  A receipt
+     * reference is an auditable Seller attestation of physical receipt; it is not an Inventory
+     * restock receipt (that contract is not authorised yet).
+     */
+    public record SellerReturnView(UUID requestId, UUID orderId, UUID storeOrderId, String status,
+                                   String reason, Instant requestedAt, Instant reviewedAt,
+                                   Instant receivedAt, String receiptReference) {}
     public record Created(ReturnView request, boolean newRequest) {}
 
     @Transactional
@@ -135,6 +143,92 @@ public class ReturnRequestService {
                         rs.getObject("order_id", UUID.class), rs.getObject("seller_order_id", UUID.class),
                         rs.getString("status"), rs.getString("reason"),
                         rs.getTimestamp("requested_at").toInstant()), orderId, customerId);
+    }
+
+    /** Seller-visible requests for the Store resolved from the authenticated principal. */
+    @Transactional(readOnly = true)
+    public List<SellerReturnView> forStore(String storeId) {
+        return db.query("select r.id,r.order_id,r.seller_order_id,r.status,r.reason,r.requested_at,"
+                        + "r.reviewed_at,r.received_at,r.receipt_reference "
+                        + "from return_requests r join seller_orders s on s.id=r.seller_order_id "
+                        + "where s.store_id=? order by r.requested_at desc",
+                (rs, i) -> sellerView(rs), storeId);
+    }
+
+    /**
+     * Serializes the Seller workflow with customer Return creation and Finance settlement on the
+     * SellerOrder row.  No Inventory event is emitted here: Order is not authorised to call the
+     * privileged INCREASE operation and a physical restock contract is still pending.
+     */
+    @Transactional
+    public SellerReturnView sellerAction(String managedStoreId, String sellerId, UUID requestId,
+                                         String actionName, String receiptReference) {
+        Objects.requireNonNull(requestId, "requestId");
+        Objects.requireNonNull(sellerId, "sellerId");
+        String action = normalizeAction(actionName);
+
+        UUID sellerOrderId = db.query("select seller_order_id from return_requests where id=?",
+                        (rs, i) -> rs.getObject(1, UUID.class), requestId)
+                .stream().findFirst().orElseThrow(ReturnRequestService::notFound);
+        SellerOrder sellerOrder = sellerOrders.lockById(sellerOrderId)
+                .orElseThrow(ReturnRequestService::notFound);
+        if (!sellerOrder.getStoreId().equals(managedStoreId)) throw notFound();
+
+        SellerReturnView before = db.query("select id,order_id,seller_order_id,status,reason,requested_at,"
+                        + "reviewed_at,received_at,receipt_reference from return_requests where id=?",
+                (rs, i) -> sellerView(rs), requestId).stream().findFirst()
+                .orElseThrow(ReturnRequestService::notFound);
+        Instant now = clock.instant();
+        int changed = switch (action) {
+            case "approve" -> db.update("update return_requests set status='APPROVED',reviewed_by=?,"
+                            + "reviewed_at=?,updated_at=? where id=? and status='REQUESTED'",
+                    sellerId, java.sql.Timestamp.from(now), java.sql.Timestamp.from(now), requestId);
+            case "reject" -> db.update("update return_requests set status='REJECTED',reviewed_by=?,"
+                            + "reviewed_at=?,updated_at=? where id=? and status='REQUESTED'",
+                    sellerId, java.sql.Timestamp.from(now), java.sql.Timestamp.from(now), requestId);
+            case "receive" -> {
+                String receipt = normalizeReceiptReference(receiptReference);
+                yield db.update("update return_requests set status='RECEIVED',received_by=?,received_at=?,"
+                                + "receipt_reference=?,updated_at=? where id=? and status='APPROVED'",
+                        sellerId, java.sql.Timestamp.from(now), receipt, java.sql.Timestamp.from(now), requestId);
+            }
+            default -> throw new IllegalStateException("unreachable");
+        };
+        if (changed != 1) {
+            throw ApiException.conflict("RETURN_INVALID_TRANSITION",
+                    "Action " + action + " is not allowed from " + before.status());
+        }
+
+        // RETURN_REQUESTED is the only Return notification event currently agreed.  Do not
+        // invent a customer event contract for Seller review/receipt transitions here.
+        return db.query("select id,order_id,seller_order_id,status,reason,requested_at,reviewed_at,received_at,"
+                        + "receipt_reference from return_requests where id=?",
+                (rs, i) -> sellerView(rs), requestId).stream().findFirst().orElseThrow();
+    }
+
+    private static SellerReturnView sellerView(java.sql.ResultSet rs) throws java.sql.SQLException {
+        java.sql.Timestamp reviewed = rs.getTimestamp("reviewed_at");
+        java.sql.Timestamp received = rs.getTimestamp("received_at");
+        return new SellerReturnView(rs.getObject("id", UUID.class), rs.getObject("order_id", UUID.class),
+                rs.getObject("seller_order_id", UUID.class), rs.getString("status"), rs.getString("reason"),
+                rs.getTimestamp("requested_at").toInstant(), reviewed == null ? null : reviewed.toInstant(),
+                received == null ? null : received.toInstant(), rs.getString("receipt_reference"));
+    }
+
+    static String normalizeReceiptReference(String raw) {
+        if (raw == null) throw ApiException.badRequest("VALIDATION_FAILED", "Receipt reference is required");
+        String result = raw.strip();
+        if (result.isBlank() || result.length() > 128 || result.chars().anyMatch(Character::isISOControl)) {
+            throw ApiException.badRequest("VALIDATION_FAILED", "Receipt reference must contain 1-128 valid characters");
+        }
+        return result;
+    }
+
+    private static String normalizeAction(String raw) {
+        if (raw == null || !(raw.equals("approve") || raw.equals("reject") || raw.equals("receive"))) {
+            throw ApiException.notFound("ROUTE_NOT_FOUND", "Unknown return action");
+        }
+        return raw;
     }
 
     public record AdminReturnView(UUID requestId, UUID orderId, UUID storeOrderId, String storeId,

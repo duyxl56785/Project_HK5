@@ -279,6 +279,30 @@ class FulfillmentPostgres16IT {
         assertThrows(Exception.class, () -> sql.update("update seller_orders set cod_status='COLLECTED' where id=?", so2.getId()));
     }
 
+    @Test
+    void databaseRequiresNonblankReceiptOnlyForReceivedReturn() throws Exception {
+        delivered("owner-1", so1);
+        requestReturn(so1, customer, "receipt-db-guard", "Receipt guard").andExpect(status().isCreated());
+        UUID returnId = sql.queryForObject("select id from return_requests where seller_order_id=?", UUID.class, so1.getId());
+
+        // Direct SQL must not bypass the API's receipt normalization.  The seller-review fields
+        // satisfy V6 so each failure isolates the V8 receipt invariant.
+        for (String invalid : new String[]{null, "", " \t\n "}) {
+            assertThrows(org.springframework.dao.DataIntegrityViolationException.class, () -> sql.update(
+                    "update return_requests set status='RECEIVED',reviewed_by='owner-1',reviewed_at=now(),"
+                            + "received_by='owner-1',received_at=now(),receipt_reference=?,updated_at=now() where id=?",
+                    invalid, returnId));
+            assertEquals("REQUESTED", sql.queryForObject("select status from return_requests where id=?", String.class, returnId));
+        }
+        assertThrows(org.springframework.dao.DataIntegrityViolationException.class, () -> sql.update(
+                "update return_requests set receipt_reference='wrong-state' where id=?", returnId));
+
+        assertEquals(1, sql.update("update return_requests set status='RECEIVED',reviewed_by='owner-1',reviewed_at=now(),"
+                        + "received_by='owner-1',received_at=now(),receipt_reference='receipt-db-8',updated_at=now() where id=?",
+                returnId));
+        assertEquals("RECEIVED", sql.queryForObject("select status from return_requests where id=?", String.class, returnId));
+    }
+
     // #155 RET-01/02/04/06: These tests run MockMvc + real PostgreSQL16 with StoreDirectory
     // mocked. They are NOT full Gateway/Inventory/React E2E or a refund authorization.
     private void delivered(String owner, SellerOrder order) throws Exception {
@@ -295,6 +319,13 @@ class FulfillmentPostgres16IT {
                 .header("Idempotency-Key", key)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"reason\":\"" + reason + "\"}"));
+    }
+
+    private org.springframework.test.web.servlet.ResultActions sellerReturn(String owner, UUID returnId,
+            String action, String receiptReference) throws Exception {
+        String body = receiptReference == null ? "{}" : "{\"receiptReference\":\"" + receiptReference + "\"}";
+        return mvc.perform(post("/api/seller/returns/{id}/{action}", returnId, action)
+                .with(as(owner, "SELLER")).contentType(MediaType.APPLICATION_JSON).content(body));
     }
 
     private int returnRows(SellerOrder sellerOrder) {
@@ -505,7 +536,7 @@ class FulfillmentPostgres16IT {
                 + "reviewed_at=now(), updated_at=now() "
                 + "where seller_order_id=? and status='REQUESTED'", so1.getId());
         sql.update("update return_requests set status='RECEIVED', received_by='owner-1', "
-                + "received_at=now(), updated_at=now() "
+                + "received_at=now(), receipt_reference='fixture-receipt', updated_at=now() "
                 + "where seller_order_id=? and status='APPROVED'", so1.getId());
         mvc.perform(post("/api/admin/store-orders/{id}/cod-collected", so1.getId())
                 .with(as("admin", "ADMIN"))).andExpect(status().isOk());
@@ -514,6 +545,88 @@ class FulfillmentPostgres16IT {
                 .andExpect(jsonPath("$.code").value("SETTLEMENT_RETURN_OPEN"));
         assertEquals(0, outbox(so1, "\"RELEASE\""));
         assertEquals(0, outbox(so1, "\"SETTLED\""));
+    }
+
+    @Test
+    void sellerReturnWorkflowIsStoreScopedAndReceivedNeedsDurableReceiptEvidence() throws Exception {
+        delivered("owner-1", so1);
+        requestReturn(so1, customer, "seller-workflow", "Sai kich co").andExpect(status().isCreated());
+        UUID returnId = sql.queryForObject("select id from return_requests where seller_order_id=?", UUID.class, so1.getId());
+
+        mvc.perform(get("/api/seller/returns").with(as("owner-1", "SELLER")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[?(@.requestId=='" + returnId + "')].reason").value("Sai kich co"));
+        mvc.perform(get("/api/seller/returns").with(as("owner-2", "SELLER")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[?(@.requestId=='" + returnId + "')]").doesNotExist());
+        sellerReturn("owner-2", returnId, "approve", null).andExpect(status().isNotFound());
+        mvc.perform(post("/api/seller/returns/{id}/approve", returnId).with(as("admin", "ADMIN"))
+                .contentType(MediaType.APPLICATION_JSON).content("{}"))
+                .andExpect(status().isForbidden());
+
+        sellerReturn("owner-1", returnId, "receive", "receipt-before-approval").andExpect(status().isConflict())
+                .andExpect(jsonPath("$.code").value("RETURN_INVALID_TRANSITION"));
+        sellerReturn("owner-1", returnId, "approve", null).andExpect(status().isOk())
+                .andExpect(jsonPath("$.status").value("APPROVED"));
+        sellerReturn("owner-1", returnId, "approve", null).andExpect(status().isConflict());
+        sellerReturn("owner-1", returnId, "receive", null).andExpect(status().isBadRequest());
+        sellerReturn("owner-1", returnId, "receive", " receipt-123 ").andExpect(status().isOk())
+                .andExpect(jsonPath("$.status").value("RECEIVED"))
+                .andExpect(jsonPath("$.receiptReference").value("receipt-123"));
+        assertEquals("RECEIVED", sql.queryForObject("select status from return_requests where id=?", String.class, returnId));
+        assertEquals("receipt-123", sql.queryForObject("select receipt_reference from return_requests where id=?", String.class, returnId));
+        assertEquals(0, outbox(so1, "\"INCREASE\""));
+        assertEquals(0, outbox(so1, "RETURN_APPROVE"));
+        assertEquals(0, outbox(so1, "RETURN_RECEIVE"));
+        assertEquals(0, outbox(so1, "\"RELEASE\""));
+
+        mvc.perform(post("/api/admin/store-orders/{id}/cod-collected", so1.getId()).with(as("admin", "ADMIN")))
+                .andExpect(status().isOk());
+        mvc.perform(post("/api/admin/store-orders/{id}/settle", so1.getId()).with(as("admin", "ADMIN")))
+                .andExpect(status().isConflict()).andExpect(jsonPath("$.code").value("SETTLEMENT_RETURN_OPEN"));
+    }
+
+    @Test
+    void rejectedReturnIsTheOnlySellerCloseThatReopensSettlement() throws Exception {
+        delivered("owner-1", so1);
+        requestReturn(so1, customer, "seller-reject", "Khong con nhu cau").andExpect(status().isCreated());
+        UUID returnId = sql.queryForObject("select id from return_requests where seller_order_id=?", UUID.class, so1.getId());
+        sellerReturn("owner-1", returnId, "reject", null).andExpect(status().isOk())
+                .andExpect(jsonPath("$.status").value("REJECTED"));
+        mvc.perform(post("/api/admin/store-orders/{id}/cod-collected", so1.getId()).with(as("admin", "ADMIN")))
+                .andExpect(status().isOk());
+        mvc.perform(post("/api/admin/store-orders/{id}/settle", so1.getId()).with(as("admin", "ADMIN")))
+                .andExpect(status().isOk());
+        assertEquals(1, outbox(so1, "\"SETTLED\""));
+        assertEquals(0, outbox(so1, "\"INCREASE\""));
+    }
+
+    @Test
+    void concurrentReceiveHasOneWinnerAndNeverCreatesAnInventoryMutation() throws Exception {
+        delivered("owner-1", so1);
+        requestReturn(so1, customer, "seller-concurrent-receive", "Bi loi").andExpect(status().isCreated());
+        UUID returnId = sql.queryForObject("select id from return_requests where seller_order_id=?", UUID.class, so1.getId());
+        sellerReturn("owner-1", returnId, "approve", null).andExpect(status().isOk());
+
+        ExecutorService pool = Executors.newFixedThreadPool(2);
+        CountDownLatch start = new CountDownLatch(1);
+        try {
+            Callable<Integer> receive = () -> {
+                start.await();
+                return sellerReturn("owner-1", returnId, "receive", "physical-receipt-9")
+                        .andReturn().getResponse().getStatus();
+            };
+            Future<Integer> a = pool.submit(receive), b = pool.submit(receive);
+            start.countDown();
+            List<Integer> outcomes = List.of(a.get(30, TimeUnit.SECONDS), b.get(30, TimeUnit.SECONDS));
+            assertTrue(outcomes.contains(200) && outcomes.contains(409), outcomes.toString());
+            assertEquals("RECEIVED", sql.queryForObject("select status from return_requests where id=?", String.class, returnId));
+            assertEquals(0, outbox(so1, "RETURN_RECEIVE"));
+            assertEquals(0, outbox(so1, "\"INCREASE\""));
+            assertEquals(0, outbox(so1, "\"RELEASE\""));
+        } finally {
+            pool.shutdownNow();
+        }
     }
 
     @Test
