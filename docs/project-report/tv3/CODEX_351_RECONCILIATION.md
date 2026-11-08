@@ -48,7 +48,7 @@
 - Ảnh [`cart-hai-store-quantity-remove-va-jwt-het-han-passed.png`](https://github.com/duyxl56785/Project_HK5/blob/78de5c08205b41986a5204a8150a9ef810507847/reports/minh-chung-kiem-thu/soopi-audit-20261106/website-extended/cart-hai-store-quantity-remove-va-jwt-het-han-passed.png) hiển thị **giỏ hàng trống**. Filename test không chứng minh hai Store trong **khung hình**. Đã **gỡ embed** khỏi báo cáo B và không dùng làm Hình 6.4.
 - `reports/evidence/tv5-ui-20261028/cod-desktop.png` là **TV5 preview / DEMO DATA**, không phải website Checkout thật.
 - GitHub Actions runs của [PR #187](https://github.com/duyxl56785/Project_HK5/pull/187) (backend/frontend+e2e) hiện **không có artifact screenshot** để bổ sung vào Hình 6.4.
-- Báo cáo Word nhóm trang 10 và [`CAPTURE_REAL_CHECKOUT.md`](CAPTURE_REAL_CHECKOUT.md) chỉ rõ bốn ảnh thật cần thu trong stack được phép.
+- Báo cáo Word nhóm trang 10 và [`CAPTURE_REAL_CHECKOUT.md`](CAPTURE_REAL_CHECKOUT.md) chỉ rõ các điểm chụp thật cần thu (Cart 2 Store, COD, Order detail, Order History riêng và receipt PostgreSQL) trong stack được phép.
 
 ## 4. Cách chạy so sánh nguyên văn an toàn trong Codex Terminal Linux
 
