@@ -125,8 +125,9 @@ Nguồn bổ sung: [OrderController](https://github.com/duyxl56785/Project_HK5/b
 
 1. `checkout-01-cart-two-stores.png`: Cart thật, hai nhóm Store, số lượng và tổng tiền; không lộ thông tin cá nhân.
 2. `checkout-02-cod-confirmation.png`: màn hình COD và hai Store trước khi bấm xác nhận; ẩn tên, số điện thoại, địa chỉ nếu có.
-3. `checkout-03-order-success.png`: Order History sau thành công, root Order và đúng hai SellerOrders với Store owner; chỉ dùng ID giả đã được phép công bố.
-4. `checkout-04-db-receipt.png`: dữ liệu trước/sau từ query **READ ONLY**, các bản ghi Order/SellerOrder/Inventory operation; không có thông tin đăng nhập, token, địa chỉ hoặc PII.
+3. `checkout-03-order-success.png`: **trang chi tiết đơn `/orders/:id`** sau Checkout thành công; ghi đúng những trường UI thật sự hiển thị, không mặc định ảnh này chứng minh hai SellerOrders.
+4. `checkout-03b-order-history.png`: **trang danh sách `/orders`**, đối chiếu đúng Order ID vừa tạo và chỉ chụp nếu hiển thị thực tế; đây mới là ảnh riêng cho Order History.
+5. `checkout-04-db-receipt.png`: dữ liệu trước/sau từ query **READ ONLY**, các bản ghi Order/SellerOrder/Inventory operation nhằm xác minh root Order và hai SellerOrders; không có thông tin đăng nhập, token, địa chỉ hoặc PII.
 
 **Cách thu và điều kiện nghiệm thu:** xem [`CAPTURE_REAL_CHECKOUT.md`](CAPTURE_REAL_CHECKOUT.md) trong cùng PR. Ghi source full SHA, stack/project ID, test case, thời gian, SHA256 của ảnh, screenshot không bị mock/fixture; TV5 xác nhận phạm vi. Chỉ khi **ảnh thật được kiểm tra và commit** mới chèn Hình 6.4 trong bản báo cáo nhóm. Hiện **không có ảnh Checkout đủ điều kiện**, vì vậy giữ nguyên chỗ trống đúng sự thật.
 
