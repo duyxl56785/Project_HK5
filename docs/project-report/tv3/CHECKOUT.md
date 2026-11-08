@@ -113,15 +113,22 @@ Nguồn bổ sung: [OrderController](https://github.com/duyxl56785/Project_HK5/b
 **Nhận định:** TV3 đã hoàn thành mã nguồn Checkout COD/Cart/Order/Order History và kiểm chứng chức năng demo nhiều cửa hàng với evidence/CI đã ghi nhận. Chưa có cơ sở để tuyên bố full production readiness hoặc failover/UNKNOWN/Finance UAT cuối. Khi làm video demo cần quay màn hình giỏ 2 Store, xác nhận COD, Order ID + 2 SellerOrders, Order History và tình huống lỗi; dẫn evidence SQL/log thực thay vì số PASS ước lượng.
 
 
-### 6. Media demo: ảnh thật sẵn có và ảnh chưa có
+### 6. Ảnh minh chứng Checkout — vị trí báo cáo nhóm và trạng thái xác minh
 
-**Ảnh đã được lưu trên GitHub, thuộc website smoke test Cart hai Store ngày 06/11/2026:**
+**Vị trí trong báo cáo Word nhóm:** mục **6. KẾT QUẢ DEMO WEB/APP**, **trang 10**, chỗ **Hình 6.4. Giỏ hàng và checkout gồm sản phẩm từ hai Store** (nguồn: bản `Bao_cao_Smart_ECommerce.docx` đã chia sẻ, nội dung tổng hợp đến 25/10/2026). Bản Word đó vẫn ghi `[ CHÈN ẢNH DEMO THỰC TẾ ]`; tài liệu cũ cũng để kịch bản TC09 Checkout hai Store ở trạng thái chưa E2E. Cần cập nhật theo evidence mới nhưng **không tự ghi đã đạt final UAT**.
 
-![Ảnh website Cart hai Store từ bộ WEBSITE-SMOKE (minh chứng Cart, không phải Checkout UAT)](../../../reports/minh-chung-kiem-thu/soopi-audit-20261106/website-extended/cart-hai-store-quantity-remove-va-jwt-het-han-passed.png)
+**Kiểm tra ảnh công bố 06/11:** [ảnh WEBSITE-SMOKE có filename `cart-hai-store-quantity-remove-va-jwt-het-han-passed.png`](https://github.com/duyxl56785/Project_HK5/blob/78de5c08205b41986a5204a8150a9ef810507847/reports/minh-chung-kiem-thu/soopi-audit-20261106/website-extended/cart-hai-store-quantity-remove-va-jwt-het-han-passed.png) đã được **mở và đọc nội dung ảnh thực tế** ngày 08/11. Ảnh hiển thị **“Giỏ hàng hiện đang trống”**; do đó **KHÔNG dùng ảnh này làm Hình 6.4 hoặc bằng chứng Cart hai Store/Checkout thành công**, bất kể filename test hay kết quả suite nói gì. Ảnh [`cod-desktop.png`](https://github.com/duyxl56785/Project_HK5/blob/78de5c08205b41986a5204a8150a9ef810507847/reports/evidence/tv5-ui-20261028/cod-desktop.png) là trang **TV5 feature preview với DEMO DATA/mô phỏng**, cũng **không phải** ảnh Checkout runtime thật.
 
-*Nguồn gốc: [artifact tại main đã kiểm tra](https://github.com/duyxl56785/Project_HK5/blob/78de5c08205b41986a5204a8150a9ef810507847/reports/minh-chung-kiem-thu/soopi-audit-20261106/website-extended/cart-hai-store-quantity-remove-va-jwt-het-han-passed.png). Ảnh chỉ chứng minh tình huống Cart trong bộ test được lưu, **không chứng minh giao dịch Checkout đã hoàn tất hay UAT cuối PASS**.*
+**Bằng chứng browser hiện có:** E2E CI trên [PR #187](https://github.com/duyxl56785/Project_HK5/pull/187) có 20/20 PASS tại đúng PR SHA, nhưng hai GitHub Actions runs tại thời điểm kiểm tra **không xuất bản artifact ảnh/video**. Bộ [TV3 live acceptance `two-store.live.spec.ts`](../../../frontend/src/features/checkout/acceptance/two-store.live.spec.ts) thể hiện luồng real Auth/Gateway/Cart/Inventory/Order trong mã test và assert `cart.groups.length=2`, root Order ID, cùng-key replay, stock delta. Tuy nhiên [`live.config.ts`](../../../frontend/src/features/checkout/acceptance/live.config.ts) chủ ý tắt screenshot/trace/video để không lưu JWT. Các bài test và mã nguồn **không tự tạo ảnh Hình 6.4**.
 
-**Các ảnh còn cần quay/chụp từ stack thật (chưa có artifact Checkout tương ứng trong repo tại SHA đã rà):** Cart 2 Store trước đặt hàng, màn hình xác nhận COD và Order ID sau đặt, Order History hiện 2 SellerOrders, snapshot PostgreSQL/Inventory receipt đã xóa token/PII, và trường hợp stale revision/hết hàng. Mỗi ảnh/clip mới cần exact source SHA, testcase, timestamp, tên stack, hash và mô tả dữ liệu giả. Không dựng UI giả làm evidence.
+**Ảnh cần thu trên một stack thử nghiệm cô lập được TV2/TV5 cho phép (đều hiện `NOT_CAPTURED`):**
+
+1. `checkout-01-cart-two-stores.png`: Cart thật, hai nhóm Store, số lượng và tổng tiền; không lộ thông tin cá nhân.
+2. `checkout-02-cod-confirmation.png`: màn hình COD và hai Store trước khi bấm xác nhận; ẩn tên, số điện thoại, địa chỉ nếu có.
+3. `checkout-03-order-success.png`: Order History sau thành công, root Order và đúng hai SellerOrders với Store owner; chỉ dùng ID giả đã được phép công bố.
+4. `checkout-04-db-receipt.png`: dữ liệu trước/sau từ query **READ ONLY**, các bản ghi Order/SellerOrder/Inventory operation; không có thông tin đăng nhập, token, địa chỉ hoặc PII.
+
+**Cách thu và điều kiện nghiệm thu:** xem [`CAPTURE_REAL_CHECKOUT.md`](CAPTURE_REAL_CHECKOUT.md) trong cùng PR. Ghi source full SHA, stack/project ID, test case, thời gian, SHA256 của ảnh, screenshot không bị mock/fixture; TV5 xác nhận phạm vi. Chỉ khi **ảnh thật được kiểm tra và commit** mới chèn Hình 6.4 trong bản báo cáo nhóm. Hiện **không có ảnh Checkout đủ điều kiện**, vì vậy giữ nguyên chỗ trống đúng sự thật.
 
 ### 7. Kịch bản thuyết trình Checkout — 5 phút
 
