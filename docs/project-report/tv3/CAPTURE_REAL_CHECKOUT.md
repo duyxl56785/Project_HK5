@@ -26,7 +26,8 @@ Dùng **Codex Chat** đọc source test và tạo bản patch tạm **trong work
 
 - **Ảnh A**: ngay sau `expect(cart.groups).toHaveLength(2)` và `await page.goto('/cart')`, thêm assert 2 Store thật trên DOM rồi `page.screenshot` → `checkout-01-cart-two-stores.png`. Màn hình phải hiện hai Store; ảnh giỏ trống không hợp lệ.
 - **Ảnh B**: sau khi đi tới Checkout và điền thông tin giao hàng giả, **trước khi** bấm `Xác nhận đặt hàng COD`, chụp `checkout-02-cod-confirmation.png`. Dùng Playwright `mask` với các input Họ tên/SĐT/Địa chỉ để không ghi PII.
-- **Ảnh C**: sau response `POST /api/orders` là 200, `await expect(page).toHaveURL(/\/orders\/UUID/)` và `assertPlaced(page, token, id, lines)`, chụp `checkout-03-order-success.png` (phải đọc được kết quả đơn tổng/2 SellerOrders nếu UI hỗ trợ; nếu UI chỉ hiển thị một summary thì ghi đúng phạm vi). Không dùng UUID/khách hàng thật nếu chưa được phép công bố.
+- **Ảnh C — Order detail:** sau response `POST /api/orders` là 200, `await expect(page).toHaveURL(/\/orders\/UUID/)` và `assertPlaced(page, token, id, lines)`, chụp `checkout-03-order-success.png`. Route thực tế `/orders/:id` hiển thị **chi tiết đơn**, không phải trang danh sách Order History; nếu UI chỉ hiển thị summary, ghi đúng phạm vi ảnh. Bằng chứng 2 SellerOrders đến từ `assertPlaced`/read-only SQL chỉ được mô tả riêng, không được suy ra là hiển thị trên ảnh.
+- **Ảnh C2 — Order History:** sau khi đã xác nhận Order detail, điều hướng thực sự tới `/orders` (route danh sách dành cho Customer), chờ API/dữ liệu hiển thị, đối chiếu root Order ID vừa tạo với hàng tương ứng rồi chụp `checkout-03b-order-history.png` với PII masking. Nếu không thấy ID hoặc route lỗi thì ghi `NOT_CAPTURED`; không dùng ảnh `/orders/:id` để nhận là đã chụp Order History. Chỉ sử dụng tài khoản/UUID thử nghiệm được cho phép công bố.
 - **Evidence D**: đối chiếu bằng các query chỉ đọc (Order root, SellerOrders, Item snapshots, Inventory operation/stock trước-sau) và viết bảng **đã redacted** với SHA/receipts; không lấy ảnh terminal có chứa secrets. Nếu chưa có quyền DB read-only, ghi `NOT_CAPTURED`.
 
 Dùng `page.screenshot({ path: ..., fullPage: true, mask: [...] })` **chỉ trong private output directory ngoài repository**. Tuyệt đối không bật `trace: 'on'`/video trên test Auth đang giữ token. Giữ các assertion sẵn có và không bỏ kiểm tra stock/replay để đổi lấy ảnh đẹp.
@@ -54,7 +55,8 @@ Chỉ sau khi hoàn tất: lưu ảnh đã redacted và `SHA256SUMS` cùng `mani
 | --- | --- |
 | `checkout-01-cart-two-stores.png` | NOT_CAPTURED |
 | `checkout-02-cod-confirmation.png` | NOT_CAPTURED |
-| `checkout-03-order-success.png` | NOT_CAPTURED |
+| `checkout-03-order-success.png` (Order detail) | NOT_CAPTURED |
+| `checkout-03b-order-history.png` (Order History list) | NOT_CAPTURED |
 | `checkout-04-db-receipt.png` | NOT_CAPTURED |
 | Bản báo cáo Codex gốc 351 dòng đã được đối chiếu toàn văn | NOT_VERIFIED |
 | PR #188 được ghép vào báo cáo nhóm | PENDING TV2 |
