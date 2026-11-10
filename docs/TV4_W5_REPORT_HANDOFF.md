@@ -30,11 +30,10 @@ TV5 QA/Finance sign-off or final UAT.
 
 ## Acceptance limits
 
-- **UNKNOWN lost-response:** `BLOCKED_DESIGN` for W5, per the final
-  [TV2 decision](https://github.com/duyxl56785/Project_HK5/issues/154#issuecomment-6757433313).
-  The isolated stack configuration was approved as preparation only; no
-  executor/teardown, provider COMMIT/status receipt, durable Checkout replay
-  oracle or case-specific TV5 QA approval exists, so the live case was not run.
+- **UNKNOWN lost-response:** `NOT_RUN / BLOCKED_APPROVAL`. The isolated stack
+  configuration is preparation only; no executor/teardown, provider
+  COMMIT/status receipt, durable Checkout replay oracle or case-specific
+  TV2/TV3/TV5 execution approval exists, so the live case was not run.
 - **UNKNOWN claim-conflict:** `BLOCKED_DESIGN`; no approved real conflict
   generator exists. No synthetic HTTP 409 or direct database modification is
   used to manufacture a PASS.
