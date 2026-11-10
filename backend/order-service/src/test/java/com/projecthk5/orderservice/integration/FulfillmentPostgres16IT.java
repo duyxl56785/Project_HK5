@@ -550,6 +550,10 @@ class FulfillmentPostgres16IT {
     @Test
     void sellerReturnWorkflowIsStoreScopedAndReceivedNeedsDurableReceiptEvidence() throws Exception {
         delivered("owner-1", so1);
+        BigDecimal grossBeforeReturn = sql.queryForObject(
+                "select gross from seller_orders where id=?", BigDecimal.class, so1.getId());
+        BigDecimal feeBeforeReturn = sql.queryForObject(
+                "select platform_fee from seller_orders where id=?", BigDecimal.class, so1.getId());
         requestReturn(so1, customer, "seller-workflow", "Sai kich co").andExpect(status().isCreated());
         UUID returnId = sql.queryForObject("select id from return_requests where seller_order_id=?", UUID.class, so1.getId());
 
@@ -579,11 +583,22 @@ class FulfillmentPostgres16IT {
         assertEquals(0, outbox(so1, "RETURN_APPROVE"));
         assertEquals(0, outbox(so1, "RETURN_RECEIVE"));
         assertEquals(0, outbox(so1, "\"RELEASE\""));
+        // Physical receipt is neither a money adjustment nor proof that the seller was paid.
+        assertEquals(0, grossBeforeReturn.compareTo(sql.queryForObject(
+                "select gross from seller_orders where id=?", BigDecimal.class, so1.getId())));
+        assertEquals(0, feeBeforeReturn.compareTo(sql.queryForObject(
+                "select platform_fee from seller_orders where id=?", BigDecimal.class, so1.getId())));
+        assertEquals("PENDING", sql.queryForObject(
+                "select cod_status from seller_orders where id=?", String.class, so1.getId()));
+        assertNull(sql.queryForObject(
+                "select settled_at from seller_orders where id=?", java.sql.Timestamp.class, so1.getId()));
 
         mvc.perform(post("/api/admin/store-orders/{id}/cod-collected", so1.getId()).with(as("admin", "ADMIN")))
                 .andExpect(status().isOk());
         mvc.perform(post("/api/admin/store-orders/{id}/settle", so1.getId()).with(as("admin", "ADMIN")))
                 .andExpect(status().isConflict()).andExpect(jsonPath("$.code").value("SETTLEMENT_RETURN_OPEN"));
+        assertNull(sql.queryForObject(
+                "select settled_at from seller_orders where id=?", java.sql.Timestamp.class, so1.getId()));
     }
 
     @Test
