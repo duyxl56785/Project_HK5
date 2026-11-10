@@ -1,0 +1,16 @@
+{
+  "containers": 0,
+  "volumes": 0,
+  "requiredFixtureVariablesPresent": {
+    "TV3_E2E_BASE_URL": false,
+    "TV3_E2E_CUSTOMER_EMAIL": false,
+    "TV3_E2E_CUSTOMER_PASSWORD": false,
+    "TV3_E2E_PRODUCTS": false,
+    "TV3_E2E_PG_CONTAINER": false,
+    "TV3_E2E_PG_USER": false,
+    "TV3_E2E_ORDER_DB": false,
+    "TV3_E2E_INVENTORY_DB": false
+  },
+  "node": "v24.19.0",
+  "original351FileExists": false
+}
