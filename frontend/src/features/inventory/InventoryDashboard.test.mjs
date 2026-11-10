@@ -38,7 +38,12 @@ test('error state exposes retry and does not render stale inventory', () => {
   assert.doesNotMatch(html, /SKU-001|Áo sơ mi/);
 });
 test('invalid or duplicated API data fails closed', () => {
-  for (const items of [[{ ...ready.items[0], availableQuantity: '-1' }], [{ ...ready.items[0] }, { ...ready.items[0] }]]) {
+  for (const items of [
+    [{ ...ready.items[0], availableQuantity: '-1' }],
+    [{ ...ready.items[0], availableQuantity: 0 }],
+    [{ ...ready.items[0], reservedQuantity: 3 }],
+    [{ ...ready.items[0] }, { ...ready.items[0] }],
+  ]) {
     const html = render({ status: 'ready', items });
     assert.match(html, /Dữ liệu tồn kho không hợp lệ/);
     assert.doesNotMatch(html, /SKU-001.*SKU-001/);

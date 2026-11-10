@@ -11,6 +11,10 @@ export function readInventory(items: readonly InventoryItem[] | undefined): read
   const seen = new Set<string>();
   for (const item of items) {
     if (!item || !item.sku || seen.has(item.sku)
+      // RegExp.test coerces numbers to strings.  Reject them explicitly: the
+      // presentation contract uses decimal strings so a Java long is never
+      // rounded by JavaScript before the UI decides whether stock is zero.
+      || typeof item.availableQuantity !== 'string' || typeof item.reservedQuantity !== 'string'
       || !quantity.test(item.availableQuantity) || !quantity.test(item.reservedQuantity)) {
       return null;
     }
