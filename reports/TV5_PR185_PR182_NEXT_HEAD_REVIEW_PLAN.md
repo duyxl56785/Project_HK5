@@ -1,5 +1,7 @@
 # TV5 — kế hoạch kiểm tra HEAD mới của PR #185 và #182
 
+**Kết thúc kế hoạch tại 10/11/2026:** GitHub xác nhận #185 MERGED 07/11/2026, #182 MERGED 08/11/2026; #183/#184 cũng MERGED. Nội dung bên dưới là kế hoạch lịch sử lập trước khi các PR được tích hợp, không còn là danh sách PR đang chờ review. TV5 đã chạy tiền kiểm Return–Settlement trên `main@78de5c08205b41986a5204a8150a9ef810507847`: [24 PostgreSQL/MockMvc PASS](../reports/minh-chung-kiem-thu/tv5-main-78de5c-return-preflight/). Kết quả này không xác nhận riêng browser fixture #185, UNKNOWN hay final UAT #18.
+
 Ngày lập: 07/11/2026. Đây là **kế hoạch**, không phải kết quả chạy test hoặc formal review. Lần đọc GitHub gần nhất ghi `main@868fd8deb7abd789cea93bbd71fc6f8e3d641a71`, #185 `d2929a4dd8b9dea9ca9609e126deda15aa7202c5` và #182 `539cf3bcc9c523ec71bc06bd3810baf74334b942`. Quyền fetch đang bị bộ duyệt tự động từ chối vì hết hạn mức; local chỉ có #185 `e0eb9aadf205c24c8a3a4653fea6ae126689e66d` và #182 `c187e5bddce4aca288a56fe2d7e846d48b6ebab8`. Không suy source mới từ metadata GitHub.
 
 ## Tiền kiểm chung khi quyền trở lại

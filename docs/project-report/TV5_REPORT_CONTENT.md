@@ -1,5 +1,7 @@
 # Phần báo cáo TV5 về Review Finance và kiểm thử Soopi
 
+**Cập nhật kiểm chứng 10/11/2026:** GitHub main `78de5c08205b41986a5204a8150a9ef810507847`; #179/#182/#183/#184/#185/#186 đều đã MERGED. TV5 chạy lại đúng main, `FulfillmentPostgres16IT` **24 PostgreSQL/MockMvc PASS, 0 FAIL/ERROR/SKIP**, exit 0, [JUnit XML/SHA256](../../reports/minh-chung-kiem-thu/tv5-main-78de5c-return-preflight/). PR #187 HEAD `bc82486315c2135ae48112887da7a4b48538ed43` có **5 PostgreSQL + 5 unit PASS** trong [lượt review riêng](../../reports/minh-chung-kiem-thu/tv5-pr187-bc8248-constraint-review/); TV5 đã [APPROVED scoped](https://github.com/duyxl56785/Project_HK5/pull/187#pullrequestreview-5835076508). Các đoạn dưới ghi lại evidence ở thời điểm trước và không cộng thành release total. **Final UAT hai Store, UNKNOWN và Finance production chưa PASS**; B.1–B.5 là phiếu chụp chờ ảnh thật.
+
 Nguyễn Minh Duy phụ trách F15 Product Review, F16 Finance, kiểm thử tích hợp và đối chiếu bằng chứng của nhóm. Phần nội dung này dùng cho báo cáo bản nộp và phần thuyết trình TV5. Kiểm chứng hiện có hỗ trợ các chức năng và trường hợp được nêu cụ thể; hệ thống vẫn chưa đạt final UAT vì còn UNKNOWN và tích hợp Seller Return.
 
 ## 1 Vai trò và phạm vi đóng góp
