@@ -16,11 +16,14 @@ import java.util.HexFormat;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+import org.postgresql.util.PSQLException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 /**
  * TV3 #155. A durable customer Return is distinct from SellerOrder fulfillment, COD and Inventory.
@@ -109,12 +112,26 @@ public class ReturnRequestService {
                         + "values (?,?,?,?,?,?,?,'REQUESTED',?,?)",
                     requestId, orderId, storeOrderId, customerId, key, fingerprint,
                     reason, java.sql.Timestamp.from(now), java.sql.Timestamp.from(now));
-        } catch (DataIntegrityViolationException concurrent) {
-            // The unique(customer,key) arbiter also protects concurrent same-key calls
-            // against two different SellerOrders (which take different row locks).
-            // Never leak SQL details or return a 500; rollback this whole transaction.
-            throw ApiException.conflict("RETURN_IDEMPOTENCY_MISMATCH",
-                    "Idempotency-Key already used or an active Return exists");
+        } catch (DataIntegrityViolationException violation) {
+            // Inspect structured PostgreSQL metadata, never SQL text or request values.
+            // The failed transaction is aborted: do not query/replay here; throw and roll it back.
+            if (violation.getMostSpecificCause() instanceof PSQLException postgres
+                    && "23505".equals(postgres.getSQLState())) {
+                var detail = postgres.getServerErrorMessage();
+                String constraint = detail == null ? null : detail.getConstraint();
+                if ("uq_return_customer_key".equals(constraint)) {
+                    throw ApiException.conflict("RETURN_IDEMPOTENCY_MISMATCH",
+                            "Idempotency-Key was used for a different return request");
+                }
+                if ("uq_return_active_seller_order".equals(constraint)) {
+                    throw ApiException.conflict("RETURN_ALREADY_OPEN",
+                            "A return is already open for this Store order");
+                }
+            }
+            // Preserve the cause internally. Existing ResponseStatusException advice emits only
+            // the established {code,message} envelope with this fixed, non-sensitive reason.
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
+                    "Unable to create return request", violation);
         }
 
         // Transactional outbox: notify only the right Store and never include shipping/PII.
