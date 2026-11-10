@@ -14,6 +14,7 @@ TV5 QA/Finance sign-off or final UAT.
 | COD | Collection is guarded by DELIVERED and pending COD state; duplicate collection is rejected. Inventory CONSUME is not COD PAID. | Fulfillment/COD module evidence recorded in Issue #11; Finance settlement remains TV5-owned |
 | Notification | Unproven persistence failures are sent to retry/DLT rather than acknowledged as duplicates. | [PR #168](https://github.com/duyxl56785/Project_HK5/pull/168), `d290559` |
 | Seller Return | Seller Store scope and `REQUESTED → APPROVED|REJECTED`, `APPROVED → RECEIVED`; receipt evidence is enforced in PostgreSQL. Return/settlement share the SellerOrder lock. | [PR #182](https://github.com/duyxl56785/Project_HK5/pull/182), merge `9de2697` |
+| Return / Finance boundary | A received return leaves `gross`, `platform_fee`, COD state and settlement unchanged. An open return blocks settlement under the same SellerOrder lock; this does not approve refund, payout reversal or restock. | [PR #191](https://github.com/duyxl56785/Project_HK5/pull/191), merge `f0b5090` |
 
 ## Tests with bounded claims
 
@@ -23,6 +24,7 @@ TV5 QA/Finance sign-off or final UAT.
 | `f2d56d7` | selected Fulfillment lifecycle and PostgreSQL suites | 14 unit + 14 PostgreSQL PASS | Unit/MockMvc and database scope, not live Gateway actor acceptance |
 | `d290559` | `:notification-service:test` | 4 unit + 3 Kafka/PostgreSQL PASS | Notification consumer persistence/retry scope |
 | `539cf3b` | Return unit, PostgreSQL, Gateway and frontend checks | 12 unit + 24 PostgreSQL; Gateway 5/5; frontend 165/165 PASS | [Seller Return live E2E](https://github.com/duyxl56785/Project_HK5/issues/153#issuecomment-6719477452) PASS on clean `main@78de5c0` (seller-return, return-access); restock remains BLOCKED |
+| `6d45172` | `FulfillmentPostgres16IT`, `ReturnConstraintPostgresIT`, Return rules | 24 + 5 PostgreSQL and 5 unit PASS | Return receipt preserves money/COD snapshots; explicit COD collection still cannot settle an open return. Published test evidence, not a new runtime or Finance policy approval. |
 | `27c65f3` | UNKNOWN fake-loopback and config-only tests | 12/12 + 7/7 PASS | Fixture safeguards only; no real Inventory provider, Docker fault or database |
 | `bbf1bf9` | `npm test`, `npm run typecheck`, `npm run build` | 162 PASS; typecheck/build PASS | Draft Inventory UI candidate only |
 
@@ -40,6 +42,10 @@ TV5 QA/Finance sign-off or final UAT.
   default-off Order pair gate. A caller-specific credential, durable restock
   intent, owner-bound provider lookup/receipt, exact replay recovery and TV5
   Finance sign-off are required before runtime wiring.
+- **Return / Finance:** `RECEIVED` is deliberately an auditable physical
+  receipt, not a refund, COD reversal, payout reversal or Inventory movement.
+  An active Return blocks settlement; whether `payableNet` means merely
+  unsettled or eligible-to-pay remains a TV2/TV5 business decision.
 - **Inventory UI:** [PR #169](https://github.com/duyxl56785/Project_HK5/pull/169)
   and [PR #190](https://github.com/duyxl56785/Project_HK5/pull/190) remain
   Draft. There is no approved Store-scoped inventory read/list contract or
