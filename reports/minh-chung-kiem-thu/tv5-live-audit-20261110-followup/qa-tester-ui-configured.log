@@ -1,0 +1,10 @@
+
+Running 3 tests using 1 worker
+
+(node:26680) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 ui\dashboard.spec.mjs:13:1 › dashboard-hien-thi-suite-va-gates (377ms)
+  ok 2 ui\dashboard.spec.mjs:21:1 › dashboard-chi-goi-suite-allowlist (373ms)
+  ok 3 ui\dashboard.spec.mjs:29:1 › dashboard-chan-doan-tieng-viet-khong-thuc-thi-html (258ms)
+
+  3 passed (1.5s)

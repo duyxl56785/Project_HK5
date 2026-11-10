@@ -1,0 +1,63 @@
+
+Running 3 tests using 1 worker
+
+(node:50060) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 ui\dashboard.spec.mjs:13:1 › dashboard-hien-thi-suite-va-gates (529ms)
+(node:48176) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  2 ui\dashboard.spec.mjs:21:1 › dashboard-chi-goi-suite-allowlist (274ms)
+(node:56404) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  3 ui\dashboard.spec.mjs:29:1 › dashboard-chan-doan-tieng-viet-khong-thuc-thi-html (241ms)
+
+
+  1) ui\dashboard.spec.mjs:13:1 › dashboard-hien-thi-suite-va-gates ────────────────────────────────
+
+    Error: Thiếu thư mục bằng chứng riêng cho lần chạy
+
+       5 | test.afterEach(async ({page}, info) => {
+       6 |   const dir = process.env.SOOPI_QA_SCREENSHOT_DIR;
+    >  7 |   if (!dir) throw new Error('Thiếu thư mục bằng chứng riêng cho lần chạy');
+         |                   ^
+       8 |   await mkdir(dir, {recursive:true});
+       9 |   const label = info.title.replace(/[^a-zA-Z0-9-]/g,'-');
+      10 |   await page.screenshot({path:path.join(dir, `${label}-${info.status}.png`),fullPage:true});
+        at D:\CMC Uni\5 Ky Dong\WEB\BCK WEB\Project_HK5\.verification\tv5-main-uat-20261110\tools\tv5-qa-tester\ui\dashboard.spec.mjs:7:19
+
+    Error Context: test-results\dashboard-dashboard-hien-thi-suite-va-gates\error-context.md
+
+  2) ui\dashboard.spec.mjs:21:1 › dashboard-chi-goi-suite-allowlist ────────────────────────────────
+
+    Error: Thiếu thư mục bằng chứng riêng cho lần chạy
+
+       5 | test.afterEach(async ({page}, info) => {
+       6 |   const dir = process.env.SOOPI_QA_SCREENSHOT_DIR;
+    >  7 |   if (!dir) throw new Error('Thiếu thư mục bằng chứng riêng cho lần chạy');
+         |                   ^
+       8 |   await mkdir(dir, {recursive:true});
+       9 |   const label = info.title.replace(/[^a-zA-Z0-9-]/g,'-');
+      10 |   await page.screenshot({path:path.join(dir, `${label}-${info.status}.png`),fullPage:true});
+        at D:\CMC Uni\5 Ky Dong\WEB\BCK WEB\Project_HK5\.verification\tv5-main-uat-20261110\tools\tv5-qa-tester\ui\dashboard.spec.mjs:7:19
+
+    Error Context: test-results\dashboard-dashboard-chi-goi-suite-allowlist\error-context.md
+
+  3) ui\dashboard.spec.mjs:29:1 › dashboard-chan-doan-tieng-viet-khong-thuc-thi-html ───────────────
+
+    Error: Thiếu thư mục bằng chứng riêng cho lần chạy
+
+       5 | test.afterEach(async ({page}, info) => {
+       6 |   const dir = process.env.SOOPI_QA_SCREENSHOT_DIR;
+    >  7 |   if (!dir) throw new Error('Thiếu thư mục bằng chứng riêng cho lần chạy');
+         |                   ^
+       8 |   await mkdir(dir, {recursive:true});
+       9 |   const label = info.title.replace(/[^a-zA-Z0-9-]/g,'-');
+      10 |   await page.screenshot({path:path.join(dir, `${label}-${info.status}.png`),fullPage:true});
+        at D:\CMC Uni\5 Ky Dong\WEB\BCK WEB\Project_HK5\.verification\tv5-main-uat-20261110\tools\tv5-qa-tester\ui\dashboard.spec.mjs:7:19
+
+    Error Context: test-results\dashboard-dashboard-chan-doan-tieng-viet-khong-thuc-thi-html\error-context.md
+
+  3 failed
+    ui\dashboard.spec.mjs:13:1 › dashboard-hien-thi-suite-va-gates ─────────────────────────────────
+    ui\dashboard.spec.mjs:21:1 › dashboard-chi-goi-suite-allowlist ─────────────────────────────────
+    ui\dashboard.spec.mjs:29:1 › dashboard-chan-doan-tieng-viet-khong-thuc-thi-html ────────────────
