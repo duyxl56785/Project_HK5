@@ -1,0 +1,2 @@
+15e692ce1cd0cb3a4c212c51350b0d9aa489407bee2cb6b48371c990da6d2bb6  TEST-com.projecthk5.orderservice.integration.ReturnConstraintPostgresIT.xml
+06c53cb3f6aeaa7f13a0d9ffb8830f5d8da8f7e9812f78e392f727911b539209  TEST-com.projecthk5.orderservice.service.ReturnRequestServiceRulesTest.xml

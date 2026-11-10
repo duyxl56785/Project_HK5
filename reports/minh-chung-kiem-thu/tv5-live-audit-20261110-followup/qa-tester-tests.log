@@ -1,0 +1,42 @@
+node:internal/modules/package_json_reader:343
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'archiver' imported from D:\CMC Uni\5 Ky Dong\WEB\BCK WEB\Project_HK5\.verification\tv5-main-uat-20261110\tools\tv5-qa-tester\server\http.mjs
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:343:9)
+    at packageResolve (node:internal/modules/esm/resolve:751:25)
+    at moduleResolve (node:internal/modules/esm/resolve:840:18)
+    at defaultResolve (node:internal/modules/esm/resolve:973:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:708:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:728:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:766:56)
+    at #resolve (node:internal/modules/esm/loader:690:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:610:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:277:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v26.13.0
+✖ tools\tv5-qa-tester\server\audit.test.mjs (282.8571ms)
+✔ allowlist từ chối executable bất kỳ và suite đang bị khóa (186.5387ms)
+✔ timeout, FAIL và thiếu test evidence không thể PASS (285.3993ms)
+✔ Docker không hoạt động thì PostgreSQL BLOCKED_ENV và command không chạy (69.7893ms)
+✔ Playwright không có screenshot thì không PASS dù process báo passed (98.5257ms)
+✔ hai Playwright suite trong một run không đếm ảnh của nhau (109.328ms)
+✔ TAP/JUnit có số kiểm thử và export escape dữ liệu (1.4101ms)
+✔ Windows cancel targets only spawned child tree, with fallback on taskkill failure (0.2183ms)
+✔ Windows cancel actually stops a private child and grandchild (318.2286ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 8
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6059.1917
+
+✖ failing tests:
+
+test at tools\tv5-qa-tester\server\audit.test.mjs:1:1
+✖ tools\tv5-qa-tester\server\audit.test.mjs (282.8571ms)
+  'test failed'

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.projecthk5.orderservice.service.ReturnRequestServiceRulesTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-10T00:55:31" hostname="MDUY-LECO" time="0.036">
+  <properties/>
+  <testcase name="onlyDeliveredUnsettledCodStoreOrdersAreEligible()" classname="com.projecthk5.orderservice.service.ReturnRequestServiceRulesTest" time="0.013"/>
+  <testcase name="reasonLengthUsesJavaUtf16UnitsAndAllowsMultiline()" classname="com.projecthk5.orderservice.service.ReturnRequestServiceRulesTest" time="0.006"/>
+  <testcase name="buyerReturnWindowIsInclusiveAtExactlySevenUtcDays()" classname="com.projecthk5.orderservice.service.ReturnRequestServiceRulesTest" time="0.001"/>
+  <testcase name="keyValidationAndCanonicalFingerprintAreStableAndNotColliding()" classname="com.projecthk5.orderservice.service.ReturnRequestServiceRulesTest" time="0.01"/>
+  <testcase name="receiptReferenceIsRequiredAndCanonicalBeforeSellerCanConfirmPhysicalReceipt()" classname="com.projecthk5.orderservice.service.ReturnRequestServiceRulesTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

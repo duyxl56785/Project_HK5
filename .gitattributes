@@ -3,3 +3,5 @@
 *.gradle text eol=lf
 *.sh text eol=lf
 *.ps1 text eol=crlf
+reports/minh-chung-kiem-thu/tv5-main-78de5c-return-preflight/*.xml -text
+reports/minh-chung-kiem-thu/tv5-pr187-bc8248-constraint-review/*.xml -text

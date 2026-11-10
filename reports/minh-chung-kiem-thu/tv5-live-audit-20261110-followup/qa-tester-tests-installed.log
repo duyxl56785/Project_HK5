@@ -1,0 +1,27 @@
+
+> soopi-tv5-qa-tester@0.1.0 test
+> node --test server/*.test.mjs
+
+✔ hai POST đồng thời chỉ nhận một run (103.8934ms)
+✔ reload server không giữ RUNNING mồ côi và không sửa raw history (12.0833ms)
+✔ toàn bộ skipped không được gắn PASS (141.6206ms)
+✔ exec exception được lưu lỗi và giải phóng run thay vì treo (123.9124ms)
+✔ download raw log và report.html trả đúng file (66.0656ms)
+✔ chẩn đoán ECONNREFUSED không bịa root cause và không lộ credential (1.6519ms)
+✔ hủy hợp lệ không tự tạo bug ứng dụng (0.4564ms)
+✔ allowlist từ chối executable bất kỳ và suite đang bị khóa (190.266ms)
+✔ timeout, FAIL và thiếu test evidence không thể PASS (354.6369ms)
+✔ Docker không hoạt động thì PostgreSQL BLOCKED_ENV và command không chạy (77.4387ms)
+✔ Playwright không có screenshot thì không PASS dù process báo passed (139.978ms)
+✔ hai Playwright suite trong một run không đếm ảnh của nhau (141.6281ms)
+✔ TAP/JUnit có số kiểm thử và export escape dữ liệu (1.1464ms)
+✔ Windows cancel targets only spawned child tree, with fallback on taskkill failure (0.3016ms)
+✔ Windows cancel actually stops a private child and grandchild (233.963ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6087.9277
