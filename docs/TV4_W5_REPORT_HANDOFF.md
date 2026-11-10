@@ -22,15 +22,17 @@ TV5 QA/Finance sign-off or final UAT.
 | `f2d56d7` | `:inventory-service:test :inventory-service:postgresIntegrationTest` | 27 unit + 38 PostgreSQL PASS | Inventory module/provider candidate, not Checkout E2E |
 | `f2d56d7` | selected Fulfillment lifecycle and PostgreSQL suites | 14 unit + 14 PostgreSQL PASS | Unit/MockMvc and database scope, not live Gateway actor acceptance |
 | `d290559` | `:notification-service:test` | 4 unit + 3 Kafka/PostgreSQL PASS | Notification consumer persistence/retry scope |
-| `539cf3b` | Return unit, PostgreSQL, Gateway and frontend checks | 12 unit + 24 PostgreSQL; Gateway 5/5; frontend 165/165 PASS | Seller Return scope; local live E2E was not run |
+| `539cf3b` | Return unit, PostgreSQL, Gateway and frontend checks | 12 unit + 24 PostgreSQL; Gateway 5/5; frontend 165/165 PASS | [Seller Return live E2E](https://github.com/duyxl56785/Project_HK5/issues/153#issuecomment-6719477452) PASS on clean `main@78de5c0` (seller-return, return-access); restock remains BLOCKED |
 | `27c65f3` | UNKNOWN fake-loopback and config-only tests | 12/12 + 7/7 PASS | Fixture safeguards only; no real Inventory provider, Docker fault or database |
 | `bbf1bf9` | `npm test`, `npm run typecheck`, `npm run build` | 162 PASS; typecheck/build PASS | Draft Inventory UI candidate only |
 
 ## Acceptance limits
 
-- **UNKNOWN lost-response:** `NOT_RUN / BLOCKED_APPROVAL`. It has no approved
+- **UNKNOWN lost-response:** `BLOCKED_DESIGN` for W5, per the final
+  [TV2 decision](https://github.com/duyxl56785/Project_HK5/issues/154#issuecomment-6757433313).
+  The isolated stack configuration was approved as preparation only; no
   executor/teardown, provider COMMIT/status receipt, durable Checkout replay
-  oracle or case-specific TV5 QA approval.
+  oracle or case-specific TV5 QA approval exists, so the live case was not run.
 - **UNKNOWN claim-conflict:** `BLOCKED_DESIGN`; no approved real conflict
   generator exists. No synthetic HTTP 409 or direct database modification is
   used to manufacture a PASS.
@@ -41,7 +43,8 @@ TV5 QA/Finance sign-off or final UAT.
 - **Inventory UI:** [PR #169](https://github.com/duyxl56785/Project_HK5/pull/169)
   and [PR #190](https://github.com/duyxl56785/Project_HK5/pull/190) remain
   Draft. There is no approved Store-scoped inventory read/list contract or
-  SellerProductsPage integration point.
+  SellerProductsPage integration point; TV2 has placed that work in the
+  post-submission backlog.
 
 ## Safety boundaries retained
 
@@ -56,7 +59,7 @@ TV5 QA/Finance sign-off or final UAT.
 
 | Owner | Needed decision/evidence |
 | --- | --- |
-| TV2 | Authoritative Store/Product→SKU facts, Store-scoped Inventory read contract, and future UI integration placement. |
+| TV2 | Authoritative Store/Product→SKU facts, Store-scoped Inventory read contract, and future UI integration placement (post-submission backlog). |
 | TV3 | Immutable checkout tuple, send generation and replay/quarantine oracle for Inventory UNKNOWN/recovery. |
 | TV5 | Finance boundary for Return restock and QA approval for any future isolated live UNKNOWN case. |
 
