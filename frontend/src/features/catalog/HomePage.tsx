@@ -16,6 +16,7 @@ const ICONS = {
   bag: 'M6 8h12l1.5 13h-15zM9 8a3 3 0 0 1 6 0',
   wallet: 'M3 7h16a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zM3 7l13-3v3M16 13.5h2',
   track: 'M3 6h11v11H3zM14 10h4l3 3v4h-7M7 19.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM17 19.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4z',
+  back: 'M9 14 4 9l5-5M4 9h11a5 5 0 0 1 0 10h-4',
 };
 
 // Keyed by the seeded root categories; any other category shows its first letter.
@@ -47,7 +48,7 @@ function Banner() {
   const [paused, setPaused] = useState(false);
   useEffect(() => {
     if (paused || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const timer = setInterval(() => setIndex((n) => (n + 1) % SLIDES.length), 5000);
+    const timer = setInterval(() => setIndex((n) => (n + 1) % SLIDES.length), 8000);
     return () => clearInterval(timer);
   }, [paused]);
   const slide = SLIDES[index];
@@ -82,6 +83,7 @@ export function HomePage() {
       <li><Icon path={ICONS.bag} /><div><strong>Một giỏ, nhiều cửa hàng</strong><span>Đặt một lần cho mọi người bán</span></div></li>
       <li><Icon path={ICONS.wallet} /><div><strong>Trả tiền khi nhận hàng</strong><span>Thanh toán COD khi nhận đơn</span></div></li>
       <li><Icon path={ICONS.track} /><div><strong>Theo dõi từng đơn</strong><span>Cập nhật theo từng cửa hàng</span></div></li>
+      <li><Icon path={ICONS.back} /><div><strong>Yêu cầu trả hàng</strong><span>Ngay trong đơn đã giao</span></div></li>
     </ul>
     {roots.length > 0 && <section className="shelf">
       <header className="shelf__head"><h2>Danh mục</h2></header>
