@@ -30,13 +30,13 @@ TV5 QA/Finance sign-off or final UAT.
 
 ## Acceptance limits
 
-- **UNKNOWN lost-response:** `NOT_RUN / BLOCKED_APPROVAL`. The isolated stack
-  configuration is preparation only; no executor/teardown, provider
-  COMMIT/status receipt, durable Checkout replay oracle or case-specific
-  TV2/TV3/TV5 execution approval exists, so the live case was not run.
-- **UNKNOWN claim-conflict:** `BLOCKED_DESIGN`; no approved real conflict
-  generator exists. No synthetic HTTP 409 or direct database modification is
-  used to manufacture a PASS.
+- **UNKNOWN lost-response:** `BLOCKED_DESIGN` for W5/UAT and `NOT_RUN` as a
+  live execution fact. The isolated stack is preparation only; no
+  executor/teardown, provider COMMIT/status receipt, durable Checkout replay
+  oracle or case-specific execution approval exists.
+- **UNKNOWN claim-conflict:** `BLOCKED_DESIGN` and `NOT_RUN`; no approved real
+  conflict generator exists. No synthetic HTTP 409 or direct database
+  modification is used to manufacture a PASS.
 - **Return restock:** `BLOCKED`. `INCREASE` is not available through the
   default-off Order pair gate. A caller-specific credential, durable restock
   intent, owner-bound provider lookup/receipt, exact replay recovery and TV5
