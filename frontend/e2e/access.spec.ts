@@ -120,10 +120,11 @@ test('the home banner holds its slide while the pointer is on it', async ({ page
   const banner = page.getByRole('region', { name: 'Giới thiệu Soopi' });
   const title = await banner.getByRole('heading').textContent();
   await banner.hover();
-  await page.waitForTimeout(5500);
+  // The banner advances every 8 s; wait past one tick while hovered.
+  await page.waitForTimeout(8500);
   await expect(banner.getByRole('heading')).toHaveText(title!);
   await page.mouse.move(0, 0);
-  await expect(banner.getByRole('heading')).not.toHaveText(title!, { timeout: 7000 });
+  await expect(banner.getByRole('heading')).not.toHaveText(title!, { timeout: 10000 });
 });
 
 test('a guest page does not ask for a session it never had', async ({ page }) => {
