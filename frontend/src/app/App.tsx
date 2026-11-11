@@ -16,8 +16,10 @@ const adminPages = () => import('../features/admin/AdminPages');
 const orderPages = () => import('../features/orders/OrdersPage');
 const sellerOrderPages = () => import('../features/seller/SellerOrdersPage');
 const sellerProductPages = () => import('../features/seller/SellerProductsPage');
+const policyPages = () => import('../features/policy/PolicyPage');
 
 const AccountPage = page(accountPages, 'AccountPage');
+const PolicyPage = page(policyPages, 'PolicyPage');
 const LoginPage = page(authPages, 'LoginPage');
 const RegisterPage = page(authPages, 'RegisterPage');
 const AdminAccountsPage = page(adminPages, 'AdminAccountsPage');
@@ -129,7 +131,7 @@ function Layout() {
     <main className="container">
       <PageBoundary key={pathname}><Suspense fallback={<p role="status">Đang tải…</p>}><Outlet /></Suspense></PageBoundary>
     </main>
-    <footer className="footer">© 2026 Soopi · Sàn thương mại điện tử nhiều người bán · Thanh toán khi nhận hàng</footer>
+    <footer className="footer">© 2026 Soopi · Sàn thương mại điện tử nhiều người bán · Thanh toán khi nhận hàng · <Link to="/quy-dinh">Quy định sàn</Link></footer>
   </>;
 }
 
@@ -144,6 +146,7 @@ export function App() {
       <Route path="stores/:slug" element={<StorePage />} />
       <Route path="login" element={<LoginPage />} />
       <Route path="register" element={<RegisterPage />} />
+      <Route path="quy-dinh" element={<PolicyPage />} />
       <Route path="account" element={guarded(undefined, <AccountPage />)} />
       <Route path="notifications" element={guarded(undefined, <NotificationsPage />)} />
       <Route path="cart" element={guarded('CUSTOMER', <CartPage />)} />

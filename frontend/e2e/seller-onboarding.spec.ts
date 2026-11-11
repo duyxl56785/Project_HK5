@@ -15,14 +15,30 @@ test('an applicant is rejected, resubmits, opens a store and gets a product on s
   await page.goto('/seller');
   await page.getByRole('button', { name: 'Gửi hồ sơ người bán' }).click();
   await expect(page.getByText('Nhập tên người đại diện')).toBeVisible();
+  await page.getByLabel('Loại hình kinh doanh').selectOption('HOUSEHOLD');
   await page.getByLabel('Tên người đại diện').fill(owner);
+  await page.getByLabel('Số CCCD').fill('001099012345');
   await page.getByLabel('Số điện thoại').fill('0912345678');
+  await page.getByLabel('Email liên hệ').fill(`seller-${id}@hk5.local`);
   await page.getByLabel('Địa chỉ lấy hàng').fill('2 Hai Bà Trưng');
+  await page.getByLabel('Tên ngân hàng').fill('Ngân hàng Thử nghiệm');
+  await page.getByLabel('Số tài khoản').fill('9876543210');
+  await page.getByLabel('Tên chủ tài khoản').fill('NGUOI BAN THU');
+  await page.getByRole('button', { name: 'Gửi hồ sơ người bán' }).click();
+  await expect(page.getByText('Bạn cần đồng ý Quy định sàn')).toBeVisible();
+  await page.getByLabel('Tôi đã đọc và đồng ý Quy định sàn').check();
+  await page.getByRole('button', { name: 'Gửi hồ sơ người bán' }).click();
+  await expect(page.getByText('Hộ kinh doanh và công ty cần mã số thuế')).toBeVisible();
+  await page.getByLabel('Mã số thuế').fill('0312345678');
   await page.getByRole('button', { name: 'Gửi hồ sơ người bán' }).click();
 
   const admin = await sessionFor(browser, accounts.admin);
   await admin.goto('/admin/sellers');
   const row = admin.getByRole('row').filter({ hasText: owner });
+  // The admin sees the application, with the ID and bank account cut to their last 4 digits.
+  await expect(row.getByText('CCCD ********2345 · MST 0312345678')).toBeVisible();
+  await expect(row.getByText('Ngân hàng Thử nghiệm ******3210 · NGUOI BAN THU')).toBeVisible();
+  await expect(row.getByText(/Đồng ý quy định 2026-11-11/)).toBeVisible();
   await row.getByLabel('Lý do').fill('Sai địa chỉ');
   await row.getByRole('button', { name: 'Từ chối' }).click();
 
@@ -31,6 +47,7 @@ test('an applicant is rejected, resubmits, opens a store and gets a product on s
     await expect(page.getByText('Lý do từ quản trị viên: Sai địa chỉ')).toBeVisible({ timeout: 1000 });
   }).toPass({ timeout: 15_000 });
   await page.getByLabel('Địa chỉ lấy hàng').fill('3 Hai Bà Trưng');
+  await page.getByLabel('Tôi đã đọc và đồng ý Quy định sàn').check();
   await page.getByRole('button', { name: 'Gửi lại hồ sơ' }).click();
 
   await admin.reload();
@@ -73,4 +90,12 @@ test('an applicant is rejected, resubmits, opens a store and gets a product on s
     await customer.goto(`/products?q=${encodeURIComponent(productName)}`);
     await expect(customer.getByText(productName).first()).toBeVisible({ timeout: 2000 });
   }).toPass({ timeout: 30_000 });
+});
+
+test('the marketplace rules are public and list the seller requirements', async ({ page }) => {
+  await page.goto('/');
+  await page.getByRole('link', { name: 'Quy định sàn' }).click();
+  await expect(page.getByRole('heading', { name: 'Quy định sàn Soopi' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: '9. Điều kiện trở thành người bán' })).toBeVisible();
+  await expect(page.getByText('Sàn thu phí 5%', { exact: false })).toBeVisible();
 });

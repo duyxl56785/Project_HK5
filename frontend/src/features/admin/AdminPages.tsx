@@ -7,6 +7,8 @@ import { api } from '../../shared/api';
 import { text } from '../../shared/forms';
 import { Badge, dateTime, ErrorNote, Loaded, money, shortId, StatusFilter, useAction } from '../../shared/ui';
 import type { CategoryDto, CategoryStatus } from '../catalog/categoryTypes';
+import { BUSINESS_TYPES } from '../policy/terms';
+import type { BusinessType } from '../policy/terms';
 import { TotalsGrid } from '../finance/FinanceTable';
 import type { StoreSummary, Totals } from '../finance/FinanceTable';
 import type { StoreOrder } from '../orders/OrdersPage';
@@ -30,7 +32,12 @@ function Moderate({ actions, needsReason, run, busy }: {
 
 interface SellerRow {
   readonly id: string; readonly ownerReference: string; readonly status: string; readonly reviewReason: string | null; readonly version: string;
-  readonly contact: { readonly representativeName: string | null; readonly phone: string | null; readonly pickupAddress: string | null };
+  readonly contact: {
+    readonly representativeName: string | null; readonly phone: string | null; readonly pickupAddress: string | null;
+    readonly businessType: BusinessType | null; readonly idNumber: string | null; readonly taxCode: string | null;
+    readonly email: string | null; readonly bankName: string | null; readonly bankAccountNumber: string | null;
+    readonly bankAccountHolder: string | null; readonly termsVersion: string | null; readonly termsAcceptedAt: string | null;
+  };
   readonly store: { readonly name: string } | null;
 }
 interface HistoryRow {
@@ -47,6 +54,17 @@ function SellerHistory({ id }: { readonly id: string }) {
       <li key={`${h.toStatus}-${h.at}`}><small className="muted">{dateTime(h.at)}</small> {h.fromStatus && <><Badge value={h.fromStatus} /> → </>}<Badge value={h.toStatus} />
         {h.reason && <small className="muted"> {h.reason}</small>}
         <br /><small className="muted">{h.reviewedBy ? `Admin ${h.reviewedBy}` : 'Người bán gửi hồ sơ'}</small></li>)}</ol>}</Loaded>}
+  </>;
+}
+
+/** ID and bank account arrive masked to the last 4 digits; profiles from before V8 have only the first three fields. */
+function SellerContact({ contact: c }: { readonly contact: SellerRow['contact'] }) {
+  return <>
+    {c.representativeName ?? '—'}{c.businessType && <> · {BUSINESS_TYPES[c.businessType]}</>}
+    <br /><small className="muted">{c.phone} · {c.email ?? '—'} · {c.pickupAddress}</small>
+    {c.idNumber && <><br /><small className="muted">CCCD {c.idNumber}{c.taxCode && <> · MST {c.taxCode}</>}</small></>}
+    {c.bankAccountNumber && <><br /><small className="muted">{c.bankName} {c.bankAccountNumber} · {c.bankAccountHolder}</small></>}
+    <br /><small className="muted">{c.termsAcceptedAt ? `Đồng ý quy định ${c.termsVersion} lúc ${dateTime(c.termsAcceptedAt)}` : 'Chưa đồng ý quy định'}</small>
   </>;
 }
 
@@ -70,7 +88,7 @@ export function AdminSellersPage() {
       <thead><tr><th>Tài khoản</th><th>Hồ sơ</th><th>Cửa hàng</th><th>Trạng thái</th><th>Thao tác</th></tr></thead>
       <tbody>{rows.map((row) => <tr key={row.id}>
         <td><code>{row.ownerReference}</code></td>
-        <td>{row.contact.representativeName ?? '—'}<br /><small className="muted">{row.contact.phone} · {row.contact.pickupAddress}</small></td>
+        <td><SellerContact contact={row.contact} /></td>
         <td>{row.store?.name ?? '—'}</td>
         <td><Badge value={row.status} />{row.reviewReason && <small className="muted"> {row.reviewReason}</small>}</td>
         <td><Moderate actions={SELLER_ACTIONS[row.status] ?? []} needsReason={['reject', 'suspend']} busy={moderate.isPending}

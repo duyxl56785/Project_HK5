@@ -23,7 +23,7 @@ const login = async (email, password) => (await must('/api/auth/login', { method
 async function account(email) { const known = await call('/api/auth/login', { method: 'POST', body: { email, password: env.SEED_PASSWORD } }); if (known.ok) return known.json.accessToken; await must('/api/auth/register', { method: 'POST', body: { email, password: env.SEED_PASSWORD } }); return login(email, env.SEED_PASSWORD); }
 async function approvedSeller(email, admin) {
   const token = await account(email);
-  if ((await call('/api/sellers/me', { token })).status === 404) await must('/api/sellers', { token, method: 'POST', body: { representativeName: 'Nguyễn Văn An', phone: '0901234567', pickupAddress: '1 Lê Lợi, Quận 1, TP.HCM' } });
+  if ((await call('/api/sellers/me', { token })).status === 404) await must('/api/sellers', { token, method: 'POST', body: { representativeName: 'Nguyễn Văn An', phone: '0901234567', pickupAddress: '1 Lê Lợi, Quận 1, TP.HCM', businessType: 'INDIVIDUAL', idNumber: '001090000001', taxCode: '', email: 'seller-demo@hk5.local', bankName: 'Ngân hàng Demo', bankAccountNumber: '0001000100', bankAccountHolder: 'NGUYEN VAN AN', termsVersion: '2026-11-11' } });
   const { seller } = await must('/api/sellers/me', { token });
   if (seller.status === 'PENDING_REVIEW') await must(`/api/admin/sellers/${seller.id}/approve`, { token: admin, method: 'POST', body: { expectedVersion: seller.version } });
   for (let tries = 0; tries < 40; tries += 1) { const fresh = await login(email, env.SEED_PASSWORD); if ((await must('/api/auth/me', { token: fresh })).roles.includes('SELLER')) return login(email, env.SEED_PASSWORD); await new Promise((done) => setTimeout(done, 500)); }
