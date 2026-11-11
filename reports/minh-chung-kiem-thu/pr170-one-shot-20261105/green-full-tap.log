@@ -1,0 +1,82 @@
+TAP version 13
+# Subtest: harness receives exact request once; proxy loses actual response without a synthetic error
+ok 1 - harness receives exact request once; proxy loses actual response without a synthetic error
+  ---
+  duration_ms: 33.8866
+  type: 'test'
+  ...
+# Subtest: changed operation/payload never reaches harness
+ok 2 - changed operation/payload never reaches harness
+  ---
+  duration_ms: 5.1007
+  type: 'test'
+  ...
+# Subtest: malformed or non-object JSON is rejected clearly without reaching harness
+ok 3 - malformed or non-object JSON is rejected clearly without reaching harness
+  ---
+  duration_ms: 4.2316
+  type: 'test'
+  ...
+# Subtest: reject non-loopback targets and missing tuple evidence before creating handler
+ok 4 - reject non-loopback targets and missing tuple evidence before creating handler
+  ---
+  duration_ms: 0.4091
+  type: 'test'
+  ...
+# Subtest: sequential replay never forwards the approved tuple a second time
+ok 5 - sequential replay never forwards the approved tuple a second time
+  ---
+  duration_ms: 7.3173
+  type: 'test'
+  ...
+# Subtest: concurrent duplicate bodies share one atomic admission while upstream is pending
+ok 6 - concurrent duplicate bodies share one atomic admission while upstream is pending
+  ---
+  duration_ms: 9.7349
+  type: 'test'
+  ...
+# Subtest: sync receipt failure is reported without crashing the process or reopening admission
+ok 7 - sync receipt failure is reported without crashing the process or reopening admission
+  ---
+  duration_ms: 103.4032
+  type: 'test'
+  ...
+# Subtest: async receipt failure is reported without crashing the process or reopening admission
+ok 8 - async receipt failure is reported without crashing the process or reopening admission
+  ---
+  duration_ms: 99.3875
+  type: 'test'
+  ...
+# Subtest: timeout records no receipt and never permits a second upstream attempt
+ok 9 - timeout records no receipt and never permits a second upstream attempt
+  ---
+  duration_ms: 121.5215
+  type: 'test'
+  ...
+# Subtest: malformed JSON and wrong fingerprints do not consume the one valid admission
+ok 10 - malformed JSON and wrong fingerprints do not consume the one valid admission
+  ---
+  duration_ms: 7.8335
+  type: 'test'
+  ...
+# Subtest: operation ID must match even when the request fingerprint matches
+ok 11 - operation ID must match even when the request fingerprint matches
+  ---
+  duration_ms: 3.3578
+  type: 'test'
+  ...
+# Subtest: incomplete upstream response is not a receipt and does not reopen admission
+ok 12 - incomplete upstream response is not a receipt and does not reopen admission
+  ---
+  duration_ms: 7.6362
+  type: 'test'
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 12
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 495.0852
