@@ -56,6 +56,8 @@ input[readonly] { background: var(--brand-50); color: var(--muted); }
 .field--inline input[type=number] { width: 110px; }
 .check { display: flex; gap: 8px; align-items: center; }
 .check input { min-height: 0; accent-color: var(--brand); }
+fieldset { border: 1px solid var(--line); border-radius: var(--radius-sm); margin: 0; padding: 14px; min-width: 0; }
+legend { padding: 0 6px; font-weight: 500; color: var(--brand-deep); }
 
 /* Buttons */
 .btn {
@@ -122,6 +124,9 @@ input[readonly] { background: var(--brand-50); color: var(--muted); }
 .cartlink .count { position: absolute; top: 0; right: -2px; margin: 0; }
 .topbar .count { background: #fff; color: var(--brand); }
 .footer { background: var(--brand-100); color: var(--brand-deep); font-size: 13px; text-align: center; padding: 22px 16px; }
+.footer a { color: inherit; text-decoration: underline; }
+.policy ul { margin: 0; padding-left: 20px; display: grid; gap: 4px; list-style: disc; }
+.policy h2 { font-size: 16px; }
 
 /* Home */
 .banner { position: relative; overflow: hidden; border-radius: var(--radius-sm); padding: 44px 48px 52px; min-height: 240px; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 10px; }

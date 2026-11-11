@@ -347,3 +347,39 @@ missing/unavailable fixture authority. This is actual PostgreSQL with fixture po
 Separate Product build309PASS includes Category14PG regression. No sum across these separate invocations.
 Exact commands/counts/raw hashes and remaining NOT_RUN work are in the
 [new progress checkpoint](../../docs/TV2_WEEK1_PROGRESS.md#strict-json-and-private-response-preparation--2026-10-22).
+
+## Seller application contract v1 — 2026-11-11
+
+**`TV2-SELLER-APPLICATION-v1`: decided by TV2**, who owns seller-service and every former TV1 decision since 01/11/2026. It supersedes, for `POST /api/sellers`, `POST /api/sellers/me/resubmit`, `GET /api/sellers/me` and `GET /api/admin/sellers` only, the earlier "no contact/tax fields" limits above. Marketplace rules text: frontend `/quy-dinh`, version `2026-11-11` (`SellerInputs.TERMS_VERSION`).
+
+### Data
+
+| Field | Required | Format check (no registry, bank or identity verification) |
+|---|---|---|
+| `businessType` | yes | `INDIVIDUAL`, `HOUSEHOLD`, `COMPANY` |
+| `representativeName`, `pickupAddress`, `bankName`, `bankAccountHolder` | yes | trimmed, non-blank, 100/255/100/100 characters max |
+| `phone` | yes | `+?[0-9]{8,15}` |
+| `idNumber` | yes | 12 digits |
+| `taxCode` | `HOUSEHOLD`, `COMPANY`; optional (`""`) for `INDIVIDUAL` | 10 digits, or 10 digits `-` 3 digits |
+| `email` | yes | `local@domain.tld`, 254 characters max |
+| `bankAccountNumber` | yes | 6–19 digits |
+| `termsVersion` | yes | must equal the current rules version; stored with `terms_accepted_at` on every apply and resubmit |
+
+V8 columns are nullable only for profiles created before v1; the API requires every field above.
+
+### Who sees what
+
+- **Owner** (`GET /api/sellers/me`, own JWT subject only): every field unmasked, so a rejected applicant can correct and resubmit. Another account gets 404.
+- **ADMIN** (`GET /api/admin/sellers`): every field for review, except `idNumber` and `bankAccountNumber`, which carry only their last 4 digits. Non-ADMIN gets 403, anonymous 401, for the list and `/history`.
+- **Public** Store/Product responses and internal Store facts carry none of these fields.
+
+### Handling rules
+
+- Validation errors never echo submitted values; invalid JSON maps to `VALIDATION_FAILED` without a cause. The service does not log request bodies and has no export endpoint for these fields.
+- Bank details are **application facts only**. They are not payout eligibility, do not settle or pay anything, and do not change any Finance gate (`HK5_FINANCE_POLICY_APPROVED` and settlement rules are unchanged).
+- Retention: kept while the Seller profile exists. W5 has **no** deletion, purge or anonymisation endpoint and values are stored as plain text in `seller_db`; both are post-submission backlog before any real data is accepted.
+- Demo, E2E and UAT use **synthetic values only**; no real CCCD, tax code or bank account may be entered. Demo database volumes and their backups are disposable (`down -v`).
+
+### Evidence
+
+`SellerApplicationHttpPostgresIT` (PostgreSQL, verified-JWT MockMvc, synthetic data): owner read-back and stored rules acceptance, another account 404, CUSTOMER/SELLER 403 and anonymous 401 on the ADMIN list and history, ADMIN list never contains the full ID or bank account, wrong rules version 400 with no row and no echo.

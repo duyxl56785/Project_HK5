@@ -4,6 +4,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.projecthk5.sellerservice.seller.service.SellerInputs;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
@@ -17,8 +21,8 @@ class SellerStoreJsonTest {
 
     @Test
     void mapsAllSixSchemasToExistingValidatedInputsWithoutCoercion() {
-        assertEquals("An", json.registration(" {\"representativeName\":\" An \",\"phone\":\"+84901234567\",\"pickupAddress\":\"1 Le Loi\"} \n").representativeName());
-        assertEquals("1 Le Loi", json.resubmission("{\"expectedVersion\":\"3\",\"representativeName\":\"An\",\"phone\":\"0901234567\",\"pickupAddress\":\"1 Le Loi\"}").contact().pickupAddress());
+        assertEquals("An", json.registration(" " + application(Map.of("representativeName", " An ")) + " \n").contact().representativeName());
+        assertEquals("1 Le Loi", json.resubmission(application(Map.of("expectedVersion", "3"))).application().contact().pickupAddress());
         assertEquals(Long.MAX_VALUE, json.version("{\"expectedVersion\":\"9223372036854775807\"}").expectedVersion());
         assertEquals("Reason", json.moderation("{\"reason\":\" Reason \",\"expectedVersion\":\"0\"}").reason());
         assertEquals("Store", json.createStore("{\"name\":\" Store \",\"slug\":\"store\"}").name());
@@ -29,13 +33,51 @@ class SellerStoreJsonTest {
     @ParameterizedTest
     @NullAndEmptySource
     @ValueSource(strings = {" ", "null", "[]", "\"text\"", "0", "true", "{", "{}", "{}{}", "{} null", "{} garbage",
-            "{\"representativeName\":\"An\",\"phone\":\"abc\",\"pickupAddress\":\"1 Le Loi\"}",
-            "{\"representativeName\":\" \",\"phone\":\"0901234567\",\"pickupAddress\":\"1 Le Loi\"}",
+            "{\"representativeName\":\"An\",\"phone\":\"0901234567\",\"pickupAddress\":\"1 Le Loi\"}",
             "{\"role\":\"SELLER\"}", "{\"ownerReference\":\"other-owner\"}", "{\"status\":\"APPROVED\"}",
             "{\"id\":\"other\"}", "{\"sellerId\":\"other\"}", "{\"storeId\":\"other\"}",
             "{\"role\":null}", "{\"extra\":{}}", "{/*comment*/}", "{,}"})
     void registrationRequiresExactlyValidContactDetails(String payload) {
         invalid(() -> json.registration(payload));
+    }
+
+    @Test
+    void applicationRequiresFormattedDetailsAndTheCurrentRules() {
+        assertNull(json.registration(application(Map.of())).contact().taxCode());
+        assertEquals("0123456789-001", json.registration(application(Map.of("businessType", "COMPANY", "taxCode", "0123456789-001")))
+                .contact().taxCode());
+        for (Map<String, String> bad : List.<Map<String, String>>of(
+                Map.of("phone", "abc"), Map.of("representativeName", " "),
+                Map.of("businessType", "SHOP"), Map.of("businessType", "individual"),
+                Map.of("idNumber", "12345678901"), Map.of("idNumber", "00123456789a"),
+                Map.of("businessType", "HOUSEHOLD"), Map.of("taxCode", "12345"), Map.of("taxCode", "0123456789-1"),
+                Map.of("email", "an@"), Map.of("email", "a n@x.vn"), Map.of("bankName", ""),
+                Map.of("bankAccountNumber", "12345"), Map.of("bankAccountNumber", "12345678901234567890"),
+                Map.of("bankAccountHolder", " "), Map.of("termsVersion", "2026-01-01"), Map.of("termsVersion", ""))) {
+            invalid(() -> json.registration(application(bad)));
+        }
+    }
+
+    /** A valid application body as JSON, with the given fields replaced or added. */
+    static String application(Map<String, String> overrides) {
+        Map<String, String> body = new LinkedHashMap<>();
+        body.put("representativeName", "An");
+        body.put("phone", "0901234567");
+        body.put("pickupAddress", "1 Le Loi");
+        body.put("businessType", "INDIVIDUAL");
+        body.put("idNumber", "001234567890");
+        body.put("taxCode", "");
+        body.put("email", "an@example.com");
+        body.put("bankName", "Ngan hang A");
+        body.put("bankAccountNumber", "0123456789");
+        body.put("bankAccountHolder", "NGUYEN VAN AN");
+        body.put("termsVersion", SellerInputs.TERMS_VERSION);
+        body.putAll(overrides);
+        try {
+            return new ObjectMapper().writeValueAsString(body);
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        }
     }
 
     @ParameterizedTest

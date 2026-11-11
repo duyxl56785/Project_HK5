@@ -49,7 +49,7 @@ class SuspendedSellerRoleBackfillPostgresTest {
             insert(connection, approved, "owner-approved", "APPROVED", 2);
         }
 
-        assertEquals(1, flyway("latest").migrate().migrationsExecuted);
+        assertEquals(1, flyway("7").migrate().migrationsExecuted);
 
         try (Connection connection = connect(); var rows = connection.createStatement().executeQuery(
                 "SELECT o.seller_id, o.kind, o.payload::jsonb->>'accountId', (o.payload::jsonb->>'granted')::boolean,"

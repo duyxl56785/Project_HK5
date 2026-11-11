@@ -15,11 +15,21 @@ export const wholeNumber = (label: string, min: number, max: number) => z.string
   return value !== '' && Number.isInteger(number) && number >= min && number <= max;
 }, `${label} là số nguyên từ ${min} đến ${max}`);
 
-export const contactSchema = z.object({
+/** Format checks only, mirroring SellerInputs.Contact; nothing is verified against a registry or bank. */
+export const sellerApplicationSchema = z.object({
+  businessType: z.enum(['INDIVIDUAL', 'HOUSEHOLD', 'COMPANY'], { message: 'Chọn loại hình kinh doanh' }),
   representativeName: text('Tên người đại diện', 100),
+  idNumber: z.string().trim().regex(/^[0-9]{12}$/, 'Số CCCD gồm đúng 12 chữ số'),
+  taxCode: z.string().trim().regex(/^([0-9]{10}(-[0-9]{3})?)?$/, 'Mã số thuế gồm 10 chữ số, có thể thêm -3 chữ số chi nhánh'),
   phone: contactPhone,
+  email: z.string().trim().max(254, 'Email tối đa 254 ký tự').regex(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, 'Email không hợp lệ'),
   pickupAddress: text('Địa chỉ lấy hàng', 255),
-});
+  bankName: text('Tên ngân hàng', 100),
+  bankAccountNumber: z.string().trim().regex(/^[0-9]{6,19}$/, 'Số tài khoản gồm 6–19 chữ số'),
+  bankAccountHolder: text('Tên chủ tài khoản', 100),
+  acceptTerms: z.literal(true, { message: 'Bạn cần đồng ý Quy định sàn' }),
+}).refine((value) => value.businessType === 'INDIVIDUAL' || value.taxCode !== '',
+  { path: ['taxCode'], message: 'Hộ kinh doanh và công ty cần mã số thuế' });
 
 export const storeSchema = z.object({
   name: text('Tên cửa hàng', 255),

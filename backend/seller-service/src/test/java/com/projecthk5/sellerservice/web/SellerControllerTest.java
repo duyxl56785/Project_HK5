@@ -12,4 +12,11 @@ class SellerControllerTest {
                     SellerController.keepsSellerRole(status), status.name());
         }
     }
+
+    @Test void adminSeesOnlyTheLastFourDigitsOfIdAndBankAccount() {
+        assertEquals("********7890", SellerController.mask("001234567890"));
+        assertEquals("******6789", SellerController.mask("0123456789"));
+        assertEquals("****", SellerController.mask("1234"));
+        assertNull(SellerController.mask(null));
+    }
 }

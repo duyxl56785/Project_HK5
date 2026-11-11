@@ -51,7 +51,7 @@ async function account(email) {
 async function approvedSeller(email, admin) {
   const token = await account(email);
   if ((await call('/api/sellers/me', { token })).status === 404) await must('/api/sellers', {
-    token, method: 'POST', body: { representativeName: 'Nguyễn Văn An', phone: '0901234567', pickupAddress: '1 Lê Lợi, Quận 1, TP.HCM' },
+    token, method: 'POST', body: { representativeName: 'Nguyễn Văn An', phone: '0901234567', pickupAddress: '1 Lê Lợi, Quận 1, TP.HCM', businessType: 'INDIVIDUAL', idNumber: '001090000001', taxCode: '', email: 'seller-demo@hk5.local', bankName: 'Ngân hàng Demo', bankAccountNumber: '0001000100', bankAccountHolder: 'NGUYEN VAN AN', termsVersion: '2026-11-11' },
   });
   const { seller } = await must('/api/sellers/me', { token });
   if (seller.status === 'PENDING_REVIEW') {

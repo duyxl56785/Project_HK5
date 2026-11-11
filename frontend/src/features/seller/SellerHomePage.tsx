@@ -7,16 +7,24 @@ import { Link } from 'react-router-dom';
 import type { z } from 'zod';
 import { api, ApiError } from '../../shared/api';
 import { useAuth } from '../../shared/auth';
-import { contactSchema, storeSchema } from '../../shared/forms';
+import { sellerApplicationSchema, storeSchema } from '../../shared/forms';
 import { ErrorNote, Field, useAction } from '../../shared/ui';
+import { BUSINESS_TYPES, TERMS_VERSION } from '../policy/terms';
+import type { BusinessType } from '../policy/terms';
 import { SellerStoreOverview } from './SellerStoreOverview';
 import type { SellerStatus } from './sellerStoreTypes';
 
 interface Seller { readonly id: string; readonly version: string; readonly status: SellerStatus; readonly reviewReason: string | null }
-interface Contact { readonly representativeName: string | null; readonly phone: string | null; readonly pickupAddress: string | null }
+interface Contact {
+  readonly representativeName: string | null; readonly phone: string | null; readonly pickupAddress: string | null;
+  readonly businessType: BusinessType | null; readonly idNumber: string | null; readonly taxCode: string | null;
+  readonly email: string | null; readonly bankName: string | null; readonly bankAccountNumber: string | null;
+  readonly bankAccountHolder: string | null;
+}
 interface Store { readonly id: string; readonly sellerId: string; readonly name: string; readonly slug: string; readonly open: boolean; readonly version: string }
 
-type ContactInput = z.infer<typeof contactSchema>;
+type FormInput = z.infer<typeof sellerApplicationSchema>;
+type ContactInput = Omit<FormInput, 'acceptTerms'> & { readonly termsVersion: string };
 type StoreInput = z.infer<typeof storeSchema>;
 
 const orNull = <T,>(run: Promise<T>) => run.catch((error: unknown) => {
@@ -31,15 +39,43 @@ function ContactForm({ contact, submitLabel, pending, onSubmit }: {
   readonly contact?: Contact; readonly submitLabel: string; readonly pending: boolean;
   readonly onSubmit: (contact: ContactInput) => void;
 }) {
-  const form = useForm<ContactInput>({
-    resolver: zodResolver(contactSchema),
-    defaultValues: { representativeName: contact?.representativeName ?? '', phone: contact?.phone ?? '', pickupAddress: contact?.pickupAddress ?? '' },
+  const form = useForm<FormInput>({
+    resolver: zodResolver(sellerApplicationSchema),
+    defaultValues: {
+      businessType: contact?.businessType ?? 'INDIVIDUAL', representativeName: contact?.representativeName ?? '',
+      idNumber: contact?.idNumber ?? '', taxCode: contact?.taxCode ?? '', phone: contact?.phone ?? '', email: contact?.email ?? '',
+      pickupAddress: contact?.pickupAddress ?? '', bankName: contact?.bankName ?? '',
+      bankAccountNumber: contact?.bankAccountNumber ?? '', bankAccountHolder: contact?.bankAccountHolder ?? '',
+    },
   });
   const { errors } = form.formState;
-  return <form className="stack" noValidate onSubmit={form.handleSubmit(onSubmit)}>
-    <Field label="Tên người đại diện" error={errors.representativeName}><input {...form.register('representativeName')} /></Field>
-    <Field label="Số điện thoại" error={errors.phone}><input type="tel" {...form.register('phone')} /></Field>
-    <Field label="Địa chỉ lấy hàng" error={errors.pickupAddress}><input {...form.register('pickupAddress')} /></Field>
+  // Acceptance is re-asked on every submission and sent as the rules version the applicant saw.
+  const submit = ({ acceptTerms: _accepted, ...value }: FormInput) => onSubmit({ ...value, termsVersion: TERMS_VERSION });
+  return <form className="stack" noValidate onSubmit={form.handleSubmit(submit)}>
+    <fieldset className="stack">
+      <legend>Thông tin người bán</legend>
+      <Field label="Loại hình kinh doanh" error={errors.businessType}><select {...form.register('businessType')}>
+        {Object.entries(BUSINESS_TYPES).map(([value, label]) => <option key={value} value={value}>{label}</option>)}
+      </select></Field>
+      <Field label="Tên người đại diện" error={errors.representativeName}><input {...form.register('representativeName')} /></Field>
+      <Field label="Số CCCD" error={errors.idNumber}><input inputMode="numeric" maxLength={12} {...form.register('idNumber')} /></Field>
+      <Field label="Mã số thuế" error={errors.taxCode}><input placeholder="Không bắt buộc với cá nhân" {...form.register('taxCode')} /></Field>
+    </fieldset>
+    <fieldset className="stack">
+      <legend>Liên hệ và lấy hàng</legend>
+      <Field label="Số điện thoại" error={errors.phone}><input type="tel" {...form.register('phone')} /></Field>
+      <Field label="Email liên hệ" error={errors.email}><input type="email" {...form.register('email')} /></Field>
+      <Field label="Địa chỉ lấy hàng" error={errors.pickupAddress}><input {...form.register('pickupAddress')} /></Field>
+    </fieldset>
+    <fieldset className="stack">
+      <legend>Tài khoản nhận tiền</legend>
+      <Field label="Tên ngân hàng" error={errors.bankName}><input {...form.register('bankName')} /></Field>
+      <Field label="Số tài khoản" error={errors.bankAccountNumber}><input inputMode="numeric" maxLength={19} {...form.register('bankAccountNumber')} /></Field>
+      <Field label="Tên chủ tài khoản" error={errors.bankAccountHolder}><input {...form.register('bankAccountHolder')} /></Field>
+    </fieldset>
+    <label className="check"><input type="checkbox" {...form.register('acceptTerms')} />
+      <span>Tôi đã đọc và đồng ý <Link to="/quy-dinh" target="_blank" rel="noopener">Quy định sàn</Link></span></label>
+    {errors.acceptTerms?.message && <small className="field__error" role="alert">{errors.acceptTerms.message}</small>}
     <button className="btn btn--primary" disabled={pending}>{submitLabel}</button>
   </form>;
 }
@@ -88,7 +124,8 @@ export function SellerHomePage() {
   if (seller.isPending) return <SellerStoreOverview state={{ status: 'loading' }} />;
   if (!profile) return <div className="panel stack">
     <h1>Trở thành người bán</h1>
-    <p>Gửi hồ sơ để quản trị viên xét duyệt. Sau khi được duyệt, bạn có thể tạo cửa hàng và đăng sản phẩm.</p>
+    <p>Gửi hồ sơ để quản trị viên xét duyệt. Sau khi được duyệt, bạn có thể tạo cửa hàng và đăng sản phẩm.
+      Xem <Link to="/quy-dinh#nguoi-ban">điều kiện trở thành người bán</Link>.</p>
     <ErrorNote error={register.error} />
     <ContactForm submitLabel="Gửi hồ sơ người bán" pending={register.isPending} onSubmit={(contact) => register.mutate(contact)} />
   </div>;

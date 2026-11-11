@@ -27,13 +27,17 @@ public final class SellerStoreJson {
     public static final class InvalidInput extends IllegalArgumentException {
         private InvalidInput() { super("Invalid Seller/Store JSON"); }
     }
-    public SellerInputs.Contact registration(String payload) {
-        return decode(payload, Set.of("representativeName", "phone", "pickupAddress"), SellerStoreJson::contact);
+    private static final Set<String> APPLICATION_FIELDS = Set.of("representativeName", "phone", "pickupAddress",
+            "businessType", "idNumber", "taxCode", "email", "bankName", "bankAccountNumber", "bankAccountHolder", "termsVersion");
+
+    public SellerInputs.Application registration(String payload) {
+        return decode(payload, APPLICATION_FIELDS, SellerStoreJson::application);
     }
 
     public SellerInputs.Resubmission resubmission(String payload) {
-        return decode(payload, Set.of("expectedVersion", "representativeName", "phone", "pickupAddress"),
-                node -> new SellerInputs.Resubmission(version(node), contact(node)));
+        Set<String> fields = new java.util.HashSet<>(APPLICATION_FIELDS);
+        fields.add("expectedVersion");
+        return decode(payload, fields, node -> new SellerInputs.Resubmission(version(node), application(node)));
     }
 
     public SellerInputs.Version version(String payload) {
@@ -95,8 +99,13 @@ public final class SellerStoreJson {
         return value.textValue();
     }
 
-    private static SellerInputs.Contact contact(ObjectNode node) {
-        return new SellerInputs.Contact(text(node, "representativeName"), text(node, "phone"), text(node, "pickupAddress"));
+    private static SellerInputs.Application application(ObjectNode node) {
+        // valueOf rejects unknown types with IllegalArgumentException, which decode maps to InvalidInput.
+        SellerInputs.Contact contact = new SellerInputs.Contact(text(node, "representativeName"), text(node, "phone"),
+                text(node, "pickupAddress"), SellerInputs.BusinessType.valueOf(text(node, "businessType")), text(node, "idNumber"),
+                text(node, "taxCode"), text(node, "email"), text(node, "bankName"), text(node, "bankAccountNumber"),
+                text(node, "bankAccountHolder"));
+        return new SellerInputs.Application(contact, text(node, "termsVersion"));
     }
 
     private static long version(ObjectNode node) {
