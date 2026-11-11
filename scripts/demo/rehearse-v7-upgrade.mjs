@@ -75,7 +75,8 @@ try {
 
   // What the old build left: suspended at Seller, role already gone at Auth, V7 still to run.
   sql('auth_db', `delete from account_role_grants where account_id = '${claims(token).sub}' and role = 'SELLER'`);
-  sql('seller_db', `delete from flyway_schema_history where script = 'V7__resend_suspended_seller_role.sql'`);
+  // Later migrations go too, or Flyway refuses a pending V7 below them; they must stay rerunnable.
+  sql('seller_db', `delete from flyway_schema_history where installed_rank >= (select installed_rank from flyway_schema_history where script = 'V7__resend_suspended_seller_role.sql')`);
   const stranded = await seller2();
   check('role gone before V7', claims(stranded).roles.includes('SELLER'), false);
   check('order list refused before V7', (await call('/api/seller/orders', { token: stranded })).status, 403);
