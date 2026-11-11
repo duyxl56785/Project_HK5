@@ -14,6 +14,7 @@ import com.projecthk5.sellerservice.seller.service.SellerPersistenceService;
 import com.projecthk5.sellerservice.seller.service.SellerPersistenceService.PersistedSeller;
 import com.projecthk5.sellerservice.store.StoreEntity;
 import jakarta.persistence.EntityManager;
+import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Map;
@@ -43,7 +44,9 @@ public class SellerController {
     }
 
     public record SellerView(SellerStoreResponses.SellerPrivate seller, Contact contact, StoreSummary store) {}
-    public record Contact(String representativeName, String phone, String pickupAddress) {}
+    public record Contact(String representativeName, String phone, String pickupAddress, SellerInputs.BusinessType businessType,
+                          String idNumber, String taxCode, String email, String bankName, String bankAccountNumber,
+                          String bankAccountHolder, String termsVersion, Instant termsAcceptedAt) {}
     public record StoreSummary(UUID id, String name, String slug, boolean open) {}
     public record AdminSellerRow(UUID id, String ownerReference, SellerStatus status, String reviewReason, String version,
                                  Contact contact, StoreSummary store) {}
@@ -53,10 +56,10 @@ public class SellerController {
     @PostMapping("/api/sellers")
     @ResponseStatus(HttpStatus.CREATED)
     public SellerStoreResponses.SellerPrivate register(@RequestBody String body) {
-        SellerInputs.Contact contact = json.registration(body);
+        SellerInputs.Application application = json.registration(body);
         SellerIdentity me = new SellerIdentity(Actor.require("CUSTOMER").id());
         PersistedSeller created = sellers.register(me);
-        SellerStoreResponses.SellerPrivate saved = saveContact(created, contact, me);
+        SellerStoreResponses.SellerPrivate saved = saveApplication(created, application, me);
         recordStatus(created.id(), null, SellerStatus.PENDING_REVIEW, null, null);
         return saved;
     }
@@ -64,7 +67,7 @@ public class SellerController {
     @GetMapping("/api/sellers/me")
     public SellerView me() {
         PersistedSeller seller = sellers.findOwn(new SellerIdentity(Actor.current().id()));
-        return new SellerView(SellerStoreResponses.sellerPrivate(seller), contactOf(em.find(SellerProfile.class, seller.id())),
+        return new SellerView(SellerStoreResponses.sellerPrivate(seller), contactOf(em.find(SellerProfile.class, seller.id()), false),
                 storeOf(seller.id()));
     }
 
@@ -73,7 +76,7 @@ public class SellerController {
         SellerIdentity me = new SellerIdentity(Actor.current().id());
         PersistedSeller own = sellers.findOwn(me);
         SellerInputs.Resubmission input = json.resubmission(body);
-        SellerStoreResponses.SellerPrivate saved = saveContact(sellers.resubmit(own.id(), input.expectedVersion(), me), input.contact(), me);
+        SellerStoreResponses.SellerPrivate saved = saveApplication(sellers.resubmit(own.id(), input.expectedVersion(), me), input.application(), me);
         recordStatus(own.id(), own.application().status(), SellerStatus.PENDING_REVIEW, null, null);
         return saved;
     }
@@ -84,7 +87,7 @@ public class SellerController {
                         + " order by s.status, s.id", SellerProfile.class)
                 .setParameter("status", status).setMaxResults(500).getResultList();
         return rows.stream().map(s -> new AdminSellerRow(s.getId(), s.getOwnerReference(), s.getStatus(), s.getReviewReason(),
-                Long.toString(s.getVersion()), contactOf(s), storeOf(s.getId()))).toList();
+                Long.toString(s.getVersion()), contactOf(s, true), storeOf(s.getId()))).toList();
     }
 
     @GetMapping("/api/admin/sellers/{id}/history")
@@ -132,8 +135,9 @@ public class SellerController {
     }
 
     /** Flushes so the returned version is the one the next write must send. */
-    private SellerStoreResponses.SellerPrivate saveContact(PersistedSeller seller, SellerInputs.Contact contact, SellerIdentity me) {
-        em.find(SellerProfile.class, seller.id()).updateContact(contact.representativeName(), contact.phone(), contact.pickupAddress());
+    private SellerStoreResponses.SellerPrivate saveApplication(PersistedSeller seller, SellerInputs.Application application,
+                                                             SellerIdentity me) {
+        em.find(SellerProfile.class, seller.id()).updateApplication(application);
         em.flush();
         return SellerStoreResponses.sellerPrivate(sellers.findOwn(me));
     }
@@ -144,8 +148,17 @@ public class SellerController {
                 sellerId, from == null ? null : from.name(), to.name(), reason, reviewedBy);
     }
 
-    private static Contact contactOf(SellerProfile seller) {
-        return new Contact(seller.getRepresentativeName(), seller.getPhone(), seller.getPickupAddress());
+    /** The owner sees their own details; the admin list shows only the last 4 digits of the ID and bank account. */
+    static Contact contactOf(SellerProfile seller, boolean masked) {
+        return new Contact(seller.getRepresentativeName(), seller.getPhone(), seller.getPickupAddress(), seller.getBusinessType(),
+                masked ? mask(seller.getIdNumber()) : seller.getIdNumber(), seller.getTaxCode(), seller.getEmail(), seller.getBankName(),
+                masked ? mask(seller.getBankAccountNumber()) : seller.getBankAccountNumber(), seller.getBankAccountHolder(),
+                seller.getTermsVersion(), seller.getTermsAcceptedAt());
+    }
+
+    static String mask(String digits) {
+        if (digits == null) return null;
+        return digits.length() <= 4 ? "*".repeat(digits.length()) : "*".repeat(digits.length() - 4) + digits.substring(digits.length() - 4);
     }
 
     private void enqueue(SellerOutbox.Kind kind, UUID sellerId, Map<String, Object> payload) {
