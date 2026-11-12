@@ -269,20 +269,27 @@ class CheckoutDraftPostgresIT {
         for(ClassLoader loader=getClass().getClassLoader();loader!=null;loader=loader.getParent())
             if(loader instanceof URLClassLoader urls)for(var url:urls.getURLs())
                 if("file".equals(url.getProtocol()))classpath.add(Path.of(url.toURI()).toString());
-        ProcessBuilder builder=new ProcessBuilder(Path.of(System.getProperty("java.home"),"bin","java").toString(),
-            "-cp",String.join(java.io.File.pathSeparator,classpath),CheckoutDraftCrashProcess.class.getName(),point,
-            "http://127.0.0.1:"+peer.getAddress().getPort());
-        builder.environment().put("TV3_CRASH_PG_URL",PG.getJdbcUrl());
-        builder.environment().put("TV3_CRASH_PG_USER",PG.getUsername());
-        builder.environment().put("TV3_CRASH_PG_PASSWORD",PG.getPassword());
-        // No dump of child env/payload/logs: stdin contains only synthetic shipping data, never a live token.
-        builder.redirectOutput(ProcessBuilder.Redirect.DISCARD).redirectError(ProcessBuilder.Redirect.DISCARD);
-        Process child=builder.start();
+        // On Windows the Gradle test worker classpath may exceed CreateProcess' command limit.
+        // Java 21 expands @argfile itself; keep the long classpath out of the OS command line.
+        Path javaArgs = CrashJvmArgFile.writeClasspath(String.join(java.io.File.pathSeparator, classpath));
         try {
-            child.getOutputStream().write(json.writeValueAsBytes(original));child.getOutputStream().close();
-            assertTrue(child.waitFor(20,TimeUnit.SECONDS),"Crash probe must terminate");
-            assertEquals(86,child.exitValue(),"Child must reach the deliberate post-commit halt");
-        } finally {if(child.isAlive())child.destroyForcibly().waitFor();}
+            ProcessBuilder builder=new ProcessBuilder(Path.of(System.getProperty("java.home"),"bin","java").toString(),
+                "@"+javaArgs.toAbsolutePath(),CheckoutDraftCrashProcess.class.getName(),point,
+                "http://127.0.0.1:"+peer.getAddress().getPort());
+            builder.environment().put("TV3_CRASH_PG_URL",PG.getJdbcUrl());
+            builder.environment().put("TV3_CRASH_PG_USER",PG.getUsername());
+            builder.environment().put("TV3_CRASH_PG_PASSWORD",PG.getPassword());
+            // No dump of child env/payload/logs: stdin contains only synthetic shipping data, never a live token.
+            builder.redirectOutput(ProcessBuilder.Redirect.DISCARD).redirectError(ProcessBuilder.Redirect.DISCARD);
+            Process child=builder.start();
+            try {
+                child.getOutputStream().write(json.writeValueAsBytes(original));child.getOutputStream().close();
+                assertTrue(child.waitFor(20,TimeUnit.SECONDS),"Crash probe must terminate");
+                assertEquals(86,child.exitValue(),"Child must reach the deliberate post-commit halt");
+            } finally {if(child.isAlive())child.destroyForcibly().waitFor();}
+        } finally {
+            java.nio.file.Files.deleteIfExists(javaArgs);
+        }
         var independentDb=new JdbcTemplate(new org.springframework.jdbc.datasource.DriverManagerDataSource(
             PG.getJdbcUrl(),PG.getUsername(),PG.getPassword()));
         var restored=new CheckoutDraftJournal(independentDb,json).load(original.orderId());
