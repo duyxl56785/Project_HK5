@@ -1,5 +1,7 @@
+-- Replay-safe for disposable V7 upgrade rehearsal: Flyway history from V7 onward is reset without dropping later tables.
+-- Existing objects retain their constraints and data; fresh installs still apply every constraint normally.
 -- FR-VC-05 C1 / TV3 (Refs #199). Must run AFTER TV2's V9; no Checkout/Finance changes.
-CREATE TABLE vouchers (
+CREATE TABLE IF NOT EXISTS vouchers (
     id UUID PRIMARY KEY,
     store_id UUID NOT NULL REFERENCES stores(id) ON DELETE RESTRICT,
     code VARCHAR(20) COLLATE "C" NOT NULL,
@@ -35,11 +37,11 @@ CREATE TABLE vouchers (
     CONSTRAINT ck_vouchers_version CHECK (version >= 0),
     CONSTRAINT ck_vouchers_timestamps CHECK (isfinite(created_at) AND isfinite(updated_at) AND updated_at >= created_at)
 );
-CREATE INDEX idx_vouchers_store_published_end ON vouchers (store_id, ends_at)
+CREATE INDEX IF NOT EXISTS idx_vouchers_store_published_end ON vouchers (store_id, ends_at)
     WHERE status = 'PUBLISHED';
-CREATE INDEX idx_vouchers_store_created ON vouchers (store_id, created_at DESC, id);
+CREATE INDEX IF NOT EXISTS idx_vouchers_store_created ON vouchers (store_id, created_at DESC, id);
 
-CREATE TABLE voucher_status_history (
+CREATE TABLE IF NOT EXISTS voucher_status_history (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     voucher_id UUID NOT NULL REFERENCES vouchers(id) ON DELETE RESTRICT,
     from_status VARCHAR(16) NOT NULL,
@@ -52,4 +54,4 @@ CREATE TABLE voucher_status_history (
         AND from_status <> to_status
     )
 );
-CREATE INDEX idx_voucher_history_voucher ON voucher_status_history (voucher_id, created_at);
+CREATE INDEX IF NOT EXISTS idx_voucher_history_voucher ON voucher_status_history (voucher_id, created_at);
