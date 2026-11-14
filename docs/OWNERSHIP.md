@@ -5,6 +5,8 @@
 | backend/auth-service, user-service, api-gateway, discovery-server, config-server | TV2 Nguyễn Văn Duy | TV2 |
 | docker/, frontend/src/app/, frontend/src/shared/ | TV2 | TV2 |
 | backend/seller-service | TV2 Nguyễn Văn Duy | TV2 |
+| backend/seller-service/**/voucher, backend/seller-service/**/voucherlimit (FR-VC-05 C1) | TV3 Trần Văn Chính (implementer) | TV2 Nguyễn Văn Duy (owner/reviewer; merge authority) |
+| frontend/src/features/voucher (FR-VC-05 C1), C1 Seller/Admin UI, gateway route voucher-limit | TV3 Trần Văn Chính (implementer) | TV2 Nguyễn Văn Duy (owner/reviewer) |
 | backend/product-service/** (catalog, category, images, moderation) | TV2 | TV2 và TV5 nếu chung model/review |
 | backend/product-service/** (reviews) | TV5 Nguyễn Minh Duy | TV5 và TV2 nếu đổi Product |
 | backend/cart-service | TV3 Trần Văn Chính | TV3 |
