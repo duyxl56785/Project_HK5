@@ -92,6 +92,7 @@ public final class PromotionPriceRules {
         boolean eligible = product.productActive() && product.storeOpen() && product.sellerApproved();
 
         Offer winner = null;
+        boolean conflicting = false;
         for (Offer offer : offers) {
             Objects.requireNonNull(offer, "Null promotion offer");
             if (!product.productId().equals(offer.productId()) || !product.storeId().equals(offer.storeId())
@@ -99,13 +100,14 @@ public final class PromotionPriceRules {
                 throw new IllegalArgumentException("Promotion does not match Product, Store and Seller");
             }
             if (!eligible || !offer.appliesAt(now)) continue;
-            if (offer.promotionalUnitPrice().compareTo(baseUnitPrice) >= 0) {
-                throw new IllegalArgumentException("Promotion price must be lower than the normal price");
-            }
-            if (winner != null) {
-                throw new ConflictingPromotionsException("More than one active promotion for Product");
-            }
+            conflicting |= winner != null;
             winner = offer;
+        }
+        if (conflicting) {
+            throw new ConflictingPromotionsException("More than one active promotion for Product");
+        }
+        if (winner != null && winner.promotionalUnitPrice().compareTo(baseUnitPrice) >= 0) {
+            throw new IllegalArgumentException("Promotion price must be lower than the normal price");
         }
         return winner == null
                 ? new PriceQuote(baseUnitPrice, baseUnitPrice, null, null, now)

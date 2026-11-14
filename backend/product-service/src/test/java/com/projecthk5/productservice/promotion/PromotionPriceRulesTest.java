@@ -75,6 +75,28 @@ class PromotionPriceRulesTest {
                 () -> at(SATURDAY_2200, superSale, flash));
     }
 
+    @Test void priceAboveCurrentBaseDoesNotMaskAnUnresolvedOverlap() {
+        var first = offer(PromotionPriceRules.Kind.FLASH_SALE, "60000", SATURDAY_2200, SUNDAY_0000);
+        var second = offer(PromotionPriceRules.Kind.SUPER_SALE, "70000", SATURDAY_2200, SUNDAY_0000);
+        var current = facts(new BigDecimal("65000"));
+        for (var offers : List.of(List.of(first, second), List.of(second, first))) {
+            assertThrows(PromotionPriceRules.ConflictingPromotionsException.class,
+                    () -> PromotionPriceRules.resolve(current, SATURDAY_2200, offers));
+        }
+    }
+
+    @Test void mismatchedOfferIsRejectedEvenWhenOtherOffersConflict() {
+        var first = offer(PromotionPriceRules.Kind.FLASH_SALE, "80000", SATURDAY_2200, SUNDAY_0000);
+        var second = offer(PromotionPriceRules.Kind.SUPER_SALE, "70000", SATURDAY_2200, SUNDAY_0000);
+        var wrongSeller = new PromotionPriceRules.Offer(UUID.randomUUID(), PRODUCT, STORE, UUID.randomUUID(),
+                PromotionPriceRules.Kind.SELLER_CLEARANCE, PromotionPriceRules.CampaignStatus.APPROVED,
+                new BigDecimal("60000"), SATURDAY_2200, SUNDAY_0000, null);
+        for (var offers : List.of(List.of(first, second, wrongSeller), List.of(wrongSeller, second, first))) {
+            assertThrows(IllegalArgumentException.class,
+                    () -> PromotionPriceRules.resolve(facts(BASE), SATURDAY_2200, offers));
+        }
+    }
+
     @Test void nonOverlappingCampaignsDoNotConflict() {
         var first = offer(PromotionPriceRules.Kind.SELLER_CLEARANCE, "80000",
                 SATURDAY_2200.minusSeconds(500), SATURDAY_2200);
