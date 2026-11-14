@@ -84,6 +84,12 @@ class StoreSchemaProposalPostgresTest {
             assertTrue(rows.next());
             assertEquals("8", rows.getString(1));
             assertEquals("V8__seller_requirements.sql", rows.getString(2));
+            assertTrue(rows.next());
+            assertEquals("9", rows.getString(1));
+            assertEquals("V9__store_voucher_limits.sql", rows.getString(2));
+            assertTrue(rows.next());
+            assertEquals("10", rows.getString(1));
+            assertEquals("V10__store_vouchers.sql", rows.getString(2));
             assertFalse(rows.next());
         }
     }
