@@ -87,7 +87,7 @@ public final class VoucherLimitJson {
         catch (NumberFormatException failure) { throw invalid(); }
     }
     private static Instant date(ObjectNode n, String key) {
-        try { return OffsetDateTime.parse(text(n,key,1,48)).toInstant(); }
+        try { return OffsetDateTime.parse(text(n,key,1,48)).toInstant().truncatedTo(java.time.temporal.ChronoUnit.MICROS); }
         catch (java.time.format.DateTimeParseException failure) { throw invalid(); }
     }
     private static ApiException invalid() {

@@ -126,7 +126,8 @@ class VoucherPostgresIT {
     @Test void vl02bAdminApproveRaceWithPublishUsesSameStoreLock() throws Exception {
         for (int i=0;i<20;i++) seed("BASE"+String.format("%04d",i),"PUBLISHED",store);
         UUID candidate=seed("NEXT1234","DRAFT",store), requestId=UUID.randomUUID();
-        Instant from=Instant.now().minusSeconds(3600),until=Instant.now().plusSeconds(86400);
+        Instant from=Instant.now().truncatedTo(java.time.temporal.ChronoUnit.MICROS).minusSeconds(3600),
+                until=from.plusSeconds(90000);
         db.update("INSERT INTO voucher_limit_requests(id,store_id,idempotency_key,request_fingerprint,"
                 +"requested_limit,reason,requested_from,requested_until,status) "
                 +"VALUES (?,?,?,?,25,'batch sale',?,?,'PENDING')",

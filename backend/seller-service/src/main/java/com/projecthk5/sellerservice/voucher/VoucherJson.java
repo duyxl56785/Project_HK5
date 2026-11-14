@@ -88,7 +88,7 @@ public final class VoucherJson {
     }
 
     private static Instant instant(ObjectNode node, String field) {
-        try { return OffsetDateTime.parse(text(node, field)).toInstant(); }
+        try { return OffsetDateTime.parse(text(node, field)).toInstant().truncatedTo(java.time.temporal.ChronoUnit.MICROS); }
         catch (DateTimeParseException failure) { throw invalid(); }
     }
 
