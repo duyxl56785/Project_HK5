@@ -123,6 +123,32 @@ class VoucherPostgresIT {
         }
     }
 
+    @Test void vl02bAdminApproveRaceWithPublishUsesSameStoreLock() throws Exception {
+        for (int i=0;i<20;i++) seed("BASE"+String.format("%04d",i),"PUBLISHED",store);
+        UUID candidate=seed("NEXT1234","DRAFT",store), requestId=UUID.randomUUID();
+        Instant from=Instant.now().minusSeconds(3600),until=Instant.now().plusSeconds(86400);
+        db.update("INSERT INTO voucher_limit_requests(id,store_id,idempotency_key,request_fingerprint,"
+                +"requested_limit,reason,requested_from,requested_until,status) "
+                +"VALUES (?,?,?,?,25,'batch sale',?,?,'PENDING')",
+                requestId,store,"approved-"+requestId,"b".repeat(64),
+                OffsetDateTime.ofInstant(from,ZoneOffset.UTC),OffsetDateTime.ofInstant(until,ZoneOffset.UTC));
+        String decision="{\"expectedVersion\":\"0\",\"approvedLimit\":25,\"approvedFrom\":\""
+                +from+"\",\"approvedUntil\":\""+until+"\"}";
+        CountDownLatch go=new CountDownLatch(1);
+        try(var pool=Executors.newFixedThreadPool(2)){
+            Future<Integer> publish=pool.submit(()->{go.await();return call(action(candidate,"publish"),OWNER,"SELLER");});
+            Future<Integer> approve=pool.submit(()->{go.await();return call(post("/api/admin/voucher-limit-requests/"+requestId+"/approve")
+                    .contentType(MediaType.APPLICATION_JSON).content(decision),"admin-other","ADMIN");});
+            go.countDown();
+            int p=publish.get(20,TimeUnit.SECONDS),a=approve.get(20,TimeUnit.SECONDS);
+            assertEquals(200,a);
+            assertTrue(p==200 || p==409);
+            int used=db.queryForObject("SELECT count(*) FROM vouchers WHERE store_id=? AND status='PUBLISHED'",Integer.class,store);
+            assertTrue(used==20 || used==21);
+            assertEquals(25,db.queryForObject("SELECT granted_limit FROM store_voucher_limits WHERE store_id=?",Integer.class,store));
+        }
+    }
+
     @Test void vl09PausedCannotResumeWhileQuotaFull() throws Exception {
         for (int i=0;i<20;i++) seed("LIVE"+String.format("%04d",i),"PUBLISHED",store);
         UUID paused=seed("PAUS5678","PAUSED",store);

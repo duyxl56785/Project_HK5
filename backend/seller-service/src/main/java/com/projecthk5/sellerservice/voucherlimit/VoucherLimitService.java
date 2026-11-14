@@ -141,7 +141,7 @@ public class VoucherLimitService {
     public RequestView detail(UUID id){Actor.require("ADMIN");return request(id,null,false);}
     @Transactional(isolation=Isolation.READ_COMMITTED)
     public Submission submit(String idem,VoucherLimitJson.Submit d){
-        key(idem);UUID store=ownStore();lock(store);eligible(store);
+        key(idem);UUID store=ownStore();lock(store);
         Instant moment=now();
         String hash=fingerprint(d);
         List<UUID> existing=db.query("SELECT id FROM voucher_limit_requests WHERE store_id=? AND idempotency_key=?",
@@ -152,6 +152,7 @@ public class VoucherLimitService {
             if(!hash.equals(old))throw conflict("IDEMPOTENCY_KEY_REUSED");
             return new Submission(request(prev,store,false),true);
         }
+        eligible(store);
         if(!d.requestedUntil().isAfter(moment))throw invalid();
         Integer pending=db.queryForObject("SELECT count(*) FROM voucher_limit_requests WHERE store_id=? AND status='PENDING'",
                 Integer.class,store);
@@ -167,10 +168,11 @@ public class VoucherLimitService {
     @Transactional(isolation=Isolation.READ_COMMITTED)
     public RequestView cancel(UUID id,long expected){
         UUID store=ownStore();lock(store);RequestView old=request(id,store,true);requiredVersion(old,expected);
+        Instant moment=now();
         int updated=db.update("UPDATE voucher_limit_requests SET status='CANCELLED',version=version+1,updated_at=? "
-                +"WHERE id=? AND version=? AND status='PENDING'",utc(now()),id,expected);
+                +"WHERE id=? AND version=? AND status='PENDING'",utc(moment),id,expected);
         if(updated!=1)throw conflict("VOUCHER_LIMIT_REQUEST_VERSION_CONFLICT");
-        audit(id,"PENDING","CANCELLED",null,Actor.current().id(),now());
+        audit(id,"PENDING","CANCELLED",null,Actor.current().id(),moment);
         return request(id,store,false);
     }
     @Transactional(isolation=Isolation.READ_COMMITTED)
@@ -195,10 +197,11 @@ public class VoucherLimitService {
             boolean partial=requestedApproved<old.requestedLimit()||from.isAfter(old.requestedFrom())
                     ||until.isBefore(old.requestedUntil());
             if(partial&&(reason==null||reason.isBlank()))throw invalid();
-            db.update("UPDATE voucher_limit_requests SET status='APPROVED',approved_limit=?,approved_from=?,"
+            int updated=db.update("UPDATE voucher_limit_requests SET status='APPROVED',approved_limit=?,approved_from=?,"
                     +"approved_until=?,decided_by=?,decided_at=?,decision_reason=?,version=version+1,updated_at=? "
                     +"WHERE id=? AND status='PENDING' AND version=?",requestedApproved,utc(from),utc(until),
                     admin.id(),utc(moment),reason,utc(moment),id,expected);
+            if(updated!=1)throw conflict("VOUCHER_LIMIT_REQUEST_VERSION_CONFLICT");
             db.update("INSERT INTO store_voucher_limits(store_id,granted_limit,valid_from,valid_until,source_request_id,"
                     +"decided_by,decided_at,version) VALUES (?,?,?,?,?,?,?,0) "
                     +"ON CONFLICT(store_id) DO UPDATE SET granted_limit=EXCLUDED.granted_limit,"
@@ -210,9 +213,10 @@ public class VoucherLimitService {
         }else{
             if(reason==null||reason.isBlank())throw invalid();
             Instant moment=now();
-            db.update("UPDATE voucher_limit_requests SET status='REJECTED',decision_reason=?,decided_by=?,decided_at=?,"
+            int updated=db.update("UPDATE voucher_limit_requests SET status='REJECTED',decision_reason=?,decided_by=?,decided_at=?,"
                     +"version=version+1,updated_at=? WHERE id=? AND status='PENDING' AND version=?",
                     reason,admin.id(),utc(moment),utc(moment),id,expected);
+            if(updated!=1)throw conflict("VOUCHER_LIMIT_REQUEST_VERSION_CONFLICT");
             audit(id,"PENDING","REJECTED",reason,admin.id(),moment);
         }
         return request(id,null,false);
