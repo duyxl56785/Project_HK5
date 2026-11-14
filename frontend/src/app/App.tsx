@@ -15,6 +15,7 @@ const authPages = () => import('../features/account/AuthPages');
 const adminPages = () => import('../features/admin/AdminPages');
 const orderPages = () => import('../features/orders/OrdersPage');
 const sellerOrderPages = () => import('../features/seller/SellerOrdersPage');
+const voucherPages = () => import('../features/voucher/VoucherPages');
 const sellerProductPages = () => import('../features/seller/SellerProductsPage');
 const policyPages = () => import('../features/policy/PolicyPage');
 
@@ -42,6 +43,8 @@ const SellerHomePage = page(() => import('../features/seller/SellerHomePage'), '
 const SellerFinancePage = page(sellerOrderPages, 'SellerFinancePage');
 const SellerOrdersPage = page(sellerOrderPages, 'SellerOrdersPage');
 const SellerReturnsPage = page(() => import('../features/seller/SellerReturnsPage'), 'SellerReturnsPage');
+const SellerVouchersPage = page(voucherPages, 'SellerVouchersPage');
+const AdminVoucherLimitsPage = page(voucherPages, 'AdminVoucherLimitsPage');
 const SellerProductPage = page(sellerProductPages, 'SellerProductPage');
 const SellerProductsPage = page(sellerProductPages, 'SellerProductsPage');
 
@@ -104,11 +107,11 @@ function Layout() {
       <nav className="topbar__strip" aria-label="Điều hướng chính">
         {has('CUSTOMER') && <NavLink to="/orders">Đơn hàng</NavLink>}
         {!has('ADMIN') && <NavLink to="/seller" end>Kênh người bán</NavLink>}
-        {has('SELLER') && <><NavLink to="/seller/products">Sản phẩm</NavLink><NavLink to="/seller/orders">Đơn cửa hàng</NavLink><NavLink to="/seller/returns">Trả hàng</NavLink><NavLink to="/seller/finance">Tài chính</NavLink></>}
+        {has('SELLER') && <><NavLink to="/seller/products">Sản phẩm</NavLink><NavLink to="/seller/orders">Đơn cửa hàng</NavLink><NavLink to="/seller/returns">Trả hàng</NavLink><NavLink to="/seller/finance">Tài chính</NavLink><NavLink to="/seller/vouchers">Voucher</NavLink></>}
         {has('ADMIN') && <>
           <NavLink to="/admin/sellers">Người bán</NavLink><NavLink to="/admin/products">Sản phẩm</NavLink>
           <NavLink to="/admin/categories">Danh mục</NavLink><NavLink to="/admin/reviews">Đánh giá</NavLink>
-          <NavLink to="/admin/accounts">Tài khoản</NavLink><NavLink to="/admin/orders">COD</NavLink><NavLink to="/admin/returns">Trả hàng</NavLink><NavLink to="/admin/finance">Tài chính</NavLink>
+          <NavLink to="/admin/accounts">Tài khoản</NavLink><NavLink to="/admin/orders">COD</NavLink><NavLink to="/admin/returns">Trả hàng</NavLink><NavLink to="/admin/finance">Tài chính</NavLink><NavLink to="/admin/voucher-limit-requests">Duyệt voucher</NavLink>
         </>}
         <span className="grow" />
         {account ? <>
@@ -160,6 +163,7 @@ export function App() {
       <Route path="seller/orders" element={guarded('SELLER', <SellerOrdersPage />)} />
       <Route path="seller/returns" element={guarded('SELLER', <SellerReturnsPage />)} />
       <Route path="seller/finance" element={guarded('SELLER', <SellerFinancePage />)} />
+      <Route path="seller/vouchers" element={guarded('SELLER', <SellerVouchersPage />)} />
       <Route path="admin/sellers" element={guarded('ADMIN', <AdminSellersPage />)} />
       <Route path="admin/products" element={guarded('ADMIN', <AdminProductsPage />)} />
       <Route path="admin/categories" element={guarded('ADMIN', <AdminCategoriesPage />)} />
@@ -168,6 +172,7 @@ export function App() {
       <Route path="admin/orders" element={guarded('ADMIN', <AdminOrdersPage />)} />
       <Route path="admin/returns" element={guarded('ADMIN', <AdminReturnsPage />)} />
       <Route path="admin/finance" element={guarded('ADMIN', <AdminFinancePage />)} />
+      <Route path="admin/voucher-limit-requests" element={guarded('ADMIN', <AdminVoucherLimitsPage />)} />
       <Route path="*" element={<p>Không tìm thấy trang. <Link to="/">Về trang chủ</Link></p>} />
     </Route>
   </Routes></BrowserRouter>;
