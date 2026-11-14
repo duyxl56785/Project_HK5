@@ -1,59 +1,62 @@
-# Gói review contract Promotion FR-PROMO-01–03
+# Contract triển khai FR-PROMO-01–03 — đã đối chiếu quyết định TV2
 
-**Dự thảo để TV2 quyết định.** Đọc kèm [RFC](FR_PROMO_01_03_SHARED_PRICE_RFC.md), [ownership](../OWNERSHIP.md) và [M01](../project-report/M01_FINANCE_DECISION.md). Bản SRS Flash/Super/Voucher v2.1 gốc chưa được tìm thấy trong worktree. Đối chiếu SRS của gói này giới hạn ở các mục được RFC và PR #202 dẫn lại, gồm giờ Flash, ngày Super do Admin chọn, quyền quản lý clearance và yêu cầu giá; các lựa chọn bên dưới là đề xuất cần ký.
+**Nguồn thẩm quyền:** TV2 Nguyễn Văn Duy đã quyết định P01–P05 tại [PR #202, comment 14/11](https://github.com/duyxl56785/Project_HK5/pull/202#issuecomment-6875893285) và thay đổi **hạn/reviewer** tại [comment sửa đổi 14/11](https://github.com/duyxl56785/Project_HK5/pull/202#issuecomment-6876058407). Đây là tài liệu tổng hợp để triển khai; khi khác với lời TV2, **comment mới nhất của TV2 là nguồn ưu tiên**. SRS v2.1 gốc chưa nằm trong worktree; không giả định đã đối chiếu trực tiếp bản SRS ở đây.
 
-## Lifecycle, đăng ký và duyệt
+**Owner/triển khai:** TV3 làm toàn bộ FR-PROMO-01 Flash Sale, FR-PROMO-02 Super Sale và FR-PROMO-03 Seller xả kho ở product-service, Gateway, Seller/Admin UI và E2E. **TV2 duy nhất review, quyết định và merge, kể cả MD12**. TV3 không cần quyết định thêm từ TV5/TV4 theo ủy quyền 14/11. Không tự merge.
 
-| Đối tượng | Chuyển trạng thái đề xuất | Quy tắc |
-|---|---|---|
-| Campaign Flash/Super | DRAFT → APPROVED ⇄ PAUSED → CANCELLED; có thể hủy từ DRAFT hoặc APPROVED | Admin sở hữu lịch, xuất bản và điều phối. Đã hủy là trạng thái cuối. UPCOMING/LIVE/ENDED suy từ giờ server và khoảng hiệu lực; không có cron ghi giá. |
-| Campaign clearance | Cùng lifecycle | Seller tạo draft của Store mình. TV2 chọn Seller tự kích hoạt sau kiểm tra hay Admin duyệt trước. Admin có thể dừng theo chính sách đã ký. |
-| Product đăng ký | PENDING → APPROVED, REJECTED hoặc WITHDRAWN | Seller có quyền rút đăng ký đang chờ của mình. Admin duyệt/từ chối Flash/Super và ghi lý do. Chỉ offer đã duyệt thuộc campaign APPROVED được xét. Chốt luồng thu hồi offer đã duyệt và đăng ký lại trước khi viết API. |
+**Hạn:** hoàn thiện, CI xanh và merge đủ chức năng trước khi **đóng băng main hết 19/11/2026**. Không merge một phần; phần nào chưa merge sau hạn là hướng phát triển. Ngày 20/11 chạy E2E trên SHA đóng băng, 21/11 nộp.
 
-Payload chỉ gồm trường được phép. Server đọc Product theo ID rồi lấy Store/Seller từ nguồn có thẩm quyền, kiểm ACTIVE/OPEN/APPROVED, kiểm giá VND nguyên từ 1 đến 1.000.000.000 theo ProductPrice và thấp hơn base hiện tại. Khi duyệt, resume hoặc đổi giá/lịch, kiểm lại các điều kiện. Khi thông tin Store/Seller thiếu hoặc mâu thuẫn, từ chối quyết định giá khuyến mãi. JWT xác thực actor và role, còn sở hữu và trạng thái hiện hành phải kiểm riêng. Các boolean trong ProductFacts chỉ là đầu vào của domain.
+## P01a — Campaign và quyền
 
-## PostgreSQL và xử lý cạnh tranh
+- Loại campaign: FLASH_SALE, SUPER_SALE, SELLER_CLEARANCE.
+- DB lifecycle: DRAFT → APPROVED ⇄ PAUSED. CANCELLED cuối cùng, chỉ hủy **trước startsAt**. Sau LIVE, Admin dừng bằng PAUSED; sau ENDED không thao tác. UPCOMING/LIVE/ENDED suy từ thời gian server, không cron thay giá.
+- Flash/Super: **Admin tạo, duyệt và dừng**. Clearance: **Seller tạo DRAFT** cho Store do mình sở hữu, **Admin duyệt sau submit**, không tự publish.
+- Product registration: PENDING → APPROVED | REJECTED | WITHDRAWN. Reject yêu cầu reason 1–500 ký tự. Seller có thể **withdraw cả PENDING lẫn APPROVED**, có hiệu lực ngay; Seller SUSPENDED vẫn được withdraw nếu xác minh ownership Store từ principal/JWT và dữ liệu Store, không cần role SELLER. Phải chặn mọi hành vi trái phép khác.
+- Không sửa giá sau approve. Muốn đổi giá thì withdraw rồi đăng ký lại; hàng PK (campaign_id, product_id) quay về PENDING và **tăng version**, giữ audit.
+- Đăng ký và duyệt chấm dứt tại startsAt; LIVE chỉ còn withdraw và pause. Admin đồng thời là chủ Store Product không được tự duyệt (403).
+- REST contract được TV2 duyệt: \`/api/seller/promotions/**\`, \`/api/admin/promotions/**\` (chi tiết endpoint/method từ gói review trước, trừ phần trái các quyết định mới). Gateway route tới product-service và \`GatewayRoutingTest\`.
+- Mã lỗi: 401 thiếu/sai JWT, 403 sai role, 404 Seller truy cập ID ngoài Store, 409 version cũ/lịch hoặc offer overlap, 400 payload sai. JSON chặt: loại bỏ trường lạ, null không hợp lệ, giá thực/phân số, storeId client-supplied. DTO tiền là chuỗi VND nguyên canonical, parse tại boundary.
 
-- `promotion_campaigns` gồm UUID, kind, lifecycle status, starts_at/ends_at TIMESTAMPTZ hữu hạn, super_sale_date DATE khi áp dụng, clearance_store_id khi áp dụng, version và dấu thời gian. CHECK loại/trạng thái, thời lượng dương và trường bắt buộc theo loại. Các FK tới Product nằm trong product-service; Store/Seller là ID từ dịch vụ sở hữu.
-- `promotion_campaign_products` có PK (campaign_id, product_id), FK campaign và Product, trạng thái đăng ký, promotional_unit_price BIGINT với CHECK giới hạn VND, version, thời điểm và người duyệt. Kiểm số nguyên ở JSON trước khi bind SQL để tránh ép kiểu làm tròn; giá sale thấp hơn base là kiểm tra liên bảng trong transaction.
-- `promotion_campaign_audit` ghi append-only actor đã xác thực, hành động, ID campaign/Product, trạng thái/phiên bản trước và sau, lý do, timestamp và correlation ID cùng transaction. Index danh sách theo campaign/trạng thái và quote theo Product/trạng thái.
-- Đề xuất `promotion_super_sale_months` với PK month_start DATE theo tháng Việt Nam, UNIQUE campaign_id và CHECK ngày được chọn thuộc tháng. Đổi ngày qua cùng hàng khóa và expectedVersion, rồi kiểm lại offer liên quan. Đề xuất giữ hàng tháng khi hủy để tránh một ngày thứ hai trong cùng tháng; TV2 chốt có cho đổi ngày sau duyệt hoặc sau khi đã LIVE hay không.
-- Đề xuất mặc định từ chối duyệt offer chồng lấn. Khi TV2 cho phép ngoại lệ, lưu winner rõ ràng theo Product và đoạn thời gian, có audit; không chọn theo thứ tự, loại hoặc giá thấp nhất. Phép giao dùng khoảng hiệu lực thực tế, gồm cửa sổ Flash và ngày Super theo giờ Việt Nam, với cận cuối loại trừ.
-- Trong transaction READ COMMITTED, khóa hàng lịch tháng khi thao tác có ảnh hưởng lịch, sau đó hàng campaign theo UUID, rồi hàng Product theo UUID. Mọi thao tác cấp hiệu lực, đổi lịch, membership, giá hoặc winner phải đi cùng giao thức khóa. Với batch, kiểm lại tập Product dưới khóa campaign, rồi truy vấn offer và base **sau khi** đã giữ khóa Product. Không lấy thêm khóa campaign khi đang giữ Product. Đổi base chỉ lấy khóa Product rồi đọc trạng thái liên quan. Nếu hai Admin duyệt đồng thời, giao dịch thứ hai đọc trạng thái đã commit của giao dịch trước và trả 409 nếu xung đột; cùng transaction ghi trạng thái và audit. Kiểm độc lập freshness của Seller facts vì dữ liệu nằm ở dịch vụ khác. TV2 chốt mức freshness và hành vi khi winner bị dừng.
+## P01b — Giao dịch, overlap và cạnh tranh
 
-## REST DTO và quyền dự thảo
+- **Từ chối mọi overlap thực sự của hai offer APPROVED thuộc campaign APPROVED**, bất kể loại; 409 PROMOTION_OVERLAP tại approve và resume. **Không lưu winner, không chọn giá thấp nhất/ưu tiên cố định, không stacking.** Chọn offer bằng chính approval, phải withdraw/reject offer khác trước.
+- Kiểm giao nhau bằng cửa sổ **hiệu lực thực** theo giờ server, khoảng [start,end), cận cuối loại trừ: Flash chỉ thứ Bảy 22:00–Chủ nhật 00:00 theo ngày đã chọn; Super là trọn ngày Admin chọn; clearance là lịch duyệt.
+- Khi pause/cancel, không tự chuyển sang offer thứ hai; resume phải tái kiểm mọi xung đột và điều kiện Product/Store/Seller.
+- **Thứ tự khóa DB:** campaign \`FOR UPDATE\` → Product theo UUID tăng dần. Không thêm khóa hàng theo tháng. Đổi Product base price chỉ khóa Product. Với hai Admin duyệt cạnh tranh, transaction thứ hai thấy trạng thái đã commit và trả 409; audit và mutation cùng transaction.
+- Giá sale nguyên VND 1..1.000.000.000 theo ProductPrice hiện có, luôn nhỏ hơn giá gốc khi đăng ký/duyệt/resume; Store, Seller và Product phải là trạng thái hợp lệ. Nguồn facts không tin client.
 
-| Method và đường dẫn ứng viên | Actor | Nội dung chính |
-|---|---|---|
-| GET/POST /api/seller/promotions | SELLER | Danh sách scope Store mình; tạo clearance với name, startsAt, endsAt. |
-| POST /api/seller/promotions/{campaignId}/products | SELLER | productId, promotionalUnitPrice dạng chuỗi VND, expectedCampaignVersion; server xác minh ownership. |
-| POST /api/seller/promotions/{campaignId}/products/{productId}/withdraw | SELLER | expectedVersion, reason nếu contract yêu cầu. |
-| GET/POST /api/admin/promotions | ADMIN | Danh sách xét duyệt; tạo Flash/Super, ngày Super dạng YYYY-MM-DD. |
-| POST /api/admin/promotions/{campaignId}/actions | ADMIN | action, expectedVersion, reason; duyệt hoặc đổi lifecycle theo bảng. |
-| POST /api/admin/promotions/{campaignId}/products/{productId}/decision | ADMIN | decision, expectedVersion, reason; xét duyệt đăng ký và kiểm xung đột. |
+## P02 — Lịch Super, Flash, Clearance
 
-Response quản lý dự kiến trả ID, kind, status, thời gian UTC ISO-8601, phiên bản, các trường đã được cấp quyền đọc và trạng thái hiển thị suy ra. Seller chỉ thấy dữ liệu Store mình, Customer chỉ xem giá công khai qua Catalog, Admin xét duyệt theo scope đã chốt. Đề xuất 401 khi thiếu/sai JWT, 403 khi sai role, 404 cho Seller truy cập ID ngoài Store, 409 khi version cũ, lịch trùng hoặc offer chồng lấn, 400 khi DTO sai. TV2 chốt đường dẫn, quyền tự duyệt, quyền quản lý clearance, trường hiển thị và semantics retry. UI Seller dựa trên trạng thái đăng ký, UI Admin hiển thị lý do/offer xung đột và version để tải lại khi 409.
+- SUPER_SALE: đúng **một campaign chưa CANCELLED mỗi tháng theo ngày Việt Nam**, ngày Admin chọn. Partial unique expression index theo tháng: \`date_trunc('month', super_sale_date)\` khi \`kind='SUPER_SALE' AND status<>'CANCELLED'\`; **bắt buộc chạy thử PostgreSQL 16/kiểm IMMUTABLE index expression trên DATE** trước khi chốt cú pháp migration, nhưng phải giữ nguyên ràng buộc nghiệp vụ TV2. Không thêm \`promotion_super_sale_months\`.
+- Super Sale chạy \`[00:00, 24:00)\` giờ Việt Nam. Chỉ đổi ngày ở DRAFT; sau APPROVED không đổi. Muốn đổi phải cancel trước startsAt rồi tạo mới.
+- FLASH_SALE: campaign gắn đúng một ngày thứ Bảy \`flash_date\` (DB CHECK thứ Bảy); chạy \`[thứ Bảy 22:00, Chủ nhật 00:00)\` giờ Việt Nam; partial unique một campaign chưa CANCELLED mỗi thứ Bảy.
+- Mọi Product đăng ký trước startsAt; ACTIVE Product + OPEN Store + APPROVED Seller; giá thấp hơn base tại registration, approval và resume.
+- SELLER_CLEARANCE: startsAt ≥ thời điểm submit, duration từ **1 giờ đến 30 ngày**.
 
-## Quote và Cart stale
+## P03 — Catalog, giá thực tế và Cart stale
 
-Quote Catalog dự kiến gồm `productId`, `storeId`, `currency`, `baseUnitPrice`, `effectiveUnitPrice`, `campaignId` và `kind` nullable, `pricingRevision`, `evaluatedAt` và `validUntil` nullable. Dùng chuỗi VND nguyên. Một lần resolve lấy một mốc giờ server. Revision opaque và ổn định trong cùng ngữ cảnh, không hash evaluatedAt; phản ánh Product price/version, offer/winner version, eligibility có thẩm quyền và offer có hiệu lực tại mốc đánh giá. Cùng mức tiền nhưng đổi campaign vẫn đổi revision. validUntil là biên lịch gần nhất có thể làm đổi quote, không thay cho kiểm tra trực tiếp khi trạng thái hoặc giá bị sửa.
+- **Không sửa DTO nội bộ** \`/internal/catalog/products/{id}\` cho Cart hoặc batch validator của Checkout. Trường \`unitPrice\` của cả hai trả **giá hiện hành theo giờ server** (sale nếu offer APPROVED đang LIVE và hợp lệ; ngược lại base).
+- Catalog public list/detail: \`unitPrice\` là giá hiện hành; thêm \`baseUnitPrice\` và nullable \`promotion {campaignId, kind, endsAt}\` để UI hiển thị gạch giá gốc. Endpoint quản lý Seller/Admin Product vẫn trả **giá gốc**. Sort/filter giá vẫn theo base trong bản nộp (phải ghi hạn chế).
+- **Không dùng pricingRevision, không mở rộng Cart/Order/Finance DTO.** Existing Cart \`unitPriceSnapshot\` và Checkout \`expectedUnitPrice\`/preflight chịu trách nhiệm stale: chênh lệch giá hiện hành trả PRICE_CHANGED, buộc khách xác nhận lại. Cùng giá nhưng đổi campaign được chấp nhận.
+- Product đổi base price khi còn offer APPROVED chưa ENDED: nếu base mới ≤ giá sale, 409 PROMOTION_PRICE_CONFLICT; Seller phải withdraw offer trước. Không sửa \`Product.unitPrice\` cho sale.
+- Eligibility Store/Seller lấy từ \`CurrentStoreFactsSource\` (MD07); nếu nguồn unavailable, **không áp sale và dùng base** (fail closed theo TV2).
+- UI Cart phải xác minh đã hiển thị PRICE_CHANGED theo lời TV2; nếu chưa, chỉ sửa cần thiết trong cùng PR, không đổi Cart/Order backend.
+- Giữ Cart claim → Catalog preflight → durable draft → Inventory RESERVE → Order/outbox → Cart finalize, replay giữ snapshot đã ghi. Race preflight/commit theo MD07 được chấp nhận.
 
-Sau khi được duyệt tích hợp, Cart so sánh Product/Store/revision và cặp currency–effective price với Catalog hiện hành. Khi khác, hiển thị giá mới và cần khách xác nhận lại. Checkout preflight sau Cart claim phải lấy quote authoritative trước durable draft và Inventory RESERVE; mismatch trả stale, không tự đặt hàng theo giá mới. Retry sau durable draft giữ snapshot và provenance đã chốt; không lấy giá mới cho cùng attempt. TV2/TV3 chốt mốc tạo quote, hành vi legacy Cart thiếu revision, error contract và ngưỡng stale giữa preview với preflight. Checkout/Finance tiếp tục dùng MD05 hiện hành cho tới khi M01 bổ sung được ký.
+## P04 — M01, MD12
 
-## Migration và kiểm thử sau khi duyệt
+TV2 chốt MD12 và TV3 thêm nguyên nội dung tại \`docs/project-report/M01_FINANCE_DECISION.md\`, phần bổ sung 14/11. Seller **chịu toàn bộ phần giảm**, sàn không bù. Đơn giá trong Order là giá hiện hành lúc Checkout preflight; gross/COD/fee 5% HALF_UP/net tính từ giá này. Snapshot MD08 không thay đổi cấu trúc; campaign provenance chỉ ghi ở product-service audit; Return dùng giá snapshot. Không stacking Voucher (C2 chưa có). MD05 chỉ nói không giảm cấp đơn. **Không sửa cart-service, order-service, Inventory, Finance**.
 
-1. Kiểm lại version Flyway trên main và PR đang mở, thêm migration tiến tới trong product-service. Chạy PostgreSQL 16 trên DB mới và DB đã có dữ liệu đến version trước migration. Xác nhận Product giá gốc, version và Catalog cũ không bị đổi, constraint/audit hoạt động và Flyway validate sạch.
-2. PostgreSQL IT dùng hai connection và barrier có timeout. Đua hai Admin duyệt offer cùng Product, hai yêu cầu đặt ngày Super cùng tháng, approve với pause/đổi lịch/base-price. Kiểm số bản ghi commit, audit của giao dịch thắng, không có ghi nhận dở dang khi rollback. Kiểm thêm Product khác, cận cuối giáp nhau và trường hợp khoảng thô trùng nhưng lịch không giao.
-3. HTTP IT dùng JWT được ký cho actor khác nhau và DB thật. Kiểm Seller đúng Store/chéo Store, Admin, Customer, token sai, Seller SUSPENDED, Store CLOSED, Product inactive, nguồn facts mất kết nối. Kiểm Catalog list/detail, base/effective, cache qua biên giờ, version/revision và retry.
-4. Sau khi M01 mới được ký, bổ sung CT-01..04 cho Cart stale, hai Store, snapshot/idempotency và crash/replay theo luồng hiện hữu. UI E2E xác minh đăng ký/duyệt/tạm dừng và giá Catalog. Các ca PostgreSQL, HTTP và E2E này hiện **NOT_RUN**.
+## PostgreSQL migration và kiểm thử bắt buộc
 
-## Các quyết định cần phản hồi trong một lượt
+- **product-service \`V10__promotions.sql\`**; thêm 3 bảng mới \`promotion_campaigns\`, \`promotion_campaign_products\`, \`promotion_campaign_audit\`, không sửa bảng cũ. \`version\` optimistic lock và \`expectedVersion\` trên DTO. DB FK Campaign/Product, CHECK thời gian/giá/status, partial unique index lịch, index quote/ownership, append-only audit.
+- DB nâng từ V9 có dữ liệu và DB trống lên V10 (PostgreSQL 16, Flyway validate), không viết lại migration đã áp dụng.
+- PostgreSQL IT **hai connection có barrier timeout**: approve đua hai offer overlap trên cùng Product → đúng một SUCCESS; approve đua base-price edit; Super trong cùng tháng; Flash 21:59:59/22:00/00:00; cận cuối hai khoảng giáp nhau không overlap.
+- HTTP/JWT IT: 401/403/404, không được self approve, Seller SUSPENDED vẫn withdraw, Store CLOSED, input lạ/null/tiền sai.
+- Catalog Internal, public: kiểm biên giờ/Store facts, sale/base đúng; kiểm Cart stale PRICE_CHANGED.
+- Seller/Admin DOM + live E2E: Seller đăng ký, Admin approve, Customer mua trong LIVE, Order snapshot sale và fee 5% trên tiền sau giảm.
+- **CI exact HEAD xanh**; PR bỏ Draft mới request TV2 review. Không merge một phần trước hạn.
 
-| Mục | Ai chốt | Câu hỏi cần trả lời |
-|---|---|---|
-| P01a | TV2 | Duyệt lifecycle và ma trận REST? Clearance tự kích hoạt hay phải Admin duyệt? Có quy tắc tự duyệt hoặc thu hồi offer đã duyệt? |
-| P01b | TV2 | Chấp nhận khóa theo tháng → campaign → Product và mặc định từ chối overlap? Nếu có winner, ai chọn, theo khoảng nào, và pause/cancel có tự chuyển sang offer khác không? |
-| P02 | TV2 | Ngày Super được đổi đến mốc nào? Hủy rồi có thể đặt ngày khác cùng tháng không? Điều kiện đăng ký cho từng kỳ Flash? |
-| P03 | TV2 + TV3 | Chốt Catalog DTO, revision, freshness và sort/filter; khi giá base giảm tới mức sale thì chặn sửa, tạm dừng hay yêu cầu duyệt lại? |
-| P04 | TV2 quyết định nghiệp vụ, TV5 review | M01 bổ sung về bên tài trợ, cơ sở phí MD04/MD05, làm tròn và phân bổ hai Store, số tiền COD, snapshot bất biến theo MD08, Return và settlement. |
-| P05 | TV2 + TV3, TV5 khi ảnh hưởng tiền, TV4 nếu đổi Inventory | Chốt chuyển đổi Cart cũ, stale/reconfirm, mốc quote tại Checkout và replay. Giữ thứ tự Cart claim → Catalog preflight → durable draft → Inventory RESERVE → Order/outbox → Cart finalize. |
+## Chú ý tài liệu cũ
+
+[Shared Price RFC](FR_PROMO_01_03_SHARED_PRICE_RFC.md) chứa các **đề xuất lịch sử** như pricingRevision, winner và review TV5. Các đề xuất đó đã **bị quyết định TV2 mới nhất thay thế**. Khi triển khai chỉ dùng comment TV2 và contract này; không tái sử dụng thiết kế cũ trái P01–P05.

@@ -30,3 +30,16 @@ Các lựa chọn này được chốt cùng lúc, cùng một phiên bản. Mu�
 | MD11 | Bản nộp không vận hành cửa hàng của sàn. Mọi cửa hàng hiện có thu phí 5% vì `StoreController` luôn trả `houseStore=false`. Luật 0% ở MD04 giữ trong `FinanceRules` nhưng chưa có cửa hàng nào dùng. Không thêm API Admin xử lý đơn thay người bán hay gắn ảnh riêng cho cửa hàng của sàn. |
 
 MD11 làm rõ phạm vi của MD04 cho bản nộp và demo local, không đổi cách tính phí hay dữ liệu đã có. MD11 không thay thế MD01–MD10 và không cho phép bật Finance, COD hay đối soát trên production. Người quyết định: `duyxl56785`.
+
+## Bổ sung 14/11/2026 — MD12, chính sách giá sản phẩm khi có Promotion
+
+**Nguồn quyết định:** TV2 Nguyễn Văn Duy (owner M01 và product-service), [P01–P05 của PR #202](https://github.com/duyxl56785/Project_HK5/pull/202#issuecomment-6875893285), cập nhật [quyền review](https://github.com/duyxl56785/Project_HK5/pull/202#issuecomment-6876058407). Đây là quyết định nghiệp vụ **cho FR-PROMO-01–03**, không phải bằng chứng tính năng đã được merge hoặc bật trên môi trường khác.
+
+| ID | Quyết định |
+| --- | --- |
+| MD12 | Flash Sale, Super Sale và xả kho do **Seller chịu toàn bộ phần giảm**; sàn không bù tiền. Đơn giá trên dòng Order là giá đang áp dụng tại lúc Checkout preflight. Tiền hàng, phí sàn 5% HALF_UP (MD04), tiền người bán nhận và COD đều tính trên đơn giá này, nên công thức ở MD04–MD10 giữ nguyên. Snapshot theo MD08 không đổi cấu trúc; nguồn khuyến mãi (campaign) ghi ở audit của product-service, chưa lưu trên Order. Trả hàng hoàn theo giá trong snapshot. Không cộng dồn với voucher (voucher C2 chưa có). |
+
+**Diễn giải MD05 sau MD12:** không có giảm giá **cấp đơn hàng**. Promotion thay đổi đơn giá Product được Catalog cung cấp trước khi Cart/Checkout lấy snapshot; không thay đổi cấu trúc Order hoặc phép tính Finance. **Không sửa** cart-service, order-service, Inventory hay Finance cho FR-PROMO-01–03 theo quyết định TV2.
+
+**Review phạm vi MD12:** TV2 quyết định và là người duy nhất review/approve/merge PR #202 theo comment sửa đổi 14/11. Quy tắc ownership lịch sử của các module khác không tự động bị xóa.
+

@@ -1,5 +1,7 @@
 # RFC — Giá khuyến mãi dùng chung cho Flash Sale / Super Sale / Seller xả kho
 
+> **QUYẾT ĐỊNH ĐÃ CHỐT NGÀY 14/11/2026:** TV2 đã chốt P01–P05 tại [comment chính thức](https://github.com/duyxl56785/Project_HK5/pull/202#issuecomment-6875893285) và [comment sửa hạn/review](https://github.com/duyxl56785/Project_HK5/pull/202#issuecomment-6876058407). **Các đề xuất RFC bên dưới là lịch sử và KHÔNG còn là nguồn triển khai nếu khác quyết định TV2.** Xem [contract đã đối chiếu quyết định](FR_PROMO_01_03_CONTRACT_REVIEW.md). Đặc biệt: không dùng pricingRevision, không lưu winner, từ chối offer overlap; không sửa Cart/Order/Finance; MD12 có trong M01; product-service dùng V10, TV3 triển khai, TV2 review/merge, đóng băng hết 19/11.
+
 **Trạng thái: DRAFT — CẦN TV2 chốt contract, TV5 review M01 mới trước khi ảnh hưởng số tiền Order.**
 
 Căn cứ: SRS Flash Sale / Super Sale / Voucher v2.1 (13/11/2026), mục 4.1–4.3, 5–9; docs/OWNERSHIP.md; docs/project-report/M01_FINANCE_DECISION.md MD04–MD08. Đây là **đề xuất kỹ thuật**, không phải quyết định nghiệp vụ đã ký. Dựng trên main@d023e10474408b959f8e0ec872cff217f101d151.
