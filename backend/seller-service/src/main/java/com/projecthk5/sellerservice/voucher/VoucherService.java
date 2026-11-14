@@ -100,6 +100,7 @@ public class VoucherService {
 
     @Transactional(readOnly=true)
     public View get(UUID id) {
+        Actor.require("SELLER");
         UUID storeId=ownedStore();
         Instant moment=now();
         return view(data(storeId,id,false),moment);
@@ -108,6 +109,7 @@ public class VoucherService {
     @Transactional(readOnly=true)
     public List<View> list(String status,int page,int size) {
         if(page<0||page>20_000||size<1||size>50) throw invalid("Invalid pagination");
+        Actor.require("SELLER");
         UUID storeId=ownedStore();
         Instant moment=now();
         String expr="CASE WHEN status='CANCELLED' THEN 'CANCELLED' "
