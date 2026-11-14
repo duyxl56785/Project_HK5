@@ -22,10 +22,11 @@ public class VoucherLimitController {
     }
 
     @PostMapping("/api/stores/me/voucher-limit-requests")
-    @ResponseStatus(HttpStatus.CREATED)
-    public VoucherLimitService.RequestView request(
+    public org.springframework.http.ResponseEntity<VoucherLimitService.RequestView> request(
             @RequestHeader("Idempotency-Key") String idempotency,@RequestBody String body){
-        return service.create(json.request(body),idempotency);
+        VoucherLimitService.CreateResult result=service.create(json.request(body),idempotency);
+        return org.springframework.http.ResponseEntity.status(result.created()?HttpStatus.CREATED:HttpStatus.OK)
+                .body(result.request());
     }
 
     @PostMapping("/api/stores/me/voucher-limit-requests/{id}/cancel")
