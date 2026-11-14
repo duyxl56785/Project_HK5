@@ -216,6 +216,12 @@ class VoucherC1HttpPostgresIT {
         assertEquals(409,send(post("/api/stores/me/vouchers/"+last+"/resume").contentType(MediaType.APPLICATION_JSON)
             .content("{\"expectedVersion\":\"0\"}"),"seller-a","SELLER").getResponse().getStatus());
         assertEquals(24,count());
+        db.update("UPDATE vouchers SET status='PAUSED' WHERE store_id=? AND code IN "
+            +"('SEED0000','SEED0001','SEED0002','SEED0003','SEED0004')",STORE_A);
+        assertEquals(19,count());
+        assertEquals(200,send(post("/api/stores/me/vouchers/"+last+"/resume").contentType(MediaType.APPLICATION_JSON)
+            .content("{\"expectedVersion\":\"0\"}"),"seller-a","SELLER").getResponse().getStatus());
+        assertEquals(20,count());
     }
     private JsonNode createRequest(String key,String payload) throws Exception {
         MvcResult created=send(post("/api/stores/me/voucher-limit-requests")
@@ -421,7 +427,8 @@ class VoucherC1HttpPostgresIT {
     }
 
     @Test void suspendedSellerCannotPublishButMayRetractPriorVoucher() throws Exception {
-        UUID draft=draft("PAUSE01","seller-a");
+        JsonNode pending=createRequest("suspended-existing",requestBody());
+        UUID draft=draft("PAUSE01","seller-a"), unpublished=draft("SUSPEND2","seller-a");
         assertEquals(200,publish(draft,"seller-a","SELLER"));
         db.update("UPDATE seller_profiles SET status='SUSPENDED',review_reason='Suspended' WHERE id=?",SELLER_A);
         assertEquals(200,send(get("/api/stores/me/vouchers"),"seller-a","CUSTOMER").getResponse().getStatus());
@@ -430,8 +437,20 @@ class VoucherC1HttpPostgresIT {
         assertEquals(404,send(get("/api/stores/me/vouchers/"+draft),"seller-b","SELLER").getResponse().getStatus());
         assertEquals(403,send(post("/api/stores/me/vouchers").contentType(MediaType.APPLICATION_JSON)
             .content(body("OTHER02")),"seller-a","SELLER").getResponse().getStatus());
+        assertEquals(403,publish(unpublished,"seller-a","SELLER"));
+        assertEquals(403,send(post("/api/stores/me/voucher-limit-requests").header("Idempotency-Key","suspended-new")
+            .contentType(MediaType.APPLICATION_JSON).content(requestBody()),"seller-a","SELLER")
+            .getResponse().getStatus());
+        assertEquals(409,approve(pending).getResponse().getStatus());
+        assertEquals(200,send(post("/api/admin/voucher-limit-requests/"+pending.get("id").asText()+"/reject")
+            .contentType(MediaType.APPLICATION_JSON).content("{\"expectedVersion\":\"0\",\"reason\":\"Seller suspended\"}"),
+            "admin-moderator","ADMIN").getResponse().getStatus());
         assertEquals(200,send(post("/api/stores/me/vouchers/"+draft+"/pause")
             .contentType(MediaType.APPLICATION_JSON).content("{\"expectedVersion\":\"1\"}"),
             "seller-a","CUSTOMER").getResponse().getStatus());
+        assertEquals(403,send(post("/api/stores/me/vouchers/"+draft+"/resume").contentType(MediaType.APPLICATION_JSON)
+            .content("{\"expectedVersion\":\"2\"}"),"seller-a","SELLER").getResponse().getStatus());
+        assertEquals(200,send(post("/api/stores/me/vouchers/"+draft+"/cancel").contentType(MediaType.APPLICATION_JSON)
+            .content("{\"expectedVersion\":\"2\"}"),"seller-a","CUSTOMER").getResponse().getStatus());
     }
 }
