@@ -42,7 +42,7 @@ spring:
           predicates: ["Path=/api/sellers,/api/sellers/**,/api/admin/sellers,/api/admin/sellers/**,/api/admin/voucher-limit-requests,/api/admin/voucher-limit-requests/**,/api/stores,/api/stores/**"]
         - id: product
           uri: ${PRODUCT_URL:http://localhost:8104}
-          predicates: ["Path=/api/categories,/api/categories/**,/api/catalog/**,/api/seller/products,/api/seller/products/**,/api/admin/products,/api/admin/products/**,/api/admin/reviews,/api/admin/reviews/**,/api/reviews,/api/reviews/**"]
+          predicates: ["Path=/api/categories,/api/categories/**,/api/catalog/**,/api/seller/promotions,/api/seller/promotions/**,/api/admin/promotions,/api/admin/promotions/**,/api/seller/products,/api/seller/products/**,/api/admin/products,/api/admin/products/**,/api/admin/reviews,/api/admin/reviews/**,/api/reviews,/api/reviews/**"]
         - id: cart
           uri: ${CART_URL:http://localhost:8106}
           predicates: ["Path=/api/cart,/api/cart/**"]

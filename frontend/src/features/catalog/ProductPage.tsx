@@ -7,7 +7,7 @@ import { dateTime, ErrorNote, Loaded, money, useAction } from '../../shared/ui';
 import type { StoreRef } from './CatalogPage';
 
 interface Detail {
-  readonly id: string; readonly name: string; readonly unitPrice: string; readonly description: string;
+  readonly id: string; readonly name: string; readonly unitPrice: string; readonly baseUnitPrice?: string; readonly promotion?: { readonly kind: string; readonly endsAt: string } | null; readonly description: string;
   readonly store: StoreRef; readonly images: readonly string[]; readonly available: number;
   readonly rating: { readonly count: number; readonly average: number };
 }
@@ -60,7 +60,8 @@ export function ProductPage() {
       </div>
       <div className="stack">
         <h1>{p.name}</h1>
-        <p className="price price--large">{money(p.unitPrice)}</p>
+        <p className="price price--large">{p.promotion && <del>{money(p.baseUnitPrice)}</del>} {money(p.unitPrice)}</p>
+        {p.promotion && <p>Đang khuyến mãi đến {new Date(p.promotion.endsAt).toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' })}</p>}
         <p className="muted">Cửa hàng: <Link to={`/stores/${p.store.slug}`}>{p.store.name}</Link> · Còn {p.available} sản phẩm</p>
         <p className="muted">{p.rating.count > 0 ? `${stars(Math.round(p.rating.average))} ${p.rating.average}/5 (${p.rating.count} đánh giá)` : 'Chưa có đánh giá'}</p>
         <Buy product={p} />

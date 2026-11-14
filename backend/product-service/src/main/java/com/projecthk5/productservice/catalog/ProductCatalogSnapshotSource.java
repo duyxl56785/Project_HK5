@@ -19,8 +19,15 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
 public class ProductCatalogSnapshotSource implements CatalogSnapshotSource {
     private final ProductRepository products;
     private final ObjectProvider<CurrentStoreFactsSource> stores;
+    private final com.projecthk5.productservice.promotion.PromotionService promotions;
 
     public ProductCatalogSnapshotSource(ProductRepository products, ObjectProvider<CurrentStoreFactsSource> stores) {
+        this(products, stores, null);
+    }
+
+    public ProductCatalogSnapshotSource(ProductRepository products, ObjectProvider<CurrentStoreFactsSource> stores,
+            com.projecthk5.productservice.promotion.PromotionService promotions) {
+        this.promotions = promotions;
         this.products = Objects.requireNonNull(products);
         this.stores = Objects.requireNonNull(stores);
     }
@@ -61,11 +68,23 @@ public class ProductCatalogSnapshotSource implements CatalogSnapshotSource {
             return ids.stream().map(id -> new LookupResult(id,
                     found.containsKey(id) ? LookupStatus.UNAVAILABLE : LookupStatus.ABSENT, null)).toList();
         }
+        var now = java.time.Instant.now();
         return ids.stream().map(id -> {
             LocalProduct row = found.get(id);
             if (row == null) return new LookupResult(id, LookupStatus.ABSENT, null);
-            return new LookupResult(id, LookupStatus.FOUND, new ResolvedProduct(row.product(),
-                    verifiedStores.get(row.product().storeId()), row.product().currency(), row.categoryExists()));
+            ProductListing product = row.product();
+            StoreAccess store = verifiedStores.get(product.storeId());
+            if (promotions != null) {
+                var quote = promotions.quote(product.id(), product.storeId(), store.sellerId(), product.unitPrice(),
+                        row.categoryExists() && store.storeOpen() && store.sellerApproved()
+                                && product.status() == com.projecthk5.productservice.product.ProductStatus.ACTIVE, now);
+                if (quote.promotion() != null) {
+                    product = new ProductListing(product.id(), product.storeId(), product.categoryId(), product.sku(),
+                            product.name(), quote.unitPrice(), product.currency(), product.status(), product.reviewReason());
+                }
+            }
+            return new LookupResult(id, LookupStatus.FOUND, new ResolvedProduct(product, store,
+                    product.currency(), row.categoryExists()));
         }).toList();
     }
 

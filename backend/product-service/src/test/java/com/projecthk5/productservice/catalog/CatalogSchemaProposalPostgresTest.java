@@ -142,9 +142,9 @@ class CatalogSchemaProposalPostgresTest {
                 .locations("classpath:db/migration").load();
         runtime.validate();
         assertEquals(0, runtime.migrate().migrationsExecuted);
-        assertEquals(java.util.List.of("1", "2", "3", "4", "5", "6", "7", "8", "9"), java.util.Arrays.stream(runtime.info().applied())
+        assertEquals(java.util.List.of("1", "2", "3", "4", "5", "6", "7", "8", "9", "10"), java.util.Arrays.stream(runtime.info().applied())
                 .map(migration -> migration.getVersion().toString()).toList());
-        assertEquals("9", runtime.info().current().getVersion().toString());
+        assertEquals("10", runtime.info().current().getVersion().toString());
     }
 
     @ParameterizedTest

@@ -7,7 +7,7 @@ import type { CategoryDto } from './categoryTypes';
 
 export interface StoreRef { readonly id: string; readonly name: string; readonly slug: string }
 interface Summary {
-  readonly id: string; readonly name: string; readonly unitPrice: string;
+  readonly id: string; readonly name: string; readonly unitPrice: string; readonly baseUnitPrice?: string; readonly promotion?: { readonly kind: string } | null;
   readonly store: StoreRef; readonly imageUrl: string | null;
 }
 export interface Page { readonly items: readonly Summary[]; readonly total: number; readonly page: number; readonly size: number }
@@ -19,7 +19,7 @@ export function ProductCard({ product: p }: { readonly product: Summary }) {
   return <Link className="product" to={`/products/${p.id}`}>
     {p.imageUrl ? <img src={p.imageUrl} alt="" loading="lazy" /> : <div className="product__blank" aria-hidden="true" />}
     <span className="product__name">{p.name}</span>
-    <span className="price">{money(p.unitPrice)}</span>
+    <span className="price">{p.promotion && <del>{money(p.baseUnitPrice)}</del>} {money(p.unitPrice)}</span>
     <small className="muted">{p.store.name}</small>
   </Link>;
 }

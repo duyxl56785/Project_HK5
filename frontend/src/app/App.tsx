@@ -34,6 +34,9 @@ const AdminSellersPage = page(adminPages, 'AdminSellersPage');
 const CartPage = page(() => import('../features/cart/CartPage'), 'CartPage');
 const CatalogPage = page(() => import('../features/catalog/CatalogPage'), 'CatalogPage');
 const HomePage = page(() => import('../features/catalog/HomePage'), 'HomePage');
+const promoPages = () => import('../features/promotion/PromotionsPage');
+const SellerPromotionsPage = page(promoPages, 'PromotionsPage');
+const AdminPromotionsPage = page(promoPages, 'AdminPromotionsPage');
 const ProductPage = page(() => import('../features/catalog/ProductPage'), 'ProductPage');
 const StorePage = page(() => import('../features/catalog/StorePage'), 'StorePage');
 const CheckoutPage = page(() => import('../features/checkout/CheckoutPage'), 'CheckoutPage');
@@ -107,9 +110,9 @@ function Layout() {
       <nav className="topbar__strip" aria-label="Điều hướng chính">
         {has('CUSTOMER') && <NavLink to="/orders">Đơn hàng</NavLink>}
         {!has('ADMIN') && <NavLink to="/seller" end>Kênh người bán</NavLink>}
-        {has('SELLER') && <><NavLink to="/seller/products">Sản phẩm</NavLink><NavLink to="/seller/orders">Đơn cửa hàng</NavLink><NavLink to="/seller/returns">Trả hàng</NavLink><NavLink to="/seller/finance">Tài chính</NavLink><NavLink to="/seller/vouchers">Voucher</NavLink></>}
+        {has('SELLER') && <><NavLink to="/seller/products">Sản phẩm</NavLink><NavLink to="/seller/promotions">Khuyến mãi</NavLink><NavLink to="/seller/orders">Đơn cửa hàng</NavLink><NavLink to="/seller/returns">Trả hàng</NavLink><NavLink to="/seller/finance">Tài chính</NavLink><NavLink to="/seller/vouchers">Voucher</NavLink></>}
         {has('ADMIN') && <>
-          <NavLink to="/admin/sellers">Người bán</NavLink><NavLink to="/admin/products">Sản phẩm</NavLink>
+          <NavLink to="/admin/sellers">Người bán</NavLink><NavLink to="/admin/products">Sản phẩm</NavLink><NavLink to="/admin/promotions">Khuyến mãi</NavLink>
           <NavLink to="/admin/categories">Danh mục</NavLink><NavLink to="/admin/reviews">Đánh giá</NavLink>
           <NavLink to="/admin/accounts">Tài khoản</NavLink><NavLink to="/admin/orders">COD</NavLink><NavLink to="/admin/returns">Trả hàng</NavLink><NavLink to="/admin/finance">Tài chính</NavLink><NavLink to="/admin/voucher-limit-requests">Duyệt voucher</NavLink>
         </>}
@@ -158,6 +161,8 @@ export function App() {
       <Route path="orders/:id" element={guarded('CUSTOMER', <OrderDetailPage />)} />
       <Route path="seller" element={guarded(undefined, <SellerHomePage />)} />
       <Route path="seller/products" element={guarded('SELLER', <SellerProductsPage />)} />
+      <Route path="seller/promotions" element={guarded(undefined, <SellerPromotionsPage />)} />
+      <Route path="admin/promotions" element={guarded('ADMIN', <AdminPromotionsPage />)} />
       <Route path="seller/products/new" element={guarded('SELLER', <SellerProductPage />)} />
       <Route path="seller/products/:id" element={guarded('SELLER', <SellerProductPage />)} />
       <Route path="seller/orders" element={guarded('SELLER', <SellerOrdersPage />)} />

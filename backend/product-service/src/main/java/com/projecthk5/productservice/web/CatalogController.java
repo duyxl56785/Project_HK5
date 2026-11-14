@@ -44,12 +44,14 @@ public class CatalogController {
     private final CatalogSnapshotSource snapshots;
     private final CatalogCache cache;
     private final ObjectMapper json;
+    private final com.projecthk5.productservice.promotion.PromotionService promotions;
     private final String cartToken;
     private final String orderToken;
 
     public CatalogController(EntityManager em, SellerStoreClient stores, CategoryRepository categories, DetailsRepository details,
                              ImageRepository images, ReviewRepository reviews, ImageStorage storage,
                              DependencyClients dependencies, CatalogSnapshotSource snapshots, CatalogCache cache, ObjectMapper json,
+                             com.projecthk5.productservice.promotion.PromotionService promotions,
                              @Value("${CART_PRODUCT_TOKEN:}") String cartToken,
                              @Value("${ORDER_PRODUCT_TOKEN:}") String orderToken) {
         this.em = em;
@@ -63,16 +65,19 @@ public class CatalogController {
         this.snapshots = snapshots;
         this.cache = cache;
         this.json = json;
+        this.promotions = promotions;
         this.cartToken = cartToken;
         this.orderToken = orderToken;
     }
 
     public record StoreRef(UUID id, String name, String slug) {}
-    public record Summary(UUID id, String name, String unitPrice, String currency, UUID categoryId, StoreRef store, String imageUrl) {}
+    public record Summary(UUID id, String name, String unitPrice, String currency, UUID categoryId, StoreRef store, String imageUrl,
+                          String baseUnitPrice, com.projecthk5.productservice.promotion.PromotionService.Promotion promotion) {}
     public record Page(List<Summary> items, long total, int page, int size) {}
     public record Rating(long count, BigDecimal average) {}
     public record Detail(UUID id, String name, String sku, String unitPrice, String currency, UUID categoryId, String description,
-                         StoreRef store, List<String> images, long available, Rating rating) {}
+                         StoreRef store, List<String> images, long available, Rating rating,
+                         String baseUnitPrice, com.projecthk5.productservice.promotion.PromotionService.Promotion promotion) {}
     public record ReviewView(UUID id, int rating, String comment, java.time.Instant createdAt) {}
     public record NameRef(UUID id, String name, String imageUrl) {}
     /** Internal snapshot for Cart/Order; sellerId is the Seller profile id. */
@@ -87,9 +92,7 @@ public class CatalogController {
                        @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "12") int size) {
         if (page < 0 || size < 1 || size > 60 || (q != null && q.length() > 100))
             throw ApiException.badRequest("VALIDATION_FAILED", "Invalid search parameters");
-        String key = String.join("|", "catalog:search", q, String.valueOf(categoryId), String.valueOf(minPrice), String.valueOf(maxPrice),
-                String.valueOf(storeId), sort, String.valueOf(page), String.valueOf(size));
-        return cache.read(key, json.constructType(Page.class), () -> searchNow(q, categoryId, minPrice, maxPrice, storeId, sort, page, size));
+        return searchNow(q, categoryId, minPrice, maxPrice, storeId, sort, page, size);
     }
 
     private Page searchNow(String q, UUID categoryId, BigDecimal minPrice, BigDecimal maxPrice, UUID storeId, String sort, int page, int size) {
@@ -112,13 +115,16 @@ public class CatalogController {
         TypedQuery<ProductEntity> rows = em.createQuery("select p" + where + order, ProductEntity.class);
         params.forEach((k, v) -> { count.setParameter(k, v); rows.setParameter(k, v); });
         List<ProductEntity> found = rows.setFirstResult(page * size).setMaxResults(size).getResultList();
-        return new Page(found.stream().map(p -> summary(p, eligible.get(p.getStoreId()))).toList(), count.getSingleResult(), page, size);
+        var now = java.time.Instant.now();
+        var facts = promotionStores(found.stream().map(ProductEntity::getStoreId).collect(Collectors.toSet()));
+        return new Page(found.stream().map(p -> summary(p, eligible.get(p.getStoreId()),
+                quote(p, facts.get(p.getStoreId()), now))).toList(), count.getSingleResult(), page, size);
     }
 
     @GetMapping("/api/catalog/products/{id}")
     @Transactional(readOnly = true)
     public Detail detail(@PathVariable UUID id) {
-        return cache.read("catalog:product:" + id, json.constructType(Detail.class), () -> detailNow(id));
+        return detailNow(id);
     }
 
     private Detail detailNow(UUID id) {
@@ -129,11 +135,12 @@ public class CatalogController {
         DependencyClients.Balance balance = dependencies.balance(p.getInventorySku());
         Object[] summary = reviews.publicSummary(id).get(0);
         BigDecimal avg = summary[1] == null ? BigDecimal.ZERO : new BigDecimal(summary[1].toString()).setScale(2, java.math.RoundingMode.HALF_UP);
-        return new Detail(p.getId(), p.getName(), p.getInventorySku(), price(p), p.getCurrency(), p.getCategoryId(),
+        var quote = quote(p, promotionStores(Set.of(p.getStoreId())).get(p.getStoreId()), java.time.Instant.now());
+        return new Detail(p.getId(), p.getName(), p.getInventorySku(), quote.unitPrice().toPlainString(), p.getCurrency(), p.getCategoryId(),
                 details.findById(id).map(ProductExtras.Details::getDescription).orElse(""),
                 new StoreRef(store.storeId(), store.name(), store.slug()),
                 images.findByProductIdOrderByDisplayOrder(id).stream().map(i -> "/api/catalog/images/" + i.getId()).toList(),
-                balance == null ? 0 : balance.availableQuantity(), new Rating((Long) summary[0], avg));
+                balance == null ? 0 : balance.availableQuantity(), new Rating((Long) summary[0], avg), price(p), quote.promotion());
     }
 
     @GetMapping("/api/catalog/products/{id}/reviews")
@@ -193,9 +200,28 @@ public class CatalogController {
         return result;
     }
 
-    private Summary summary(ProductEntity p, SellerStoreClient.Facts store) {
-        return new Summary(p.getId(), p.getName(), price(p), p.getCurrency(), p.getCategoryId(),
-                new StoreRef(store.storeId(), store.name(), store.slug()), firstImage(p.getId()));
+    private Map<UUID, com.projecthk5.productservice.catalog.CurrentStoreFactsSource.StoreFacts> promotionStores(Set<UUID> ids) {
+        try {
+            return stores.loadCurrent(ids).stream().filter(f -> f.current() && ids.contains(f.storeId()))
+                    .collect(Collectors.toMap(f -> f.storeId(), Function.identity()));
+        } catch (RuntimeException unavailable) {
+            return Map.of();
+        }
+    }
+
+    private com.projecthk5.productservice.promotion.PromotionService.Quote quote(ProductEntity p,
+            com.projecthk5.productservice.catalog.CurrentStoreFactsSource.StoreFacts facts, java.time.Instant now) {
+        if (facts == null || facts.sellerId() == null || !Boolean.TRUE.equals(facts.storeOpen())
+                || !Boolean.TRUE.equals(facts.sellerApproved())) {
+            return new com.projecthk5.productservice.promotion.PromotionService.Quote(p.getUnitPrice(), null);
+        }
+        return promotions.quote(p.getId(), p.getStoreId(), facts.sellerId(), p.getUnitPrice(), true, now);
+    }
+
+    private Summary summary(ProductEntity p, SellerStoreClient.Facts store,
+            com.projecthk5.productservice.promotion.PromotionService.Quote quote) {
+        return new Summary(p.getId(), p.getName(), quote.unitPrice().toPlainString(), p.getCurrency(), p.getCategoryId(),
+                new StoreRef(store.storeId(), store.name(), store.slug()), firstImage(p.getId()), price(p), quote.promotion());
     }
 
     private String firstImage(UUID productId) {

@@ -110,6 +110,24 @@ public class ProductPersistenceAdapter {
                 throw new ProductPersistenceException(ProductPersistenceException.Code.STALE_VERSION,
                         "Product changed since it was read");
             }
+            if (entity.getStoreId().equals(listing.storeId()) && entity.getInventorySku().equals(listing.sku())
+                    && entity.getUnitPrice().compareTo(listing.unitPrice()) != 0) {
+                entityManager.refresh(entity, LockModeType.PESSIMISTIC_WRITE);
+                if (entity.getVersion() != expectedVersion) {
+                    throw new ProductPersistenceException(ProductPersistenceException.Code.STALE_VERSION,
+                            "Product changed since it was read");
+                }
+                var conflict = entityManager.createNativeQuery("""
+                        SELECT EXISTS(SELECT 1 FROM promotion_campaign_products r
+                        JOIN promotion_campaigns c ON c.id=r.campaign_id
+                        WHERE r.product_id=:id AND r.status='APPROVED' AND c.status<>'CANCELLED'
+                          AND c.ends_at>clock_timestamp() AND r.promotional_unit_price>=:price)
+                        """).setParameter("id", listing.id()).setParameter("price", listing.unitPrice());
+                if (Boolean.TRUE.equals(conflict.getSingleResult())) {
+                    throw com.projecthk5.security.ApiException.conflict("PROMOTION_PRICE_CONFLICT",
+                            "Withdraw the approved promotion before lowering this price");
+                }
+            }
             entity.apply(listing);
             // Flush inside REQUIRED so constraints/version failures roll back the caller's transaction too.
             ProductEntity saved = repository.saveAndFlush(entity);

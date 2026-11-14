@@ -106,6 +106,11 @@ class ProductPersistenceAdapterTest {
                 new BigDecimal("999.00000"), "VND", ProductStatus.REJECTED, "Needs review");
         when(repository.findById(id)).thenReturn(Optional.of(managed));
         when(repository.saveAndFlush(managed)).thenReturn(managed);
+        var priceGuard = mock(jakarta.persistence.Query.class);
+        when(entityManager.createNativeQuery(anyString())).thenReturn(priceGuard);
+        when(priceGuard.setParameter(eq("id"), eq(id))).thenReturn(priceGuard);
+        when(priceGuard.setParameter(eq("price"), eq(updated.unitPrice()))).thenReturn(priceGuard);
+        when(priceGuard.getSingleResult()).thenReturn(false);
 
         var result = adapter.update(updated, 7L);
 
@@ -117,6 +122,8 @@ class ProductPersistenceAdapterTest {
         var order = inOrder(repository, entityManager);
         order.verify(repository).findById(id);
         order.verify(entityManager).refresh(managed);
+        order.verify(entityManager).refresh(managed, jakarta.persistence.LockModeType.PESSIMISTIC_WRITE);
+        order.verify(entityManager).createNativeQuery(anyString());
         order.verify(repository).saveAndFlush(managed);
         verifyNoMoreInteractions(repository);
         verifyNoMoreInteractions(entityManager);
