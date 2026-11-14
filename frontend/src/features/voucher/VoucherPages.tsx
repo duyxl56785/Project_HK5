@@ -2,6 +2,7 @@ import { useState, useRef } from 'react';
 import type { FormEvent } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { api } from '../../shared/api';
+import { toIsoVN, toVNInput as vnInput } from './voucherTime';
 import { Badge, dateTime, ErrorNote, Loaded, money, useAction } from '../../shared/ui';
 
 type State = 'DRAFT' | 'SCHEDULED' | 'ACTIVE' | 'PAUSED' | 'EXPIRED' | 'CANCELLED';
@@ -21,16 +22,7 @@ interface Request {
   readonly decisionReason:string|null;readonly createdAt:string;
 }
 const statuses:State[]=['DRAFT','SCHEDULED','ACTIVE','PAUSED','EXPIRED','CANCELLED'];
-function toIsoVN(value:string):string {
-  if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(value)) throw new Error('Nhập giờ hợp lệ');
-  const date = new Date(value + '+07:00');
-  if(!Number.isFinite(date.getTime())) throw new Error('Nhập giờ hợp lệ');
-  return date.toISOString();
-}
-function vnInput(value:string) {
-  const t=Date.parse(value);
-  return Number.isFinite(t)?new Date(t+7*3600000).toISOString().slice(0,16):'';
-}
+
 type VoucherForm = {
   code:string;name:string;discountType:'FIXED'|'PERCENT';discountValue:string;
   maxDiscount:string;minOrderAmount:string;usageLimit:string;startsAt:string;endsAt:string;
