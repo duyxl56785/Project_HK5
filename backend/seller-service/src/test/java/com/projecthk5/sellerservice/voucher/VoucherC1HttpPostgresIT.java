@@ -148,7 +148,8 @@ class VoucherC1HttpPostgresIT {
         }
     }
     private String requestBody(){
-        return "{\"requestedLimit\":30,\"reason\":\"Đẩy tồn kho\",\"requestedFrom\":\""+start()
+        return "{\"requestedLimit\":30,\"reason\":\"Đẩy tồn kho\",\"requestedFrom\":\""
+            +Instant.now().minusSeconds(3600).toString()
             +"\",\"requestedUntil\":\""+end()+"\"}";
     }
     @Test void idempotentRequestAndPartialAdminApprovalGrant() throws Exception {
