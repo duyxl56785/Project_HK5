@@ -45,6 +45,7 @@ public class VoucherLimitService {
                             String decidedBy,Instant decidedAt) {}
     public record LimitView(int used,int limit,int defaultLimit,GrantView grant) {}
     public record AdminDetail(RequestView request,int used) {}
+    public record CreateResult(RequestView request,boolean created) {}
     private record Request(UUID id,UUID storeId,int requestedLimit,String reason,String budgetNote,
                   Instant requestedFrom,Instant requestedUntil,String status,Integer approvedLimit,
                   Instant approvedFrom,Instant approvedUntil,String decidedBy,Instant decidedAt,
@@ -165,7 +166,7 @@ public class VoucherLimitService {
             .stream().map(VoucherLimitService::view).toList();
     }
     @Transactional(isolation=Isolation.READ_COMMITTED)
-    public RequestView create(RequestSpec x,String idem){
+    public CreateResult create(RequestSpec x,String idem){
         key(idem);
         UUID store=ownStore();
         vouchers.lockStore(store); requireEligible(store);
@@ -176,7 +177,7 @@ public class VoucherLimitService {
         if(!matches.isEmpty()){
             if(!matches.get(0).fingerprint().equals(fp))
                 throw conflict("IDEMPOTENCY_KEY_REUSED","Idempotency-Key reused with different payload");
-            return view(matches.get(0));
+            return new CreateResult(view(matches.get(0)),false);
         }
         Integer count=db.queryForObject("SELECT count(*) FROM voucher_limit_requests "
             +"WHERE store_id=? AND status='PENDING'",Integer.class,store);
@@ -188,7 +189,7 @@ public class VoucherLimitService {
             +"VALUES (?,?,?,?,?,?,?,?,?,'PENDING',?,?)",id,store,x.requestedLimit(),x.reason(),x.budgetNote(),
             utc(x.requestedFrom()),utc(x.requestedUntil()),idem,fp,utc(t),utc(t));
         history(id,null,"PENDING",null,Actor.current().id(),t);
-        return view(own(store,id,false));
+        return new CreateResult(view(own(store,id,false)),true);
     }
     @Transactional(isolation=Isolation.READ_COMMITTED)
     public RequestView cancel(UUID id,long expected){
