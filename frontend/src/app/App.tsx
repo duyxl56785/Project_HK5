@@ -17,6 +17,7 @@ const orderPages = () => import('../features/orders/OrdersPage');
 const sellerOrderPages = () => import('../features/seller/SellerOrdersPage');
 const sellerProductPages = () => import('../features/seller/SellerProductsPage');
 const policyPages = () => import('../features/policy/PolicyPage');
+const voucherPages = () => import('../features/voucher/VoucherPages');
 
 const AccountPage = page(accountPages, 'AccountPage');
 const PolicyPage = page(policyPages, 'PolicyPage');
@@ -44,6 +45,8 @@ const SellerOrdersPage = page(sellerOrderPages, 'SellerOrdersPage');
 const SellerReturnsPage = page(() => import('../features/seller/SellerReturnsPage'), 'SellerReturnsPage');
 const SellerProductPage = page(sellerProductPages, 'SellerProductPage');
 const SellerProductsPage = page(sellerProductPages, 'SellerProductsPage');
+const SellerVoucherPage = page(voucherPages, 'SellerVoucherPage');
+const AdminVoucherLimitPage = page(voucherPages, 'AdminVoucherLimitPage');
 
 /** A page chunk can fail to load, for example after a new deploy; one broken page must not blank the app. */
 class PageBoundary extends Component<{ readonly children: ReactNode }, { readonly failed: boolean }> {
@@ -104,11 +107,11 @@ function Layout() {
       <nav className="topbar__strip" aria-label="Điều hướng chính">
         {has('CUSTOMER') && <NavLink to="/orders">Đơn hàng</NavLink>}
         {!has('ADMIN') && <NavLink to="/seller" end>Kênh người bán</NavLink>}
-        {has('SELLER') && <><NavLink to="/seller/products">Sản phẩm</NavLink><NavLink to="/seller/orders">Đơn cửa hàng</NavLink><NavLink to="/seller/returns">Trả hàng</NavLink><NavLink to="/seller/finance">Tài chính</NavLink></>}
+        {has('SELLER') && <><NavLink to="/seller/products">Sản phẩm</NavLink><NavLink to="/seller/orders">Đơn cửa hàng</NavLink><NavLink to="/seller/returns">Trả hàng</NavLink><NavLink to="/seller/finance">Tài chính</NavLink><NavLink to="/seller/vouchers">Voucher</NavLink></>}
         {has('ADMIN') && <>
           <NavLink to="/admin/sellers">Người bán</NavLink><NavLink to="/admin/products">Sản phẩm</NavLink>
           <NavLink to="/admin/categories">Danh mục</NavLink><NavLink to="/admin/reviews">Đánh giá</NavLink>
-          <NavLink to="/admin/accounts">Tài khoản</NavLink><NavLink to="/admin/orders">COD</NavLink><NavLink to="/admin/returns">Trả hàng</NavLink><NavLink to="/admin/finance">Tài chính</NavLink>
+          <NavLink to="/admin/accounts">Tài khoản</NavLink><NavLink to="/admin/orders">COD</NavLink><NavLink to="/admin/returns">Trả hàng</NavLink><NavLink to="/admin/finance">Tài chính</NavLink><NavLink to="/admin/voucher-limits">Duyệt Voucher</NavLink>
         </>}
         <span className="grow" />
         {account ? <>
@@ -160,6 +163,7 @@ export function App() {
       <Route path="seller/orders" element={guarded('SELLER', <SellerOrdersPage />)} />
       <Route path="seller/returns" element={guarded('SELLER', <SellerReturnsPage />)} />
       <Route path="seller/finance" element={guarded('SELLER', <SellerFinancePage />)} />
+      <Route path="seller/vouchers" element={guarded('SELLER', <SellerVoucherPage />)} />
       <Route path="admin/sellers" element={guarded('ADMIN', <AdminSellersPage />)} />
       <Route path="admin/products" element={guarded('ADMIN', <AdminProductsPage />)} />
       <Route path="admin/categories" element={guarded('ADMIN', <AdminCategoriesPage />)} />
@@ -168,6 +172,7 @@ export function App() {
       <Route path="admin/orders" element={guarded('ADMIN', <AdminOrdersPage />)} />
       <Route path="admin/returns" element={guarded('ADMIN', <AdminReturnsPage />)} />
       <Route path="admin/finance" element={guarded('ADMIN', <AdminFinancePage />)} />
+      <Route path="admin/voucher-limits" element={guarded('ADMIN', <AdminVoucherLimitPage />)} />
       <Route path="*" element={<p>Không tìm thấy trang. <Link to="/">Về trang chủ</Link></p>} />
     </Route>
   </Routes></BrowserRouter>;

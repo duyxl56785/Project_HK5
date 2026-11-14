@@ -39,7 +39,7 @@ spring:
           predicates: [Path=/api/users/**]
         - id: seller
           uri: ${SELLER_URL:http://localhost:8103}
-          predicates: ["Path=/api/sellers,/api/sellers/**,/api/admin/sellers,/api/admin/sellers/**,/api/stores,/api/stores/**"]
+          predicates: ["Path=/api/sellers,/api/sellers/**,/api/admin/sellers,/api/admin/sellers/**,/api/stores,/api/stores/**,/api/admin/voucher-limit-requests,/api/admin/voucher-limit-requests/**"]
         - id: product
           uri: ${PRODUCT_URL:http://localhost:8104}
           predicates: ["Path=/api/categories,/api/categories/**,/api/catalog/**,/api/seller/products,/api/seller/products/**,/api/admin/products,/api/admin/products/**,/api/admin/reviews,/api/admin/reviews/**,/api/reviews,/api/reviews/**"]
