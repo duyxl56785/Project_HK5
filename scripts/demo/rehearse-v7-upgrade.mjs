@@ -75,7 +75,10 @@ try {
 
   // What the old build left: suspended at Seller, role already gone at Auth, V7 still to run.
   sql('auth_db', `delete from account_role_grants where account_id = '${claims(token).sub}' and role = 'SELLER'`);
-  // Later migrations go too, or Flyway refuses a pending V7 below them; they must stay rerunnable.
+  // The disposable fixture starts at HEAD. Remove the tables absent before V7
+  // so Flyway can replay the forward-only C1 migrations as it would on that schema.
+  sql('seller_db', 'drop table voucher_status_history, vouchers, store_voucher_limits, voucher_limit_request_history, voucher_limit_requests');
+  // Later history entries go too, or Flyway refuses a pending V7 below them.
   sql('seller_db', `delete from flyway_schema_history where installed_rank >= (select installed_rank from flyway_schema_history where script = 'V7__resend_suspended_seller_role.sql')`);
   const stranded = await seller2();
   check('role gone before V7', claims(stranded).roles.includes('SELLER'), false);

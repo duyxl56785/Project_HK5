@@ -132,6 +132,7 @@ export function SellerHomePage() {
 
   return <div className="stack">
     {myStore !== undefined && <SellerStoreOverview state={{ status: 'ready', seller: profile, store: myStore }} />}
+    {profile.status === 'SUSPENDED' && <Link to="/seller/vouchers">Xem và thu hồi voucher</Link>}
     {profile.reviewReason && <p className="note">Lý do từ quản trị viên: {profile.reviewReason}</p>}
     {profile.status === 'REJECTED' && <div className="panel stack"><h2>Sửa và gửi lại hồ sơ</h2>
       <ContactForm contact={seller.data?.contact} submitLabel="Gửi lại hồ sơ" pending={resubmit.isPending}
