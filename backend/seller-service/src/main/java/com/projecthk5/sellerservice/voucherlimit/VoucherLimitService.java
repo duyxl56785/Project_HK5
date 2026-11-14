@@ -101,13 +101,24 @@ public class VoucherLimitService {
                 +"VALUES (?,?,?,?,?,?)",id,before,after,reason,who,utc(now));
     }
     private static String fingerprint(VoucherLimitJson.Submit d){
-        String text=d.requestedLimit()+"\n"+d.reason()+"\n"+d.budgetNote()+"\n"+d.requestedFrom()+"\n"+d.requestedUntil();
+        // Length-prefix fields: newlines in reason/budgetNote must not alias payloads.
+        StringBuilder canonical=new StringBuilder("voucher-limit-v1;");
+        appendFingerprint(canonical,Integer.toString(d.requestedLimit()));
+        appendFingerprint(canonical,d.reason());
+        appendFingerprint(canonical,d.budgetNote());
+        appendFingerprint(canonical,d.requestedFrom().toString());
+        appendFingerprint(canonical,d.requestedUntil().toString());
         try{return HexFormat.of().formatHex(MessageDigest.getInstance("SHA-256")
-                .digest(text.getBytes(StandardCharsets.UTF_8)));}
+                .digest(canonical.toString().getBytes(StandardCharsets.UTF_8)));}
         catch(NoSuchAlgorithmException e){throw new IllegalStateException(e);}
     }
+    private static void appendFingerprint(StringBuilder out,String value){
+        if(value==null)out.append("N;");
+        else out.append('S').append(value.length()).append(':').append(value).append(';');
+    }
     private static void key(String value){
-        if(value==null||value.isBlank()||value.length()>128||!value.equals(value.strip()))
+        if(value==null||value.isBlank()||value.length()>128||!value.equals(value.strip())
+                ||value.codePoints().anyMatch(Character::isISOControl))
             throw ApiException.badRequest("VALIDATION_FAILED","Idempotency-Key required");
     }
 
@@ -189,7 +200,10 @@ public class VoucherLimitService {
         if("approve".equals(action)){
             if(admin.id().equals(state.owner()))throw new ApiException(org.springframework.http.HttpStatus.FORBIDDEN,
                     "SELLER_SELF_MODERATION","Store owner cannot approve their own grant");
-            eligible(old.storeId());
+            // Approving a suspended Seller or closed Store is a business conflict, not
+            // an unauthorized Seller write: ADMIN must receive INVALID_STATE (409).
+            if (!"APPROVED".equals(state.seller()) || !"OPEN".equals(state.store()))
+                throw conflict("VOUCHER_LIMIT_REQUEST_INVALID_STATE");
             Instant moment=now();
             if(requestedApproved==null||from==null||until==null||requestedApproved<21
                     ||requestedApproved>old.requestedLimit()||from.isBefore(old.requestedFrom())
