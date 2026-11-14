@@ -57,7 +57,7 @@ class CatalogSchemaProposalPostgresTest {
              var rows = statement.executeQuery("SELECT string_agg(version, ',' ORDER BY installed_rank)"
                      + " FROM flyway_schema_history WHERE success AND version IS NOT NULL")) {
             assertTrue(rows.next());
-            assertEquals("1,2,3,4,5,6,7,8,9", rows.getString(1), "Only Category V1, Product V2, image reservations V3, details V4, write fence V5, reviewable items V6, category slug V7, review hidden reason V8 and review comment limit V9 are migrations");
+            assertEquals("1,2,3,4,5,6,7,8,9,10", rows.getString(1), "Runtime Flyway history includes promotion V10");
         }
         try (Connection connection = connect(); var statement = connection.createStatement();
              var rows = statement.executeQuery("SELECT count(*) FROM flyway_schema_history"
