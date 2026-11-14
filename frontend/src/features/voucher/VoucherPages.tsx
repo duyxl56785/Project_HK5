@@ -2,6 +2,7 @@ import { useState, useRef } from 'react';
 import type { FormEvent } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { api } from '../../shared/api';
+import { useAuth } from '../../shared/auth';
 import { toIsoVN, toVNInput as vnInput } from './voucherTime';
 import { Badge, dateTime, ErrorNote, Loaded, money, useAction } from '../../shared/ui';
 
@@ -22,6 +23,11 @@ interface Request {
   readonly decisionReason:string|null;readonly createdAt:string;
 }
 const statuses:State[]=['DRAFT','SCHEDULED','ACTIVE','PAUSED','EXPIRED','CANCELLED'];
+
+const voucherStatusLabels: Record<State, string> = {
+  DRAFT: 'Bản nháp', SCHEDULED: 'Đã lên lịch', ACTIVE: 'Đang hoạt động',
+  PAUSED: 'Đã tạm dừng', EXPIRED: 'Đã hết hạn', CANCELLED: 'Đã hủy',
+};
 
 type VoucherForm = {
   code:string;name:string;discountType:'FIXED'|'PERCENT';discountValue:string;
@@ -83,7 +89,7 @@ function VoucherEditor({ row, close }: {readonly row:Voucher|null;readonly close
     </div>
   </form>;
 }
-function VoucherCard({row,onEdit}:{readonly row:Voucher;readonly onEdit:(row:Voucher)=>void}){
+function VoucherCard({row,onEdit,canManage}:{readonly row:Voucher;readonly onEdit:(row:Voucher)=>void;readonly canManage:boolean}){
   const act=useAction((action:string)=>api<Voucher>(
     '/api/stores/me/vouchers/'+row.id+'/'+action,
     {method:'POST',body:{expectedVersion:row.version}}),['voucher']);
@@ -91,14 +97,14 @@ function VoucherCard({row,onEdit}:{readonly row:Voucher;readonly onEdit:(row:Vou
     row.status==='SCHEDULED'||row.status==='ACTIVE'?['pause','cancel']:
     row.status==='PAUSED'?['resume','cancel']:[];
   return <article className="panel stack">
-    <div className="row row--between"><strong>{row.code} — {row.name}</strong><span>{row.status}</span></div>
+    <div className="row row--between"><strong>{row.code} — {row.name}</strong><span className={`badge badge--${row.status.toLowerCase()}`}>{voucherStatusLabels[row.status]}</span></div>
     <p>{row.discountType==='FIXED'?'Giảm '+money(row.discountValue):
       'Giảm '+row.discountValue+'%, tối đa '+money(row.maxDiscount)}
       {' · Đơn từ '+money(row.minOrderAmount)}</p>
     <small>{dateTime(row.startsAt)} đến {dateTime(row.endsAt)} · Quota sử dụng {row.usageLimit}</small>
     <div className="row row--wrap">
-      {row.status==='DRAFT'&&<button className="btn" type="button" onClick={()=>onEdit(row)}>Sửa</button>}
-      {actions.map(action=><button key={action} className="btn" type="button" disabled={act.isPending}
+      {canManage&&row.status==='DRAFT'&&<button className="btn" type="button" onClick={()=>onEdit(row)}>Sửa</button>}
+      {actions.filter(action=>canManage||action==='pause'||action==='cancel').map(action=><button key={action} className="btn" type="button" disabled={act.isPending}
         onClick={()=>act.mutate(action)}>{action==='publish'?'Công bố':action==='pause'?'Tạm dừng':
           action==='resume'?'Bật lại':'Hủy'}</button>)}
     </div><ErrorNote error={act.error}/>
@@ -148,28 +154,30 @@ function StoreRequest({item}:{readonly item:Request}){
     <ErrorNote error={cancel.error}/></li>;
 }
 export function SellerVouchersPage(){
+  const { account, has } = useAuth();
+  const canManage = has('SELLER');
   const [editing,setEditing]=useState<Voucher|null|undefined>(undefined);
   const [filter,setFilter]=useState('');
-  const voucher=useQuery({queryKey:['voucher','list',filter],queryFn:()=>api<Voucher[]>(
+  const voucher=useQuery({queryKey:['voucher','list',account?.userId,canManage,filter],queryFn:()=>api<Voucher[]>(
     '/api/stores/me/vouchers?size=50'+(filter?'&status='+encodeURIComponent(filter):''))});
-  const limit=useQuery({queryKey:['voucher','limit'],queryFn:()=>api<Limit>('/api/stores/me/voucher-limit')});
-  const requests=useQuery({queryKey:['voucher','requests'],queryFn:()=>api<Request[]>(
+  const limit=useQuery({queryKey:['voucher','limit',account?.userId],enabled:canManage,queryFn:()=>api<Limit>('/api/stores/me/voucher-limit')});
+  const requests=useQuery({queryKey:['voucher','requests',account?.userId],enabled:canManage,queryFn:()=>api<Request[]>(
     '/api/stores/me/voucher-limit-requests?size=50')});
   return <div className="stack"><h1>Voucher cửa hàng</h1>
     <p className="muted">C1 chỉ quản lý voucher. Chưa thể dùng mã để giảm tiền tại Checkout.</p>
-    <div className="panel stack"><h2>Hạn mức sử dụng</h2>
+    {canManage&&<><div className="panel stack"><h2>Hạn mức sử dụng</h2>
       <Loaded query={limit}>{item=><p><strong>{item.used}/{item.limit}</strong> slot
         {item.grant&&' · Grant đến '+dateTime(item.grant.validUntil)}</p>}</Loaded></div>
     <button type="button" className="btn btn--primary" onClick={()=>setEditing(null)}>Tạo voucher</button>
-    {editing!==undefined&&<VoucherEditor key={editing?.id??'new'} row={editing} close={()=>setEditing(undefined)}/>}
+    {editing!==undefined&&<VoucherEditor key={editing?.id??'new'} row={editing} close={()=>setEditing(undefined)}/>}</>}
     <label className="field">Trạng thái<select value={filter} onChange={e=>setFilter(e.currentTarget.value)}>
-      <option value="">Tất cả</option>{statuses.map(s=><option key={s} value={s}>{s}</option>)}
+      <option value="">Tất cả</option>{statuses.map(s=><option key={s} value={s}>{voucherStatusLabels[s]}</option>)}
     </select></label>
     <Loaded query={voucher} empty={rows=>rows.length===0}>{rows=><div className="stack">
-      {rows.map(row=><VoucherCard key={row.id} row={row} onEdit={setEditing}/>)}</div>}</Loaded>
-    <RequestForm/><h2>Yêu cầu nâng hạn mức</h2>
+      {rows.map(row=><VoucherCard key={row.id} row={row} onEdit={setEditing} canManage={canManage}/>)}</div>}</Loaded>
+    {canManage&&<><RequestForm/><h2>Yêu cầu nâng hạn mức</h2>
     <Loaded query={requests} empty={rows=>rows.length===0}>{rows=><ul className="stack">
-      {rows.map(item=><StoreRequest key={item.id} item={item}/>)}</ul>}</Loaded>
+      {rows.map(item=><StoreRequest key={item.id} item={item}/>)}</ul>}</Loaded></>}
   </div>;
 }
 function DecisionCard({item}:{readonly item:Request}){
@@ -182,13 +190,34 @@ function DecisionCard({item}:{readonly item:Request}){
       {method:'POST',body:input.body}),['admin-vouchers']);
   function approve(){
     setNote('');
-    try{act.mutate({action:'approve',body:{expectedVersion:item.version,
-      approvedLimit:Number(limit),approvedFrom:toIsoVN(from),approvedUntil:toIsoVN(until),
-      ...(reason.trim()?{reason:reason.trim()}: {})}});}
-    catch{setNote('Thời gian phê duyệt chưa hợp lệ');}
+    try {
+      const approvedLimit = Number(limit);
+      const approvedFrom = from === vnInput(item.requestedFrom) ? item.requestedFrom : toIsoVN(from);
+      const approvedUntil = until === vnInput(item.requestedUntil) ? item.requestedUntil : toIsoVN(until);
+      const start = Date.parse(approvedFrom);
+      const end = Date.parse(approvedUntil);
+      const requestedStart = Date.parse(item.requestedFrom);
+      const requestedEnd = Date.parse(item.requestedUntil);
+      if (!Number.isInteger(approvedLimit) || approvedLimit < 21 || approvedLimit > item.requestedLimit) {
+        setNote('Số slot duyệt phải nằm trong hạn mức yêu cầu.');
+        return;
+      }
+      if (start < requestedStart || end > requestedEnd || end <= start) {
+        setNote('Thời gian phê duyệt phải nằm trong khoảng đã yêu cầu.');
+        return;
+      }
+      if ((approvedLimit < item.requestedLimit || start > requestedStart || end < requestedEnd) && !reason.trim()) {
+        setNote('Nhập lý do khi giảm số slot hoặc rút ngắn thời hạn.');
+        return;
+      }
+      act.mutate({action:'approve',body:{expectedVersion:item.version,approvedLimit,approvedFrom,approvedUntil,
+        ...(reason.trim()?{reason:reason.trim()}: {})}});
+    } catch {
+      setNote('Thời gian phê duyệt chưa hợp lệ');
+    }
   }
   return <article className="panel stack">
-    <h2>Store {item.storeId.slice(0,8)} — Xin {item.requestedLimit} slot</h2>
+    <h2>Store {item.storeId} — Xin {item.requestedLimit} slot</h2>
     <p>{item.reason}</p>
     <small>{dateTime(item.requestedFrom)} đến {dateTime(item.requestedUntil)}</small>
     <label className="field">Số slot duyệt<input type="number" min="21" max={item.requestedLimit}

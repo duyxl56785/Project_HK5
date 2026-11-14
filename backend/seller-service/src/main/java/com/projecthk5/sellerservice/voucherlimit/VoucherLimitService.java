@@ -188,7 +188,7 @@ public class VoucherLimitService {
         UUID id=UUID.randomUUID();
         db.update("INSERT INTO voucher_limit_requests (id,store_id,requested_limit,reason,budget_note,"
             +"requested_from,requested_until,idempotency_key,request_fingerprint,status,created_at,updated_at) "
-            +"VALUES (?,?,?,?,?,?,?,?,?,'PENDING',?,?)",id,store,x.requestedLimit(),x.reason(),x.budgetNote(),
+            +"VALUES (?,?,?,?,?,?,?,?,?,'PENDING',?,?)",id,store,x.requestedLimit(),x.reason(),x.budgetNote() == null || x.budgetNote().isBlank() ? null : x.budgetNote(),
             utc(x.requestedFrom()),utc(x.requestedUntil()),idem,fp,utc(t),utc(t));
         history(id,null,"PENDING",null,Actor.current().id(),t);
         return new CreateResult(view(own(store,id,false)),true);

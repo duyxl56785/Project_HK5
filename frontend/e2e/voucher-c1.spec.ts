@@ -29,7 +29,7 @@ test('seller publishes 20 vouchers, asks for 25, Admin approves, seller publishe
       await expect(form).toHaveCount(0);
       const card=seller.locator('article').filter({hasText:code});
       await card.getByRole('button',{name:'Công bố'}).click();
-      await expect(card.getByText('SCHEDULED')).toBeVisible();
+      await expect(card.getByText('Đã lên lịch')).toBeVisible();
     }
     for(let n=1;n<=20;n++) await createAndPublish(n);
     await expect(seller.getByText('20/20')).toBeVisible();
@@ -40,7 +40,10 @@ test('seller publishes 20 vouchers, asks for 25, Admin approves, seller publishe
     await request.getByLabel(/Từ ngày/).fill(grantFrom);
     await request.getByLabel(/Đến ngày/).fill(grantUntil);
     await request.getByRole('button',{name:'Gửi yêu cầu'}).click();
-    await expect(seller.getByText('Đã gửi yêu cầu. Chờ Admin xét duyệt.')).toBeVisible();
+    await expect(request.getByRole('status')).toHaveText('Đã gửi yêu cầu tới Admin.');
+    const pendingRequest = seller.getByRole('listitem').filter({ hasText: 'Cần mở rộng xả kho cho nhiều sản phẩm' });
+    await expect(pendingRequest).toBeVisible();
+    await expect(seller.getByText('20/20')).toBeVisible();
 
     await admin.goto('/admin/voucher-limit-requests');
     await expect(admin.getByRole('heading',{name:'Xét duyệt nâng hạn mức voucher'})).toBeVisible();
@@ -62,9 +65,10 @@ test('seller publishes 20 vouchers, asks for 25, Admin approves, seller publishe
 test('customer cannot open voucher administration',async({browser})=>{
   const customer=await sessionFor(browser,accounts.customer);
   try {
-    for(const path of ['/seller/vouchers','/admin/voucher-limit-requests']){
-      await customer.goto(path);
-      await expect(customer.getByText('Tài khoản của bạn không có quyền truy cập trang này.')).toBeVisible();
-    }
+    await customer.goto('/seller/vouchers');
+    await expect(customer.getByRole('alert')).toBeVisible();
+    await expect(customer.getByRole('button',{name:'Tạo voucher'})).toHaveCount(0);
+    await customer.goto('/admin/voucher-limit-requests');
+    await expect(customer.getByText('Tài khoản của bạn không có quyền truy cập trang này.')).toBeVisible();
   } finally {await customer.context().close();}
 });

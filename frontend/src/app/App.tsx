@@ -163,7 +163,7 @@ export function App() {
       <Route path="seller/orders" element={guarded('SELLER', <SellerOrdersPage />)} />
       <Route path="seller/returns" element={guarded('SELLER', <SellerReturnsPage />)} />
       <Route path="seller/finance" element={guarded('SELLER', <SellerFinancePage />)} />
-      <Route path="seller/vouchers" element={guarded('SELLER', <SellerVouchersPage />)} />
+      <Route path="seller/vouchers" element={guarded(undefined, <SellerVouchersPage />)} />
       <Route path="admin/sellers" element={guarded('ADMIN', <AdminSellersPage />)} />
       <Route path="admin/products" element={guarded('ADMIN', <AdminProductsPage />)} />
       <Route path="admin/categories" element={guarded('ADMIN', <AdminCategoriesPage />)} />

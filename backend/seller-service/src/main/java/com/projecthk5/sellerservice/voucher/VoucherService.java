@@ -98,10 +98,19 @@ public class VoucherService {
             Long.toString(d.version()));
     }
 
+    private UUID readableStore() {
+        if (Actor.current().has("SELLER")) return ownedStore();
+        List<UUID> ids = db.query(
+            "SELECT st.id FROM stores st JOIN seller_profiles seller ON seller.id=st.seller_id "
+                +"WHERE seller.owner_reference=? AND seller.status='SUSPENDED'",
+            (rs,n)->rs.getObject(1,UUID.class),Actor.current().id());
+        if(ids.size()!=1) Actor.require("SELLER");
+        return ids.getFirst();
+    }
+
     @Transactional(readOnly=true)
     public View get(UUID id) {
-        Actor.require("SELLER");
-        UUID storeId=ownedStore();
+        UUID storeId=readableStore();
         Instant moment=now();
         return view(data(storeId,id,false),moment);
     }
@@ -109,8 +118,7 @@ public class VoucherService {
     @Transactional(readOnly=true)
     public List<View> list(String status,int page,int size) {
         if(page<0||page>20_000||size<1||size>50) throw invalid("Invalid pagination");
-        Actor.require("SELLER");
-        UUID storeId=ownedStore();
+        UUID storeId=readableStore();
         Instant moment=now();
         String expr="CASE WHEN status='CANCELLED' THEN 'CANCELLED' "
             +"WHEN status='DRAFT' THEN 'DRAFT' WHEN ends_at <= ? THEN 'EXPIRED' "

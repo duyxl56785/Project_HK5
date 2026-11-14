@@ -20,16 +20,18 @@ CREATE TABLE voucher_limit_requests (
     version BIGINT NOT NULL DEFAULT 0,
     created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT uq_vlr_store_request UNIQUE (store_id, id),
     CONSTRAINT uq_voucher_limit_request_key UNIQUE (store_id,idempotency_key),
     CONSTRAINT ck_vlr_reason CHECK (reason = btrim(reason) AND reason ~ '[^[:space:]]'),
-    CONSTRAINT ck_vlr_budget CHECK (budget_note IS NULL OR budget_note = btrim(budget_note)),
+    CONSTRAINT ck_vlr_budget CHECK (budget_note IS NULL OR (budget_note = btrim(budget_note) AND budget_note ~ '[^[:space:]]')),
     CONSTRAINT ck_vlr_key CHECK (idempotency_key = btrim(idempotency_key) AND idempotency_key ~ '^[!-~]{1,128}$'),
     CONSTRAINT ck_vlr_fingerprint CHECK (request_fingerprint ~ '^[0-9a-f]{64}$'),
     CONSTRAINT ck_vlr_window CHECK (isfinite(requested_from) AND isfinite(requested_until)
          AND requested_until > requested_from AND requested_until <= requested_from + INTERVAL '30 days'),
     CONSTRAINT ck_vlr_status CHECK (status IN ('PENDING','APPROVED','REJECTED','CANCELLED')),
     CONSTRAINT ck_vlr_approval CHECK (
-        (status='APPROVED' AND approved_limit BETWEEN 21 AND requested_limit
+        (status='APPROVED' AND approved_limit IS NOT NULL AND approved_from IS NOT NULL AND approved_until IS NOT NULL
+         AND approved_limit BETWEEN 21 AND requested_limit
          AND approved_from >= requested_from AND approved_until <= requested_until
          AND approved_until > approved_from AND decided_by IS NOT NULL AND decided_at IS NOT NULL)
         OR (status <> 'APPROVED' AND approved_limit IS NULL AND approved_from IS NULL AND approved_until IS NULL)
@@ -37,6 +39,17 @@ CREATE TABLE voucher_limit_requests (
     CONSTRAINT ck_vlr_decision CHECK (
         (status IN ('APPROVED','REJECTED') AND decided_by IS NOT NULL AND decided_at IS NOT NULL)
         OR (status IN ('PENDING','CANCELLED') AND decided_by IS NULL AND decided_at IS NULL)
+    ),
+    CONSTRAINT ck_vlr_decision_reason CHECK (
+        (decision_reason IS NULL OR (decision_reason = btrim(decision_reason) AND decision_reason ~ '[^[:space:]]'))
+        AND (status NOT IN ('PENDING','CANCELLED') OR decision_reason IS NULL)
+        AND (
+            (status <> 'REJECTED' AND NOT (
+                status = 'APPROVED' AND (approved_limit < requested_limit
+                    OR approved_from > requested_from OR approved_until < requested_until)
+            ))
+            OR decision_reason IS NOT NULL
+        )
     ),
     CONSTRAINT ck_vlr_version CHECK (version >= 0),
     CONSTRAINT ck_vlr_timestamps CHECK (isfinite(created_at) AND isfinite(updated_at) AND updated_at >= created_at)
@@ -64,10 +77,12 @@ CREATE TABLE store_voucher_limits (
     granted_limit SMALLINT NOT NULL CHECK (granted_limit BETWEEN 21 AND 50),
     valid_from TIMESTAMPTZ NOT NULL,
     valid_until TIMESTAMPTZ NOT NULL,
-    source_request_id UUID NOT NULL REFERENCES voucher_limit_requests(id) ON DELETE RESTRICT,
+    source_request_id UUID NOT NULL,
     decided_by VARCHAR(128) NOT NULL,
     decided_at TIMESTAMPTZ NOT NULL,
     version BIGINT NOT NULL DEFAULT 0,
+    CONSTRAINT fk_svl_store_request FOREIGN KEY (store_id, source_request_id)
+        REFERENCES voucher_limit_requests(store_id, id) ON DELETE RESTRICT,
     CONSTRAINT ck_svl_window CHECK (isfinite(valid_from) AND isfinite(valid_until) AND valid_until > valid_from),
     CONSTRAINT ck_svl_version CHECK (version >= 0)
 );
