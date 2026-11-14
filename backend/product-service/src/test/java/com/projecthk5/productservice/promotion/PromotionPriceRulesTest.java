@@ -12,19 +12,25 @@ import org.junit.jupiter.api.Test;
 class PromotionPriceRulesTest {
     private static final UUID PRODUCT = UUID.fromString("00000000-0000-0000-0000-000000000001");
     private static final UUID STORE = UUID.fromString("00000000-0000-0000-0000-000000000002");
+    private static final UUID SELLER = UUID.fromString("00000000-0000-0000-0000-000000000003");
     private static final BigDecimal BASE = new BigDecimal("100000");
     private static final Instant SATURDAY_2200 = Instant.parse("2026-11-14T15:00:00Z");
     private static final Instant SATURDAY_215959 = Instant.parse("2026-11-14T14:59:59Z");
     private static final Instant SUNDAY_0000 = Instant.parse("2026-11-14T17:00:00Z");
 
-    private PromotionPriceRules.ApprovedOffer offer(PromotionPriceRules.Kind kind, String price,
-                                                    Instant from, Instant until) {
-        return new PromotionPriceRules.ApprovedOffer(UUID.randomUUID(), PRODUCT, STORE, kind,
-                new BigDecimal(price), from, until);
+    private PromotionPriceRules.Offer offer(PromotionPriceRules.Kind kind, String price,
+                                             Instant from, Instant until) {
+        return new PromotionPriceRules.Offer(UUID.randomUUID(), PRODUCT, STORE, SELLER, kind,
+                PromotionPriceRules.CampaignStatus.APPROVED, new BigDecimal(price), from, until,
+                kind == PromotionPriceRules.Kind.SUPER_SALE ? LocalDate.of(2026, 11, 14) : null);
     }
 
-    private PromotionPriceRules.PriceQuote at(Instant now, PromotionPriceRules.ApprovedOffer... offers) {
-        return PromotionPriceRules.resolve(PRODUCT, STORE, BASE, "VND", now, List.of(offers));
+    private PromotionPriceRules.ProductFacts facts(BigDecimal base) {
+        return new PromotionPriceRules.ProductFacts(PRODUCT, STORE, SELLER, base, "VND", true, true, true);
+    }
+
+    private PromotionPriceRules.PriceQuote at(Instant now, PromotionPriceRules.Offer... offers) {
+        return PromotionPriceRules.resolve(facts(BASE), now, List.of(offers));
     }
 
     @Test void fs01TimeBoundariesUseVietnamServerTime() {
@@ -65,6 +71,8 @@ class PromotionPriceRulesTest {
         assertTrue(PromotionPriceRules.windowsOverlap(flash, superSale));
         assertThrows(PromotionPriceRules.ConflictingPromotionsException.class,
                 () -> at(SATURDAY_2200, flash, superSale));
+        assertThrows(PromotionPriceRules.ConflictingPromotionsException.class,
+                () -> at(SATURDAY_2200, superSale, flash));
     }
 
     @Test void nonOverlappingCampaignsDoNotConflict() {
@@ -93,9 +101,14 @@ class PromotionPriceRulesTest {
         var offer = offer(PromotionPriceRules.Kind.SELLER_CLEARANCE, "80000",
                 SATURDAY_2200, SUNDAY_0000);
         assertThrows(IllegalArgumentException.class, () -> PromotionPriceRules.resolve(
-                PRODUCT, UUID.randomUUID(), BASE, "VND", SATURDAY_2200, List.of(offer)));
+                new PromotionPriceRules.ProductFacts(PRODUCT, UUID.randomUUID(), SELLER, BASE, "VND", true, true, true),
+                SATURDAY_2200, List.of(offer)));
         assertThrows(IllegalArgumentException.class, () -> PromotionPriceRules.resolve(
-                UUID.randomUUID(), STORE, BASE, "VND", SATURDAY_2200, List.of(offer)));
+                new PromotionPriceRules.ProductFacts(UUID.randomUUID(), STORE, SELLER, BASE, "VND", true, true, true),
+                SATURDAY_2200, List.of(offer)));
+        assertThrows(IllegalArgumentException.class, () -> PromotionPriceRules.resolve(
+                new PromotionPriceRules.ProductFacts(PRODUCT, STORE, UUID.randomUUID(), BASE, "VND", true, true, true),
+                SATURDAY_2200, List.of(offer)));
     }
 
     @Test void invalidIntervalsFailBeforeAnyPricing() {
@@ -103,6 +116,56 @@ class PromotionPriceRulesTest {
                 PromotionPriceRules.Kind.SUPER_SALE, "80000", SATURDAY_2200, SATURDAY_2200));
         assertThrows(IllegalArgumentException.class, () -> offer(
                 PromotionPriceRules.Kind.SUPER_SALE, "80000", SUNDAY_0000, SATURDAY_2200));
+    }
+
+    @Test void superSaleQuoteUsesSelectedVietnamDateAndCampaignWindow() {
+        var start = Instant.parse("2026-11-17T17:00:00Z");
+        var end = Instant.parse("2026-11-18T17:00:00Z");
+        var offer = new PromotionPriceRules.Offer(UUID.randomUUID(), PRODUCT, STORE, SELLER,
+                PromotionPriceRules.Kind.SUPER_SALE, PromotionPriceRules.CampaignStatus.APPROVED,
+                new BigDecimal("80000"), start.minusSeconds(1), end.plusSeconds(1), LocalDate.of(2026, 11, 18));
+        assertFalse(at(start.minusNanos(1), offer).discounted());
+        assertTrue(at(start, offer).discounted());
+        assertTrue(at(end.minusNanos(1), offer).discounted());
+        assertFalse(at(end, offer).discounted());
+        assertThrows(IllegalArgumentException.class, () -> new PromotionPriceRules.Offer(
+                UUID.randomUUID(), PRODUCT, STORE, SELLER, PromotionPriceRules.Kind.SUPER_SALE,
+                PromotionPriceRules.CampaignStatus.APPROVED, new BigDecimal("80000"), start, end, null));
+    }
+
+    @Test void ineligibleProductStoreOrSellerDoesNotProduceDiscount() {
+        var offer = offer(PromotionPriceRules.Kind.SELLER_CLEARANCE, "80000", SATURDAY_2200, SUNDAY_0000);
+        for (var product : List.of(
+                new PromotionPriceRules.ProductFacts(PRODUCT, STORE, SELLER, BASE, "VND", false, true, true),
+                new PromotionPriceRules.ProductFacts(PRODUCT, STORE, SELLER, BASE, "VND", true, false, true),
+                new PromotionPriceRules.ProductFacts(PRODUCT, STORE, SELLER, BASE, "VND", true, true, false))) {
+            assertEquals(BASE, PromotionPriceRules.resolve(product, SATURDAY_2200, List.of(offer)).effectiveUnitPrice());
+        }
+    }
+
+    @Test void onlyApprovedOffersParticipateInPricingAndConflicts() {
+        var active = offer(PromotionPriceRules.Kind.FLASH_SALE, "80000", SATURDAY_2200, SUNDAY_0000);
+        for (var status : List.of(PromotionPriceRules.CampaignStatus.DRAFT,
+                PromotionPriceRules.CampaignStatus.PAUSED, PromotionPriceRules.CampaignStatus.CANCELLED)) {
+            var inactive = new PromotionPriceRules.Offer(UUID.randomUUID(), PRODUCT, STORE, SELLER,
+                    PromotionPriceRules.Kind.SELLER_CLEARANCE, status, new BigDecimal("70000"),
+                    SATURDAY_2200, SUNDAY_0000, null);
+            assertFalse(at(SATURDAY_2200, inactive).discounted());
+            assertEquals(active.campaignId(), at(SATURDAY_2200, inactive, active).campaignId());
+        }
+    }
+
+    @Test void requoteValidatesAgainstCurrentBaseWithoutMutatingPreviousQuote() {
+        var offer = offer(PromotionPriceRules.Kind.SELLER_CLEARANCE, "80000", SATURDAY_2200, SUNDAY_0000);
+        var original = at(SATURDAY_2200, offer);
+        var updated = facts(new BigDecimal("90000"));
+        assertSame(updated.baseUnitPrice(),
+                PromotionPriceRules.resolve(updated, SATURDAY_2200, List.of(offer)).baseUnitPrice());
+        assertSame(BASE, original.baseUnitPrice());
+        for (var invalid : List.of("80000", "79999")) {
+            assertThrows(IllegalArgumentException.class, () -> PromotionPriceRules.resolve(
+                    facts(new BigDecimal(invalid)), SATURDAY_2200, List.of(offer)));
+        }
     }
 
     @Test void quoteDoesNotChangeProductBasePrice() {

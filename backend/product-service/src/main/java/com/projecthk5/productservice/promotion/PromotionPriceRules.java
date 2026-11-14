@@ -25,14 +25,33 @@ public final class PromotionPriceRules {
 
     public enum Kind { FLASH_SALE, SUPER_SALE, SELLER_CLEARANCE }
 
-    /** One already-approved Product-specific offer, never client-supplied pricing. */
-    public record ApprovedOffer(UUID campaignId, UUID productId, UUID storeId, Kind kind,
-                                BigDecimal promotionalUnitPrice, Instant startsAt, Instant endsAt) {
-        public ApprovedOffer {
+    public enum CampaignStatus { DRAFT, APPROVED, PAUSED, CANCELLED }
+
+    /** Facts supplied by the caller. Authorization and freshness are the provider's responsibility. */
+    public record ProductFacts(UUID productId, UUID storeId, UUID sellerId, BigDecimal baseUnitPrice,
+                               String currency, boolean productActive, boolean storeOpen, boolean sellerApproved) {
+        public ProductFacts {
+            Objects.requireNonNull(productId, "productId");
+            Objects.requireNonNull(storeId, "storeId");
+            Objects.requireNonNull(sellerId, "sellerId");
+            ProductPrice.validate(baseUnitPrice, currency);
+        }
+    }
+
+    /** Product-specific campaign projection supplied by a trusted server-side caller. */
+    public record Offer(UUID campaignId, UUID productId, UUID storeId, UUID sellerId, Kind kind,
+                        CampaignStatus status, BigDecimal promotionalUnitPrice,
+                        Instant startsAt, Instant endsAt, LocalDate superSaleDate) {
+        public Offer {
             Objects.requireNonNull(campaignId, "campaignId");
             Objects.requireNonNull(productId, "productId");
             Objects.requireNonNull(storeId, "storeId");
+            Objects.requireNonNull(sellerId, "sellerId");
             Objects.requireNonNull(kind, "kind");
+            Objects.requireNonNull(status, "status");
+            if ((kind == Kind.SUPER_SALE) != (superSaleDate != null)) {
+                throw new IllegalArgumentException("Only Super Sale requires an Admin-selected date");
+            }
             Objects.requireNonNull(startsAt, "startsAt");
             Objects.requireNonNull(endsAt, "endsAt");
             ProductPrice.validate(promotionalUnitPrice, "VND");
@@ -43,8 +62,14 @@ public final class PromotionPriceRules {
 
         public boolean appliesAt(Instant now) {
             Objects.requireNonNull(now, "now");
-            return !now.isBefore(startsAt) && now.isBefore(endsAt)
-                    && (kind != Kind.FLASH_SALE || isWeeklyFlashWindow(now));
+            if (status != CampaignStatus.APPROVED || now.isBefore(startsAt) || !now.isBefore(endsAt)) {
+                return false;
+            }
+            return switch (kind) {
+                case FLASH_SALE -> isWeeklyFlashWindow(now);
+                case SUPER_SALE -> isChosenSuperSaleDay(now, superSaleDate);
+                case SELLER_CLEARANCE -> true;
+            };
         }
     }
 
@@ -59,22 +84,21 @@ public final class PromotionPriceRules {
      * configuration error: the Admin must choose the winner before making them effective.
      * Never silently stack discounts, choose the lowest price, or mutate Product.unitPrice.
      */
-    public static PriceQuote resolve(UUID productId, UUID storeId, BigDecimal baseUnitPrice,
-                                     String currency, Instant now,
-                                     Collection<ApprovedOffer> approvedOffers) {
-        Objects.requireNonNull(productId, "productId");
-        Objects.requireNonNull(storeId, "storeId");
+    public static PriceQuote resolve(ProductFacts product, Instant now, Collection<Offer> offers) {
+        Objects.requireNonNull(product, "product");
         Objects.requireNonNull(now, "now");
-        Objects.requireNonNull(approvedOffers, "approvedOffers");
-        ProductPrice.validate(baseUnitPrice, currency);
+        Objects.requireNonNull(offers, "offers");
+        BigDecimal baseUnitPrice = product.baseUnitPrice();
+        boolean eligible = product.productActive() && product.storeOpen() && product.sellerApproved();
 
-        ApprovedOffer winner = null;
-        for (ApprovedOffer offer : approvedOffers) {
+        Offer winner = null;
+        for (Offer offer : offers) {
             Objects.requireNonNull(offer, "Null promotion offer");
-            if (!productId.equals(offer.productId()) || !storeId.equals(offer.storeId())) {
-                throw new IllegalArgumentException("Promotion does not belong to the quoted Product/Store");
+            if (!product.productId().equals(offer.productId()) || !product.storeId().equals(offer.storeId())
+                    || !product.sellerId().equals(offer.sellerId())) {
+                throw new IllegalArgumentException("Promotion does not match Product, Store and Seller");
             }
-            if (!offer.appliesAt(now)) continue;
+            if (!eligible || !offer.appliesAt(now)) continue;
             if (offer.promotionalUnitPrice().compareTo(baseUnitPrice) >= 0) {
                 throw new IllegalArgumentException("Promotion price must be lower than the normal price");
             }
@@ -101,7 +125,8 @@ public final class PromotionPriceRules {
         return now.atZone(VIETNAM_ZONE).toLocalDate().equals(adminChosenDate);
     }
 
-    public static boolean windowsOverlap(ApprovedOffer a, ApprovedOffer b) {
+    /** Raw interval overlap for validation. Schedule and status are evaluated separately. */
+    public static boolean windowsOverlap(Offer a, Offer b) {
         Objects.requireNonNull(a, "a");
         Objects.requireNonNull(b, "b");
         if (!a.productId().equals(b.productId()) || !a.storeId().equals(b.storeId())) return false;
