@@ -4,6 +4,8 @@
 
 Căn cứ: SRS Flash Sale / Super Sale / Voucher v2.1 (13/11/2026), mục 4.1–4.3, 5–9; docs/OWNERSHIP.md; docs/project-report/M01_FINANCE_DECISION.md MD04–MD08. Đây là **đề xuất kỹ thuật**, không phải quyết định nghiệp vụ đã ký. Dựng trên main@d023e10474408b959f8e0ec872cff217f101d151.
 
+Xem [gói review contract](FR_PROMO_01_03_CONTRACT_REVIEW.md) để phản hồi lifecycle, API, khóa PostgreSQL và kế hoạch kiểm thử.
+
 ## Phạm vi
 
 - **FR-PROMO-01 Flash Sale:** tuần nào cũng có cửa sổ thứ Bảy 22:00 (bao gồm) đến Chủ nhật 00:00 (không bao gồm), múi giờ Asia/Ho_Chi_Minh; Seller đăng ký Product ACTIVE thuộc Store OPEN, Seller APPROVED; Admin duyệt.
