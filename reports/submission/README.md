@@ -9,4 +9,15 @@ Hai tệp trong thư mục này là **bản nháp để nhóm kiểm**, không p
 
 Bản ghép lấy thông tin từ [nội dung TV5](../../docs/project-report/TV5_REPORT_CONTENT.md), [phiếu ảnh B.1–B.5](../../docs/project-report/TV5_APPENDIX_B_CAPTURE_SHEET.md), [lời trình bày](../../docs/project-report/TV5_DECK_SPEAKER_NOTES.md) và [ma trận UAT](../../tests/TV5_UAT_ACCEPTANCE_CURRENT.md). Lượt PostgreSQL 20 PASS thuộc `main@618f9ea8f723d607454397012cd5613ca199f660`, không phải main quan sát sau đó `868fd8deb7abd789cea93bbd71fc6f8e3d641a71`. Hai UNKNOWN, final UAT #18, ảnh B.1–B.5 và Finance production vẫn BLOCKED/NOT_RUN theo gate tương ứng.
 
+## Cập nhật TV5 ngày 14/11/2026
+
+Hai bản nháp mới giữ nguyên giới hạn nghiệm thu và chỉ đồng bộ thông tin đã kiểm chứng:
+
+| Tệp | Nội dung cập nhật | Kiểm tra thực tế | SHA256 |
+|---|---|---|---|
+| `Bao_cao_Soopi_TV5_DRAFT_2026-11-14.docx` | Cập nhật main quan sát `d023e10474408b959f8e0ec872cff217f101d151`, lịch Issue #158 (freeze 19/11, E2E/clone sạch 20/11, nộp 21/11) và trạng thái #179 đã merge. Ảnh B.1–B.5, Hình 6.4, UNKNOWN, RET-05, Finance production và final UAT vẫn chưa được nhận PASS. | `python-docx` mở lại: 453 paragraphs, 44 tables; ba đoạn cập nhật đọc lại đúng. Render DOCX **BLOCKED_ENV** vì runtime thiếu `soffice.exe`; chưa tuyên bố kiểm bố cục Word cuối. | `81abe78af6ae6d1bbe80f0b92465750beb97afda69d2149738e8c857c2202c12` |
+| `Soopi_TV5_notes_DRAFT_2026-11-14.pptx` | Giữ 23 slide nhóm; bổ sung speaker notes TV5 tại slide 16 và 23 về CI trước freeze, lịch 19–21/11, ảnh `PENDING_UAT` và các gate BLOCKED. | Artifact tool import/export/re-import: 23 slides. Đã render 23/23 slide, xem montage và slide 16/23; không có thay đổi nội dung hiển thị hoặc ảnh minh chứng giả. | `6a13c61f45e9456452b7a228c3afef4706f5a4db47fc7f9c2914720b17539713` |
+
+Các tệp này vẫn là **DRAFT**. Chỉ ghép ảnh thật và kết luận UAT sau khi có SHA đóng băng cùng receipt E2E/clone sạch đúng SHA. Không dùng bản nháp này để tuyên bố Finance/COD/Settlement production đã được phê duyệt.
+
 Các script trong `reports/submission/.deck-build/` chỉ phục vụ render/kiểm cục bộ, không phải evidence QA của sản phẩm. Không stage chúng hoặc ảnh preview khi commit tài liệu. Source DOCX/PPTX ngoài repository không bị sửa.
