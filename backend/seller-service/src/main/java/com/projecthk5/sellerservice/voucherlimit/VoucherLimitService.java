@@ -147,6 +147,7 @@ public class VoucherLimitService {
     }
     @Transactional(readOnly=true)
     public LimitView limit(){
+        Actor.require("SELLER");
         UUID storeId=ownStore();
         Instant t=now(); int used=vouchers.used(storeId,t);
         List<GrantView> grants=db.query("SELECT granted_limit,valid_from,valid_until,source_request_id,"
@@ -159,6 +160,7 @@ public class VoucherLimitService {
     }
     @Transactional(readOnly=true)
     public List<RequestView> mine(int page,int size){
+        Actor.require("SELLER");
         checkPage(page,size);
         UUID storeId=ownStore();
         return db.query("SELECT "+FIELDS+" FROM voucher_limit_requests WHERE store_id=?"
