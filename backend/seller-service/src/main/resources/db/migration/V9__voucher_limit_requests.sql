@@ -1,5 +1,7 @@
+-- Replay-safe for disposable V7 upgrade rehearsal: Flyway history from V7 onward is reset without dropping later tables.
+-- Existing objects retain their constraints and data; fresh installs still apply every constraint normally.
 -- FR-VC-05: one current grant and one pending request per Store, with immutable decision audit.
-CREATE TABLE voucher_limit_requests (
+CREATE TABLE IF NOT EXISTS voucher_limit_requests (
     id UUID PRIMARY KEY,
     store_id UUID NOT NULL REFERENCES stores(id) ON DELETE RESTRICT,
     idempotency_key VARCHAR(128) COLLATE "C" NOT NULL,
@@ -36,12 +38,12 @@ CREATE TABLE voucher_limit_requests (
             AND approved_until IS NULL AND decided_by IS NULL AND decided_at IS NULL)
     )
 );
-CREATE UNIQUE INDEX uq_voucher_limit_one_pending ON voucher_limit_requests(store_id)
+CREATE UNIQUE INDEX IF NOT EXISTS uq_voucher_limit_one_pending ON voucher_limit_requests(store_id)
     WHERE status = 'PENDING';
-CREATE INDEX idx_voucher_limit_request_state_created ON voucher_limit_requests(status,created_at,id);
-CREATE INDEX idx_voucher_limit_request_store_created ON voucher_limit_requests(store_id,created_at DESC,id);
+CREATE INDEX IF NOT EXISTS idx_voucher_limit_request_state_created ON voucher_limit_requests(status,created_at,id);
+CREATE INDEX IF NOT EXISTS idx_voucher_limit_request_store_created ON voucher_limit_requests(store_id,created_at DESC,id);
 
-CREATE TABLE store_voucher_limits (
+CREATE TABLE IF NOT EXISTS store_voucher_limits (
     store_id UUID PRIMARY KEY REFERENCES stores(id) ON DELETE RESTRICT,
     granted_limit SMALLINT NOT NULL CHECK (granted_limit BETWEEN 21 AND 50),
     valid_from TIMESTAMPTZ NOT NULL,
@@ -54,7 +56,7 @@ CREATE TABLE store_voucher_limits (
         isfinite(valid_from) AND isfinite(valid_until) AND valid_until > valid_from)
 );
 
-CREATE TABLE voucher_limit_request_history (
+CREATE TABLE IF NOT EXISTS voucher_limit_request_history (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     request_id UUID NOT NULL REFERENCES voucher_limit_requests(id) ON DELETE RESTRICT,
     from_status VARCHAR(16),
@@ -63,4 +65,4 @@ CREATE TABLE voucher_limit_request_history (
     actor VARCHAR(128) NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
-CREATE INDEX idx_voucher_limit_history_request ON voucher_limit_request_history(request_id,created_at,id);
+CREATE INDEX IF NOT EXISTS idx_voucher_limit_history_request ON voucher_limit_request_history(request_id,created_at,id);
