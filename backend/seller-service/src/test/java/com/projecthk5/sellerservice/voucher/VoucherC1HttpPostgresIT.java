@@ -152,14 +152,15 @@ class VoucherC1HttpPostgresIT {
             +"\",\"requestedUntil\":\""+end()+"\"}";
     }
     @Test void idempotentRequestAndPartialAdminApprovalGrant() throws Exception {
+        String fixedPayload=requestBody();
         var req=post("/api/stores/me/voucher-limit-requests")
-            .header("Idempotency-Key","same-key").contentType(MediaType.APPLICATION_JSON).content(requestBody());
+            .header("Idempotency-Key","same-key").contentType(MediaType.APPLICATION_JSON).content(fixedPayload);
         MvcResult first=send(req,"seller-a","SELLER");
         assertEquals(201,first.getResponse().getStatus());
         // Same logical request and same key must return 200 with original ID.
         String payload=first.getResponse().getContentAsString();
         MvcResult again=send(post("/api/stores/me/voucher-limit-requests").header("Idempotency-Key","same-key")
-            .contentType(MediaType.APPLICATION_JSON).content(requestBody()),"seller-a","SELLER");
+            .contentType(MediaType.APPLICATION_JSON).content(fixedPayload),"seller-a","SELLER");
         assertEquals(200,again.getResponse().getStatus(),again.getResponse().getContentAsString());
         assertEquals(json.readTree(payload).get("id").asText(),json.readTree(again.getResponse().getContentAsString()).get("id").asText());
         UUID id=UUID.fromString(json.readTree(payload).get("id").asText());
