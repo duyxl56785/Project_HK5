@@ -1,6 +1,6 @@
 # TV3 — Cart, Checkout COD và Order đa cửa hàng
 
-**Trạng thái:** REVIEW CANDIDATE, tái dựng từ [bản nháp TV3 trên Issue #160](https://github.com/duyxl56785/Project_HK5/issues/160#issuecomment-6702448960) và đối chiếu code main@78de5c08205b41986a5204a8150a9ef810507847. Không phải bản sao file 351 dòng của Codex; chưa được TV2 duyệt vào báo cáo cuối. Không sửa ứng dụng.
+**Trạng thái ngày 12/11/2026:** **NỘI DUNG TV3 ĐÃ ĐƯỢC TV2 APPROVE VÀ MERGE** qua [PR #188](https://github.com/duyxl56785/Project_HK5/pull/188#pullrequestreview-5835994306). Báo cáo được tái dựng từ [bản nháp trên Issue #160](https://github.com/duyxl56785/Project_HK5/issues/160#issuecomment-6702448960) và nguồn gốc `main@78de5c08205b41986a5204a8150a9ef810507847`; không phải bản sao file Codex 351 dòng. TV2 **chấp nhận phương án B** (source-reviewed reconstructed report, không bắt buộc diff bản gốc để duyệt nội dung). **Bản DOCX cuối, Hình 6.4, ảnh thật và #18 UAT vẫn CHƯA HOÀN THÀNH**; nội dung được duyệt không đồng nghĩa báo cáo nhóm đã sẵn sàng nộp. Không sửa ứng dụng.
 
 ### 1. Mục tiêu và phạm vi chức năng
 
@@ -118,7 +118,9 @@ Nguồn bổ sung: [OrderController](https://github.com/duyxl56785/Project_HK5/b
 | One Order + 2 SellerOrders, snapshot tiền | **PASS demo đã ghi** | TV3 frozen SQL Order/SellerOrder/Item snapshots trên app `bf8eb3a`; không gộp với browser History từ HEAD khác thành một lượt UAT duy nhất |
 | Same-key replay, đổi body/shipping, expectedItems, giá đổi/hết hàng/Product | **6/6 PASS lịch sử, API-only** | [Raw results/HTTP/SQL](../../../backend/order-service/review-evidence/negative-checkout-20261102/results.json): baseline `99979a75`, app thực chạy `bf8eb3a`; không nhận là chạy mới trên main. Raw receipt riêng cho 10-case TV2 chưa được kiểm đủ nên không cộng vào PASS. |
 | Order History | **Có route/UI và API; lượt demo TV2 riêng chưa xác minh đủ raw evidence tại checkpoint này** | Không suy một lượt History PASS mới từ source hoặc CI xanh. Khi trích demo TV2 cần exact SHA, report và ảnh gốc tương ứng; chưa phải final UAT. |
-| CI mới tại HEAD PR #187 (chưa merge) | **3/3 SUCCESS** | [PR #187](https://github.com/duyxl56785/Project_HK5/pull/187) `bc824863`: Hosted PostgreSQL16 **140/140 PASS**, frontend **166/166 PASS**, Playwright qua Gateway cô lập **20/20 PASS**. Đây là SHA PR, **không phải final UAT trên main**. |
+| CI tại HEAD PR #187 (bằng chứng lịch sử, PR đã merge) | **3/3 SUCCESS** | [PR #187](https://github.com/duyxl56785/Project_HK5/pull/187) `bc824863`: Hosted PostgreSQL16 **140/140 PASS**, frontend **166/166 PASS**, Playwright qua Gateway cô lập **20/20 PASS**. Đây là số tại SHA PR cũ, **không phải final UAT trên main**. |
+| CI sau merge tại `main@478cfc0` ngày 12/11/2026 | **3/3 SUCCESS, không phải final UAT** | [Backend readiness run 43219103180](https://github.com/duyxl56785/Project_HK5/actions/runs/43219103180): task Order PostgreSQL16 **PASS**, Gradle BUILD SUCCESSFUL; [Frontend/E2E run 43219102687](https://github.com/duyxl56785/Project_HK5/actions/runs/43219102687): frontend Node **170/170 PASS**, Playwright **21/21 PASS**. Exact full SHA `478cfc01b812d44b8db26807b2a5a01a7921be7f`. CI tự động có phạm vi giới hạn, không thay thế UAT trên SHA đóng băng (E2E ngày 20/11). |
+| Regression Windows Checkout crash-test (PR #196) | **PASS tại Windows do TV2 chạy, đã merge** | [TV2 APPROVED và test trên Windows 11/JDK21/Docker](https://github.com/duyxl56785/Project_HK5/pull/196#pullrequestreview-5874519988): `CrashJvmArgFileTest` **2/2**, `CheckoutDraftPostgresIT` **14/14** (gồm AFTER_DRAFT/T1/RESERVE), full Cart PG **13/13**, Inventory PG **38/38**, Order PG **140/140 PASS**. PR #196 đã merge vào `main@478cfc0`; chỉ sửa 3 file test, không đổi logic Checkout. |
 | UNKNOWN claim-conflict thật | **BLOCKED_DESIGN** | Chưa có legitimate fixture/provider COMMIT receipt; không dùng mock làm real contention |
 | UNKNOWN timeout/lost-response thật | **NOT_RUN / BLOCKED_OWNER** | [#170](https://github.com/duyxl56785/Project_HK5/pull/170) mới là preparation; thiếu case-level approval, full tuple và read-only provider oracle |
 | Final UAT 2 Seller / 2 Store / 1 Customer / 1 Admin, Finance production | **NOT ACCEPTED** | TV5 [#18](https://github.com/duyxl56785/Project_HK5/issues/18) OPEN; M01, grants/retention và các owner approvals còn độc lập |
@@ -150,7 +152,7 @@ Nguồn bổ sung: [OrderController](https://github.com/duyxl56785/Project_HK5/b
 - **0:45–1:40:** Kiến trúc React, Gateway, Cart, Catalog, Order, Inventory và PostgreSQL/Flyway.
 - **1:40–2:35:** POST /api/orders với `Idempotency-Key`, `expectedItems`, `expectedRevision` và `shipping`, sau đó Cart claim và Catalog preflight.
 - **2:35–3:35:** Giải thích freeze Order IDs, BigDecimal, durable draft trước Inventory RESERVE, transaction commit/outbox; mất response thì quarantine.
-- **3:35–4:30:** Dẫn evidence đúng SHA: #145/#147 là lịch sử; PR #187 hosted PG 140, frontend 166, E2E 20 trên **nhánh PR**, không phải final UAT.
+- **3:35–4:30:** Dẫn evidence đúng SHA: #145/#147 và PR #187 là lịch sử; `main@478cfc0` có task CI Order PG16 PASS, frontend 170/170, E2E 21/21 sau merge #196; Windows PG của TV2 đã xác minh 3 ca crash. Nhấn mạnh các kết quả này **không phải final UAT ngày 20/11**.
 - **4:30–5:00:** Nêu rõ chỗ chưa nghiệm thu: live UNKNOWN, Return restock exactly-once, Finance/retention và final #18.
 
 ### 8. Mười câu hỏi phản biện và câu trả lời gợi ý
@@ -167,15 +169,15 @@ Nguồn bổ sung: [OrderController](https://github.com/duyxl56785/Project_HK5/b
 10. **CI xanh là final UAT PASS?** Không; CI trên exact PR HEAD chỉ kiểm các suite đã cấu hình, final UAT cần đủ mệnh đề và TV5 ký nhận.
 
 
-### 9. Công việc còn lại trước khi đưa vào báo cáo chính thức
+### 9. Công việc còn lại trước khi ghép bản DOCX chính thức
 
-- TV2 xác nhận mẫu/chương/mục đặt phần Checkout trong báo cáo chung và có cần hình sequence diagram hay screenshot mới không.
-- TV3/Codex đưa phần nội dung trên vào **đúng file báo cáo hiện có** theo mẫu, không sửa phần của TV1/TV2/TV4/TV5; bổ sung hình/log từ artifact thực, không tự vẽ UI như evidence.
-- Bản này publish để TV2 REVIEW trên nhánh riêng, **chưa merge vào báo cáo chính**. Chỉ tick `[x] Viết phần Checkout trong báo cáo` ở #160 khi TV2 chốt vị trí và ghép nội dung vào tài liệu cuối.
+- **Đã xong phần nội dung thuộc TV3:** bản báo cáo Checkout tái dựng đã được TV2 [APPROVED](https://github.com/duyxl56785/Project_HK5/pull/188#pullrequestreview-5835994306), merge vào `main` qua PR #188; Issue #160 đã tick riêng phần **viết nội dung**. Không yêu cầu khôi phục file Codex 351 dòng để nhận duyệt lại nội dung đã được TV2 chấp thuận.
+- **Chưa xong phần TV2/TV5:** chọn vị trí chính xác trong DOCX/slide bản nộp, chèn Hình 6.4 từ **ảnh Cart hai Store/Checkout thật trên stack được duyệt**, đối chiếu Order ID và receipt đọc-only; che PII và ghi exact SHA + thời điểm + checksum. Không lấy ảnh giỏ trống/mô phỏng để thay thế.
+- **Chưa xong nghiệm thu release:** TV5 #18 cần biên bản UAT trên **SHA đóng băng cuối ngày 19/11** (TV2 cập nhật ngày 14/11 tại [#158](https://github.com/duyxl56785/Project_HK5/issues/158)); ngày 20/11 chạy E2E trên stack sạch và cài từ bản clone sạch trên máy khác; ngày 21/11 nộp; không còn ngày dự phòng, lỗi chặn phát hiện ngày 20/11 phải sửa và chạy lại E2E trước khi nộp. TV3 không tự tick `[ ] Không còn lỗi P0/P1` hoặc báo cáo hoàn tất nếu chưa có TV2/TV5 ký nhận.
 
-**Checkpoint 08/11:** Seller Return #182 (gồm #183) đã merge; bản sửa P3 đang ở [PR #187](https://github.com/duyxl56785/Project_HK5/pull/187) (CI 3/3 SUCCESS, READY FOR REVIEW, chưa merge). Inventory restock RECEIVED exactly-once, UNKNOWN fault thật, Finance production và final UAT #18 vẫn chưa nghiệm thu.
+**Checkpoint lịch sử 08/11 (đã được mốc mới thay thế):** Seller Return #182 (gồm #183) đã merge; lúc đó P3 còn ở [PR #187](https://github.com/duyxl56785/Project_HK5/pull/187). **Tại checkpoint 12/11**, #187, #188 và #196 **đều đã merge**; #196 [được TV2 nghiệm thu Windows](https://github.com/duyxl56785/Project_HK5/pull/196#pullrequestreview-5874519988), ba check CI trên `main@478cfc0` SUCCESS. **Inventory restock RET-05, UNKNOWN fault live, Finance production, UAT cuối #18 và ảnh thật vẫn NOT_RUN/BLOCKED theo đúng owner**, không biến thành PASS nhờ merge.
 
 **Checkpoint Codex Terminal 08/11 — các gate vẫn chưa đủ:** file gốc 351 dòng không có trong filesystem hiện tại nên unified diff A→B là **NOT_RUN / ORIGINAL_FILE_MISSING**; không tái dựng từ trí nhớ để nhận là bản gốc. Docker hoạt động nhưng có 0 container/0 volume và chưa có tám biến fixture `TV3_E2E_*`. Chưa tìm thấy phê duyệt TV2/TV5 cho stack capture cụ thể trong nguồn đã đọc: live two-store **NOT_RUN**, các ảnh **NOT_CAPTURED**, SQL oracle mới **NOT_RUN**. Xem [kết quả và manifest](evidence/20261108/README.md). Không có ảnh giả hoặc flag nào được bật.
 
 ---
-**Truy xuất:** Source căn cứ `main@78de5c08205b41986a5204a8150a9ef810507847`; [bộ ma trận UAT TV5](../../../tests/TV5_UAT_ACCEPTANCE_CURRENT.md) là baseline có trạng thái NOT_RUN/BLOCKED, không tự coi PASS. Bản này được dựng lại từ Issue #160 vì `/workspace/tv3-checkout-project-report-20261107/.../CHECKOUT.md` chỉ có trong phiên Codex; phải đối chiếu với bản Codex 351 dòng trước khi quyết định tài liệu cuối.
+**Truy xuất:** Source phân tích ban đầu được chốt tại `main@78de5c08205b41986a5204a8150a9ef810507847` (các URL ở trên giữ nguyên SHA lịch sử). Bổ sung kết quả kiểm thử mới tại exact `main@478cfc01b812d44b8db26807b2a5a01a7921be7f` với log CI tương ứng. [Bộ ma trận UAT TV5](../../../tests/TV5_UAT_ACCEPTANCE_CURRENT.md) còn trạng thái NOT_RUN/BLOCKED, không tự coi PASS. Bản này được dựng lại từ Issue #160 do file Codex 351 dòng không khả dụng; TV2 đã **waive diff bản gốc đối với approval nội dung PR #188**, nhưng không waive ảnh thật, UAT hay ghép DOCX.
