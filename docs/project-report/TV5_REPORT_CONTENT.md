@@ -1,8 +1,10 @@
 # Phần báo cáo TV5 về Review Finance và kiểm thử Soopi
 
-**Cập nhật kiểm chứng 10/11/2026:** GitHub main `78de5c08205b41986a5204a8150a9ef810507847`; #179/#182/#183/#184/#185/#186 đều đã MERGED. TV5 chạy lại đúng main, `FulfillmentPostgres16IT` **24 PostgreSQL/MockMvc PASS, 0 FAIL/ERROR/SKIP**, exit 0, [JUnit XML/SHA256](../../reports/minh-chung-kiem-thu/tv5-main-78de5c-return-preflight/). PR #187 HEAD `bc82486315c2135ae48112887da7a4b48538ed43` có **5 PostgreSQL + 5 unit PASS** trong [lượt review riêng](../../reports/minh-chung-kiem-thu/tv5-pr187-bc8248-constraint-review/); TV5 đã [APPROVED scoped](https://github.com/duyxl56785/Project_HK5/pull/187#pullrequestreview-5835076508). Các đoạn dưới ghi lại evidence ở thời điểm trước và không cộng thành release total. **Final UAT hai Store, UNKNOWN và Finance production chưa PASS**; B.1–B.5 là phiếu chụp chờ ảnh thật.
+**Cập nhật kiểm chứng 10/11/2026:** GitHub main `e61bbac2b2b8599384e0e035b89058a188e318ec` đã nhận #179/#182/#183/#184/#185/#186/#187/#188/#189. TV5 chạy trên đúng main: 29 PostgreSQL/MockMvc + 5 unit PASS; sau đó thêm assertion chỉ trong test, chạy lại 29 + 5 PASS tại commit [`6d45172`](https://github.com/duyxl56785/Project_HK5/commit/6d4517210ec92958931f046674e008f10fa9146e) với [raw XML/log/SHA256](../../reports/minh-chung-kiem-thu/tv5-return-finance-e61bbac-20261110/) và [ma trận RET-01..06](../../tests/TV5_RETURN_ACCEPTANCE_20261110.md). Hai lượt này là hai snapshot riêng, không cộng thành release total. #187 có [review APPROVED scoped](https://github.com/duyxl56785/Project_HK5/pull/187#pullrequestreview-5835076508). **Final UAT hai Store, UNKNOWN và Finance production chưa PASS**; B.1–B.5 là phiếu chụp chờ ảnh thật.
 
-Nguyễn Minh Duy phụ trách F15 Product Review, F16 Finance, kiểm thử tích hợp và đối chiếu bằng chứng của nhóm. Phần nội dung này dùng cho báo cáo bản nộp và phần thuyết trình TV5. Kiểm chứng hiện có hỗ trợ các chức năng và trường hợp được nêu cụ thể; hệ thống vẫn chưa đạt final UAT vì còn UNKNOWN và tích hợp Seller Return.
+**Quyết định nhóm mới do TV5 cung cấp ngày 10/11:** UNKNOWN giữ `BLOCKED_DESIGN`, không chạy cả hai live fixture; Inventory UI #169/#190 là backlog, không thuộc phạm vi merge release hiện tại. Đây là chỉ dẫn phạm vi mới, chưa phải kết quả CI hoặc xác nhận GitHub tại HEAD mới.
+
+Nguyễn Minh Duy phụ trách F15 Product Review, F16 Finance, kiểm thử tích hợp và đối chiếu bằng chứng của nhóm. Phần nội dung này dùng cho báo cáo bản nộp và phần thuyết trình TV5. Kiểm chứng hiện có hỗ trợ các chức năng và trường hợp được nêu cụ thể; hệ thống vẫn chưa đạt final UAT vì Return RECEIVED → Inventory INCREASE, UNKNOWN và các gate live/production chưa đủ điều kiện.
 
 ## 1 Vai trò và phạm vi đóng góp
 
@@ -34,12 +36,12 @@ Các ca cần bảo vệ gồm JWT sai/hết hạn, session revoke, Customer/Sel
 
 | PR | Kết quả TV5 đã có | Giới hạn và owner tiếp theo |
 |---|---|---|
-| 179 | Tool TV5, source fixes849e2f4/6418d8a và evidence2a2c4e4 đã push | Chờ duyxl56785 review HEAD mới; approval7cf05ea là cũ |
-| 182 | COMMENTED c187e5b; 12 unit +22 PG PASS trong lượt trước | GitHub quan sát 07/11 ghi HEAD539cf3b hết conflict; TV5 chưa fetch/đọc diff mới, chưa xác minh V7 nonblank hoặc tích hợp183. [Kế hoạch kiểm tra](../../reports/TV5_PR185_PR182_NEXT_HEAD_REVIEW_PLAN.md) |
-| 183 | APPROVED scoped c7defdc | Không review lặp; chờ TV4 tiếp nhận vào182 |
-| 184 | APPROVED scoped528180e | Không review lặp khi HEAD không đổi |
-| 185 | COMMENTED e0eb9aa | GitHub quan sát 07/11 ghi HEADd2929a4; TV5 chưa fetch/đọc diff mới, chưa xác minh fixture. [Kế hoạch kiểm tra](../../reports/TV5_PR185_PR182_NEXT_HEAD_REVIEW_PLAN.md) |
-| 186 | Main Return PG evidence d83b974, docs2d13167 | duyxl56785 đã APPROVED đúng HEAD2d13167 theo lượt kiểm GitHub 07/11; không request review lại khi HEAD không đổi. XML/hash20tests là preflight, không phải UAT |
+| 179 | Tool TV5, source fixes849e2f4/6418d8a và evidence2a2c4e4 đã push | MERGED; evidence tool không chứng minh final UAT |
+| 182 | COMMENTED c187e5b; 12 unit +22 PG PASS trong lượt trước | MERGED; main `e61bbac` có Return code, [29 PG + 5 unit preflight riêng](../../tests/TV5_RETURN_ACCEPTANCE_20261110.md) |
+| 183 | APPROVED scoped c7defdc | MERGED; UI live hai Store chưa nghiệm thu |
+| 184 | APPROVED scoped528180e | MERGED; không suy production approval từ demo |
+| 185 | COMMENTED e0eb9aa trong lượt cũ | MERGED; full live UAT/UNKNOWN vẫn chờ gate riêng |
+| 186 | Main Return PG evidence d83b974, docs2d13167 | MERGED; XML/hash20tests lịch sử là preflight, không phải UAT |
 
 ## 7 Lỗi TV5 đã phát hiện và sửa
 
@@ -61,7 +63,7 @@ Website và tester là hai tiến trình riêng. Dựng stack dữ liệu giả 
 
 | Trường bản nộp | Điều kiện điền |
 |---|---|
-| Final run SHA và CI URLs | Main cuối đã tích hợp source được owner nhận, hosted checks đúng SHA; main868fd8deb7abd789cea93bbd71fc6f8e3d641a71 là mốc GitHub quan sát, không phải final run |
+| Final run SHA và CI URLs | Main cuối đã tích hợp source được owner nhận, hosted checks đúng SHA; main `e61bbac2b2b8599384e0e035b89058a188e318ec` là mốc GitHub quan sát, không phải final run |
 | Ngày/môi trường/actor/seed | Receipt của project cô lập thực chạy, không lấy từ rehearsal |
 | Tổng test nghiệm thu | Chỉ một release run với denominator và skip/block giải thích |
 | Kết quả UNKNOWN | Actual immutable tuple/waiver, provider COMMIT/stock receipt, runner/stop và quyền chạy từng ca |
@@ -84,7 +86,7 @@ Website và tester là hai tiến trình riêng. Dựng stack dữ liệu giả 
 
 Các số thị trường ở slide4–5 là nội dung nguồn lịch sử, phiên này không xác minh web nên không cập nhật/tuyên bố còn đúng. Không sửa nội dung owner khác hoặc tự thêm số liệu.
 
-[Phiếu chụp B.1–B.5](TV5_APPENDIX_B_CAPTURE_SHEET.md) nêu caption, actor/Store, oracle và SHA256 cần có cho từng ảnh. Phiếu này **không** phải ảnh đã chụp; cả năm vị trí final tiếp tục NOT_RUN. [Lời trình bày TV5](TV5_DECK_SPEAKER_NOTES.md) đã được đưa vào bản nháp PPTX nêu trên; deck nguồn ngoài repository vẫn giữ nguyên. GitHub quan sát 07/11 có 8 PR và 19 Issue mở; #183/#184 không còn trong danh sách mở nhưng chưa kiểm `merged_at`/`closed_at` nên không ghi đã merge. Nội dung report/deck đã soạn vẫn cần owner kiểm bản hiển thị và bổ sung final UAT receipt trước khi nộp.
+[Phiếu chụp B.1–B.5](TV5_APPENDIX_B_CAPTURE_SHEET.md) nêu caption, actor/Store, oracle và SHA256 cần có cho từng ảnh. Phiếu này **không** phải ảnh đã chụp; cả năm vị trí final tiếp tục NOT_RUN. [Lời trình bày TV5](TV5_DECK_SPEAKER_NOTES.md) đã được đưa vào bản nháp PPTX nêu trên; deck nguồn ngoài repository vẫn giữ nguyên. Nội dung report/deck đã soạn vẫn cần owner kiểm bản hiển thị và bổ sung final UAT receipt trước khi nộp.
 
 ### Formal review links đã công bố
 

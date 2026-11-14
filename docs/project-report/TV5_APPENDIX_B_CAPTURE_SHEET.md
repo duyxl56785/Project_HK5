@@ -17,3 +17,18 @@ Tài liệu này chuẩn bị nội dung cho báo cáo 55 trang và deck. **Chư
 ## Liên hệ với slide
 
 Slide 20–22 có thể trỏ tới B.1–B.5 sau khi đủ ảnh và nguồn. Slide 8 nêu F15/F16 với giới hạn Finance policy; slide 16 nêu preflight Return/Settlement riêng; slide 23 demo website và QA tester trên dữ liệu giả. Deck nguồn ngoài repo vẫn chưa được cập nhật hoặc render. Bản nộp cuối cần đối chiếu chú thích ảnh với [ma trận UAT](../../tests/TV5_UAT_ACCEPTANCE_CURRENT.md) và [nội dung TV5](TV5_REPORT_CONTENT.md) sau khi chạy final UAT.
+
+## Kế hoạch chụp W5 trên giao diện #193
+
+Chỉ thực hiện sau khi main đóng băng, TV2 công bố receipt E2E cùng full SHA và UAT gate cho phép. Giao diện phải là main có #193 (Roboto/header xanh) hoặc SHA đóng băng kế tiếp; không tái sử dụng ảnh giao diện cũ, mock hoặc ảnh ở SHA khác.
+
+| Tệp ảnh gốc | Case | Nội dung cần nhìn thấy | Đối chiếu ngoài ảnh | Trạng thái trước UAT |
+|---|---|---|---|---|
+| `B-2-cart-two-stores.png` | U03 | Giỏ của một Customer giả có hàng Store A và B, subtotal từng Store và tổng | HTTP/DB seed, price snapshot, SHA | NOT_RUN |
+| `B-3-order-detail.png` | U03–U05 | Chi tiết một root Order và hai SellerOrder theo cùng run | receipt Order/Inventory, actor/Store, SHA | NOT_RUN |
+| `B-3-order-history.png` | U03–U05 | Lịch sử đơn của Customer giả, không lộ dữ liệu Store khác | request/response redacted, Store isolation oracle | NOT_RUN |
+| `B-5-cod-confirmation.png` | U05 | Xác nhận COD sau DELIVERED bằng actor được contract cho phép | COD audit, 409 duplicate/invalid trong log riêng | NOT_RUN |
+| `B-4-return.png` | RET-01–RET-04 | Return của SellerOrder đúng Store; trạng thái và receipt vật lý | Return/settlement guard, không suy restock/refund | NOT_RUN |
+| `B-5-admin-cod-reconciliation.png` | U08 | Admin đối soát COD của dữ liệu giả, không hiện email/token/PII | finance snapshot/audit, cross-Store negative check | NOT_RUN |
+
+Lưu ảnh trong `reports/minh-chung-kiem-thu/<run-id>/screenshots/` cùng raw log, response đã che dữ liệu nhạy cảm, `README.md` và `SHA256SUMS.txt`. Tên run phải chứa full main SHA và thời điểm Asia/Bangkok. Nếu ca chưa chạy hoặc gate thất bại, giữ `NOT_RUN`/`BLOCKED`; không tạo ảnh thay thế.
