@@ -5,7 +5,7 @@ const SECTIONS = [
   ['pham-vi', '1. Phạm vi áp dụng'], ['tai-khoan', '2. Tài khoản'], ['hang-cam', '3. Hàng hóa bị cấm'],
   ['dang-san-pham', '4. Đăng sản phẩm'], ['khuyen-mai', '5. Giá, khuyến mãi và voucher'], ['dat-hang', '6. Đặt hàng và thanh toán'],
   ['giao-hang', '7. Xử lý đơn, giao hàng và hủy đơn'], ['tra-hang', '8. Trả hàng'], ['danh-gia', '9. Đánh giá'],
-  ['phi', '10. Phí và đối soát'], ['nguoi-ban', '11. Điều kiện trở thành người bán'], ['vi-pham', '12. Xử lý vi phạm'],
+  ['phi', '10. Phí và đối soát'], ['nguoi-ban', '11. Quy định đối với người bán'], ['vi-pham', '12. Xử lý vi phạm'],
   ['du-lieu', '13. Dữ liệu cá nhân'], ['thay-doi', '14. Thay đổi quy định'],
 ] as const;
 
@@ -137,17 +137,70 @@ export function PolicyPage() {
     </section>
 
     <section className="stack" id="nguoi-ban">
-      <h2>11. Điều kiện trở thành người bán</h2>
-      <p>Người dùng đã đăng nhập gửi hồ sơ tại trang <Link to="/seller">Bán hàng</Link> với đủ các thông tin sau:</p>
+      <h2>11. Quy định đối với người bán</h2>
+
+      <h3>11.1. Điều kiện đăng ký</h3>
+      <ul>
+        <li>Người đăng ký phải có tài khoản Soopi đang hoạt động và đã đăng nhập.</li>
+        <li>Mỗi tài khoản chỉ có một hồ sơ người bán và chỉ mở một cửa hàng. Không lập nhiều tài khoản để mở nhiều cửa hàng cho cùng một chủ thể.</li>
+        <li>Người đăng ký phải là người đại diện hợp pháp của cá nhân, hộ kinh doanh hoặc công ty ghi trong hồ sơ.</li>
+        <li>Tài khoản từng bị khóa do vi phạm không được đăng ký bán hàng.</li>
+      </ul>
+
+      <h3>11.2. Hồ sơ bắt buộc</h3>
+      <p>Hồ sơ gửi tại trang <Link to="/seller">Bán hàng</Link> phải có đủ các thông tin sau. Hồ sơ thiếu hoặc sai định dạng không được tiếp nhận.</p>
       <ul>
         <li>Loại hình kinh doanh: cá nhân, hộ kinh doanh hoặc công ty.</li>
-        <li>Tên người đại diện và số CCCD gồm 12 chữ số.</li>
-        <li>Mã số thuế (10 chữ số, hoặc 10 chữ số kèm mã chi nhánh 3 chữ số). Bắt buộc với hộ kinh doanh và công ty.</li>
+        <li>Tên người đại diện và số CCCD gồm đúng 12 chữ số.</li>
+        <li>Mã số thuế gồm 10 chữ số, hoặc 10 chữ số kèm mã chi nhánh 3 chữ số. Bắt buộc với hộ kinh doanh và công ty.</li>
         <li>Số điện thoại, email liên hệ và địa chỉ lấy hàng.</li>
-        <li>Tài khoản ngân hàng nhận tiền: tên ngân hàng, số tài khoản và tên chủ tài khoản.</li>
-        <li>Đồng ý với Quy định sàn phiên bản hiện hành.</li>
+        <li>Tài khoản ngân hàng nhận tiền: tên ngân hàng, số tài khoản và tên chủ tài khoản. Tên chủ tài khoản phải trùng với người đại diện hoặc tên đơn vị kinh doanh.</li>
+        <li>Xác nhận đồng ý với Quy định sàn phiên bản hiện hành. Hệ thống ghi lại phiên bản và thời điểm đồng ý.</li>
       </ul>
-      <p>Quản trị viên xét duyệt hồ sơ. Hồ sơ bị từ chối có ghi lý do; người nộp sửa và gửi lại. Sau khi được duyệt, người bán tạo cửa hàng và đăng sản phẩm.</p>
+      <p>Người bán chịu trách nhiệm về tính chính xác của hồ sơ. Khai sai hoặc dùng thông tin của người khác là vi phạm và bị xử lý theo mục 11.6.</p>
+
+      <h3>11.3. Xét duyệt</h3>
+      <ul>
+        <li>Hồ sơ mới ở trạng thái Chờ duyệt. Trong thời gian này người nộp chưa được tạo cửa hàng hay đăng sản phẩm.</li>
+        <li>Quản trị viên duyệt hoặc từ chối hồ sơ. Quyết định từ chối luôn ghi lý do.</li>
+        <li>Hồ sơ bị từ chối được sửa và gửi lại. Hồ sơ gửi lại phải khắc phục đúng lý do đã nêu.</li>
+        <li>Chỉ sau khi hồ sơ được duyệt, người bán mới tạo cửa hàng. Tên và đường dẫn cửa hàng không được trùng với cửa hàng đã có, không mạo danh thương hiệu hoặc cửa hàng khác.</li>
+      </ul>
+
+      <h3>11.4. Nghĩa vụ của người bán</h3>
+      <ul>
+        <li>Chỉ bán hàng hợp pháp, có nguồn gốc rõ ràng và không thuộc mục 3. Người bán chịu trách nhiệm trước người mua về chất lượng hàng.</li>
+        <li>Đăng sản phẩm đúng mục 4 và chỉ bán sản phẩm đã được quản trị viên duyệt.</li>
+        <li>Giữ số tồn kho đúng thực tế. Không nhận đơn khi không có hàng để giao.</li>
+        <li>Xác nhận, chuẩn bị và bàn giao đơn đúng trình tự ở mục 7. Giao đúng hàng, đủ số lượng như đơn đã đặt.</li>
+        <li>Chỉ từ chối đơn khi có lý do chính đáng và phải ghi lý do.</li>
+        <li>Xử lý yêu cầu trả hàng theo mục 8: trả lời yêu cầu kèm lý do, xác nhận khi nhận lại hàng và hoàn tiền cho người mua.</li>
+        <li>Chịu toàn bộ phần giảm giá của khuyến mãi và voucher do mình đăng ký; bán đúng giá ưu đãi đã được duyệt.</li>
+        <li>Trả phí sàn theo mục 10 và giữ thông tin tài khoản ngân hàng nhận tiền luôn chính xác.</li>
+        <li>Cập nhật hồ sơ khi thông tin liên hệ, địa chỉ lấy hàng hoặc tài khoản ngân hàng thay đổi.</li>
+      </ul>
+
+      <h3>11.5. Hành vi bị cấm</h3>
+      <ul>
+        <li>Bán hàng thuộc mục 3, hoặc giao hàng khác với sản phẩm đã đăng.</li>
+        <li>Đăng sản phẩm trùng lặp, sai danh mục hoặc dùng tên, ảnh gây hiểu nhầm để thu hút người mua.</li>
+        <li>Nâng giá gốc trước khi đăng ký khuyến mãi để tạo mức giảm giả.</li>
+        <li>Tự đặt đơn, tạo đơn ảo hoặc nhờ người khác đặt đơn để tăng doanh số, tăng đánh giá.</li>
+        <li>Tự đánh giá sản phẩm của mình, đổi quà lấy đánh giá hoặc gây sức ép để người mua sửa, xóa đánh giá.</li>
+        <li>Dẫn người mua giao dịch, thanh toán ngoài sàn để tránh phí.</li>
+        <li>Dùng thông tin nhận hàng của người mua cho mục đích ngoài việc giao đơn.</li>
+        <li>Cho thuê, chuyển nhượng tài khoản người bán hoặc cửa hàng cho người khác.</li>
+      </ul>
+
+      <h3>11.6. Tạm ngừng và chấm dứt quyền bán</h3>
+      <ul>
+        <li>Quản trị viên tạm ngừng người bán khi có vi phạm ở mục 11.4 hoặc 11.5. Quyết định luôn ghi lý do.</li>
+        <li>Khi bị tạm ngừng, sản phẩm của người bán ngừng hiển thị để mua và người bán không đăng ký được khuyến mãi mới.</li>
+        <li>Đơn đã nhận trước khi bị tạm ngừng vẫn phải được xử lý đến cùng, gồm cả yêu cầu trả hàng.</li>
+        <li>Người bán được khôi phục khi quản trị viên xác nhận vi phạm đã được khắc phục.</li>
+        <li>Vi phạm nghiêm trọng hoặc tái phạm dẫn đến khóa tài khoản theo mục 12.</li>
+      </ul>
+
       <p className="note">Soopi là dự án học tập: hệ thống chỉ kiểm tra định dạng, không đối chiếu với cơ quan nhà nước hay ngân hàng. Hãy dùng dữ liệu giả, không nhập giấy tờ thật. Quản trị viên chỉ thấy 4 số cuối của CCCD và số tài khoản.</p>
     </section>
 
