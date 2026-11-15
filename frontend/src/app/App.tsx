@@ -21,6 +21,7 @@ const policyPages = () => import('../features/policy/PolicyPage');
 
 const AccountPage = page(accountPages, 'AccountPage');
 const PolicyPage = page(policyPages, 'PolicyPage');
+const SupportPage = page(() => import('../features/policy/SupportPage'), 'SupportPage');
 const LoginPage = page(authPages, 'LoginPage');
 const RegisterPage = page(authPages, 'RegisterPage');
 const AdminAccountsPage = page(adminPages, 'AdminAccountsPage');
@@ -117,6 +118,12 @@ function Layout() {
           <NavLink to="/admin/accounts">Tài khoản</NavLink><NavLink to="/admin/orders">COD</NavLink><NavLink to="/admin/returns">Trả hàng</NavLink><NavLink to="/admin/finance">Tài chính</NavLink><NavLink to="/admin/voucher-limit-requests">Duyệt voucher</NavLink>
         </>}
         <span className="grow" />
+        <NavLink to="/ho-tro" className="helplink">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="9" /><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 .9-1 1.7M12 17h.01" />
+          </svg>
+          Hỗ trợ
+        </NavLink>
         {account ? <>
           <NotificationBell />
           <NavLink to="/account">Tài khoản</NavLink>
@@ -137,7 +144,7 @@ function Layout() {
     <main className="container">
       <PageBoundary key={pathname}><Suspense fallback={<p role="status">Đang tải…</p>}><Outlet /></Suspense></PageBoundary>
     </main>
-    <footer className="footer">© 2026 Soopi · Sàn thương mại điện tử nhiều người bán · Thanh toán khi nhận hàng · <Link to="/quy-dinh">Quy định sàn</Link></footer>
+    <footer className="footer">© 2026 Soopi · Sàn thương mại điện tử nhiều người bán · Thanh toán khi nhận hàng · <Link to="/ho-tro">Hỗ trợ</Link> · <Link to="/quy-dinh">Quy định sàn</Link></footer>
   </>;
 }
 
@@ -153,6 +160,7 @@ export function App() {
       <Route path="login" element={<LoginPage />} />
       <Route path="register" element={<RegisterPage />} />
       <Route path="quy-dinh" element={<PolicyPage />} />
+      <Route path="ho-tro" element={<SupportPage />} />
       <Route path="account" element={guarded(undefined, <AccountPage />)} />
       <Route path="notifications" element={guarded(undefined, <NotificationsPage />)} />
       <Route path="cart" element={guarded('CUSTOMER', <CartPage />)} />
