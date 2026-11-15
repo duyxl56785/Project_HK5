@@ -1,0 +1,2 @@
+Generated isolated UAT env and 23 secret files.
+PASS isolated config uses a per-project env/secrets directory and leaves shared demo artifacts unchanged.
