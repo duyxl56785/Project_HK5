@@ -1,0 +1,184 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.10/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :api-gateway:clean
+> Task :auth-service:clean
+> Task :cart-service:clean
+> Task :config-server:clean
+> Task :discovery-server:clean
+> Task :inventory-service:clean
+> Task :notification-service:clean
+> Task :order-service:clean
+> Task :product-service:clean
+> Task :security-common:clean
+> Task :seller-service:clean
+> Task :user-service:clean
+> Task :api-gateway:compileJava FROM-CACHE
+> Task :api-gateway:processResources
+> Task :api-gateway:classes
+> Task :api-gateway:resolveMainClassName
+> Task :api-gateway:bootJar
+> Task :api-gateway:jar
+> Task :api-gateway:assemble
+> Task :api-gateway:compileTestJava FROM-CACHE
+> Task :api-gateway:processTestResources NO-SOURCE
+> Task :api-gateway:testClasses UP-TO-DATE
+> Task :api-gateway:test FROM-CACHE
+> Task :api-gateway:check UP-TO-DATE
+> Task :api-gateway:build
+> Task :security-common:compileJava FROM-CACHE
+> Task :auth-service:compileJava FROM-CACHE
+> Task :auth-service:processResources
+> Task :auth-service:classes
+> Task :auth-service:resolveMainClassName
+> Task :security-common:processResources
+> Task :security-common:classes
+> Task :security-common:jar
+> Task :auth-service:bootJar
+> Task :auth-service:jar
+> Task :auth-service:assemble
+> Task :auth-service:compileTestJava FROM-CACHE
+> Task :auth-service:processTestResources
+> Task :auth-service:testClasses
+> Task :auth-service:test
+
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+
+> Task :auth-service:check
+> Task :auth-service:build
+> Task :cart-service:compileJava FROM-CACHE
+> Task :cart-service:processResources
+> Task :cart-service:classes
+> Task :cart-service:resolveMainClassName
+> Task :cart-service:bootJar
+> Task :cart-service:jar
+> Task :cart-service:assemble
+> Task :cart-service:compileTestJava FROM-CACHE
+> Task :cart-service:processTestResources NO-SOURCE
+> Task :cart-service:testClasses UP-TO-DATE
+> Task :cart-service:test FROM-CACHE
+> Task :cart-service:check UP-TO-DATE
+> Task :cart-service:build
+> Task :config-server:compileJava FROM-CACHE
+> Task :config-server:processResources
+> Task :config-server:classes
+> Task :config-server:resolveMainClassName
+> Task :config-server:bootJar
+> Task :config-server:jar
+> Task :config-server:assemble
+> Task :config-server:compileTestJava NO-SOURCE
+> Task :config-server:processTestResources NO-SOURCE
+> Task :config-server:testClasses UP-TO-DATE
+> Task :config-server:test NO-SOURCE
+> Task :config-server:check UP-TO-DATE
+> Task :config-server:build
+> Task :discovery-server:compileJava FROM-CACHE
+> Task :discovery-server:processResources
+> Task :discovery-server:classes
+> Task :discovery-server:resolveMainClassName
+> Task :discovery-server:bootJar
+> Task :discovery-server:jar
+> Task :discovery-server:assemble
+> Task :discovery-server:compileTestJava NO-SOURCE
+> Task :discovery-server:processTestResources NO-SOURCE
+> Task :discovery-server:testClasses UP-TO-DATE
+> Task :discovery-server:test NO-SOURCE
+> Task :discovery-server:check UP-TO-DATE
+> Task :discovery-server:build
+> Task :inventory-service:compileJava FROM-CACHE
+> Task :inventory-service:processResources
+> Task :inventory-service:classes
+> Task :inventory-service:resolveMainClassName
+> Task :inventory-service:bootJar
+> Task :inventory-service:jar
+> Task :inventory-service:assemble
+> Task :inventory-service:compileTestJava FROM-CACHE
+> Task :inventory-service:processTestResources NO-SOURCE
+> Task :inventory-service:testClasses UP-TO-DATE
+> Task :inventory-service:test FROM-CACHE
+> Task :inventory-service:check UP-TO-DATE
+> Task :inventory-service:build
+> Task :notification-service:compileJava FROM-CACHE
+> Task :notification-service:processResources
+> Task :notification-service:classes
+> Task :notification-service:resolveMainClassName
+> Task :notification-service:bootJar
+> Task :notification-service:jar
+> Task :notification-service:assemble
+> Task :notification-service:compileTestJava FROM-CACHE
+> Task :notification-service:processTestResources NO-SOURCE
+> Task :notification-service:testClasses UP-TO-DATE
+> Task :notification-service:test FROM-CACHE
+> Task :notification-service:check UP-TO-DATE
+> Task :notification-service:build
+> Task :order-service:compileJava FROM-CACHE
+> Task :order-service:processResources
+> Task :order-service:classes
+> Task :order-service:resolveMainClassName
+> Task :order-service:bootJar
+> Task :order-service:jar
+> Task :order-service:assemble
+> Task :order-service:compileTestJava FROM-CACHE
+> Task :order-service:processTestResources NO-SOURCE
+> Task :order-service:testClasses UP-TO-DATE
+> Task :order-service:test FROM-CACHE
+> Task :order-service:check UP-TO-DATE
+> Task :order-service:build
+> Task :product-service:compileJava FROM-CACHE
+> Task :product-service:processResources
+> Task :product-service:classes
+> Task :product-service:resolveMainClassName
+> Task :product-service:bootJar
+> Task :product-service:jar
+> Task :product-service:assemble
+> Task :product-service:compileTestJava FROM-CACHE
+> Task :product-service:processTestResources
+> Task :product-service:testClasses
+> Task :product-service:test FROM-CACHE
+> Task :product-service:integrationTest FROM-CACHE
+> Task :product-service:check UP-TO-DATE
+> Task :product-service:build
+> Task :security-common:resolveMainClassName
+> Task :security-common:bootJar SKIPPED
+> Task :security-common:assemble
+> Task :security-common:compileTestJava FROM-CACHE
+> Task :security-common:processTestResources NO-SOURCE
+> Task :security-common:testClasses UP-TO-DATE
+> Task :security-common:test FROM-CACHE
+> Task :security-common:check UP-TO-DATE
+> Task :security-common:build
+> Task :seller-service:compileJava FROM-CACHE
+> Task :seller-service:processResources
+> Task :seller-service:classes
+> Task :seller-service:resolveMainClassName
+> Task :seller-service:bootJar
+> Task :seller-service:jar
+> Task :seller-service:assemble
+> Task :seller-service:compileTestJava FROM-CACHE
+> Task :seller-service:processTestResources
+> Task :seller-service:testClasses
+> Task :seller-service:test FROM-CACHE
+> Task :seller-service:integrationTest FROM-CACHE
+> Task :seller-service:check UP-TO-DATE
+> Task :seller-service:build
+> Task :user-service:compileJava FROM-CACHE
+> Task :user-service:processResources
+> Task :user-service:classes
+> Task :user-service:resolveMainClassName
+> Task :user-service:bootJar
+> Task :user-service:jar
+> Task :user-service:assemble
+> Task :user-service:compileTestJava FROM-CACHE
+> Task :user-service:processTestResources
+> Task :user-service:testClasses
+> Task :user-service:test FROM-CACHE
+> Task :user-service:check UP-TO-DATE
+> Task :user-service:build
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.10/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 2m 12s
+97 actionable tasks: 64 executed, 33 from cache
