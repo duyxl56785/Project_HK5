@@ -12,7 +12,7 @@
 - DB lifecycle: DRAFT → APPROVED ⇄ PAUSED. CANCELLED cuối cùng, chỉ hủy **trước startsAt**. Sau LIVE, Admin dừng bằng PAUSED; sau ENDED không thao tác. UPCOMING/LIVE/ENDED suy từ thời gian server, không cron thay giá.
 - Flash/Super: **Admin tạo, duyệt và dừng**. Clearance: **Seller tạo DRAFT** cho Store do mình sở hữu, **Admin duyệt sau submit**, không tự publish.
 - Product registration: PENDING → APPROVED | REJECTED | WITHDRAWN. Reject yêu cầu reason 1–500 ký tự. Seller có thể **withdraw cả PENDING lẫn APPROVED**, có hiệu lực ngay; Seller SUSPENDED vẫn được withdraw nếu xác minh ownership Store từ principal/JWT và dữ liệu Store, không cần role SELLER. Phải chặn mọi hành vi trái phép khác.
-- Không sửa giá sau approve. Muốn đổi giá thì withdraw rồi đăng ký lại; hàng PK (campaign_id, product_id) quay về PENDING và **tăng version**, giữ audit.
+- Không sửa giá sau approve. Muốn đổi giá thì withdraw rồi đăng ký lại; hàng PK (campaign_id, product_id) quay về PENDING và **tăng version**, giữ audit. Đăng ký REJECTED là trạng thái cuối trên cùng cặp campaign/Product; chỉ WITHDRAWN mới được đăng ký lại.
 - Đăng ký và duyệt chấm dứt tại startsAt; LIVE chỉ còn withdraw và pause. Admin đồng thời là chủ Store Product không được tự duyệt (403).
 - REST contract được TV2 duyệt: `/api/seller/promotions/**`, `/api/admin/promotions/**` (chi tiết endpoint/method từ gói review trước, trừ phần trái các quyết định mới). Gateway route tới product-service và `GatewayRoutingTest`.
 - Mã lỗi: 401 thiếu/sai JWT, 403 sai role, 404 Seller truy cập ID ngoài Store, 409 version cũ/lịch hoặc offer overlap, 400 payload sai. JSON chặt: loại bỏ trường lạ, null không hợp lệ, giá thực/phân số, storeId client-supplied. DTO tiền là chuỗi VND nguyên canonical, parse tại boundary.

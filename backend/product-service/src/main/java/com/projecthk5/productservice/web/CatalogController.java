@@ -92,7 +92,11 @@ public class CatalogController {
                        @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "12") int size) {
         if (page < 0 || size < 1 || size > 60 || (q != null && q.length() > 100))
             throw ApiException.badRequest("VALIDATION_FAILED", "Invalid search parameters");
-        return searchNow(q, categoryId, minPrice, maxPrice, storeId, sort, page, size);
+        String key = String.join("|", "catalog:search:v2", String.valueOf(q), String.valueOf(categoryId),
+                String.valueOf(minPrice), String.valueOf(maxPrice), String.valueOf(storeId), sort,
+                String.valueOf(page), String.valueOf(size));
+        return cache.read(key, json.constructType(Page.class),
+                () -> searchNow(q, categoryId, minPrice, maxPrice, storeId, sort, page, size));
     }
 
     private Page searchNow(String q, UUID categoryId, BigDecimal minPrice, BigDecimal maxPrice, UUID storeId, String sort, int page, int size) {
@@ -124,7 +128,7 @@ public class CatalogController {
     @GetMapping("/api/catalog/products/{id}")
     @Transactional(readOnly = true)
     public Detail detail(@PathVariable UUID id) {
-        return detailNow(id);
+        return cache.read("catalog:product:v2:" + id, json.constructType(Detail.class), () -> detailNow(id));
     }
 
     private Detail detailNow(UUID id) {

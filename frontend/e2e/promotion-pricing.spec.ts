@@ -36,10 +36,10 @@ test('Seller clearance flows through Catalog and Checkout into Order price and f
     const id = (await response.json()).id;
     expect(id).toMatch(/^[0-9a-f-]{36}$/);
     const sellerPanel = seller.locator('article').filter({ hasText: name });
-    await sellerPanel.getByLabel('Mã Product').fill(product.id);
+    await sellerPanel.getByLabel('Sản phẩm', { exact: true }).selectOption(product.id);
     await sellerPanel.getByLabel('Giá sale (VND)').fill(String(price));
     await sellerPanel.getByRole('button', { name: 'Đăng ký sản phẩm' }).click();
-    await expect(sellerPanel.getByText('PENDING', {exact: false})).toBeVisible();
+    await expect(sellerPanel.getByText('Chờ duyệt', {exact: false})).toBeVisible();
     await sellerPanel.getByRole('button', { name: 'Gửi duyệt xả kho' }).click();
     await expect(sellerPanel.getByRole('button', { name: 'Gửi duyệt xả kho' })).toHaveCount(0);
     await admin.goto('/admin/promotions');
@@ -54,8 +54,10 @@ test('Seller clearance flows through Catalog and Checkout into Order price and f
       submitted_at=clock_timestamp()-interval '2 minutes', ends_at=clock_timestamp()+interval '2 hours'
       WHERE id='${id}' AND kind='SELLER_CLEARANCE' AND status='APPROVED' RETURNING id
       ) SELECT count(*) FROM moved`)).toBe('1');
-    await customer.goto('/products/' + product.id);
-    await expect(customer.getByText(/Đang khuyến mãi đến/)).toBeVisible();
+    await expect(async () => {
+      await customer.goto('/products/' + product.id);
+      await expect(customer.getByText(/Đang khuyến mãi đến/)).toBeVisible({ timeout: 1500 });
+    }).toPass({ timeout: 20000 });
     await customer.getByRole('button', { name: 'Mua ngay' }).click();
     await customer.getByRole('link', { name: 'Tiến hành đặt hàng' }).click();
     await customer.getByLabel('Người nhận').fill('Khách demo khuyến mãi');

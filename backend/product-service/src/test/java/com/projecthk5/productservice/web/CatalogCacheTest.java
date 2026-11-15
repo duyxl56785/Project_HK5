@@ -64,6 +64,25 @@ class CatalogCacheTest {
         }));
     }
 
+    record PriceView(String baseUnitPrice, String unitPrice, String promotion) {}
+
+    @Test
+    void priceAndPromotionCrossTheSaleBoundaryAsOneCachedResponse() throws Exception {
+        JavaType type = json.constructType(PriceView.class);
+        var sale = new PriceView("100000", "80000", "FLASH_SALE");
+        var base = new PriceView("100000", "100000", null);
+        String payload = json.writeValueAsString(sale);
+        when(values.get("price")).thenReturn(System.currentTimeMillis() + "|" + payload);
+        assertEquals(sale, cache.read("price", type, () -> base));
+
+        when(values.get("price")).thenReturn((System.currentTimeMillis()-CatalogCache.FRESH.toMillis()-100) + "|" + payload);
+        assertEquals(sale, cache.read("price", type, () -> {
+            throw ApiException.unavailable("CATALOG_UNAVAILABLE", "Dependency unavailable");
+        }));
+        assertEquals(base, cache.read("price", type, () -> base));
+        verify(values).set(anyString(), anyString(), org.mockito.ArgumentMatchers.eq(CatalogCache.STALE));
+    }
+
     @Test
     void anythingButUnavailabilityStillFails() {
         stored(CatalogCache.FRESH.toMillis() + 1);

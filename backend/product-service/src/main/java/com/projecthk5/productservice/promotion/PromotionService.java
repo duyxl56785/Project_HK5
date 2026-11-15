@@ -29,7 +29,14 @@ public class PromotionService {
 
     public record Campaign(UUID id, String name, String kind, String status, UUID storeId,
                            Instant startsAt, Instant endsAt, Instant submittedAt, long version) {}
-    public record Registration(UUID productId, BigDecimal promotionalUnitPrice, String status, String reason, long version) {}
+    public record Registration(UUID productId, String productName, UUID storeId, String storeName,
+                               BigDecimal baseUnitPrice, BigDecimal promotionalUnitPrice,
+                               String status, String reason, long version) {}
+
+    private static final String REGISTRATION_SELECT = """
+            SELECT r.*,p.name AS product_name,p.store_id,p.unit_price AS base_unit_price
+            FROM promotion_campaign_products r JOIN products p ON p.id=r.product_id
+            """;
     private record Product(UUID id, UUID store, String status, BigDecimal base) {}
 
     private static Instant time(ResultSet row, String name) throws SQLException {
@@ -48,7 +55,9 @@ public class PromotionService {
     }
 
     private static Registration registration(ResultSet row, int index) throws SQLException {
-        return new Registration(row.getObject("product_id", UUID.class), row.getBigDecimal("promotional_unit_price"),
+        return new Registration(row.getObject("product_id", UUID.class), row.getString("product_name"),
+                row.getObject("store_id", UUID.class), null, row.getBigDecimal("base_unit_price"),
+                row.getBigDecimal("promotional_unit_price"),
                 row.getString("status"), row.getString("reason"), row.getLong("version"));
     }
 
@@ -65,7 +74,7 @@ public class PromotionService {
     }
 
     private List<Registration> registrations(UUID id) {
-        return db.query("SELECT * FROM promotion_campaign_products WHERE campaign_id=? ORDER BY product_id",
+        return db.query(REGISTRATION_SELECT + " WHERE r.campaign_id=? ORDER BY r.product_id",
                 PromotionService::registration, id);
     }
 
@@ -92,13 +101,20 @@ public class PromotionService {
     public List<Registration> listProducts(UUID id, boolean admin) {
         Actor actor = admin ? Actor.require("ADMIN") : Actor.current();
         Campaign c = campaign(id, false);
-        if (admin) return registrations(id);
+        if (admin) {
+            List<Registration> rows = registrations(id);
+            var storeIds = rows.stream().map(Registration::storeId).collect(java.util.stream.Collectors.toSet());
+            var names = stores.facts(storeIds).stream().collect(java.util.stream.Collectors.toMap(
+                    SellerStoreClient.Facts::storeId, SellerStoreClient.Facts::name));
+            return rows.stream().map(r -> new Registration(r.productId(), r.productName(), r.storeId(),
+                    names.get(r.storeId()), r.baseUnitPrice(), r.promotionalUnitPrice(),
+                    r.status(), r.reason(), r.version())).toList();
+        }
         UUID store = stores.managedBy(actor.id()).storeId();
         if (c.storeId() != null && !store.equals(c.storeId())) throw missing();
-        List<Registration> owned = db.query("""
-                SELECT r.* FROM promotion_campaign_products r JOIN products p ON p.id=r.product_id
-                WHERE r.campaign_id=? AND p.store_id=? ORDER BY r.product_id
-                """, PromotionService::registration, id, store);
+        List<Registration> owned = db.query(REGISTRATION_SELECT
+                + " WHERE r.campaign_id=? AND p.store_id=? ORDER BY r.product_id",
+                PromotionService::registration, id, store);
         if (!actor.has("SELLER")) {
             ongoing(c, Instant.now());
             owned = owned.stream().filter(r -> List.of("PENDING", "APPROVED").contains(r.status())).toList();
@@ -111,6 +127,7 @@ public class PromotionService {
         boolean clearance = kind == PromotionPriceRules.Kind.SELLER_CLEARANCE;
         Actor actor = Actor.require(clearance ? "SELLER" : "ADMIN");
         UUID store = clearance ? stores.currentManagementStore(actor.id()) : null;
+        if (clearance) requireStoreEligible(store);
         if (name.isBlank() || name.length()>120) throw invalid("Invalid campaign name");
         if (clearance) {
             var span = Duration.between(start, end);
@@ -172,6 +189,7 @@ public class PromotionService {
         String next = switch (action) {
             case "submit" -> {
                 beforeStart(c, now);
+                requireStoreEligible(c.storeId());
                 if (!c.status().equals("DRAFT") || c.submittedAt()!=null) throw state();
                 yield "DRAFT";
             }
@@ -274,7 +292,7 @@ public class PromotionService {
     }
 
     private Registration findRegistration(UUID id, UUID productId) {
-        return db.query("SELECT * FROM promotion_campaign_products WHERE campaign_id=? AND product_id=?",
+        return db.query(REGISTRATION_SELECT + " WHERE r.campaign_id=? AND r.product_id=?",
                 PromotionService::registration, id, productId).stream().findFirst().orElse(null);
     }
 
@@ -288,6 +306,11 @@ public class PromotionService {
                     AND c.starts_at < ? AND c.ends_at > ?)
                 """, Boolean.class, p.id(), c.id(), utc(c.endsAt()), utc(c.startsAt()))))
             throw ApiException.conflict("PROMOTION_OVERLAP", "Another approved offer overlaps this campaign");
+    }
+
+    private void requireStoreEligible(UUID store) {
+        var facts = stores.readStore(store);
+        if (!facts.storeOpen() || !facts.sellerApproved()) throw state();
     }
 
     private static void eligible(Product p, com.projecthk5.productservice.product.ProductAccessPolicy.StoreAccess facts,

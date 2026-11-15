@@ -19,7 +19,7 @@ before(async () => {
       resolveId(id) { if (id === '../../shared/auth') return '\0promotion-test-session'; },
       load(id) {
         if (id === '\0promotion-test-session') {
-          return "export const useAuth = () => ({ account: { userId: 'owner' }, has: () => false });";
+          return "export const useAuth = () => ({ account: { userId: 'owner' }, has: () => globalThis.promotionTestSeller === true });";
         }
       },
     }],
@@ -45,7 +45,7 @@ async function render(Page, respond, verify) {
   try {
     await act(async () => root.render(createElement(QueryClientProvider, { client },
       createElement(Page))));
-    for (let i = 0; i < 100 && !host.querySelector('article li'); i++) {
+    for (let i = 0; i < 100 && (!host.querySelector('article li') || (globalThis.promotionTestSeller && !host.querySelector('option[value="product-1"]'))); i++) {
       await act(async () => new Promise(resolve => setTimeout(resolve, 20)));
     }
     verify(host, paths);
@@ -61,7 +61,10 @@ const campaign = {
   id: 'campaign-1', name: 'Demo Sale', kind: 'FLASH_SALE', status: 'APPROVED',
   startsAt: '2090-01-01T15:00:00Z', endsAt: '2090-01-01T17:00:00Z', version: 0,
 };
-const registration = { productId: 'product-1', status: 'PENDING', promotionalUnitPrice: 1000, version: 0 };
+const registration = {
+  productId: 'product-1', productName: 'Áo demo', storeName: 'Tiệm demo',
+  status: 'PENDING', baseUnitPrice: 2000, promotionalUnitPrice: 1000, version: 0,
+};
 
 test('Seller without role may withdraw but cannot create or register', async () => {
   await render(pages.PromotionsPage, path => path.endsWith('/products') ? [registration] : [campaign],
@@ -71,10 +74,32 @@ test('Seller without role may withdraw but cannot create or register', async () 
     });
 });
 
+test('Seller selects a Product by name from their active Product list', async () => {
+  globalThis.promotionTestSeller = true;
+  try {
+    await render(pages.PromotionsPage, path => {
+      if (path.startsWith('/api/seller/products?')) {
+        const query = new URL(path, 'http://localhost').searchParams;
+        assert.equal(query.get('status'), 'ACTIVE');
+        return { products: [{ id:'product-1', name:'Áo demo', unitPrice:'2000' }] };
+      }
+      return path.endsWith('/products') ? [registration] : [campaign];
+    }, host => {
+      const option = host.querySelector('select[name="productId"] option[value="product-1"]');
+      assert.match(option?.textContent ?? '', /Áo demo/);
+      assert.equal(host.querySelector('input[name="productId"]'), null);
+    });
+  } finally {
+    delete globalThis.promotionTestSeller;
+  }
+});
+
 test('Admin can pause and approve an offer and needs a rejection reason', async () => {
   await render(pages.AdminPromotionsPage, path => path.endsWith('/products') ? [registration] : [campaign],
     host => {
       assert.match(host.textContent, /Tạm dừng/);
+      assert.match(host.textContent, /Áo demo.*Tiệm demo.*Giá gốc.*Giá sale.*Chờ duyệt/);
+      assert.match(host.textContent, /Sắp diễn ra/);
       const buttons = [...host.querySelectorAll('button')];
       assert.equal(buttons.find(button => button.textContent === 'Duyệt sản phẩm')?.disabled, false);
       assert.equal(buttons.find(button => button.textContent === 'Từ chối sản phẩm')?.disabled, true);

@@ -11,13 +11,27 @@ interface Campaign {
   version: string | number; submittedAt: string | null;
 }
 interface Registration {
-  productId: string; promotionalUnitPrice: number; status: string; reason: string | null;
+  productId: string; productName: string; storeId: string; storeName: string | null;
+  baseUnitPrice: number; promotionalUnitPrice: number; status: string; reason: string | null;
   version: string | number;
 }
 
 const kinds: Record<Kind, string> = {
   FLASH_SALE: 'Flash Sale', SUPER_SALE: 'Super Sale', SELLER_CLEARANCE: 'Xả kho',
 };
+
+interface SellerProduct { id: string; name: string; unitPrice: string }
+
+const statusLabels: Record<string, string> = {
+  DRAFT: 'Bản nháp', APPROVED: 'Đã duyệt', PAUSED: 'Đã tạm dừng', CANCELLED: 'Đã hủy',
+  PENDING: 'Chờ duyệt', REJECTED: 'Bị từ chối', WITHDRAWN: 'Đã rút',
+};
+
+async function activeProducts(term: string): Promise<SellerProduct[]> {
+  const params = new URLSearchParams({ status: 'ACTIVE', size: '100', term });
+  const page = await api<{products: SellerProduct[]}>('/api/seller/products?' + params);
+  return page.products;
+}
 
 function CampaignForm({ admin, path }: { readonly admin: boolean; readonly path: string }) {
   const save = useAction((body: object) => api(path, { method: 'POST', body }), ['promotions']);
@@ -50,16 +64,28 @@ function CampaignPanel({ campaign, admin, canRegister, path }: { readonly campai
     queryFn: () => api<Registration[]>(id + '/products'),
   });
   const [reason, setReason] = useState('');
+  const [term, setTerm] = useState('');
+  const [selected, setSelected] = useState('');
+  const available = useQuery({
+    queryKey: ['promotions', 'owned-products', term],
+    queryFn: () => activeProducts(term),
+    enabled: !admin && canRegister && campaign.status !== 'CANCELLED' && Date.now() < Date.parse(campaign.startsAt),
+  });
   const change = useAction(({ suffix, body, method = 'POST' }: { suffix: string; body: object; method?: string }) =>
     api(id + suffix, { method, body }), ['promotions']);
-  const before = Date.now() < Date.parse(campaign.startsAt);
-  const ongoing = Date.now() < Date.parse(campaign.endsAt) && campaign.status !== 'CANCELLED';
+  const now = Date.now();
+  const before = now < Date.parse(campaign.startsAt);
+  const ongoing = now < Date.parse(campaign.endsAt) && campaign.status !== 'CANCELLED';
+  const label = campaign.status === 'APPROVED'
+    ? !ongoing ? 'Đã kết thúc' : before ? 'Sắp diễn ra' : 'Đang diễn ra'
+    : statusLabels[campaign.status];
   const expectedVersion = String(campaign.version);
   const action = (name: string) => change.mutate({ suffix: '/actions', body: { action: name, expectedVersion } });
   function register(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const productId = String(data.get('productId')).trim();
+    if (!available.data?.some(item => item.id === productId)) return;
     const prior = products.data?.find(item => item.productId === productId);
     change.mutate({ suffix: '/products', body: {
       productId, promotionalUnitPrice: String(data.get('price')), expectedCampaignVersion: expectedVersion,
@@ -68,7 +94,7 @@ function CampaignPanel({ campaign, admin, canRegister, path }: { readonly campai
   }
   return <article className="panel stack">
     <h2>{campaign.name}</h2>
-    <p>{kinds[campaign.kind]} · {campaign.status} · {dateTime(campaign.startsAt)} – {dateTime(campaign.endsAt)}</p>
+    <p>{kinds[campaign.kind]} · {label} · {dateTime(campaign.startsAt)} – {dateTime(campaign.endsAt)}</p>
     {admin && ongoing && <div className="row">
       {before && campaign.status === 'DRAFT' && <button onClick={() => action('approve')}>Duyệt chương trình</button>}
       {campaign.status === 'APPROVED' && <button onClick={() => action('pause')}>Tạm dừng</button>}
@@ -87,13 +113,25 @@ function CampaignPanel({ campaign, admin, canRegister, path }: { readonly campai
     {!admin && canRegister && ongoing && before && campaign.kind === 'SELLER_CLEARANCE' && !campaign.submittedAt &&
       <button onClick={() => change.mutate({ suffix: '/submit', body: { expectedVersion } })}>Gửi duyệt xả kho</button>}
     {!admin && canRegister && ongoing && before && <form className="row" onSubmit={register}>
-      <label>Mã Product <input required name="productId" /></label>
+      <label>Tìm sản phẩm <input value={term} maxLength={100} onChange={event => {
+        setTerm(event.currentTarget.value); setSelected('');
+      }} /></label>
+      <label>Sản phẩm <select required name="productId" value={selected} onChange={event => setSelected(event.currentTarget.value)}>
+        <option value="">Chọn sản phẩm</option>
+        {available.data?.map(product => <option key={product.id} value={product.id}>
+          {product.name} · {money(product.unitPrice)}
+        </option>)}
+      </select></label>
+      <ErrorNote error={available.error} />
       <label>Giá sale (VND) <input required inputMode="numeric" pattern="[1-9][0-9]*" name="price" /></label>
       <button disabled={change.isPending}>Đăng ký sản phẩm</button>
     </form>}
     {admin && <label>Lý do từ chối <input value={reason} maxLength={500} onChange={e => setReason(e.currentTarget.value)} /></label>}
     <Loaded query={products}>{rows => <ul>{rows.map(row => <li key={row.productId}>
-      {row.productId} · {money(row.promotionalUnitPrice)} · {row.status} {row.reason && ' · ' + row.reason}
+      <strong>{row.productName}</strong>
+      {admin && <span> · Cửa hàng {row.storeName ?? row.storeId}</span>}
+      <span> · Giá gốc {money(row.baseUnitPrice)} · Giá sale {money(row.promotionalUnitPrice)} · {statusLabels[row.status]}</span>
+      {row.reason && ' · ' + row.reason}
       {ongoing && !admin && ['PENDING','APPROVED'].includes(row.status) && <button onClick={() =>
         change.mutate({ suffix: '/products/' + row.productId + '/withdraw', body: { expectedVersion: String(row.version) } })}>
         Rút đăng ký
