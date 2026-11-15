@@ -38,6 +38,8 @@ public class ProductWebConfig {
                         .requestMatchers(HttpMethod.GET, "/api/catalog/**").permitAll()
                         // Internal pair routes authenticate with X-Internal-Token inside the controller.
                         .requestMatchers("/internal/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/seller/promotions/*/products/*/withdraw").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/api/seller/promotions", "/api/seller/promotions/*/products").authenticated()
                         .requestMatchers("/api/seller/**").hasRole("SELLER")
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/reviews/**").hasRole("CUSTOMER")
@@ -51,8 +53,9 @@ public class ProductWebConfig {
     }
 
     @Bean
-    CatalogSnapshotSource catalogSnapshotSource(ProductRepository products, ObjectProvider<CurrentStoreFactsSource> stores) {
-        return new ProductCatalogSnapshotSource(products, stores);
+    CatalogSnapshotSource catalogSnapshotSource(ProductRepository products, ObjectProvider<CurrentStoreFactsSource> stores,
+            com.projecthk5.productservice.promotion.PromotionService promotions) {
+        return new ProductCatalogSnapshotSource(products, stores, promotions);
     }
 
     @Bean

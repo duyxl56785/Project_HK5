@@ -122,4 +122,4 @@ Chưa chứng minh được request đổi thread, chạy async hoặc nhiều t
 | Kafka | `order.placed.v1`, `seller-order.status-changed.v1`; bản ghi lỗi sau 3 lần xử lý vào `<topic>.dlt` | Đặt hàng vẫn chạy, sự kiện chờ trong outbox và gửi lại khi Kafka hoạt động |
 | Redis | Cache Catalog công khai: mới 10 giây, giữ tối đa 5 phút | Catalog đọc trực tiếp nguồn |
 
-Catalog công khai có thể chậm tối đa 10 giây sau khi đổi giá, tồn kho hoặc khóa cửa hàng. Giỏ hàng, đặt hàng và mọi thao tác ghi không đọc cache.
+Catalog công khai cache cả giá gốc, giá hiện hành và thông tin khuyến mãi trong cùng response. Ở luồng bình thường, thay đổi giá, tồn kho, trạng thái Store hoặc mốc sale có thể hiển thị trễ tối đa 10 giây. Khi dependency không khả dụng, cache có thể phục vụ response cũ trong tối đa 5 phút. Sort và lọc theo giá vẫn dùng giá gốc. Giỏ hàng, đặt hàng và mọi thao tác ghi không đọc cache công khai.

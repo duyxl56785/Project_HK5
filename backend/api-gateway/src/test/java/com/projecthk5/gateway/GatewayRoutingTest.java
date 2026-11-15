@@ -98,6 +98,10 @@ class GatewayRoutingTest {
         assertNotEquals(routeOf("/api/seller/products"), routeOf("/api/seller/orders"));
         assertEquals(routeOf("/api/orders"), routeOf("/api/seller/orders"));
         assertEquals(routeOf("/api/catalog/products"), routeOf("/api/seller/products"));
+        assertEquals(routeOf("/api/catalog/products"), routeOf("/api/seller/promotions"));
+        assertEquals(routeOf("/api/catalog/products"), routeOf("/api/seller/promotions/1/products/2/withdraw"));
+        assertEquals(routeOf("/api/catalog/products"), routeOf("/api/admin/promotions"));
+        assertEquals(routeOf("/api/catalog/products"), routeOf("/api/admin/promotions/1/actions"));
     }
 
     @Autowired org.springframework.cloud.gateway.route.RouteLocator routes;
