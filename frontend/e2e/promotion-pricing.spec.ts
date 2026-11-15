@@ -36,7 +36,9 @@ test('Seller clearance flows through Catalog and Checkout into Order price and f
     const id = (await response.json()).id;
     expect(id).toMatch(/^[0-9a-f-]{36}$/);
     const sellerPanel = seller.locator('article').filter({ hasText: name });
-    await sellerPanel.getByLabel('Sản phẩm', { exact: true }).selectOption(product.id);
+    const productPicker = sellerPanel.getByRole('combobox', { name: 'Sản phẩm', exact: true });
+    await expect(productPicker.locator('option', { hasText: product.name })).toHaveAttribute('value', product.id);
+    await productPicker.selectOption(product.id, { timeout: 10000 });
     await sellerPanel.getByLabel('Giá sale (VND)').fill(String(price));
     await sellerPanel.getByRole('button', { name: 'Đăng ký sản phẩm' }).click();
     await expect(sellerPanel.getByText('Chờ duyệt', {exact: false})).toBeVisible();
@@ -74,6 +76,6 @@ test('Seller clearance flows through Catalog and Checkout into Order price and f
     await adminPanel.getByRole('button', { name: 'Tạm dừng' }).click();
     await expect(adminPanel.getByRole('button', { name: 'Tiếp tục' })).toBeVisible();
   } finally {
-    await Promise.all([seller.context().close(), admin.context().close(), customer.context().close()]);
+    await Promise.allSettled([seller.context().close(), admin.context().close(), customer.context().close()]);
   }
 });

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useId, useState } from 'react';
 import type { FormEvent } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { api } from '../../shared/api';
@@ -66,6 +66,7 @@ function CampaignPanel({ campaign, admin, canRegister, path }: { readonly campai
   const [reason, setReason] = useState('');
   const [term, setTerm] = useState('');
   const [selected, setSelected] = useState('');
+  const productSelectId = useId();
   const available = useQuery({
     queryKey: ['promotions', 'owned-products', term],
     queryFn: () => activeProducts(term),
@@ -116,12 +117,13 @@ function CampaignPanel({ campaign, admin, canRegister, path }: { readonly campai
       <label>Tìm sản phẩm <input value={term} maxLength={100} onChange={event => {
         setTerm(event.currentTarget.value); setSelected('');
       }} /></label>
-      <label>Sản phẩm <select required name="productId" value={selected} onChange={event => setSelected(event.currentTarget.value)}>
+      <label htmlFor={productSelectId}>Sản phẩm</label>
+      <select id={productSelectId} required name="productId" value={selected} onChange={event => setSelected(event.currentTarget.value)}>
         <option value="">Chọn sản phẩm</option>
         {available.data?.map(product => <option key={product.id} value={product.id}>
           {product.name} · {money(product.unitPrice)}
         </option>)}
-      </select></label>
+      </select>
       <ErrorNote error={available.error} />
       <label>Giá sale (VND) <input required inputMode="numeric" pattern="[1-9][0-9]*" name="price" /></label>
       <button disabled={change.isPending}>Đăng ký sản phẩm</button>
