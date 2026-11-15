@@ -1,6 +1,6 @@
 # Bản ghép TV5 cho báo cáo và deck ngày 07/11/2026
 
-Hai tệp trong thư mục này là **bản nháp để nhóm kiểm**, không phải bản nộp cuối hoặc xác nhận final UAT.
+Các tệp `Bao_cao_Soopi_TV5_DRAFT_*` và `Soopi_TV5_notes_DRAFT_*` là **nguồn nội dung TV5 để nhóm kiểm**, không phải bản nộp cuối hoặc xác nhận final UAT. Báo cáo nộp chính thức do TV2 ghép từ `Bao_cao_Smart_ECommerce.docx`; không nộp nhầm bản nháp TV5. Hai tệp nháp ngày 07/11 ở bảng dưới chỉ còn trong [lịch sử Git tại `e08a26d`](https://github.com/duyxl56785/Project_HK5/tree/e08a26d96c384ea3612ea369fd860cf63f4f1fc0/reports/submission); HEAD chỉ giữ hai bản ngày 14/11 để tránh trùng bản nhị phân.
 
 | Tệp | Thay đổi thực tế | Kiểm tra đã chạy | Còn thiếu |
 |---|---|---|---|

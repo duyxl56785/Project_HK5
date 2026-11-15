@@ -2,7 +2,7 @@
 
 **Cập nhật kiểm chứng 10/11/2026:** GitHub main `e61bbac2b2b8599384e0e035b89058a188e318ec` đã nhận #179/#182/#183/#184/#185/#186/#187/#188/#189. TV5 chạy trên đúng main: 29 PostgreSQL/MockMvc + 5 unit PASS; sau đó thêm assertion chỉ trong test, chạy lại 29 + 5 PASS tại commit [`6d45172`](https://github.com/duyxl56785/Project_HK5/commit/6d4517210ec92958931f046674e008f10fa9146e) với [raw XML/log/SHA256](../../reports/minh-chung-kiem-thu/tv5-return-finance-e61bbac-20261110/) và [ma trận RET-01..06](../../tests/TV5_RETURN_ACCEPTANCE_20261110.md). Hai lượt này là hai snapshot riêng, không cộng thành release total. #187 có [review APPROVED scoped](https://github.com/duyxl56785/Project_HK5/pull/187#pullrequestreview-5835076508). **Final UAT hai Store, UNKNOWN và Finance production chưa PASS**; B.1–B.5 là phiếu chụp chờ ảnh thật.
 
-**Quyết định nhóm mới do TV5 cung cấp ngày 10/11:** UNKNOWN giữ `BLOCKED_DESIGN`, không chạy cả hai live fixture; Inventory UI #169/#190 là backlog, không thuộc phạm vi merge release hiện tại. Đây là chỉ dẫn phạm vi mới, chưa phải kết quả CI hoặc xác nhận GitHub tại HEAD mới.
+**Quyết định TV2 ngày 10/11 khi đóng [#154](https://github.com/duyxl56785/Project_HK5/issues/154#issuecomment-6757433313):** hai ca UNKNOWN giữ `BLOCKED_DESIGN` cho W5, không chạy live fixture khi thiếu gate. TV2 cũng xác nhận Inventory UI #169/#190 là backlog sau nộp trong [review #192](https://github.com/duyxl56785/Project_HK5/pull/192#pullrequestreview-5844015364), không thuộc phạm vi merge release hiện tại. Đây là quyết định về phạm vi, không phải kết quả CI, quyền chạy fixture hay final UAT PASS.
 
 Nguyễn Minh Duy phụ trách F15 Product Review, F16 Finance, kiểm thử tích hợp và đối chiếu bằng chứng của nhóm. Phần nội dung này dùng cho báo cáo bản nộp và phần thuyết trình TV5. Kiểm chứng hiện có hỗ trợ các chức năng và trường hợp được nêu cụ thể; hệ thống vẫn chưa đạt final UAT vì Return RECEIVED → Inventory INCREASE, UNKNOWN và các gate live/production chưa đủ điều kiện.
 
@@ -63,7 +63,7 @@ Website và tester là hai tiến trình riêng. Dựng stack dữ liệu giả 
 
 | Trường bản nộp | Điều kiện điền |
 |---|---|
-| Final run SHA và CI URLs | Main cuối đã tích hợp source được owner nhận, hosted checks đúng SHA; main `e61bbac2b2b8599384e0e035b89058a188e318ec` là mốc GitHub quan sát, không phải final run |
+| Final run SHA và CI URLs | Điền SHA đóng băng do TV2 công bố hết 19/11, rồi dẫn hosted checks và receipt E2E/clone sạch trên cùng SHA; `e61bbac2b2b8599384e0e035b89058a188e318ec` chỉ là mốc kiểm thử 10/11, không phải final run |
 | Ngày/môi trường/actor/seed | Receipt của project cô lập thực chạy, không lấy từ rehearsal |
 | Tổng test nghiệm thu | Chỉ một release run với denominator và skip/block giải thích |
 | Kết quả UNKNOWN | Actual immutable tuple/waiver, provider COMMIT/stock receipt, runner/stop và quyền chạy từng ca |
@@ -72,7 +72,7 @@ Website và tester là hai tiến trình riêng. Dựng stack dữ liệu giả 
 
 ## 12 Đối chiếu 23 slide hiện có
 
-Đã đọc XML toàn bộ 23 slide của deck Soopi cung cấp ngoài repo, không suy layout từ text. Deck đang mô tả đề tài/kế hoạch/kiến trúc/UI, chưa chứa một phần nghiệm thu TV5 hoàn chỉnh. Bản nháp ở `reports/submission/Soopi_TV5_notes_DRAFT_2026-11-07.pptx` đã thêm lời trình bày TV5; 23 slide hiển thị được render và so byte với bản nguồn, nhưng chưa được người nộp mở trong PowerPoint để kiểm font/notes. Đây chưa phải deck cuối.
+Đã đọc XML toàn bộ 23 slide của deck Soopi cung cấp ngoài repo, không suy layout từ text. Deck đang mô tả đề tài/kế hoạch/kiến trúc/UI, chưa chứa một phần nghiệm thu TV5 hoàn chỉnh. Bản nháp TV5 cập nhật tại `reports/submission/Soopi_TV5_notes_DRAFT_2026-11-14.pptx` có lời trình bày TV5; 23 slide đã được render, nhưng chưa được người nộp mở trong PowerPoint để kiểm font/notes. Đây chưa phải deck cuối.
 
 | Slide | Nội dung TV5 chuẩn bị để đưa vào lời trình bày hoặc slide khi tổng hợp |
 |---|---|

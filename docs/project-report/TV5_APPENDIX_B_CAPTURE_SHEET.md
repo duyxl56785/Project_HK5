@@ -1,6 +1,6 @@
 # Phụ lục B.1–B.5 — phiếu chụp và đối chiếu ảnh thật
 
-Tài liệu này chuẩn bị nội dung cho báo cáo 55 trang và deck. **Chưa có ảnh final UAT B.1–B.5**. Không thay vị trí TODO trong DOCX bằng ảnh demo, ảnh dựng hoặc ảnh của SHA khác. Mỗi ảnh cần nhận dạng được một lượt chạy trên main đã tích hợp: full 40-character SHA, thời gian Asia/Bangkok, case ID, môi trường cô lập, actor giả, Store/order giả và tệp ảnh gốc cùng SHA256. Che token, mật khẩu, địa chỉ/số điện thoại dù là dữ liệu giả trước khi công bố. Giữ tệp gốc nội bộ theo quy định evidence, không biên tập ảnh rồi coi là raw.
+Tài liệu này chuẩn bị nội dung cho báo cáo 55 trang và deck. **Chưa có ảnh final UAT B.1–B.5**. Không thay vị trí TODO trong DOCX bằng ảnh demo, ảnh dựng hoặc ảnh của SHA khác. Mỗi ảnh cần nhận dạng được một lượt chạy trên main đã tích hợp: full 40-character SHA, thời gian Asia/Ho_Chi_Minh, case ID, môi trường cô lập, actor giả, Store/order giả và tệp ảnh gốc cùng SHA256. Che token, mật khẩu, địa chỉ/số điện thoại dù là dữ liệu giả trước khi công bố. Giữ tệp gốc nội bộ theo quy định evidence, không biên tập ảnh rồi coi là raw.
 
 | Vị trí báo cáo V2 | Case/owner | Nội dung phải nhìn thấy trong ảnh và đối chiếu không nằm trong ảnh | Chú thích chỉ được dùng sau khi chạy thật |
 |---|---|---|---|
@@ -31,4 +31,4 @@ Chỉ thực hiện sau khi main đóng băng, TV2 công bố receipt E2E cùng 
 | `B-4-return.png` | RET-01–RET-04 | Return của SellerOrder đúng Store; trạng thái và receipt vật lý | Return/settlement guard, không suy restock/refund | NOT_RUN |
 | `B-5-admin-cod-reconciliation.png` | U08 | Admin đối soát COD của dữ liệu giả, không hiện email/token/PII | finance snapshot/audit, cross-Store negative check | NOT_RUN |
 
-Lưu ảnh trong `reports/minh-chung-kiem-thu/<run-id>/screenshots/` cùng raw log, response đã che dữ liệu nhạy cảm, `README.md` và `SHA256SUMS.txt`. Tên run phải chứa full main SHA và thời điểm Asia/Bangkok. Nếu ca chưa chạy hoặc gate thất bại, giữ `NOT_RUN`/`BLOCKED`; không tạo ảnh thay thế.
+Lưu ảnh trong `reports/minh-chung-kiem-thu/<run-id>/screenshots/` cùng raw log, response đã che dữ liệu nhạy cảm, `README.md` và `SHA256SUMS.txt`. Tên run phải chứa full main SHA và thời điểm Asia/Ho_Chi_Minh. Nếu ca chưa chạy hoặc gate thất bại, giữ `NOT_RUN`/`BLOCKED`; không tạo ảnh thay thế.
