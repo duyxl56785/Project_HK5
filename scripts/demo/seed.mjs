@@ -161,39 +161,57 @@ for (const [name, seller, items] of catalog) {
   }
 }
 
-// Voucher C1 sample data. Skipped when the Store already has vouchers, so re-runs never add duplicates.
+// Voucher C1 sample data, matched by code: a re-run creates only missing codes and finishes unfinished
+// ones. Vouchers with other codes, and seed codes moved to another state by hand, are left alone.
 const day = 24 * 60 * 60 * 1000;
 const at = (offset) => new Date(Date.now() + offset).toISOString();
-async function vouchers(token, items) {
-  if ((await must('/api/stores/me/vouchers?size=1', { token })).length > 0) return;
+const blocked = [];
+const stepOf = { ACTIVE: 'publish', SCHEDULED: 'publish', PAUSED: 'pause', CANCELLED: 'cancel' };
+async function allVouchers(token) {
+  const rows = [];
+  for (let page = 0; ; page += 1) {
+    const batch = await must(`/api/stores/me/vouchers?page=${page}&size=50`, { token });
+    rows.push(...batch);
+    if (batch.length < 50) return rows;
+  }
+}
+async function vouchers(store, token, items) {
+  const existing = new Map((await allVouchers(token)).map((voucher) => [voucher.code, voucher]));
   for (const [code, name, discountType, discountValue, minOrderAmount, maxDiscount, actions, startsIn = -day] of items) {
-    let voucher = await must('/api/stores/me/vouchers', { token, method: 'POST', body: {
+    let voucher = existing.get(code) ?? await must('/api/stores/me/vouchers', { token, method: 'POST', body: {
       code, name, discountType, discountValue, minOrderAmount, usageLimit: 100,
       startsAt: at(startsIn), endsAt: at(startsIn + 60 * day), ...(maxDiscount ? { maxDiscount } : {}),
     } });
-    for (const action of actions) {
-      voucher = await must(`/api/stores/me/vouchers/${voucher.id}/${action}`, { token, method: 'POST', body: { expectedVersion: voucher.version } });
+    const done = voucher.status === 'DRAFT' ? 0 : actions.indexOf(stepOf[voucher.status]) + 1;
+    if (done === 0 && voucher.status !== 'DRAFT') continue;
+    for (const action of actions.slice(done)) {
+      const reply = await call(`/api/stores/me/vouchers/${voucher.id}/${action}`, { token, method: 'POST', body: { expectedVersion: voucher.version } });
+      if (!reply.ok) { blocked.push(`${store} ${code} ${action}: ${reply.status} ${JSON.stringify(reply.json)}`); break; }
+      voucher = reply.json;
     }
   }
 }
 // Góc Tiện Ích (seller3, unused by E2E, which needs seller1 at 0/20): paused and cancelled first, then 20 published to fill the default quota,
 // a draft that cannot be published yet, and a pending request for more slots.
-await vouchers(third, [
+await vouchers('Góc Tiện Ích', third, [
   ['TAMDUNG10', 'Giảm 10% (tạm dừng)', 'PERCENT', 10, 100000, 30000, ['publish', 'pause']],
   ['DAHUY50K', 'Giảm 50.000đ (đã hủy)', 'FIXED', 50000, 300000, null, ['cancel']],
   ['SAPMO15', 'Giảm 15% mở bán tuần sau', 'PERCENT', 15, 200000, 50000, ['publish'], 7 * day],
   ...Array.from({ length: 19 }, (_, i) => [`GTI${String(i + 1).padStart(2, '0')}`, `Giảm ${(i + 1) * 5}.000đ đơn từ 200.000đ`, 'FIXED', (i + 1) * 5000, 200000, null, ['publish']]),
   ['THEM21', 'Voucher thứ 21 (chờ nâng hạn mức)', 'FIXED', 20000, 150000, null, []],
 ]);
-if ((await must('/api/stores/me/voucher-limit-requests', { token: third })).length === 0) {
+// A Store has at most one PENDING request and cannot file another while it waits, so the PENDING one is the newest.
+const [latest] = await must('/api/stores/me/voucher-limit-requests?size=1', { token: third });
+if (latest?.status !== 'PENDING') {
+  // A fresh key per attempt: if a run dies after the insert, the next run finds that PENDING row above.
   const response = await fetch(`${gateway}/api/stores/me/voucher-limit-requests`, {
     method: 'POST',
-    headers: { Origin: origin, 'X-CSRF-Protection': '1', 'Content-Type': 'application/json', 'Idempotency-Key': 'seed-limit-goc-tien-ich', Authorization: `Bearer ${third}` },
+    headers: { Origin: origin, 'X-CSRF-Protection': '1', 'Content-Type': 'application/json', 'Idempotency-Key': `seed-limit-goc-tien-ich-${Date.now()}`, Authorization: `Bearer ${third}` },
     body: JSON.stringify({ requestedLimit: 30, reason: 'Chạy chương trình khuyến mãi cuối năm, cần thêm 10 voucher.', requestedFrom: at(0), requestedUntil: at(30 * day - 60000) }),
   });
-  if (!response.ok) throw new Error(`voucher limit request -> ${response.status} ${await response.text()}`);
+  if (!response.ok) blocked.push(`Góc Tiện Ích limit request: ${response.status} ${await response.text()}`);
 }
-await vouchers(second, [
+await vouchers('Nhà Xinh', second, [
   ['NHAXINH30K', 'Giảm 30.000đ đơn từ 250.000đ', 'FIXED', 30000, 250000, null, ['publish']],
   ['NHAXINH10', 'Giảm 10% tối đa 40.000đ', 'PERCENT', 10, 150000, 40000, ['publish']],
   ['TET2027', 'Giảm 20% dịp Tết (nháp)', 'PERCENT', 20, 300000, 80000, []],
@@ -201,3 +219,7 @@ await vouchers(second, [
 
 console.log('Seeded customer@hk5.local, seller1@hk5.local, seller2@hk5.local, seller3@hk5.local (password: SEED_PASSWORD in .env.demo).');
 console.log(`Admin: ${env.ADMIN_BOOTSTRAP_EMAIL} (password: ADMIN_BOOTSTRAP_PASSWORD in .env.demo).`);
+if (blocked.length > 0) {
+  console.error(['Voucher sample BLOCKED, the voucher demo data is incomplete:', ...blocked].join('\n  '));
+  process.exitCode = 1;
+}
