@@ -34,8 +34,8 @@ const TOPICS: readonly Topic[] = [
     { q: 'Làm sao để bán hàng trên Soopi?', a: <>Đăng nhập, mở <Link to="/seller">Kênh người bán</Link> và gửi hồ sơ. Sau khi quản trị viên duyệt, bạn tạo cửa hàng và đăng sản phẩm. Điều kiện chi tiết ở <Link to="/quy-dinh#nguoi-ban">mục 11 của Quy định</Link>.</> },
     { q: 'Vì sao sản phẩm của tôi chưa hiển thị?', a: 'Sản phẩm mới phải được quản trị viên duyệt trước khi bán. Sản phẩm bị từ chối hoặc đình chỉ có ghi lý do; hãy sửa rồi gửi lại.' },
     { q: 'Phí bán hàng là bao nhiêu?', a: 'Sàn thu 5% trên giá trị mỗi đơn, làm tròn đến đồng. Không có phí đăng ký hay phí đăng sản phẩm.' },
-    { q: 'Khi nào tôi nhận được tiền?', a: 'Sau khi đơn giao thành công và tiền COD đã được thu, sàn đối soát và chuyển phần còn lại vào tài khoản ngân hàng bạn đã đăng ký. Đơn đang có yêu cầu trả hàng chưa được đối soát.' },
-    { q: 'Tôi tạo được bao nhiêu voucher?', a: 'Mặc định mỗi cửa hàng có tối đa 20 chương trình voucher. Bạn có thể xin quản trị viên nâng lên tối đa 50 chương trình, trong tối đa 30 ngày. Lưu ý: bước thanh toán chưa áp dụng voucher cho người mua.' },
+    { q: 'Khi nào tôi nhận được tiền?', a: 'Sau khi đơn giao thành công, tiền COD đã được xác nhận thu và không có yêu cầu trả hàng đang chặn, quản trị viên ghi nhận đối soát. Hệ thống tính số tiền bạn được nhận sau khi trừ phí 5%. Lưu ý: Soopi chưa tích hợp chuyển khoản ngân hàng thực tế, nên ghi nhận đối soát không có nghĩa là tiền đã được chuyển.' },
+    { q: 'Tôi tạo được bao nhiêu voucher?', a: 'Bạn tạo voucher nháp không giới hạn. Mặc định mỗi cửa hàng có tối đa 20 voucher đang phát hành và chưa hết hạn cùng lúc; voucher nháp, tạm dừng, hết hạn hoặc đã hủy không tính vào hạn mức. Bạn có thể xin quản trị viên nâng hạn mức lên tối đa 50, áp dụng trong thời hạn được duyệt (tối đa 30 ngày). Lưu ý: bước thanh toán chưa áp dụng voucher cho người mua.' },
   ] },
 ];
 

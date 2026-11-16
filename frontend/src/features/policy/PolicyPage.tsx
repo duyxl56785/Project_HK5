@@ -74,7 +74,7 @@ export function PolicyPage() {
         <li>Giá khi đặt đơn là giá đang có hiệu lực tại thời điểm xác nhận. Nếu giá thay đổi trong lúc thanh toán, hệ thống báo để người mua xem lại, không đặt đơn theo giá cũ.</li>
         <li>Khi chương trình kết thúc hoặc bị tạm dừng, giá ưu đãi trên trang sản phẩm có thể còn hiển thị thêm vài giây. Giá ở bước thanh toán luôn là giá đúng.</li>
         <li>Sắp xếp và lọc theo giá trên trang danh sách dùng giá gốc.</li>
-        <li>Mỗi cửa hàng được tạo tối đa 20 chương trình voucher, mỗi chương trình hiệu lực không quá 90 ngày, mức giảm theo phần trăm không quá 90%. Người bán có thể xin quản trị viên nâng hạn mức lên tối đa 50 chương trình trong tối đa 30 ngày.</li>
+        <li>Mặc định mỗi cửa hàng có tối đa 20 voucher đang phát hành và chưa hết hạn cùng lúc. Voucher nháp, tạm dừng, hết hạn hoặc đã hủy không tính vào hạn mức này. Mỗi voucher hiệu lực không quá 90 ngày, mức giảm theo phần trăm không quá 90%. Người bán có thể xin quản trị viên nâng hạn mức lên tối đa 50, áp dụng trong thời hạn được duyệt (tối đa 30 ngày).</li>
         <li>Hiện bước thanh toán chưa áp dụng voucher cho người mua.</li>
       </ul>
     </section>
@@ -130,7 +130,8 @@ export function PolicyPage() {
       <ul>
         <li>Sàn thu phí 5% trên giá trị mỗi đơn của người bán, làm tròn đến đồng. Với sản phẩm đang khuyến mãi, phí tính trên giá sau giảm.</li>
         <li>Sàn không thu phí đăng ký người bán và phí đăng sản phẩm.</li>
-        <li>Sau khi đơn giao thành công và tiền COD đã thu, sàn đối soát và chuyển phần còn lại vào tài khoản ngân hàng người bán đã đăng ký.</li>
+        <li>Sau khi đơn giao thành công, tiền COD đã được xác nhận thu và không có yêu cầu trả hàng đang chặn, quản trị viên ghi nhận đối soát. Hệ thống tính số tiền người bán được nhận sau khi trừ phí 5%.</li>
+        <li>Soopi chưa tích hợp chuyển khoản ngân hàng thực tế: ghi nhận đối soát không có nghĩa là tiền đã được chuyển.</li>
         <li>Đơn bị hủy, bị từ chối hoặc đang có yêu cầu trả hàng không được đối soát.</li>
         <li>Người bán xem các khoản thu, phí và tiền nhận về tại trang <Link to="/seller/finance">Tài chính</Link>.</li>
       </ul>
