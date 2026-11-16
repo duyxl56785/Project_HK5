@@ -176,19 +176,19 @@ async function vouchers(token, items) {
     }
   }
 }
-// Tiệm Áo Sài Gòn: paused and cancelled first, then 20 published to fill the default quota,
+// Góc Tiện Ích (seller3, unused by E2E, which needs seller1 at 0/20): paused and cancelled first, then 20 published to fill the default quota,
 // a draft that cannot be published yet, and a pending request for more slots.
-await vouchers(first, [
+await vouchers(third, [
   ['TAMDUNG10', 'Giảm 10% (tạm dừng)', 'PERCENT', 10, 100000, 30000, ['publish', 'pause']],
   ['DAHUY50K', 'Giảm 50.000đ (đã hủy)', 'FIXED', 50000, 300000, null, ['cancel']],
   ['SAPMO15', 'Giảm 15% mở bán tuần sau', 'PERCENT', 15, 200000, 50000, ['publish'], 7 * day],
-  ...Array.from({ length: 19 }, (_, i) => [`AOSG${String(i + 1).padStart(2, '0')}`, `Giảm ${(i + 1) * 5}.000đ đơn từ 200.000đ`, 'FIXED', (i + 1) * 5000, 200000, null, ['publish']]),
+  ...Array.from({ length: 19 }, (_, i) => [`GTI${String(i + 1).padStart(2, '0')}`, `Giảm ${(i + 1) * 5}.000đ đơn từ 200.000đ`, 'FIXED', (i + 1) * 5000, 200000, null, ['publish']]),
   ['THEM21', 'Voucher thứ 21 (chờ nâng hạn mức)', 'FIXED', 20000, 150000, null, []],
 ]);
-if ((await must('/api/stores/me/voucher-limit-requests', { token: first })).length === 0) {
+if ((await must('/api/stores/me/voucher-limit-requests', { token: third })).length === 0) {
   const response = await fetch(`${gateway}/api/stores/me/voucher-limit-requests`, {
     method: 'POST',
-    headers: { Origin: origin, 'X-CSRF-Protection': '1', 'Content-Type': 'application/json', 'Idempotency-Key': 'seed-limit-tiem-ao-sai-gon', Authorization: `Bearer ${first}` },
+    headers: { Origin: origin, 'X-CSRF-Protection': '1', 'Content-Type': 'application/json', 'Idempotency-Key': 'seed-limit-goc-tien-ich', Authorization: `Bearer ${third}` },
     body: JSON.stringify({ requestedLimit: 30, reason: 'Chạy chương trình khuyến mãi cuối năm, cần thêm 10 voucher.', requestedFrom: at(0), requestedUntil: at(30 * day - 60000) }),
   });
   if (!response.ok) throw new Error(`voucher limit request -> ${response.status} ${await response.text()}`);
