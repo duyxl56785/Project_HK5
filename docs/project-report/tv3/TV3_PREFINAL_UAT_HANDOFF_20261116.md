@@ -2,18 +2,20 @@
 
 **Phạm vi:** Cart, Checkout COD đa cửa hàng, Order/Return, Flash Sale/Super Sale/Seller Clearance và Voucher Store **C1**. **Trạng thái: PRE-FINAL; chưa có nghiệm thu cuối ngày 20/11.** Refs #160, #18, #162, #158. Chỉ là báo cáo đối chiếu/bàn giao, không sửa API/code/DB/CI/cờ.
 
+**Checkpoint 16/11/2026 sau quyết định TV2:** [Nguồn bản nộp chính thức](https://github.com/duyxl56785/Project_HK5/issues/162#issuecomment-6907759709) là `Bao_cao_Smart_ECommerce_ban_nop.docx` do TV2 ghép; **Hình 6.4 = Admin duyệt/người bán, 6.5 = Cart hai Store, 6.6 = root Order + hai SellerOrders**. Bản DOCX TV5 14/11 chỉ là nguồn nội dung, không phải file nộp; **không cần chụp B.1–B.5 riêng**. PR #209 seed demo Voucher C1 đã merge vào `main@87e0ec814b42f6c211d1a5865e025a6bfa72626e` ngày 16/11, nhưng điều đó không làm ảnh/Final UAT tự PASS.
+
 ## 1. Đã xác minh từ nguồn (không suy thành UAT cuối)
 
 | Hạng mục | Provenance | Kết luận giới hạn |
 | --- | --- | --- |
-| Báo cáo Checkout | [PR #188](https://github.com/duyxl56785/Project_HK5/pull/188) và [#197](https://github.com/duyxl56785/Project_HK5/pull/197): TV2/TV5 reviewed, merged; [CHECKOUT.md](CHECKOUT.md) | **DONE nội dung TV3**, chưa ghép vào DOCX cuối/Hình 6.4 |
+| Báo cáo Checkout | [PR #188](https://github.com/duyxl56785/Project_HK5/pull/188) và [#197](https://github.com/duyxl56785/Project_HK5/pull/197): TV2/TV5 reviewed, merged; [CHECKOUT.md](CHECKOUT.md) | **DONE nội dung TV3**, chưa ghép vào DOCX cuối/Hình 6.5–6.6 |
 | Cart/Checkout/Return | [#196](https://github.com/duyxl56785/Project_HK5/pull/196) Windows/PG regression đã được TV2 kiểm; source đã merge | PASS trong phạm vi suite; UNKNOWN thật và RET-05 chưa nghiệm thu |
 | Voucher C1 | [PR #200](https://github.com/duyxl56785/Project_HK5/pull/200) merge `d023e104`, owner APPROVED; [CI backend 43560390842](https://github.com/duyxl56785/Project_HK5/actions/runs/43560390842), [CI E2E 43560390914](https://github.com/duyxl56785/Project_HK5/actions/runs/43560390914), Playwright **23/23 PASS** | **DONE C1**: quản lý voucher, slot, yêu cầu Admin; **chưa có C2 redeem Checkout**; #198/#199 đã closed |
 | Flash, Super, xả kho | [PR #202](https://github.com/duyxl56785/Project_HK5/pull/202) merge `552e8eb`; [backend run 43702848981](https://github.com/duyxl56785/Project_HK5/actions/runs/43702848981), [frontend/E2E run 43702848877](https://github.com/duyxl56785/Project_HK5/actions/runs/43702848877), Playwright **24/24 PASS** | CI ở **`main@552e8eb`**, không tự coi là frozen-SHA UAT |
 | Source lúc lập | `main@b2bee1d13eef2d404bc79c917b36af9489983351` | Repo có [DRAFT báo cáo TV5](../../../reports/submission/Bao_cao_Soopi_TV5_DRAFT_2026-11-14.docx), **không** được tự gọi là final |
 | TV3 Windows smoke 15/11 | Người chạy xác nhận Catalog HTTP 200, `seed.mjs` in `Seeded` | PASS smoke cơ bản; **không** có screenshot/SQL receipt ràng buộc SHA |
 
-## 2. Ma trận ảnh cần thu trước 19/11
+## 2. Ma trận ảnh chuẩn bị (snapshot ban đầu; xem audit mới bên dưới)
 
 | File đề nghị | Actor / route | Điều kiện phải thấy | Trạng thái |
 | --- | --- | --- | --- |
@@ -28,7 +30,9 @@
 | `checkout-03b-order-history.png` | Customer `/orders` | Cùng ID trên danh sách History, phân biệt trang detail | **NOT_CAPTURED** |
 | `checkout-04-db-receipt.md` | DB read-only | Order + 2 SellerOrders, fee, stock/journal; redacted | **NOT_CAPTURED** |
 
-Nguồn hướng dẫn chi tiết: [CAPTURE_REAL_CHECKOUT.md](CAPTURE_REAL_CHECKOUT.md). Ảnh `cart-hai-store-quantity-remove-va-jwt-het-han-passed.png` lịch sử là giỏ **trống**, `cod-desktop.png` là mock/preview; không dùng làm ảnh Checkout thật. Ảnh B.1 trong [PR #204](https://github.com/duyxl56785/Project_HK5/pull/204) chỉ là PRE-FINAL; không phải cả bộ B.1–B.5 đã đủ.
+**Audit cập nhật theo báo cáo Codex Windows ngày 16/11 (chưa kiểm độc lập các file private trong phiên GitHub):** chỉ **1/9 PNG `voucher-01-seller.png` = REVIEWED_DEMO**, nguồn demo checkout `552e8eb` chưa có xác minh image SHA. Các ảnh cũ **FAIL**: `promo-02` campaign CANCELLED/Loading, `promo-03` sai kind Super Sale, `checkout-01` và `checkout-02` có **ba Store**, không phải hai. Bốn mục `promo-01`, `voucher-02`, `checkout-03`, `checkout-03b` = **BLOCKED_RUNTIME** vì Docker Engine HTTP 500; DB receipt vẫn **NOT_CAPTURED**. ZIP pre-freeze private theo Codex có SHA256 `873e74e3ab2fe5550c15220c1c6a3de6417982f83ecb64d6d70598bc079a05a7`, không được xem là đã public hay final.
+
+Nguồn hướng dẫn chi tiết: [CAPTURE_REAL_CHECKOUT.md](CAPTURE_REAL_CHECKOUT.md). Ảnh `cart-hai-store-quantity-remove-va-jwt-het-han-passed.png` lịch sử là giỏ **trống**, `cod-desktop.png` là mock/preview; không dùng làm ảnh Checkout thật. Theo TV2, **B.1–B.5 không cần chụp riêng cho bản nộp**; PR #204 vẫn là PRE-FINAL/DRAFT, cần sửa checksum trước khi dùng receipt.
 
 **Ràng buộc:** chỉ chụp từ stack local/disposable do TV2/TV5 cho phép, source SHA và Compose project ID rõ; không upload credential/JWT/PII. Screenshot có dữ liệu thật chưa duyệt phải nằm trong thư mục private ngoài repo, TV5 xem pixel, kiểm SHA256 rồi mới chèn báo cáo/commit. Nếu fixture không có thì giữ `NOT_CAPTURED`, không tạo ảnh giả. Không tự bật cờ Checkout, Finance hoặc UNKNOWN chỉ để chụp.
 
@@ -52,13 +56,15 @@ Nguồn hướng dẫn chi tiết: [CAPTURE_REAL_CHECKOUT.md](CAPTURE_REAL_CHECK
 
 Có bản nháp [DOCX TV5 14/11](../../../reports/submission/Bao_cao_Soopi_TV5_DRAFT_2026-11-14.docx) và [deck TV5 14/11](../../../reports/submission/Soopi_TV5_notes_DRAFT_2026-11-14.pptx), nhưng **chưa kiểm trực tiếp nội dung nhị phân từng trang** trong lượt này. Dùng bảng này làm checklist, không nhận đã sửa/render bản Word/PowerPoint:
 
-- §6, **Hình 6.4:** Cart hai Store + COD + Order detail thật, cùng source/run; không dùng ảnh cart trống, không nhầm Order detail với Order History.
+- §6, **Hình 6.4:** **Admin duyệt/quản lý người bán** (không dùng ảnh Cart/Checkout).
+- §6, **Hình 6.5:** Cart thật **đúng hai Store**, số lượng/tổng tiền và source/run; COD trước submit chỉ là ảnh hỗ trợ, che PII.
+- §6, **Hình 6.6:** **một root Order tách thành đúng hai SellerOrders**; phải có Order ID + read-only SQL/API receipt cùng run, không suy số đơn con chỉ từ ảnh Order Detail. Order History `/orders` là ảnh riêng nếu chụp.
 - **MD12:** Flash/Super/Clearance thay **đơn giá Product** trước preflight; 5% tính trên tiền hàng sau khuyến mãi; immutable snapshot, `PRICE_CHANGED` nếu quote thay; không bảo C2 đã hiện diện.
 - **Voucher C1:** DRAFT/PAUSED không chiếm slot; 20 slot là số voucher `PUBLISHED` chưa hết hạn, không phải số chương trình tối đa được tạo; chưa trừ lượt/áp mã lúc Checkout. C2 chỉ là hướng phát triển theo PR #206.
 - **Finance/COD:** `FulfillmentService.settle` chỉ đánh dấu đối soát & ghi thông báo, chưa tự chuyển khoản ngân hàng; không tự khẳng định đã thanh toán thực.
 - **Return:** Chưa tự động hoàn tiền/restock, RET-05 blocked; UNKNOWN không tự giải quyết.
 - **QA:** mọi số CI phải ghi đúng SHA/run; `PASS` CI không đồng nghĩa `PASS` final UAT; nếu ca chưa chạy ghi `NOT_RUN/BLOCKED`.
-- **B.1–B.5:** ảnh phải runtime thật trên SHA/stack đã cho phép, đã mask PII; ảnh B.1 pre-final của PR #204 không thay toàn bộ ảnh cuối.
+- **Nguồn báo cáo chính thức:** TV2 chọn Word `Bao_cao_Smart_ECommerce_ban_nop.docx` và deck 23 slide để ghép sau UAT 20/11. **Không cần chụp riêng B.1–B.5**; bằng chứng runtime dùng cho Hình 6.1–6.8 phải đúng SHA/stack, che PII; ảnh lịch sử chỉ gắn `HISTORICAL_DEMO` khi TV5 cho phép.
 - **Lịch:** frozen main hết **19/11**, clean-stack E2E & clean-clone **20/11**, nộp **21/11**.
 
 ## 5. Điều kiện chốt Issue #160
