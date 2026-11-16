@@ -1,6 +1,6 @@
 # TV3 — Đối chiếu bản Checkout Codex 351 dòng với báo cáo PR #188
 
-**Trạng thái:** `STRUCTURAL_COMPARISON_DONE` / `EXACT_LINE_DIFF_NOT_RUN` / `ORIGINAL_FILE_INACCESSIBLE`. 
+**Trạng thái:** `STRUCTURAL_COMPARISON_DONE` / `EXACT_LINE_DIFF_NOT_RUN` / `ORIGINAL_FILE_INACCESSIBLE`.
 
 **Cập nhật đối chiếu bản nộp 16/11/2026:** PR #188 đã được TV2 duyệt và merge; TV2 [chốt số hình chính thức](https://github.com/duyxl56785/Project_HK5/issues/162#issuecomment-6907759709): **Hình 6.4 là Admin duyệt Seller**, **Hình 6.5 là giỏ hai Store**, **Hình 6.6 là một Order tổng tách hai SellerOrders**. Các dòng ghi `Hình 6.4` của bản Word 25/10 bên dưới là **nguồn lịch sử**, không phải hướng dẫn ghép Checkout hiện hành. TV2 đã waive việc diff nguyên văn A 351 dòng để duyệt **nội dung tái dựng**, nhưng không waive ảnh thật/UAT.
 
