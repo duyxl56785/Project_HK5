@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.projecthk5.orderservice.entity.OrderOverallStatusTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-11-16T04:32:14" hostname="PHAMCUONG" time="0.008">
+  <properties/>
+  <testcase name="cancelledWhenEveryStoreOrderWasCancelledOrRejected()" classname="com.projecthk5.orderservice.entity.OrderOverallStatusTest" time="0.004"/>
+  <testcase name="staysProcessingWhileAnyStoreOrderIsStillOpen()" classname="com.projecthk5.orderservice.entity.OrderOverallStatusTest" time="0.002"/>
+  <testcase name="completesWhenEveryStoreOrderEndedAndOneWasDelivered()" classname="com.projecthk5.orderservice.entity.OrderOverallStatusTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest" tests="16" skipped="0" failures="0" errors="0" timestamp="2026-11-16T04:32:13" hostname="PHAMCUONG" time="0.063">
+  <properties/>
+  <testcase name="rejectsUnrepresentableOrderPriceBeforeAnyStockSideEffect()" classname="com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest" time="0.007"/>
+  <testcase name="enforcesBatchCardinalityOneThroughOneHundredAndUniqueProductIds()" classname="com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest" time="0.016"/>
+  <testcase name="rejectsPriceAndCurrencyMismatchButNoImplicitMoneyPolicyIsSelected()" classname="com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest" time="0.002"/>
+  <testcase name="allowsMultipleProductsForConsistentSameStoreSameSellerAndHouse()" classname="com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest" time="0.003"/>
+  <testcase name="acceptsTwoStoresAndOnlyAuthoritativeSkuInOriginalOrder()" classname="com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest" time="0.002"/>
+  <testcase name="rejectsSameStoreWithConflictingHouseClassification()" classname="com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest" time="0.001"/>
+  <testcase name="rejectsPartialBatchMissingRowWrongVersionOrUnverifiedResponse()" classname="com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest" time="0.001"/>
+  <testcase name="rejectsUnicodePaddedSkuAndNoncanonicalExpectedIdentifiers()" classname="com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest" time="0.002"/>
+  <testcase name="rejectsMissingOrDuplicatedTrustedSkuAcrossProducts()" classname="com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest" time="0.001"/>
+  <testcase name="rejectsSameStoreWithDifferentSellersRegardlessOfOrder()" classname="com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest" time="0.001"/>
+  <testcase name="doesNotDeriveSkuFromProductId()" classname="com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest" time="0.002"/>
+  <testcase name="rejectsOneSellerClaimedByTwoStoresRegardlessOfOrder()" classname="com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest" time="0.002"/>
+  <testcase name="rejectsIncorrectStoreSellerOrUnavailableSource()" classname="com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest" time="0.002"/>
+  <testcase name="rejectsNonReadyItemEvenIfProviderIncorrectlyClaimsAllReady()" classname="com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest" time="0.002"/>
+  <testcase name="rejectsReorderedExtraDuplicatedAndMismatchedProductRows()" classname="com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest" time="0.001"/>
+  <testcase name="preservesExactCanonicalSkuCaseCompositionAndInternalUnicode()" classname="com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

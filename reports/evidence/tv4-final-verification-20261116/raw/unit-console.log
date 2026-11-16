@@ -1,0 +1,70 @@
+4218c9b4076c7fbaad606a74b6f5adedf26d8e43
+COMMAND: backend\gradlew.bat -p C:\tv4audit\backend :inventory-service:test :order-service:test :notification-service:test --rerun-tasks --no-daemon --console=plain 
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.10/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :notification-service:processResources
+> Task :notification-service:processTestResources NO-SOURCE
+> Task :order-service:processResources
+> Task :order-service:processTestResources NO-SOURCE
+> Task :security-common:compileJava
+> Task :security-common:processResources
+> Task :security-common:classes
+> Task :security-common:jar
+> Task :inventory-service:compileJava
+> Task :inventory-service:processResources
+> Task :inventory-service:classes
+> Task :notification-service:compileJava
+> Task :notification-service:classes
+> Task :order-service:compileJava
+> Task :order-service:classes
+> Task :notification-service:compileTestJava
+> Task :notification-service:testClasses
+
+> Task :inventory-service:compileTestJava
+Note: C:\tv4audit\backend\inventory-service\src\test\java\com\projecthk5\inventoryservice\service\InventoryOperationServiceTest.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+
+> Task :inventory-service:processTestResources NO-SOURCE
+> Task :inventory-service:testClasses
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+> Task :order-service:compileTestJava
+> Task :order-service:testClasses
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+> Task :inventory-service:test
+> Task :order-service:test
+> Task :notification-service:test
+
+2026-11-16T11:32:42.784+07:00  INFO 16992 --- [notification-service] [ntainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notification-service-1, groupId=notification-service] Node 1 disconnected.
+2026-11-16T11:32:42.784+07:00  INFO 16992 --- [notification-service] [ntainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notification-service-1, groupId=notification-service] Cancelled in-flight API_VERSIONS request with correlation id 30 due to node 1 being disconnected (elapsed time since creation: 3ms, elapsed time since send: 3ms, request timeout: 30000ms)
+2026-11-16T11:32:42.786+07:00  INFO 16992 --- [notification-service] [ntainer#0-0-C-1] k.c.c.i.ConsumerRebalanceListenerInvoker : [Consumer clientId=consumer-notification-service-1, groupId=notification-service] Revoke previously assigned partitions order.placed.v1-0, seller-order.status-changed.v1-0
+2026-11-16T11:32:42.786+07:00  INFO 16992 --- [notification-service] [ntainer#0-0-C-1] o.s.k.l.KafkaMessageListenerContainer    : notification-service: partitions revoked: [order.placed.v1-0, seller-order.status-changed.v1-0]
+2026-11-16T11:32:42.787+07:00  INFO 16992 --- [notification-service] [ntainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notification-service-1, groupId=notification-service] Resetting generation and member id due to: consumer pro-actively leaving the group
+2026-11-16T11:32:42.788+07:00  INFO 16992 --- [notification-service] [ntainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notification-service-1, groupId=notification-service] Request joining group due to: consumer pro-actively leaving the group
+2026-11-16T11:32:42.788+07:00  INFO 16992 --- [notification-service] [ntainer#0-0-C-1] o.a.k.c.c.internals.LegacyKafkaConsumer  : [Consumer clientId=consumer-notification-service-1, groupId=notification-service] Unsubscribed all topics or patterns and assigned partitions
+2026-11-16T11:32:42.789+07:00  INFO 16992 --- [notification-service] [ntainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notification-service-1, groupId=notification-service] Resetting generation and member id due to: consumer pro-actively leaving the group
+2026-11-16T11:32:42.789+07:00  INFO 16992 --- [notification-service] [ntainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notification-service-1, groupId=notification-service] Request joining group due to: consumer pro-actively leaving the group
+2026-11-16T11:32:42.792+07:00  INFO 16992 --- [notification-service] [ntainer#0-0-C-1] o.apache.kafka.common.metrics.Metrics    : Metrics scheduler closed
+2026-11-16T11:32:42.792+07:00  INFO 16992 --- [notification-service] [ntainer#0-0-C-1] o.apache.kafka.common.metrics.Metrics    : Closing reporter org.apache.kafka.common.metrics.JmxReporter
+2026-11-16T11:32:42.793+07:00  INFO 16992 --- [notification-service] [ntainer#0-0-C-1] o.apache.kafka.common.metrics.Metrics    : Closing reporter org.apache.kafka.common.telemetry.internals.ClientTelemetryReporter
+2026-11-16T11:32:42.793+07:00  INFO 16992 --- [notification-service] [ntainer#0-0-C-1] o.apache.kafka.common.metrics.Metrics    : Metrics reporters closed
+2026-11-16T11:32:42.802+07:00  INFO 16992 --- [notification-service] [ntainer#0-0-C-1] o.a.kafka.common.utils.AppInfoParser     : App info kafka.consumer for consumer-notification-service-1 unregistered
+2026-11-16T11:32:42.810+07:00  INFO 16992 --- [notification-service] [ntainer#0-0-C-1] o.s.k.l.KafkaMessageListenerContainer    : notification-service: Consumer stopped
+2026-11-16T11:32:42.815+07:00  INFO 16992 --- [notification-service] [ionShutdownHook] o.a.k.clients.producer.KafkaProducer     : [Producer clientId=notification-service-producer-1] Closing the Kafka producer with timeoutMillis = 30000 ms.
+2026-11-16T11:32:42.837+07:00  INFO 16992 --- [notification-service] [ionShutdownHook] o.apache.kafka.common.metrics.Metrics    : Metrics scheduler closed
+2026-11-16T11:32:42.837+07:00  INFO 16992 --- [notification-service] [ionShutdownHook] o.apache.kafka.common.metrics.Metrics    : Closing reporter org.apache.kafka.common.metrics.JmxReporter
+2026-11-16T11:32:42.837+07:00  INFO 16992 --- [notification-service] [ionShutdownHook] o.apache.kafka.common.metrics.Metrics    : Closing reporter org.apache.kafka.common.telemetry.internals.ClientTelemetryReporter
+2026-11-16T11:32:42.837+07:00  INFO 16992 --- [notification-service] [ionShutdownHook] o.apache.kafka.common.metrics.Metrics    : Metrics reporters closed
+2026-11-16T11:32:42.838+07:00  INFO 16992 --- [notification-service] [ionShutdownHook] o.a.kafka.common.utils.AppInfoParser     : App info kafka.producer for notification-service-producer-1 unregistered
+2026-11-16T11:32:42.850+07:00  INFO 16992 --- [notification-service] [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-11-16T11:32:42.854+07:00  INFO 16992 --- [notification-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-11-16T11:32:42.860+07:00  INFO 16992 --- [notification-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.10/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 1m 13s
+15 actionable tasks: 15 executed

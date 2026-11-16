@@ -1,0 +1,536 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.projecthk5.notificationservice.web.OrderEventKafkaIT" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-11-16T04:32:37" hostname="PHAMCUONG" time="4.197">
+  <properties/>
+  <testcase name="poisonRecordMovesToTheDeadLetterTopic()" classname="com.projecthk5.notificationservice.web.OrderEventKafkaIT" time="3.678"/>
+  <testcase name="failedInsertIsNotAcknowledgedAsDuplicate()" classname="com.projecthk5.notificationservice.web.OrderEventKafkaIT" time="0.262"/>
+  <testcase name="redeliveredEventStoresOneNotification()" classname="com.projecthk5.notificationservice.web.OrderEventKafkaIT" time="0.255"/>
+  <system-out><![CDATA[11:32:16.073 [Test worker] INFO tc.postgres:16-alpine -- Creating container for image: postgres:16-alpine
+11:32:16.309 [Test worker] INFO tc.postgres:16-alpine -- Container postgres:16-alpine is starting: cec8e7a7a200391e8e1792c203c6733fe48a366310eb93186ba609980f0255a2
+11:32:19.187 [Test worker] INFO tc.postgres:16-alpine -- Container postgres:16-alpine started in PT3.1141215S
+11:32:19.188 [Test worker] INFO tc.postgres:16-alpine -- Container is started (JDBC URL: jdbc:postgresql://localhost:60132/test?loggerLevel=OFF)
+11:32:19.188 [Test worker] INFO tc.apache/kafka:3.8.1 -- Creating container for image: apache/kafka:3.8.1
+11:32:19.325 [Test worker] INFO tc.apache/kafka:3.8.1 -- Container apache/kafka:3.8.1 is starting: 5f5ae0bc9f872969efe805b98d5a576cdc119e3ebe4028d61f531e4da870def0
+11:32:25.362 [Test worker] INFO tc.apache/kafka:3.8.1 -- Container apache/kafka:3.8.1 started in PT6.1735137S
+11:32:25.467 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.projecthk5.notificationservice.web.OrderEventKafkaIT]: OrderEventKafkaIT does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+11:32:25.636 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.projecthk5.notificationservice.NotificationServiceApplication for test class com.projecthk5.notificationservice.web.OrderEventKafkaIT
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.5)
+
+2026-11-16T11:32:27.253+07:00  INFO 16992 --- [notification-service] [    Test worker] c.p.n.web.OrderEventKafkaIT              : Starting OrderEventKafkaIT using Java 21.0.10 with PID 16992 (started by PC in C:\tv4audit\backend\notification-service)
+2026-11-16T11:32:27.256+07:00  INFO 16992 --- [notification-service] [    Test worker] c.p.n.web.OrderEventKafkaIT              : No active profile set, falling back to 1 default profile: "default"
+2026-11-16T11:32:28.492+07:00  INFO 16992 --- [notification-service] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-11-16T11:32:28.628+07:00  INFO 16992 --- [notification-service] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 127 ms. Found 1 JPA repository interface.
+2026-11-16T11:32:28.938+07:00  INFO 16992 --- [notification-service] [    Test worker] o.s.cloud.context.scope.GenericScope     : BeanFactory id=ba979dae-8e4a-3e43-8a25-28492a5f619d
+2026-11-16T11:32:30.156+07:00  INFO 16992 --- [notification-service] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-11-16T11:32:30.375+07:00  INFO 16992 --- [notification-service] [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@67fda9fb
+2026-11-16T11:32:30.378+07:00  INFO 16992 --- [notification-service] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-11-16T11:32:30.413+07:00  INFO 16992 --- [notification-service] [    Test worker] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://localhost:60132/test (PostgreSQL 16.15)
+2026-11-16T11:32:30.463+07:00  INFO 16992 --- [notification-service] [    Test worker] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table "public"."flyway_schema_history" does not exist yet
+2026-11-16T11:32:30.467+07:00  INFO 16992 --- [notification-service] [    Test worker] o.f.core.internal.command.DbValidate     : Successfully validated 2 migrations (execution time 00:00.026s)
+2026-11-16T11:32:30.505+07:00  INFO 16992 --- [notification-service] [    Test worker] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table "public"."flyway_schema_history" ...
+2026-11-16T11:32:30.571+07:00  INFO 16992 --- [notification-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Current version of schema "public": << Empty Schema >>
+2026-11-16T11:32:30.586+07:00  INFO 16992 --- [notification-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "1 - notifications"
+2026-11-16T11:32:30.635+07:00  INFO 16992 --- [notification-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "2 - write fence abort"
+2026-11-16T11:32:30.667+07:00  INFO 16992 --- [notification-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Successfully applied 2 migrations to schema "public", now at version v2 (execution time 00:00.030s)
+2026-11-16T11:32:30.825+07:00  INFO 16992 --- [notification-service] [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-11-16T11:32:30.912+07:00  INFO 16992 --- [notification-service] [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2026-11-16T11:32:30.957+07:00  INFO 16992 --- [notification-service] [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-11-16T11:32:31.156+07:00  INFO 16992 --- [notification-service] [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-11-16T11:32:32.536+07:00  INFO 16992 --- [notification-service] [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-11-16T11:32:32.615+07:00  INFO 16992 --- [notification-service] [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-11-16T11:32:33.072+07:00  INFO 16992 --- [notification-service] [    Test worker] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-11-16T11:32:34.701+07:00  INFO 16992 --- [notification-service] [    Test worker] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoints beneath base path '/actuator'
+2026-11-16T11:32:36.993+07:00  INFO 16992 --- [notification-service] [    Test worker] o.s.cloud.commons.util.InetUtils         : Cannot determine local hostname
+2026-11-16T11:32:37.016+07:00  INFO 16992 --- [notification-service] [    Test worker] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestTemplate.
+2026-11-16T11:32:37.087+07:00  WARN 16992 --- [notification-service] [    Test worker] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2026-11-16T11:32:37.282+07:00  INFO 16992 --- [notification-service] [    Test worker] o.a.k.clients.consumer.ConsumerConfig    : ConsumerConfig values: 
+	allow.auto.create.topics = true
+	auto.commit.interval.ms = 5000
+	auto.include.jmx.reporter = true
+	auto.offset.reset = earliest
+	bootstrap.servers = [localhost:60134]
+	check.crcs = true
+	client.dns.lookup = use_all_dns_ips
+	client.id = consumer-notification-service-1
+	client.rack = 
+	connections.max.idle.ms = 540000
+	default.api.timeout.ms = 60000
+	enable.auto.commit = false
+	enable.metrics.push = true
+	exclude.internal.topics = true
+	fetch.max.bytes = 52428800
+	fetch.max.wait.ms = 500
+	fetch.min.bytes = 1
+	group.id = notification-service
+	group.instance.id = null
+	group.protocol = classic
+	group.remote.assignor = null
+	heartbeat.interval.ms = 3000
+	interceptor.classes = []
+	internal.leave.group.on.close = true
+	internal.throw.on.fetch.stable.offset.unsupported = false
+	isolation.level = read_uncommitted
+	key.deserializer = class org.apache.kafka.common.serialization.StringDeserializer
+	max.partition.fetch.bytes = 1048576
+	max.poll.interval.ms = 300000
+	max.poll.records = 500
+	metadata.max.age.ms = 300000
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	partition.assignment.strategy = [class org.apache.kafka.clients.consumer.RangeAssignor, class org.apache.kafka.clients.consumer.CooperativeStickyAssignor]
+	receive.buffer.bytes = 65536
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 30000
+	retry.backoff.max.ms = 1000
+	retry.backoff.ms = 100
+	sasl.client.callback.handler.class = null
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.login.callback.handler.class = null
+	sasl.login.class = null
+	sasl.login.connect.timeout.ms = null
+	sasl.login.read.timeout.ms = null
+	sasl.login.refresh.buffer.seconds = 300
+	sasl.login.refresh.min.period.seconds = 60
+	sasl.login.refresh.window.factor = 0.8
+	sasl.login.refresh.window.jitter = 0.05
+	sasl.login.retry.backoff.max.ms = 10000
+	sasl.login.retry.backoff.ms = 100
+	sasl.mechanism = GSSAPI
+	sasl.oauthbearer.clock.skew.seconds = 30
+	sasl.oauthbearer.expected.audience = null
+	sasl.oauthbearer.expected.issuer = null
+	sasl.oauthbearer.jwks.endpoint.refresh.ms = 3600000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.max.ms = 10000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.ms = 100
+	sasl.oauthbearer.jwks.endpoint.url = null
+	sasl.oauthbearer.scope.claim.name = scope
+	sasl.oauthbearer.sub.claim.name = sub
+	sasl.oauthbearer.token.endpoint.url = null
+	security.protocol = PLAINTEXT
+	security.providers = null
+	send.buffer.bytes = 131072
+	session.timeout.ms = 45000
+	socket.connection.setup.timeout.max.ms = 30000
+	socket.connection.setup.timeout.ms = 10000
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.3]
+	ssl.endpoint.identification.algorithm = https
+	ssl.engine.factory.class = null
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.certificate.chain = null
+	ssl.keystore.key = null
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLSv1.3
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.certificates = null
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+	value.deserializer = class org.apache.kafka.common.serialization.StringDeserializer
+
+2026-11-16T11:32:37.361+07:00  INFO 16992 --- [notification-service] [    Test worker] o.a.k.c.t.i.KafkaMetricsCollector        : initializing Kafka metrics collector
+2026-11-16T11:32:37.673+07:00  INFO 16992 --- [notification-service] [    Test worker] o.a.kafka.common.utils.AppInfoParser     : Kafka version: 3.7.1
+2026-11-16T11:32:37.674+07:00  INFO 16992 --- [notification-service] [    Test worker] o.a.kafka.common.utils.AppInfoParser     : Kafka commitId: e2494e6ffb89f828
+2026-11-16T11:32:37.674+07:00  INFO 16992 --- [notification-service] [    Test worker] o.a.kafka.common.utils.AppInfoParser     : Kafka startTimeMs: 1794803557672
+2026-11-16T11:32:37.689+07:00  INFO 16992 --- [notification-service] [    Test worker] o.a.k.c.c.internals.LegacyKafkaConsumer  : [Consumer clientId=consumer-notification-service-1, groupId=notification-service] Subscribed to topic(s): order.placed.v1, seller-order.status-changed.v1
+2026-11-16T11:32:37.713+07:00  INFO 16992 --- [notification-service] [    Test worker] c.p.n.web.OrderEventKafkaIT              : Started OrderEventKafkaIT in 11.928 seconds (process running for 31.831)
+2026-11-16T11:32:37.792+07:00  INFO 16992 --- [notification-service] [    Test worker] o.a.k.clients.producer.ProducerConfig    : ProducerConfig values: 
+	acks = -1
+	auto.include.jmx.reporter = true
+	batch.size = 16384
+	bootstrap.servers = [localhost:60134]
+	buffer.memory = 33554432
+	client.dns.lookup = use_all_dns_ips
+	client.id = notification-service-producer-1
+	compression.type = none
+	connections.max.idle.ms = 540000
+	delivery.timeout.ms = 120000
+	enable.idempotence = true
+	enable.metrics.push = true
+	interceptor.classes = []
+	key.serializer = class org.apache.kafka.common.serialization.StringSerializer
+	linger.ms = 0
+	max.block.ms = 60000
+	max.in.flight.requests.per.connection = 5
+	max.request.size = 1048576
+	metadata.max.age.ms = 300000
+	metadata.max.idle.ms = 300000
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	partitioner.adaptive.partitioning.enable = true
+	partitioner.availability.timeout.ms = 0
+	partitioner.class = null
+	partitioner.ignore.keys = false
+	receive.buffer.bytes = 32768
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 30000
+	retries = 2147483647
+	retry.backoff.max.ms = 1000
+	retry.backoff.ms = 100
+	sasl.client.callback.handler.class = null
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.login.callback.handler.class = null
+	sasl.login.class = null
+	sasl.login.connect.timeout.ms = null
+	sasl.login.read.timeout.ms = null
+	sasl.login.refresh.buffer.seconds = 300
+	sasl.login.refresh.min.period.seconds = 60
+	sasl.login.refresh.window.factor = 0.8
+	sasl.login.refresh.window.jitter = 0.05
+	sasl.login.retry.backoff.max.ms = 10000
+	sasl.login.retry.backoff.ms = 100
+	sasl.mechanism = GSSAPI
+	sasl.oauthbearer.clock.skew.seconds = 30
+	sasl.oauthbearer.expected.audience = null
+	sasl.oauthbearer.expected.issuer = null
+	sasl.oauthbearer.jwks.endpoint.refresh.ms = 3600000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.max.ms = 10000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.ms = 100
+	sasl.oauthbearer.jwks.endpoint.url = null
+	sasl.oauthbearer.scope.claim.name = scope
+	sasl.oauthbearer.sub.claim.name = sub
+	sasl.oauthbearer.token.endpoint.url = null
+	security.protocol = PLAINTEXT
+	security.providers = null
+	send.buffer.bytes = 131072
+	socket.connection.setup.timeout.max.ms = 30000
+	socket.connection.setup.timeout.ms = 10000
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.3]
+	ssl.endpoint.identification.algorithm = https
+	ssl.engine.factory.class = null
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.certificate.chain = null
+	ssl.keystore.key = null
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLSv1.3
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.certificates = null
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+	transaction.timeout.ms = 60000
+	transactional.id = null
+	value.serializer = class org.apache.kafka.common.serialization.StringSerializer
+
+2026-11-16T11:32:37.796+07:00  INFO 16992 --- [notification-service] [    Test worker] o.a.k.c.t.i.KafkaMetricsCollector        : initializing Kafka metrics collector
+2026-11-16T11:32:37.822+07:00  INFO 16992 --- [notification-service] [    Test worker] o.a.k.clients.producer.KafkaProducer     : [Producer clientId=notification-service-producer-1] Instantiated an idempotent producer.
+2026-11-16T11:32:37.853+07:00  INFO 16992 --- [notification-service] [    Test worker] o.a.kafka.common.utils.AppInfoParser     : Kafka version: 3.7.1
+2026-11-16T11:32:37.854+07:00  INFO 16992 --- [notification-service] [    Test worker] o.a.kafka.common.utils.AppInfoParser     : Kafka commitId: e2494e6ffb89f828
+2026-11-16T11:32:37.854+07:00  INFO 16992 --- [notification-service] [    Test worker] o.a.kafka.common.utils.AppInfoParser     : Kafka startTimeMs: 1794803557853
+2026-11-16T11:32:38.319+07:00  WARN 16992 --- [notification-service] [vice-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=notification-service-producer-1] Error while fetching metadata with correlation id 1 : {seller-order.status-changed.v1=UNKNOWN_TOPIC_OR_PARTITION}
+2026-11-16T11:32:38.320+07:00  WARN 16992 --- [notification-service] [ntainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notification-service-1, groupId=notification-service] Error while fetching metadata with correlation id 2 : {order.placed.v1=UNKNOWN_TOPIC_OR_PARTITION, seller-order.status-changed.v1=UNKNOWN_TOPIC_OR_PARTITION}
+2026-11-16T11:32:38.322+07:00  INFO 16992 --- [notification-service] [ntainer#0-0-C-1] org.apache.kafka.clients.Metadata        : [Consumer clientId=consumer-notification-service-1, groupId=notification-service] Cluster ID: 4L6g3nShT-eMCtK--X86sw
+2026-11-16T11:32:38.322+07:00  INFO 16992 --- [notification-service] [vice-producer-1] org.apache.kafka.clients.Metadata        : [Producer clientId=notification-service-producer-1] Cluster ID: 4L6g3nShT-eMCtK--X86sw
+2026-11-16T11:32:38.450+07:00  INFO 16992 --- [notification-service] [ntainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notification-service-1, groupId=notification-service] Discovered group coordinator localhost:60134 (id: 2147483646 rack: null)
+2026-11-16T11:32:38.455+07:00  INFO 16992 --- [notification-service] [ntainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notification-service-1, groupId=notification-service] (Re-)joining group
+2026-11-16T11:32:38.489+07:00  INFO 16992 --- [notification-service] [ntainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notification-service-1, groupId=notification-service] Request joining group due to: need to re-join with the given member-id: consumer-notification-service-1-4754298b-40b7-430e-bb0c-61c590a8e529
+2026-11-16T11:32:38.490+07:00  INFO 16992 --- [notification-service] [ntainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notification-service-1, groupId=notification-service] (Re-)joining group
+2026-11-16T11:32:38.505+07:00  INFO 16992 --- [notification-service] [ntainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notification-service-1, groupId=notification-service] Successfully joined group with generation Generation{generationId=1, memberId='consumer-notification-service-1-4754298b-40b7-430e-bb0c-61c590a8e529', protocol='range'}
+2026-11-16T11:32:38.512+07:00  INFO 16992 --- [notification-service] [ntainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notification-service-1, groupId=notification-service] Finished assignment for group at generation 1: {consumer-notification-service-1-4754298b-40b7-430e-bb0c-61c590a8e529=Assignment(partitions=[order.placed.v1-0, seller-order.status-changed.v1-0])}
+2026-11-16T11:32:38.539+07:00  INFO 16992 --- [notification-service] [ntainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notification-service-1, groupId=notification-service] Successfully synced group in generation Generation{generationId=1, memberId='consumer-notification-service-1-4754298b-40b7-430e-bb0c-61c590a8e529', protocol='range'}
+2026-11-16T11:32:38.540+07:00  INFO 16992 --- [notification-service] [ntainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notification-service-1, groupId=notification-service] Notifying assignor about the new Assignment(partitions=[order.placed.v1-0, seller-order.status-changed.v1-0])
+2026-11-16T11:32:38.543+07:00  INFO 16992 --- [notification-service] [vice-producer-1] o.a.k.c.p.internals.TransactionManager   : [Producer clientId=notification-service-producer-1] ProducerId set to 0 with epoch 0
+2026-11-16T11:32:38.544+07:00  INFO 16992 --- [notification-service] [ntainer#0-0-C-1] k.c.c.i.ConsumerRebalanceListenerInvoker : [Consumer clientId=consumer-notification-service-1, groupId=notification-service] Adding newly assigned partitions: order.placed.v1-0, seller-order.status-changed.v1-0
+2026-11-16T11:32:38.564+07:00  INFO 16992 --- [notification-service] [ntainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notification-service-1, groupId=notification-service] Found no committed offset for partition order.placed.v1-0
+2026-11-16T11:32:38.565+07:00  INFO 16992 --- [notification-service] [ntainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notification-service-1, groupId=notification-service] Found no committed offset for partition seller-order.status-changed.v1-0
+2026-11-16T11:32:38.583+07:00  INFO 16992 --- [notification-service] [ntainer#0-0-C-1] o.a.k.c.c.internals.SubscriptionState    : [Consumer clientId=consumer-notification-service-1, groupId=notification-service] Resetting offset for partition order.placed.v1-0 to position FetchPosition{offset=0, offsetEpoch=Optional.empty, currentLeader=LeaderAndEpoch{leader=Optional[localhost:60134 (id: 1 rack: null)], epoch=0}}.
+2026-11-16T11:32:38.584+07:00  INFO 16992 --- [notification-service] [ntainer#0-0-C-1] o.a.k.c.c.internals.SubscriptionState    : [Consumer clientId=consumer-notification-service-1, groupId=notification-service] Resetting offset for partition seller-order.status-changed.v1-0 to position FetchPosition{offset=0, offsetEpoch=Optional.empty, currentLeader=LeaderAndEpoch{leader=Optional[localhost:60134 (id: 1 rack: null)], epoch=0}}.
+2026-11-16T11:32:38.585+07:00  INFO 16992 --- [notification-service] [ntainer#0-0-C-1] o.s.k.l.KafkaMessageListenerContainer    : notification-service: partitions assigned: [order.placed.v1-0, seller-order.status-changed.v1-0]
+2026-11-16T11:32:38.610+07:00  INFO 16992 --- [notification-service] [    Test worker] o.a.k.clients.consumer.ConsumerConfig    : ConsumerConfig values: 
+	allow.auto.create.topics = true
+	auto.commit.interval.ms = 5000
+	auto.include.jmx.reporter = true
+	auto.offset.reset = earliest
+	bootstrap.servers = [localhost:60134]
+	check.crcs = true
+	client.dns.lookup = use_all_dns_ips
+	client.id = consumer-dlt-check-2
+	client.rack = 
+	connections.max.idle.ms = 540000
+	default.api.timeout.ms = 60000
+	enable.auto.commit = true
+	enable.metrics.push = true
+	exclude.internal.topics = true
+	fetch.max.bytes = 52428800
+	fetch.max.wait.ms = 500
+	fetch.min.bytes = 1
+	group.id = dlt-check
+	group.instance.id = null
+	group.protocol = classic
+	group.remote.assignor = null
+	heartbeat.interval.ms = 3000
+	interceptor.classes = []
+	internal.leave.group.on.close = true
+	internal.throw.on.fetch.stable.offset.unsupported = false
+	isolation.level = read_uncommitted
+	key.deserializer = class org.apache.kafka.common.serialization.StringDeserializer
+	max.partition.fetch.bytes = 1048576
+	max.poll.interval.ms = 300000
+	max.poll.records = 500
+	metadata.max.age.ms = 300000
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	partition.assignment.strategy = [class org.apache.kafka.clients.consumer.RangeAssignor, class org.apache.kafka.clients.consumer.CooperativeStickyAssignor]
+	receive.buffer.bytes = 65536
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 30000
+	retry.backoff.max.ms = 1000
+	retry.backoff.ms = 100
+	sasl.client.callback.handler.class = null
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.login.callback.handler.class = null
+	sasl.login.class = null
+	sasl.login.connect.timeout.ms = null
+	sasl.login.read.timeout.ms = null
+	sasl.login.refresh.buffer.seconds = 300
+	sasl.login.refresh.min.period.seconds = 60
+	sasl.login.refresh.window.factor = 0.8
+	sasl.login.refresh.window.jitter = 0.05
+	sasl.login.retry.backoff.max.ms = 10000
+	sasl.login.retry.backoff.ms = 100
+	sasl.mechanism = GSSAPI
+	sasl.oauthbearer.clock.skew.seconds = 30
+	sasl.oauthbearer.expected.audience = null
+	sasl.oauthbearer.expected.issuer = null
+	sasl.oauthbearer.jwks.endpoint.refresh.ms = 3600000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.max.ms = 10000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.ms = 100
+	sasl.oauthbearer.jwks.endpoint.url = null
+	sasl.oauthbearer.scope.claim.name = scope
+	sasl.oauthbearer.sub.claim.name = sub
+	sasl.oauthbearer.token.endpoint.url = null
+	security.protocol = PLAINTEXT
+	security.providers = null
+	send.buffer.bytes = 131072
+	session.timeout.ms = 45000
+	socket.connection.setup.timeout.max.ms = 30000
+	socket.connection.setup.timeout.ms = 10000
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.3]
+	ssl.endpoint.identification.algorithm = https
+	ssl.engine.factory.class = null
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.certificate.chain = null
+	ssl.keystore.key = null
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLSv1.3
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.certificates = null
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+	value.deserializer = class org.apache.kafka.common.serialization.StringDeserializer
+
+2026-11-16T11:32:38.613+07:00  INFO 16992 --- [notification-service] [    Test worker] o.a.k.c.t.i.KafkaMetricsCollector        : initializing Kafka metrics collector
+2026-11-16T11:32:38.629+07:00  INFO 16992 --- [notification-service] [    Test worker] o.a.kafka.common.utils.AppInfoParser     : Kafka version: 3.7.1
+2026-11-16T11:32:38.630+07:00  INFO 16992 --- [notification-service] [    Test worker] o.a.kafka.common.utils.AppInfoParser     : Kafka commitId: e2494e6ffb89f828
+2026-11-16T11:32:38.630+07:00  INFO 16992 --- [notification-service] [    Test worker] o.a.kafka.common.utils.AppInfoParser     : Kafka startTimeMs: 1794803558629
+2026-11-16T11:32:38.639+07:00  INFO 16992 --- [notification-service] [    Test worker] o.a.k.c.c.internals.LegacyKafkaConsumer  : [Consumer clientId=consumer-dlt-check-2, groupId=dlt-check] Subscribed to topic(s): seller-order.status-changed.v1.dlt
+2026-11-16T11:32:38.787+07:00  WARN 16992 --- [notification-service] [aitility-thread] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-dlt-check-2, groupId=dlt-check] Error while fetching metadata with correlation id 2 : {seller-order.status-changed.v1.dlt=UNKNOWN_TOPIC_OR_PARTITION}
+2026-11-16T11:32:38.788+07:00  INFO 16992 --- [notification-service] [aitility-thread] org.apache.kafka.clients.Metadata        : [Consumer clientId=consumer-dlt-check-2, groupId=dlt-check] Cluster ID: 4L6g3nShT-eMCtK--X86sw
+2026-11-16T11:32:38.788+07:00  INFO 16992 --- [notification-service] [aitility-thread] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-dlt-check-2, groupId=dlt-check] Discovered group coordinator localhost:60134 (id: 2147483646 rack: null)
+2026-11-16T11:32:38.795+07:00  INFO 16992 --- [notification-service] [aitility-thread] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-dlt-check-2, groupId=dlt-check] (Re-)joining group
+2026-11-16T11:32:38.801+07:00  INFO 16992 --- [notification-service] [aitility-thread] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-dlt-check-2, groupId=dlt-check] Request joining group due to: need to re-join with the given member-id: consumer-dlt-check-2-51851036-7ed3-4e87-bf70-560ff7c9686c
+2026-11-16T11:32:38.802+07:00  INFO 16992 --- [notification-service] [aitility-thread] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-dlt-check-2, groupId=dlt-check] (Re-)joining group
+2026-11-16T11:32:38.807+07:00  INFO 16992 --- [notification-service] [aitility-thread] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-dlt-check-2, groupId=dlt-check] Successfully joined group with generation Generation{generationId=1, memberId='consumer-dlt-check-2-51851036-7ed3-4e87-bf70-560ff7c9686c', protocol='range'}
+2026-11-16T11:32:38.921+07:00  INFO 16992 --- [notification-service] [aitility-thread] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-dlt-check-2, groupId=dlt-check] Finished assignment for group at generation 1: {consumer-dlt-check-2-51851036-7ed3-4e87-bf70-560ff7c9686c=Assignment(partitions=[seller-order.status-changed.v1.dlt-0])}
+2026-11-16T11:32:38.926+07:00  INFO 16992 --- [notification-service] [aitility-thread] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-dlt-check-2, groupId=dlt-check] Successfully synced group in generation Generation{generationId=1, memberId='consumer-dlt-check-2-51851036-7ed3-4e87-bf70-560ff7c9686c', protocol='range'}
+2026-11-16T11:32:38.927+07:00  INFO 16992 --- [notification-service] [aitility-thread] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-dlt-check-2, groupId=dlt-check] Notifying assignor about the new Assignment(partitions=[seller-order.status-changed.v1.dlt-0])
+2026-11-16T11:32:38.927+07:00  INFO 16992 --- [notification-service] [aitility-thread] k.c.c.i.ConsumerRebalanceListenerInvoker : [Consumer clientId=consumer-dlt-check-2, groupId=dlt-check] Adding newly assigned partitions: seller-order.status-changed.v1.dlt-0
+2026-11-16T11:32:38.931+07:00  INFO 16992 --- [notification-service] [aitility-thread] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-dlt-check-2, groupId=dlt-check] Found no committed offset for partition seller-order.status-changed.v1.dlt-0
+2026-11-16T11:32:38.934+07:00  INFO 16992 --- [notification-service] [aitility-thread] o.a.k.c.c.internals.SubscriptionState    : [Consumer clientId=consumer-dlt-check-2, groupId=dlt-check] Resetting offset for partition seller-order.status-changed.v1.dlt-0 to position FetchPosition{offset=0, offsetEpoch=Optional.empty, currentLeader=LeaderAndEpoch{leader=Optional[localhost:60134 (id: 1 rack: null)], epoch=0}}.
+2026-11-16T11:32:39.758+07:00  INFO 16992 --- [notification-service] [ntainer#0-0-C-1] o.a.k.c.c.internals.LegacyKafkaConsumer  : [Consumer clientId=consumer-notification-service-1, groupId=notification-service] Seeking to offset 0 for partition seller-order.status-changed.v1-0
+2026-11-16T11:32:39.759+07:00 ERROR 16992 --- [notification-service] [ntainer#0-0-C-1] o.s.k.l.KafkaMessageListenerContainer    : Error handler threw an exception
+
+org.springframework.kafka.KafkaException: Seek to current after exception
+	at org.springframework.kafka.listener.SeekUtils.seekOrRecover(SeekUtils.java:227) ~[spring-kafka-3.2.4.jar:3.2.4]
+	at org.springframework.kafka.listener.DefaultErrorHandler.handleRemaining(DefaultErrorHandler.java:168) ~[spring-kafka-3.2.4.jar:3.2.4]
+	at org.springframework.kafka.listener.KafkaMessageListenerContainer$ListenerConsumer.invokeErrorHandler(KafkaMessageListenerContainer.java:2836) ~[spring-kafka-3.2.4.jar:3.2.4]
+	at org.springframework.kafka.listener.KafkaMessageListenerContainer$ListenerConsumer.lambda$doInvokeRecordListener$53(KafkaMessageListenerContainer.java:2713) ~[spring-kafka-3.2.4.jar:3.2.4]
+	at io.micrometer.observation.Observation.observe(Observation.java:565) ~[micrometer-observation-1.13.6.jar:1.13.6]
+	at org.springframework.kafka.listener.KafkaMessageListenerContainer$ListenerConsumer.doInvokeRecordListener(KafkaMessageListenerContainer.java:2699) ~[spring-kafka-3.2.4.jar:3.2.4]
+	at org.springframework.kafka.listener.KafkaMessageListenerContainer$ListenerConsumer.doInvokeWithRecords(KafkaMessageListenerContainer.java:2541) ~[spring-kafka-3.2.4.jar:3.2.4]
+	at org.springframework.kafka.listener.KafkaMessageListenerContainer$ListenerConsumer.invokeRecordListener(KafkaMessageListenerContainer.java:2430) ~[spring-kafka-3.2.4.jar:3.2.4]
+	at org.springframework.kafka.listener.KafkaMessageListenerContainer$ListenerConsumer.invokeListener(KafkaMessageListenerContainer.java:2085) ~[spring-kafka-3.2.4.jar:3.2.4]
+	at org.springframework.kafka.listener.KafkaMessageListenerContainer$ListenerConsumer.invokeIfHaveRecords(KafkaMessageListenerContainer.java:1461) ~[spring-kafka-3.2.4.jar:3.2.4]
+	at org.springframework.kafka.listener.KafkaMessageListenerContainer$ListenerConsumer.pollAndInvoke(KafkaMessageListenerContainer.java:1426) ~[spring-kafka-3.2.4.jar:3.2.4]
+	at org.springframework.kafka.listener.KafkaMessageListenerContainer$ListenerConsumer.run(KafkaMessageListenerContainer.java:1296) ~[spring-kafka-3.2.4.jar:3.2.4]
+	at java.base/java.util.concurrent.CompletableFuture$AsyncRun.run(CompletableFuture.java:1804) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+Caused by: org.springframework.kafka.listener.ListenerExecutionFailedException: Listener method 'void com.projecthk5.notificationservice.web.OrderEventListener.on(java.lang.String) throws com.fasterxml.jackson.core.JsonProcessingException' threw exception
+	at org.springframework.kafka.listener.KafkaMessageListenerContainer$ListenerConsumer.decorateException(KafkaMessageListenerContainer.java:2869) ~[spring-kafka-3.2.4.jar:3.2.4]
+	at org.springframework.kafka.listener.KafkaMessageListenerContainer$ListenerConsumer.doInvokeOnMessage(KafkaMessageListenerContainer.java:2814) ~[spring-kafka-3.2.4.jar:3.2.4]
+	at org.springframework.kafka.listener.KafkaMessageListenerContainer$ListenerConsumer.invokeOnMessage(KafkaMessageListenerContainer.java:2778) ~[spring-kafka-3.2.4.jar:3.2.4]
+	at org.springframework.kafka.listener.KafkaMessageListenerContainer$ListenerConsumer.lambda$doInvokeRecordListener$53(KafkaMessageListenerContainer.java:2701) ~[spring-kafka-3.2.4.jar:3.2.4]
+	... 10 common frames omitted
+	Suppressed: org.springframework.kafka.listener.ListenerExecutionFailedException: Restored Stack Trace
+		at org.springframework.kafka.listener.adapter.MessagingMessageListenerAdapter.invokeHandler(MessagingMessageListenerAdapter.java:435) ~[spring-kafka-3.2.4.jar:3.2.4]
+		at org.springframework.kafka.listener.adapter.MessagingMessageListenerAdapter.invoke(MessagingMessageListenerAdapter.java:384) ~[spring-kafka-3.2.4.jar:3.2.4]
+		at org.springframework.kafka.listener.adapter.RecordMessagingMessageListenerAdapter.onMessage(RecordMessagingMessageListenerAdapter.java:85) ~[spring-kafka-3.2.4.jar:3.2.4]
+		at org.springframework.kafka.listener.adapter.RecordMessagingMessageListenerAdapter.onMessage(RecordMessagingMessageListenerAdapter.java:50) ~[spring-kafka-3.2.4.jar:3.2.4]
+		at org.springframework.kafka.listener.KafkaMessageListenerContainer$ListenerConsumer.doInvokeOnMessage(KafkaMessageListenerContainer.java:2800) ~[spring-kafka-3.2.4.jar:3.2.4]
+Caused by: com.fasterxml.jackson.core.JsonParseException: Unrecognized token 'not': was expecting (JSON String, Number, Array, Object or token 'null', 'true' or 'false')
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); line: 1, column: 4]
+	at com.fasterxml.jackson.core.JsonParser._constructError(JsonParser.java:2572) ~[jackson-core-2.17.2.jar:2.17.2]
+	at com.fasterxml.jackson.core.JsonParser._constructReadException(JsonParser.java:2598) ~[jackson-core-2.17.2.jar:2.17.2]
+	at com.fasterxml.jackson.core.JsonParser._constructReadException(JsonParser.java:2606) ~[jackson-core-2.17.2.jar:2.17.2]
+	at com.fasterxml.jackson.core.base.ParserMinimalBase._reportError(ParserMinimalBase.java:765) ~[jackson-core-2.17.2.jar:2.17.2]
+	at com.fasterxml.jackson.core.json.ReaderBasedJsonParser._reportInvalidToken(ReaderBasedJsonParser.java:3018) ~[jackson-core-2.17.2.jar:2.17.2]
+	at com.fasterxml.jackson.core.json.ReaderBasedJsonParser._reportInvalidToken(ReaderBasedJsonParser.java:2996) ~[jackson-core-2.17.2.jar:2.17.2]
+	at com.fasterxml.jackson.core.json.ReaderBasedJsonParser._matchToken(ReaderBasedJsonParser.java:2761) ~[jackson-core-2.17.2.jar:2.17.2]
+	at com.fasterxml.jackson.core.json.ReaderBasedJsonParser._matchNull(ReaderBasedJsonParser.java:2747) ~[jackson-core-2.17.2.jar:2.17.2]
+	at com.fasterxml.jackson.core.json.ReaderBasedJsonParser.nextToken(ReaderBasedJsonParser.java:750) ~[jackson-core-2.17.2.jar:2.17.2]
+	at com.fasterxml.jackson.databind.ObjectMapper._readTreeAndClose(ObjectMapper.java:4934) ~[jackson-databind-2.17.2.jar:2.17.2]
+	at com.fasterxml.jackson.databind.ObjectMapper.readTree(ObjectMapper.java:3280) ~[jackson-databind-2.17.2.jar:2.17.2]
+	at com.projecthk5.notificationservice.web.OrderEventListener.on(OrderEventListener.java:32) ~[main/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.messaging.handler.invocation.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:169) ~[spring-messaging-6.1.14.jar:6.1.14]
+	at org.springframework.kafka.listener.adapter.KotlinAwareInvocableHandlerMethod.doInvoke(KotlinAwareInvocableHandlerMethod.java:45) ~[spring-kafka-3.2.4.jar:3.2.4]
+	at org.springframework.messaging.handler.invocation.InvocableHandlerMethod.invoke(InvocableHandlerMethod.java:119) ~[spring-messaging-6.1.14.jar:6.1.14]
+	at org.springframework.kafka.listener.adapter.HandlerAdapter.invoke(HandlerAdapter.java:70) ~[spring-kafka-3.2.4.jar:3.2.4]
+	at org.springframework.kafka.listener.adapter.MessagingMessageListenerAdapter.invokeHandler(MessagingMessageListenerAdapter.java:420) ~[spring-kafka-3.2.4.jar:3.2.4]
+	at org.springframework.kafka.listener.adapter.MessagingMessageListenerAdapter.invoke(MessagingMessageListenerAdapter.java:384) ~[spring-kafka-3.2.4.jar:3.2.4]
+	at org.springframework.kafka.listener.adapter.RecordMessagingMessageListenerAdapter.onMessage(RecordMessagingMessageListenerAdapter.java:85) ~[spring-kafka-3.2.4.jar:3.2.4]
+	at org.springframework.kafka.listener.adapter.RecordMessagingMessageListenerAdapter.onMessage(RecordMessagingMessageListenerAdapter.java:50) ~[spring-kafka-3.2.4.jar:3.2.4]
+	at org.springframework.kafka.listener.KafkaMessageListenerContainer$ListenerConsumer.doInvokeOnMessage(KafkaMessageListenerContainer.java:2800) ~[spring-kafka-3.2.4.jar:3.2.4]
+	... 12 common frames omitted
+
+2026-11-16T11:32:40.865+07:00  INFO 16992 --- [notification-service] [ntainer#0-0-C-1] o.a.k.c.c.internals.LegacyKafkaConsumer  : [Consumer clientId=consumer-notification-service-1, groupId=notification-service] Seeking to offset 0 for partition seller-order.status-changed.v1-0
+2026-11-16T11:32:40.865+07:00 ERROR 16992 --- [notification-service] [ntainer#0-0-C-1] o.s.k.l.KafkaMessageListenerContainer    : Error handler threw an exception
+
+org.springframework.kafka.KafkaException: Seek to current after exception
+	at org.springframework.kafka.listener.SeekUtils.seekOrRecover(SeekUtils.java:227) ~[spring-kafka-3.2.4.jar:3.2.4]
+	at org.springframework.kafka.listener.DefaultErrorHandler.handleRemaining(DefaultErrorHandler.java:168) ~[spring-kafka-3.2.4.jar:3.2.4]
+	at org.springframework.kafka.listener.KafkaMessageListenerContainer$ListenerConsumer.invokeErrorHandler(KafkaMessageListenerContainer.java:2836) ~[spring-kafka-3.2.4.jar:3.2.4]
+	at org.springframework.kafka.listener.KafkaMessageListenerContainer$ListenerConsumer.lambda$doInvokeRecordListener$53(KafkaMessageListenerContainer.java:2713) ~[spring-kafka-3.2.4.jar:3.2.4]
+	at io.micrometer.observation.Observation.observe(Observation.java:565) ~[micrometer-observation-1.13.6.jar:1.13.6]
+	at org.springframework.kafka.listener.KafkaMessageListenerContainer$ListenerConsumer.doInvokeRecordListener(KafkaMessageListenerContainer.java:2699) ~[spring-kafka-3.2.4.jar:3.2.4]
+	at org.springframework.kafka.listener.KafkaMessageListenerContainer$ListenerConsumer.doInvokeWithRecords(KafkaMessageListenerContainer.java:2541) ~[spring-kafka-3.2.4.jar:3.2.4]
+	at org.springframework.kafka.listener.KafkaMessageListenerContainer$ListenerConsumer.invokeRecordListener(KafkaMessageListenerContainer.java:2430) ~[spring-kafka-3.2.4.jar:3.2.4]
+	at org.springframework.kafka.listener.KafkaMessageListenerContainer$ListenerConsumer.invokeListener(KafkaMessageListenerContainer.java:2085) ~[spring-kafka-3.2.4.jar:3.2.4]
+	at org.springframework.kafka.listener.KafkaMessageListenerContainer$ListenerConsumer.invokeIfHaveRecords(KafkaMessageListenerContainer.java:1461) ~[spring-kafka-3.2.4.jar:3.2.4]
+	at org.springframework.kafka.listener.KafkaMessageListenerContainer$ListenerConsumer.pollAndInvoke(KafkaMessageListenerContainer.java:1426) ~[spring-kafka-3.2.4.jar:3.2.4]
+	at org.springframework.kafka.listener.KafkaMessageListenerContainer$ListenerConsumer.run(KafkaMessageListenerContainer.java:1296) ~[spring-kafka-3.2.4.jar:3.2.4]
+	at java.base/java.util.concurrent.CompletableFuture$AsyncRun.run(CompletableFuture.java:1804) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+Caused by: org.springframework.kafka.listener.ListenerExecutionFailedException: Listener method 'void com.projecthk5.notificationservice.web.OrderEventListener.on(java.lang.String) throws com.fasterxml.jackson.core.JsonProcessingException' threw exception
+	at org.springframework.kafka.listener.KafkaMessageListenerContainer$ListenerConsumer.decorateException(KafkaMessageListenerContainer.java:2869) ~[spring-kafka-3.2.4.jar:3.2.4]
+	at org.springframework.kafka.listener.KafkaMessageListenerContainer$ListenerConsumer.doInvokeOnMessage(KafkaMessageListenerContainer.java:2814) ~[spring-kafka-3.2.4.jar:3.2.4]
+	at org.springframework.kafka.listener.KafkaMessageListenerContainer$ListenerConsumer.invokeOnMessage(KafkaMessageListenerContainer.java:2778) ~[spring-kafka-3.2.4.jar:3.2.4]
+	at org.springframework.kafka.listener.KafkaMessageListenerContainer$ListenerConsumer.lambda$doInvokeRecordListener$53(KafkaMessageListenerContainer.java:2701) ~[spring-kafka-3.2.4.jar:3.2.4]
+	... 10 common frames omitted
+	Suppressed: org.springframework.kafka.listener.ListenerExecutionFailedException: Restored Stack Trace
+		at org.springframework.kafka.listener.adapter.MessagingMessageListenerAdapter.invokeHandler(MessagingMessageListenerAdapter.java:435) ~[spring-kafka-3.2.4.jar:3.2.4]
+		at org.springframework.kafka.listener.adapter.MessagingMessageListenerAdapter.invoke(MessagingMessageListenerAdapter.java:384) ~[spring-kafka-3.2.4.jar:3.2.4]
+		at org.springframework.kafka.listener.adapter.RecordMessagingMessageListenerAdapter.onMessage(RecordMessagingMessageListenerAdapter.java:85) ~[spring-kafka-3.2.4.jar:3.2.4]
+		at org.springframework.kafka.listener.adapter.RecordMessagingMessageListenerAdapter.onMessage(RecordMessagingMessageListenerAdapter.java:50) ~[spring-kafka-3.2.4.jar:3.2.4]
+		at org.springframework.kafka.listener.KafkaMessageListenerContainer$ListenerConsumer.doInvokeOnMessage(KafkaMessageListenerContainer.java:2800) ~[spring-kafka-3.2.4.jar:3.2.4]
+Caused by: com.fasterxml.jackson.core.JsonParseException: Unrecognized token 'not': was expecting (JSON String, Number, Array, Object or token 'null', 'true' or 'false')
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); line: 1, column: 4]
+	at com.fasterxml.jackson.core.JsonParser._constructError(JsonParser.java:2572) ~[jackson-core-2.17.2.jar:2.17.2]
+	at com.fasterxml.jackson.core.JsonParser._constructReadException(JsonParser.java:2598) ~[jackson-core-2.17.2.jar:2.17.2]
+	at com.fasterxml.jackson.core.JsonParser._constructReadException(JsonParser.java:2606) ~[jackson-core-2.17.2.jar:2.17.2]
+	at com.fasterxml.jackson.core.base.ParserMinimalBase._reportError(ParserMinimalBase.java:765) ~[jackson-core-2.17.2.jar:2.17.2]
+	at com.fasterxml.jackson.core.json.ReaderBasedJsonParser._reportInvalidToken(ReaderBasedJsonParser.java:3018) ~[jackson-core-2.17.2.jar:2.17.2]
+	at com.fasterxml.jackson.core.json.ReaderBasedJsonParser._reportInvalidToken(ReaderBasedJsonParser.java:2996) ~[jackson-core-2.17.2.jar:2.17.2]
+	at com.fasterxml.jackson.core.json.ReaderBasedJsonParser._matchToken(ReaderBasedJsonParser.java:2761) ~[jackson-core-2.17.2.jar:2.17.2]
+	at com.fasterxml.jackson.core.json.ReaderBasedJsonParser._matchNull(ReaderBasedJsonParser.java:2747) ~[jackson-core-2.17.2.jar:2.17.2]
+	at com.fasterxml.jackson.core.json.ReaderBasedJsonParser.nextToken(ReaderBasedJsonParser.java:750) ~[jackson-core-2.17.2.jar:2.17.2]
+	at com.fasterxml.jackson.databind.ObjectMapper._readTreeAndClose(ObjectMapper.java:4934) ~[jackson-databind-2.17.2.jar:2.17.2]
+	at com.fasterxml.jackson.databind.ObjectMapper.readTree(ObjectMapper.java:3280) ~[jackson-databind-2.17.2.jar:2.17.2]
+	at com.projecthk5.notificationservice.web.OrderEventListener.on(OrderEventListener.java:32) ~[main/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.messaging.handler.invocation.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:169) ~[spring-messaging-6.1.14.jar:6.1.14]
+	at org.springframework.kafka.listener.adapter.KotlinAwareInvocableHandlerMethod.doInvoke(KotlinAwareInvocableHandlerMethod.java:45) ~[spring-kafka-3.2.4.jar:3.2.4]
+	at org.springframework.messaging.handler.invocation.InvocableHandlerMethod.invoke(InvocableHandlerMethod.java:119) ~[spring-messaging-6.1.14.jar:6.1.14]
+	at org.springframework.kafka.listener.adapter.HandlerAdapter.invoke(HandlerAdapter.java:70) ~[spring-kafka-3.2.4.jar:3.2.4]
+	at org.springframework.kafka.listener.adapter.MessagingMessageListenerAdapter.invokeHandler(MessagingMessageListenerAdapter.java:420) ~[spring-kafka-3.2.4.jar:3.2.4]
+	at org.springframework.kafka.listener.adapter.MessagingMessageListenerAdapter.invoke(MessagingMessageListenerAdapter.java:384) ~[spring-kafka-3.2.4.jar:3.2.4]
+	at org.springframework.kafka.listener.adapter.RecordMessagingMessageListenerAdapter.onMessage(RecordMessagingMessageListenerAdapter.java:85) ~[spring-kafka-3.2.4.jar:3.2.4]
+	at org.springframework.kafka.listener.adapter.RecordMessagingMessageListenerAdapter.onMessage(RecordMessagingMessageListenerAdapter.java:50) ~[spring-kafka-3.2.4.jar:3.2.4]
+	at org.springframework.kafka.listener.KafkaMessageListenerContainer$ListenerConsumer.doInvokeOnMessage(KafkaMessageListenerContainer.java:2800) ~[spring-kafka-3.2.4.jar:3.2.4]
+	... 12 common frames omitted
+
+2026-11-16T11:32:40.931+07:00  INFO 16992 --- [notification-service] [    Test worker] k.c.c.i.ConsumerRebalanceListenerInvoker : [Consumer clientId=consumer-dlt-check-2, groupId=dlt-check] Revoke previously assigned partitions seller-order.status-changed.v1.dlt-0
+2026-11-16T11:32:40.931+07:00  INFO 16992 --- [notification-service] [    Test worker] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-dlt-check-2, groupId=dlt-check] Member consumer-dlt-check-2-51851036-7ed3-4e87-bf70-560ff7c9686c sending LeaveGroup request to coordinator localhost:60134 (id: 2147483646 rack: null) due to the consumer is being closed
+2026-11-16T11:32:40.932+07:00  INFO 16992 --- [notification-service] [    Test worker] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-dlt-check-2, groupId=dlt-check] Resetting generation and member id due to: consumer pro-actively leaving the group
+2026-11-16T11:32:40.933+07:00  INFO 16992 --- [notification-service] [    Test worker] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-dlt-check-2, groupId=dlt-check] Request joining group due to: consumer pro-actively leaving the group
+2026-11-16T11:32:41.402+07:00  INFO 16992 --- [notification-service] [    Test worker] o.apache.kafka.common.metrics.Metrics    : Metrics scheduler closed
+2026-11-16T11:32:41.402+07:00  INFO 16992 --- [notification-service] [    Test worker] o.apache.kafka.common.metrics.Metrics    : Closing reporter org.apache.kafka.common.metrics.JmxReporter
+2026-11-16T11:32:41.403+07:00  INFO 16992 --- [notification-service] [    Test worker] o.apache.kafka.common.metrics.Metrics    : Closing reporter org.apache.kafka.common.telemetry.internals.ClientTelemetryReporter
+2026-11-16T11:32:41.403+07:00  INFO 16992 --- [notification-service] [    Test worker] o.apache.kafka.common.metrics.Metrics    : Metrics reporters closed
+2026-11-16T11:32:41.410+07:00  INFO 16992 --- [notification-service] [    Test worker] o.a.kafka.common.utils.AppInfoParser     : App info kafka.consumer for consumer-dlt-check-2 unregistered
+2026-11-16T11:32:41.650+07:00  WARN 16992 --- [notification-service] [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Error: 0, SQLState: 23502
+2026-11-16T11:32:41.650+07:00 ERROR 16992 --- [notification-service] [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : ERROR: null value in column "title" of relation "notifications" violates not-null constraint
+  Detail: Failing row contains (224049fc-807b-4838-ada6-b2a81b51a521, account-1, ORDER_ACCEPTED, null, m, null, invalid-81b655a7-f437-4813-939b-8d60a07d2294, 2026-11-16 11:32:41.562032+07, null).
+2026-11-16T11:32:42.021+07:00  INFO 16992 --- [notification-service] [vice-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=notification-service-producer-1] Node 1 disconnected.
+2026-11-16T11:32:42.021+07:00  INFO 16992 --- [notification-service] [ntainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notification-service-1, groupId=notification-service] Node 1 disconnected.
+2026-11-16T11:32:42.024+07:00  INFO 16992 --- [notification-service] [ntainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notification-service-1, groupId=notification-service] Cancelled in-flight FETCH request with correlation id 26 due to node 1 being disconnected (elapsed time since creation: 182ms, elapsed time since send: 182ms, request timeout: 30000ms)
+2026-11-16T11:32:42.025+07:00  INFO 16992 --- [notification-service] [ntainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notification-service-1, groupId=notification-service] Node -1 disconnected.
+2026-11-16T11:32:42.025+07:00  INFO 16992 --- [notification-service] [vice-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=notification-service-producer-1] Node -1 disconnected.
+2026-11-16T11:32:42.025+07:00  INFO 16992 --- [notification-service] [ntainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notification-service-1, groupId=notification-service] Node 2147483646 disconnected.
+2026-11-16T11:32:42.026+07:00  INFO 16992 --- [notification-service] [ication-service] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notification-service-1, groupId=notification-service] Group coordinator localhost:60134 (id: 2147483646 rack: null) is unavailable or invalid due to cause: coordinator unavailable. isDisconnected: true. Rediscovery will be attempted.
+2026-11-16T11:32:42.026+07:00  INFO 16992 --- [notification-service] [ntainer#0-0-C-1] o.a.kafka.clients.FetchSessionHandler    : [Consumer clientId=consumer-notification-service-1, groupId=notification-service] Error sending fetch request (sessionId=215499671, epoch=9) to node 1:
+
+org.apache.kafka.common.errors.DisconnectException: null
+
+2026-11-16T11:32:42.152+07:00  INFO 16992 --- [notification-service] [vice-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=notification-service-producer-1] Node 1 disconnected.
+2026-11-16T11:32:42.152+07:00  INFO 16992 --- [notification-service] [ntainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notification-service-1, groupId=notification-service] Node 1 disconnected.
+2026-11-16T11:32:42.152+07:00  INFO 16992 --- [notification-service] [vice-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=notification-service-producer-1] Cancelled in-flight API_VERSIONS request with correlation id 14 due to node 1 being disconnected (elapsed time since creation: 19ms, elapsed time since send: 19ms, request timeout: 30000ms)
+2026-11-16T11:32:42.152+07:00  INFO 16992 --- [notification-service] [ntainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notification-service-1, groupId=notification-service] Cancelled in-flight API_VERSIONS request with correlation id 28 due to node 1 being disconnected (elapsed time since creation: 5ms, elapsed time since send: 5ms, request timeout: 30000ms)
+2026-11-16T11:32:42.378+07:00  INFO 16992 --- [notification-service] [ntainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notification-service-1, groupId=notification-service] Node 1 disconnected.
+2026-11-16T11:32:42.378+07:00  INFO 16992 --- [notification-service] [ntainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notification-service-1, groupId=notification-service] Cancelled in-flight API_VERSIONS request with correlation id 29 due to node 1 being disconnected (elapsed time since creation: 4ms, elapsed time since send: 4ms, request timeout: 30000ms)
+2026-11-16T11:32:42.392+07:00  INFO 16992 --- [notification-service] [vice-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=notification-service-producer-1] Node 1 disconnected.
+2026-11-16T11:32:42.393+07:00  INFO 16992 --- [notification-service] [vice-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=notification-service-producer-1] Cancelled in-flight API_VERSIONS request with correlation id 15 due to node 1 being disconnected (elapsed time since creation: 3ms, elapsed time since send: 3ms, request timeout: 30000ms)
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

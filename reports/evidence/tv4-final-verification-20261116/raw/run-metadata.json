@@ -1,0 +1,16 @@
+{
+  "source_head": "4218c9b4076c7fbaad606a74b6f5adedf26d8e43",
+  "source_main": "b2bee1d13eef2d404bc79c917b36af9489983351",
+  "status_at_start": "clean before receipt, then evidence files untracked",
+  "host": "Windows; Java 21.0.10; Gradle 8.10; Docker Desktop 29.9.1; Node 24.22.0; npm 11.19.1",
+  "flags": {
+    "INVENTORY_ORDER_PAIR_ENABLED": false,
+    "HK5_FINANCE_POLICY_APPROVED": false
+  },
+  "combined_postgres": {
+    "exit": 124,
+    "bounded_timeout_seconds": 240,
+    "note": "Inventory and order process did not finish within bounded timeout; raw console retained.",
+    "disposition": "BLOCKED_TEST_RUN_HANG"
+  }
+}

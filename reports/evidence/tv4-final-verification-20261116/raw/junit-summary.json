@@ -1,0 +1,372 @@
+{
+  "source_head": "4218c9b4076c7fbaad606a74b6f5adedf26d8e43",
+  "generated_at": "2026-11-16T11:53:40.9744161+07:00",
+  "suites": [
+    {
+      "name": "postgres_inventory",
+      "tests": 38.0,
+      "failures": 0.0,
+      "errors": 0.0,
+      "skipped": 0.0,
+      "files": [
+        {
+          "path": "raw/junit/postgres/inventory/TEST-com.projecthk5.inventoryservice.integration.InventoryDefaultFlywayPostgresIT.xml",
+          "tests": 1,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "time": "0.021"
+        },
+        {
+          "path": "raw/junit/postgres/inventory/TEST-com.projecthk5.inventoryservice.integration.InventoryInitializePostgresIT.xml",
+          "tests": 4,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "time": "0.238"
+        },
+        {
+          "path": "raw/junit/postgres/inventory/TEST-com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT.xml",
+          "tests": 10,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "time": "1.003"
+        },
+        {
+          "path": "raw/junit/postgres/inventory/TEST-com.projecthk5.inventoryservice.integration.InventoryReservationLedgerCandidatePostgresIT.xml",
+          "tests": 18,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "time": "1.073"
+        },
+        {
+          "path": "raw/junit/postgres/inventory/TEST-com.projecthk5.inventoryservice.integration.InventorySchemaPostgresIT.xml",
+          "tests": 2,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "time": "0.21"
+        },
+        {
+          "path": "raw/junit/postgres/inventory/TEST-com.projecthk5.inventoryservice.InventoryPostgresIntegrationTest.xml",
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "time": "0.829"
+        }
+      ]
+    },
+    {
+      "name": "unit_inventory",
+      "tests": 27.0,
+      "failures": 0.0,
+      "errors": 0.0,
+      "skipped": 0.0,
+      "files": [
+        {
+          "path": "raw/junit/unit/inventory/TEST-com.projecthk5.inventoryservice.api.InventoryRequestValidationTest.xml",
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "time": "0.341"
+        },
+        {
+          "path": "raw/junit/unit/inventory/TEST-com.projecthk5.inventoryservice.model.InventoryItemTest.xml",
+          "tests": 7,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "time": "0.025"
+        },
+        {
+          "path": "raw/junit/unit/inventory/TEST-com.projecthk5.inventoryservice.security.InventoryInternalTokenFilterTest.xml",
+          "tests": 1,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "time": "0.396"
+        },
+        {
+          "path": "raw/junit/unit/inventory/TEST-com.projecthk5.inventoryservice.security.InventoryOrderPairGateTest.xml",
+          "tests": 10,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "time": "0.088"
+        },
+        {
+          "path": "raw/junit/unit/inventory/TEST-com.projecthk5.inventoryservice.service.InventoryOperationServiceTest.xml",
+          "tests": 6,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "time": "2.769"
+        }
+      ]
+    },
+    {
+      "name": "unit_notification",
+      "tests": 7.0,
+      "failures": 0.0,
+      "errors": 0.0,
+      "skipped": 0.0,
+      "files": [
+        {
+          "path": "raw/junit/unit/notification/TEST-com.projecthk5.notificationservice.web.NotificationPersistenceTest.xml",
+          "tests": 4,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "time": "0.194"
+        },
+        {
+          "path": "raw/junit/unit/notification/TEST-com.projecthk5.notificationservice.web.OrderEventKafkaIT.xml",
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "time": "4.197"
+        }
+      ]
+    },
+    {
+      "name": "unit_order",
+      "tests": 178.0,
+      "failures": 0.0,
+      "errors": 0.0,
+      "skipped": 0.0,
+      "files": [
+        {
+          "path": "raw/junit/unit/order/TEST-com.projecthk5.orderservice.api.SellerOrderControllerTest.xml",
+          "tests": 7,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "time": "0.163"
+        },
+        {
+          "path": "raw/junit/unit/order/TEST-com.projecthk5.orderservice.catalog.CatalogCheckoutBatchPreflightTest.xml",
+          "tests": 16,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "time": "0.063"
+        },
+        {
+          "path": "raw/junit/unit/order/TEST-com.projecthk5.orderservice.domain.CheckoutRulesTest.xml",
+          "tests": 6,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "time": "0.027"
+        },
+        {
+          "path": "raw/junit/unit/order/TEST-com.projecthk5.orderservice.domain.InventoryOperationIntentTest.xml",
+          "tests": 6,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "time": "0.034"
+        },
+        {
+          "path": "raw/junit/unit/order/TEST-com.projecthk5.orderservice.domain.OrderAmountStorageBoundsTest.xml",
+          "tests": 6,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "time": "0.013"
+        },
+        {
+          "path": "raw/junit/unit/order/TEST-com.projecthk5.orderservice.entity.OrderOverallStatusTest.xml",
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "time": "0.008"
+        },
+        {
+          "path": "raw/junit/unit/order/TEST-com.projecthk5.orderservice.entity.SellerOrderTest.xml",
+          "tests": 6,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "time": "0.014"
+        },
+        {
+          "path": "raw/junit/unit/order/TEST-com.projecthk5.orderservice.finance.FinanceCheckoutPreflightTest.xml",
+          "tests": 4,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "time": "0.543"
+        },
+        {
+          "path": "raw/junit/unit/order/TEST-com.projecthk5.orderservice.finance.FinanceConsumerParityTest.xml",
+          "tests": 8,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "time": "0.031"
+        },
+        {
+          "path": "raw/junit/unit/order/TEST-com.projecthk5.orderservice.finance.FinancePolicyConfigurationTest.xml",
+          "tests": 4,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "time": "1.008"
+        },
+        {
+          "path": "raw/junit/unit/order/TEST-com.projecthk5.orderservice.finance.FinanceRulesBoundaryTest.xml",
+          "tests": 18,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "time": "0.105"
+        },
+        {
+          "path": "raw/junit/unit/order/TEST-com.projecthk5.orderservice.finance.FinanceRulesTest.xml",
+          "tests": 15,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "time": "0.031"
+        },
+        {
+          "path": "raw/junit/unit/order/TEST-com.projecthk5.orderservice.fulfillment.SellerOrderLifecycleTest.xml",
+          "tests": 7,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "time": "0.014"
+        },
+        {
+          "path": "raw/junit/unit/order/TEST-com.projecthk5.orderservice.integration.CrashJvmArgFileTest.xml",
+          "tests": 2,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "time": "1.816"
+        },
+        {
+          "path": "raw/junit/unit/order/TEST-com.projecthk5.orderservice.security.ContractJwtDecoderTest.xml",
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "time": "0.194"
+        },
+        {
+          "path": "raw/junit/unit/order/TEST-com.projecthk5.orderservice.security.JwtEnvironmentConfigurationTest.xml",
+          "tests": 2,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "time": "1.807"
+        },
+        {
+          "path": "raw/junit/unit/order/TEST-com.projecthk5.orderservice.service.CheckoutServiceTest.xml",
+          "tests": 29,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "time": "0.634"
+        },
+        {
+          "path": "raw/junit/unit/order/TEST-com.projecthk5.orderservice.service.FinanceReportTest.xml",
+          "tests": 2,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "time": "0.008"
+        },
+        {
+          "path": "raw/junit/unit/order/TEST-com.projecthk5.orderservice.service.FulfillmentServiceTest.xml",
+          "tests": 7,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "time": "0.021"
+        },
+        {
+          "path": "raw/junit/unit/order/TEST-com.projecthk5.orderservice.service.IdempotencyCoordinatorTest.xml",
+          "tests": 2,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "time": "0.004"
+        },
+        {
+          "path": "raw/junit/unit/order/TEST-com.projecthk5.orderservice.service.InventoryOperationCallerTest.xml",
+          "tests": 12,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "time": "0.041"
+        },
+        {
+          "path": "raw/junit/unit/order/TEST-com.projecthk5.orderservice.service.OutboxRelayTest.xml",
+          "tests": 8,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "time": "0.269"
+        },
+        {
+          "path": "raw/junit/unit/order/TEST-com.projecthk5.orderservice.service.ReturnRequestServiceRulesTest.xml",
+          "tests": 5,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "time": "0.023"
+        }
+      ]
+    },
+    {
+      "name": "postgres_fulfillment",
+      "tests": 24.0,
+      "failures": 0.0,
+      "errors": 0.0,
+      "skipped": 0.0,
+      "files": [
+        {
+          "path": "raw/junit/postgres/fulfillment/TEST-com.projecthk5.orderservice.integration.FulfillmentPostgres16IT.xml",
+          "tests": 24,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "time": "3.654"
+        }
+      ]
+    },
+    {
+      "name": "postgres_journals",
+      "tests": 39.0,
+      "failures": 0.0,
+      "errors": 0.0,
+      "skipped": 0.0,
+      "files": [
+        {
+          "path": "raw/junit/postgres/order-journals/TEST-com.projecthk5.orderservice.integration.CheckoutInventoryJournalPostgresIT.xml",
+          "tests": 25,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "time": "3.529"
+        },
+        {
+          "path": "raw/junit/postgres/order-journals/TEST-com.projecthk5.orderservice.integration.InventoryOperationJournalPostgres16IT.xml",
+          "tests": 14,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "time": "0.402"
+        }
+      ]
+    }
+  ]
+}

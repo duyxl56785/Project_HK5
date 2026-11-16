@@ -1,0 +1,19 @@
+{
+  "merged_main": "27f46aadf5e98b2f1ae1969bc7b09fa1f1c8ab0f",
+  "evidence_branch_head_before_document_commit": "dc96af09c5ad9db3776358b93667ecfde8fbf596",
+  "rationale": "main delta from b2bee1d changes frontend/demo/docs but no backend path; frontend rerun required and recorded separately",
+  "commands": [
+    "cd frontend && npm test",
+    "cd frontend && npm run typecheck",
+    "cd frontend && npm run build"
+  ],
+  "results": {
+    "typecheck": "exit 0",
+    "test": "178 passed, 0 fail/cancel/skip, exit 0",
+    "build": "exit 0"
+  },
+  "flags": {
+    "HK5_FINANCE_POLICY_APPROVED": false,
+    "INVENTORY_ORDER_PAIR_ENABLED": false
+  }
+}
