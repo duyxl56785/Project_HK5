@@ -2,7 +2,8 @@
 
 ## Source and environment
 
-- Exact source: `main@b2bee1d13eef2d404bc79c917b36af9489983351` (PR #194 merge; fetched 16/11/2026).
+- Backend source: `main@b2bee1d13eef2d404bc79c917b36af9489983351` (PR #194 merge). `b2bee1d..27f46aa` changes no backend path, so the backend receipts remain bound to that source.
+- Latest main observed: `27f46aadf5e98b2f1ae1969bc7b09fa1f1c8ab0f`. It changes frontend/demo/docs; therefore frontend was rerun after this main was merged into the evidence branch at `dc96af09c5ad9db3776358b93667ecfde8fbf596`.
 - Checkout: short-path worktree `C:\tv4audit`; no tracked source change before this receipt. The raw receipts record the later untracked evidence directory in each command header.
 - Host: Windows, Java 21.0.10, Gradle Wrapper 8.10, Docker Desktop 29.9.1, Node 24.22.0 and npm 11.19.1.
 - Testcontainers used disposable PostgreSQL containers only. No shared database, volume, feature flag, seed or demo stack was changed.
@@ -20,6 +21,7 @@
 | Frontend unit/DOM regression | `cd frontend && npm test` | PASS: 178/178; 0 failure/cancel/skip. |
 | Frontend typecheck | `cd frontend && npm run typecheck` | PASS, exit 0. |
 | Frontend production build | `cd frontend && npm run build` | PASS, exit 0. |
+| Frontend regression after latest main | `cd frontend && npm test`; `npm run typecheck`; `npm run build` | PASS: 178/178, then typecheck/build exit 0 at merge commit `dc96af0` containing `main@27f46aa`. |
 
 The focused PostgreSQL classes are intentionally reported separately. Their 63 tests are not added to the historical or full-suite counts.
 
@@ -30,6 +32,7 @@ The focused PostgreSQL classes are intentionally reported separately. Their 63 t
 - `raw/combined-postgres-console.log` and `raw/combined-postgres-exit.txt` preserve the bounded combined run. Exit `124` means it was stopped at the 240-second bound; it is not an assertion failure and does not turn focused PASS into full-suite PASS.
 - `raw/frontend-npm-audit.json` is the unmodified audit response. It reports one moderate direct dependency advisory: `vite@6.4.4`, [GHSA-8g5g-mxqh-grgj](https://github.com/advisories/GHSA-8g5g-mxqh-grgj). No dependency or source was changed.
 - `raw/run-metadata.json` binds the source and flags; `SHA256SUMS.txt` hashes raw receipts only, never this README.
+- `raw/run-metadata-main27.json` binds the fresh frontend run to merged `main@27f46aa`; the three matching `raw/frontend-main27-*` receipts retain its exact console and exit codes.
 
 ## Matrix and limits
 

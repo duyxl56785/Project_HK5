@@ -1,0 +1,7 @@
+dc96af09c5ad9db3776358b93667ecfde8fbf596
+?? reports/evidence/tv4-final-verification-20261116/raw/frontend-main27-test-exit.txt
+COMMAND: cd frontend && npm run typecheck
+
+> hk5-marketplace-frontend@0.1.0 typecheck
+> tsc --noEmit
+
