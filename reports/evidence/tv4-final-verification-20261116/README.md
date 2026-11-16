@@ -1,0 +1,52 @@
+# TV4 final verification receipt — 16/11/2026
+
+## Source and environment
+
+- Exact source: `main@b2bee1d13eef2d404bc79c917b36af9489983351` (PR #194 merge; fetched 16/11/2026).
+- Checkout: clean, short-path worktree `C:\\tv4audit`; no tracked source change before this receipt.
+- Host: Windows, Java 21.0.10, Gradle Wrapper 8.10, Docker Desktop 29.9.1, Node 24.22.0 and npm 11.19.1.
+- Testcontainers used disposable PostgreSQL containers only. No shared database, volume, feature flag, seed or demo stack was changed.
+- Both `INVENTORY_ORDER_PAIR_ENABLED` and `HK5_FINANCE_POLICY_APPROVED` remained at their default `false` value.
+
+## Executed verification
+
+| Scope | Exact command | Result |
+| --- | --- | --- |
+| Inventory, Order and Notification unit regression | `backend\\gradlew.bat :inventory-service:test :order-service:test :notification-service:test --rerun-tasks --no-daemon --console=plain` | PASS: Inventory 27/27, Order 178/178, Notification 7/7; 0 failure/error/skip. |
+| Inventory PostgreSQL/Flyway/provider candidate | `backend\\gradlew.bat :inventory-service:postgresIntegrationTest --rerun-tasks --no-daemon --continue --console=plain` | PASS: 38/38; 0 failure/error/skip. |
+| Fulfillment, cancel/refusal release, dispatch consume and COD guards | `backend\\gradlew.bat :order-service:postgresIntegrationTest --tests '*FulfillmentPostgres16IT' --rerun-tasks --no-daemon --console=plain` | PASS: 24/24; 0 failure/error/skip. |
+| Checkout-to-Inventory journal | `backend\\gradlew.bat :order-service:postgresIntegrationTest --tests '*CheckoutInventoryJournalPostgresIT' --rerun-tasks --no-daemon --console=plain` | PASS: 25/25; 0 failure/error/skip. |
+| Exact operation retry/journal fence | `backend\\gradlew.bat :order-service:postgresIntegrationTest --tests '*InventoryOperationJournalPostgres16IT' --rerun-tasks --no-daemon --console=plain` | PASS: 14/14; 0 failure/error/skip. |
+| Frontend unit/DOM regression | `frontend\\npm test` | PASS: 178/178; 0 failure/cancel/skip. |
+| Frontend typecheck | `frontend\\npm run typecheck` | PASS, exit 0. |
+| Frontend production build | `frontend\\npm run build` | PASS, exit 0. |
+
+The focused PostgreSQL classes are intentionally reported separately. Their 63 tests are not added to the historical or full-suite counts.
+
+## Matrix and limits
+
+| Area | Observed result | Acceptance boundary |
+| --- | --- | --- |
+| RESERVE / no negative stock / replay | PASS within Inventory module and PostgreSQL provider candidate evidence. | Not a positive service-pair Checkout E2E. |
+| CONSUME at `DISPATCHED` | PASS in `FulfillmentPostgres16IT`; replay/journal regression also PASS. | Does not prove a real Gateway/Seller actor flow. |
+| Cancel/refusal `RELEASE` | PASS in targeted Fulfillment PostgreSQL regression. | No claim of owner-approved cross-service recovery. |
+| COD | PASS only for `DELIVERED`/duplicate guard in Fulfillment scope. | Finance settlement/snapshots remain TV5-owned and are not approved by this receipt. |
+| Notification | PASS for persistence/retry/DLT unit/Kafka scope. | No two-Store production notification UAT claim. |
+| Seller Return | Existing receipt/settlement guards remain unchanged. | Positive RET-05 restock is `BLOCKED`: no caller allowlist, durable restock tuple/receipt lookup, approved recovery or TV5 Finance sign-off. |
+| UNKNOWN lost-response / claim-conflict | `BLOCKED_DESIGN` / live `NOT_RUN`. | No feature flag, fault injection, synthetic commit or provider mutation was used to manufacture a PASS. |
+
+## Non-passing / not-run work
+
+- The unfiltered combined `:inventory-service:postgresIntegrationTest :order-service:postgresIntegrationTest` attempt was stopped after the Inventory suite completed 38/38: the Order JVM remained in Spring/Testcontainers shutdown before it created Order XML. It is recorded **BLOCKED (test-run hang)**, not PASS or assertion FAIL. The focused Order PostgreSQL commands above completed and are the only Order integration results claimed here.
+- Final two-Store live E2E, positive Checkout-to-Inventory provider wire, caller authorization, full COD/Finance settlement, UNKNOWN recovery and RET-05 exactly-once restock are **NOT_RUN/BLOCKED** under the owner gates recorded in Issue #4, #11, #17, #156 and #161.
+- Frontend dependencies were absent in the new checkout. `npm ci` restored the lockfile dependencies before the reported frontend run. `npm audit` reported one moderate dependency advisory; no `npm audit fix` or dependency/source change was made.
+
+## Issue / PR references
+
+- TV4 scope: #4, #11, #17, #156, #161.
+- Relevant merged work: [#69](https://github.com/duyxl56785/Project_HK5/pull/69), [#168](https://github.com/duyxl56785/Project_HK5/pull/168), [#182](https://github.com/duyxl56785/Project_HK5/pull/182), [#191](https://github.com/duyxl56785/Project_HK5/pull/191).
+- Main checkpoint: [#194](https://github.com/duyxl56785/Project_HK5/pull/194).
+
+## Disposition for TV5
+
+**PARTIAL / READY_FOR_REVIEW, not final UAT accepted.** This receipt is evidence for the executed module, database and frontend scopes only. It must not be read as approval to enable either gate, as a live E2E result, or as proof of UNKNOWN/RET-05 recovery.
