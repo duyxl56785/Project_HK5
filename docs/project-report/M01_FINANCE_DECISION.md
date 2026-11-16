@@ -43,3 +43,28 @@ MD11 làm rõ phạm vi của MD04 cho bản nộp và demo local, không đổi
 
 **Review phạm vi MD12:** TV2 quyết định và là người duy nhất review/approve/merge PR #202 theo comment sửa đổi 14/11. Quy tắc ownership lịch sử của các module khác không tự động bị xóa.
 
+## Bổ sung 16/11/2026 — MD13–MD25, chính sách tiền cho Voucher C2
+
+**Nguồn quyết định:** TV2 Nguyễn Văn Duy (owner M01), chọn phương án A cho MD13–MD24 và chốt MD25 trong phiên làm việc ngày 16/11/2026. Chi tiết, phương án đã loại, ví dụ số và ảnh hưởng code: [M01_VOUCHER_C2_DECISION.md](M01_VOUCHER_C2_DECISION.md). Phiên bản `M01-VOUCHER-C2-v2` (v1 là MD13–MD24; v2 thêm MD25 cùng ngày).
+
+Đây là quyết định nghiệp vụ **cho FR-VC-05 giai đoạn C2**, không phải bằng chứng C2 đã được code, merge hoặc bật. C2 không nằm trong bản nộp 21/11/2026.
+
+| ID | Quyết định |
+| --- | --- |
+| MD13 | Seller chịu toàn bộ phần giảm của voucher; sàn không bù tiền. |
+| MD14 | Voucher của Store chỉ áp cho SellerOrder của Store đó. Mỗi SellerOrder tối đa một mã; đơn nhiều Store được dùng mỗi Store một mã. |
+| MD15 | Số giảm tính trên tiền hàng của SellerOrder (đơn giá theo MD12), khi tiền hàng ≥ `minOrderAmount`. `FIXED`: đúng `discountValue`. `PERCENT`: tiền hàng × phần trăm, HALF_UP về đồng một lần, không vượt `maxDiscount`. |
+| MD16 | `gross` của SellerOrder là tiền hàng trừ giảm voucher. Phí sàn 5% HALF_UP (MD04) tính trên `gross` này. |
+| MD17 | Không cộng dồn với Flash Sale, Super Sale, xả kho: SellerOrder có dòng đang hưởng Promotion thì từ chối mã bằng lỗi rõ ràng. |
+| MD18 | Tổng lượt không vượt `usageLimit`. Mỗi tài khoản khách dùng mỗi voucher một lần. Trừ lượt nguyên tử ở `seller-service` lúc Checkout, idempotent theo SellerOrder. |
+| MD19 | Checkout thất bại không mất lượt. Hủy hoặc từ chối trước khi giao thì hoàn lượt. Trả hàng sau khi giao không hoàn lượt. |
+| MD20 | Trả hàng hoàn theo số khách thực trả trong snapshot (`gross` sau giảm). MD06 giữ nguyên. |
+| MD21 | Snapshot SellerOrder lưu thêm, bất biến: tiền hàng trước giảm, số giảm, `voucherId`, mã, loại, giá trị, `maxDiscount`. Công thức COD, đối soát và `sellerNet` không đổi. |
+| MD22 | Voucher phải đang hiệu lực và còn lượt tại lúc trừ lượt; nếu không, Checkout dừng với lỗi riêng. `seller-service` lỗi thì đơn có mã bị từ chối, không đặt đơn thiếu giảm giá. Thay đổi voucher sau khi đơn đã đặt không ảnh hưởng đơn. |
+| MD23 | Thêm cờ riêng cho áp voucher ở Checkout, mặc định tắt, chỉ bật trong `.env.demo` local sau khi test tiền PASS. Mở rộng MD09. |
+| MD24 | Doanh thu người bán và phí sàn tính trên `gross` sau giảm. Báo cáo thêm tổng giảm giá voucher theo Store; số này không phải chi phí của sàn. Mở rộng MD10. |
+| MD25 | `gross` của SellerOrder sau giảm voucher phải ≥ 1 đồng. Mã làm `gross` về 0 bị từ chối bằng lỗi rõ ràng; hệ thống không tự giảm bớt mức giảm. Chỉ xảy ra với `FIXED` khi tiền hàng đúng bằng `discountValue`. |
+
+**Quan hệ với quyết định cũ:** MD13–MD25 mở rộng MD05 (nay có giảm giá cấp đơn của từng Store) và giữ điều khoản "không cộng dồn với voucher" của MD12. MD01–MD04, MD06–MD11 không đổi.
+
+**Review:** contract C1 yêu cầu TV5 review phần tiền của C2. Tại ngày 16/11/2026, TV5, TV3 và TV4 chưa xác nhận; trạng thái ghi ở mục 8 của file chi tiết. Quyết định này không đổi phân công trong [OWNERSHIP.md](../OWNERSHIP.md).
