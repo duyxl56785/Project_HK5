@@ -1,0 +1,39 @@
+4218c9b4076c7fbaad606a74b6f5adedf26d8e43
+?? reports/evidence/tv4-final-verification-20261116/raw/
+COMMAND: backend\gradlew.bat -p C:\tv4audit\backend :inventory-service:postgresIntegrationTest --rerun-tasks --no-daemon --continue --console=plain 
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.10/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :inventory-service:compileJava
+> Task :inventory-service:processResources
+> Task :inventory-service:classes
+
+> Task :inventory-service:compileTestJava
+Note: C:\tv4audit\backend\inventory-service\src\test\java\com\projecthk5\inventoryservice\service\InventoryOperationServiceTest.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+
+> Task :inventory-service:processTestResources NO-SOURCE
+> Task :inventory-service:testClasses
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+> Task :inventory-service:postgresIntegrationTest
+
+2026-11-16T11:34:20.871+07:00  INFO 11644 --- [inventory-service] [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-11-16T11:34:20.873+07:00  INFO 11644 --- [inventory-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-11-16T11:34:20.877+07:00  INFO 11644 --- [inventory-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-11-16T11:34:20.879+07:00  INFO 11644 --- [inventory-service] [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-11-16T11:34:20.880+07:00  INFO 11644 --- [inventory-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown initiated...
+2026-11-16T11:34:20.882+07:00  INFO 11644 --- [inventory-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown completed.
+2026-11-16T11:34:20.887+07:00  INFO 11644 --- [inventory-service] [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-11-16T11:34:20.887+07:00  INFO 11644 --- [inventory-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown initiated...
+2026-11-16T11:34:20.894+07:00  INFO 11644 --- [inventory-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown completed.
+2026-11-16T11:34:20.898+07:00  INFO 11644 --- [inventory-service] [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-11-16T11:34:20.898+07:00  INFO 11644 --- [inventory-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Shutdown initiated...
+2026-11-16T11:34:20.904+07:00  INFO 11644 --- [inventory-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Shutdown completed.
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.10/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 55s
+4 actionable tasks: 4 executed

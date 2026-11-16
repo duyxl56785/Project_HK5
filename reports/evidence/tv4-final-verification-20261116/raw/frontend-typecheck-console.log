@@ -1,0 +1,7 @@
+4218c9b4076c7fbaad606a74b6f5adedf26d8e43
+?? reports/evidence/tv4-final-verification-20261116/raw/
+COMMAND: cd frontend && npm run typecheck
+
+> hk5-marketplace-frontend@0.1.0 typecheck
+> tsc --noEmit
+

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.projecthk5.orderservice.api.SellerOrderControllerTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-11-16T04:32:13" hostname="PHAMCUONG" time="0.163">
+  <properties/>
+  <testcase name="suspendedSellerCannotTakeOnNewOrders()" classname="com.projecthk5.orderservice.api.SellerOrderControllerTest" time="0.045"/>
+  <testcase name="[1] action=reject" classname="com.projecthk5.orderservice.api.SellerOrderControllerTest" time="0.052"/>
+  <testcase name="[2] action=prepare" classname="com.projecthk5.orderservice.api.SellerOrderControllerTest" time="0.002"/>
+  <testcase name="[3] action=ready" classname="com.projecthk5.orderservice.api.SellerOrderControllerTest" time="0.001"/>
+  <testcase name="[4] action=dispatch" classname="com.projecthk5.orderservice.api.SellerOrderControllerTest" time="0.001"/>
+  <testcase name="[5] action=deliver" classname="com.projecthk5.orderservice.api.SellerOrderControllerTest" time="0.0"/>
+  <testcase name="approvedSellerAcceptsOrders()" classname="com.projecthk5.orderservice.api.SellerOrderControllerTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

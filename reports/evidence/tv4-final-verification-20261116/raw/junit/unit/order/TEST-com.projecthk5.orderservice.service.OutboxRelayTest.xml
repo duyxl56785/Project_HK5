@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.projecthk5.orderservice.service.OutboxRelayTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-11-16T04:32:23" hostname="PHAMCUONG" time="0.269">
+  <properties/>
+  <testcase name="brokerOutageKeepsEventsQueuedWithoutSpendingAttempts()" classname="com.projecthk5.orderservice.service.OutboxRelayTest" time="0.162"/>
+  <testcase name="inventoryOperationIsSentWithStableIdAndMarkedPublished()" classname="com.projecthk5.orderservice.service.OutboxRelayTest" time="0.026"/>
+  <testcase name="definitiveInventoryRejectionIsParkedForOperators()" classname="com.projecthk5.orderservice.service.OutboxRelayTest" time="0.013"/>
+  <testcase name="storeNoticeIsDeliveredToTheCurrentStoreOwner()" classname="com.projecthk5.orderservice.service.OutboxRelayTest" time="0.01"/>
+  <testcase name="unknownTopicIsParkedNotRetried()" classname="com.projecthk5.orderservice.service.OutboxRelayTest" time="0.002"/>
+  <testcase name="inventoryStillFlowsDuringBrokerOutage()" classname="com.projecthk5.orderservice.service.OutboxRelayTest" time="0.015"/>
+  <testcase name="retriesStopAfterTheLimit()" classname="com.projecthk5.orderservice.service.OutboxRelayTest" time="0.021"/>
+  <testcase name="transientFailureStaysQueuedForRetry()" classname="com.projecthk5.orderservice.service.OutboxRelayTest" time="0.005"/>
+  <system-out><![CDATA[11:32:24.144 [Test worker] ERROR com.projecthk5.orderservice.service.OutboxRelay -- Outbox event 2bfc59e2-d2c8-4f77-b0a7-4d813e611c16 rejected by Inventory: gone
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

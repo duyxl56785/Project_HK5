@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT" tests="10" skipped="0" failures="0" errors="0" timestamp="2026-11-16T04:34:18" hostname="PHAMCUONG" time="1.003">
+  <properties/>
+  <testcase name="reserveConsumeAndReleaseRetriesDoNotApplyStockTwice()" classname="com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT" time="0.131"/>
+  <testcase name="failureOnLaterSkuRollsBackEarlierStockMutationAndClaimedLedger()" classname="com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT" time="0.07"/>
+  <testcase name="disjointSkuSameIdCannotReplaceWinnerAfterEarlierEmptyLedgerRead()" classname="com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT" time="0.122"/>
+  <testcase name="concurrentDuplicateMultiSkuReleaseReplaysAfterFirstCommitWithoutDoubleReturn()" classname="com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT" time="0.145"/>
+  <testcase name="concurrentDifferentIdsCannotOversellSharedSkuAndLosingClaimRollsBack()" classname="com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT" time="0.069"/>
+  <testcase name="multiSkuReserveAndReleaseReplayCanonicalizeLineOrderAndRejectPayloadReuse()" classname="com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT" time="0.117"/>
+  <testcase name="[1] samePayload=true" classname="com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT" time="0.054"/>
+  <testcase name="[2] samePayload=false" classname="com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT" time="0.056"/>
+  <testcase name="competingMultiSkuReleaseIdsCannotOverdrawReservedBalances()" classname="com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT" time="0.093"/>
+  <testcase name="multiSkuReleaseAfterConsumeRejectsExcessHeldQuantityAndRollsBackWholeBatch()" classname="com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT" time="0.119"/>
+  <system-out><![CDATA[2026-11-16T11:34:15.512+07:00  INFO 11644 --- [inventory-service] [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.projecthk5.inventoryservice.InventoryServiceApplication for test class com.projecthk5.inventoryservice.integration.InventoryOperationPostgresIT
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.5)
+
+2026-11-16T11:34:16.548+07:00  INFO 11644 --- [inventory-service] [    Test worker] c.p.i.i.InventoryOperationPostgresIT     : Starting InventoryOperationPostgresIT using Java 21.0.10 with PID 11644 (started by PC in C:\tv4audit\backend\inventory-service)
+2026-11-16T11:34:16.548+07:00  INFO 11644 --- [inventory-service] [    Test worker] c.p.i.i.InventoryOperationPostgresIT     : No active profile set, falling back to 1 default profile: "default"
+2026-11-16T11:34:16.802+07:00  INFO 11644 --- [inventory-service] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-11-16T11:34:16.817+07:00  INFO 11644 --- [inventory-service] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 14 ms. Found 2 JPA repository interfaces.
+2026-11-16T11:34:16.855+07:00  INFO 11644 --- [inventory-service] [    Test worker] o.s.cloud.context.scope.GenericScope     : BeanFactory id=174e69e3-cdad-3c36-a73e-f095e629f554
+2026-11-16T11:34:16.923+07:00  INFO 11644 --- [inventory-service] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Starting...
+2026-11-16T11:34:16.938+07:00  INFO 11644 --- [inventory-service] [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-4 - Added connection org.postgresql.jdbc.PgConnection@1eee885c
+2026-11-16T11:34:16.938+07:00  INFO 11644 --- [inventory-service] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Start completed.
+2026-11-16T11:34:16.941+07:00  INFO 11644 --- [inventory-service] [    Test worker] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://localhost:60221/test (PostgreSQL 16.15)
+2026-11-16T11:34:16.962+07:00  INFO 11644 --- [inventory-service] [    Test worker] o.f.core.internal.command.DbValidate     : Successfully validated 3 migrations (execution time 00:00.010s)
+2026-11-16T11:34:16.983+07:00  INFO 11644 --- [inventory-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Current version of schema "public": 3
+2026-11-16T11:34:16.984+07:00  INFO 11644 --- [inventory-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Schema "public" is up to date. No migration necessary.
+2026-11-16T11:34:17.013+07:00  INFO 11644 --- [inventory-service] [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-11-16T11:34:17.018+07:00  INFO 11644 --- [inventory-service] [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-11-16T11:34:17.026+07:00  INFO 11644 --- [inventory-service] [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-11-16T11:34:17.118+07:00  INFO 11644 --- [inventory-service] [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-11-16T11:34:17.133+07:00  INFO 11644 --- [inventory-service] [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-11-16T11:34:17.470+07:00  INFO 11644 --- [inventory-service] [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-11-16T11:34:17.470+07:00  INFO 11644 --- [inventory-service] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-11-16T11:34:17.473+07:00  INFO 11644 --- [inventory-service] [    Test worker] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoints beneath base path '/actuator'
+2026-11-16T11:34:17.480+07:00  INFO 11644 --- [inventory-service] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 10 ms
+2026-11-16T11:34:18.491+07:00  INFO 11644 --- [inventory-service] [    Test worker] o.s.cloud.commons.util.InetUtils         : Cannot determine local hostname
+2026-11-16T11:34:18.499+07:00  INFO 11644 --- [inventory-service] [    Test worker] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestTemplate.
+2026-11-16T11:34:18.532+07:00  WARN 11644 --- [inventory-service] [    Test worker] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2026-11-16T11:34:18.545+07:00  INFO 11644 --- [inventory-service] [    Test worker] c.p.i.i.InventoryOperationPostgresIT     : Started InventoryOperationPostgresIT in 3.031 seconds (process running for 31.754)
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

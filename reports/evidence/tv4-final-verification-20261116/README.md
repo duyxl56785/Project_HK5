@@ -3,7 +3,7 @@
 ## Source and environment
 
 - Exact source: `main@b2bee1d13eef2d404bc79c917b36af9489983351` (PR #194 merge; fetched 16/11/2026).
-- Checkout: clean, short-path worktree `C:\\tv4audit`; no tracked source change before this receipt.
+- Checkout: short-path worktree `C:\tv4audit`; no tracked source change before this receipt. The raw receipts record the later untracked evidence directory in each command header.
 - Host: Windows, Java 21.0.10, Gradle Wrapper 8.10, Docker Desktop 29.9.1, Node 24.22.0 and npm 11.19.1.
 - Testcontainers used disposable PostgreSQL containers only. No shared database, volume, feature flag, seed or demo stack was changed.
 - Both `INVENTORY_ORDER_PAIR_ENABLED` and `HK5_FINANCE_POLICY_APPROVED` remained at their default `false` value.
@@ -12,16 +12,24 @@
 
 | Scope | Exact command | Result |
 | --- | --- | --- |
-| Inventory, Order and Notification unit regression | `backend\\gradlew.bat :inventory-service:test :order-service:test :notification-service:test --rerun-tasks --no-daemon --console=plain` | PASS: Inventory 27/27, Order 178/178, Notification 7/7; 0 failure/error/skip. |
-| Inventory PostgreSQL/Flyway/provider candidate | `backend\\gradlew.bat :inventory-service:postgresIntegrationTest --rerun-tasks --no-daemon --continue --console=plain` | PASS: 38/38; 0 failure/error/skip. |
-| Fulfillment, cancel/refusal release, dispatch consume and COD guards | `backend\\gradlew.bat :order-service:postgresIntegrationTest --tests '*FulfillmentPostgres16IT' --rerun-tasks --no-daemon --console=plain` | PASS: 24/24; 0 failure/error/skip. |
-| Checkout-to-Inventory journal | `backend\\gradlew.bat :order-service:postgresIntegrationTest --tests '*CheckoutInventoryJournalPostgresIT' --rerun-tasks --no-daemon --console=plain` | PASS: 25/25; 0 failure/error/skip. |
-| Exact operation retry/journal fence | `backend\\gradlew.bat :order-service:postgresIntegrationTest --tests '*InventoryOperationJournalPostgres16IT' --rerun-tasks --no-daemon --console=plain` | PASS: 14/14; 0 failure/error/skip. |
-| Frontend unit/DOM regression | `frontend\\npm test` | PASS: 178/178; 0 failure/cancel/skip. |
-| Frontend typecheck | `frontend\\npm run typecheck` | PASS, exit 0. |
-| Frontend production build | `frontend\\npm run build` | PASS, exit 0. |
+| Inventory, Order and Notification unit regression | `backend\gradlew.bat -p C:\tv4audit\backend :inventory-service:test :order-service:test :notification-service:test --rerun-tasks --no-daemon --console=plain` | PASS: Inventory 27/27, Order 178/178, Notification 7/7; 0 failure/error/skip. |
+| Inventory PostgreSQL/Flyway/provider candidate | `backend\gradlew.bat -p C:\tv4audit\backend :inventory-service:postgresIntegrationTest --rerun-tasks --no-daemon --continue --console=plain` | PASS: 38/38; 0 failure/error/skip. |
+| Fulfillment, cancel/refusal release, dispatch consume and COD guards | `backend\gradlew.bat -p C:\tv4audit\backend :order-service:postgresIntegrationTest --tests '*FulfillmentPostgres16IT' --rerun-tasks --no-daemon --console=plain` | PASS: 24/24; 0 failure/error/skip. |
+| Checkout-to-Inventory journal | `backend\gradlew.bat -p C:\tv4audit\backend :order-service:postgresIntegrationTest --tests '*CheckoutInventoryJournalPostgresIT' --rerun-tasks --no-daemon --console=plain` | PASS: 25/25; 0 failure/error/skip. |
+| Exact operation retry/journal fence | `backend\gradlew.bat -p C:\tv4audit\backend :order-service:postgresIntegrationTest --tests '*InventoryOperationJournalPostgres16IT' --rerun-tasks --no-daemon --console=plain` | PASS: 14/14; 0 failure/error/skip. |
+| Frontend unit/DOM regression | `cd frontend && npm test` | PASS: 178/178; 0 failure/cancel/skip. |
+| Frontend typecheck | `cd frontend && npm run typecheck` | PASS, exit 0. |
+| Frontend production build | `cd frontend && npm run build` | PASS, exit 0. |
 
 The focused PostgreSQL classes are intentionally reported separately. Their 63 tests are not added to the historical or full-suite counts.
+
+## Raw receipts and integrity
+
+- `raw/*-console.log` preserves console output. Each begins with the checked-out SHA and `git status --short`; the matching `*-exit.txt` is the process exit code.
+- `raw/junit/**/TEST-*.xml` is the original JUnit XML copied immediately after the corresponding successful command. `raw/junit-summary.json` is derived from those files and lists every class and count.
+- `raw/combined-postgres-console.log` and `raw/combined-postgres-exit.txt` preserve the bounded combined run. Exit `124` means it was stopped at the 240-second bound; it is not an assertion failure and does not turn focused PASS into full-suite PASS.
+- `raw/frontend-npm-audit.json` is the unmodified audit response. It reports one moderate direct dependency advisory: `vite@6.4.4`, [GHSA-8g5g-mxqh-grgj](https://github.com/advisories/GHSA-8g5g-mxqh-grgj). No dependency or source was changed.
+- `raw/run-metadata.json` binds the source and flags; `SHA256SUMS.txt` hashes raw receipts only, never this README.
 
 ## Matrix and limits
 
@@ -37,9 +45,9 @@ The focused PostgreSQL classes are intentionally reported separately. Their 63 t
 
 ## Non-passing / not-run work
 
-- The unfiltered combined `:inventory-service:postgresIntegrationTest :order-service:postgresIntegrationTest` attempt was stopped after the Inventory suite completed 38/38: the Order JVM remained in Spring/Testcontainers shutdown before it created Order XML. It is recorded **BLOCKED (test-run hang)**, not PASS or assertion FAIL. The focused Order PostgreSQL commands above completed and are the only Order integration results claimed here.
+- The bounded combined `:inventory-service:postgresIntegrationTest :order-service:postgresIntegrationTest` rerun exceeded 240 seconds while Order/Testcontainers was shutting down and trying to reconnect to its ephemeral PostgreSQL port. Its raw exit is `124`, and it is recorded **BLOCKED (test-run hang)**, not PASS or assertion FAIL. The focused Order PostgreSQL commands above completed and are the only Order integration results claimed here.
 - Final two-Store live E2E, positive Checkout-to-Inventory provider wire, caller authorization, full COD/Finance settlement, UNKNOWN recovery and RET-05 exactly-once restock are **NOT_RUN/BLOCKED** under the owner gates recorded in Issue #4, #11, #17, #156 and #161.
-- Frontend dependencies were absent in the new checkout. `npm ci` restored the lockfile dependencies before the reported frontend run. `npm audit` reported one moderate dependency advisory; no `npm audit fix` or dependency/source change was made.
+- Frontend dependencies were absent in the new checkout. `npm ci` restored the lockfile dependencies before the reported frontend run. `npm audit` reported the moderate direct `vite@6.4.4` advisory `GHSA-8g5g-mxqh-grgj`; no `npm audit fix`, dependency or source change was made.
 
 ## Issue / PR references
 

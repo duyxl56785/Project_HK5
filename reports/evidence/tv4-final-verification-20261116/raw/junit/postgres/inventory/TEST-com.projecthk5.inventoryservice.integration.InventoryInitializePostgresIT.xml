@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.projecthk5.inventoryservice.integration.InventoryInitializePostgresIT" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-11-16T04:34:15" hostname="PHAMCUONG" time="0.238">
+  <properties/>
+  <testcase name="competingInitializationWaitsForUniqueRowAndReturns409AfterWinnerCommits()" classname="com.projecthk5.inventoryservice.integration.InventoryInitializePostgresIT" time="0.167"/>
+  <testcase name="encodedAndMatrixPathsRequireTokenAndNeverWriteWithoutIt()" classname="com.projecthk5.inventoryservice.integration.InventoryInitializePostgresIT" time="0.011"/>
+  <testcase name="duplicateAfterReservationPreservesAvailableReservedVersionAndTimestamp()" classname="com.projecthk5.inventoryservice.integration.InventoryInitializePostgresIT" time="0.031"/>
+  <testcase name="duplicateFreshSkuReturns409WithoutChangingAnyStoredBalanceField()" classname="com.projecthk5.inventoryservice.integration.InventoryInitializePostgresIT" time="0.026"/>
+  <system-out><![CDATA[2026-11-16T11:34:09.779+07:00  INFO 11644 --- [inventory-service] [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.projecthk5.inventoryservice.integration.InventoryInitializePostgresIT]: InventoryInitializePostgresIT does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-11-16T11:34:09.790+07:00  INFO 11644 --- [inventory-service] [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.projecthk5.inventoryservice.InventoryServiceApplication for test class com.projecthk5.inventoryservice.integration.InventoryInitializePostgresIT
+2026-11-16T11:34:09.794+07:00  INFO 11644 --- [inventory-service] [    Test worker] tc.postgres:16-alpine                    : Creating container for image: postgres:16-alpine
+2026-11-16T11:34:09.975+07:00  INFO 11644 --- [inventory-service] [    Test worker] tc.postgres:16-alpine                    : Container postgres:16-alpine is starting: 8d7dc8b9c1fb00599bd6d5fc4e6725cbec178ff8e51fa0a838f60bdbd80eabef
+2026-11-16T11:34:11.872+07:00  INFO 11644 --- [inventory-service] [    Test worker] tc.postgres:16-alpine                    : Container postgres:16-alpine started in PT2.0780882S
+2026-11-16T11:34:11.872+07:00  INFO 11644 --- [inventory-service] [    Test worker] tc.postgres:16-alpine                    : Container is started (JDBC URL: jdbc:postgresql://localhost:60221/test?loggerLevel=OFF)
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.5)
+
+2026-11-16T11:34:12.939+07:00  INFO 11644 --- [inventory-service] [    Test worker] c.p.i.i.InventoryInitializePostgresIT    : Starting InventoryInitializePostgresIT using Java 21.0.10 with PID 11644 (started by PC in C:\tv4audit\backend\inventory-service)
+2026-11-16T11:34:12.939+07:00  INFO 11644 --- [inventory-service] [    Test worker] c.p.i.i.InventoryInitializePostgresIT    : No active profile set, falling back to 1 default profile: "default"
+2026-11-16T11:34:13.246+07:00  INFO 11644 --- [inventory-service] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-11-16T11:34:13.261+07:00  INFO 11644 --- [inventory-service] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 15 ms. Found 2 JPA repository interfaces.
+2026-11-16T11:34:13.346+07:00  INFO 11644 --- [inventory-service] [    Test worker] o.s.cloud.context.scope.GenericScope     : BeanFactory id=5fe4da27-6b14-39c2-b5b0-ab59c7af6eed
+2026-11-16T11:34:13.407+07:00  INFO 11644 --- [inventory-service] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Starting...
+2026-11-16T11:34:13.429+07:00  INFO 11644 --- [inventory-service] [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-3 - Added connection org.postgresql.jdbc.PgConnection@7423becb
+2026-11-16T11:34:13.429+07:00  INFO 11644 --- [inventory-service] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Start completed.
+2026-11-16T11:34:13.432+07:00  INFO 11644 --- [inventory-service] [    Test worker] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://localhost:60221/test (PostgreSQL 16.15)
+2026-11-16T11:34:13.447+07:00  INFO 11644 --- [inventory-service] [    Test worker] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table "public"."flyway_schema_history" does not exist yet
+2026-11-16T11:34:13.449+07:00  INFO 11644 --- [inventory-service] [    Test worker] o.f.core.internal.command.DbValidate     : Successfully validated 3 migrations (execution time 00:00.007s)
+2026-11-16T11:34:13.459+07:00  INFO 11644 --- [inventory-service] [    Test worker] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table "public"."flyway_schema_history" ...
+2026-11-16T11:34:13.486+07:00  INFO 11644 --- [inventory-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Current version of schema "public": << Empty Schema >>
+2026-11-16T11:34:13.490+07:00  INFO 11644 --- [inventory-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "1 - inventory"
+2026-11-16T11:34:13.512+07:00  INFO 11644 --- [inventory-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "2 - request hash varchar"
+2026-11-16T11:34:13.529+07:00  INFO 11644 --- [inventory-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "3 - reservation ledger candidate"
+2026-11-16T11:34:13.573+07:00  INFO 11644 --- [inventory-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Successfully applied 3 migrations to schema "public", now at version v3 (execution time 00:00.049s)
+2026-11-16T11:34:13.604+07:00  INFO 11644 --- [inventory-service] [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-11-16T11:34:13.610+07:00  INFO 11644 --- [inventory-service] [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-11-16T11:34:13.623+07:00  INFO 11644 --- [inventory-service] [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-11-16T11:34:13.680+07:00  INFO 11644 --- [inventory-service] [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-11-16T11:34:13.696+07:00  INFO 11644 --- [inventory-service] [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-11-16T11:34:14.179+07:00  INFO 11644 --- [inventory-service] [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-11-16T11:34:14.180+07:00  INFO 11644 --- [inventory-service] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-11-16T11:34:14.184+07:00  INFO 11644 --- [inventory-service] [    Test worker] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoints beneath base path '/actuator'
+2026-11-16T11:34:14.196+07:00  INFO 11644 --- [inventory-service] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 16 ms
+2026-11-16T11:34:15.224+07:00  INFO 11644 --- [inventory-service] [    Test worker] o.s.cloud.commons.util.InetUtils         : Cannot determine local hostname
+2026-11-16T11:34:15.231+07:00  INFO 11644 --- [inventory-service] [    Test worker] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestTemplate.
+2026-11-16T11:34:15.256+07:00  WARN 11644 --- [inventory-service] [    Test worker] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2026-11-16T11:34:15.267+07:00  INFO 11644 --- [inventory-service] [    Test worker] c.p.i.i.InventoryInitializePostgresIT    : Started InventoryInitializePostgresIT in 3.389 seconds (process running for 28.475)
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

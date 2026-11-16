@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.projecthk5.orderservice.service.CheckoutServiceTest" tests="29" skipped="0" failures="0" errors="0" timestamp="2026-11-16T04:32:22" hostname="PHAMCUONG" time="0.634">
+  <properties/>
+  <testcase name="commitConfirmedByReadNeverCompensates()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.012"/>
+  <testcase name="invalidClaimedCartQuantityCannotReachReservationOrWriter()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.004"/>
+  <testcase name="unsupportedUnitPrecisionNeverReachesInventoryOrWriter()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.004"/>
+  <testcase name="unrepresentableFeeUnderSyntheticPolicyFailsBeforeReserve()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.004"/>
+  <testcase name="everyRefusedLineIsListedBeforeStockIsTouched()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.009"/>
+  <testcase name="outboxSerializationFailureCannotReserveStockOrWriteOrder()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.372"/>
+  <testcase name="definitiveCartRejectionIsNotMarkedForReconciliation()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.006"/>
+  <testcase name="twoProductsFromSameSellerAndStoreCreateOneSellerOrder()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.009"/>
+  <testcase name="shortStockNamesTheLineAndReleasesTheCart()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.01"/>
+  <testcase name="inventoryRefusalThatIsNotAboutStockIsNotReportedAsShortStock()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.009"/>
+  <testcase name="inventoryTimeoutPreservesCartAndReservationForReconciliation()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.015"/>
+  <testcase name="conflictingCatalogSellerStoreFactsNeverReachInventoryOrOrderWriter()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.008"/>
+  <testcase name="twoStoresGenerateOneOrderWithTwoSellerOrdersAndSnapshot()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.009"/>
+  <testcase name="malformedClaimedCartNullLineReleasesClaimWithoutExternalSideEffects()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.004"/>
+  <testcase name="draftFailureStopsBeforeInventoryAndReleasesOnlyTheKnownCartClaim()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.009"/>
+  <testcase name="reservationCarriesCatalogSkuAndOrderKeepsShippingAndLabels()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.013"/>
+  <testcase name="parentOverflowAcrossTwoIndividuallyValidStoresFailsBeforeReserve()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.008"/>
+  <testcase name="shortStockNamingAnSkuOutsideTheVerifiedLinesKeepsTheOriginalRefusal()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.009"/>
+  <testcase name="definitiveStockRejectionReleasesCartAndIsNotMarkedForReconciliation()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.006"/>
+  <testcase name="nullCartClaimReplyIsUnknownAndNeverBlindlyReleasesOrReserves()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.004"/>
+  <testcase name="explicitlyUnclaimedCartCannotProceedOrReleaseAnotherClaim()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.004"/>
+  <testcase name="reversedCartOrderStillRejectsOneSellerFromTwoStoresBeforeInventory()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.003"/>
+  <testcase name="changedPriceRejectsCheckoutBeforeStockReservation()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.004"/>
+  <testcase name="sameKeyAndExistingSuccessfulOrderReplaysWithoutCreating()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.004"/>
+  <testcase name="productGoneFromCatalogIsListedWithTheOtherLines()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.004"/>
+  <testcase name="commitUnknownDoesNotCompensateAndFlagsForReconciliation()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.007"/>
+  <testcase name="immutableDraftPrecedesReserveAndUsesTheExactWrittenGraphAndEvent()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.015"/>
+  <testcase name="nonFinalProcessingReplayNeverCallsInventory()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.002"/>
+  <testcase name="malformedRequestCannotCreateAttemptOrCallRemotePorts()" classname="com.projecthk5.orderservice.service.CheckoutServiceTest" time="0.003"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
