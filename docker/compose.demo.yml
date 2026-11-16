@@ -1,4 +1,5 @@
-# Full local stack. Start it with: node scripts/demo/up.mjs (see docs/RUN_LOCAL.md).
+# Full local stack. Start it with: node scripts/demo/up.mjs --approved-inventory-pair --approved-finance-policy (see docs/RUN_LOCAL.md).
+# Without both flags Checkout is refused; a missing --approved-finance-policy shows "Sàn đang tạm dừng nhận đơn". Each run resets both gates in .env.demo to the flags given.
 # Only the UI (127.0.0.1:5173) and the Gateway (127.0.0.1:18080) are published. Secrets live in docker/secrets, written by gen-env.mjs. Inspect data with: docker compose ... exec postgres psql -U hk5 hk5_demo
 name: hk5-demo
 
