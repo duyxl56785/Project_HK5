@@ -4,6 +4,7 @@
 import { randomBytes } from 'node:crypto';
 import { appendFileSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+import { seedLimitRequest, seedVouchers } from './voucher-seed.mjs';
 
 const envFile = resolve(import.meta.dirname, '../../.env.demo');
 const env = Object.fromEntries(readFileSync(envFile, 'utf8').split('\n')
@@ -161,5 +162,54 @@ for (const [name, seller, items] of catalog) {
   }
 }
 
+// Voucher C1 sample data. Existing vouchers and limit requests are never changed; see voucher-seed.mjs.
+const voucherApi = (token) => ({
+  list: (page, size) => must(`/api/stores/me/vouchers?page=${page}&size=${size}`, { token }),
+  create: (body) => must('/api/stores/me/vouchers', { token, method: 'POST', body }),
+  act: (id, action, version) => call(`/api/stores/me/vouchers/${id}/${action}`, { token, method: 'POST', body: { expectedVersion: version } }),
+});
+const limitApi = (token) => ({
+  latest: async () => (await must('/api/stores/me/voucher-limit-requests?size=1', { token }))[0],
+  create: async (body, key) => {
+    const response = await fetch(`${gateway}/api/stores/me/voucher-limit-requests`, {
+      method: 'POST',
+      headers: { Origin: origin, 'X-CSRF-Protection': '1', 'Content-Type': 'application/json', 'Idempotency-Key': key, Authorization: `Bearer ${token}` },
+      body: JSON.stringify(body),
+    });
+    return { ok: response.ok, status: response.status, text: response.ok ? '' : await response.text() };
+  },
+});
+const day = 24 * 60 * 60 * 1000;
+// Góc Tiện Ích (seller3, unused by E2E, which needs seller1 at 0/20): paused and cancelled first, then 20 published
+// to fill the default quota, a draft that cannot be published yet, and a pending request for more slots.
+const voucherResults = [
+  await seedVouchers(voucherApi(third), 'Góc Tiện Ích', [
+    ['TAMDUNG10', 'Giảm 10% (tạm dừng)', 'PERCENT', 10, 100000, 30000, ['publish', 'pause']],
+    ['DAHUY50K', 'Giảm 50.000đ (đã hủy)', 'FIXED', 50000, 300000, null, ['cancel']],
+    ['SAPMO15', 'Giảm 15% mở bán tuần sau', 'PERCENT', 15, 200000, 50000, ['publish'], 7 * day],
+    ...Array.from({ length: 19 }, (_, i) => [`GTI${String(i + 1).padStart(2, '0')}`, `Giảm ${(i + 1) * 5}.000đ đơn từ 200.000đ`, 'FIXED', (i + 1) * 5000, 200000, null, ['publish']]),
+    ['THEM21', 'Voucher thứ 21 (chờ nâng hạn mức)', 'FIXED', 20000, 150000, null, []],
+  ]),
+  await seedLimitRequest(limitApi(third), 'Góc Tiện Ích', {
+    requestedLimit: 30, reason: 'Chạy chương trình khuyến mãi cuối năm, cần thêm 10 voucher.',
+    requestedFrom: new Date().toISOString(), requestedUntil: new Date(Date.now() + 30 * day - 60000).toISOString(),
+  }),
+  await seedVouchers(voucherApi(second), 'Nhà Xinh', [
+    ['NHAXINH30K', 'Giảm 30.000đ đơn từ 250.000đ', 'FIXED', 30000, 250000, null, ['publish']],
+    ['NHAXINH10', 'Giảm 10% tối đa 40.000đ', 'PERCENT', 10, 150000, 40000, ['publish']],
+    ['TET2027', 'Giảm 20% dịp Tết (nháp)', 'PERCENT', 20, 300000, 80000, []],
+  ]),
+];
+const blocked = voucherResults.flatMap((result) => result.blocked);
+const differs = voucherResults.flatMap((result) => result.differs);
+
 console.log('Seeded customer@hk5.local, seller1@hk5.local, seller2@hk5.local, seller3@hk5.local (password: SEED_PASSWORD in .env.demo).');
 console.log(`Admin: ${env.ADMIN_BOOTSTRAP_EMAIL} (password: ADMIN_BOOTSTRAP_PASSWORD in .env.demo).`);
+if (differs.length > 0) {
+  // Usually earlier demo clicks, such as publishing THEM21; the stack still starts, but the sample is not as seeded.
+  console.warn(['Voucher sample PARTIAL, existing data left unchanged:', ...differs].join('\n  '));
+}
+if (blocked.length > 0) {
+  console.error(['Voucher sample BLOCKED, the voucher demo data is incomplete:', ...blocked].join('\n  '));
+  process.exitCode = 1;
+}
