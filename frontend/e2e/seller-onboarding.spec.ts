@@ -96,6 +96,6 @@ test('the marketplace rules are public and list the seller requirements', async 
   await page.goto('/');
   await page.getByRole('link', { name: 'Quy định sàn' }).click();
   await expect(page.getByRole('heading', { name: 'Quy định sàn Soopi' })).toBeVisible();
-  await expect(page.getByRole('heading', { name: '9. Điều kiện trở thành người bán' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: '11. Quy định đối với người bán' })).toBeVisible();
   await expect(page.getByText('Sàn thu phí 5%', { exact: false })).toBeVisible();
 });
