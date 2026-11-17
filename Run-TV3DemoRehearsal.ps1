@@ -1,4 +1,4 @@
-[CmdletBinding()]
+﻿[CmdletBinding()]
 param(
   [Parameter(Mandatory)][ValidatePattern('^[a-f0-9]{40}$')][string]$ExpectedSha,
   [ValidatePattern('^hk5-tv3-rehearsal$')][string]$ApprovedIsolatedStack,
@@ -7,10 +7,33 @@ param(
 $ErrorActionPreference = 'Stop'
 $root = (Resolve-Path -LiteralPath $PSScriptRoot).Path
 if ((Get-Location).Path -ne $root) { throw "Chạy từ root chứa runner: $root" }
+# Native stderr must never terminate PowerShell 5.1 while we are checking $LASTEXITCODE.
+# Capture both channels; return stdout only so Docker/Git machine-readable values stay clean.
 function Read-Command($exe, [string[]]$commandArgs) {
-  $result = @(& $exe @commandArgs 2>$null)
-  if ($LASTEXITCODE -ne 0) { throw "$exe $($commandArgs[0]) thất bại (exit $LASTEXITCODE)" }
-  return $result
+  $savedPreference = $ErrorActionPreference
+  try {
+    $ErrorActionPreference = 'Continue'
+    $combined = @(& $exe @commandArgs 2>&1)
+    $nativeExit = $LASTEXITCODE
+  } finally {
+    $ErrorActionPreference = $savedPreference
+  }
+  if ($nativeExit -ne 0) {
+    throw "$exe $($commandArgs[0]) thất bại (exit $nativeExit)"
+  }
+  return @($combined | Where-Object { $_ -isnot [System.Management.Automation.ErrorRecord] })
+}
+# Preserve stdout and stderr for installs/tests in private logs; do not mistake warnings for failure.
+function Invoke-LoggedNative($exe, [string[]]$commandArgs, [string]$logPath) {
+  $savedPreference = $ErrorActionPreference
+  try {
+    $ErrorActionPreference = 'Continue'
+    & $exe @commandArgs 2>&1 | Out-File -LiteralPath $logPath -Encoding utf8
+    $nativeExit = $LASTEXITCODE
+  } finally {
+    $ErrorActionPreference = $savedPreference
+  }
+  return $nativeExit
 }
 function Check-Git {
   $actual = Read-Command git @('rev-parse', 'HEAD')
@@ -103,14 +126,14 @@ $playwrightExit = $null
 Push-Location -LiteralPath (Join-Path $root 'frontend')
 try {
   if ($InstallDeps) {
-    & npm.cmd ci --no-audit --no-fund 2>&1 | Out-File -LiteralPath (Join-Path $evidence 'npm-install.log') -Encoding utf8
-    if ($LASTEXITCODE -ne 0) { throw 'npm ci thất bại' }
+    $npmExit = Invoke-LoggedNative 'npm.cmd' @('ci','--no-audit','--no-fund') (Join-Path $evidence 'npm-install.log')
+    if ($npmExit -ne 0) { throw 'npm ci thất bại' }
   }
   $pw = Join-Path (Get-Location).Path 'node_modules\.bin\playwright.cmd'
   if (!(Test-Path -LiteralPath $pw)) { throw 'Playwright chưa cài trong frontend' }
   if ($InstallDeps) {
-    & $pw install chromium 2>&1 | Out-File -LiteralPath (Join-Path $evidence 'chromium-install.log') -Encoding utf8
-    if ($LASTEXITCODE -ne 0) { throw 'Cài Chromium thất bại' }
+    $chromiumExit = Invoke-LoggedNative $pw @('install','chromium') (Join-Path $evidence 'chromium-install.log')
+    if ($chromiumExit -ne 0) { throw 'Cài Chromium thất bại' }
   }
   $phase = 'check-stack-before-test'
   Check-Git
@@ -119,9 +142,10 @@ try {
     if ($state -cne ($containers[$service]+'|true')) { throw "Container đã đổi trước test: $service" }
   }
   $phase = 'playwright'
-  & $pw test 'e2e/tv3-demo-rehearsal.spec.ts' --workers 1 --retries 0 --trace off --reporter list,json --output (Join-Path $evidence 'test-results') 2>&1 |
-    Out-File -LiteralPath (Join-Path $evidence 'playwright.log') -Encoding utf8
-  $playwrightExit = $LASTEXITCODE
+  $playwrightExit = Invoke-LoggedNative $pw @(
+    'test','e2e/tv3-demo-rehearsal.spec.ts','--workers','1','--retries','0',
+    '--trace','off','--reporter','list,json','--output',(Join-Path $evidence 'test-results')
+  ) (Join-Path $evidence 'playwright.log')
   if ($playwrightExit -ne 0) { $code=$playwrightExit; throw 'Playwright thất bại, xem log private' }
   if (!(Test-Path -LiteralPath (Join-Path $evidence 'receipt.json'))) { throw 'Thiếu receipt, lượt chạy có thể đã skip' }
   $receipt = Get-Content -LiteralPath (Join-Path $evidence 'receipt.json') -Raw | ConvertFrom-Json
