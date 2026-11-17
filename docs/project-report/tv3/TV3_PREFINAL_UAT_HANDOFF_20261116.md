@@ -30,11 +30,11 @@
 | `checkout-03b-order-history.png` | Customer `/orders` | Cùng ID trên danh sách History, phân biệt trang detail | **NOT_CAPTURED** |
 | `checkout-04-db-receipt.md` | DB read-only | Order + 2 SellerOrders, fee, stock/journal; redacted | **NOT_CAPTURED** |
 
-**Audit cập nhật theo báo cáo Codex Windows ngày 16/11 (chưa kiểm độc lập các file private trong phiên GitHub):** chỉ **1/9 PNG `voucher-01-seller.png` = REVIEWED_DEMO**, nguồn demo checkout `552e8eb` chưa có xác minh image SHA. Các ảnh cũ **FAIL**: `promo-02` campaign CANCELLED/Loading, `promo-03` sai kind Super Sale, `checkout-01` và `checkout-02` có **ba Store**, không phải hai. Bốn mục `promo-01`, `voucher-02`, `checkout-03`, `checkout-03b` = **BLOCKED_RUNTIME** vì Docker Engine HTTP 500; DB receipt vẫn **NOT_CAPTURED**. ZIP pre-freeze private theo Codex có SHA256 `873e74e3ab2fe5550c15220c1c6a3de6417982f83ecb64d6d70598bc079a05a7`, không được xem là đã public hay final.
+**Audit cập nhật theo báo cáo Codex Windows ngày 16/11 (chưa kiểm độc lập các file private trong phiên GitHub):** chỉ **1/9 PNG `voucher-01-seller.png` = REVIEWED_DEMO**, nguồn demo checkout `552e8eb` chưa có xác minh image SHA. Các ảnh cũ **FAIL**: `promo-02` campaign CANCELLED/Loading, `promo-03` sai kind Super Sale, `checkout-01` và `checkout-02` có **ba Store**, không phải hai. Bốn mục `promo-01`, `voucher-02`, `checkout-03`, `checkout-03b` = **NOT_RUN_LOCAL** (Docker Engine local đã lỗi trong lượt trước nhưng không còn chặn review/merge theo [quyết định TV2](https://github.com/duyxl56785/Project_HK5/issues/160#issuecomment-6918341602)); DB receipt vẫn **NOT_CAPTURED**. ZIP pre-freeze private theo Codex có SHA256 `873e74e3ab2fe5550c15220c1c6a3de6417982f83ecb64d6d70598bc079a05a7`, không được xem là đã public hay final.
 
 Nguồn hướng dẫn chi tiết: [CAPTURE_REAL_CHECKOUT.md](CAPTURE_REAL_CHECKOUT.md). Ảnh `cart-hai-store-quantity-remove-va-jwt-het-han-passed.png` lịch sử là giỏ **trống**, `cod-desktop.png` là mock/preview; không dùng làm ảnh Checkout thật. Theo TV2, **B.1–B.5 không cần chụp riêng cho bản nộp**; PR #204 vẫn là PRE-FINAL/DRAFT, cần sửa checksum trước khi dùng receipt.
 
-**Ràng buộc:** chỉ chụp từ stack local/disposable do TV2/TV5 cho phép, source SHA và Compose project ID rõ; không upload credential/JWT/PII. Screenshot có dữ liệu thật chưa duyệt phải nằm trong thư mục private ngoài repo, TV5 xem pixel, kiểm SHA256 rồi mới chèn báo cáo/commit. Nếu fixture không có thì giữ `NOT_CAPTURED`, không tạo ảnh giả. Không tự bật cờ Checkout, Finance hoặc UNKNOWN chỉ để chụp.
+**Ràng buộc:** [TV2 quyết định](https://github.com/duyxl56785/Project_HK5/issues/160#issuecomment-6918341602) dùng CI exact HEAD và các lượt chạy TV2 trên máy TV2 làm bằng chứng runtime, **không yêu cầu TV3 sửa Docker/capture local**. Mọi ảnh UAT được TV2 chụp từ stack disposable có source SHA và Compose project ID rõ; không upload credential/JWT/PII. Screenshot có dữ liệu thật chưa duyệt phải nằm trong thư mục private ngoài repo, TV5 xem pixel, kiểm SHA256 rồi mới chèn báo cáo/commit. Nếu fixture không có thì giữ `NOT_CAPTURED`, không tạo ảnh giả. Không tự bật cờ Checkout, Finance hoặc UNKNOWN chỉ để chụp.
 
 ## 3. Ma trận UAT đúng frozen SHA — 20/11
 
@@ -64,7 +64,7 @@ Có bản nháp [DOCX TV5 14/11](../../../reports/submission/Bao_cao_Soopi_TV5_D
 - **Finance/COD:** `FulfillmentService.settle` chỉ đánh dấu đối soát & ghi thông báo, chưa tự chuyển khoản ngân hàng; không tự khẳng định đã thanh toán thực.
 - **Return:** Chưa tự động hoàn tiền/restock, RET-05 blocked; UNKNOWN không tự giải quyết.
 - **QA:** mọi số CI phải ghi đúng SHA/run; `PASS` CI không đồng nghĩa `PASS` final UAT; nếu ca chưa chạy ghi `NOT_RUN/BLOCKED`.
-- **Nguồn báo cáo chính thức:** TV2 chọn Word `Bao_cao_Smart_ECommerce_ban_nop.docx` và deck 23 slide để ghép sau UAT 20/11. **Không cần chụp riêng B.1–B.5**; bằng chứng runtime dùng cho Hình 6.1–6.8 phải đúng SHA/stack, che PII; ảnh lịch sử chỉ gắn `HISTORICAL_DEMO` khi TV5 cho phép.
+- **Nguồn báo cáo chính thức:** TV2 chọn Word `Bao_cao_Smart_ECommerce_ban_nop.docx` và deck 23 slide để ghép sau UAT 20/11. **TV2 chụp lại toàn bộ Hình 6.1–6.8 ngày 20/11 trên frozen SHA** theo [#162](https://github.com/duyxl56785/Project_HK5/issues/162#issuecomment-6907759709); **không dùng ảnh lịch sử cho bản nộp**, không cần chụp riêng B.1–B.5. TV3 cung cấp checklist/oracle để TV2/TV5 đối chiếu; ảnh runtime phải đúng SHA/stack, che PII và kèm receipt.
 - **Lịch:** frozen main hết **19/11**, clean-stack E2E & clean-clone **20/11**, nộp **21/11**.
 
 ## 5. Điều kiện chốt Issue #160
