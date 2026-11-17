@@ -1,11 +1,10 @@
 name: TV3 main exact-SHA pre-final readiness and E2E
 
+# Historical one-shot run 44052552623 is intentionally retained as FAIL:
+# invalid Compose project name did not match the promotion test allowlist.
+# No automatic rerun; corrected E2E proof is run 44054213307.
 on:
-  push:
-    branches:
-      - ci/tv3-main-879143a-preflight-20261117
-    paths:
-      - .github/workflows/tv3-main-preflight.yml
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -85,7 +84,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 40
     env:
-      COMPOSE_PROJECT_NAME: hk5-tv3-main-879143a-ci
+      COMPOSE_PROJECT_NAME: hk5-promo-test-tv3-main-879143a
       E2E_BASE_URL: http://localhost:5173
       PLAYWRIGHT_JSON_OUTPUT_FILE: /tmp/tv3-main-e2e-stats.json
     steps:
@@ -112,7 +111,7 @@ jobs:
         run: |
           set -euo pipefail
           node scripts/demo/up.mjs --approved-inventory-pair --approved-finance-policy
-          test "$COMPOSE_PROJECT_NAME" = 'hk5-tv3-main-879143a-ci'
+          test "$COMPOSE_PROJECT_NAME" = 'hk5-promo-test-tv3-main-879143a'
           docker compose --env-file .env.demo -f docker/compose.demo.yml ps --status running
       - name: Install Playwright
         working-directory: frontend
