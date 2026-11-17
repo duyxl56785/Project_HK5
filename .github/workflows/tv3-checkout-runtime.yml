@@ -1,0 +1,170 @@
+name: TV3 isolated Checkout runtime (one-shot)
+
+on:
+  push:
+    branches:
+      - ci/tv3-checkout-runtime-20261117
+    paths:
+      - .github/workflows/tv3-checkout-runtime.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tv3-checkout-one-shot-ci
+  cancel-in-progress: false
+
+jobs:
+  checkout-rehearsal:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      TV3_REHEARSAL_SHA: '240d0280bdde66f7d9055e24ded75f1e9417edfb'
+      TV3_REHEARSAL_PROJECT: hk5-tv3-rehearsal
+      TV3_REHEARSAL_PG_READ_ONLY: '1'
+      COMPOSE_PROJECT_NAME: hk5-tv3-rehearsal
+      E2E_BASE_URL: http://localhost:5173
+      TV3_SOURCE_DIR: ${{ runner.temp }}/tv3-app-source
+      TV3_REHEARSAL_EVIDENCE: ${{ runner.temp }}/tv3-private-evidence
+
+    steps:
+      - name: Checkout handoff (source app will be detached at exact SHA)
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Restore only four TV3 test files on exact app source
+        shell: bash
+        run: |
+          set -euo pipefail
+          git worktree add --detach "$TV3_SOURCE_DIR" "$TV3_REHEARSAL_SHA"
+          cd "$TV3_SOURCE_DIR"
+          git restore --source "$GITHUB_SHA" --worktree -- \
+            frontend/e2e/tv3-demo-rehearsal.spec.ts \
+            Run-TV3DemoRehearsal.ps1 verify_tv3_rehearsal.py \
+            TV3_TV2_LIVE_RUN_HANDOFF.md
+          test "$(git rev-parse HEAD)" = "$TV3_REHEARSAL_SHA"
+          git diff --exit-code HEAD --
+          test -f frontend/e2e/tv3-demo-rehearsal.spec.ts
+          mkdir -p "$TV3_REHEARSAL_EVIDENCE"
+          echo "Application source SHA: $(git rev-parse HEAD)"
+          echo "Handoff/CI SHA: $GITHUB_SHA"
+          echo "Disposable project: $COMPOSE_PROJECT_NAME"
+
+      - name: Setup Java 21
+        uses: actions/setup-java@c5195efecf7bdfc987ee8bae7a71cb8b11521c00 # v4.7.1
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Setup Node 22
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '22'
+
+      - name: Validate disposable demo configuration
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd "$TV3_SOURCE_DIR"
+          node --test scripts/demo/gen-env.test.mjs scripts/demo/disposable.test.mjs scripts/demo/voucher-seed.test.mjs
+
+      - name: Start NEW CI-only project and seed synthetic data
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd "$TV3_SOURCE_DIR"
+          node scripts/demo/up.mjs --approved-inventory-pair --approved-finance-policy
+          test "$COMPOSE_PROJECT_NAME" = "hk5-tv3-rehearsal"
+          docker compose --env-file .env.demo -f docker/compose.demo.yml ps --status running
+
+      - name: Install Playwright in detached source
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd "$TV3_SOURCE_DIR/frontend"
+          npm ci --no-audit --no-fund
+          npx playwright install --with-deps chromium
+
+      - name: Run ONLY the approved TV3 two-store Checkout spec ONCE
+        id: tv3
+        shell: bash
+        env:
+          PLAYWRIGHT_JSON_OUTPUT_FILE: ${{ runner.temp }}/tv3-private-evidence/playwright-results.json
+        run: |
+          set +e
+          cd "$TV3_SOURCE_DIR/frontend"
+          ./node_modules/.bin/playwright test e2e/tv3-demo-rehearsal.spec.ts \
+            --workers=1 --retries=0 --trace=off --reporter=list,json \
+            --output="$TV3_REHEARSAL_EVIDENCE/test-results" \
+            > "$TV3_REHEARSAL_EVIDENCE/playwright.log" 2>&1
+          code=$?
+          echo "exit_code=$code" >> "$GITHUB_OUTPUT"
+          echo "TV3 Playwright exit: $code (raw log private; NOT uploaded)"
+          exit "$code"
+
+      - name: Validate proof and publish only a redacted summary
+        if: always()
+        shell: bash
+        env:
+          TV3_EXIT_CODE: ${{ steps.tv3.outputs.exit_code }}
+        run: |
+          set -euo pipefail
+          cd "$TV3_SOURCE_DIR"
+          python3 - <<'PY'
+          import hashlib, json, os
+          from pathlib import Path
+          e = Path(os.environ['TV3_REHEARSAL_EVIDENCE'])
+          e.mkdir(exist_ok=True, parents=True)
+          raw = os.environ.get('TV3_EXIT_CODE','')
+          rc = int(raw) if raw.isdigit() else 1
+          has_receipt = (e / 'receipt.json').is_file()
+          status = 'PASS' if rc == 0 and has_receipt else 'FAIL'
+          report = {
+            'kind':'TV3_CHECKOUT_REHEARSAL_RUN',
+            'sourceSha':os.environ['TV3_REHEARSAL_SHA'],
+            'stackBuildSha':'NOT_ATTESTED',
+            'project':os.environ['COMPOSE_PROJECT_NAME'],
+            'phase':'complete' if status == 'PASS' else 'playwright_or_preflight',
+            'proofScope':'POSTGRES_READ_ONLY',
+            'status':status,
+            'exitCode':0 if status == 'PASS' else 1,
+            'playwrightExitCode':rc,
+            'executor':'GitHub Actions ephemeral Ubuntu, not TV2 Windows',
+          }
+          (e / 'run.json').write_text(json.dumps(report, ensure_ascii=False)+'\n',encoding='utf-8')
+          files = sorted((p for p in e.rglob('*') if p.is_file() and p.name != 'SHA256SUMS.txt'))
+          manifest = '\n'.join(hashlib.sha256(p.read_bytes()).hexdigest()+'  '+p.relative_to(e).as_posix() for p in files)
+          (e/'SHA256SUMS.txt').write_text(manifest+'\n',encoding='ascii')
+          with open(os.environ['GITHUB_STEP_SUMMARY'],'a',encoding='utf-8') as o:
+            o.write('## TV3 one-shot isolated Checkout runtime\n\n')
+            o.write('- SOURCE SHA: `'+os.environ['TV3_REHEARSAL_SHA']+'`\n')
+            o.write('- CI handoff SHA: `'+os.environ['GITHUB_SHA']+'`\n')
+            o.write('- Scope: disposable CI stack, NOT TV2/20-Nov final UAT\n')
+            o.write('- Playwright exit: '+str(rc)+'\n')
+            o.write('- Receipt produced: '+str(has_receipt)+'\n')
+            o.write('- Raw logs, traces, screenshots, credentials: **NOT uploaded**\n')
+            if has_receipt:
+              proof = json.loads((e/'receipt.json').read_text(encoding='utf-8'))
+              o.write('- StoreOrders: '+str(len(proof.get('storeOrders',[])))+'\n')
+              o.write('- Reserve operations: '+str(proof.get('replay',{}).get('reserveOperationCount'))+'\n')
+              o.write('- Replay HTTP: '+str(proof.get('replay',{}).get('status'))+'\n')
+              o.write('- Mismatch HTTP: '+str(proof.get('replay',{}).get('mismatchStatus'))+'\n')
+            o.write('- Private receipt SHA256: '+(hashlib.sha256((e/'receipt.json').read_bytes()).hexdigest() if has_receipt else 'N/A')+'\n')
+          PY
+          if [ -f "$TV3_REHEARSAL_EVIDENCE/receipt.json" ]; then
+            python3 verify_tv3_rehearsal.py "$TV3_REHEARSAL_EVIDENCE" --expected-sha "$TV3_REHEARSAL_SHA"
+          else
+            echo "No receipt; UAT cannot be claimed PASS"
+          fi
+
+      - name: Remove only this CI runner's disposable project and volumes
+        if: always()
+        shell: bash
+        run: |
+          if [ -f "$TV3_SOURCE_DIR/.env.demo" ]; then
+            cd "$TV3_SOURCE_DIR"
+            docker compose --env-file .env.demo -f docker/compose.demo.yml down -v || true
+          fi
+          echo "No existing local TV2 or TV3 Docker stacks were accessed"
