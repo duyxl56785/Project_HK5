@@ -136,7 +136,7 @@ try {
 } finally {
   Pop-Location
   foreach ($key in $prior.Keys) { [Environment]::SetEnvironmentVariable($key,$prior[$key],'Process') }
-  [ordered]@{
+  $runReceipt = [ordered]@{
     kind='TV3_CHECKOUT_REHEARSAL_RUN'
     sourceSha=$ExpectedSha
     stackBuildSha='NOT_ATTESTED'
@@ -150,10 +150,27 @@ try {
     status=$(if($code -ne 0){'FAIL'}elseif($UsePostgresReadOnly){'PASS'}else{'PARTIAL'})
     exitCode=$code
     playwrightExitCode=$playwrightExit
-  } | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $evidence 'run.json') -Encoding utf8NoBOM
+  }
+  # Windows PowerShell 5.1 (.NET Framework) does not support Set-Content -Encoding utf8NoBOM.
+  # Write the same UTF-8 no-BOM JSON with a .NET Framework-compatible API.
+  $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+  [IO.File]::WriteAllText(
+    (Join-Path $evidence 'run.json'),
+    (($runReceipt | ConvertTo-Json -Depth 5) + [Environment]::NewLine),
+    $utf8NoBom
+  )
+  # Path.GetRelativePath is unavailable in Windows PowerShell 5.1 / .NET Framework.
+  # Build paths relative to the fixed evidence root, with an explicit prefix guard.
+  $evidencePrefix = [IO.Path]::GetFullPath($evidence).TrimEnd(
+    [IO.Path]::DirectorySeparatorChar, [IO.Path]::AltDirectorySeparatorChar
+  ) + [IO.Path]::DirectorySeparatorChar
   Get-ChildItem -LiteralPath $evidence -Recurse -File | Sort-Object FullName | ForEach-Object {
-    $relative = [IO.Path]::GetRelativePath($evidence,$_.FullName).Replace([char]92,[char]47)
-    (Get-FileHash -LiteralPath $_.FullName -Algorithm SHA256).Hash.ToLowerInvariant() + '  ' + $relative
+    $fullFile = [IO.Path]::GetFullPath($_.FullName)
+    if (!$fullFile.StartsWith($evidencePrefix, [StringComparison]::OrdinalIgnoreCase)) {
+      throw 'Evidence path outside approved root'
+    }
+    $relative = $fullFile.Substring($evidencePrefix.Length).Replace([char]92,[char]47)
+    (Get-FileHash -LiteralPath $fullFile -Algorithm SHA256).Hash.ToLowerInvariant() + '  ' + $relative
   } | Set-Content -LiteralPath (Join-Path $evidence 'SHA256SUMS.txt') -Encoding ascii
 }
 exit $code
