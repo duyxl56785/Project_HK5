@@ -19,10 +19,10 @@ git rev-parse $remoteRef
 if ($LASTEXITCODE -ne 0) { throw 'Thiếu commit handoff' }
 $qa = Read-Host 'Đường dẫn mới cho worktree rehearsal'
 if (Test-Path -LiteralPath $qa) { throw 'Đường dẫn đã tồn tại' }
-git worktree add --detach $qa $sha
+git -c core.longpaths=true worktree add --detach $qa $sha
 if ($LASTEXITCODE -ne 0) { throw 'Tạo worktree thất bại' }
 Set-Location -LiteralPath $qa
-git restore --source "origin/$handoff" --worktree -- frontend/e2e/tv3-demo-rehearsal.spec.ts Run-TV3DemoRehearsal.ps1 verify_tv3_rehearsal.py TV3_TV2_LIVE_RUN_HANDOFF.md
+git -c core.longpaths=true restore --source "origin/$handoff" --worktree -- frontend/e2e/tv3-demo-rehearsal.spec.ts Run-TV3DemoRehearsal.ps1 verify_tv3_rehearsal.py TV3_TV2_LIVE_RUN_HANDOFF.md
 if ($LASTEXITCODE -ne 0) { throw 'Restore bộ test thất bại' }
 $actual = git rev-parse HEAD
 if ($LASTEXITCODE -ne 0 -or $actual -cne $sha) { throw 'Sai source SHA' }
@@ -32,6 +32,58 @@ git status --short
 ~~~
 
 Kỳ vọng bốn file bàn giao xuất hiện với trạng thái **untracked**; app HEAD vẫn là `240d028`. Theo [quyết định của TV2](https://github.com/duyxl56785/Project_HK5/issues/160#issuecomment-6938080387), máy chạy là **Windows PowerShell 5.1**, không phải PowerShell 7. Runner đã sửa phần ghi JSON UTF-8 no BOM và đường dẫn tương đối để tương thích PS 5.1; cần TV2 **thực chạy xác nhận** `run.json`/`SHA256SUMS.txt` trước khi gọi PASS.
+
+### Kiểm tra độc lập PowerShell 5.1 trước khi dùng Docker (không tạo đơn)
+
+**Bắt buộc thực hiện trên chính máy TV2, sau khi restore đủ bốn file.** Lượt kiểm này chỉ đọc `.ps1`, gọi Node giả lập warning và ghi một log thử trong TEMP; **không chạy main runner, không gọi Checkout, không truy cập Docker/DB, không bật flags**. Chạy trong **Windows PowerShell 5.1**; dừng nếu có FAIL. Kết quả mong đợi: `PS51_OFFLINE_PREFLIGHT_PASS`.
+
+```powershell
+$runner = (Resolve-Path -LiteralPath '.\Run-TV3DemoRehearsal.ps1').Path
+$bytes = [IO.File]::ReadAllBytes($runner)
+if ($bytes.Length -lt 3 -or $bytes[0] -ne 239 -or $bytes[1] -ne 187 -or $bytes[2] -ne 191) {
+    throw 'Runner thiếu UTF-8 BOM EF BB BF'
+}
+$tokens = $null; $parseErrors = $null
+$ast = [System.Management.Automation.Language.Parser]::ParseFile(
+    $runner, [ref]$tokens, [ref]$parseErrors)
+if ($parseErrors.Count -ne 0) {
+    $parseErrors | ForEach-Object { Write-Host $_.Message }
+    throw 'PowerShell 5.1 parser FAIL'
+}
+$functions = @($ast.FindAll({
+    param($node)
+    $node -is [System.Management.Automation.Language.FunctionDefinitionAst]
+}, $true))
+foreach ($name in @('Read-Command', 'Invoke-LoggedNative')) {
+    $matches = @($functions | Where-Object { $_.Name -eq $name })
+    if ($matches.Count -ne 1) { throw "Function $name không tồn tại duy nhất" }
+    . ([ScriptBlock]::Create($matches[0].Extent.Text))
+}
+Get-Command node -ErrorAction Stop | Out-Null
+$oldPreference = $ErrorActionPreference
+$probeLog = Join-Path $env:TEMP ('tv3-ps51-native-' + [Guid]::NewGuid().ToString('N') + '.log')
+try {
+    $ErrorActionPreference = 'Stop'
+    $out = @(Read-Command 'node' @('-e', 'console.error("warn");console.log("ok")'))
+    if ($out.Count -ne 1 -or $out[0] -cne 'ok') {
+        throw 'Read-Command không lọc stderr warning đúng'
+    }
+    $ok = Invoke-LoggedNative 'node' @('-e','console.error("warn");console.log("ok")') $probeLog
+    if ($ok -ne 0 -or !(Select-String -LiteralPath $probeLog -SimpleMatch 'warn' -Quiet)) {
+        throw 'Native stderr ghi log hoặc exit-code 0 sai'
+    }
+    $bad = Invoke-LoggedNative 'node' @('-e','console.error("expected");process.exit(7)') $probeLog
+    if ($bad -ne 7 -or $ErrorActionPreference -cne 'Stop') {
+        throw 'Native exit-code 7 hoặc khôi phục preference sai'
+    }
+    Write-Host 'PS51_OFFLINE_PREFLIGHT_PASS'
+} finally {
+    $ErrorActionPreference = $oldPreference
+    Remove-Item -LiteralPath $probeLog -ErrorAction SilentlyContinue
+}
+```
+
+**Giới hạn chứng cứ:** Bài này thực thi đúng hai function được trích từ AST runner để kiểm xử lý stderr và exit code; **không kiểm Docker, không kiểm đoạn `finally` của live runner hoặc chứng minh E2E PASS**. Sau khi chạy rehearsal thật mới có thể xác nhận `run.json`, `SHA256SUMS.txt` và receipt. `core.longpaths=true` được áp dụng riêng cho lệnh Git tạo/restore worktree, không đổi cấu hình Git toàn máy.
 
 ### Dựng một stack mới hoàn toàn riêng — thao tác trên máy TV2
 
