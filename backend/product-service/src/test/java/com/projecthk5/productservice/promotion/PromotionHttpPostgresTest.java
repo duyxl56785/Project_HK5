@@ -30,7 +30,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 @Testcontainers
 @Tag("postgresql")
-@SpringBootTest
+@SpringBootTest(properties = "ORDER_PRODUCT_TOKEN=c2-product-test")
 @AutoConfigureMockMvc
 class PromotionHttpPostgresTest {
     @Container
@@ -171,6 +171,30 @@ class PromotionHttpPostgresTest {
         assertNull(promotions.quote(f.product(), f.store(), seller, base, false, start).promotion());
         assertNull(promotions.quote(f.product(), f.store(), seller, base, true, end).promotion());
         assertEquals(100000, db.queryForObject("SELECT unit_price FROM products WHERE id=?",Integer.class,f.product()));
+    }
+
+    @Test
+    void internalCheckoutSnapshotAttestsThePromotionThatActuallySetsThePrice() throws Exception {
+        var fixture = fixture();
+        var store = stores.readStore(fixture.store());
+        when(stores.loadCurrent(java.util.Set.of(fixture.store()))).thenReturn(List.of(
+                new com.projecthk5.productservice.catalog.CurrentStoreFactsSource.StoreFacts(fixture.store(),
+                        store.sellerId(), "owner", true, true, false, true)));
+        var snapshot = get("/internal/catalog/products/" + fixture.product())
+                .header("X-Internal-Token", "c2-product-test");
+        http.perform(snapshot).andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.status().isOk())
+                .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath("$.promotionApplied").value(false))
+                .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath("$.unitPrice").value(100000));
+
+        db.update("UPDATE promotion_campaign_products SET status='APPROVED' WHERE campaign_id=?", fixture.campaign());
+        db.update("UPDATE promotion_campaigns SET starts_at=now()-interval '2 hours', ends_at=now()+interval '2 hours', "
+                + "submitted_at=now()-interval '3 hours' "
+                + "WHERE id=?", fixture.campaign());
+        http.perform(snapshot).andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.status().isOk())
+                .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath("$.promotionApplied").value(true))
+                .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath("$.unitPrice").value(80000));
+        assertEquals(100000, db.queryForObject("SELECT unit_price FROM products WHERE id=?", Integer.class,
+                fixture.product()));
     }
 
     private record Route(String method, String path, String body) {

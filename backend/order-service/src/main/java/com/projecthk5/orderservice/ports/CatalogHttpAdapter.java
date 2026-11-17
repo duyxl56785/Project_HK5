@@ -1,5 +1,6 @@
 package com.projecthk5.orderservice.ports;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.projecthk5.security.InternalTokens;
 import com.projecthk5.security.JwtResourceServer;
 import java.math.BigDecimal;
@@ -28,7 +29,8 @@ public class CatalogHttpAdapter implements CatalogPort {
     }
 
     record Wire(String productId, String sellerId, String storeId, String sku, String name, boolean available,
-                boolean sellerApproved, boolean storeOpen, boolean houseStore, BigDecimal unitPrice) {}
+                boolean sellerApproved, boolean storeOpen, boolean houseStore, BigDecimal unitPrice,
+                JsonNode promotionApplied) {}
 
     @Override
     public ProductSnapshot verify(String productId) {
@@ -50,7 +52,9 @@ public class CatalogHttpAdapter implements CatalogPort {
         // Inventory moves stock by this exact SKU, so a bad one is refused here and never repaired.
         if (w.sku() == null || w.sku().length() > 128 || !CANONICAL_SKU.matcher(w.sku()).matches())
             throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, "Product catalog returned an unusable SKU");
+        JsonNode promotion = w.promotionApplied();
+        Boolean applied = promotion != null && promotion.isBoolean() ? promotion.booleanValue() : null;
         return new ProductSnapshot(w.productId(), w.sellerId(), w.storeId(), w.available(), w.sellerApproved(),
-                w.storeOpen(), w.houseStore(), w.unitPrice(), w.sku(), w.name());
+                w.storeOpen(), w.houseStore(), w.unitPrice(), w.sku(), w.name(), applied);
     }
 }
