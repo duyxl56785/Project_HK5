@@ -82,7 +82,9 @@ jobs:
         shell: bash
         run: |
           set +e
-          node scripts/demo/rehearse-v7-upgrade.mjs > /tmp/tv3-v7-private.log 2>&1
+          # V7's requireDisposable permits only hk5-v7-<8 hex>; unset the smoke project
+          # so newProject() generates a fresh protected isolated project.
+          env -u COMPOSE_PROJECT_NAME node scripts/demo/rehearse-v7-upgrade.mjs > /tmp/tv3-v7-private.log 2>&1
           status=$?
           echo "V7 isolated upgrade exit: $status"
           exit "$status"
