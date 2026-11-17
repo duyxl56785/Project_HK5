@@ -29,7 +29,34 @@ if ($LASTEXITCODE -ne 0) { throw 'Tracked source bị thay đổi' }
 git status --short
 ~~~
 
-Kỳ vọng bốn file bàn giao xuất hiện với trạng thái untracked. Theo [phê duyệt TV2](https://github.com/duyxl56785/Project_HK5/issues/160#issuecomment-6937160336), TV2 đọc bộ test rồi chỉ chạy trên project hk5-tv3-rehearsal với volume mới, source cùng worktree và dữ liệu giả. Tạo hoặc dùng cấu hình demo của TV2 trên máy này. Không chuyển .env.demo, dữ liệu volume, tài khoản hay token từ máy TV3.
+Kỳ vọng bốn file bàn giao xuất hiện với trạng thái **untracked**; app HEAD vẫn là `240d028`. Theo [quyết định của TV2](https://github.com/duyxl56785/Project_HK5/issues/160#issuecomment-6938080387), máy chạy là **Windows PowerShell 5.1**, không phải PowerShell 7. Runner đã sửa phần ghi JSON UTF-8 no BOM và đường dẫn tương đối để tương thích PS 5.1; cần TV2 **thực chạy xác nhận** `run.json`/`SHA256SUMS.txt` trước khi gọi PASS.
+
+### Dựng một stack mới hoàn toàn riêng — thao tác trên máy TV2
+
+**Chỉ sau khi TV2 đọc và chấp thuận commit bộ test mới nhất.** Chạy trong **Windows PowerShell 5.1**, từ root worktree detached source `240d028`. Không chạy trên máy TV3 và không sao chép tài khoản/secret từ máy TV3.
+
+1. File `docker/compose.demo.yml` có `name: hk5-demo`; phải đặt `COMPOSE_PROJECT_NAME=hk5-tv3-rehearsal` để Compose sử dụng **project name khác**. Kiểm tra bằng `docker compose ls`/container label, không chỉ tin vào tên biến.
+2. Cổng `5173` và `18080` được bind cố định. **TV2 tự kiểm và dừng stack hk5-demo do TV2 quản lý nếu đang chiếm hai cổng; không dùng lệnh down -v hoặc xóa volume của stack cũ.** Runner không tự dừng hay tạo stack nào.
+3. `frontend/e2e/support.ts`, runner và `up.mjs` đều đọc `.env.demo` ở root worktree. TV2 chép **file `.env.demo` của chính máy TV2** vào root worktree mới và giữ private/git-ignored, không commit hay in nội dung. `up.mjs`/gen-env dựng lại `docker/secrets` trong worktree này. Không chép `docker/secrets` hay volume từ checkout khác.
+4. Tạo và seed stack trên project/volume riêng sau khi TV2 quyết định cho phép cả hai cờ **chỉ trong demo local**:
+
+~~~powershell
+# Windows PowerShell 5.1 — root worktree source 240d028, sau khi TV2 kiểm tra cổng.
+if (Test-Path -LiteralPath '.env.demo') { throw 'Worktree đã có .env.demo; xác minh lại trước khi chạy' }
+$sourceEnv = Read-Host 'Đường dẫn tuyệt đối tới .env.demo do TV2 quản lý trên chính máy TV2'
+if (-not (Test-Path -LiteralPath $sourceEnv -PathType Leaf)) { throw 'Không tìm thấy .env.demo nguồn' }
+Copy-Item -LiteralPath $sourceEnv -Destination '.env.demo' -ErrorAction Stop
+$env:COMPOSE_PROJECT_NAME = 'hk5-tv3-rehearsal'
+$env:E2E_BASE_URL = 'http://localhost:5173'
+docker compose ls
+# Chỉ khi TV2 đã xác nhận 5173/18080 không thuộc stack cần giữ.
+node scripts/demo/up.mjs --approved-inventory-pair --approved-finance-policy
+if ($LASTEXITCODE -ne 0) { throw 'Dựng hoặc seed rehearsal thất bại; không chạy Checkout' }
+~~~
+
+`up.mjs` tạo các container và seed giả, **thực hiện ghi dữ liệu**; đây là bước TV2 phải chủ động chạy, không phải preflight read-only. Không chạy hai stack song song trên cùng cổng. Lệnh này **không** bật flags cho production hoặc UAT chính thức; các cờ mặc định OFF ở môi trường khác.
+
+5. Sau khi dựng, `E2E_BASE_URL` giữ đúng `http://localhost:5173` (Origin whitelist của stack). Đọc lại `docker compose ls`, nhãn/volumes và HTTP readiness bên dưới trước khi chạy test.
 
 ## 1. Kiểm trước khi chạy trên chính máy có stack
 
@@ -64,7 +91,15 @@ Sau khi TV2 đọc bộ test và xác nhận các điều kiện ở trên, ch�
 .\Run-TV3DemoRehearsal.ps1 -ExpectedSha $sha -ApprovedIsolatedStack $project
 ```
 
-Đây là chế độ mặc định dùng API. Thêm `-UsePostgresReadOnly` vào chính lệnh đó **chỉ khi** TV2 đã cho phép tài khoản kiểm thử đọc order_db/inventory_db. Khi thiếu dependency hoặc Chromium, thêm `-InstallDeps` trong cùng lượt trước khi bắt đầu. Không chạy cả hai mode nối tiếp chỉ để gom evidence. Một lượt thành công tạo một đơn thật trên stack demo và thay đổi Cart/stock tương ứng. Mode API tạo receipt PARTIAL vì nhìn thấy available qua Catalog sau TTL, chưa chứng minh reserved và số operation ở PostgreSQL.
+TV2 đã [đồng ý dùng mode PostgreSQL cho stack disposable này](https://github.com/duyxl56785/Project_HK5/issues/160#issuecomment-6938080387) để kiểm `reserved` và đúng một `RESERVE`. Sau khi TV2 xác minh quyền, **thêm `-UsePostgresReadOnly` trong chính lượt đầu tiên**:
+
+~~~powershell
+.\Run-TV3DemoRehearsal.ps1 -ExpectedSha $sha -ApprovedIsolatedStack 'hk5-tv3-rehearsal' -UsePostgresReadOnly
+~~~
+
+**Lưu ý bảo mật/phạm vi:** cờ này dùng tài khoản PostgreSQL `hk5` qua `docker exec` với mỗi truy vấn bọc trong `BEGIN READ ONLY ... ROLLBACK`; **không** phải tài khoản DB chỉ được cấp quyền SELECT. Chỉ sử dụng vì TV2 đã cho phép trên stack riêng sẽ xóa sau rehearsal, không áp dụng production. Nếu quyền PostgreSQL thực tế chưa được TV2 xác nhận, chạy **API-only** và ghi `PARTIAL` thay vì tự suy ra single reserve.
+
+Nếu thiếu dependency hoặc Chromium, dùng `-InstallDeps` **trong cùng một lượt đầu**, không chạy test ở cả hai mode để gom evidence. Bài này tạo đúng một Order và thay đổi Cart/stock; không chạy lại khi trạng thái Checkout chưa được đối soát.
 
 Runner in đường dẫn riêng trong TEMP. Sau khi chạy, gọi verifier ở root:
 
@@ -78,7 +113,7 @@ Verifier 0 = cấu trúc và checksum PASS trong phạm vi PostgreSQL được p
 ## 3. TV2 trả lại evidence
 
 - Full source SHA, provenance build nếu có, Compose project, image IDs, thời điểm, mode và runner/Playwright exit code.
-- run.json, playwright.log, playwright-results.json, checkout-attempt.json, receipt.json và SHA256SUMS.txt. Nếu thất bại, gửi những file thực có và trạng thái đã dừng ở đâu.
+- `run.json`, `playwright.log`, `playwright-results.json`, `checkout-attempt.json`, `receipt.json` và `SHA256SUMS.txt`. Xác minh `run.json` và manifest **được tạo trên Windows PowerShell 5.1 thật**, không chỉ parse syntax. Nếu thất bại, gửi những file thực có và trạng thái đã dừng ở đâu.
 - Hai PNG REHEARSAL sau khi kiểm pixel và masking. Trace/video bị tắt có chủ đích vì chứa phiên xác thực. Ghi `trace=OFF` trong bàn giao, dùng JSON report và log đã rà secrets để xem lỗi.
 - Đối chiếu Hình 6.5 với đúng hai card Cart. Đối chiếu Hình 6.6 với hai card Order Detail và receipt chứng minh hai SellerOrders khác ID/Store cùng root. Receipt để TV5 đối chiếu. Không ghép PNG REHEARSAL vào Word làm ảnh frozen SHA.
 
