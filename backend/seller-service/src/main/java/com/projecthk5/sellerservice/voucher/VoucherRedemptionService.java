@@ -120,17 +120,39 @@ public class VoucherRedemptionService {
             throw changed();
         }
 
+        insert(request, price, State.RESERVED, null);
+        return replay(request, find(request.sellerOrderId()));
+    }
+
+    /**
+     * Terminal proof from Order: fence a delayed redeem, including when a status
+     * read found no row yet. A tombstone occupies neither the customer slot nor quota.
+     */
+    public Reservation abortCheckout(Redeem request, Quote quote) {
+        if (request == null || quote == null || !request.voucherId().equals(quote.voucherId())
+                || request.expectedVersion() != quote.version()
+                || request.merchandiseAmount() != quote.merchandiseAmount()
+                || request.expectedDiscount() != quote.discountAmount()) {
+            throw ApiException.badRequest("VALIDATION_FAILED", "Abort requires the original quote");
+        }
+        vouchers.lockStore(request.storeId());
+        insert(request, quote, State.RELEASED, ReleaseReason.CHECKOUT_FAILED);
+        Reservation row = replay(request, find(request.sellerOrderId()));
+        if (!row.quote().equals(quote)) throw invalidTransition();
+        return release(request.storeId(), request.sellerOrderId(), ReleaseReason.CHECKOUT_FAILED);
+    }
+
+    private void insert(Redeem request, Quote price, State state, ReleaseReason reason) {
         // The primary key also protects against conflicting requests that locked different Stores.
         db.update("""
                 INSERT INTO voucher_redemptions (seller_order_id, voucher_id, store_id, customer_id,
                     voucher_version, voucher_code, discount_type, discount_value, max_discount,
-                    merchandise_amount, discount_amount, state)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'RESERVED')
+                    merchandise_amount, discount_amount, state, release_reason)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 ON CONFLICT (seller_order_id) DO NOTHING
                 """, request.sellerOrderId(), price.voucherId(), request.storeId(), request.customerId(),
                 price.version(), price.code(), price.type().name(), price.discountValue(), price.maxDiscount(),
-                price.merchandiseAmount(), price.discountAmount());
-        return replay(request, find(request.sellerOrderId()));
+                price.merchandiseAmount(), price.discountAmount(), state.name(), reason == null ? null : reason.name());
     }
 
     @Transactional(readOnly = true)

@@ -23,6 +23,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.DynamicPropertyRegistry;
@@ -33,7 +35,8 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-@SpringBootTest(properties = "hk5.voucher-c2.enabled=true")
+@SpringBootTest(properties = {"hk5.voucher-c2.enabled=true", "ORDER_SELLER_TOKEN=c2-seller-test"})
+@AutoConfigureMockMvc
 @Testcontainers
 @Tag("postgresql")
 class VoucherRedemptionPostgresIT {
@@ -50,6 +53,34 @@ class VoucherRedemptionPostgresIT {
     @Autowired JdbcTemplate db;
     @Autowired VoucherRedemptionService service;
     @Autowired PlatformTransactionManager transactions;
+    @Autowired MockMvc http;
+
+    @Test
+    void checkoutAbortFencesDelayedRedeemWithoutConsumingQuota() {
+        Fixture fixture = seed(1);
+        var quote = quote(fixture, "customer");
+        var intent = command(UUID.randomUUID(), fixture, "customer", quote);
+        var aborted = service.abortCheckout(intent, quote);
+        assertEquals(State.RELEASED, aborted.state());
+        assertEquals(aborted, service.redeem(intent));
+        assertEquals(aborted, service.abortCheckout(intent, quote));
+        assertEquals(State.RESERVED, service.redeem(command(UUID.randomUUID(), fixture, "customer", quote)).state());
+    }
+
+    @Test
+    void internalRedemptionReadsRequireOnlyTheConfiguredOrderPairCredential() throws Exception {
+        Fixture fixture = seed(1);
+        var intent = command(UUID.randomUUID(), fixture, "customer", quote(fixture, "customer"));
+        service.redeem(intent);
+        String path = "/internal/vouchers/redemptions/" + fixture.store() + "/" + intent.sellerOrderId();
+        var get = org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get(path);
+        var status = org.springframework.test.web.servlet.result.MockMvcResultMatchers.status();
+        http.perform(get).andExpect(status.isUnauthorized());
+        http.perform(get.header("X-Internal-Token", "c2-seller-test"))
+                .andExpect(status.isOk())
+                .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers
+                        .jsonPath("$.state").value("RESERVED"));
+    }
 
     @Test
     void migrationUpgradesV10WithoutRewritingExistingVoucherOrFlywayChecksum() {
