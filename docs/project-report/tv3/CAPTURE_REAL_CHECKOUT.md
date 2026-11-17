@@ -4,9 +4,11 @@
 
 **Read-only preflight thực tế 08/11, Codex Terminal:** local Docker 28.4.0/VFS hoạt động; `docker ps -a` và volume list đều rỗng. Cả tám biến bắt buộc cho two-store (base URL, Customer account/password, Products, PG container/user và hai DB) đều chưa được cấp. Đã đọc PR #188 và các bình luận truy cập được của #160/#18, chưa có phê duyệt stack capture xác định source/project/ports/fixtures cùng giới hạn công bố ảnh của TV2/TV5. Đây là `BLOCKED_CAPTURE_STACK_AND_FIXTURES`, **không phải Docker unavailable**. Không chạy test, mở DB, khởi động stack, dùng credential cũ hay bật flags. Không tạo ảnh mới. [Evidence](evidence/20261108/README.md).
 
+**Checkpoint bổ sung 16/11/2026 (không thay thế preflight lịch sử 08/11):** Codex Windows đã báo rà 5 PNG và checksum, chỉ `voucher-01-seller.png` đạt `REVIEWED_DEMO`; Super Sale/clearance và Cart/COD ảnh cũ sai tiêu chí, chưa có ảnh hai Store đạt. Trên máy TV3, Docker Engine đã trả HTTP 500 tại lượt chẩn đoán cũ; **lượt chụp local là `NOT_RUN_LOCAL`, không còn là blocker của TV3** theo [quyết định QA của TV2 ngày 16/11](https://github.com/duyxl56785/Project_HK5/issues/160#issuecomment-6918341602). TV2 dùng CI exact HEAD và receipt từ máy TV2; **TV2 chụp Hình 6.1–6.8 và chạy frozen-SHA UAT ngày 20/11**, kết quả cuối hiện vẫn `NOT_RUN_FROZEN_SHA`. Đây là kết quả ảnh **do Codex báo trên máy Windows**, không phải file đã được tài liệu GitHub này tự mở/kiểm byte. Không dùng ảnh 3 Store làm Hình 6.5.
+
 ## 1. Điểm đặt ảnh trong báo cáo nhóm
 
-Bản Word `Bao_cao_Smart_ECommerce.docx` (nội dung tổng hợp đến 25/10/2026) có **mục 6 — KẾT QUẢ DEMO WEB/APP**, trang 10: **Hình 6.4. Giỏ hàng và checkout gồm sản phẩm từ hai Store**. Hiện là `[CHÈN ẢNH DEMO THỰC TẾ]`. Báo cáo chỉ có thể dùng ảnh runtime thật, không dùng preview fixture hoặc ảnh giỏ trống.
+Bản Word lịch sử `Bao_cao_Smart_ECommerce.docx` ngày 25/10 từng đánh số **Hình 6.4** cho giỏ/Checkout và còn placeholder `[CHÈN ẢNH DEMO THỰC TẾ]`. Theo [TV2 chốt bản nộp ngày 16/11](https://github.com/duyxl56785/Project_HK5/issues/162#issuecomment-6907759709), số hình **chính thức** đã đổi: **Hình 6.4 = Admin duyệt/người bán**, **Hình 6.5 = giỏ đúng hai Store**, **Hình 6.6 = một đơn tổng tách hai đơn con**. Ảnh COD chưa gửi, Order Detail, Order History và DB receipt là evidence hỗ trợ; không suy hai đơn con chỉ từ hình Order Detail. Không dùng ảnh giỏ trống, preview fixture hay ảnh sai Store.
 
 ## 2. Nguồn test đã có (đối chiếu tại main@78de5c08205b41986a5204a8150a9ef810507847)
 
@@ -51,7 +53,7 @@ npx playwright test --config src/features/checkout/acceptance/live.config.ts --p
 
 Trước đó Codex phải đối chiếu `frontend/src/features/checkout/acceptance/README.md` để cấu hình đầy đủ `TV3_E2E_*` và screenshot path trong copy test riêng; **không commit .env hoặc secret**. Bản test này **tạo Order và thay đổi tồn kho trên stack thử nghiệm**, không chỉ đọc: phải có quyền chạy rõ ràng. Không chạy nếu không có đúng 2 Product thuộc 2 Store.
 
-Chỉ sau khi hoàn tất: lưu ảnh đã redacted và `SHA256SUMS` cùng `manifest.md` có test-result/exit code, commit hash và hình nào là bằng chứng của điều gì; TV5 duyệt. Sau đó TV3 mới được bổ sung ảnh hợp lệ vào [Hình 6.4] của bản báo cáo chính thức.
+**Người thực hiện ảnh bản nộp:** Theo [TV2 chốt nguồn và lịch](https://github.com/duyxl56785/Project_HK5/issues/162#issuecomment-6907759709) và [quyết định QA](https://github.com/duyxl56785/Project_HK5/issues/160#issuecomment-6918341602), **TV2 chụp lại Hình 6.1–6.8 trên SHA đóng băng ngày 20/11**, bao gồm Hình 6.5 (Cart đúng hai Store) và 6.6 (root Order + hai SellerOrders). Tài liệu này là **checklist nội dung/oracle để TV2 và TV5 đối chiếu**, không phải cam kết TV3 chụp ảnh hay bàn giao PNG mới. Ảnh phải redacted, kèm `SHA256SUMS`, `manifest.md`, test-result/exit code, commit SHA; TV5 nghiệm thu. **Không dùng hình Checkout cho Hình 6.4 của Admin**.
 
 ## 6. Trạng thái hiện tại
 
@@ -63,6 +65,6 @@ Chỉ sau khi hoàn tất: lưu ảnh đã redacted và `SHA256SUMS` cùng `mani
 | `checkout-03b-order-history.png` (Order History list) | NOT_CAPTURED |
 | `checkout-04-db-receipt.png` | NOT_CAPTURED |
 | Bản báo cáo Codex gốc 351 dòng đã được đối chiếu toàn văn | NOT_VERIFIED |
-| PR #188 được ghép vào báo cáo nhóm | PENDING TV2 |
+| Nội dung CHECKOUT.md từ PR #188 | APPROVED/MERGED; ghép Word chính thức vẫn PENDING TV2/TV5 |
 
 **Cảnh báo nguồn ảnh:** File cũ tên `cart-hai-store-quantity-remove-va-jwt-het-han-passed.png` thuộc suite 06/11 **thực tế hiển thị giỏ trống**. Không dùng file đó thay `checkout-01`. `reports/evidence/tv5-ui-20261028/cod-desktop.png` là TV5 DEMO DATA preview, không phải Checkout thật.

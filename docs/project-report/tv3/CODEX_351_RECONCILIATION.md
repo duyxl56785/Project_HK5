@@ -2,6 +2,8 @@
 
 **Trạng thái:** `STRUCTURAL_COMPARISON_DONE` / `EXACT_LINE_DIFF_NOT_RUN` / `ORIGINAL_FILE_INACCESSIBLE`.
 
+**Cập nhật đối chiếu bản nộp 16/11/2026:** PR #188 đã được TV2 duyệt và merge; TV2 [chốt số hình chính thức](https://github.com/duyxl56785/Project_HK5/issues/162#issuecomment-6907759709): **Hình 6.4 là Admin duyệt Seller**, **Hình 6.5 là giỏ hai Store**, **Hình 6.6 là một Order tổng tách hai SellerOrders**. Các dòng ghi `Hình 6.4` của bản Word 25/10 bên dưới là **nguồn lịch sử**, không phải hướng dẫn ghép Checkout hiện hành. TV2 đã waive việc diff nguyên văn A 351 dòng để duyệt **nội dung tái dựng**, nhưng không waive ảnh thật/UAT.
+
 **Kiểm tra lại bằng Codex Terminal ngày 08/11/2026:** original path A cũng không tồn tại trong môi trường terminal hiện tại (không chỉ là giới hạn của ChatGPT). Không còn worktree cũ trong `git worktree list`; không tìm thấy bản lưu của A trong các đường dẫn hiện có đã kiểm. Không xóa/reset hay dựng lại A. SHA256 từng được ghi trong phiên trước là `0fd4d7cb4f4de62fee60ebb1ee20df417fcc19748ba7cdfbdf0d3e6c5e34b087`; đây là **historical reference**, không phải checksum vừa đo lại từ A.
 
 Đã fetch PR #188 lúc đầu tại `2eaa7dec356d53369cae7ced5aa635406faf34ed`, sau đó phát hiện owner cập nhật và chuyển sang baseline **`b2187441f4ae669f041ae3274cd53f4b7b7e6bf6`** trước khi tích hợp tài liệu. Snapshot B mới có 166 logical lines, 19583 byte UTF-8, SHA256 `4c200060ca78b5cc7caf44f1ca747fec3e1a8c9a510948fea3c898a24a73b337`. Giữ riêng snapshot ban đầu trong metadata; không ghi đè ba commit caption của owner. Đã lưu [manifest input](evidence/20261108/comparison-inputs.json), [bảng giữ/sửa](evidence/20261108/KEEP_CHANGE.md) và [unified diff giữa hai nguồn thực sự đọc được](evidence/20261108/issue160-draft-to-pr188-baseline.diff): **Issue draft 72 dòng → PR baseline mới**, không phải A 351 dòng → B. Unified diff A→B vẫn **NOT_RUN**, không xuất một diff giả từ file rỗng.
@@ -49,9 +51,9 @@
 
 ## 3. Phát hiện khi kiểm tra ảnh cũ trên GitHub ngày 08/11
 
-- Ảnh [`cart-hai-store-quantity-remove-va-jwt-het-han-passed.png`](https://github.com/duyxl56785/Project_HK5/blob/78de5c08205b41986a5204a8150a9ef810507847/reports/minh-chung-kiem-thu/soopi-audit-20261106/website-extended/cart-hai-store-quantity-remove-va-jwt-het-han-passed.png) hiển thị **giỏ hàng trống**. Filename test không chứng minh hai Store trong **khung hình**. Đã **gỡ embed** khỏi báo cáo B và không dùng làm Hình 6.4.
+- Ảnh [`cart-hai-store-quantity-remove-va-jwt-het-han-passed.png`](https://github.com/duyxl56785/Project_HK5/blob/78de5c08205b41986a5204a8150a9ef810507847/reports/minh-chung-kiem-thu/soopi-audit-20261106/website-extended/cart-hai-store-quantity-remove-va-jwt-het-han-passed.png) hiển thị **giỏ hàng trống**. Filename test không chứng minh hai Store trong **khung hình**. Đã **gỡ embed** khỏi báo cáo B và không dùng làm Hình 6.5 trong bản nộp hiện hành (trước 16/11 bản Word cũ gọi ảnh này là 6.4).
 - `reports/evidence/tv5-ui-20261028/cod-desktop.png` là **TV5 preview / DEMO DATA**, không phải website Checkout thật.
-- GitHub Actions runs của [PR #187](https://github.com/duyxl56785/Project_HK5/pull/187) (backend/frontend+e2e) hiện **không có artifact screenshot** để bổ sung vào Hình 6.4.
+- GitHub Actions runs của [PR #187](https://github.com/duyxl56785/Project_HK5/pull/187) (backend/frontend+e2e) hiện **không có artifact screenshot** để bổ sung vào Hình 6.5–6.6.
 - Báo cáo Word nhóm trang 10 và [`CAPTURE_REAL_CHECKOUT.md`](CAPTURE_REAL_CHECKOUT.md) chỉ rõ các điểm chụp thật cần thu (Cart 2 Store, COD, Order detail, Order History riêng và receipt PostgreSQL) trong stack được phép.
 
 ## 4. Cách chạy so sánh nguyên văn an toàn trong Codex Terminal Linux
@@ -79,9 +81,9 @@ echo "diff_exit_code=$status"
 ## 5. Điều kiện để TV3/TV2 chốt báo cáo
 
 - [ ] So sánh raw Markdown A với B: line diff, headings, link targets, các mã test và SHA; giữ bản gốc.
-- [ ] TV2 xác nhận vị trí ghép báo cáo Word: **mục 6, Hình 6.4**, và chỗ đặt phụ lục kỹ thuật Checkout.
+- [x] TV2 đã [chốt vị trí hình của bản nộp](https://github.com/duyxl56785/Project_HK5/issues/162#issuecomment-6907759709): **mục 6, Hình 6.5 = Cart hai Store, Hình 6.6 = Order tổng và hai SellerOrders**; Hình 6.4 là Admin, không phải Checkout. Việc *chèn ảnh thật* và nghiệm thu vẫn [ ] ở dòng sau.
 - [ ] Có ảnh thực sự hiển thị **Cart hai Store, COD confirmation, Order success, SellerOrder/DB** và metadata/PII redaction do TV5 chấp thuận.
 - [ ] TV5 xác nhận các kết quả PASS/NOT_RUN/BLOCKED được trích dẫn đúng test SHA và phạm vi.
-- [ ] PR #188 được review, merge vào đúng tài liệu nhóm; TV3 **tự** tick Issue #160 sau khi đáp ứng tiêu chí owner.
+- [x] PR #188 đã được TV2 review và merge **nội dung Markdown TV3**; ghép vào **Word nộp chính thức** và checklist hoàn tất #160 vẫn chờ ảnh/UAT, không tick thay owner.
 
 **Kết luận tại checkpoint:** Nội dung B đã bao phủ các **nhóm chủ đề** Codex tóm tắt, nhưng **chưa thể chứng minh tương đương toàn văn** với A; ảnh demo Checkout đủ điều kiện vẫn chưa tồn tại trong nguồn đã kiểm. Không được đánh dấu "hoàn thành" hai công việc này.
