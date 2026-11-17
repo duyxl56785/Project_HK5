@@ -18,5 +18,11 @@ public interface CatalogSnapshotSource {
     record LookupResult(UUID productId, LookupStatus status, ResolvedProduct facts) { }
 
     // Currency/status/ownership facts must come from verified provider storage/dependencies.
-    record ResolvedProduct(ProductListing product, StoreAccess store, String currency, boolean categoryExists) { }
+    // promotionApplied: unitPrice is a live Promotion price (MD12); Voucher C2 must not stack on it (MD17).
+    record ResolvedProduct(ProductListing product, StoreAccess store, String currency, boolean categoryExists,
+                           boolean promotionApplied) {
+        public ResolvedProduct(ProductListing product, StoreAccess store, String currency, boolean categoryExists) {
+            this(product, store, currency, categoryExists, false);
+        }
+    }
 }

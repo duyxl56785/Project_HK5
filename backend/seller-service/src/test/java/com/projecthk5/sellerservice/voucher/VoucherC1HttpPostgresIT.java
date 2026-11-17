@@ -61,6 +61,7 @@ class VoucherC1HttpPostgresIT {
     private static String end(){return Instant.now().plusSeconds(86400).toString();}
 
     @BeforeEach void reset() {
+        db.update("DELETE FROM voucher_redemptions");
         db.update("DELETE FROM voucher_status_history");
         db.update("DELETE FROM store_voucher_limits");
         db.update("DELETE FROM voucher_limit_request_history");
@@ -139,6 +140,7 @@ class VoucherC1HttpPostgresIT {
     }
     @Test void concurrentPublishAtNineteenHasOneWinnerInTwentyReplays() throws Exception {
         for(int round=0;round<20;round++){
+            db.update("DELETE FROM voucher_redemptions");
             db.update("DELETE FROM voucher_status_history");
             db.update("DELETE FROM vouchers");
             seed(19);

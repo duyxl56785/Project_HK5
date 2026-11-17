@@ -81,8 +81,10 @@ public class CatalogController {
     public record ReviewView(UUID id, int rating, String comment, java.time.Instant createdAt) {}
     public record NameRef(UUID id, String name, String imageUrl) {}
     /** Internal snapshot for Cart/Order; sellerId is the Seller profile id. */
+    /** promotionApplied (Voucher C2, MD17): unitPrice is a live Promotion price, so no Store voucher may stack on it. */
     public record Snapshot(String productId, String sellerId, String storeId, String sku, String name, boolean available,
-                           boolean sellerApproved, boolean storeOpen, boolean houseStore, BigDecimal unitPrice) {}
+                           boolean sellerApproved, boolean storeOpen, boolean houseStore, BigDecimal unitPrice,
+                           boolean promotionApplied) {}
 
     @GetMapping("/api/catalog/products")
     @Transactional(readOnly = true)
@@ -183,7 +185,8 @@ public class CatalogController {
         var product = facts.product();
         return new Snapshot(product.id().toString(), facts.store().sellerId().toString(), product.storeId().toString(),
                 product.sku(), product.name(), product.status() == ProductStatus.ACTIVE && facts.categoryExists(),
-                facts.store().sellerApproved(), facts.store().storeOpen(), facts.store().houseStore(), product.unitPrice());
+                facts.store().sellerApproved(), facts.store().storeOpen(), facts.store().houseStore(), product.unitPrice(),
+                facts.promotionApplied());
     }
 
     private Map<UUID, SellerStoreClient.Facts> eligibleStores() {

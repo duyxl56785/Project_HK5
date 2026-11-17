@@ -74,17 +74,19 @@ public class ProductCatalogSnapshotSource implements CatalogSnapshotSource {
             if (row == null) return new LookupResult(id, LookupStatus.ABSENT, null);
             ProductListing product = row.product();
             StoreAccess store = verifiedStores.get(product.storeId());
+            boolean promotionApplied = false;
             if (promotions != null) {
                 var quote = promotions.quote(product.id(), product.storeId(), store.sellerId(), product.unitPrice(),
                         row.categoryExists() && store.storeOpen() && store.sellerApproved()
                                 && product.status() == com.projecthk5.productservice.product.ProductStatus.ACTIVE, now);
                 if (quote.promotion() != null) {
+                    promotionApplied = true;
                     product = new ProductListing(product.id(), product.storeId(), product.categoryId(), product.sku(),
                             product.name(), quote.unitPrice(), product.currency(), product.status(), product.reviewReason());
                 }
             }
             return new LookupResult(id, LookupStatus.FOUND, new ResolvedProduct(product, store,
-                    product.currency(), row.categoryExists()));
+                    product.currency(), row.categoryExists(), promotionApplied));
         }).toList();
     }
 
