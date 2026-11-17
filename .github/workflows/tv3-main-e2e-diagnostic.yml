@@ -1,0 +1,126 @@
+name: TV3 prefinal exact-main E2E failure diagnostics (redacted)
+
+on:
+  push:
+    branches:
+      - ci/tv3-main-879143a-preflight-20261117
+    paths:
+      - .github/workflows/tv3-main-e2e-diagnostic.yml
+
+permissions:
+  contents: read
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      TV3_SHA: '879143a1f081da4644ebc29c0950069429731f0f'
+      COMPOSE_PROJECT_NAME: hk5-tv3-main-diagnostic
+      E2E_BASE_URL: http://localhost:5173
+      PLAYWRIGHT_JSON_OUTPUT_FILE: /tmp/tv3-e2e-full-private.json
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: '879143a1f081da4644ebc29c0950069429731f0f'
+          persist-credentials: false
+      - uses: actions/setup-java@c5195efecf7bdfc987ee8bae7a71cb8b11521c00 # v4.7.1
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '22'
+      - name: Exact app SHA, clean clone, isolated gate defaults
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$TV3_SHA"
+          test -z "$(git status --porcelain)"
+          node --test scripts/demo/gen-env.test.mjs scripts/demo/disposable.test.mjs scripts/demo/voucher-seed.test.mjs
+      - name: Start isolated disposable stack (no existing data)
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/demo/up.mjs --approved-inventory-pair --approved-finance-policy
+          test "$COMPOSE_PROJECT_NAME" = 'hk5-tv3-main-diagnostic'
+      - name: Install Playwright
+        shell: bash
+        run: |
+          cd frontend
+          npm ci --no-audit --no-fund
+          npx playwright install --with-deps chromium
+      - name: Reproduce full browser suite once with no retry (raw report stays private)
+        id: browser
+        shell: bash
+        run: |
+          cd frontend
+          set +e
+          ./node_modules/.bin/playwright test --workers=1 --retries=0 --reporter=json > /tmp/tv3-diagnostic-raw-private.log 2>&1
+          rc=$?
+          echo "exit_code=$rc" >> "$GITHUB_OUTPUT"
+          echo "Browser exit: $rc (raw data not uploaded)"
+          exit "$rc"
+      - name: Publish only test names and error categories; never raw messages/logs
+        if: always()
+        shell: bash
+        env:
+          E2E_RC: ${{ steps.browser.outputs.exit_code }}
+        run: |
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          f=Path('/tmp/tv3-e2e-full-private.json')
+          out={'kind':'TV3_E2E_DIAGNOSTIC_REDACTED','sha':os.environ['TV3_SHA'],
+               'scope':'CI_UBUNTU_NOT_FINAL_UAT','exit':os.environ.get('E2E_RC','NOT_RUN'),
+               'stats':None,'failures':[]}
+          if f.is_file():
+              report=json.loads(f.read_text(encoding='utf-8'))
+              stats=report.get('stats',{})
+              out['stats']={k:stats.get(k) for k in ('expected','unexpected','skipped','flaky')}
+              def classify(error):
+                  m=(error or '').lower()
+                  if 'timeout' in m: return 'TIMEOUT'
+                  if 'strict mode violation' in m: return 'LOCATOR_AMBIGUOUS'
+                  if 'expected' in m and 'received' in m: return 'ASSERTION_EXPECTED_RECEIVED'
+                  if 'net::' in m or 'econn' in m: return 'NETWORK'
+                  if 'locator' in m: return 'LOCATOR'
+                  if 'http' in m or 'status' in m: return 'HTTP_OR_STATUS'
+                  return 'OTHER_OR_NO_MESSAGE'
+              def visit(suite):
+                  for spec in suite.get('specs',[]):
+                      for t in spec.get('tests',[]):
+                          if t.get('status') not in ('expected','skipped'):
+                              results=t.get('results',[])
+                              errs=[r.get('error',{}).get('message','') for r in results]
+                              out['failures'].append({'file':str(suite.get('file') or spec.get('file') or ''),
+                                   'title':str(spec.get('title',''))[:200],
+                                   'testStatus':t.get('status'),
+                                   'attemptStatuses':[r.get('status') for r in results],
+                                   'errorCategories':[classify(e) for e in errs]})
+                  for child in suite.get('suites',[]): visit(child)
+              for suite in report.get('suites',[]): visit(suite)
+          dest=Path('/tmp/tv3-e2e-diagnostic-redacted.json')
+          dest.write_text(json.dumps(out,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')
+          print(json.dumps(out,ensure_ascii=False))
+          with open(os.environ['GITHUB_STEP_SUMMARY'],'a',encoding='utf-8') as s:
+              s.write('## Exact-main E2E diagnosis (static titles only, no raw errors)\n\n')
+              s.write('- SHA: `'+out['sha']+'`\n- exit: '+str(out['exit'])+'\n- stats: `'+str(out['stats'])+'`\n')
+              for item in out['failures']: s.write('- '+item['file']+' : '+item['title']+' ['+str(item['errorCategories'])+']\n')
+              s.write('- No raw reports, traces, screenshots, credentials or error messages uploaded.\n')
+          PY
+      - name: Upload redacted test title diagnostics only
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: tv3-main-879143a-e2e-redacted-diagnostics
+          path: /tmp/tv3-e2e-diagnostic-redacted.json
+          if-no-files-found: warn
+          retention-days: 14
+      - name: Remove only this runner's disposable stack/volumes
+        if: always()
+        shell: bash
+        run: |
+          if [ -f .env.demo ]; then
+            docker compose --env-file .env.demo -f docker/compose.demo.yml down -v || true
+          fi
