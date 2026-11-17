@@ -10,7 +10,7 @@ import { Badge, dateTime, ErrorNote, Loaded, money, shortId, useAction } from '.
 import { ReturnRequestPanel } from './ReturnRequestPanel';
 import type { ReturnView } from './ReturnRequestPanel';
 import { formatExactVnd } from '../checkout/checkoutApi';
-import { minorUnits, renderMinorUnits } from '../cart/cartModel';
+import { orderPayable } from './orderPayable';
 
 export interface OrderItem {
   readonly productId: string; readonly name: string | null; readonly sku: string | null; readonly quantity: number;
@@ -34,15 +34,6 @@ const reviewSchema = z.object({ rating: z.number().int().min(1).max(5), comment:
 type ReviewInput = z.infer<typeof reviewSchema>;
 interface MyReview { readonly orderId: string; readonly productId: string }
 
-/** Refused store orders are never collected, so they leave the amount the customer owes. */
-const payable = (order: CustomerOrder) => {
-  const open = order.storeOrders.filter((s) => s.status !== 'CANCELLED' && s.status !== 'REJECTED');
-  const exact = open.map((child) => minorUnits(child.grossExact));
-  if (exact.every((value) => value !== null))
-    return formatExactVnd(renderMinorUnits(exact.reduce((sum, value) => sum + value, 0n)));
-  return money(open.reduce((sum, child) => sum + Number(child.gross), 0));
-};
-
 export function OrdersPage() {
   const orders = useQuery({ queryKey: ['orders'], queryFn: () => api<CustomerOrder[]>('/api/orders?size=50') });
   return <div className="stack">
@@ -50,7 +41,7 @@ export function OrdersPage() {
     <Loaded query={orders} empty={(rows) => rows.length === 0}>{(rows) => <ul className="list">{rows.map((o) => <li key={o.id} className="row row--between">
       <div><Link to={`/orders/${o.id}`}><strong>#{shortId(o.id)}</strong></Link> <Badge value={o.overallStatus} /> <small className="muted">{dateTime(o.createdAt)}</small>
         <div className="row row--wrap">{o.storeOrders.map((s) => <span key={s.id}>{s.storeName ?? 'Cửa hàng'} <Badge value={s.status} /></span>)}</div></div>
-      <strong>{payable(o)}</strong>
+      <strong>{orderPayable(o.storeOrders)}</strong>
     </li>)}</ul>}</Loaded>
   </div>;
 }
@@ -120,6 +111,6 @@ export function OrderDetailPage() {
     {o.storeOrders.map((s) => <StoreOrderCard key={s.id} order={s} reviewed={reviewed}
       existingReturn={returns.data?.find((item) => item.storeOrderId === s.id)}
       returnsLoading={returns.isPending} returnsError={returns.error} />)}
-    <p className="price price--large">Tổng cộng: {payable(o)}</p>
+    <p className="price price--large">Tổng cộng: {orderPayable(o.storeOrders)}</p>
   </div>}</Loaded>;
 }

@@ -40,7 +40,7 @@ test('C2 uses two Store vouchers and an identical replay returns the same custom
     return detail;
   }));
   const secondAccount = { email: 'seller2@hk5.local', password: env.SEED_PASSWORD };
-  const sellerHeaders = [await login(accounts.seller), await login(secondAccount)];
+  const sellerHeaders = await Promise.all([login(accounts.seller), login(secondAccount)]);
   expect((await request.get('/api/orders/voucher-capability')).status()).toBe(401);
   // Approved Sellers retain their CUSTOMER role. Use a customer-only account for the role-denial check.
   expect((await request.get('/api/stores/me/vouchers', { headers: customerHeaders })).status()).toBe(403);
@@ -48,19 +48,21 @@ test('C2 uses two Store vouchers and an identical replay returns the same custom
     .toEqual({ enabled: true });
   const prefix = 'C2QA' + unique().toUpperCase();
   const liveCodes = [prefix + 'A', prefix + 'B'];
-  for (const [i, code] of liveCodes.entries()) {
-    const created = await request.post('/api/stores/me/vouchers', { headers: sellerHeaders[i], data: {
-      code, name: 'C2 isolated QA', discountType: 'FIXED', discountValue: Number(discounts[i]),
-      minOrderAmount: Number(discounts[i]) + 1, usageLimit: 1,
-      startsAt: new Date(Date.now() - 3600000).toISOString(), endsAt: new Date(Date.now() + 86400000).toISOString(),
-    } });
-    expect(created.status()).toBe(201);
-    const { id, version } = await created.json();
-    const published = await request.post('/api/stores/me/vouchers/' + id + '/publish',
-      { headers: sellerHeaders[i], data: { expectedVersion: version } });
-    expect(published.status()).toBe(200);
-    expect((await published.json()).status).toBe('ACTIVE');
-  }
+  await test.step('Publish the two Store vouchers', async () => {
+    await Promise.all(liveCodes.map(async (code, i) => {
+      const created = await request.post('/api/stores/me/vouchers', { headers: sellerHeaders[i], data: {
+        code, name: 'C2 isolated QA', discountType: 'FIXED', discountValue: Number(discounts[i]),
+        minOrderAmount: Number(discounts[i]) + 1, usageLimit: 1,
+        startsAt: new Date(Date.now() - 3600000).toISOString(), endsAt: new Date(Date.now() + 86400000).toISOString(),
+      } });
+      expect(created.status()).toBe(201);
+      const { id, version } = await created.json();
+      const published = await request.post('/api/stores/me/vouchers/' + id + '/publish',
+        { headers: sellerHeaders[i], data: { expectedVersion: version } });
+      expect(published.status()).toBe(200);
+      expect((await published.json()).status).toBe('ACTIVE');
+    }));
+  });
 
   const stock = async (req: APIRequestContext, p: FixtureProduct) =>
     (await (await req.get('/api/catalog/products/' + p.id)).json()).available;
@@ -102,6 +104,7 @@ test('C2 uses two Store vouchers and an identical replay returns the same custom
     expect(payload.vouchers).toHaveLength(2);
     await expect(customer).toHaveURL(/\/orders\/[0-9a-f-]{36}$/);
     await expect(customer.locator('article')).toHaveCount(2);
+    await expect(customer.getByText('Tổng cộng: ' + format(expected[0] + expected[1]), { exact: true })).toBeVisible();
     const order = await request.get('/api/orders/' + result.orderId, { headers: customerHeaders });
     expect(order.status()).toBe(200);
     const detail = await order.json();
