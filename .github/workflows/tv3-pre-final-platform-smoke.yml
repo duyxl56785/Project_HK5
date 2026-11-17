@@ -1,0 +1,100 @@
+name: TV3 exact-main platform smoke and V7 evidence (one shot)
+
+on:
+  push:
+    branches:
+      - ci/tv3-main-879143a-preflight-20261117
+    paths:
+      - .github/workflows/tv3-pre-final-platform-smoke.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tv3-879143a-platform-smoke-one-shot
+  cancel-in-progress: false
+
+jobs:
+  platform:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      TV3_APP_SHA: '879143a1f081da4644ebc29c0950069429731f0f'
+      COMPOSE_PROJECT_NAME: hk5-tv3-main-platform-879143a
+      E2E_BASE_URL: http://localhost:5173
+    steps:
+      - name: Checkout exact app SHA (separate from CI workflow HEAD)
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: '879143a1f081da4644ebc29c0950069429731f0f'
+          persist-credentials: false
+      - name: Java 21
+        uses: actions/setup-java@c5195efecf7bdfc987ee8bae7a71cb8b11521c00 # v4.7.1
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Node 22
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '22'
+      - name: Confirm source and demo opt-in default-off
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$TV3_APP_SHA"
+          test -z "$(git status --porcelain)"
+          node --test scripts/demo/gen-env.test.mjs scripts/demo/disposable.test.mjs scripts/demo/voucher-seed.test.mjs
+      - name: Start separate disposable stack with synthetic fixtures only
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/demo/up.mjs --approved-inventory-pair --approved-finance-policy > /tmp/tv3-platform-stack-private.log 2>&1 || {
+            echo 'Disposable demo start failed (raw logs not uploaded)'; exit 1;
+          }
+          test "$COMPOSE_PROJECT_NAME" = 'hk5-tv3-main-platform-879143a'
+          echo 'Disposable synthetic demo ready on exact app SHA'
+      - name: Seller suspended contract smoke (isolated stack)
+        shell: bash
+        run: |
+          set +e
+          node scripts/demo/smoke-suspended-seller.mjs > /tmp/tv3-seller-smoke-private.log 2>&1
+          status=$?
+          echo "Seller suspended smoke exit: $status"
+          exit "$status"
+      - name: Auth/access/proxy/restart review smoke
+        shell: bash
+        run: |
+          set +e
+          node scripts/demo/smoke-review.mjs > /tmp/tv3-review-smoke-private.log 2>&1
+          status=$?
+          echo "Auth/proxy/restart smoke exit: $status"
+          exit "$status"
+      - name: Stop only isolated main smoke project and its own volumes
+        if: always()
+        shell: bash
+        run: |
+          if [ -f .env.demo ]; then
+            docker compose --env-file .env.demo -f docker/compose.demo.yml down -v > /tmp/tv3-main-cleanup-private.log 2>&1 || true
+          fi
+          echo 'Main smoke cleanup requested on ephemeral CI Docker only'
+      - name: V7 migration rehearsal in its own temporary isolated worktree
+        if: ${{ success() }}
+        shell: bash
+        run: |
+          set +e
+          node scripts/demo/rehearse-v7-upgrade.mjs > /tmp/tv3-v7-private.log 2>&1
+          status=$?
+          echo "V7 isolated upgrade exit: $status"
+          exit "$status"
+      - name: Status summary (no secrets/raw logs/screenshots)
+        if: always()
+        shell: bash
+        run: |
+          cat >> "$GITHUB_STEP_SUMMARY" <<'EOF'
+          ## TV3 exact-main isolated platform and upgrade smoke
+          - App source SHA: `879143a1f081da4644ebc29c0950069429731f0f`
+          - Environment: ephemeral GitHub-hosted Ubuntu, synthetic seeded DB/volumes
+          - Scope: smoke-suspended-seller / smoke-review / V7 upgrade in disposable worktree
+          - Not a frozen-main final UAT, Windows independent clean-clone, or TV5 sign-off
+          - No raw logs, cookies, tokens, photos, database dumps or secrets uploaded
+          EOF
