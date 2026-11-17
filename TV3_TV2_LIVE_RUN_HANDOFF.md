@@ -55,9 +55,9 @@ $functions = @($ast.FindAll({
     $node -is [System.Management.Automation.Language.FunctionDefinitionAst]
 }, $true))
 foreach ($name in @('Read-Command', 'Invoke-LoggedNative')) {
-    $matches = @($functions | Where-Object { $_.Name -eq $name })
-    if ($matches.Count -ne 1) { throw "Function $name không tồn tại duy nhất" }
-    . ([ScriptBlock]::Create($matches[0].Extent.Text))
+    $foundFuncs = @($functions | Where-Object { $_.Name -eq $name })
+    if ($foundFuncs.Count -ne 1) { throw "Function $name không tồn tại duy nhất" }
+    . ([ScriptBlock]::Create($foundFuncs[0].Extent.Text))
 }
 Get-Command node -ErrorAction Stop | Out-Null
 $oldPreference = $ErrorActionPreference
