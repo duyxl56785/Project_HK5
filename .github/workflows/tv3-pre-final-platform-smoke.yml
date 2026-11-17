@@ -1,11 +1,9 @@
 name: TV3 exact-main platform smoke and V7 evidence (one shot)
 
+# One-shot proof completed in run 44089780065 on exact app main@879143a1.
+# No more automatic CI reruns on documentation updates.
 on:
-  push:
-    branches:
-      - ci/tv3-main-879143a-preflight-20261117
-    paths:
-      - .github/workflows/tv3-pre-final-platform-smoke.yml
+  workflow_dispatch:
 
 permissions:
   contents: read
