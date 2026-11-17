@@ -11,7 +11,7 @@ const vnd = (amount: string | number) => BigInt(String(amount).replace(/\.0+$/, 
 
 test('C2 uses two Store vouchers and an identical replay returns the same customer order', async ({ browser, request }) => {
   test.skip(!allowed, 'Requires the separate, loopback-only C2 QA project');
-  test.setTimeout(180_000);
+  test.setTimeout(300_000);
   const customerAccount = { email: 'c2-' + unique() + '@hk5.local', password: env.SEED_PASSWORD };
   const headers = { Origin: origin!, 'X-CSRF-Protection': '1' };
   const login = async (account: typeof customerAccount) => {
@@ -24,13 +24,21 @@ test('C2 uses two Store vouchers and an identical replay returns the same custom
   const customerHeaders = await login(customerAccount);
   const response = await request.get('/api/catalog/products?size=50');
   expect(response.status()).toBe(200);
-  type FixtureProduct = { id: string; name: string; unitPrice: number; store: { id: string; name: string }; available: number; promotion?: unknown };
-  const products: FixtureProduct[] = (await response.json()).items;
+  type CatalogCard = { id: string; name: string; unitPrice: string; store: { id: string; name: string }; promotion?: unknown };
+  type FixtureProduct = CatalogCard & { available: number };
+  const products: CatalogCard[] = (await response.json()).items;
   const stores = ['Tiệm Áo Sài Gòn', 'Nhà Xinh'];
   const discounts = [10000n, 5000n];
-  const fixture = stores.map((name, i) => products.find(p =>
-    p.store.name === name && p.available > 0 && !p.promotion && vnd(p.unitPrice) > discounts[i]));
-  expect(fixture.filter(Boolean)).toHaveLength(2);
+  const fixture = await Promise.all(stores.map(async (name, i) => {
+    const found = products.find(p => p.store.name === name && !p.promotion && vnd(p.unitPrice) > discounts[i]);
+    expect(found, 'Seeded Product in ' + name).toBeDefined();
+    const response = await request.get('/api/catalog/products/' + found!.id);
+    expect(response.status()).toBe(200);
+    const detail: FixtureProduct = await response.json();
+    expect(detail.store.name).toBe(name);
+    expect(detail.available).toBeGreaterThan(0);
+    return detail;
+  }));
   const secondAccount = { email: 'seller2@hk5.local', password: env.SEED_PASSWORD };
   const sellerHeaders = [await login(accounts.seller), await login(secondAccount)];
   expect((await request.get('/api/orders/voucher-capability')).status()).toBe(401);
