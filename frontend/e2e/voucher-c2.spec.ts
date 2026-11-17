@@ -34,7 +34,8 @@ test('C2 uses two Store vouchers and an identical replay returns the same custom
   const secondAccount = { email: 'seller2@hk5.local', password: env.SEED_PASSWORD };
   const sellerHeaders = [await login(accounts.seller), await login(secondAccount)];
   expect((await request.get('/api/orders/voucher-capability')).status()).toBe(401);
-  expect((await request.get('/api/orders/voucher-capability', { headers: sellerHeaders[0] })).status()).toBe(403);
+  // Approved Sellers retain their CUSTOMER role. Use a customer-only account for the role-denial check.
+  expect((await request.get('/api/stores/me/vouchers', { headers: customerHeaders })).status()).toBe(403);
   expect(await (await request.get('/api/orders/voucher-capability', { headers: customerHeaders })).json())
     .toEqual({ enabled: true });
   const prefix = 'C2QA' + unique().toUpperCase();
