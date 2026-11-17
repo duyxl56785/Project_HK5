@@ -2,6 +2,8 @@
 
 Source cho lượt rehearsal này: `240d0280bdde66f7d9055e24ded75f1e9417edfb` của `duyxl56785/Project_HK5`. Đây là rehearsal trước freeze. TV2 thực hiện ảnh chính thức và UAT khi có frozen SHA.
 
+**Windows PowerShell 5.1:** runner phải lưu UTF-8 **có BOM** để parser đọc tiếng Việt đúng. Trước khi dựng stack, TV2 xác minh `[Parser]::ParseFile` trả `0` lỗi và kiểm native stderr trong môi trường không tạo Order. Lệnh `powershell.exe -NoProfile -ExecutionPolicy Bypass -File` chỉ bypass execution policy cho tiến trình con, không đổi thiết lập máy.
+
 ## Lấy đúng bốn file vào worktree theo source SHA
 
 Từ **Windows PowerShell** ở root clone Project_HK5 của TV2, xác nhận origin là repository nhóm. Tạo worktree mới, detached ở source SHA, rồi chỉ restore các file test từ branch bàn giao. Ghi lại cả SHA ứng dụng và commit của bộ test.
@@ -88,18 +90,20 @@ Cho một người chạy. Customer demo phải có Cart trống; test tự dừ
 Sau khi TV2 đọc bộ test và xác nhận các điều kiện ở trên, chạy trong cùng cửa sổ **Windows PowerShell**, từ root và với biến của bước 1.
 
 ```powershell
-.\Run-TV3DemoRehearsal.ps1 -ExpectedSha $sha -ApprovedIsolatedStack $project
+# PS 5.1, execution policy bypass for this child process only; one live run.
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\Run-TV3DemoRehearsal.ps1 -ExpectedSha $sha -ApprovedIsolatedStack 'hk5-tv3-rehearsal' -UsePostgresReadOnly -InstallDeps
 ```
 
 TV2 đã [đồng ý dùng mode PostgreSQL cho stack disposable này](https://github.com/duyxl56785/Project_HK5/issues/160#issuecomment-6938080387) để kiểm `reserved` và đúng một `RESERVE`. Sau khi TV2 xác minh quyền, **thêm `-UsePostgresReadOnly` trong chính lượt đầu tiên**:
 
 ~~~powershell
-.\Run-TV3DemoRehearsal.ps1 -ExpectedSha $sha -ApprovedIsolatedStack 'hk5-tv3-rehearsal' -UsePostgresReadOnly
+# SAME one-run command as the preceding snippet; DO NOT execute twice.
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\Run-TV3DemoRehearsal.ps1 -ExpectedSha $sha -ApprovedIsolatedStack 'hk5-tv3-rehearsal' -UsePostgresReadOnly -InstallDeps
 ~~~
 
 **Lưu ý bảo mật/phạm vi:** cờ này dùng tài khoản PostgreSQL `hk5` qua `docker exec` với mỗi truy vấn bọc trong `BEGIN READ ONLY ... ROLLBACK`; **không** phải tài khoản DB chỉ được cấp quyền SELECT. Chỉ sử dụng vì TV2 đã cho phép trên stack riêng sẽ xóa sau rehearsal, không áp dụng production. Nếu quyền PostgreSQL thực tế chưa được TV2 xác nhận, chạy **API-only** và ghi `PARTIAL` thay vì tự suy ra single reserve.
 
-Nếu thiếu dependency hoặc Chromium, dùng `-InstallDeps` **trong cùng một lượt đầu**, không chạy test ở cả hai mode để gom evidence. Bài này tạo đúng một Order và thay đổi Cart/stock; không chạy lại khi trạng thái Checkout chưa được đối soát.
+Trong worktree mới chưa có `frontend/node_modules`, lệnh một lượt phía trên đã có `-InstallDeps` để chạy `npm ci` và cài Chromium trước khi đặt đơn. Chạy **một lượt duy nhất**, không lặp cả hai command để gom evidence. Runner giữ stdout/stderr npm/Playwright trong log **private** và quyết định theo exit code. Chỉ khi không được TV2 cho phép dùng PostgreSQL mới bỏ `-UsePostgresReadOnly` và ghi `PARTIAL`. Không chạy lại nếu outcome chưa được đối soát.
 
 Runner in đường dẫn riêng trong TEMP. Sau khi chạy, gọi verifier ở root:
 
