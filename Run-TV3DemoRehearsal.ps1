@@ -153,7 +153,7 @@ try {
   }
   # Windows PowerShell 5.1 (.NET Framework) does not support Set-Content -Encoding utf8NoBOM.
   # Write the same UTF-8 no-BOM JSON with a .NET Framework-compatible API.
-  $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+  $utf8NoBom = New-Object System.Text.UTF8Encoding -ArgumentList $false
   [IO.File]::WriteAllText(
     (Join-Path $evidence 'run.json'),
     (($runReceipt | ConvertTo-Json -Depth 5) + [Environment]::NewLine),
@@ -161,9 +161,8 @@ try {
   )
   # Path.GetRelativePath is unavailable in Windows PowerShell 5.1 / .NET Framework.
   # Build paths relative to the fixed evidence root, with an explicit prefix guard.
-  $evidencePrefix = [IO.Path]::GetFullPath($evidence).TrimEnd(
-    [IO.Path]::DirectorySeparatorChar, [IO.Path]::AltDirectorySeparatorChar
-  ) + [IO.Path]::DirectorySeparatorChar
+  # $evidence is created by Join-Path with a generated directory name, no trailing separator.
+  $evidencePrefix = [IO.Path]::GetFullPath($evidence) + [IO.Path]::DirectorySeparatorChar
   Get-ChildItem -LiteralPath $evidence -Recurse -File | Sort-Object FullName | ForEach-Object {
     $fullFile = [IO.Path]::GetFullPath($_.FullName)
     if (!$fullFile.StartsWith($evidencePrefix, [StringComparison]::OrdinalIgnoreCase)) {
