@@ -24,8 +24,8 @@ jobs:
       TV3_REHEARSAL_PG_READ_ONLY: '1'
       COMPOSE_PROJECT_NAME: hk5-tv3-rehearsal
       E2E_BASE_URL: http://localhost:5173
-      TV3_SOURCE_DIR: ${{ runner.temp }}/tv3-app-source
-      TV3_REHEARSAL_EVIDENCE: ${{ runner.temp }}/tv3-private-evidence
+      TV3_SOURCE_DIR: /tmp/tv3-app-source
+      TV3_REHEARSAL_EVIDENCE: /tmp/tv3-private-evidence
 
     steps:
       - name: Checkout handoff (source app will be detached at exact SHA)
