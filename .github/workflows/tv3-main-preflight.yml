@@ -1,0 +1,186 @@
+name: TV3 main exact-SHA pre-final readiness and E2E
+
+on:
+  push:
+    branches:
+      - ci/tv3-main-879143a-preflight-20261117
+    paths:
+      - .github/workflows/tv3-main-preflight.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tv3-main-879143a-one-shot-preflight
+  cancel-in-progress: false
+
+env:
+  EXPECTED_APP_SHA: '879143a1f081da4644ebc29c0950069429731f0f'
+
+jobs:
+  frontend:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: '879143a1f081da4644ebc29c0950069429731f0f'
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '22'
+      - name: Assert exact main app SHA
+        working-directory: .
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_APP_SHA"
+      - run: npm ci --no-audit --no-fund
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build
+
+  backend-readiness:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: '879143a1f081da4644ebc29c0950069429731f0f'
+          persist-credentials: false
+      - uses: actions/setup-java@c5195efecf7bdfc987ee8bae7a71cb8b11521c00 # v4.7.1
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Verify and run existing backend readiness with disposable PostgreSQL
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          if ((git rev-parse HEAD).Trim() -cne $env:EXPECTED_APP_SHA) { throw 'Wrong app SHA' }
+          foreach ($name in @('POSTGRES_PASSWORD','AUTH_DB_PASSWORD','AUTH_MIGRATION_PASSWORD','USER_DB_PASSWORD','USER_MIGRATION_PASSWORD')) {
+            $secret = [Convert]::ToBase64String([Security.Cryptography.RandomNumberGenerator]::GetBytes(32))
+            Write-Output "::add-mask::$secret"
+            [Environment]::SetEnvironmentVariable($name, $secret, 'Process')
+          }
+          $env:TV1_DATABASE_TESTS = 'true'
+          try {
+            docker compose -f docker/compose.dev.yml config --quiet
+            if ($LASTEXITCODE -ne 0) { throw 'Compose config failed' }
+            docker compose -f docker/compose.dev.yml up -d --no-deps --wait --wait-timeout 60 postgres
+            if ($LASTEXITCODE -ne 0) { throw 'PG startup failed' }
+            ./docker/provision-tv1.ps1
+            ./docker/test-tv1-databases.ps1
+            ./docker/provision-tv1.ps1
+            ./docker/test-tv1-databases.ps1
+            Push-Location backend
+            try {
+              ./gradlew build --console=plain
+              if ($LASTEXITCODE -ne 0) { throw 'Backend readiness failed' }
+            } finally { Pop-Location }
+          } finally {
+            docker compose -f docker/compose.dev.yml down -v
+          }
+
+  e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      COMPOSE_PROJECT_NAME: hk5-tv3-main-879143a-ci
+      E2E_BASE_URL: http://localhost:5173
+      PLAYWRIGHT_JSON_OUTPUT_FILE: /tmp/tv3-main-e2e-stats.json
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: '879143a1f081da4644ebc29c0950069429731f0f'
+          persist-credentials: false
+      - uses: actions/setup-java@c5195efecf7bdfc987ee8bae7a71cb8b11521c00 # v4.7.1
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '22'
+      - name: Exact SHA, clean independent checkout and default-off gates test
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$EXPECTED_APP_SHA"
+          test -z "$(git status --porcelain)"
+          node --test scripts/demo/gen-env.test.mjs scripts/demo/disposable.test.mjs scripts/demo/voucher-seed.test.mjs
+      - name: Start disposable demo from fresh volumes and seed
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/demo/up.mjs --approved-inventory-pair --approved-finance-policy
+          test "$COMPOSE_PROJECT_NAME" = 'hk5-tv3-main-879143a-ci'
+          docker compose --env-file .env.demo -f docker/compose.demo.yml ps --status running
+      - name: Install Playwright
+        working-directory: frontend
+        run: |
+          npm ci --no-audit --no-fund
+          npx playwright install --with-deps chromium
+      - name: Run full browser E2E exactly once, without retries
+        id: e2e_suite
+        shell: bash
+        run: |
+          cd frontend
+          set +e
+          ./node_modules/.bin/playwright test --workers=1 --retries=0 --reporter=list,json > /tmp/tv3-main-e2e-private.log 2>&1
+          code=$?
+          echo "exit_code=$code" >> "$GITHUB_OUTPUT"
+          echo "Browser E2E exit: $code; raw output kept private on ephemeral runner"
+          exit "$code"
+      - name: Post-test isolated seller and platform smoke
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/demo/smoke-suspended-seller.mjs
+          node scripts/demo/smoke-review.mjs
+      - name: Capture sanitized E2E result summary
+        if: always()
+        env:
+          BROWSER_EXIT_CODE: ${{ steps.e2e_suite.outputs.exit_code }}
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json, os, hashlib
+          from pathlib import Path
+          p=Path('/tmp/tv3-main-e2e-stats.json')
+          result={'kind':'HK5_PREFINAL_MAIN_CI','appSourceSha':os.environ['EXPECTED_APP_SHA'],
+                  'scope':'GITHUB_ACTIONS_UBUNTU_NOT_FROZEN_NOT_FINAL_UAT',
+                  'project':os.environ['COMPOSE_PROJECT_NAME'],
+                  'e2eExit':os.environ.get('BROWSER_EXIT_CODE','NOT_RUN'),
+                  'stats':None,'reportSha256':None}
+          if p.is_file():
+              obj=json.loads(p.read_text(encoding='utf-8'))
+              stats=obj.get('stats',{})
+              result['stats']={k:stats.get(k) for k in ('expected','unexpected','skipped','flaky')}
+              result['reportSha256']=hashlib.sha256(p.read_bytes()).hexdigest()
+          out=Path('/tmp/tv3-main-e2e-redacted.json')
+          out.write_text(json.dumps(result,indent=2)+'\n',encoding='utf-8')
+          with open(os.environ['GITHUB_STEP_SUMMARY'],'a',encoding='utf-8') as f:
+              f.write('## TV3 exact-main prefinal E2E (not frozen-UAT)\n')
+              for key in ('appSourceSha','scope','project','e2eExit','stats','reportSha256'):
+                  f.write('- '+key+': `'+str(result[key])+'`\n')
+              f.write('- No screenshots, cookies, DB dumps, raw logs or credentials uploaded.\n')
+          print(json.dumps(result))
+          PY
+      - name: Upload only redacted, source-SHA-bound E2E stats
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: tv3-main-879143a-prefinal-redacted
+          path: /tmp/tv3-main-e2e-redacted.json
+          if-no-files-found: warn
+          retention-days: 14
+      - name: Stop only the disposable CI demo stack
+        if: always()
+        shell: bash
+        run: |
+          if [ -f .env.demo ]; then
+            docker compose --env-file .env.demo -f docker/compose.demo.yml down -v || true
+          fi
+      - name: Rehearse V7 upgrade on disposable stack
+        if: ${{ success() }}
+        shell: bash
+        run: node scripts/demo/rehearse-v7-upgrade.mjs
