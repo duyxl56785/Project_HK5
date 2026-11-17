@@ -16,7 +16,7 @@ jobs:
     timeout-minutes: 30
     env:
       TV3_SHA: '879143a1f081da4644ebc29c0950069429731f0f'
-      COMPOSE_PROJECT_NAME: hk5-tv3-main-diagnostic
+      COMPOSE_PROJECT_NAME: hk5-promo-test-tv3-main-879143a
       E2E_BASE_URL: http://localhost:5173
       PLAYWRIGHT_JSON_OUTPUT_FILE: /tmp/tv3-e2e-full-private.json
     steps:
@@ -43,7 +43,7 @@ jobs:
         run: |
           set -euo pipefail
           node scripts/demo/up.mjs --approved-inventory-pair --approved-finance-policy
-          test "$COMPOSE_PROJECT_NAME" = 'hk5-tv3-main-diagnostic'
+          test "$COMPOSE_PROJECT_NAME" = 'hk5-promo-test-tv3-main-879143a'
       - name: Install Playwright
         shell: bash
         run: |
