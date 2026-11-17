@@ -66,7 +66,7 @@ $containers = [ordered]@{}
 $project = $ApprovedIsolatedStack
 foreach ($service in 'frontend','api-gateway','postgres','inventory-service','order-service','cart-service','product-service','seller-service','auth-service','user-service') {
   $name = "$project-$service-1"
-  $format = '{{index .Config.Labels "com.docker.compose.project"}}|{{index .Config.Labels "com.docker.compose.service"}}|{{index .Config.Labels "com.docker.compose.project.working_dir"}}|{{.State.Running}}|{{.Id}}|{{.Image}}'
+  $format = '{{index .Config.Labels `com.docker.compose.project`}}|{{index .Config.Labels `com.docker.compose.service`}}|{{index .Config.Labels `com.docker.compose.project.working_dir`}}|{{.State.Running}}|{{.Id}}|{{.Image}}'
   $label,$role,$working,$running,$id,$image = (Read-Command docker @('inspect','--format',$format,$name)) -split '\|',6
   if (!$working -or $label -cne $project -or $role -cne $service -or
       [IO.Path]::GetFullPath($working) -ne (Join-Path $root 'docker') -or $running -cne 'true' -or
@@ -84,7 +84,7 @@ $mounts = (Read-Command docker @('inspect','--format','{{json .Mounts}}',"$proje
 $dataMount = @($mounts | Where-Object { $_.Destination -eq '/var/lib/postgresql/data' })
 if ($dataMount.Count -ne 1 -or $dataMount[0].Type -ne 'volume' -or !$dataMount[0].Name) { throw 'Thiếu volume PostgreSQL riêng' }
 $volumeName = $dataMount[0].Name
-$volumeOwner = Read-Command docker @('volume','inspect','--format','{{index .Labels "com.docker.compose.project"}}',$volumeName)
+$volumeOwner = Read-Command docker @('volume','inspect','--format','{{index .Labels `com.docker.compose.project`}}',$volumeName)
 $volumeUsers = @(Read-Command docker @('ps','-a','--filter',"volume=$volumeName",'--format','{{.Names}}'))
 if ($volumeOwner -cne $project -or $volumeUsers.Count -ne 1 -or $volumeUsers[0] -cne "$project-postgres-1") {
   throw 'PostgreSQL volume có thể dùng chung hoặc khác Compose project'
@@ -92,7 +92,7 @@ if ($volumeOwner -cne $project -or $volumeUsers.Count -ne 1 -or $volumeUsers[0] 
 foreach ($rule in @(@{ service='inventory-service'; key='INVENTORY_ORDER_PAIR_ENABLED' },
                     @{ service='order-service'; key='HK5_FINANCE_POLICY_APPROVED' })) {
   $key = $rule.key
-  $format = '{{range .Config.Env}}{{if or (eq . "' + $key + '=true") (eq . "' + $key + '=false")}}{{println .}}{{end}}{{end}}'
+  $format = '{{range .Config.Env}}{{if or (eq . `' + $key + '=true`) (eq . `' + $key + '=false`)}}{{println .}}{{end}}{{end}}'
   $value = @(Read-Command docker @('inspect','--format',$format,"$project-$($rule.service)-1") | Where-Object {$_})
   if ($value.Count -ne 1 -or $value[0] -cne "$key=true") { throw "Feature gate chưa bật sẵn: $key" }
 }
