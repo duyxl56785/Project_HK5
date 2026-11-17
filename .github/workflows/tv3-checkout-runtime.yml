@@ -91,7 +91,7 @@ jobs:
         id: tv3
         shell: bash
         env:
-          PLAYWRIGHT_JSON_OUTPUT_FILE: ${{ runner.temp }}/tv3-private-evidence/playwright-results.json
+          PLAYWRIGHT_JSON_OUTPUT_FILE: /tmp/tv3-private-evidence/playwright-results.json
         run: |
           set +e
           cd "$TV3_SOURCE_DIR/frontend"
