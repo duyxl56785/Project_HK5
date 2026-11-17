@@ -6,6 +6,8 @@ import java.util.UUID;
 public interface InventoryPort {
     void reserve(UUID orderId, List<Reservation> items);
     void release(UUID orderId);
+    /** Optional read-only proof for a C2 recovery. Absence never authorizes compensation. */
+    default boolean confirmReserve(UUID orderId, List<Reservation> items) { return false; }
     /** Idempotent by operationId: Inventory replays a repeated id without moving stock twice. */
     default void apply(String operationId, String type, List<Reservation> items) {
         throw new UnsupportedOperationException("Inventory operation " + type + " not supported");

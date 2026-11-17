@@ -3,6 +3,7 @@ package com.projecthk5.cartservice.integration;
 import com.projecthk5.cartservice.entity.Cart;
 import com.projecthk5.cartservice.entity.CartItem;
 import com.projecthk5.cartservice.repository.CartRepository;
+import com.projecthk5.cartservice.service.CartService;
 import java.math.BigDecimal;
 import java.util.UUID;
 import org.junit.jupiter.api.Tag;
@@ -34,6 +35,7 @@ class CartPostgres16IT {
         r.add("app.security.current-key-b64",()->"MDEyMzQ1Njc4OWFiY2RlZjAxMjM0NTY3ODlhYmNkZWY=");
     }
     @Autowired CartRepository carts;
+    @Autowired CartService service;
     @Autowired JdbcTemplate sql;
 
     @Test void migrationHibernateValidateCascadeTwoStoresAndUniqueProduct() {
@@ -49,5 +51,29 @@ class CartPostgres16IT {
         carts.deleteById(saved.getId());
         carts.flush();
         assertEquals(0,sql.queryForObject("select count(*) from cart_items where cart_id=?",Integer.class,saved.getId()));
+    }
+
+    @Test void c2CartRecoveryIsBoundToOwnerClaimAndExactRevision() {
+        var cart = new Cart("cart-recovery-" + UUID.randomUUID());
+        cart.getItems().add(new CartItem(cart, "p", "store", "seller", 1, new BigDecimal("10000")));
+        cart = carts.saveAndFlush(cart);
+        String customer = cart.getCustomerId();
+        long revision = service.claim(customer, "first-checkout", cart.getRevision()).revision();
+        service.recoverCheckout("another-customer", "first-checkout", revision, true);
+        service.recoverCheckout(customer, "wrong-key", revision, true);
+        service.recoverCheckout(customer, "first-checkout", revision - 1, true);
+        assertTrue(service.view(customer).claimed());
+        assertEquals(1, service.view(customer).items().size());
+        service.recoverCheckout(customer, "first-checkout", revision, false);
+        var reopened = service.view(customer);
+        assertFalse(reopened.claimed());
+        assertEquals(1, reopened.items().size());
+        long nextRevision = service.claim(customer, "next-checkout", reopened.revision()).revision();
+        service.recoverCheckout(customer, "first-checkout", revision, true);
+        assertTrue(service.view(customer).claimed());
+        service.recoverCheckout(customer, "next-checkout", nextRevision, true);
+        service.recoverCheckout(customer, "next-checkout", nextRevision, true);
+        assertFalse(service.view(customer).claimed());
+        assertTrue(service.view(customer).items().isEmpty());
     }
 }

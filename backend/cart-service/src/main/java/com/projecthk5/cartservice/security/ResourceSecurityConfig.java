@@ -21,6 +21,8 @@ public class ResourceSecurityConfig {
             .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(HttpMethod.GET, "/actuator/health", "/actuator/health/**", "/actuator/info").permitAll()
+                // Recovery has no customer bearer after restart. The endpoint requires the Order pair credential.
+                .requestMatchers(HttpMethod.POST, "/internal/cart/recover").permitAll()
                 .anyRequest().authenticated())
             .oauth2ResourceServer(oauth -> oauth.jwt(jwt -> jwt.jwtAuthenticationConverter(token ->
                 new JwtAuthenticationToken(token,

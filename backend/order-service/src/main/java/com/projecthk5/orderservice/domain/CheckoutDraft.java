@@ -1,6 +1,8 @@
 package com.projecthk5.orderservice.domain;
 
 import com.projecthk5.orderservice.entity.Order;
+import com.projecthk5.orderservice.entity.OrderItem;
+import com.projecthk5.orderservice.entity.SellerOrder;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.*;
@@ -10,13 +12,15 @@ public record CheckoutDraft(int version, UUID orderId, String customerId, String
         Long expectedRevision, long claimedCartRevision, Instant createdAt, String paymentMethod,
         Order.Shipping shipping, BigDecimal total, List<Store> sellerOrders, String outboxPayload) {
     public CheckoutDraft {
-        if (version != 1 || orderId == null || customerId == null || customerId.isBlank()
+        if ((version != 1 && version != 2) || orderId == null || customerId == null || customerId.isBlank()
                 || requestFingerprint == null || !requestFingerprint.matches("[0-9a-f]{64}")
                 || createdAt == null || !"COD".equals(paymentMethod) || claimedCartRevision < 0
                 || outboxPayload == null || outboxPayload.isBlank())
             throw new IllegalArgumentException("Invalid checkout draft metadata");
         sellerOrders = List.copyOf(sellerOrders);
         if (sellerOrders.isEmpty()) throw new IllegalArgumentException("Empty checkout draft");
+        if ((version == 2) != sellerOrders.stream().anyMatch(store -> store.voucher() != null))
+            throw new IllegalArgumentException("Checkout draft voucher version mismatch");
         Set<UUID> ids = new HashSet<>();
         Set<String> stores = new HashSet<>();
         Set<String> sellers = new HashSet<>();
@@ -34,14 +38,27 @@ public record CheckoutDraft(int version, UUID orderId, String customerId, String
 
     public record Store(UUID id, String sellerId, String storeId, boolean houseStore, String status,
             String codStatus, Instant updatedAt, BigDecimal gross, BigDecimal platformFee,
-            BigDecimal sellerNet, List<Line> items) {
+            BigDecimal sellerNet, List<Line> items, VoucherSnapshot voucher) {
+        public Store(UUID id, String sellerId, String storeId, boolean houseStore, String status,
+                     String codStatus, Instant updatedAt, BigDecimal gross, BigDecimal platformFee,
+                     BigDecimal sellerNet, List<Line> items) {
+            this(id, sellerId, storeId, houseStore, status, codStatus, updatedAt, gross, platformFee, sellerNet,
+                    items, null);
+        }
         public Store {
             if (id == null || sellerId == null || sellerId.isBlank() || storeId == null || storeId.isBlank()
                     || !"PLACED".equals(status) || !"PENDING".equals(codStatus) || updatedAt == null)
                 throw new IllegalArgumentException("Invalid checkout Store draft");
             items = List.copyOf(items);
             exact(gross); exact(platformFee); exact(sellerNet);
-            if (items.isEmpty() || sum(items.stream().map(Line::lineTotal).toList()).compareTo(gross) != 0
+            BigDecimal merchandise = sum(items.stream().map(Line::lineTotal).toList());
+            BigDecimal expectedGross = merchandise;
+            if (voucher != null) {
+                if (merchandise.compareTo(BigDecimal.valueOf(voucher.merchandiseAmount())) != 0)
+                    throw new IllegalArgumentException("Checkout voucher merchandise mismatch");
+                expectedGross = voucher.gross();
+            }
+            if (items.isEmpty() || expectedGross.compareTo(gross) != 0
                     || gross.subtract(platformFee).compareTo(sellerNet) != 0)
                 throw new IllegalArgumentException("Checkout Store draft money mismatch");
         }
@@ -67,10 +84,25 @@ public record CheckoutDraft(int version, UUID orderId, String customerId, String
                 s.getStoreId(), Objects.requireNonNull(houseStores.get(s.getStoreId())), s.getStatus().name(),
                 s.getCodStatus().name(), s.getUpdatedAt(), s.getGross(), s.getPlatformFee(), s.getSellerNet(),
                 s.getItems().stream().map(i -> new Line(i.getId(), i.getProductId(), i.getSku(), i.getProductName(),
-                        i.getQuantity(), i.getUnitPriceSnapshot(), i.getLineTotal())).toList())).toList();
-        return new CheckoutDraft(1, order.getId(), order.getCustomerId(), fingerprint, expectedRevision,
+                        i.getQuantity(), i.getUnitPriceSnapshot(), i.getLineTotal())).toList(), s.getVoucher())).toList();
+        int version = stores.stream().anyMatch(store -> store.voucher() != null) ? 2 : 1;
+        return new CheckoutDraft(version, order.getId(), order.getCustomerId(), fingerprint, expectedRevision,
                 claimedCartRevision, order.getCreatedAt(), order.getPaymentMethod(), order.getShipping(),
                 order.getTotal(), stores, outboxPayload);
+    }
+
+    public Order restoreOrder() {
+        Order order = new Order(orderId, customerId, createdAt);
+        order.ship(shipping);
+        for (Store store : sellerOrders) {
+            var child = new SellerOrder(store.id(), order, store.sellerId(), store.storeId(), store.gross(),
+                    store.platformFee(), store.voucher(), store.updatedAt());
+            for (Line item : store.items())
+                child.getItems().add(new OrderItem(item.id(), child, item.productId(), item.quantity(),
+                        item.unitPriceSnapshot(), item.lineTotal(), item.sku(), item.productName()));
+            order.addSellerOrder(child);
+        }
+        return order;
     }
 
     private static void exact(BigDecimal amount) { OrderAmountStorageBounds.requireExactNonnegative(amount); }

@@ -1,6 +1,8 @@
 package com.projecthk5.inventoryservice.integration;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.projecthk5.inventoryservice.api.*;
 import com.projecthk5.inventoryservice.model.InsufficientReservationException;
@@ -8,6 +10,7 @@ import com.projecthk5.inventoryservice.model.InsufficientStockException;
 import com.projecthk5.inventoryservice.repository.InventoryOperationRepository;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicReference;
 import org.aopalliance.intercept.MethodInterceptor;
@@ -21,6 +24,9 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
+import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.support.TransactionTemplate;
 
@@ -30,7 +36,32 @@ class InventoryOperationPostgresIT extends InventoryPostgresSupport {
     @Autowired InventoryOperationRepository operations;
     @Autowired JdbcTemplate sql;
     @Autowired PlatformTransactionManager transactions;
+    @Autowired MockMvc http;
     private static final AtomicReference<LookupGate> GATE = new AtomicReference<>();
+    private static final String ORDER_PAIR = UUID.randomUUID().toString();
+
+    @DynamicPropertySource static void orderPair(DynamicPropertyRegistry registry) {
+        registry.add("inventory.order-pair-enabled", () -> true);
+        registry.add("inventory.order-pair-token", () -> ORDER_PAIR);
+    }
+
+    @Test void c2RecoveryReceiptIsPairOnlyAndDescribesTheCommittedReserve() throws Exception {
+        UUID order = UUID.randomUUID();
+        String path = "/internal/inventory/orders/" + order + "/reserve";
+        String operation = "order-" + order + "-reserve";
+        http.perform(get(path)).andExpect(status().isUnauthorized());
+        http.perform(get(path).header("X-Inventory-Internal-Token", TOKEN)).andExpect(status().isUnauthorized());
+        http.perform(get(path).header("X-Internal-Token", ORDER_PAIR)).andExpect(status().isNotFound());
+        String sku = initialize("c2-qa-reserve", 3);
+        controller.operate(request(operation, InventoryOperationType.RESERVE, sku, 1));
+        String fingerprint = operations.findById(operation).orElseThrow().getRequestHash();
+        http.perform(get(path).header("X-Internal-Token", ORDER_PAIR))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.operationId").value(operation))
+                .andExpect(jsonPath("$.operationType").value("RESERVE"))
+                .andExpect(jsonPath("$.fingerprint").value(fingerprint));
+        assertEquals(2, controller.getBalance(sku).availableQuantity());
+        assertEquals(1, controller.getBalance(sku).reservedQuantity());
+    }
 
     @Test void disjointSkuSameIdCannotReplaceWinnerAfterEarlierEmptyLedgerRead() throws Exception {
         String a = initialize("race-a", 10), b = initialize("race-b", 10), key = id("same-key");

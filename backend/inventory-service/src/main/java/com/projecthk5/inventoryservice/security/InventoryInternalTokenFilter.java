@@ -32,6 +32,8 @@ public class InventoryInternalTokenFilter extends OncePerRequestFilter {
     static final int MAX_ORDER_OPERATION_BODY_BYTES = 64 * 1024;
     private static final PathPattern INVENTORY_API =
             PathPatternParser.defaultInstance.parse("/api/inventory/**");
+    private static final PathPattern RESERVE_RECEIPT =
+            PathPatternParser.defaultInstance.parse("/internal/inventory/orders/{orderId}/reserve");
     private static final String PAIR_HEADER = "X-Internal-Token";
     private static final String LEGACY_HEADER = "X-Inventory-Internal-Token";
     private static final String OPERATIONS_PATH = "/api/inventory/operations";
@@ -53,8 +55,8 @@ public class InventoryInternalTokenFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
-        return !INVENTORY_API.matches(
-                ServletRequestPathUtils.parseAndCache(request).pathWithinApplication());
+        var path = ServletRequestPathUtils.parseAndCache(request).pathWithinApplication();
+        return !INVENTORY_API.matches(path) && !RESERVE_RECEIPT.matches(path);
     }
 
     @Override
@@ -63,6 +65,10 @@ public class InventoryInternalTokenFilter extends OncePerRequestFilter {
         String suppliedPairToken = request.getHeader(PAIR_HEADER);
         if (suppliedPairToken != null) {
             doOrderPairRequest(request, response, filterChain, suppliedPairToken);
+            return;
+        }
+        if (receiptPath(request)) {
+            writeError(response, HttpServletResponse.SC_UNAUTHORIZED, "INTERNAL_AUTH_INVALID");
             return;
         }
 
@@ -102,6 +108,10 @@ public class InventoryInternalTokenFilter extends OncePerRequestFilter {
             return;
         }
 
+        if ("GET".equals(request.getMethod()) && receiptPath(request)) {
+            filterChain.doFilter(request, response);
+            return;
+        }
         if (!"POST".equals(request.getMethod()) || !OPERATIONS_PATH.equals(request.getRequestURI())) {
             writeError(response, HttpServletResponse.SC_FORBIDDEN, "INTERNAL_FORBIDDEN");
             return;
@@ -129,6 +139,10 @@ public class InventoryInternalTokenFilter extends OncePerRequestFilter {
         }
 
         filterChain.doFilter(new ReplayableBodyRequest(request, body), response);
+    }
+
+    private static boolean receiptPath(HttpServletRequest request) {
+        return RESERVE_RECEIPT.matches(ServletRequestPathUtils.getParsedRequestPath(request).pathWithinApplication());
     }
 
     private static byte[] readAtMost(InputStream input, int maximumBytes) throws IOException {

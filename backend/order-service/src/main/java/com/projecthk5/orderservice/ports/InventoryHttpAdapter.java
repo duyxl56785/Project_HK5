@@ -64,6 +64,35 @@ public class InventoryHttpAdapter implements InventoryPort {
         throw new UnsupportedOperationException("Use apply(operationId, RELEASE, lines)");
     }
 
+    record ReserveReceipt(String operationId, String operationType, String fingerprint) { }
+
+    @Override
+    public boolean confirmReserve(UUID orderId, List<Reservation> items) {
+        requireReservationContext();
+        InventoryOperationJournal.Snapshot row;
+        try { row = journal.load(reserveId(orderId)); }
+        catch (java.util.NoSuchElementException missing) { return false; }
+        var intent = row.intent();
+        if (!intent.checkoutAttemptId().equals(orderId)) return false;
+        intent.requireSamePayload(InventoryOperationIntent.Type.RESERVE, reservationLines(items));
+        if (row.state() == InventoryOperationJournal.State.CONFIRMED) return true;
+        if (row.state() != InventoryOperationJournal.State.UNKNOWN
+                && row.state() != InventoryOperationJournal.State.IN_FLIGHT) return false;
+
+        ReserveReceipt receipt;
+        try {
+            receipt = inventory.get().uri("/internal/inventory/orders/{id}/reserve", orderId)
+                    .header(InternalTokens.HEADER, token).retrieve().body(ReserveReceipt.class);
+        } catch (RestClientException unavailableOrMissing) {
+            return false;
+        }
+        if (receipt == null || !intent.operationId().equals(receipt.operationId())
+                || !"RESERVE".equals(receipt.operationType()) || !intent.fingerprint().equals(receipt.fingerprint()))
+            return false;
+        journal.confirmVoucherReserveReceipt(orderId, intent.operationId(), intent.fingerprint());
+        return true;
+    }
+
     @Override
     public void apply(String operationId, String type, List<Reservation> items) {
         if ("RESERVE".equals(type)) {

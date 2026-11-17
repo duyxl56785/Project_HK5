@@ -22,8 +22,13 @@ import org.springframework.transaction.annotation.Transactional;
 public class CheckoutDraftJournal {
     private final JdbcTemplate db;
     private final ObjectMapper json;
+    private final VoucherCheckoutJournal vouchers;
 
-    public CheckoutDraftJournal(JdbcTemplate db, ObjectMapper json) { this.db = db; this.json = json; }
+    public CheckoutDraftJournal(JdbcTemplate db, ObjectMapper json) {
+        this.db = db;
+        this.json = json;
+        this.vouchers = new VoucherCheckoutJournal(db, json);
+    }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void prepare(CheckoutDraft draft) {
@@ -44,6 +49,15 @@ public class CheckoutDraftJournal {
             load(draft.orderId()); // Also reject a corrupt pre-existing checksum or attempt binding.
             if (!payload.equals(saved)) throw new IllegalStateException("Checkout draft is immutable");
         }
+        vouchers.register(draft);
+    }
+
+    /** Wait for the draft writer's attempt lock before proving whether its transaction committed. */
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public boolean committed(UUID attemptId) {
+        db.queryForObject("select id from checkout_attempts where id=? for update", UUID.class, attemptId);
+        return Boolean.TRUE.equals(db.queryForObject(
+                "select exists(select 1 from checkout_order_drafts where checkout_attempt_id=?)", Boolean.class, attemptId));
     }
 
     /** Reload without Catalog, Cart, current prices or any network/side effects. Internal use only. */

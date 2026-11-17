@@ -25,11 +25,13 @@ public class OrderViews {
     public record StoreOrder(UUID id, UUID orderId, String storeId, String storeName, String status, String codStatus,
                              String statusReason, BigDecimal gross, BigDecimal platformFee, BigDecimal sellerNet,
                              Instant createdAt, Instant updatedAt, Instant deliveredAt, Instant codCollectedAt,
-                             Instant settledAt, String version, Order.Shipping shipping, List<Item> items) {
+                             Instant settledAt, String version, Order.Shipping shipping, List<Item> items,
+                             String merchandiseAmount, String voucherDiscount, String voucherCode, String grossExact) {
         /** Keeps what fulfillment needs, including the COD amount to collect, and drops the Store's finance. */
         StoreOrder withoutFinance() {
             return new StoreOrder(id, orderId, storeId, storeName, status, null, statusReason, gross, null, null,
-                    createdAt, updatedAt, deliveredAt, null, null, version, shipping, items);
+                    createdAt, updatedAt, deliveredAt, null, null, version, shipping, items,
+                    merchandiseAmount, voucherDiscount, voucherCode, grossExact);
         }
     }
     public record CustomerOrder(UUID id, String status, String overallStatus, BigDecimal total, String paymentMethod, Instant createdAt,
@@ -60,7 +62,9 @@ public class OrderViews {
         return new StoreOrder(so.getId(), o.getId(), so.getStoreId(), names.get(so.getStoreId()), so.getStatus().name(),
                 so.getCodStatus().name(), so.getStatusReason(), so.getGross(), so.getPlatformFee(), so.getSellerNet(),
                 o.getCreatedAt(), so.getUpdatedAt(), so.getDeliveredAt(), so.getCodCollectedAt(), so.getSettledAt(),
-                Long.toString(so.getVersion()), o.getShipping(), so.getItems().stream().map(OrderViews::item).toList());
+                Long.toString(so.getVersion()), o.getShipping(), so.getItems().stream().map(OrderViews::item).toList(),
+                so.getMerchandiseAmount().toPlainString(), so.getVoucherDiscount().toPlainString(),
+                so.getVoucher() == null ? null : so.getVoucher().code(), so.getGross().toPlainString());
     }
 
     private static Item item(OrderItem i) {
