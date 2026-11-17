@@ -20,7 +20,7 @@ public class VoucherHttpAdapter implements VoucherPort {
     private static final String ROOT = "/internal/vouchers/redemptions";
     private static final Set<String> REJECTIONS = Set.of("VOUCHER_CHANGED", "VOUCHER_NOT_FOUND",
             "VOUCHER_MIN_ORDER_AMOUNT", "VOUCHER_GROSS_TOO_LOW", "VOUCHER_ALREADY_USED", "VOUCHER_USAGE_LIMIT_REACHED",
-            "STORE_NOT_FOUND");
+            "STORE_NOT_FOUND", "VOUCHER_C2_DISABLED");
     private final RestClient seller;
     private final String token;
 

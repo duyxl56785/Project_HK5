@@ -8,7 +8,7 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 /** Seller-side ledger. Its callers must supply identities and lifecycle facts from durable Order data. */
 @Service
-@ConditionalOnProperty(name = "hk5.voucher-c2.enabled", havingValue = "true")
 @Transactional(isolation = Isolation.READ_COMMITTED)
 public class VoucherRedemptionService {
     public enum State { RESERVED, COMMITTED, RELEASED }
@@ -84,16 +83,20 @@ public class VoucherRedemptionService {
     private final JdbcTemplate db;
     private final VoucherService vouchers;
     private final Clock clock;
+    private final boolean enabled;
 
-    public VoucherRedemptionService(JdbcTemplate db, VoucherService vouchers, @Qualifier("voucherClock") Clock clock) {
+    public VoucherRedemptionService(JdbcTemplate db, VoucherService vouchers, @Qualifier("voucherClock") Clock clock,
+                                    @Value("${hk5.voucher-c2.enabled:false}") boolean enabled) {
         this.db = db;
         this.vouchers = vouchers;
         this.clock = clock;
+        this.enabled = enabled;
     }
 
     /** An advisory quote; all criteria are re-evaluated under lock when consuming a slot. */
     @Transactional(readOnly = true)
     public Quote quote(UUID storeId, String customerId, String code, long merchandiseAmount) {
+        requireNewRedemptionEnabled();
         Objects.requireNonNull(storeId, "storeId");
         validateCustomer(customerId);
         String normalizedCode = code == null ? "" : code.toUpperCase(Locale.ROOT);
@@ -111,6 +114,7 @@ public class VoucherRedemptionService {
         if (existing != null) {
             return replay(request, existing);
         }
+        requireNewRedemptionEnabled();
         Voucher voucher = findVoucher("id = ?", request.storeId(), request.voucherId());
         if (voucher.version() != request.expectedVersion()) {
             throw changed();
@@ -122,6 +126,10 @@ public class VoucherRedemptionService {
 
         insert(request, price, State.RESERVED, null);
         return replay(request, find(request.sellerOrderId()));
+    }
+
+    private void requireNewRedemptionEnabled() {
+        if (!enabled) throw ApiException.conflict("VOUCHER_C2_DISABLED", "Voucher checkout is disabled");
     }
 
     /**

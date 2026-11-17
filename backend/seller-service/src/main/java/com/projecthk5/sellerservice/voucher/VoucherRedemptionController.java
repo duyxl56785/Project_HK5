@@ -4,7 +4,6 @@ import com.projecthk5.security.ApiException;
 import com.projecthk5.security.InternalTokens;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,10 +12,9 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-/** Order-to-Seller only. The gateway does not expose /internal routes. */
+/** Order-to-Seller only. Settlement of existing reservations remains available with new C2 admissions disabled. */
 @RestController
 @RequestMapping("/internal/vouchers/redemptions")
-@ConditionalOnProperty(name = "hk5.voucher-c2.enabled", havingValue = "true")
 class VoucherRedemptionController {
     private final VoucherRedemptionService vouchers;
     private final String orderToken;
