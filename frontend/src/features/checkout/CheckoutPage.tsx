@@ -9,7 +9,7 @@ import { Field } from '../../shared/ui';
 import type { Address } from '../account/AccountPage';
 import { useCart } from '../cart/cartApi';
 import { CheckoutCodView } from './CheckoutCodView';
-import { checkoutKey, forgetCheckoutKey, placeOrder } from './checkoutApi';
+import { checkoutKey, forgetCheckoutKey, placeOrder, quoteCheckout, voucherCapability } from './checkoutApi';
 import type { Shipping } from './checkoutApi';
 
 const fromAddress = (a: Address): Shipping => ({ name: a.recipientName, phone: a.phone, address: `${a.line}, ${a.city}` });
@@ -23,6 +23,8 @@ export function CheckoutPage() {
   const { errors } = form.formState;
   const shipping = shippingSchema.safeParse(form.watch());
   const [chosen, setChosen] = useState(false);
+  const [keyGeneration, setKeyGeneration] = useState(0);
+  const capability = useQuery({ queryKey: ['voucher-c2-capability'], queryFn: voucherCapability, retry: false });
 
   useEffect(() => {
     const saved = addresses.data?.find((a) => a.isDefault) ?? addresses.data?.[0];
@@ -30,7 +32,7 @@ export function CheckoutPage() {
   }, [addresses.data, chosen, form]);
 
   const revision = cart.data?.snapshot.revision;
-  const key = useMemo(() => revision === undefined ? '' : checkoutKey(revision), [revision]);
+  const key = useMemo(() => revision === undefined ? '' : checkoutKey(revision), [revision, keyGeneration]);
 
   if (cart.isPending) return <CheckoutCodView state={{ status: 'loading' }} />;
   if (cart.error) return <CheckoutCodView state={{ status: 'unavailable' }} />;
@@ -56,6 +58,12 @@ export function CheckoutPage() {
       {!shipping.success && <p className="muted" role="status">Nhập đủ người nhận, số điện thoại và địa chỉ để đặt hàng.</p>}
     </section>
     <CheckoutCodView state={{ status: 'ready', cart: snapshot, idempotencyKey: key }} storeNames={storeNames}
+      onQuote={capability.data?.enabled === true ? quoteCheckout : undefined}
+      onRefreshAfterRejection={() => {
+        forgetCheckoutKey(snapshot.revision);
+        setKeyGeneration((generation) => generation + 1);
+        void client.invalidateQueries({ queryKey: ['cart'] });
+      }}
       onConfirm={shipping.success ? async (request) => {
         const result = await placeOrder(request, shipping.data);
         if (result.status === 'confirmed') {
