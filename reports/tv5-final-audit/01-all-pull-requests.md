@@ -2,7 +2,7 @@
 
 | PR | State | Head SHA | Base / recorded base SHA | Review / CI | Remaining action |
 |---|---|---|---|---|---|
-| [#204](https://github.com/duyxl56785/Project_HK5/pull/204) | OPEN, Ready for review, `mergeable=true` | `f74d08c7270bfee41ab2b0c45da3796f66250feb` | main / `b2bee1d13eef2d404bc79c917b36af9489983351` | Prior TV2 CHANGES_REQUESTED at `52c4036`; TV2 `duyxl56785` requested on new head | TV2 review current head and decide merge |
+| [#204](https://github.com/duyxl56785/Project_HK5/pull/204) | OPEN, Ready for review, `mergeable=true` | `1a5c5ac6d682f9fba292b8e3d887014d2a59bea2` | main / `b2bee1d13eef2d404bc79c917b36af9489983351` | Prior TV2 CHANGES_REQUESTED at `52c4036`; TV2 `duyxl56785` requested on new head | TV2 review current head and decide merge |
 | [#207](https://github.com/duyxl56785/Project_HK5/pull/207) | MERGED | `b4a33be606b519fd46c87f185d586bb5bd3dee21` | main / `27f46aadf5e98b2f1ae1969bc7b09fa1f1c8ab0f` | TV2 APPROVED; docs-only; combined PG exit 124 BLOCKED | None; preserve scoped limits |
 | [#209](https://github.com/duyxl56785/Project_HK5/pull/209) | MERGED | `8caf5b1379d3300ab69407c5884077bc6daaf25c` | main / `27f46aadf5e98b2f1ae1969bc7b09fa1f1c8ab0f` | TV3 APPROVED; Frontend/E2E #43867495388 SUCCESS | None; Voucher C1 demo seed only |
 | [#210](https://github.com/duyxl56785/Project_HK5/pull/210) | MERGED | `41b34e27280b2ced0dea2898aa6c79827fe58b50` | main / `240d0280bdde66f7d9055e24ded75f1e9417edfb` | TV2 APPROVED; docs-only | None; official figure mapping |
