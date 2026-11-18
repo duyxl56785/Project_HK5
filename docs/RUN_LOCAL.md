@@ -39,14 +39,17 @@ cd frontend && npm ci && npm run dev
 
 `.env.demo` và `docker/secrets/` đã được git bỏ qua và chỉ dùng cho máy local. Compose nạp secret bằng Docker secrets, service đọc từ `/run/secrets` qua `configtree`, nên `docker inspect` không thấy mật khẩu hay token.
 
-`INVENTORY_ORDER_PAIR_ENABLED` và `HK5_FINANCE_POLICY_APPROVED` mặc định là `false`. Không có hai cờ dưới đây thì stack vẫn chạy, seed và xem hàng được, nhưng Checkout bị từ chối. Mỗi lần chạy, `gen-env.mjs` đặt lại từng cổng theo cờ của lần đó, nên `.env.demo` cũ đang `true` sẽ về `false` nếu không truyền cờ.
+`INVENTORY_ORDER_PAIR_ENABLED` và `HK5_FINANCE_POLICY_APPROVED` mặc định là `false`. Nếu thiếu một trong hai cờ Inventory hoặc Finance, stack vẫn chạy, seed và xem hàng được, nhưng Checkout bị từ chối. Mỗi lần chạy, `gen-env.mjs` đặt lại từng cổng theo cờ của lần đó, nên `.env.demo` cũ đang `true` sẽ về `false` nếu không truyền cờ.
 
 | Cờ | Cổng | Tình trạng phê duyệt |
 | --- | --- | --- |
 | `--approved-finance-policy` | `HK5_FINANCE_POLICY_APPROVED` | MD09 ở [M01_FINANCE_DECISION.md](project-report/M01_FINANCE_DECISION.md), chỉ cho demo local. Chờ TV4, TV5 ký |
 | `--approved-inventory-pair` | `INVENTORY_ORDER_PAIR_ENABLED` | MD09 ở [M01_FINANCE_DECISION.md](project-report/M01_FINANCE_DECISION.md), chỉ cho demo local. TV2 đã nhận phần việc TV1. Chờ TV3 duyệt ủy quyền pair và delegated provenance |
+| `--approved-voucher-c2` | `HK5_VOUCHER_C2_ENABLED` | Mặc định tắt. Xem [hướng dẫn demo Voucher C2](RUN_TV3_C2_DEMO.md). |
 
-Cờ chỉ là thao tác bật cho demo local với dữ liệu giả, không phải bằng chứng owner đã duyệt. Kết quả CI chạy với cả hai cờ chỉ chứng minh đường opt-in của demo local, không chứng minh môi trường khác. Đường mặc định tắt được kiểm ở `scripts/demo/gen-env.test.mjs`. Môi trường khác cần quyết định riêng.
+Để demo thanh toán bằng voucher, thêm `--approved-voucher-c2` vào lệnh khởi động ở trên và bật cả `--approved-finance-policy`. Khi C2 bật nhưng Finance Policy tắt, Checkout có voucher trả HTTP 503 `VOUCHER_FINANCE_POLICY_UNAVAILABLE`.
+
+Cờ chỉ là thao tác bật cho demo local với dữ liệu giả, không phải bằng chứng owner đã duyệt. Kết quả CI chạy với các cờ chỉ chứng minh đường opt-in của demo local, không chứng minh môi trường khác. Đường mặc định tắt được kiểm ở `scripts/demo/gen-env.test.mjs`. Môi trường khác cần quyết định riêng.
 
 ## Luồng nghiệp vụ chính
 

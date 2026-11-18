@@ -1,20 +1,21 @@
 # Chạy demo Voucher C2 và Khuyến mãi
 
-Nhánh `feat/tv3-c2-demo-promotion-ui` chứa Voucher C2 từ PR #211 cùng giao diện Khuyến mãi đã cập nhật nút bấm, trạng thái chờ duyệt và thông báo quá hạn cho Admin và Seller.
+Bản demo này gồm Voucher C2 từ PR #211 cùng giao diện Khuyến mãi đã cập nhật nút bấm, trạng thái chờ duyệt và thông báo quá hạn cho Admin và Seller.
 
 ## Dựng từ PowerShell
 
-Cần Docker Desktop đang chạy, JDK 21, Node.js 22 trở lên. Dùng clone riêng và kiểm tra cổng 5173, 18080 trước khi khởi động. Xem thêm [hướng dẫn chạy local](RUN_LOCAL.md).
+Cần Docker Desktop đang chạy, JDK 21, Node.js 22 trở lên. Dùng clone riêng và kiểm tra cổng 5173, 18080 trước khi khởi động. Gán SHA bản demo được nhóm xác nhận cho `$demoSha` trước khi chạy các lệnh dưới đây. Xem thêm [hướng dẫn chạy local](RUN_LOCAL.md).
 
 ```powershell
-git -c core.longpaths=true clone --branch feat/tv3-c2-demo-promotion-ui https://github.com/duyxl56785/Project_HK5.git D:\hk5-c2-demo
+git -c core.longpaths=true clone https://github.com/duyxl56785/Project_HK5.git D:\hk5-c2-demo
 Set-Location D:\hk5-c2-demo
-$env:COMPOSE_PROJECT_NAME = 'hk5-tv3-c2-demo'
-$env:HK5_VOUCHER_C2_ENABLED = 'true'
-node scripts/demo/up.mjs --approved-inventory-pair --approved-finance-policy
+git switch --detach $demoSha
+$env:COMPOSE_PROJECT_NAME = 'hk5-promo-test-tv3'
+Remove-Item Env:HK5_VOUCHER_C2_ENABLED -ErrorAction SilentlyContinue
+node scripts/demo/up.mjs --approved-inventory-pair --approved-finance-policy --approved-voucher-c2
 ```
 
-Mở [SOOPI local](http://localhost:5173). Script khởi tạo dữ liệu seed và tự sinh mật khẩu trong `.env.demo` trên máy đang chạy. Các cờ trong lệnh trên dành cho project demo riêng.
+Mở [SOOPI local](http://localhost:5173). Script khởi tạo dữ liệu seed và tự sinh mật khẩu trong `.env.demo` trên máy đang chạy. Các cờ trong lệnh trên dành cho project demo riêng. Voucher C2 mặc định tắt. Khi bật `--approved-voucher-c2`, phải bật cả `--approved-finance-policy`. Nếu thiếu cờ Finance, Checkout có voucher trả HTTP 503 `VOUCHER_FINANCE_POLICY_UNAVAILABLE`.
 
 | Vai trò | Email seed | Khóa mật khẩu trong `.env.demo` |
 | --- | --- | --- |

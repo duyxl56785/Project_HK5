@@ -35,10 +35,10 @@ jobs:
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: '22'
-      - name: Generated env keeps both gates off unless opted in
+      - name: Generated env keeps all gates off unless opted in
         run: node --test scripts/demo/gen-env.test.mjs scripts/demo/disposable.test.mjs scripts/demo/voucher-seed.test.mjs
       - name: Start the stack from fresh volumes and seed it, local demo opt-in only
-        run: node scripts/demo/up.mjs --approved-inventory-pair --approved-finance-policy
+        run: node scripts/demo/up.mjs --approved-inventory-pair --approved-finance-policy --approved-voucher-c2
       - name: Install Playwright
         working-directory: frontend
         run: |
@@ -46,6 +46,8 @@ jobs:
           npx playwright install --with-deps chromium
       - name: Playwright on the live stack
         working-directory: frontend
+        env:
+          E2E_VOUCHER_C2: '1'
         run: npm run e2e
       - name: Suspended Seller checks through the Gateway
         run: node scripts/demo/smoke-suspended-seller.mjs

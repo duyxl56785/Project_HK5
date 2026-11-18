@@ -1,6 +1,43 @@
 import { execFileSync } from 'node:child_process';
-import { expect, test } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
 import { accounts, sessionFor, unique } from './support';
+
+async function checkVoucherPromotionConflict(seller: Page, customer: Page, origin: string) {
+  const writeHeaders = { Origin: origin, 'X-CSRF-Protection': '1' };
+  const login = await seller.request.post('/api/auth/login', { headers: writeHeaders, data: accounts.seller });
+  expect(login.status()).toBe(200);
+  const headers = { ...writeHeaders, Authorization: 'Bearer ' + (await login.json()).accessToken };
+  const code = 'PROMO' + unique().toUpperCase();
+  const voucherPath = '/api/stores/me/vouchers';
+  const now = Date.now();
+  const created = await seller.request.post(voucherPath, { headers, data: {
+    code, name: 'Voucher kiểm thử MD17', discountType: 'FIXED', discountValue: 1, minOrderAmount: 1, usageLimit: 1,
+    startsAt: new Date(now - 3600000).toISOString(), endsAt: new Date(now + 86400000).toISOString(),
+  } });
+  expect(created.status()).toBe(201);
+  const { id, version } = await created.json();
+  let expectedVersion = version;
+  try {
+    const published = await seller.request.post(voucherPath + '/' + id + '/publish', { headers, data: { expectedVersion } });
+    expect(published.status()).toBe(200);
+    const active = await published.json();
+    expectedVersion = active.version;
+    expect(active.status).toBe('ACTIVE');
+
+    await customer.getByLabel(/Mã voucher/).fill(code);
+    const quoted = customer.waitForResponse(r => r.url().endsWith('/api/orders/voucher-quote') && r.request().method() === 'POST');
+    await customer.getByRole('button', { name: 'Áp dụng voucher' }).click();
+    const refusal = await quoted;
+    expect(refusal.status()).toBe(409);
+    expect(await refusal.json()).toMatchObject({ code: 'VOUCHER_PROMOTION_CONFLICT' });
+    await expect(customer.getByRole('alert')).toContainText('không thể dùng chung voucher');
+    await customer.getByRole('button', { name: 'Bỏ mã' }).click();
+  } finally {
+    const canceled = await seller.request.post(voucherPath + '/' + id + '/cancel', { headers, data: { expectedVersion } });
+    expect(canceled.status()).toBe(200);
+    expect((await canceled.json()).status).toBe('CANCELLED');
+  }
+}
 
 test('Seller clearance flows through Catalog and Checkout into Order price and fee', async ({ browser }) => {
   test.setTimeout(180_000);
@@ -65,6 +102,11 @@ test('Seller clearance flows through Catalog and Checkout into Order price and f
     await customer.getByLabel('Người nhận').fill('Khách demo khuyến mãi');
     await customer.getByLabel('Số điện thoại').fill('0900000000');
     await customer.getByLabel('Địa chỉ', { exact: true }).fill('Địa chỉ demo');
+    if (process.env.E2E_VOUCHER_C2 === '1') {
+      await test.step('MD17 rejects a Store voucher when a Checkout item is on sale', async () => {
+        await checkVoucherPromotionConflict(seller, customer, baseUrl.origin);
+      });
+    }
     await customer.getByRole('button', { name: /đặt hàng/i }).click();
     await expect(customer).toHaveURL(/\/orders\/[0-9a-f-]{36}$/);
     const orderId = new URL(customer.url()).pathname.split('/').pop();
