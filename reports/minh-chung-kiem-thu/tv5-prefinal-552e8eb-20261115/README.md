@@ -22,7 +22,7 @@
 - An earlier parallel invocation had one `AuthPersistenceTest` PostgreSQL connection timeout. The test then passed alone, and the complete forced serial build also passed. The earlier timeout's exact cause was not proven; no source was changed to make it pass.
 - Frontend at the same source SHA: `npm ci`, typecheck, production build, and 178 unit tests passed. `npm ci` reported one moderate advisory; dependencies were not changed to suppress it.
 - Raw command logs are in `logs/backend/` and `logs/frontend/`. JUnit XML remains in each backend module's `build/test-results/{test,integrationTest}` directory in the tested checkout.
-- Raw logs and captured data are preserved byte-for-byte: the receipt `.gitattributes` marks logs, JSON, text snapshots and screenshots as `-text -diff`. `SHA256SUMS.txt` is explicitly `text eol=lf diff`, so reviewers can inspect it and compare it across platforms. The manifest hashes only the 16 raw evidence files; narrative Markdown and this README are intentionally excluded because they remain editable report text.
+- The 15 raw log/capture payloads are preserved byte-for-byte: the receipt `.gitattributes` marks logs, JSON, text snapshots and screenshots as `-text -diff`. `test-summary.json` is a derived summary updated on 18/11 to add recorded run metadata and the official figure crosswalk; it is not an original byte-for-byte capture from 15/11. Its current committed bytes are versioned and hashed as the sixteenth manifest payload. `SHA256SUMS.txt` is explicitly `text eol=lf diff`, so reviewers can inspect it and compare it across platforms. Narrative Markdown and this README are excluded because they remain editable report text.
 
 ## Isolated rehearsal snapshot
 
@@ -55,6 +55,6 @@ No production/shared flags were changed. A demo command with explicit opt-in fla
 
 ## Evidence file integrity
 
-- `SHA256SUMS.txt` records hashes for exactly 16 included raw evidence files (logs, JSON, text snapshots and screenshot); it excludes itself, `.gitattributes` and editable Markdown.
-- The live PR/Issue/reviewer audit is maintained in `reports/tv5-final-audit/`, not in this historical capture receipt.
+- `SHA256SUMS.txt` records hashes for exactly 16 payloads: 15 raw logs/captured artifacts plus the derived `test-summary.json` updated on 18/11; it excludes itself, `.gitattributes` and editable Markdown.
+- A separate TV5 working audit/handoff is retained locally outside this receipt PR and will be delivered separately after final UAT; it is not part of this historical capture receipt.
 - No code files were modified by this run.

@@ -2,7 +2,7 @@
 
 | Test ID | Preconditions and steps | Expected | Actual | State | Evidence |
 |---|---|---|---|---|---|
-| BE-01 | Read the recorded run metadata (not a raw `--version` capture) | Gradle Wrapper 8.10, JDK 21 | Gradle 8.10 / JDK 21.0.7 | PASS (recorded metadata) | `test-summary.json`; execution evidence `logs/backend/forced-serial-build-pass.log` |
+| BE-01 | Read the recorded run metadata (not a raw `--version` capture) | Gradle Wrapper 8.10, JDK 21 | Gradle 8.10 / JDK 21.0.7 | RECORDED (no raw version log; not a runtime PASS) | `test-summary.json`; execution evidence `logs/backend/forced-serial-build-pass.log` |
 | BE-02 | Clean compile/build and rerun all backend tasks serially | Build and tests complete | 97 tasks executed; exit 0 | PASS | `logs/backend/forced-serial-build-pass.log` |
 | BE-03 | Aggregate backend JUnit XML | No failures/errors | 1,180 unit + 497 integration; 1,661 pass, 16 skipped | PASS | module `build/test-results` in tested checkout |
 | FE-01 | npm ci, typecheck, unit, production build | All commands exit 0 | 178 unit pass; install/typecheck/build pass | PASS | `logs/frontend/` |
