@@ -2,6 +2,8 @@
 
 Use only after TV2 publishes the frozen full main SHA and matching CI receipt. The 18/11 audit has not identified a frozen SHA yet.
 
+**Schedule:** TV2's 17/11 Issue #160 decision sets the merge cutoff at 20/11 12:00, freezes `main` at 20/11 18:00, runs final UAT on 21/11, and submits by 23/11. Do not use the superseded 19/11 freeze / 20/11 UAT dates.
+
 ## Before execution
 
 - [ ] Record full 40-character main SHA, freeze timestamp, CI run URLs and result.

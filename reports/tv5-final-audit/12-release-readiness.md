@@ -2,4 +2,4 @@
 
 **Status: BLOCKED for final acceptance; PARTIALLY_COMPLETE for pre-final evidence.**
 
-Live GitHub state and hosted CI are now verified. PR #204 still requires corrections and TV2 re-review. Frozen main SHA, clean-clone on another machine, final UAT, final figures and Finance settlement acceptance remain outstanding. Docker Engine is available, but the retained pre-final stack is incomplete (6 running / 9 exited, missing temporary secret mounts, PostgreSQL exit 255).
+Live GitHub state and hosted CI are verified. PR #204's three historical review corrections are delivered on head `0f3c7398c23bc07fb190b28deea4f9271e3b3180`; TV2 review of that exact head remains pending. The controlling TV2 schedule is PR merge cutoff 20/11 12:00, main freeze 20/11 18:00, final UAT 21/11 and submission by 23/11. Frozen main SHA, clean-clone on another machine, final UAT, final figures and Finance settlement acceptance remain outstanding. Docker Engine is available, but the retained pre-final stack is incomplete (6 running / 9 exited; PostgreSQL exit 255; eight app containers have missing temporary secret bind mounts).

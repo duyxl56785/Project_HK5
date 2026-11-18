@@ -4,14 +4,15 @@
 |---|---|
 | Worktree audit | `.verification/tv5-pr204-fix` |
 | Branch | `docs/tv5-prefinal-evidence-20261115` |
-| Feature branch SHA at delivery readback | `1a5c5ac6d682f9fba292b8e3d887014d2a59bea2` |
+| Feature branch SHA at continuation readback | `0f3c7398c23bc07fb190b28deea4f9271e3b3180` |
 | Remote tracking | `origin/docs/tv5-prefinal-evidence-20261115` |
-| Root WIP cần bảo toàn | `.vs/`, `reports/tv5-m01-local/`, `frontend/package-lock.json` untracked |
+| Root worktree | `codex/tv5-w1-acceptance-evidence` @ `9c5094cc8d4164d036fd2601f60741e7ceca3562`; untracked `.vs/`, `reports/tv5-m01-local/`, `frontend/package-lock.json` |
 | Git root | `.verification/tv5-pr204-fix` |
 | Current remote main | `879143a1f081da4644ebc29c0950069429731f0f` |
 | Merge base | `b2bee1d13eef2d404bc79c917b36af9489983351` |
 | Branch relation | PR API reports `mergeable=true`; branch base snapshot is `b2bee1d...`, current main at audit `879143a...` |
-| Audit drafts | 28 existing untracked Markdown files in `reports/tv5-final-audit/` |
-| Other untracked | One anomalously named file preserved untouched |
+| Audit documents | 28 Markdown files are tracked in the target feature branch |
+| Target worktree status | No staged/modified tracked files; one anomalously named untracked file preserved untouched |
+| Branch relation | `origin/main=879143a...`; PR compare: 7 ahead / 28 behind; merge base `b2bee1d...`; GitHub PR API reports `mergeable=true` |
 
-`git fetch origin main docs/tv5-prefinal-evidence-20261115` succeeded. Four commits (`bb81467`, `6ae6284`, `f74d08c`, `1a5c5ac`) were created and pushed; `git ls-remote` confirmed remote branch SHA `1a5c5ac...`. The feature branch is synchronized, with one unrelated anomalous untracked file left untouched. No reset, clean, stash, force push or direct main write.
+The continuation readback used `git ls-remote origin refs/heads/main refs/heads/docs/tv5-prefinal-evidence-20261115`; remote branch SHA equals local HEAD `0f3c739...`, and remote main is `879143a...`. The target worktree has one unrelated anomalous untracked file, left untouched. Root worktree WIP is separately preserved. No reset, clean, stash, force push or direct main write was performed.
