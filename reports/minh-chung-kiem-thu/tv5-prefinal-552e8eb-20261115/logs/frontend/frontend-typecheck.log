@@ -1,0 +1,4 @@
+
+> hk5-marketplace-frontend@0.1.0 typecheck
+> tsc --noEmit
+

@@ -1,0 +1,12 @@
+docs/project-report/TV5_APPENDIX_B_CAPTURE_SHEET.md
+docs/project-report/TV5_DECK_SPEAKER_NOTES.md
+docs/project-report/TV5_REPORT_CONTENT.md
+reports/minh-chung-kiem-thu/tv5-prefinal-config-552e8eb-20261115/.gitattributes
+reports/minh-chung-kiem-thu/tv5-prefinal-config-552e8eb-20261115/README.md
+reports/minh-chung-kiem-thu/tv5-prefinal-config-552e8eb-20261115/SHA256SUMS.txt
+reports/minh-chung-kiem-thu/tv5-prefinal-config-552e8eb-20261115/config-only.txt
+reports/submission/Bao_cao_Soopi_TV5_DRAFT_2026-11-14.docx
+reports/submission/README.md
+reports/submission/Soopi_TV5_notes_DRAFT_2026-11-14.pptx
+tests/TV5_RETURN_ACCEPTANCE_20261110.md
+tests/TV5_UAT_ACCEPTANCE_CURRENT.md

@@ -1,0 +1,290 @@
+Starting a Gradle Daemon, 2 busy and 5 incompatible and 1 stopped Daemons could not be reused, use --status for details
+> Task :cart-service:clean UP-TO-DATE
+> Task :security-common:clean UP-TO-DATE
+> Task :notification-service:clean UP-TO-DATE
+> Task :config-server:clean UP-TO-DATE
+> Task :auth-service:clean UP-TO-DATE
+> Task :product-service:clean UP-TO-DATE
+> Task :user-service:clean UP-TO-DATE
+> Task :discovery-server:clean UP-TO-DATE
+> Task :api-gateway:clean UP-TO-DATE
+> Task :seller-service:clean UP-TO-DATE
+> Task :order-service:clean UP-TO-DATE
+> Task :inventory-service:clean UP-TO-DATE
+> Task :cart-service:processResources
+> Task :order-service:processResources
+> Task :user-service:processResources
+> Task :notification-service:processResources
+> Task :auth-service:processResources
+> Task :seller-service:processResources
+> Task :order-service:processTestResources NO-SOURCE
+> Task :cart-service:processTestResources NO-SOURCE
+> Task :notification-service:processTestResources NO-SOURCE
+> Task :product-service:processResources
+> Task :user-service:processTestResources
+> Task :seller-service:processTestResources
+> Task :auth-service:processTestResources
+> Task :product-service:processTestResources
+> Task :api-gateway:compileJava FROM-CACHE
+> Task :config-server:compileJava FROM-CACHE
+> Task :discovery-server:compileJava FROM-CACHE
+> Task :security-common:compileJava FROM-CACHE
+> Task :inventory-service:compileJava FROM-CACHE
+> Task :discovery-server:processResources
+> Task :discovery-server:classes
+> Task :security-common:processResources
+> Task :security-common:classes
+> Task :api-gateway:processResources
+> Task :api-gateway:classes
+> Task :config-server:processResources
+> Task :config-server:classes
+> Task :discovery-server:resolveMainClassName
+> Task :api-gateway:resolveMainClassName
+> Task :config-server:resolveMainClassName
+> Task :inventory-service:processResources
+> Task :inventory-service:classes
+> Task :notification-service:compileJava FROM-CACHE
+> Task :user-service:compileJava FROM-CACHE
+> Task :notification-service:classes
+> Task :user-service:classes
+> Task :inventory-service:resolveMainClassName
+> Task :auth-service:compileJava FROM-CACHE
+> Task :cart-service:compileJava FROM-CACHE
+> Task :auth-service:classes
+> Task :notification-service:resolveMainClassName
+> Task :cart-service:classes
+> Task :user-service:resolveMainClassName
+> Task :cart-service:resolveMainClassName
+> Task :auth-service:resolveMainClassName
+> Task :auth-service:jar
+> Task :order-service:compileJava FROM-CACHE
+> Task :order-service:classes
+> Task :notification-service:jar
+> Task :security-common:jar
+> Task :user-service:jar
+> Task :security-common:resolveMainClassName
+> Task :security-common:bootJar SKIPPED
+> Task :security-common:assemble
+> Task :order-service:resolveMainClassName
+> Task :security-common:compileTestJava FROM-CACHE
+> Task :security-common:processTestResources NO-SOURCE
+> Task :security-common:testClasses UP-TO-DATE
+> Task :auth-service:compileTestJava FROM-CACHE
+> Task :security-common:test FROM-CACHE
+> Task :security-common:check UP-TO-DATE
+> Task :security-common:build
+> Task :cart-service:jar
+> Task :config-server:bootJar
+> Task :discovery-server:bootJar
+> Task :api-gateway:bootJar
+> Task :config-server:jar
+> Task :config-server:assemble
+> Task :config-server:compileTestJava NO-SOURCE
+> Task :config-server:processTestResources NO-SOURCE
+> Task :config-server:testClasses UP-TO-DATE
+> Task :config-server:test NO-SOURCE
+> Task :config-server:check UP-TO-DATE
+> Task :config-server:build
+> Task :user-service:bootJar
+> Task :user-service:assemble
+> Task :discovery-server:jar
+> Task :discovery-server:assemble
+> Task :discovery-server:compileTestJava NO-SOURCE
+> Task :discovery-server:processTestResources NO-SOURCE
+> Task :discovery-server:testClasses UP-TO-DATE
+> Task :discovery-server:test NO-SOURCE
+> Task :inventory-service:bootJar
+> Task :discovery-server:check UP-TO-DATE
+> Task :discovery-server:build
+> Task :auth-service:bootJar
+> Task :auth-service:assemble
+> Task :auth-service:testClasses
+> Task :cart-service:bootJar
+> Task :api-gateway:jar
+> Task :cart-service:assemble
+> Task :api-gateway:assemble
+> Task :order-service:bootJar
+> Task :inventory-service:jar
+> Task :inventory-service:assemble
+> Task :inventory-service:compileTestJava FROM-CACHE
+> Task :inventory-service:processTestResources NO-SOURCE
+> Task :inventory-service:testClasses UP-TO-DATE
+> Task :order-service:jar
+> Task :order-service:assemble
+> Task :notification-service:compileTestJava
+> Task :seller-service:compileJava
+> Task :seller-service:classes
+> Task :user-service:compileTestJava
+> Task :user-service:testClasses
+> Task :api-gateway:compileTestJava
+> Task :api-gateway:processTestResources NO-SOURCE
+> Task :api-gateway:testClasses
+> Task :seller-service:resolveMainClassName
+> Task :product-service:compileJava
+> Task :product-service:classes
+> Task :cart-service:compileTestJava
+> Task :cart-service:testClasses
+> Task :product-service:resolveMainClassName
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+> Task :user-service:test
+> Task :user-service:check
+> Task :user-service:build
+> Task :order-service:compileTestJava
+> Task :order-service:testClasses
+> Task :seller-service:bootJar
+> Task :seller-service:jar
+> Task :seller-service:assemble
+> Task :notification-service:bootJar
+> Task :notification-service:assemble
+> Task :notification-service:testClasses
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+> Task :inventory-service:test
+> Task :inventory-service:check
+> Task :inventory-service:build
+> Task :cart-service:test
+> Task :cart-service:check
+> Task :cart-service:build
+> Task :product-service:bootJar
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+> Task :product-service:jar
+> Task :product-service:assemble
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+> Task :seller-service:compileTestJava
+> Task :seller-service:testClasses
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+> Task :product-service:compileTestJava
+> Task :product-service:testClasses
+> Task :api-gateway:test
+> Task :api-gateway:check
+> Task :api-gateway:build
+> Task :seller-service:test
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+> Task :order-service:test
+> Task :order-service:check
+> Task :order-service:build
+> Task :auth-service:test
+> Task :notification-service:test
+
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+
+> Task :auth-service:test
+
+AuthPersistenceTest > initializationError FAILED
+    org.flywaydb.core.internal.exception.FlywaySqlException at AuthPersistenceTest.java:90
+        Caused by: org.postgresql.util.PSQLException at AuthPersistenceTest.java:90
+            Caused by: java.net.SocketTimeoutException at AuthPersistenceTest.java:90
+
+> Task :product-service:test
+
+> Task :auth-service:test
+
+29 tests completed, 1 failed, 11 skipped
+
+> Task :auth-service:test FAILED
+> Task :seller-service:integrationTest
+
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+
+> Task :product-service:integrationTest
+
+2026-11-15T22:35:51.336+07:00  INFO 22696 --- [notification-service] [ntainer#0-0-C-1] k.c.c.i.ConsumerRebalanceListenerInvoker : [Consumer clientId=consumer-notification-service-1, groupId=notification-service] Revoke previously assigned partitions order.placed.v1-0, seller-order.status-changed.v1-0
+2026-11-15T22:35:51.336+07:00  INFO 22696 --- [notification-service] [ntainer#0-0-C-1] o.s.k.l.KafkaMessageListenerContainer    : notification-service: partitions revoked: [order.placed.v1-0, seller-order.status-changed.v1-0]
+2026-11-15T22:35:51.337+07:00  INFO 22696 --- [notification-service] [ntainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notification-service-1, groupId=notification-service] Resetting generation and member id due to: consumer pro-actively leaving the group
+2026-11-15T22:35:51.338+07:00  INFO 22696 --- [notification-service] [ntainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notification-service-1, groupId=notification-service] Request joining group due to: consumer pro-actively leaving the group
+2026-11-15T22:35:51.338+07:00  INFO 22696 --- [notification-service] [ntainer#0-0-C-1] o.a.k.c.c.internals.LegacyKafkaConsumer  : [Consumer clientId=consumer-notification-service-1, groupId=notification-service] Unsubscribed all topics or patterns and assigned partitions
+2026-11-15T22:35:51.339+07:00  INFO 22696 --- [notification-service] [ntainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notification-service-1, groupId=notification-service] Resetting generation and member id due to: consumer pro-actively leaving the group
+2026-11-15T22:35:51.339+07:00  INFO 22696 --- [notification-service] [ntainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notification-service-1, groupId=notification-service] Request joining group due to: consumer pro-actively leaving the group
+2026-11-15T22:35:51.342+07:00  INFO 22696 --- [notification-service] [ntainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notification-service-1, groupId=notification-service] Node 1 disconnected.
+2026-11-15T22:35:51.342+07:00  WARN 22696 --- [notification-service] [ntainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notification-service-1, groupId=notification-service] Connection to node 1 (localhost/127.0.0.1:58845) could not be established. Node may not be available.
+2026-11-15T22:35:51.343+07:00  INFO 22696 --- [notification-service] [ntainer#0-0-C-1] o.apache.kafka.common.metrics.Metrics    : Metrics scheduler closed
+2026-11-15T22:35:51.343+07:00  INFO 22696 --- [notification-service] [ntainer#0-0-C-1] o.apache.kafka.common.metrics.Metrics    : Closing reporter org.apache.kafka.common.metrics.JmxReporter
+2026-11-15T22:35:51.344+07:00  INFO 22696 --- [notification-service] [ntainer#0-0-C-1] o.apache.kafka.common.metrics.Metrics    : Closing reporter org.apache.kafka.common.telemetry.internals.ClientTelemetryReporter
+2026-11-15T22:35:51.344+07:00  INFO 22696 --- [notification-service] [ntainer#0-0-C-1] o.apache.kafka.common.metrics.Metrics    : Metrics reporters closed
+2026-11-15T22:35:51.348+07:00  INFO 22696 --- [notification-service] [ntainer#0-0-C-1] o.a.kafka.common.utils.AppInfoParser     : App info kafka.consumer for consumer-notification-service-1 unregistered
+2026-11-15T22:35:51.355+07:00  INFO 22696 --- [notification-service] [ntainer#0-0-C-1] o.s.k.l.KafkaMessageListenerContainer    : notification-service: Consumer stopped
+2026-11-15T22:35:51.359+07:00  INFO 22696 --- [notification-service] [ionShutdownHook] o.a.k.clients.producer.KafkaProducer     : [Producer clientId=notification-service-producer-1] Closing the Kafka producer with timeoutMillis = 30000 ms.
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+2026-11-15T22:36:21.372+07:00  INFO 22696 --- [notification-service] [vice-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=notification-service-producer-1] Disconnecting from node 1 due to request timeout.
+2026-11-15T22:36:21.372+07:00  INFO 22696 --- [notification-service] [ionShutdownHook] o.a.k.clients.producer.KafkaProducer     : [Producer clientId=notification-service-producer-1] Proceeding to force close the producer since pending requests could not be completed within timeout 30000 ms.
+2026-11-15T22:36:21.374+07:00  INFO 22696 --- [notification-service] [vice-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=notification-service-producer-1] Cancelled in-flight API_VERSIONS request with correlation id 15 due to node 1 being disconnected (elapsed time since creation: 31531ms, elapsed time since send: 31531ms, request timeout: 30000ms)
+2026-11-15T22:36:21.385+07:00  INFO 22696 --- [notification-service] [ionShutdownHook] o.apache.kafka.common.metrics.Metrics    : Metrics scheduler closed
+2026-11-15T22:36:21.385+07:00  INFO 22696 --- [notification-service] [ionShutdownHook] o.apache.kafka.common.metrics.Metrics    : Closing reporter org.apache.kafka.common.metrics.JmxReporter
+2026-11-15T22:36:21.385+07:00  INFO 22696 --- [notification-service] [ionShutdownHook] o.apache.kafka.common.metrics.Metrics    : Closing reporter org.apache.kafka.common.telemetry.internals.ClientTelemetryReporter
+2026-11-15T22:36:21.385+07:00  INFO 22696 --- [notification-service] [ionShutdownHook] o.apache.kafka.common.metrics.Metrics    : Metrics reporters closed
+2026-11-15T22:36:21.386+07:00  INFO 22696 --- [notification-service] [ionShutdownHook] o.a.kafka.common.utils.AppInfoParser     : App info kafka.producer for notification-service-producer-1 unregistered
+2026-11-15T22:36:21.401+07:00  INFO 22696 --- [notification-service] [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-11-15T22:36:21.405+07:00  INFO 22696 --- [notification-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-11-15T22:36:21.411+07:00  INFO 22696 --- [notification-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-11-15T22:36:40.160+07:00  INFO 20204 --- [seller-service] [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-11-15T22:36:40.164+07:00  INFO 20204 --- [seller-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-11-15T22:36:40.171+07:00  INFO 20204 --- [seller-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-11-15T22:36:40.181+07:00  INFO 20204 --- [seller-service] [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-11-15T22:36:40.182+07:00  INFO 20204 --- [seller-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown initiated...
+2026-11-15T22:36:40.189+07:00  INFO 20204 --- [seller-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown completed.
+2026-11-15T22:36:40.197+07:00  INFO 20204 --- [seller-service] [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-11-15T22:36:40.198+07:00  INFO 20204 --- [seller-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown initiated...
+2026-11-15T22:36:40.207+07:00  INFO 20204 --- [seller-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown completed.
+2026-11-15T22:36:40.216+07:00  INFO 20204 --- [seller-service] [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-11-15T22:36:40.217+07:00  INFO 20204 --- [seller-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Shutdown initiated...
+2026-11-15T22:36:40.224+07:00  INFO 20204 --- [seller-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Shutdown completed.
+2026-11-15T22:36:40.232+07:00  INFO 20204 --- [seller-service] [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-11-15T22:36:40.233+07:00  INFO 20204 --- [seller-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Shutdown initiated...
+2026-11-15T22:36:40.240+07:00  INFO 20204 --- [seller-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Shutdown completed.
+2026-11-15T22:38:41.857+07:00  INFO 11484 --- [product-service] [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-11-15T22:38:41.860+07:00  INFO 11484 --- [product-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-11-15T22:38:41.865+07:00  INFO 11484 --- [product-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-11-15T22:38:41.879+07:00  INFO 11484 --- [product-service] [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-11-15T22:38:41.880+07:00  INFO 11484 --- [product-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown initiated...
+2026-11-15T22:38:41.883+07:00  INFO 11484 --- [product-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown completed.
+2026-11-15T22:38:41.894+07:00  INFO 11484 --- [product-service] [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-11-15T22:38:41.894+07:00  INFO 11484 --- [product-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown initiated...
+2026-11-15T22:38:41.899+07:00  INFO 11484 --- [product-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown completed.
+2026-11-15T22:38:41.912+07:00  INFO 11484 --- [product-service] [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-11-15T22:38:41.912+07:00  INFO 11484 --- [product-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Shutdown initiated...
+2026-11-15T22:38:41.916+07:00  INFO 11484 --- [product-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Shutdown completed.
+2026-11-15T22:38:41.929+07:00  INFO 11484 --- [product-service] [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-11-15T22:38:41.930+07:00  INFO 11484 --- [product-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Shutdown initiated...
+2026-11-15T22:38:41.935+07:00  INFO 11484 --- [product-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Shutdown completed.
+2026-11-15T22:38:41.946+07:00  INFO 11484 --- [product-service] [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-11-15T22:38:41.947+07:00  INFO 11484 --- [product-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-6 - Shutdown initiated...
+2026-11-15T22:38:41.951+07:00  INFO 11484 --- [product-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-6 - Shutdown completed.
+2026-11-15T22:38:41.969+07:00  INFO 11484 --- [product-service] [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-11-15T22:38:41.969+07:00  INFO 11484 --- [product-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-7 - Shutdown initiated...
+2026-11-15T22:38:41.974+07:00  INFO 11484 --- [product-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-7 - Shutdown completed.
+2026-11-15T22:38:41.987+07:00  INFO 11484 --- [product-service] [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-11-15T22:38:41.988+07:00  INFO 11484 --- [product-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-8 - Shutdown initiated...
+2026-11-15T22:38:41.992+07:00  INFO 11484 --- [product-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-8 - Shutdown completed.
+2026-11-15T22:38:42.004+07:00  INFO 11484 --- [product-service] [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-11-15T22:38:42.005+07:00  INFO 11484 --- [product-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-9 - Shutdown initiated...
+2026-11-15T22:38:42.010+07:00  INFO 11484 --- [product-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-9 - Shutdown completed.
+2026-11-15T22:38:42.020+07:00  INFO 11484 --- [product-service] [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-11-15T22:38:42.021+07:00  INFO 11484 --- [product-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-10 - Shutdown initiated...
+2026-11-15T22:38:42.025+07:00  INFO 11484 --- [product-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-10 - Shutdown completed.
+2026-11-15T22:38:42.037+07:00  INFO 11484 --- [product-service] [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-11-15T22:38:42.038+07:00  INFO 11484 --- [product-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-11 - Shutdown initiated...
+2026-11-15T22:38:42.042+07:00  INFO 11484 --- [product-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-11 - Shutdown completed.
+2026-11-15T22:38:42.074+07:00  INFO 11484 --- [product-service] [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-11-15T22:38:42.076+07:00  INFO 11484 --- [product-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-12 - Shutdown initiated...
+2026-11-15T22:38:42.079+07:00  INFO 11484 --- [product-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-12 - Shutdown completed.
+2026-11-15T22:38:42.121+07:00  INFO 11484 --- [product-service] [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-11-15T22:38:42.121+07:00  INFO 11484 --- [product-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-13 - Shutdown initiated...
+2026-11-15T22:38:42.125+07:00  INFO 11484 --- [product-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-13 - Shutdown completed.
+
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+FAILURE: Build failed with an exception.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+* What went wrong:
+Execution failed for task ':auth-service:test'.
+> There were failing tests. See the report at: file:///H:/backend/auth-service/build/reports/tests/test/index.html
+
+* Try:
+> Run with --scan to get full insights.
+For more on this, please refer to https://docs.gradle.org/8.10/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD FAILED in 5m 21s
+97 actionable tasks: 71 executed, 14 from cache, 12 up-to-date

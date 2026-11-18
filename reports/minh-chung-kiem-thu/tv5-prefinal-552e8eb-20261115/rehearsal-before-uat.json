@@ -1,0 +1,202 @@
+{
+  "captured": "2026-11-15T23:33:20+07:00",
+  "project": "hk5-uat-tv5-20261115230000",
+  "gateway": "http://127.0.0.1:18081",
+  "frontend": "http://127.0.0.1:5174",
+  "container_count": 15,
+  "containers": [
+    {
+      "Name": "hk5-uat-tv5-20261115230000-api-gateway-1",
+      "Service": "api-gateway",
+      "State": "running",
+      "Status": "Up 33 minutes",
+      "Publishers": [
+        {
+          "URL": "127.0.0.1",
+          "TargetPort": 8080,
+          "PublishedPort": 18081,
+          "Protocol": "tcp"
+        }
+      ]
+    },
+    {
+      "Name": "hk5-uat-tv5-20261115230000-auth-service-1",
+      "Service": "auth-service",
+      "State": "running",
+      "Status": "Up 33 minutes",
+      "Publishers": []
+    },
+    {
+      "Name": "hk5-uat-tv5-20261115230000-cart-service-1",
+      "Service": "cart-service",
+      "State": "running",
+      "Status": "Up 33 minutes",
+      "Publishers": []
+    },
+    {
+      "Name": "hk5-uat-tv5-20261115230000-config-server-1",
+      "Service": "config-server",
+      "State": "running",
+      "Status": "Up 34 minutes (healthy)",
+      "Publishers": []
+    },
+    {
+      "Name": "hk5-uat-tv5-20261115230000-discovery-server-1",
+      "Service": "discovery-server",
+      "State": "running",
+      "Status": "Up 34 minutes (healthy)",
+      "Publishers": []
+    },
+    {
+      "Name": "hk5-uat-tv5-20261115230000-frontend-1",
+      "Service": "frontend",
+      "State": "running",
+      "Status": "Up 33 minutes",
+      "Publishers": [
+        {
+          "URL": "127.0.0.1",
+          "TargetPort": 80,
+          "PublishedPort": 5174,
+          "Protocol": "tcp"
+        }
+      ]
+    },
+    {
+      "Name": "hk5-uat-tv5-20261115230000-inventory-service-1",
+      "Service": "inventory-service",
+      "State": "running",
+      "Status": "Up 33 minutes",
+      "Publishers": []
+    },
+    {
+      "Name": "hk5-uat-tv5-20261115230000-kafka-1",
+      "Service": "kafka",
+      "State": "running",
+      "Status": "Up 34 minutes (healthy)",
+      "Publishers": [
+        {
+          "URL": "",
+          "TargetPort": 9092,
+          "PublishedPort": 0,
+          "Protocol": "tcp"
+        }
+      ]
+    },
+    {
+      "Name": "hk5-uat-tv5-20261115230000-notification-service-1",
+      "Service": "notification-service",
+      "State": "running",
+      "Status": "Up 33 minutes",
+      "Publishers": []
+    },
+    {
+      "Name": "hk5-uat-tv5-20261115230000-order-service-1",
+      "Service": "order-service",
+      "State": "running",
+      "Status": "Up 33 minutes",
+      "Publishers": []
+    },
+    {
+      "Name": "hk5-uat-tv5-20261115230000-postgres-1",
+      "Service": "postgres",
+      "State": "running",
+      "Status": "Up 34 minutes (healthy)",
+      "Publishers": [
+        {
+          "URL": "",
+          "TargetPort": 5432,
+          "PublishedPort": 0,
+          "Protocol": "tcp"
+        }
+      ]
+    },
+    {
+      "Name": "hk5-uat-tv5-20261115230000-product-service-1",
+      "Service": "product-service",
+      "State": "running",
+      "Status": "Up 33 minutes",
+      "Publishers": []
+    },
+    {
+      "Name": "hk5-uat-tv5-20261115230000-redis-1",
+      "Service": "redis",
+      "State": "running",
+      "Status": "Up 34 minutes (healthy)",
+      "Publishers": [
+        {
+          "URL": "",
+          "TargetPort": 6379,
+          "PublishedPort": 0,
+          "Protocol": "tcp"
+        }
+      ]
+    },
+    {
+      "Name": "hk5-uat-tv5-20261115230000-seller-service-1",
+      "Service": "seller-service",
+      "State": "running",
+      "Status": "Up 33 minutes",
+      "Publishers": []
+    },
+    {
+      "Name": "hk5-uat-tv5-20261115230000-user-service-1",
+      "Service": "user-service",
+      "State": "running",
+      "Status": "Up 33 minutes",
+      "Publishers": []
+    }
+  ],
+  "volumes": [
+    "hk5-uat-tv5-20261115230000-pgdemo",
+    "hk5-uat-tv5-20261115230000-productimages"
+  ],
+  "networks": [
+    "hk5-uat-tv5-20261115230000_default"
+  ],
+  "databases": [
+    {
+      "flyway_history": true,
+      "database": "auth_db"
+    },
+    {
+      "flyway_history": true,
+      "database": "cart_db"
+    },
+    {
+      "flyway_history": false,
+      "database": "hk5_demo"
+    },
+    {
+      "flyway_history": true,
+      "database": "inventory_db"
+    },
+    {
+      "flyway_history": true,
+      "database": "notification_db"
+    },
+    {
+      "flyway_history": true,
+      "database": "order_db"
+    },
+    {
+      "flyway_history": false,
+      "database": "postgres"
+    },
+    {
+      "flyway_history": true,
+      "database": "product_db"
+    },
+    {
+      "flyway_history": true,
+      "database": "seller_db"
+    },
+    {
+      "flyway_history": true,
+      "database": "user_db"
+    }
+  ],
+  "flags": {
+    "INVENTORY_ORDER_PAIR_ENABLED": "false",
+    "HK5_FINANCE_POLICY_APPROVED": "false"
+  }
+}

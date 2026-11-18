@@ -1,0 +1,77 @@
+{
+  "status": "PRE-FINAL",
+  "testedMainSha": "552e8ebdf9b6f83fde65e71d297ca18bc73ff93b",
+  "currentGithubMain": "b2bee1d13eef2d404bc79c917b36af9489983351",
+  "runMetadata": {
+    "gradleWrapper": "8.10",
+    "jdk": "21.0.7",
+    "source": "Recorded run metadata; no raw gradlew --version or java -version capture is included in this receipt."
+  },
+  "backend": {
+    "command": "gradlew.bat clean build --rerun-tasks --no-daemon --max-workers=1 --console=plain",
+    "exitCode": 0,
+    "tasksExecuted": 97,
+    "unitTests": 1180,
+    "integrationTests": 497,
+    "total": 1677,
+    "passed": 1661,
+    "skipped": 16,
+    "failed": 0,
+    "errors": 0,
+    "duration": "8m48s",
+    "countEvidence": "Recorded from JUnit XML in the tested checkout; raw XML is not included in this receipt, so the aggregate is not independently recomputable from this folder."
+  },
+  "frontend": {
+    "npmCi": "PASS",
+    "typecheck": "PASS",
+    "unitTests": 178,
+    "failed": 0,
+    "build": "PASS",
+    "advisory": "npm ci reported one moderate audit advisory; no dependency changes"
+  },
+  "smoke": {
+    "project": "hk5-uat-tv5-20261115230000",
+    "containers": 15,
+    "flags": {
+      "INVENTORY_ORDER_PAIR_ENABLED": false,
+      "HK5_FINANCE_POLICY_APPROVED": false
+    },
+    "http200": [
+      "gateway health",
+      "categories",
+      "catalog products",
+      "frontend root"
+    ],
+    "applicationDatabasesWithFlyway": 8,
+    "stores": 3,
+    "activeProducts": 6,
+    "accounts": 5,
+    "cartRows": 0,
+    "checkoutAttempted": false
+  },
+  "finalUat": false,
+  "images": {
+    "B1": "PRE-FINAL partial real screenshot",
+    "B2": "NOT_RUN",
+    "B3": "NOT_RUN",
+    "B4": "NOT_RUN",
+    "B5": "NOT_RUN",
+    "historicalPreFinalCheckoutFigure6_4": "BLOCKED / NOT_RUN (old 25/10 Word mapping; superseded)",
+    "figure6_4_adminSellerApproval": "NOT_RUN",
+    "figure6_5_twoStoreCart": "BLOCKED / NOT_RUN",
+    "figure6_6_rootOrderTwoSellerOrders": "BLOCKED / NOT_RUN",
+    "officialFigureMapSource": "Issue #162 comment 6907759709 and merged PR #210"
+  },
+  "github": {
+    "pr194": "MERGED",
+    "pr194Head": "42a09be6112a2ef05ddf3105d051d135871d7003",
+    "pr194MergeCommit": "b2bee1d13eef2d404bc79c917b36af9489983351",
+    "pr194Reviewer": "duyxl56785 APPROVED exact head",
+    "pr194CheckRuns": 0,
+    "issue162": "OPEN",
+    "issue18": "OPEN",
+    "issue158Freeze": "2026-11-19",
+    "finalUatSchedule": "2026-11-20"
+  },
+  "cleanup": "PENDING — rehearsal intentionally preserved"
+}
