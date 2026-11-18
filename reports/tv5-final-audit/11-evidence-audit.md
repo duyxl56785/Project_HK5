@@ -7,7 +7,7 @@ Receipt: `reports/minh-chung-kiem-thu/tv5-prefinal-552e8eb-20261115/`.
 - Relative paths: receipt-relative paths; no missing JDK/Gradle version logs are referenced.
 - `test-summary.json`: JSON parse PASS; aggregate backend test count is recorded from JUnit XML in the tested checkout, which is not bundled.
 - B.1 screenshot SHA256: `66510614854578543463737fbb653e630396208b872728041693c85269c03811`.
-- `test-summary.json` was amended to preserve the historical Figure 6.4 label and add official 6.4/6.5/6.6 mapping; regenerate its checksum after the payload commit.
-- Git blob verification remains pending until payload commit; final manifest will be generated from committed blobs and committed separately.
+- `test-summary.json` was amended to preserve the historical Figure 6.4 label and add official 6.4/6.5/6.6 mapping; its final hash is included in the committed manifest.
+- Git blob verification: 16/16 match at manifest commit `6ae6284`; subsequent audit-only commit `f74d08c` does not alter receipt payloads.
 
 This is PRE-FINAL evidence, not final UAT or a frozen-SHA release receipt.
