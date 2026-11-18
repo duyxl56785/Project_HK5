@@ -1,1 +1,7 @@
-logs/** whitespace=-blank-at-eol,-blank-at-eof
+# Captured evidence is immutable input to SHA256SUMS.txt.  Keep its original
+# Windows bytes in Git; narrative Markdown remains normal text and is excluded.
+logs/** -text -diff
+*.json -text -diff
+*.txt -text -diff
+screenshots/** -text -diff
+SHA256SUMS.txt text eol=lf diff
