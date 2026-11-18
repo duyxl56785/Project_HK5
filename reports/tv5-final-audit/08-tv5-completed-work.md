@@ -10,4 +10,4 @@
 - Audited COD/Finance source at `origin/main=879143a...`; recorded fail-closed policy and missing final settlement evidence.
 - Confirmed Docker Engine 29.8.1 is available; inspected the retained pre-final stack read-only and found it incomplete (6 running / 9 exited, missing temporary secret mounts, PostgreSQL exit 255). No volumes/network were removed or modified.
 
-Commits `bb81467`, `6ae6284` and `f74d08c` are pushed to `docs/tv5-prefinal-evidence-20261115`. Remote branch verified at `f74d08c7270bfee41ab2b0c45da3796f66250feb`. Manifest verification is 16/16 at commit `6ae6284`; later `f74d08c` changes audit Markdown only. PR #204 is Ready for review with TV2 reviewer requested; merge remains pending.
+Commits `bb81467`, `6ae6284`, `f74d08c` and `1a5c5ac` are pushed to `docs/tv5-prefinal-evidence-20261115`. Remote branch verified at `1a5c5ac6d682f9fba292b8e3d887014d2a59bea2`. Manifest verification is 16/16 at commit `6ae6284`; later audit commits change Markdown only. PR #204 is Ready for review with TV2 reviewer requested; merge remains pending.

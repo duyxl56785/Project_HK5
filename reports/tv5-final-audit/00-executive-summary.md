@@ -4,8 +4,8 @@
 
 | Hạng mục | Trạng thái | Bằng chứng | Việc còn thiếu |
 |---|---|---|---|
-| Workspace/Git | PASS — audit | Branch `docs/tv5-prefinal-evidence-20261115`, HEAD `f74d08c`; remote branch synchronized; origin/main `879143a` | Preserve unrelated untracked file and root worktree WIP |
-| PR #204 | READY_FOR_REVIEW | OPEN, Ready for review, mergeable; TV2 reviewer requested at `f74d08c`; prior CHANGES_REQUESTED remains historical | TV2 review current head and confirm merge decision |
+| Workspace/Git | PASS — audit | Branch `docs/tv5-prefinal-evidence-20261115`, HEAD `1a5c5ac`; remote branch synchronized; origin/main `879143a` | Preserve unrelated untracked file and root worktree WIP |
+| PR #204 | READY_FOR_REVIEW | OPEN, Ready for review, mergeable; TV2 reviewer requested at `1a5c5ac`; prior CHANGES_REQUESTED remains historical | TV2 review current head and confirm merge decision |
 | PR #207/#209/#210 | MERGED | #207 TV2 APPROVED; #209 TV3 APPROVED + CI; #210 TV2 APPROVED | Keep scoped limitations |
 | Issues #18/#158/#160/#162 | OPEN | Live GitHub readback | Frozen-SHA UAT, clean clone, report/deck and owner sign-off |
 | `.gitattributes` / SHA256SUMS | PASS | 16/16 committed blobs and working bytes match at manifest commit `6ae6284` | None for this receipt |
@@ -21,4 +21,4 @@
 
 **Docker update 18/11:** daemon is now available (`desktop-linux`, Engine 29.8.1), but the retained `hk5-uat-tv5-20261115230000` stack is incomplete: 6 containers running, 9 exited; 8 app containers fail to mount missing temporary secret files and PostgreSQL exited 255. Existing volumes/network were left untouched. This is not a usable final UAT stack.
 
-**TV5 delivery:** commits `bb81467`, `6ae6284`, `f74d08c` are pushed to [PR #204](https://github.com/duyxl56785/Project_HK5/pull/204). Current remote head is `f74d08c7270bfee41ab2b0c45da3796f66250feb`; reviewer `duyxl56785` is requested. PR remains OPEN and mergeable; no merge performed.
+**TV5 delivery:** commits `bb81467`, `6ae6284`, `f74d08c`, `1a5c5ac` are pushed to [PR #204](https://github.com/duyxl56785/Project_HK5/pull/204). The live readback confirmed head `1a5c5ac6d682f9fba292b8e3d887014d2a59bea2`; reviewer `duyxl56785` is requested. PR remains OPEN and mergeable; no merge performed.
