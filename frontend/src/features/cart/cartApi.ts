@@ -5,15 +5,27 @@ import type { CartSnapshot } from './cartTypes';
 
 interface WireItem { readonly productId: string; readonly storeId: string; readonly sellerId: string; readonly quantity: number; readonly unitPriceSnapshot: number }
 interface WireCart { readonly revision: number; readonly claimed: boolean; readonly items: readonly WireItem[] }
+interface ProductName { readonly id: string; readonly name: string }
 
 export interface LoadedCart { readonly snapshot: CartSnapshot; readonly storeNames: Readonly<Record<string, string>> }
+
+const CATALOG_NAMES_BATCH_SIZE = 100;
+
+async function loadProductNames(ids: readonly string[]): Promise<ProductName[]> {
+  const names: ProductName[] = [];
+  for (let offset = 0; offset < ids.length; offset += CATALOG_NAMES_BATCH_SIZE) {
+    const batch = ids.slice(offset, offset + CATALOG_NAMES_BATCH_SIZE);
+    names.push(...await api<ProductName[]>(`/api/catalog/products/names?ids=${batch.join(',')}`));
+  }
+  return names;
+}
 
 /** The Cart API has ids only; titles and Store names are joined from public read endpoints. */
 async function loadCart(): Promise<LoadedCart> {
   const cart = await api<WireCart>('/api/cart');
   const ids = cart.items.map((item) => item.productId);
   const [names, stores] = ids.length === 0 ? [[], []] : await Promise.all([
-    api<{ id: string; name: string }[]>(`/api/catalog/products/names?ids=${ids.join(',')}`),
+    loadProductNames(ids),
     api<{ id: string; name: string }[]>('/api/stores'),
   ]);
   const titles = new Map(names.map((n) => [n.id, n.name]));
