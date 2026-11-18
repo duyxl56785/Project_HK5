@@ -19,6 +19,8 @@ Commits `bb81467`, `6ae6284`, `f74d08c` and `1a5c5ac` are pushed to `docs/tv5-pr
 - Re-read GitHub Issues #18, #158, #160 and #162: all four remain OPEN. The controlling schedule remains the TV2 17/11 decision recorded above. Current PR-head combined status returned an empty list; documentation-only runtime tests are not applicable.
 - Reconfirmed that the only report/deck source files in `reports/submission/` are the 14/11 DOCX and PPTX drafts. No final frozen-SHA captures or final accepted report/deck were found in this target worktree.
 
+### Earlier continuation checkpoint — superseded by the latest follow-up above
+
 - Rechecked target worktree and root worktree separately. Target HEAD is `0f3c7398c23bc07fb190b28deea4f9271e3b3180`, exactly matching the remote feature branch; root branch remains `codex/tv5-w1-acceptance-evidence` at `9c5094cc8d4164d036fd2601f60741e7ceca3562`. No tracked target-worktree modifications were present; the anomalous untracked file and root WIP were preserved.
 - Live PR #204 is OPEN, Ready for review, `mergeable=true`, head `0f3c739...`, base `b2bee1d...`; compare with current main `879143a...` is 7 ahead / 28 behind. TV2 remains requested. The only submitted review is CHANGES_REQUESTED on old head `52c4036`; zero inline threads and no newer review submission.
 - Live readback confirms #207/#209/#210 merged and #18/#158/#160/#162 open. TV2's 17/11 Issue #160 comment is the controlling schedule: PR #204 push by 20/11 12:00, freeze 20/11 18:00, final UAT 21/11, submission by 23/11.
