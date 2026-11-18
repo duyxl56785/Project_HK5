@@ -14,7 +14,7 @@
 | QA/UAT | PARTIAL | TV2 Windows rehearsal 17/11 at app `240d028`: one root Order/two SellerOrders, replay and authorization checks | Final frozen-SHA UAT |
 | COD | PARTIAL | Checkout COD exercised in rehearsal | Admin COD collection and final UAT receipt |
 | Finance | BLOCKED — final acceptance | MD04/MD12 and source rules inspected | Approved final scope and exact-SHA fee/settlement evidence |
-| Figures 6.1–6.8 | PARTIAL | 6.1 pre-final partial; 6.5/6.6 rehearsal media privately inspected | Final captures on frozen SHA |
+| Figures 6.1–6.8 | PARTIAL / CAPTION REVIEW | 6.1 architecture caption present; 6.4–6.6 owner crosswalk; 6.2/6.3/6.7/6.8 not defined in inspected draft | TV2 confirm required figure list; final 6.4–6.6 captures and separate B.1–B.5 appendix evidence |
 | Handoff | PARTIAL | Audit documents updated | Owner decisions, frozen SHA, approved Word/deck |
 
 **Schedule conflict:** this task says freeze 19/11, verify 20/11 and deadline 21/11. TV2's later Issue #160 update says freeze 20/11 18:00, final UAT 21/11 and submission by 23/11. TV2 must confirm the controlling schedule.
