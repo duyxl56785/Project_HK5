@@ -4,8 +4,8 @@
 
 | Hạng mục | Trạng thái | Bằng chứng | Việc còn thiếu |
 |---|---|---|---|
-| Workspace/Git | PASS — read-only audit | Target worktree branch `docs/tv5-prefinal-evidence-20261115`, HEAD `0bd80aaec8c78fdabd37517f2991e4c28ef6e88e`, synchronized with origin; root worktree remains on `codex/tv5-w1-acceptance-evidence` with unrelated untracked WIP | Preserve root WIP and one anomalously named untracked file in target worktree |
-| PR #204 | READY_FOR_REVIEW | OPEN, Ready for review, mergeable; head `0bd80aa`; TV2 reviewer `duyxl56785` requested; previous CHANGES_REQUESTED review applies to `52c4036` | TV2 must review current head and decide merge |
+| Workspace/Git | PASS — read-only audit | Target worktree branch `docs/tv5-prefinal-evidence-20261115`, HEAD `169fe16d15157d2a7b24da45798e90f9fe2e29d1`, matches remote; root worktree remains on `codex/tv5-w1-acceptance-evidence` with unrelated untracked WIP | Preserve root WIP and one anomalously named untracked file in target worktree |
+| PR #204 | OPEN; current-head review pending | Remote head `169fe16`; latest fetched review is CHANGES_REQUESTED on older `52c4036`; no inline threads or newer review submission returned. Draft/mergeability/requested-reviewer metadata not reverified in this readback | TV2 must review exact current head and decide merge |
 | PR #207/#209/#210 | MERGED | #207 TV2 APPROVED; #209 TV3 APPROVED + CI; #210 TV2 APPROVED | Keep scoped limitations |
 | Issues #18/#158/#160/#162 | OPEN | Live GitHub readback | Frozen-SHA UAT, clean clone, report/deck and owner sign-off |
 | `.gitattributes` / SHA256SUMS | PASS | 16/16 committed blobs and working bytes match at manifest commit `6ae6284` | None for this receipt |
@@ -21,4 +21,4 @@
 
 **Docker update 18/11:** daemon is now available (`desktop-linux`, Engine 29.8.1), but the retained `hk5-uat-tv5-20261115230000` stack is incomplete: 6 containers running, 9 exited; 8 app containers fail to mount missing temporary secret files and PostgreSQL exited 255. Existing volumes/network were left untouched. This is not a usable final UAT stack.
 
-**TV5 delivery:** commits `bb81467`, `6ae6284`, `f74d08c`, `1a5c5ac`, `bc8547a`, `0f3c739`, `0bd80aa` are pushed to [PR #204](https://github.com/duyxl56785/Project_HK5/pull/204). Live GitHub readback confirms head `0bd80aaec8c78fdabd37517f2991e4c28ef6e88e`, reviewer `duyxl56785` requested, OPEN / Ready for review / mergeable. No merge performed. Current `main` is `879143a1f081da4644ebc29c0950069429731f0f`; compare reports 8 commits ahead / 28 behind with merge base `b2bee1d`, while GitHub currently reports mergeable.
+**TV5 delivery:** latest verified feature-branch head is `169fe16d15157d2a7b24da45798e90f9fe2e29d1`, and `git ls-remote` confirms the remote branch matches it. GitHub issue readback confirms PR #204 remains OPEN. The only fetched submitted review is the historical CHANGES_REQUESTED review on `52c4036`; no newer review submission or inline thread was returned. Current draft/mergeability/reviewer-request metadata was not available from the latest connector readback. No merge performed. Current `main` remains `879143a1f081da4644ebc29c0950069429731f0f`.

@@ -14,6 +14,11 @@ Commits `bb81467`, `6ae6284`, `f74d08c` and `1a5c5ac` are pushed to `docs/tv5-pr
 
 ## Continuation readback — 18/11/2026
 
+- Latest follow-up readback: target HEAD and `origin/docs/tv5-prefinal-evidence-20261115` both resolve to `169fe16d15157d2a7b24da45798e90f9fe2e29d1`; `origin/main` remains `879143a1f081da4644ebc29c0950069429731f0f`. PR #204 is OPEN. The latest fetched review remains CHANGES_REQUESTED on historical head `52c4036`; no newer review or inline thread was returned. Current draft/mergeability/requested-reviewer metadata is NOT_VERIFIED from this connector response.
+- Revalidated the 16-entry manifest at current HEAD using Python byte reads: each working-tree file is byte-identical to `git cat-file blob HEAD:<path>`, and its SHA-256 equals the manifest entry (16/16 MATCH). The earlier PowerShell `git hash-object` comparison is not used as the receipt oracle because Windows clean-filter behavior can differ; raw Git blob bytes are the comparison source.
+- Re-read GitHub Issues #18, #158, #160 and #162: all four remain OPEN. The controlling schedule remains the TV2 17/11 decision recorded above. Current PR-head combined status returned an empty list; documentation-only runtime tests are not applicable.
+- Reconfirmed that the only report/deck source files in `reports/submission/` are the 14/11 DOCX and PPTX drafts. No final frozen-SHA captures or final accepted report/deck were found in this target worktree.
+
 - Rechecked target worktree and root worktree separately. Target HEAD is `0f3c7398c23bc07fb190b28deea4f9271e3b3180`, exactly matching the remote feature branch; root branch remains `codex/tv5-w1-acceptance-evidence` at `9c5094cc8d4164d036fd2601f60741e7ceca3562`. No tracked target-worktree modifications were present; the anomalous untracked file and root WIP were preserved.
 - Live PR #204 is OPEN, Ready for review, `mergeable=true`, head `0f3c739...`, base `b2bee1d...`; compare with current main `879143a...` is 7 ahead / 28 behind. TV2 remains requested. The only submitted review is CHANGES_REQUESTED on old head `52c4036`; zero inline threads and no newer review submission.
 - Live readback confirms #207/#209/#210 merged and #18/#158/#160/#162 open. TV2's 17/11 Issue #160 comment is the controlling schedule: PR #204 push by 20/11 12:00, freeze 20/11 18:00, final UAT 21/11, submission by 23/11.
