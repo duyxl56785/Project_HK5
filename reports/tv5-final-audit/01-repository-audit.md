@@ -4,7 +4,7 @@
 |---|---|
 | Worktree audit | `.verification/tv5-pr204-fix` |
 | Branch | `docs/tv5-prefinal-evidence-20261115` |
-| Feature branch SHA at continuation readback | `0f3c7398c23bc07fb190b28deea4f9271e3b3180` |
+| Feature branch SHA at final continuation readback | `0bd80aaec8c78fdabd37517f2991e4c28ef6e88e` |
 | Remote tracking | `origin/docs/tv5-prefinal-evidence-20261115` |
 | Root worktree | `codex/tv5-w1-acceptance-evidence` @ `9c5094cc8d4164d036fd2601f60741e7ceca3562`; untracked `.vs/`, `reports/tv5-m01-local/`, `frontend/package-lock.json` |
 | Git root | `.verification/tv5-pr204-fix` |
@@ -13,6 +13,6 @@
 | Branch relation | PR API reports `mergeable=true`; branch base snapshot is `b2bee1d...`, current main at audit `879143a...` |
 | Audit documents | 28 Markdown files are tracked in the target feature branch |
 | Target worktree status | No staged/modified tracked files; one anomalously named untracked file preserved untouched |
-| Branch relation | `origin/main=879143a...`; PR compare: 7 ahead / 28 behind; merge base `b2bee1d...`; GitHub PR API reports `mergeable=true` |
+| Branch relation | `origin/main=879143a...`; PR compare: 8 ahead / 28 behind; merge base `b2bee1d...`; GitHub PR API reports `mergeable=true` |
 
-The continuation readback used `git ls-remote origin refs/heads/main refs/heads/docs/tv5-prefinal-evidence-20261115`; remote branch SHA equals local HEAD `0f3c739...`, and remote main is `879143a...`. The target worktree has one unrelated anomalous untracked file, left untouched. Root worktree WIP is separately preserved. No reset, clean, stash, force push or direct main write was performed.
+The final continuation readback used `git ls-remote origin refs/heads/main refs/heads/docs/tv5-prefinal-evidence-20261115`; after the audit commit and ordinary push, remote branch SHA equals local HEAD `0bd80aa...`, and remote main remains `879143a...`. The target worktree has one unrelated anomalous untracked file, left untouched. Root worktree WIP is separately preserved. No reset, clean, stash, force push or direct main write was performed.

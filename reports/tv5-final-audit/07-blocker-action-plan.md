@@ -2,7 +2,7 @@
 
 | Priority | Blocker | Owner | Next action | Required evidence |
 |---|---|---|---|---|
-| P0 delivery gate | PR #204 corrections are delivered; current-head reviewer decision pending | TV2 / TV5 | TV2 re-review `0f3c739`; merge only through approved maintainer flow before 20/11 12:00 | Review on exact head, CI/review decision, merge SHA if approved |
+| P0 delivery gate | PR #204 corrections are delivered; current-head reviewer decision pending | TV2 / TV5 | TV2 re-review `0bd80aa`; merge only through approved maintainer flow before 20/11 12:00 | Review on exact head, CI/review decision, merge SHA if approved |
 | P0 | No final frozen SHA / UAT receipt | TV2 | Publish full SHA and matching hosted CI | SHA, workflow URLs, clean-stack receipt, final UAT logs |
 | P0 | Clean clone on another machine incomplete | TV2 / TV1 | Run exact frozen SHA on separate machine | Clone receipt, environment, exit code, E2E log |
 | P1 | Final figures 6.1–6.8 absent | TV2, TV5 | Capture official mapping on frozen SHA | Raw images, timestamps, SHA256, masked PII, API/DB oracle |
