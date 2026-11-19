@@ -1,5 +1,5 @@
 // Builds the backend jars, starts the local stack and seeds it.
-// Usage: node scripts/demo/up.mjs [--skip-build] [--no-seed] [--approved-inventory-pair] [--approved-finance-policy]
+// Usage: node scripts/demo/up.mjs [--skip-build] [--no-seed] [--approved-inventory-pair] [--approved-finance-policy] [--approved-voucher-c2]
 import { execSync } from 'node:child_process';
 import { resolve } from 'node:path';
 

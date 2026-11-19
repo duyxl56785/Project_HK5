@@ -2,18 +2,20 @@ import { expect, test } from '@playwright/test';
 import type { APIRequestContext } from '@playwright/test';
 import { accounts, env, sessionFor, unique } from './support';
 
-const origin = process.env.E2E_BASE_URL;
-const allowed = process.env.E2E_VOUCHER_C2 === '1'
-  && /^hk5-c2-qa-\d{8}$/.test(process.env.E2E_C2_PROJECT ?? '')
-  && /^http:\/\/(localhost|127\.0\.0\.1):25173$/.test(origin ?? '');
+const origin = process.env.E2E_BASE_URL ?? 'http://localhost:5173';
+const localQa = /^hk5-c2-qa-\d{8}$/.test(process.env.E2E_C2_PROJECT ?? '')
+  && /^http:\/\/(localhost|127\.0\.0\.1):25173$/.test(origin);
+const githubActions = process.env.GITHUB_ACTIONS === 'true'
+  && /^http:\/\/(localhost|127\.0\.0\.1):5173$/.test(origin);
+const allowed = process.env.E2E_VOUCHER_C2 === '1' && (localQa || githubActions);
 const format = (amount: bigint) => new Intl.NumberFormat('vi-VN').format(amount) + ' ₫';
 const vnd = (amount: string | number) => BigInt(String(amount).replace(/\.0+$/, ''));
 
 test('C2 uses two Store vouchers and an identical replay returns the same customer order', async ({ browser, request }) => {
-  test.skip(!allowed, 'Requires the separate, loopback-only C2 QA project');
+  test.skip(!allowed, 'Requires C2 opt-in on the loopback CI stack or the separate local C2 QA project');
   test.setTimeout(300_000);
   const customerAccount = { email: 'c2-' + unique() + '@hk5.local', password: env.SEED_PASSWORD };
-  const headers = { Origin: origin!, 'X-CSRF-Protection': '1' };
+  const headers = { Origin: origin, 'X-CSRF-Protection': '1' };
   const login = async (account: typeof customerAccount) => {
     const response = await request.post('/api/auth/login', { headers, data: account });
     expect(response.status()).toBe(200);

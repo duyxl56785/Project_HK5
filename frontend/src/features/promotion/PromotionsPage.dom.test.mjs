@@ -69,7 +69,13 @@ const registration = {
 test('Seller without role may withdraw but cannot create or register', async () => {
   await render(pages.PromotionsPage, path => path.endsWith('/products') ? [registration] : [campaign],
     host => {
-      assert.match(host.textContent, /Rút đăng ký/);
+      const row = host.querySelector('article li');
+      const status = row.querySelector('span.badge--pending');
+      const withdraw = row.querySelector('button.btn--danger');
+      assert.equal(status?.textContent, 'Chờ duyệt');
+      assert.equal(withdraw?.textContent.trim(), 'Rút đăng ký');
+      assert.equal(withdraw?.type, 'button');
+      assert.notEqual(status?.parentElement, withdraw?.parentElement);
       assert.doesNotMatch(host.textContent, /Tạo chương trình|Đăng ký sản phẩm/);
     });
 });
@@ -83,11 +89,22 @@ test('Seller selects a Product by name from their active Product list', async ()
         assert.equal(query.get('status'), 'ACTIVE');
         return { products: [{ id:'product-1', name:'Áo demo', unitPrice:'2000' }] };
       }
-      return path.endsWith('/products') ? [registration] : [campaign];
+      return path.endsWith('/products') ? [registration] : [
+        { ...campaign, kind: 'SELLER_CLEARANCE', status: 'DRAFT', submittedAt: null },
+      ];
     }, host => {
       const option = host.querySelector('select[name="productId"] option[value="product-1"]');
       assert.match(option?.textContent ?? '', /Áo demo/);
       assert.equal(host.querySelector('input[name="productId"]'), null);
+      const create = host.querySelector('form[aria-label="Tạo chương trình khuyến mãi"] button.btn--primary');
+      const register = option?.closest('form').querySelector('button.btn--primary');
+      const submit = [...host.querySelectorAll('article button.btn--primary')].find(
+        button => button.textContent === 'Gửi duyệt xả kho');
+      assert.equal(create?.textContent, 'Tạo chương trình');
+      assert.equal(create?.type, 'submit');
+      assert.equal(register?.textContent, 'Đăng ký sản phẩm');
+      assert.equal(register?.type, 'submit');
+      assert.equal(submit?.type, 'button');
     });
   } finally {
     delete globalThis.promotionTestSeller;
@@ -98,10 +115,49 @@ test('Admin can pause and approve an offer and needs a rejection reason', async 
   await render(pages.AdminPromotionsPage, path => path.endsWith('/products') ? [registration] : [campaign],
     host => {
       assert.match(host.textContent, /Tạm dừng/);
-      assert.match(host.textContent, /Áo demo.*Tiệm demo.*Giá gốc.*Giá sale.*Chờ duyệt/);
+      const row = host.querySelector('article li');
+      assert.equal(row.querySelector('strong').textContent, 'Áo demo');
+      assert.equal(row.querySelector('.badge--pending').textContent, 'Chờ duyệt');
+      assert.match(row.querySelector('p').textContent, /Tiệm demo.*Giá gốc.*Giá sale/);
       assert.match(host.textContent, /Sắp diễn ra/);
       const buttons = [...host.querySelectorAll('button')];
       assert.equal(buttons.find(button => button.textContent === 'Duyệt sản phẩm')?.disabled, false);
       assert.equal(buttons.find(button => button.textContent === 'Từ chối sản phẩm')?.disabled, true);
     });
+});
+
+test('Admin and Seller see the same approval deadline without changing decided registrations', async () => {
+  const expired = {
+    ...campaign, kind: 'SELLER_CLEARANCE', startsAt: '2020-01-01T15:00:00Z',
+    status: 'DRAFT', submittedAt: '2019-12-31T15:00:00Z',
+  };
+  const withdraw = { ...registration, productId: 'product-2', productName: 'Đèn demo', status: 'WITHDRAWN' };
+  for (const Page of [pages.AdminPromotionsPage, pages.PromotionsPage]) {
+    await render(Page, path => path.endsWith('/products') ? [registration, withdraw] : [expired], host => {
+      const card = host.querySelector('article');
+      assert.match(card.querySelector('p').textContent, /Xả kho · Đã quá hạn duyệt/);
+      assert.match(card.querySelector('.note--error').textContent, /qua giờ bắt đầu khi còn chờ duyệt/);
+      const badges = [...card.querySelectorAll('li .badge')].map(node => node.textContent);
+      assert.deepEqual(badges, ['Đã quá hạn duyệt', 'Đã rút']);
+      assert.doesNotMatch(card.textContent, /Duyệt chương trình|Duyệt sản phẩm|Lý do từ chối/);
+    });
+  }
+});
+
+test('Admin sees why a clearance draft and its products cannot be approved before Seller submits', async () => {
+  const unsubmitted = { ...campaign, kind: 'SELLER_CLEARANCE', status: 'DRAFT', submittedAt: null };
+  await render(pages.AdminPromotionsPage, path => path.endsWith('/products') ? [registration] : [unsubmitted], host => {
+    const card = host.querySelector('article');
+    assert.match(card.querySelector('.note').textContent, /Seller cần bấm Gửi duyệt xả kho/);
+    assert.doesNotMatch(card.textContent, /Đã quá hạn duyệt|Duyệt chương trình|Duyệt sản phẩm/);
+    assert.match(card.textContent, /Từ chối sản phẩm/);
+  });
+  await render(pages.AdminPromotionsPage, path => path.endsWith('/products') ? [registration] : [
+    { ...unsubmitted, submittedAt: '2020-01-01T00:00:00Z' },
+  ], host => {
+    const card = host.querySelector('article');
+    assert.match(card.textContent, /Chờ duyệt chương trình/);
+    assert.match(card.textContent, /Duyệt chương trình/);
+    assert.doesNotMatch(card.textContent, /Duyệt sản phẩm/);
+  });
 });
