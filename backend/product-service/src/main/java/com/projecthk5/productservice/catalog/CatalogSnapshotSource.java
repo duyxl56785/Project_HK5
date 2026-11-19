@@ -18,5 +18,11 @@ public interface CatalogSnapshotSource {
     record LookupResult(UUID productId, LookupStatus status, ResolvedProduct facts) { }
 
     // Currency/status/ownership facts must come from verified provider storage/dependencies.
-    record ResolvedProduct(ProductListing product, StoreAccess store, String currency, boolean categoryExists) { }
+    /** Null means that authoritative Promotion facts were not available. */
+    record ResolvedProduct(ProductListing product, StoreAccess store, String currency, boolean categoryExists,
+                           Boolean promotionApplied) {
+        public ResolvedProduct(ProductListing product, StoreAccess store, String currency, boolean categoryExists) {
+            this(product, store, currency, categoryExists, null);
+        }
+    }
 }

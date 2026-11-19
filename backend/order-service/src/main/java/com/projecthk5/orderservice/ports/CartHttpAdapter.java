@@ -40,6 +40,24 @@ public class CartHttpAdapter implements CartPort {
     }
     @Override public void release(String bearer,String key) { call("release",bearer,key); }
     @Override public void finalizeCart(String bearer,String key) { call("finalize",bearer,key); }
+    @Override public CartSnapshot view(String bearer) {
+        try {
+            return client.get().uri("/api/cart").header("Authorization", bearer).retrieve().body(CartSnapshot.class);
+        } catch (RestClientException ex) {
+            throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, "Cart preview unavailable", ex);
+        }
+    }
+    @Override public void recover(String customer, String key, long claimedRevision, boolean placed) {
+        configured();
+        try {
+            client.post().uri("/internal/cart/recover").header("X-Internal-Token", secret)
+                    .body(Map.of("customerId", customer, "key", key,
+                            "claimedRevision", claimedRevision, "placed", placed))
+                    .retrieve().toBodilessEntity();
+        } catch (RestClientException ex) {
+            throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, "Cart recovery unavailable", ex);
+        }
+    }
     private void call(String operation,String bearer,String key) {
         configured();
         try { client.post().uri("/internal/cart/"+operation)

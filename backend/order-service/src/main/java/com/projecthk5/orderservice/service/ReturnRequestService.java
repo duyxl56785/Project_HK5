@@ -55,7 +55,7 @@ public class ReturnRequestService {
     }
 
     public record ReturnView(UUID requestId, UUID orderId, UUID storeOrderId,
-                             String status, String reason, Instant requestedAt) {}
+                             String status, String reason, Instant requestedAt, String refundAmount) {}
     /**
      * Seller projection deliberately omits the buyer identity and delivery address.  A receipt
      * reference is an auditable Seller attestation of physical receipt; it is not an Inventory
@@ -63,7 +63,7 @@ public class ReturnRequestService {
      */
     public record SellerReturnView(UUID requestId, UUID orderId, UUID storeOrderId, String status,
                                    String reason, Instant requestedAt, Instant reviewedAt,
-                                   Instant receivedAt, String receiptReference) {}
+                                   Instant receivedAt, String receiptReference, String refundAmount) {}
     public record Created(ReturnView request, boolean newRequest) {}
 
     @Transactional
@@ -138,7 +138,8 @@ public class ReturnRequestService {
         events.notifyStore(sellerOrder, "RETURN_REQUESTED", "Khách hàng yêu cầu trả hàng",
                 "Có yêu cầu trả hàng cho đơn của cửa hàng.", "return-" + requestId,
                 sellerOrder.getStatus().name(), "CUSTOMER");
-        return new Created(new ReturnView(requestId, orderId, storeOrderId, "REQUESTED", reason, now), true);
+        return new Created(new ReturnView(requestId, orderId, storeOrderId, "REQUESTED", reason, now,
+                sellerOrder.getGross().toPlainString()), true);
     }
 
     /** Used ONLY after FulfillmentService has locked the SellerOrder row. */
@@ -154,21 +155,14 @@ public class ReturnRequestService {
     @Transactional(readOnly = true)
     public List<ReturnView> mine(String customerId, UUID orderId) {
         orders.findByIdAndCustomerId(orderId, customerId).orElseThrow(ReturnRequestService::notFound);
-        return db.query("select id,order_id,seller_order_id,status,reason,requested_at "
-                        + "from return_requests where order_id=? and customer_id=? order by requested_at desc",
-                (rs, i) -> new ReturnView(rs.getObject("id", UUID.class),
-                        rs.getObject("order_id", UUID.class), rs.getObject("seller_order_id", UUID.class),
-                        rs.getString("status"), rs.getString("reason"),
-                        rs.getTimestamp("requested_at").toInstant()), orderId, customerId);
+        return db.query(RETURN_SELECT + " where r.order_id=? and r.customer_id=? order by r.requested_at desc",
+                ReturnRequestService::buyerView, orderId, customerId);
     }
 
     /** Seller-visible requests for the Store resolved from the authenticated principal. */
     @Transactional(readOnly = true)
     public List<SellerReturnView> forStore(String storeId) {
-        return db.query("select r.id,r.order_id,r.seller_order_id,r.status,r.reason,r.requested_at,"
-                        + "r.reviewed_at,r.received_at,r.receipt_reference "
-                        + "from return_requests r join seller_orders s on s.id=r.seller_order_id "
-                        + "where s.store_id=? order by r.requested_at desc",
+        return db.query(RETURN_SELECT + " where s.store_id=? order by r.requested_at desc",
                 (rs, i) -> sellerView(rs), storeId);
     }
 
@@ -191,8 +185,7 @@ public class ReturnRequestService {
                 .orElseThrow(ReturnRequestService::notFound);
         if (!sellerOrder.getStoreId().equals(managedStoreId)) throw notFound();
 
-        SellerReturnView before = db.query("select id,order_id,seller_order_id,status,reason,requested_at,"
-                        + "reviewed_at,received_at,receipt_reference from return_requests where id=?",
+        SellerReturnView before = db.query(RETURN_SELECT + " where r.id=?",
                 (rs, i) -> sellerView(rs), requestId).stream().findFirst()
                 .orElseThrow(ReturnRequestService::notFound);
         Instant now = clock.instant();
@@ -218,8 +211,7 @@ public class ReturnRequestService {
 
         // RETURN_REQUESTED is the only Return notification event currently agreed.  Do not
         // invent a customer event contract for Seller review/receipt transitions here.
-        return db.query("select id,order_id,seller_order_id,status,reason,requested_at,reviewed_at,received_at,"
-                        + "receipt_reference from return_requests where id=?",
+        return db.query(RETURN_SELECT + " where r.id=?",
                 (rs, i) -> sellerView(rs), requestId).stream().findFirst().orElseThrow();
     }
 
@@ -229,7 +221,8 @@ public class ReturnRequestService {
         return new SellerReturnView(rs.getObject("id", UUID.class), rs.getObject("order_id", UUID.class),
                 rs.getObject("seller_order_id", UUID.class), rs.getString("status"), rs.getString("reason"),
                 rs.getTimestamp("requested_at").toInstant(), reviewed == null ? null : reviewed.toInstant(),
-                received == null ? null : received.toInstant(), rs.getString("receipt_reference"));
+                received == null ? null : received.toInstant(), rs.getString("receipt_reference"),
+                rs.getBigDecimal("gross").toPlainString());
     }
 
     static String normalizeReceiptReference(String raw) {
@@ -249,43 +242,47 @@ public class ReturnRequestService {
     }
 
     public record AdminReturnView(UUID requestId, UUID orderId, UUID storeOrderId, String storeId,
-                                  String status, String reason, Instant requestedAt) {}
+                                  String status, String reason, Instant requestedAt, String refundAmount) {}
 
     private static final java.util.Set<String> STATUSES = java.util.Set.of("REQUESTED", "APPROVED", "REJECTED", "RECEIVED");
-    private static final String ADMIN_SELECT = "select r.id,r.order_id,r.seller_order_id,s.store_id,r.status,r.reason,"
-            + "r.requested_at from return_requests r join seller_orders s on s.id=r.seller_order_id ";
+    private static final String RETURN_SELECT = "select r.id,r.order_id,r.seller_order_id,s.store_id,r.status,r.reason,"
+            + "r.requested_at,r.reviewed_at,r.received_at,r.receipt_reference,s.gross "
+            + "from return_requests r join seller_orders s on s.id=r.seller_order_id ";
 
     /** Admin read-only oversight (#154): newest 200, optional status filter. No Admin write exists. */
     @Transactional(readOnly = true)
     public List<AdminReturnView> admin(String status) {
         if (status == null || status.isBlank()) {
-            return db.query(ADMIN_SELECT + "order by r.requested_at desc limit 200", ReturnRequestService::adminRow);
+            return db.query(RETURN_SELECT + "order by r.requested_at desc limit 200", ReturnRequestService::adminRow);
         }
         if (!STATUSES.contains(status)) throw ApiException.badRequest("VALIDATION_FAILED", "Unknown return status");
-        return db.query(ADMIN_SELECT + "where r.status=? order by r.requested_at desc limit 200",
+        return db.query(RETURN_SELECT + "where r.status=? order by r.requested_at desc limit 200",
                 ReturnRequestService::adminRow, status);
     }
 
     @Transactional(readOnly = true)
     public AdminReturnView adminOne(UUID requestId) {
-        return db.query(ADMIN_SELECT + "where r.id=?", ReturnRequestService::adminRow, requestId).stream()
+        return db.query(RETURN_SELECT + "where r.id=?", ReturnRequestService::adminRow, requestId).stream()
                 .findFirst().orElseThrow(() -> ApiException.notFound("RETURN_NOT_FOUND", "Return request not found"));
     }
 
     private static AdminReturnView adminRow(java.sql.ResultSet rs, int i) throws java.sql.SQLException {
         return new AdminReturnView(rs.getObject("id", UUID.class), rs.getObject("order_id", UUID.class),
                 rs.getObject("seller_order_id", UUID.class), rs.getString("store_id"), rs.getString("status"),
-                rs.getString("reason"), rs.getTimestamp("requested_at").toInstant());
+                rs.getString("reason"), rs.getTimestamp("requested_at").toInstant(),
+                rs.getBigDecimal("gross").toPlainString());
     }
 
     private ReturnView findByCustomerKey(String customerId, String key) {
-        return db.query("select id,order_id,seller_order_id,status,reason,requested_at "
-                + "from return_requests where customer_id=? and idempotency_key=?",
-                (rs, i) -> new ReturnView(rs.getObject("id", UUID.class),
-                        rs.getObject("order_id", UUID.class), rs.getObject("seller_order_id", UUID.class),
-                        rs.getString("status"), rs.getString("reason"),
-                        rs.getTimestamp("requested_at").toInstant()), customerId, key)
+        return db.query(RETURN_SELECT + " where r.customer_id=? and r.idempotency_key=?",
+                ReturnRequestService::buyerView, customerId, key)
                 .stream().findFirst().orElse(null);
+    }
+
+    private static ReturnView buyerView(java.sql.ResultSet rs, int row) throws java.sql.SQLException {
+        return new ReturnView(rs.getObject("id", UUID.class), rs.getObject("order_id", UUID.class),
+                rs.getObject("seller_order_id", UUID.class), rs.getString("status"), rs.getString("reason"),
+                rs.getTimestamp("requested_at").toInstant(), rs.getBigDecimal("gross").toPlainString());
     }
 
     private String savedFingerprint(String customerId, String key) {

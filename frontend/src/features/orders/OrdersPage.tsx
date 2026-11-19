@@ -9,6 +9,8 @@ import { optionalText } from '../../shared/forms';
 import { Badge, dateTime, ErrorNote, Loaded, money, shortId, useAction } from '../../shared/ui';
 import { ReturnRequestPanel } from './ReturnRequestPanel';
 import type { ReturnView } from './ReturnRequestPanel';
+import { formatExactVnd } from '../checkout/checkoutApi';
+import { orderPayable } from './orderPayable';
 
 export interface OrderItem {
   readonly productId: string; readonly name: string | null; readonly sku: string | null; readonly quantity: number;
@@ -21,6 +23,8 @@ export interface StoreOrder {
   readonly gross: number; readonly platformFee: number | null; readonly sellerNet: number | null;
   readonly createdAt: string; readonly deliveredAt: string | null; readonly codCollectedAt: string | null;
   readonly settledAt: string | null; readonly shipping: Shipping | null; readonly items: readonly OrderItem[];
+  readonly merchandiseAmount?: string; readonly voucherDiscount?: string; readonly voucherCode?: string | null;
+  readonly grossExact?: string;
 }
 interface CustomerOrder {
   readonly id: string; readonly status: string; readonly overallStatus: string; readonly total: number; readonly createdAt: string;
@@ -30,11 +34,6 @@ const reviewSchema = z.object({ rating: z.number().int().min(1).max(5), comment:
 type ReviewInput = z.infer<typeof reviewSchema>;
 interface MyReview { readonly orderId: string; readonly productId: string }
 
-/** Refused store orders are never collected, so they leave the amount the customer owes. */
-const payable = (order: CustomerOrder) => order.storeOrders
-  .filter((s) => s.status !== 'CANCELLED' && s.status !== 'REJECTED')
-  .reduce((sum, s) => sum + Number(s.gross), 0);
-
 export function OrdersPage() {
   const orders = useQuery({ queryKey: ['orders'], queryFn: () => api<CustomerOrder[]>('/api/orders?size=50') });
   return <div className="stack">
@@ -42,7 +41,7 @@ export function OrdersPage() {
     <Loaded query={orders} empty={(rows) => rows.length === 0}>{(rows) => <ul className="list">{rows.map((o) => <li key={o.id} className="row row--between">
       <div><Link to={`/orders/${o.id}`}><strong>#{shortId(o.id)}</strong></Link> <Badge value={o.overallStatus} /> <small className="muted">{dateTime(o.createdAt)}</small>
         <div className="row row--wrap">{o.storeOrders.map((s) => <span key={s.id}>{s.storeName ?? 'Cửa hàng'} <Badge value={s.status} /></span>)}</div></div>
-      <strong>{money(payable(o))}</strong>
+      <strong>{orderPayable(o.storeOrders)}</strong>
     </li>)}</ul>}</Loaded>
   </div>;
 }
@@ -79,7 +78,11 @@ function StoreOrderCard({ order, reviewed, existingReturn, returnsLoading, retur
       {order.status === 'DELIVERED' && (reviewed.has(`${order.orderId}:${item.productId}`)
         ? <small className="muted">Đã đánh giá</small> : <ReviewForm orderId={order.orderId} productId={item.productId} />)}
     </li>)}</ul>
-    <p>Tạm tính: <strong>{money(order.gross)}</strong></p>
+    {order.voucherCode && order.merchandiseAmount && order.voucherDiscount && <>
+      <p>Tiền hàng trước giảm: {formatExactVnd(order.merchandiseAmount)}</p>
+      <p>Voucher {order.voucherCode}: −{formatExactVnd(order.voucherDiscount)}</p>
+    </>}
+    <p>Tạm tính: <strong>{order.grossExact ? formatExactVnd(order.grossExact) : money(order.gross)}</strong></p>
     {order.status === 'PLACED' && <div className="row row--wrap">
       <input aria-label="Lý do hủy" className="grow" placeholder="Lý do hủy (không bắt buộc)" maxLength={500} value={reason} onChange={(e) => setReason(e.currentTarget.value)} />
       <button type="button" className="btn btn--danger" disabled={cancel.isPending} onClick={() => cancel.mutate(undefined)}>Hủy đơn của cửa hàng này</button>
@@ -108,6 +111,6 @@ export function OrderDetailPage() {
     {o.storeOrders.map((s) => <StoreOrderCard key={s.id} order={s} reviewed={reviewed}
       existingReturn={returns.data?.find((item) => item.storeOrderId === s.id)}
       returnsLoading={returns.isPending} returnsError={returns.error} />)}
-    <p className="price price--large">Tổng cộng: {money(payable(o))}</p>
+    <p className="price price--large">Tổng cộng: {orderPayable(o.storeOrders)}</p>
   </div>}</Loaded>;
 }

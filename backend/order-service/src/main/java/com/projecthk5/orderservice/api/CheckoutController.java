@@ -14,13 +14,24 @@ import org.springframework.web.bind.annotation.*;
 public class CheckoutController {
     private final CheckoutService service;
     public CheckoutController(CheckoutService service){this.service=service;}
+    @GetMapping("/voucher-capability")
+    public java.util.Map<String, Boolean> voucherCapability() {
+        return java.util.Map.of("enabled", service.voucherEnabled());
+    }
+
+    @PostMapping("/voucher-quote")
+    public CheckoutQuote quote(JwtAuthenticationToken jwt, @RequestHeader(HttpHeaders.AUTHORIZATION) String bearer,
+                               @Valid @RequestBody VoucherQuoteRequest request) {
+        return service.quote(CustomerIdentity.customerId(jwt), bearer, request);
+    }
+
     @PostMapping public CheckoutResult checkout(JwtAuthenticationToken jwt,
         @RequestHeader(value="Idempotency-Key",required=false) String key,
         @RequestHeader(HttpHeaders.AUTHORIZATION) String bearer,
         @Valid @RequestBody PlaceOrderRequest request){
         ShippingAddress s=request.shipping();
         return service.checkout(CustomerIdentity.customerId(jwt),bearer,key,
-            new CheckoutRequest(request.expectedItems(),request.expectedRevision()),
+            new CheckoutRequest(request.expectedItems(),request.expectedRevision(),request.vouchers()),
             new Order.Shipping(s.name().strip(),s.phone().strip(),s.address().strip()));
     }
 }

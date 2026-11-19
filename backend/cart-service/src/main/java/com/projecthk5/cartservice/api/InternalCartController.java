@@ -4,6 +4,9 @@ import com.projecthk5.cartservice.api.CartDtos.*;
 import com.projecthk5.cartservice.security.CustomerIdentity;
 import com.projecthk5.cartservice.service.CartService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.Size;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,4 +28,14 @@ public class InternalCartController {
     @PostMapping("/claim") public CartView claim(JwtAuthenticationToken jwt,@RequestHeader(value="X-Internal-Token",required=false) String token,@Valid @RequestBody Claim req) {authorize(token); return service.claim(CustomerIdentity.customerId(jwt),req.key(),req.expectedRevision());}
     @PostMapping("/release") public void release(JwtAuthenticationToken jwt,@RequestHeader(value="X-Internal-Token",required=false) String token,@Valid @RequestBody Claim req) {authorize(token); service.release(CustomerIdentity.customerId(jwt),req.key());}
     @PostMapping("/finalize") public void finalizeOrder(JwtAuthenticationToken jwt,@RequestHeader(value="X-Internal-Token",required=false) String token,@Valid @RequestBody Claim req) {authorize(token); service.finalizeCheckout(CustomerIdentity.customerId(jwt),req.key());}
+
+    record Recovery(@NotBlank @Size(max=200) String customerId, @NotBlank @Size(max=128) String key,
+                    @PositiveOrZero long claimedRevision, boolean placed) { }
+
+    @PostMapping("/recover")
+    public void recover(@RequestHeader(value="X-Internal-Token",required=false) String token,
+                        @Valid @RequestBody Recovery req) {
+        authorize(token);
+        service.recoverCheckout(req.customerId(), req.key(), req.claimedRevision(), req.placed());
+    }
 }

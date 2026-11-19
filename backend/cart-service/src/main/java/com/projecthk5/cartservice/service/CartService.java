@@ -86,6 +86,16 @@ public class CartService {
     public void finalizeCheckout(String customerId,String key) {
         Cart cart=locked(customerId);cart.finalizeCheckout(key);repository.saveAndFlush(cart);
     }
+    @Transactional
+    public void recoverCheckout(String customerId, String key, long claimedRevision, boolean placed) {
+        repository.findForUpdate(customerId).ifPresent(cart -> {
+            // A previous cleanup or a newer Cart must never be cleared by an old recovery job.
+            if (!key.equals(cart.getCheckoutClaim()) || claimedRevision != cart.getRevision()) return;
+            if (placed) cart.finalizeCheckout(key);
+            else cart.release(key);
+            repository.saveAndFlush(cart);
+        });
+    }
     private Cart locked(String customerId) { return repository.findForUpdate(customerId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Cart not found")); }
     private CartItem findItem(Cart cart,String productId) { return cart.getItems().stream().filter(i -> i.getProductId().equals(productId)).findFirst().orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Product not in cart")); }
     private record GroupKey(String sellerId,String storeId) {}

@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import { api } from '../../shared/api';
 import { Badge, dateTime, ErrorNote, useAction } from '../../shared/ui';
+import { formatExactVnd } from '../checkout/checkoutApi';
 
 export interface ReturnView {
   readonly requestId: string;
@@ -9,6 +10,7 @@ export interface ReturnView {
   readonly status: 'REQUESTED' | 'APPROVED' | 'REJECTED' | 'RECEIVED';
   readonly reason: string;
   readonly requestedAt: string;
+  readonly refundAmount?: string;
 }
 
 interface Props {
@@ -55,6 +57,7 @@ export function ReturnRequestPanel({ orderId, storeOrderId, deliveredAt, settled
     <div className="row row--wrap"><strong>Yêu cầu trả hàng</strong> <Badge value={existing.status} /></div>
     <small className="muted">Đã gửi: {dateTime(existing.requestedAt)}</small>
     <p className="muted">Lý do: {existing.reason}</p>
+    {existing.refundAmount && <p>Số tiền theo đơn để đối chiếu hoàn tiền: {formatExactVnd(existing.refundAmount)}</p>}
     <p className="muted">Không hoàn tiền tự động. Cửa hàng sẽ xử lý yêu cầu.</p>
   </section>;
 

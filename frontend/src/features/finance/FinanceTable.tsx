@@ -1,12 +1,15 @@
 import { Badge, dateTime, money, shortId } from '../../shared/ui';
+import { formatExactVnd } from '../checkout/checkoutApi';
 
 export interface Totals {
   readonly deliveredOrders: number; readonly gross: number; readonly platformFee: number; readonly sellerNet: number;
   readonly codCollected: number; readonly codPending: number; readonly settledNet: number; readonly payableNet: number;
+  readonly voucherDiscount?: string;
 }
 interface Row {
   readonly storeOrderId: string; readonly orderId: string; readonly gross: number; readonly platformFee: number;
   readonly sellerNet: number; readonly codStatus: string; readonly deliveredAt: string | null; readonly settledAt: string | null;
+  readonly voucherDiscount?: string;
 }
 export interface StoreSummary { readonly storeId: string; readonly storeName: string | null; readonly totals: Totals; readonly rows: readonly Row[] }
 
@@ -16,6 +19,7 @@ export function TotalsGrid({ totals }: { readonly totals: Totals }) {
     ['Thực nhận', money(totals.sellerNet)], ['COD đã thu', money(totals.codCollected)], ['COD chờ thu', money(totals.codPending)],
     ['Đã thanh toán', money(totals.settledNet)], ['Còn phải trả', money(totals.payableNet)],
   ];
+  if (totals.voucherDiscount !== undefined) cells.push(['Giảm giá voucher', formatExactVnd(totals.voucherDiscount)]);
   return <dl className="stats">{cells.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl>;
 }
 
@@ -23,9 +27,10 @@ export function FinanceTable({ summary }: { readonly summary: StoreSummary }) {
   return <div className="stack">
     <TotalsGrid totals={summary.totals} />
     {summary.rows.length > 0 && <table className="table" tabIndex={0}>
-      <thead><tr><th>Đơn</th><th>Giao lúc</th><th>Doanh thu</th><th>Phí sàn</th><th>Thực nhận</th><th>COD</th><th>Thanh toán</th></tr></thead>
+      <thead><tr><th>Đơn</th><th>Giao lúc</th><th>Doanh thu</th><th>Voucher</th><th>Phí sàn</th><th>Thực nhận</th><th>COD</th><th>Thanh toán</th></tr></thead>
       <tbody>{summary.rows.map((r) => <tr key={r.storeOrderId}>
-        <td>#{shortId(r.orderId)}</td><td>{dateTime(r.deliveredAt)}</td><td>{money(r.gross)}</td><td>{money(r.platformFee)}</td>
+        <td>#{shortId(r.orderId)}</td><td>{dateTime(r.deliveredAt)}</td><td>{money(r.gross)}</td>
+        <td>{r.voucherDiscount === undefined ? '—' : formatExactVnd(r.voucherDiscount)}</td><td>{money(r.platformFee)}</td>
         <td>{money(r.sellerNet)}</td><td><Badge value={r.codStatus} /></td><td>{dateTime(r.settledAt)}</td>
       </tr>)}</tbody></table>}
   </div>;
