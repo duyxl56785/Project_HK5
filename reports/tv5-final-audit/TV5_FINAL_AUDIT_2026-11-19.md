@@ -106,7 +106,7 @@ Hình 6.1–6.8 phải được TV2 chụp trên frozen SHA theo mapping: 6.1 Ho
 | #162 report/deck | OPEN | TV2 + TV5 | Official DOCX, final screenshots, frozen SHA, CI/UAT receipts | Đối chiếu bản ghép và đủ checklist trước nộp |
 | Voucher C2 | BLOCKED / OFF | TV2 + TV3 | #211/#212 merge, frozen-SHA C2 E2E no skip, P0 triage | TV2/business approval và tất cả gate đạt |
 | Finance policy | WAITING_FOR_APPROVAL | TV2/business | Policy source, signatures, rate/scale/house policy | Phê duyệt rõ ràng đúng phạm vi demo/production |
-| Frontend dependency advisory | OPEN / P2 | TV1 | `npm audit` result for `vite@6.4.4`, GHSA-8g5g-mxqh-grgj | TV1 chọn bản vá tương thích và rerun frontend CI; TV5 không tự nâng dependency shared |
+| Frontend dependency advisory | OPEN / P2 | TV1 | Main `frontend/package-lock.json` vẫn khóa `vite@6.4.4`; tìm kiếm PR mở theo `vite` và GHSA chưa thấy PR sửa advisory | TV1 chọn bản vá tương thích và rerun frontend CI; TV5 không tự nâng dependency shared |
 
 Issues #18, #157, #162 vẫn OPEN tại thời điểm kiểm tra. Không tick hoặc đóng issue thay owner.
 
@@ -123,7 +123,7 @@ Issues #18, #157, #162 vẫn OPEN tại thời điểm kiểm tra. Không tick h
 - Cập nhật nội dung báo cáo và speaker notes trong worktree review PR #211.
 - Cập nhật speaker notes trong PPTX draft (slide 8, 16, 23); không thay visible slide/media.
 - Tạo audit report này.
-- Branch `docs/tv5-final-uat-c2-matrix-20261119` đã push và bàn giao qua [PR #214](https://github.com/duyxl56785/Project_HK5/pull/214) vào `main`; TV2 `duyxl56785` đã được request review. PR #214 mergeable tại lần kiểm tra cuối; không có hosted workflow run/status check được trả về cho PR docs-only.
+- Branch `docs/tv5-final-uat-c2-matrix-20261119` đã push qua [PR #214](https://github.com/duyxl56785/Project_HK5/pull/214); hai checkpoint cập nhật post-merge CI được push bằng commits `4100cfa84f5488f8665c7f34ad68496d4cf63c19` và `6e06d844cff2770c6a8a6a6b33b1783fba82f566`. PR #214 hiện OPEN, chưa có review/comment TV2; head `6e06d84`, mergeable `true`, không merge.
 - Không merge PR #214, không merge #211/#212, không đổi base #212, không bật flags, không tick/đóng Issue.
 - Worktree chính vẫn giữ nguyên các thay đổi chưa commit/untracked của người dùng; mọi thao tác diễn ra trong worktree riêng.
 
