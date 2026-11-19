@@ -1,6 +1,6 @@
 // Generates .env.demo (git-ignored) with fresh random secrets for the local demo stack,
 // and writes each secret to docker/secrets (git-ignored), which Compose mounts as Docker secrets.
-// Usage: node scripts/demo/gen-env.mjs [--force] [--approved-inventory-pair] [--approved-finance-policy]
+// Usage: node scripts/demo/gen-env.mjs [--force] [--approved-inventory-pair] [--approved-finance-policy] [--approved-voucher-c2]
 import { randomBytes } from 'node:crypto';
 import { appendFileSync, chmodSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
@@ -13,6 +13,7 @@ const authorityTokens = ['USER', 'SELLER', 'PRODUCT', 'CART', 'ORDER', 'NOTIFICA
 const gates = Object.fromEntries(Object.entries({
   INVENTORY_ORDER_PAIR_ENABLED: '--approved-inventory-pair',
   HK5_FINANCE_POLICY_APPROVED: '--approved-finance-policy',
+  HK5_VOUCHER_C2_ENABLED: '--approved-voucher-c2',
 }).map(([key, flag]) => [key, String(process.argv.includes(flag))]));
 const localPolicy = {
   ...gates,
