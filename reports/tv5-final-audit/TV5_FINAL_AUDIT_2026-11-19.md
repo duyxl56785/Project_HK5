@@ -44,12 +44,12 @@ Sau khi #211 merge, TV3 đổi base #212 sang `main@cee7c87d`; CI `44496245054` 
 | Hạng mục | Trạng thái đã kiểm tra |
 |---|---|
 | PR | OPEN, GitHub `mergeable=false` tại lần kiểm tra |
-| Remote HEAD | `c46138d830f4c65759bff1b9daab591d2db3d52f` |
-| Base / compare | Base `main`; main `4b5bcb4`; compare `diverged`, PR branch ahead 22 / behind 4; merge-base `cee7c87d` |
+| Remote HEAD | `864ee54c4c3300b2e16b323b0ac48ce15bcfbe19` |
+| Base / compare | Base `main@4b5bcb4`; compare `ahead`, PR branch ahead 24 / behind 0; merge-base `4b5bcb4` |
 | Review/comments | Chưa có formal review, inline thread hoặc comment; TV2 `duyxl56785` vẫn là requested reviewer |
 | Changed files | 7 file TV5 docs/notes/matrix/audit; không có source business logic |
 
-TV5 đồng bộ `main@4b5bcb4` vào clone riêng bằng merge không conflict, chưa push thay đổi đồng bộ này tại checkpoint audit. Cần cập nhật checklist thực thi/evidence intake thuộc ownership TV5, kiểm tra diff rồi mới push branch PR #214. Không merge PR #214.
+TV5 đã đồng bộ `main@4b5bcb4` vào clone riêng bằng merge không conflict, bổ sung checklist 37 case/evidence intake và push commit `864ee54` lên branch PR #214. PR hiện mergeable `true`, ahead 24/behind 0. TV2 vẫn requested reviewer; chưa có formal review/comment/thread. Không merge PR #214.
 
 ### Main / freeze
 
@@ -117,7 +117,7 @@ Hình 6.1–6.8 phải được TV2 chụp trên frozen SHA theo mapping: 6.1 Ho
 |---|---|---|---|---|
 | #211 merge integration | MERGED; readiness SUCCESS; frontend SUCCESS; E2E SUCCESS | TV2 | Merge SHA `cee7c87d`; runs `44493061534` / `44493061575` | CI hậu merge bắt buộc đã xanh; vẫn không thay Final UAT |
 | #212 integration | MERGED | TV2 + TV3 | TV2 APPROVED exact HEAD `3483486`; merge SHA `4b5bcb4`; CI retarget `44496245054` (frontend SUCCESS, E2E OFF 24/24, ON 25/25, 0 skip) | TV2 cung cấp post-merge push CI run và frozen-SHA CI |
-| #214 TV5 docs | OPEN / WAITING_REVIEW; remote branch behind main 4 commits | TV5 + TV2 | Remote HEAD `c46138d`; main `4b5bcb4`; 7 docs-only files; no review/thread/comment; local clone merge from main is clean | TV5 hoàn thiện checklist/intake, push updated branch; TV2 review exact new HEAD |
+| #214 TV5 docs | OPEN / WAITING_REVIEW; mergeable true | TV5 + TV2 | Remote HEAD `864ee54`; base `main@4b5bcb4`; compare ahead 24/behind 0; 9 TV5 docs/notes/matrix/audit files; no review/thread/comment | TV2 review exact HEAD `864ee54`; TV5 xử lý feedback thuộc ownership |
 | Frozen SHA | BLOCKED | TV2 | Full SHA, freeze time, CI URLs, PR list | TV2 xác nhận bằng văn bản |
 | Final UAT #18 | BLOCKED / NOT_RUN | TV2/TV3/TV4/TV5 | Clean stack, exact SHA, HTTP/DB/Inventory/Finance receipts, screenshots | Bắt buộc cases đạt; P0 được xử lý/waiver rõ ràng |
 | #157 Return/Finance | OPEN | TV5 + TV3/TV4 | RET-05 stock-once, Return/settlement UAT và các checkbox còn lại | Mọi tiêu chí issue có evidence, TV5 cập nhật trong phạm vi |
@@ -143,7 +143,7 @@ Trạng thái issue được fetch trực tiếp trong lượt làm mới 19/11:
 - Đồng bộ ma trận 37 case, acceptance, report content, Markdown speaker notes, audit và submission README với CI mới sau retarget #212.
 - Cập nhật speaker notes trong PPTX draft ở slide 16 và 23; ZIP integrity PASS, 23 slide XML/23 notes XML. Chỉ hai notes XML thay đổi; toàn bộ slide XML và media giữ nguyên. SHA256 mới: `70c2e0fd02a1bcdcffb4c84f8871944b6e58094f2df3d7049086d41dbcc9dac0`.
 - Các commit đồng bộ văn bản trên branch gồm `51218bf`, `a079680`, `29de073`, `ece68b3`, `13c9e63`, `c809fba`; commit PPTX/README `62019fc`; commit phân biệt retarget CI với frozen-SHA gate `c685d5536fa5cdc34e9045b913548af2a0c20e2d`. PR #214 vẫn OPEN, TV2 đang được request review; chưa có review/comment.
-- Clone riêng đã fetch GitHub `main@4b5bcb4` và merge vào branch tài liệu không conflict; merge commit local `f485738cc6eb7ef69761c03e13d1d5cee1780857`. Checklist/evidence guide đang được chuẩn bị trên clone, chưa push tại thời điểm audit này.
+- Clone riêng đã fetch GitHub `main@4b5bcb4` và merge vào branch tài liệu không conflict; merge commit local `f485738cc6eb7ef69761c03e13d1d5cee1780857`. Commit tài liệu `864ee54c4c3300b2e16b323b0ac48ce15bcfbe19` đã push thành công lên PR #214; GitHub xác nhận mergeable true, ahead 24/behind 0, 9 changed files.
 - Workspace gốc vẫn ở `codex/tv5-w1-acceptance-evidence` và các mục untracked `.vs/`, `frontend/package-lock.json`, `reports/tv5-m01-local/` được giữ nguyên.
 - Không merge PR #214, không bật C2/Finance, không tick/đóng Issue.
 
