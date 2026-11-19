@@ -12,9 +12,8 @@
 |---|---|
 | HEAD | `4f3152bc2188511a26e2b41f64fc94c6f31968ba` |
 | Base | `main`, base SHA `879143a1f081da4644ebc29c0950069429731f0f` |
-| Main hiện tại | `4471256cacb8ea66693970701250d92f0a9082c4` |
-| PR | OPEN, chưa merge |
-| GitHub mergeable | `true`; không được coi riêng giá trị này là bằng chứng tích hợp an toàn |
+| Merge | MERGED `2026-11-19T09:04:26Z`; merge commit `cee7c87d1c7437fc5ed0009405fd2d0fc394bfb2` |
+| Main sau merge | `cee7c87d1c7437fc5ed0009405fd2d0fc394bfb2` (first parent `4471256cacb8ea66693970701250d92f0a9082c4`) |
 | TV2 | APPROVED tại exact HEAD |
 | TV4 | APPROVED tại exact HEAD |
 | TV5 | APPROVED tại exact HEAD; MD21 thread đã resolve |
@@ -22,7 +21,7 @@
 
 **MD21:** finding cũ đã được khắc phục. Migration `V10__seller_order_voucher_snapshot_immutable.sql` tạo PostgreSQL trigger từ chối thay đổi `voucher_snapshot` sau INSERT; PostgreSQL regression kiểm native SQL sửa/xóa/gắn snapshot, no-op cùng giá trị và fulfillment update. Không sửa migration V9.
 
-**Chênh lệch với main:** PR branch diverged so với `main@4471256` (PR có 13 commit riêng; main có 17 commit kể từ common ancestor). `git merge-tree --write-tree` và thử merge trong worktree disposable đều không conflict. Điều này chứng minh ghép cây tự động được, không chứng minh hosted CI trên merge commit hoặc Final UAT.
+**Post-merge CI trên exact main merge SHA:** Frontend check trong run `44493061534` đã SUCCESS. Run Frontend and E2E `44493061534` và Backend readiness `44493061575` được GitHub ghi nhận trên exact SHA `cee7c87d1c7437fc5ed0009405fd2d0fc394bfb2`; tại lần refresh `2026-11-19T09:04:33Z`, cả hai workflow còn `in_progress` (readiness và E2E jobs chưa kết thúc). Không kết luận CI tổng thể PASS cho đến khi hai run hoàn tất.
 
 ### PR #212
 
@@ -34,12 +33,12 @@
 | CI | Run `44456964277`: E2E C2 ON 25 passed/0 skipped; E2E C2 OFF 24 passed/0 skipped; frontend typecheck/test/build thành công |
 | Formal review | Review TV2 hiện có tại HEAD cũ `a43abf5`, không phải exact HEAD `3483486`; cần owner review lại HEAD mới |
 
-Không đổi base hoặc merge #212 trước khi TV2 merge #211. Sau đó TV3 đổi base, kiểm tra diff và chạy lại CI; owner liên quan review lại.
+Sau khi #211 merge, #212 vẫn đang base `codex/tv3-voucher-c2` tại `c5faad9e1cd460f15743d06e2b6d67688b448555`; TV3 chưa đổi base sang `main`. Run `44456964277` là CI trên base cũ, không chứng minh trạng thái sau đổi base. TV3 sở hữu việc đổi base, xem diff và chạy CI mới; TV5 không tự thay đổi.
 
 ### Main / freeze
 
-- Main hiện tại: `4471256cacb8ea66693970701250d92f0a9082c4`.
-- Chưa có xác nhận của TV2 rằng SHA này là frozen SHA.
+- Main hiện tại tại lần kiểm tra: `cee7c87d1c7437fc5ed0009405fd2d0fc394bfb2` (merge #211).
+- Chưa có xác nhận của TV2 rằng SHA này là frozen SHA; không tự gán frozen SHA từ main hiện tại.
 - Lịch TV2 mới nhất trên PR #211: freeze trước 18:00 ngày 20/11/2026; Final UAT ngày 21/11/2026.
 - M01 hiện còn ghi lịch freeze 19/11 và chữ ký TV5/TV4 `CHỜ`. M01 thuộc owner TV2; TV2 cần đồng bộ tài liệu theo formal reviews và lịch mới.
 - Không có receipt clean-clone hoặc Final UAT trên frozen SHA tại thời điểm audit.
@@ -99,7 +98,7 @@ Hình 6.1–6.8 phải được TV2 chụp trên frozen SHA theo mapping: 6.1 Ho
 
 | Hạng mục | Trạng thái | Owner | Evidence cần có | Điều kiện đóng |
 |---|---|---|---|---|
-| #211 merge integration | WAITING_FOR_TV2 | TV2 | Merge SHA, hosted CI trên merge/main | PR merge đúng quy trình, CI đạt |
+| #211 merge integration | MERGED; POST-MERGE CI IN_PROGRESS | TV2 | Merge SHA `cee7c87d`; runs `44493061534` / `44493061575` | Chờ cả readiness và E2E kết thúc; không suy PASS từ frontend check riêng |
 | #212 rebase/review | WAITING_FOR_TV3 | TV3 | Base main, exact diff, CI mới, owner reviews | Chỉ sau #211 merge; CI và review exact HEAD đạt |
 | Frozen SHA | BLOCKED | TV2 | Full SHA, freeze time, CI URLs, PR list | TV2 xác nhận bằng văn bản |
 | Final UAT #18 | BLOCKED / NOT_RUN | TV2/TV3/TV4/TV5 | Clean stack, exact SHA, HTTP/DB/Inventory/Finance receipts, screenshots | Bắt buộc cases đạt; P0 được xử lý/waiver rõ ràng |
@@ -113,7 +112,7 @@ Issues #18, #157, #162 vẫn OPEN tại thời điểm kiểm tra. Không tick h
 
 ## F. Bàn giao theo owner
 
-- **TV2:** kiểm tra merge candidate/main divergence; merge #211 nếu đủ điều kiện; cập nhật M01 chữ ký/lịch; xử lý #212 merge order; công bố frozen SHA; điều phối clean stack/Final UAT; cung cấp official DOCX và ảnh 6.1–6.8.
+- **TV2:** theo dõi post-merge CI #211 trên `cee7c87d`; cập nhật M01 chữ ký/lịch; xử lý thứ tự tích hợp #212; công bố frozen SHA; điều phối clean stack/Final UAT; cung cấp official DOCX và ảnh 6.1–6.8.
 - **TV3:** sau khi #211 merge, đổi base #212 sang main; kiểm tra diff, CI và formal review exact HEAD; phối hợp Cart/Checkout/Parent Order/SellerOrder trong UAT.
 - **TV4:** xác nhận fulfillment/COD/Inventory/Return receipts trên frozen SHA; xử lý blocker restock nếu muốn đưa vào scope.
 - **TV5:** đối chiếu actual receipts, điền ma trận chỉ theo kết quả thật, kiểm ảnh/tiền/report, hoàn tất QA sign-off sau khi gate đạt.
@@ -128,4 +127,4 @@ Issues #18, #157, #162 vẫn OPEN tại thời điểm kiểm tra. Không tick h
 - Không merge PR #214, không merge #211/#212, không đổi base #212, không bật flags, không tick/đóng Issue.
 - Worktree chính vẫn giữ nguyên các thay đổi chưa commit/untracked của người dùng; mọi thao tác diễn ra trong worktree riêng.
 
-**Disposition:** TV5 phần review #211 và tài liệu QA đã được chuẩn bị; release/final acceptance vẫn `PARTIAL`, chờ TV2 tích hợp và frozen SHA.
+**Disposition:** TV5 review #211 đã hoàn tất và PR #211 đã merge vào main; post-merge readiness/E2E còn đang chạy tại lần kiểm tra. Release/final acceptance vẫn `PARTIAL`, chờ #212 được TV3 đổi base/kiểm CI, TV2 xác nhận frozen SHA và Final UAT có evidence thật.
