@@ -21,7 +21,7 @@
 
 **MD21:** finding cũ đã được khắc phục. Migration `V10__seller_order_voucher_snapshot_immutable.sql` tạo PostgreSQL trigger từ chối thay đổi `voucher_snapshot` sau INSERT; PostgreSQL regression kiểm native SQL sửa/xóa/gắn snapshot, no-op cùng giá trị và fulfillment update. Không sửa migration V9.
 
-**Post-merge CI trên exact main merge SHA:** Frontend check trong run `44493061534` đã SUCCESS. Run Frontend and E2E `44493061534` và Backend readiness `44493061575` được GitHub ghi nhận trên exact SHA `cee7c87d1c7437fc5ed0009405fd2d0fc394bfb2`; tại lần refresh `2026-11-19T09:04:33Z`, cả hai workflow còn `in_progress` (readiness và E2E jobs chưa kết thúc). Không kết luận CI tổng thể PASS cho đến khi hai run hoàn tất.
+**Post-merge CI trên exact main merge SHA:** Backend readiness run `44493061575` đã `SUCCESS`. Run Frontend and E2E `44493061534` có frontend job `SUCCESS`, nhưng E2E job còn `in_progress` tại lần refresh gần nhất. Cả hai run gắn exact SHA `cee7c87d1c7437fc5ed0009405fd2d0fc394bfb2`; chưa kết luận CI tổng thể PASS cho đến khi E2E hoàn tất.
 
 ### PR #212
 
@@ -98,7 +98,7 @@ Hình 6.1–6.8 phải được TV2 chụp trên frozen SHA theo mapping: 6.1 Ho
 
 | Hạng mục | Trạng thái | Owner | Evidence cần có | Điều kiện đóng |
 |---|---|---|---|---|
-| #211 merge integration | MERGED; POST-MERGE CI IN_PROGRESS | TV2 | Merge SHA `cee7c87d`; runs `44493061534` / `44493061575` | Chờ cả readiness và E2E kết thúc; không suy PASS từ frontend check riêng |
+| #211 merge integration | MERGED; readiness SUCCESS; frontend SUCCESS; E2E IN_PROGRESS | TV2 | Merge SHA `cee7c87d`; runs `44493061534` / `44493061575` | Chờ E2E kết thúc; không suy PASS từ frontend check riêng |
 | #212 rebase/review | WAITING_FOR_TV3 | TV3 | Base main, exact diff, CI mới, owner reviews | Chỉ sau #211 merge; CI và review exact HEAD đạt |
 | Frozen SHA | BLOCKED | TV2 | Full SHA, freeze time, CI URLs, PR list | TV2 xác nhận bằng văn bản |
 | Final UAT #18 | BLOCKED / NOT_RUN | TV2/TV3/TV4/TV5 | Clean stack, exact SHA, HTTP/DB/Inventory/Finance receipts, screenshots | Bắt buộc cases đạt; P0 được xử lý/waiver rõ ràng |
@@ -127,4 +127,4 @@ Issues #18, #157, #162 vẫn OPEN tại thời điểm kiểm tra. Không tick h
 - Không merge PR #214, không merge #211/#212, không đổi base #212, không bật flags, không tick/đóng Issue.
 - Worktree chính vẫn giữ nguyên các thay đổi chưa commit/untracked của người dùng; mọi thao tác diễn ra trong worktree riêng.
 
-**Disposition:** TV5 review #211 đã hoàn tất và PR #211 đã merge vào main; post-merge readiness/E2E còn đang chạy tại lần kiểm tra. Release/final acceptance vẫn `PARTIAL`, chờ #212 được TV3 đổi base/kiểm CI, TV2 xác nhận frozen SHA và Final UAT có evidence thật.
+**Disposition:** TV5 review #211 đã hoàn tất và PR #211 đã merge vào main; post-merge Backend readiness và frontend job SUCCESS, E2E còn đang chạy tại lần kiểm tra. Release/final acceptance vẫn `PARTIAL`, chờ #212 được TV3 đổi base/kiểm CI, TV2 xác nhận frozen SHA và Final UAT có evidence thật.
