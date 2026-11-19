@@ -137,7 +137,7 @@ Trạng thái issue được fetch trực tiếp trong lượt làm mới 19/11:
 - Làm mới trạng thái PR #211/#212/#214, workflow run `44496245054` và Issues #18/#157/#162 từ GitHub; không chạy Final UAT hoặc stack runtime.
 - Đồng bộ ma trận 37 case, acceptance, report content, Markdown speaker notes, audit và submission README với CI mới sau retarget #212.
 - Cập nhật speaker notes trong PPTX draft ở slide 16 và 23; ZIP integrity PASS, 23 slide XML/23 notes XML. Chỉ hai notes XML thay đổi; toàn bộ slide XML và media giữ nguyên. SHA256 mới: `70c2e0fd02a1bcdcffb4c84f8871944b6e58094f2df3d7049086d41dbcc9dac0`.
-- Các commit đồng bộ văn bản trên branch gồm `51218bf`, `a079680`, `29de073`, `ece68b3`, `13c9e63`, `c809fba`; commit PPTX/README cuối `62019fc3933064526f0448bf10c2a48da679ab3f`. PR #214 vẫn OPEN, TV2 đang được request review; chưa có review/comment.
+- Các commit đồng bộ văn bản trên branch gồm `51218bf`, `a079680`, `29de073`, `ece68b3`, `13c9e63`, `c809fba`; commit PPTX/README `62019fc`; commit phân biệt retarget CI với frozen-SHA gate `c685d5536fa5cdc34e9045b913548af2a0c20e2d`. PR #214 vẫn OPEN, TV2 đang được request review; chưa có review/comment.
 - `git diff --check` PASS trong clone xác minh riêng; clone sạch sau commit. Workspace gốc vẫn ở `codex/tv5-w1-acceptance-evidence` và các mục untracked `.vs/`, `frontend/package-lock.json`, `reports/tv5-m01-local/` được giữ nguyên.
 - Không merge PR #214/#212, không đổi base PR #212, không bật C2/Finance, không tick/đóng Issue.
 
