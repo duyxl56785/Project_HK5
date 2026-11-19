@@ -49,6 +49,8 @@ MD11 làm rõ phạm vi của MD04 cho bản nộp và demo local, không đổi
 
 Đây là quyết định nghiệp vụ **cho FR-VC-05 giai đoạn C2**, không phải bằng chứng C2 đã được code, merge hoặc bật. C2 không nằm trong bản nộp 21/11/2026.
 
+**Cập nhật 19/11/2026:** câu "C2 không nằm trong bản nộp 21/11/2026" ở trên viết theo lịch cũ và không còn áp dụng. C2 đã code và merge vào `main`: #211 tại `cee7c87`, #212 tại `4b5bcb4`. Cờ C2 vẫn mặc định tắt theo MD23. TV2 quyết định bật hay tắt ở UAT ngày 21/11 theo bốn điều kiện ghi ở mục **Lịch** của [file chi tiết](M01_VOUCHER_C2_DECISION.md). Thiếu một điều kiện thì C2 tắt, và báo cáo ghi "đã code, đã test, chưa bật trong bản nộp". Cập nhật này không đổi MD13–MD25.
+
 | ID | Quyết định |
 | --- | --- |
 | MD13 | Seller chịu toàn bộ phần giảm của voucher; sàn không bù tiền. |
