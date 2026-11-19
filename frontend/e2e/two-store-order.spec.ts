@@ -25,7 +25,18 @@ test('one customer order splits into two store orders and reserves stock in both
   await customer.goto('/cart');
   await expect(customer.getByText(`Cửa hàng: ${first.store.name}`)).toBeVisible();
   await expect(customer.getByText(`Cửa hàng: ${second.store.name}`)).toBeVisible();
+  const expectedC2 = process.env.E2E_VOUCHER_C2;
+  const capability = expectedC2 === '0' || expectedC2 === '1'
+    ? customer.waitForResponse((response) => response.url().endsWith('/api/orders/voucher-capability')
+      && response.request().method() === 'GET')
+    : null;
   await customer.getByRole('link', { name: 'Tiến hành đặt hàng' }).click();
+  if (capability) {
+    const response = await capability;
+    expect(response.status()).toBe(200);
+    expect(await response.json()).toEqual({ enabled: expectedC2 === '1' });
+    await expect(customer.getByLabel(/Mã voucher/)).toHaveCount(expectedC2 === '1' ? 2 : 0);
+  }
   await customer.getByLabel('Người nhận').fill('Khách hai cửa hàng');
   await customer.getByLabel('Số điện thoại').fill('0901234567');
   await customer.getByLabel('Địa chỉ', { exact: true }).fill('1 Lê Lợi, Quận 1');
