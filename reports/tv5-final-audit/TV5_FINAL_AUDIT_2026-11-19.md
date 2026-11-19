@@ -124,7 +124,7 @@ Issues #18, #157, #162 vẫn OPEN tại thời điểm kiểm tra. Không tick h
 - Cập nhật nội dung báo cáo và speaker notes trong worktree review PR #211.
 - Cập nhật speaker notes trong PPTX draft (slide 8, 16, 23); không thay visible slide/media.
 - Tạo audit report này.
-- Branch `docs/tv5-final-uat-c2-matrix-20261119` đã push; commit nội dung `286597f` và checkpoint PR `a46a76b` (HEAD hiện tại). [PR #214](https://github.com/duyxl56785/Project_HK5/pull/214) mở vào `main`, TV2 `duyxl56785` đã được request review. PR #214 mergeable tại lần kiểm tra cuối; không có hosted workflow run/status check được trả về cho PR docs-only.
+- Branch `docs/tv5-final-uat-c2-matrix-20261119` đã push và bàn giao qua [PR #214](https://github.com/duyxl56785/Project_HK5/pull/214) vào `main`; TV2 `duyxl56785` đã được request review. PR #214 mergeable tại lần kiểm tra cuối; không có hosted workflow run/status check được trả về cho PR docs-only.
 - Không merge PR #214, không merge #211/#212, không đổi base #212, không bật flags, không tick/đóng Issue.
 - Worktree chính vẫn giữ nguyên các thay đổi chưa commit/untracked của người dùng; mọi thao tác diễn ra trong worktree riêng.
 
