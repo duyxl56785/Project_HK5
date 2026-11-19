@@ -134,12 +134,11 @@ Trạng thái issue được fetch trực tiếp trong lượt làm mới 19/11:
 
 ## G. Thay đổi TV5 trong phiên này
 
-- Cập nhật ma trận 37 case và pointer acceptance trong worktree `docs/tv5-final-uat-c2-matrix-20261119`.
-- Cập nhật nội dung báo cáo và speaker notes trong worktree review PR #211.
-- Cập nhật speaker notes trong PPTX draft (slide 16 và 23; note slide 8 giữ nguyên từ checkpoint trước); không thay visible slide/media.
-- Tạo audit report này.
-- Branch `docs/tv5-final-uat-c2-matrix-20261119` đã push qua [PR #214](https://github.com/duyxl56785/Project_HK5/pull/214); commits trước đó gồm `4100cfa`, `6e06d84`, `d93a8fc`. Lượt này phát hiện #212 đã retarget sang main và CI hậu merge #211 đã hoàn tất; cập nhật tiếp bốn tài liệu TV5 trên cùng branch. TV2 đang được request review trên #214; chưa có review/comment.
-- Không merge PR #214, không merge #212, không đổi base PR của TV3, không bật flags, không tick/đóng Issue.
-- Worktree chính vẫn giữ nguyên các thay đổi chưa commit/untracked của người dùng; mọi thao tác diễn ra trong worktree riêng.
+- Làm mới trạng thái PR #211/#212/#214, workflow run `44496245054` và Issues #18/#157/#162 từ GitHub; không chạy Final UAT hoặc stack runtime.
+- Đồng bộ ma trận 37 case, acceptance, report content, Markdown speaker notes, audit và submission README với CI mới sau retarget #212.
+- Cập nhật speaker notes trong PPTX draft ở slide 16 và 23; ZIP integrity PASS, 23 slide XML/23 notes XML. Chỉ hai notes XML thay đổi; toàn bộ slide XML và media giữ nguyên. SHA256 mới: `70c2e0fd02a1bcdcffb4c84f8871944b6e58094f2df3d7049086d41dbcc9dac0`.
+- Các commit đồng bộ văn bản trên branch gồm `51218bf`, `a079680`, `29de073`, `ece68b3`, `13c9e63`, `c809fba`; commit PPTX/README cuối `62019fc3933064526f0448bf10c2a48da679ab3f`. PR #214 vẫn OPEN, TV2 đang được request review; chưa có review/comment.
+- `git diff --check` PASS trong clone xác minh riêng; clone sạch sau commit. Workspace gốc vẫn ở `codex/tv5-w1-acceptance-evidence` và các mục untracked `.vs/`, `frontend/package-lock.json`, `reports/tv5-m01-local/` được giữ nguyên.
+- Không merge PR #214/#212, không đổi base PR #212, không bật C2/Finance, không tick/đóng Issue.
 
 **Disposition:** PR #211 đã merge; post-merge readiness/frontend/E2E trên merge SHA đều SUCCESS. PR #212 đã retarget sang `main`; CI mới `44496245054` SUCCESS cả frontend và hai E2E cấu hình (OFF 24/24, ON 25/25, 0 skip), nhưng PR vẫn OPEN và TV2 chưa review exact HEAD `3483486`. PR #214 chờ TV2 review. Main `cee7c87d...` chưa được TV2 xác nhận frozen; Final UAT `NOT_RUN`; C2 OFF, Finance NOT_APPROVED, runtime flags NOT_VERIFIED. Release vẫn `PARTIAL / BLOCKED` cho tới khi #212 được review/quyết định tích hợp, TV2 công bố frozen SHA, có clean-stack/clone receipts, evidence 37 case áp dụng và hình 6.1–6.8.
