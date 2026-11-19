@@ -35,14 +35,15 @@
 | CI | Run `44456964277`: E2E C2 ON 25 passed/0 skipped; E2E C2 OFF 24 passed/0 skipped; frontend typecheck/test/build thành công; run có trước khi đổi base, chưa có CI mới sau retarget |
 | Formal review | Review TV2 hiện có tại HEAD cũ `a43abf5`, không phải exact HEAD `3483486`; cần owner review lại HEAD mới |
 
-Sau khi #211 merge, TV3 đã đổi base #212 sang `main@cee7c87d`. Run `44456964277` là CI trước retarget, không chứng minh trạng thái sau đổi base. TV3 cần kiểm tra diff/conflict và tạo CI mới; formal review TV2 hiện có vẫn gắn HEAD cũ `a43abf5`, không phải HEAD `3483486`. TV5 không tự thay đổi source/base của TV3.
+Sau khi #211 merge, TV3 đã đổi base #212 sang `main@cee7c87d`. CI mới sau retarget là run `44496245054`: job `frontend` SUCCESS; jobs `E2E C2 OFF` và `E2E C2 ON` vẫn `IN_PROGRESS` tại lần kiểm tra. Run `44456964277` là CI trước retarget, không thay thế run mới. Formal review TV2 hiện có vẫn gắn HEAD cũ `a43abf5`, không phải HEAD `3483486`. TV3 cần theo dõi run mới và xử lý kết quả; TV2 cần review exact HEAD. TV5 không tự thay đổi source/base của TV3.
 
 ### PR #214 — tài liệu TV5
 
 | Hạng mục | Trạng thái đã kiểm tra |
 |---|---|
 | PR | OPEN, mergeable `true`, base `main` |
-| HEAD tại lúc làm mới | `d93a8fcb77b57ca600b18507c773e34820d418f0` trước đồng bộ main và cập nhật tài liệu trong lượt này |
+| HEAD sau lần push vừa xác minh | `bc9e539099fe8bcfadf62fc01fdc9d8f714d3e53` |
+| Base | `main@cee7c87d1c7437fc5ed0009405fd2d0fc394bfb2` |
 | Review/comments | Chưa có formal review hoặc comment; TV2 `duyxl56785` đang nằm trong requested reviewers |
 | Changed files | 7 file TV5 docs/notes/matrix/audit, không có source code trước lần đồng bộ main |
 
@@ -66,6 +67,7 @@ TV5 chỉ cập nhật tài liệu thuộc ownership TV5; không merge PR #214. 
 | #211 Frontend/E2E `44454864498` | Frontend + browser | 24 passed, 1 skipped | C2 OFF; `voucher-c2.spec.ts` không chạy |
 | #212 Frontend/E2E `44456964277` | C2 ON browser | 25 passed, 0 skipped | PR HEAD `3483486`; CI trước khi retarget base sang main |
 | #212 Frontend/E2E `44456964277` | C2 OFF browser | 24 passed, 0 skipped | PR HEAD `3483486`; CI trước khi retarget base sang main |
+| #212 Frontend/E2E `44496245054` | Frontend + E2E C2 ON/OFF | Frontend SUCCESS; both E2E jobs IN_PROGRESS | New run after retarget to `main@cee7c87d`; no E2E result yet |
 
 ### TV5 local preflight trên ứng viên tích hợp
 
@@ -112,7 +114,7 @@ Hình 6.1–6.8 phải được TV2 chụp trên frozen SHA theo mapping: 6.1 Ho
 | Hạng mục | Trạng thái | Owner | Evidence cần có | Điều kiện đóng |
 |---|---|---|---|---|
 | #211 merge integration | MERGED; readiness SUCCESS; frontend SUCCESS; E2E SUCCESS | TV2 | Merge SHA `cee7c87d`; runs `44493061534` / `44493061575` | CI hậu merge bắt buộc đã xanh; vẫn không thay Final UAT |
-| #212 retarget/review | BASE UPDATED; WAITING_FOR_TV3_CI_AND_TV2_REVIEW | TV3 + TV2 | Base `main@cee7c87d`, CI mới sau retarget, review exact HEAD | CI và review exact HEAD đạt; sau đó TV2 quyết định merge |
+| #212 retarget/review | BASE UPDATED; CI IN_PROGRESS; WAITING_FOR_TV2_REVIEW | TV3 + TV2 | Base `main@cee7c87d`, run `44496245054`, review exact HEAD | CI và review exact HEAD đạt; sau đó TV2 quyết định merge |
 | #214 TV5 docs | OPEN / WAITING_REVIEW | TV2 | Exact head, docs-only diff, `git diff --check` | TV2 review và phản hồi; TV5 xử lý feedback trong ownership |
 | Frozen SHA | BLOCKED | TV2 | Full SHA, freeze time, CI URLs, PR list | TV2 xác nhận bằng văn bản |
 | Final UAT #18 | BLOCKED / NOT_RUN | TV2/TV3/TV4/TV5 | Clean stack, exact SHA, HTTP/DB/Inventory/Finance receipts, screenshots | Bắt buộc cases đạt; P0 được xử lý/waiver rõ ràng |
@@ -141,4 +143,4 @@ Trạng thái issue được fetch trực tiếp trong lượt làm mới 19/11:
 - Không merge PR #214, không merge #212, không đổi base PR của TV3, không bật flags, không tick/đóng Issue.
 - Worktree chính vẫn giữ nguyên các thay đổi chưa commit/untracked của người dùng; mọi thao tác diễn ra trong worktree riêng.
 
-**Disposition:** PR #211 đã merge và post-merge readiness/frontend/E2E đều SUCCESS. TV3 đã đổi base #212 sang main nhưng CI mới và formal review exact HEAD chưa có. PR #214 chờ TV2 review. Main chưa được xác nhận frozen; Final UAT `NOT_RUN`; C2 OFF, Finance NOT_APPROVED, runtime flags NOT_VERIFIED. Release vẫn `PARTIAL / BLOCKED` cho tới khi có frozen SHA, clean-stack/clone receipts, evidence 37 case áp dụng và hình 6.1–6.8.
+**Disposition:** PR #211 đã merge và post-merge readiness/frontend/E2E đều SUCCESS. TV3 đã đổi base #212 sang main; CI mới `44496245054` đang chạy (frontend SUCCESS, E2E ON/OFF IN_PROGRESS), TV2 chưa review exact HEAD. PR #214 chờ TV2 review. Main chưa được xác nhận frozen; Final UAT `NOT_RUN`; C2 OFF, Finance NOT_APPROVED, runtime flags NOT_VERIFIED. Release vẫn `PARTIAL / BLOCKED` cho tới khi CI/review #212 hoàn tất, có frozen SHA, clean-stack/clone receipts, evidence 37 case áp dụng và hình 6.1–6.8.
