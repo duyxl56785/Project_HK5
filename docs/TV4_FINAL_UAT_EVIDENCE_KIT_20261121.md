@@ -1,8 +1,8 @@
 # TV4 — bộ chuẩn bị evidence Final UAT, 21/11/2026
 
-**Owner:** Phạm Thế Cường (TV4)  
+**Owner:** Phạm Thế Cường (TV4)
 **Trạng thái tài liệu:** `PREPARATION_ONLY` — đây là runbook, **không** là
-receipt kết quả và không xác nhận bất kỳ ca nào đã PASS.  
+receipt kết quả và không xác nhận bất kỳ ca nào đã PASS.
 **Checkpoint nguồn:** `main@4b5bcb4ceb5a6a636e4c943db2d41c8a4c1bb14f`
 (19/11/2026), trước khi TV2 công bố frozen SHA.
 
