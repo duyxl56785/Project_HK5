@@ -34,6 +34,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 import org.junit.jupiter.api.*;
+import org.postgresql.util.PSQLException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -188,6 +190,84 @@ class VoucherCheckoutPostgresIT {
         money("100000", new BigDecimal(placed.prices().getLast().gross()));
         money("5000", new BigDecimal(placed.prices().getLast().platformFee()));
         assertEquals(1, ledger.size());
+    }
+
+    @Test void nativeSqlCannotChangeOrRemoveTheVoucherSnapshot() {
+        var placed = place(request(false));
+        UUID child = storeOrder(placed.orderId(), STORE_A);
+        String original = db.queryForObject(
+                "select voucher_snapshot::text from seller_orders where id=?", String.class, child);
+        for (String change : List.of(
+                "jsonb_set(voucher_snapshot, '{code}', '\"OTHER\"'::jsonb)",
+                "jsonb_set(voucher_snapshot, '{voucherId}', '\"00000000-0000-0000-0000-000000000099\"'::jsonb)",
+                "jsonb_set(voucher_snapshot, '{version}', '99'::jsonb)",
+                "jsonb_set(voucher_snapshot, '{type}', '\"FIXED\"'::jsonb)",
+                "jsonb_set(voucher_snapshot, '{discountValue}', '10'::jsonb)",
+                "jsonb_set(voucher_snapshot, '{maxDiscount}', '40000'::jsonb)",
+                "jsonb_set(jsonb_set(voucher_snapshot, '{merchandiseAmount}', '200000'::jsonb),"
+                        + " '{discountAmount}', '30001'::jsonb)",
+                "null::jsonb")) {
+            assertSnapshotUpdateRejected("update seller_orders set voucher_snapshot=" + change + " where id=?", child);
+            assertEquals(original, db.queryForObject(
+                    "select voucher_snapshot::text from seller_orders where id=?", String.class, child));
+        }
+    }
+
+    @Test void nativeSqlCannotAttachAVoucherToAnOrderCreatedWithoutOne() {
+        var placed = place(request(false));
+        UUID child = storeOrder(placed.orderId(), STORE_B);
+        assertSnapshotUpdateRejected("""
+                update seller_orders set voucher_snapshot=jsonb_build_object(
+                    'voucherId', '00000000-0000-0000-0000-000000000099',
+                    'version', 1, 'code', 'OTHER', 'type', 'FIXED',
+                    'discountValue', 1, 'merchandiseAmount', 100001, 'discountAmount', 1)
+                where id=?
+                """, child);
+        assertNull(db.queryForObject(
+                "select voucher_snapshot::text from seller_orders where id=?", String.class, child));
+        money("100000", db.queryForObject("select gross from seller_orders where id=?", BigDecimal.class, child));
+    }
+
+    @Test void unchangedSnapshotsAndFulfillmentUpdatesRemainAllowed() {
+        var placed = place(request(false));
+        UUID withVoucher = storeOrder(placed.orderId(), STORE_A);
+        UUID withoutVoucher = storeOrder(placed.orderId(), STORE_B);
+        String original = db.queryForObject(
+                "select voucher_snapshot::text from seller_orders where id=?", String.class, withVoucher);
+        assertEquals(1, db.update(
+                "update seller_orders set voucher_snapshot=?::jsonb, updated_at=updated_at+interval '1 second' where id=?",
+                original, withVoucher));
+        assertEquals(1, db.update(
+                "update seller_orders set voucher_snapshot=null, updated_at=updated_at+interval '1 second' where id=?",
+                withoutVoucher));
+        fulfillment.sellerAction(STORE_A, withVoucher, "accept", null);
+        fulfillment.sellerAction(STORE_B, withoutVoucher, "accept", null);
+        assertEquals("ACCEPTED", db.queryForObject(
+                "select status from seller_orders where id=?", String.class, withVoucher));
+        assertEquals("ACCEPTED", db.queryForObject(
+                "select status from seller_orders where id=?", String.class, withoutVoucher));
+        assertEquals(original, db.queryForObject(
+                "select voucher_snapshot::text from seller_orders where id=?", String.class, withVoucher));
+        assertNull(db.queryForObject(
+                "select voucher_snapshot::text from seller_orders where id=?", String.class, withoutVoucher));
+    }
+
+    @Test void immutableVoucherSnapshotKeepsGrossBoundToTheOriginalDiscount() {
+        var placed = place(request(false));
+        UUID child = storeOrder(placed.orderId(), STORE_A);
+        var failure = assertThrows(DataIntegrityViolationException.class,
+                () -> db.update("update seller_orders set gross=gross+1 where id=?", child));
+        var sql = assertInstanceOf(PSQLException.class, failure.getMostSpecificCause());
+        assertEquals("23514", sql.getSQLState());
+        assertEquals("ck_seller_order_voucher_snapshot", sql.getServerErrorMessage().getConstraint());
+        money("169999", db.queryForObject("select gross from seller_orders where id=?", BigDecimal.class, child));
+    }
+
+    private void assertSnapshotUpdateRejected(String update, UUID child) {
+        var failure = assertThrows(DataIntegrityViolationException.class, () -> db.update(update, child));
+        var sql = assertInstanceOf(PSQLException.class, failure.getMostSpecificCause());
+        assertEquals("23514", sql.getSQLState());
+        assertEquals("seller_order_voucher_snapshot_immutable", sql.getServerErrorMessage().getConstraint());
     }
 
     @Test void promotionMustBeAuthoritativeAndQuoteCannotBeRepricedSilently() {
