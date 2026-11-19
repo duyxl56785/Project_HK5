@@ -2,9 +2,11 @@
 
 **Repository:** `duyxl56785/Project_HK5`
 **Vai trò:** TV5 — QA Lead
-**Kết luận tổng:** `PARTIAL / WAITING_FOR_TV3_CI_AND_TV2_FROZEN_SHA`
+**Kết luận tổng:** `PARTIAL / WAITING_FOR_TV2_FROZEN_SHA_AND_FINAL_UAT_RECEIPTS`
 
-**Lần làm mới GitHub:** 19/11/2026; `git ls-remote origin` xác nhận `main=cee7c87d1c7437fc5ed0009405fd2d0fc394bfb2`.
+**Lần làm mới GitHub:** 19/11/2026; commit search mới nhất và compare PR #214 xác nhận `main=4b5bcb4ceb5a6a636e4c943db2d41c8a4c1bb14f` sau merge #212.
+
+> **Delta sau checkpoint cũ:** PR #212 đã được TV2 APPROVE đúng HEAD `3483486` và MERGED vào `main` lúc `2026-11-19T10:05:23Z`; merge SHA `4b5bcb4`. Những dòng phía dưới được cập nhật theo trạng thái mới này. Không dùng các đoạn mô tả #212 còn OPEN trong các tài liệu lịch sử khác làm trạng thái hiện hành.
 
 ## A. Trạng thái GitHub
 
@@ -30,27 +32,28 @@
 | Hạng mục | Trạng thái đã kiểm tra |
 |---|---|
 | HEAD | `3483486acd375e2c45616974ab333d2b850b9771` |
-| Base | `main` tại `cee7c87d1c7437fc5ed0009405fd2d0fc394bfb2` |
-| PR | OPEN, chưa merge; TV3 đã đổi base sang main (PR updated `2026-11-19T09:18:43Z`) |
-| CI | Run mới sau retarget `44496245054`: frontend SUCCESS; E2E C2 OFF 24 passed/0 skipped; E2E C2 ON 25 passed/0 skipped; cả ba jobs completed/SUCCESS trên base `main@cee7c87d` |
-| Formal review | Review TV2 hiện có tại HEAD cũ `a43abf5`, không phải exact HEAD `3483486`; cần owner review lại HEAD mới |
+| Base | `main@cee7c87d` tại thời điểm retarget; merge target cuối là `main` |
+| PR | MERGED `2026-11-19T10:05:23Z`; merge commit `4b5bcb4ceb5a6a636e4c943db2d41c8a4c1bb14f` |
+| CI | Retarget run `44496245054`: frontend SUCCESS; E2E C2 OFF 24 passed/0 skipped; E2E C2 ON 25 passed/0 skipped; cả ba jobs SUCCESS trước merge |
+| Formal review | TV2 `APPROVED` đúng exact HEAD `3483486` lúc `2026-11-19T10:04:12Z`; review ghi nhận matrix ON/OFF và không có skip |
 
-Sau khi #211 merge, TV3 đã đổi base #212 sang `main@cee7c87d`. CI mới sau retarget `44496245054` đã hoàn tất SUCCESS: frontend typecheck/unit/build PASS; E2E C2 OFF 24/24 và C2 ON 25/25, đều 0 skip. Log job cũng ghi `FAILS=0`. Run `44456964277` là CI trước retarget, chỉ giữ làm lịch sử. Formal review TV2 hiện có vẫn gắn HEAD cũ `a43abf5`, không phải HEAD `3483486`; PR #212 vẫn OPEN và đang chờ TV2 review exact HEAD. TV3 không còn cần theo dõi run này; bước tiếp theo của TV3 là xử lý feedback/review nếu phát sinh. TV5 không tự thay đổi source/base của TV3.
+Sau khi #211 merge, TV3 đổi base #212 sang `main@cee7c87d`; CI `44496245054` hoàn tất SUCCESS: frontend typecheck/unit/build PASS; E2E C2 OFF 24/24 và C2 ON 25/25, đều 0 skip, `FAILS=0`. TV2 sau đó APPROVED đúng HEAD `3483486`; #212 được merge vào main tại `4b5bcb4`. CI `44496245054` là CI retarget trước merge, không phải push CI sau merge hoặc frozen-SHA CI. Connector Actions không trả workflow run gắn merge SHA `4b5bcb4` trong lượt kiểm tra; TV2 cần cung cấp/xác nhận post-merge push run. TV5 không sửa source của TV3.
 
 ### PR #214 — tài liệu TV5
 
 | Hạng mục | Trạng thái đã kiểm tra |
 |---|---|
-| PR | OPEN, mergeable `true`, base `main` |
-| Base | `main@cee7c87d1c7437fc5ed0009405fd2d0fc394bfb2` |
-| Review/comments | Chưa có formal review hoặc comment; TV2 `duyxl56785` đang nằm trong requested reviewers |
-| Changed files | 7 file TV5 docs/notes/matrix/audit, không có source code trước lần đồng bộ main |
+| PR | OPEN, GitHub `mergeable=false` tại lần kiểm tra |
+| Remote HEAD | `c46138d830f4c65759bff1b9daab591d2db3d52f` |
+| Base / compare | Base `main`; main `4b5bcb4`; compare `diverged`, PR branch ahead 22 / behind 4; merge-base `cee7c87d` |
+| Review/comments | Chưa có formal review, inline thread hoặc comment; TV2 `duyxl56785` vẫn là requested reviewer |
+| Changed files | 7 file TV5 docs/notes/matrix/audit; không có source business logic |
 
-TV5 chỉ cập nhật tài liệu thuộc ownership TV5; không merge PR #214. Sau khi cập nhật/push, xác nhận lại exact head, base và requested reviewer.
+TV5 đồng bộ `main@4b5bcb4` vào clone riêng bằng merge không conflict, chưa push thay đổi đồng bộ này tại checkpoint audit. Cần cập nhật checklist thực thi/evidence intake thuộc ownership TV5, kiểm tra diff rồi mới push branch PR #214. Không merge PR #214.
 
 ### Main / freeze
 
-- Main hiện tại tại lần kiểm tra: `cee7c87d1c7437fc5ed0009405fd2d0fc394bfb2` (merge #211; `git ls-remote origin refs/heads/main` xác nhận).
+- Main hiện tại tại lần kiểm tra: `4b5bcb4ceb5a6a636e4c943db2d41c8a4c1bb14f` (merge #212; commit search mới nhất và compare PR #214 cùng xác nhận).
 - Chưa có xác nhận của TV2 rằng SHA này là frozen SHA; không tự gán frozen SHA từ main hiện tại.
 - Lịch TV2 mới nhất trên PR #211: freeze trước 18:00 ngày 20/11/2026; Final UAT ngày 21/11/2026.
 - M01 hiện còn ghi lịch freeze 19/11 và chữ ký TV5/TV4 `CHỜ`. M01 thuộc owner TV2; TV2 cần đồng bộ tài liệu theo formal reviews và lịch mới.
@@ -91,7 +94,7 @@ Worktree disposable được tạo từ `main@4471256`, sau đó merge `origin/c
 
 **NOT APPROVED**
 
-- C2: OFF; #212 đã có CI mới sau retarget xanh (C2 ON 25/25, 0 skip) nhưng PR vẫn OPEN, chưa có formal review TV2 tại exact HEAD, chưa có frozen-SHA CI/P0 triage và Finance business approval. Chỉ TV2/business quyết định bật cờ sau khi đủ gate.
+- C2: OFF; #212 đã MERGED và TV2 APPROVED đúng HEAD; CI retarget C2 ON 25/25, 0 skip. Vẫn thiếu frozen-SHA CI, P0 triage, Finance business approval và runtime flag receipt. Chỉ TV2/business quyết định bật cờ sau khi đủ gate.
 - Finance: NOT_APPROVED cho demo/production khi chưa có business approval/policy source đầy đủ. Không suy approval từ code review hoặc CI.
 - Rate 0.05, scale 0 và house-store policy phải theo policy được phê duyệt; không tự bật `--approved-finance-policy`.
 - Nếu gate C2 không đạt trước freeze, báo cáo phải ghi: **“đã code, đã test, chưa bật trong bản nộp”**. Không trình bày C2/Finance là chức năng đã nghiệm thu.
@@ -102,7 +105,7 @@ Worktree disposable được tạo từ `main@4471256`, sau đó merge `origin/c
 |---|---|---|
 | `Bao_cao_Smart_ECommerce_ban_nop.docx` | MISSING FROM REPOSITORY | Đây là file Word chính thức TV2 chốt ngày 16/11; TV2 ghép sau E2E/freeze. TV5 không thay bằng draft của mình. |
 | `Bao_cao_Soopi_TV5_DRAFT_2026-11-14.docx` | DRAFT, giữ nguyên | SHA256 `81abe78af6ae6d1bbe80f0b92465750beb97afda69d2149738e8c857c2202c12`; ZIP PASS. Không phải bản nộp chính thức. |
-| `Soopi_TV5_notes_DRAFT_2026-11-14.pptx` | DRAFT, speaker notes cập nhật | SHA256 mới `5e4e503dc63e7cee75f9ba7ab1bc0c66b7c6206d1af092bb2cec8e5b4ac2920f`; ZIP PASS; 23 slides/23 notes; lượt cập nhật hiện tại chỉ đổi notes slide 16 và 23, không thay visible slides/media. |
+| `Soopi_TV5_notes_DRAFT_2026-11-14.pptx` | DRAFT, speaker notes cập nhật | SHA256 mới `70c2e0fd02a1bcdcffb4c84f8871944b6e58094f2df3d7049086d41dbcc9dac0`; ZIP PASS; 23 slides/23 notes; lượt cập nhật chỉ đổi notes slide 16 và 23, không thay visible slides/media. |
 | `TV5_REPORT_CONTENT.md` | Updated 19/11 | Bổ sung PR #211/#212, CI, merge candidate, frozen SHA và gate C2/Finance. |
 | `TV5_DECK_SPEAKER_NOTES.md` | Updated 19/11 | Đồng bộ lời trình bày slide 8, 16, 23 với trạng thái hiện tại. |
 
@@ -113,13 +116,13 @@ Hình 6.1–6.8 phải được TV2 chụp trên frozen SHA theo mapping: 6.1 Ho
 | Hạng mục | Trạng thái | Owner | Evidence cần có | Điều kiện đóng |
 |---|---|---|---|---|
 | #211 merge integration | MERGED; readiness SUCCESS; frontend SUCCESS; E2E SUCCESS | TV2 | Merge SHA `cee7c87d`; runs `44493061534` / `44493061575` | CI hậu merge bắt buộc đã xanh; vẫn không thay Final UAT |
-| #212 retarget/review | BASE UPDATED; CI SUCCESS; WAITING_FOR_TV2_REVIEW | TV3 + TV2 | Base `main@cee7c87d`, run `44496245054` (frontend SUCCESS, E2E OFF 24/24, ON 25/25, 0 skip); TV2 review cũ `a43abf5` | TV2 review exact HEAD `3483486`; xử lý feedback rồi TV2 quyết định merge |
-| #214 TV5 docs | OPEN / WAITING_REVIEW | TV2 | Exact head, docs-only diff, `git diff --check` | TV2 review và phản hồi; TV5 xử lý feedback trong ownership |
+| #212 integration | MERGED | TV2 + TV3 | TV2 APPROVED exact HEAD `3483486`; merge SHA `4b5bcb4`; CI retarget `44496245054` (frontend SUCCESS, E2E OFF 24/24, ON 25/25, 0 skip) | TV2 cung cấp post-merge push CI run và frozen-SHA CI |
+| #214 TV5 docs | OPEN / WAITING_REVIEW; remote branch behind main 4 commits | TV5 + TV2 | Remote HEAD `c46138d`; main `4b5bcb4`; 7 docs-only files; no review/thread/comment; local clone merge from main is clean | TV5 hoàn thiện checklist/intake, push updated branch; TV2 review exact new HEAD |
 | Frozen SHA | BLOCKED | TV2 | Full SHA, freeze time, CI URLs, PR list | TV2 xác nhận bằng văn bản |
 | Final UAT #18 | BLOCKED / NOT_RUN | TV2/TV3/TV4/TV5 | Clean stack, exact SHA, HTTP/DB/Inventory/Finance receipts, screenshots | Bắt buộc cases đạt; P0 được xử lý/waiver rõ ràng |
 | #157 Return/Finance | OPEN | TV5 + TV3/TV4 | RET-05 stock-once, Return/settlement UAT và các checkbox còn lại | Mọi tiêu chí issue có evidence, TV5 cập nhật trong phạm vi |
 | #162 report/deck | OPEN | TV2 + TV5 | Official DOCX, final screenshots, frozen SHA, CI/UAT receipts | Đối chiếu bản ghép và đủ checklist trước nộp |
-| Voucher C2 | BLOCKED / OFF | TV2 + TV3 | #211/#212 merge, frozen-SHA C2 E2E no skip, P0 triage | TV2/business approval và tất cả gate đạt |
+| Voucher C2 | BLOCKED / OFF | TV2 + TV3 | #211/#212 merged; PR-head/retarget C2 ON 25/25, 0 skip; frozen-SHA C2 E2E chưa có | TV2/business approval, frozen-SHA CI, P0 triage, runtime flags được xác nhận |
 | Finance policy | WAITING_FOR_APPROVAL | TV2/business | Policy source, signatures, rate/scale/house policy | Phê duyệt rõ ràng đúng phạm vi demo/production |
 | Frontend dependency advisory | OPEN / P2 / FIX NOT VERIFIED | TV2 (đã nhận ownership TV1) | Main `frontend/package-lock.json` blob `28447aea3df83da544b5ff6bc77f5fc78e3e9612` vẫn khóa `vite@6.4.4`; truy vấn GHSA không tìm thấy issue/commit khớp, chưa đủ căn cứ xác nhận đã có PR fix | TV2 chọn bản vá tương thích và rerun frontend CI; TV5 không tự nâng dependency shared |
 
@@ -127,18 +130,21 @@ Trạng thái issue được fetch trực tiếp trong lượt làm mới 19/11:
 
 ## F. Bàn giao theo owner
 
-- **TV2:** post-merge CI #211 đã SUCCESS; review PR #214; kiểm tra CI/review mới của #212; xác nhận P0 scope, công bố frozen SHA; điều phối clean stack/Final UAT; cung cấp official DOCX và ảnh 6.1–6.8.
-- **TV3:** đã đổi base #212 sang main và CI mới `44496245054` đã xanh; phối hợp TV2 xử lý review exact HEAD `3483486`/feedback và tiếp tục Checkout/Parent Order/SellerOrder trong UAT.
+- **TV2:** xác nhận post-merge push CI #212; review PR #214; xác nhận P0 scope, công bố frozen SHA; điều phối clean stack/Final UAT; cung cấp official DOCX và ảnh 6.1–6.8.
+- **TV3:** PR #212 đã merge sau review exact HEAD; cung cấp Checkout/Cart/Order/Voucher receipts trên frozen SHA, xử lý blocker/feedback nếu phát sinh.
 - **TV4:** xác nhận fulfillment/COD/Inventory/Return receipts trên frozen SHA; xử lý blocker restock nếu muốn đưa vào scope.
 - **TV5:** đối chiếu actual receipts, điền ma trận chỉ theo kết quả thật, kiểm ảnh/tiền/report, hoàn tất QA sign-off sau khi gate đạt.
 
 ## G. Thay đổi TV5 trong phiên này
 
-- Làm mới trạng thái PR #211/#212/#214, workflow run `44496245054` và Issues #18/#157/#162 từ GitHub; không chạy Final UAT hoặc stack runtime.
+- Làm mới trạng thái PR #212/#214 trực tiếp từ GitHub; xác minh review TV2 exact HEAD `3483486`, merge commit #212 `4b5bcb4`, compare/base và changed files PR #214. Không chạy Final UAT hoặc stack runtime.
+- Tạo `TV5_FINAL_UAT_EXECUTION_CHECKLIST_20261121.md` với mục tiêu, prerequisites, steps, expected result, evidence, evidence owner và status cho đủ 37 case; tạo `TV5_FINAL_UAT_EVIDENCE_INTAKE_20261121.md` cho cấu trúc folder/manifest, owner mapping, raw/redacted artifacts và receipt acceptance.
+- Đồng bộ gate G-05 #212 MERGED; giữ G-06 frozen-SHA CI NOT RUN và G-08 Finance/C2 BLOCKED.
 - Đồng bộ ma trận 37 case, acceptance, report content, Markdown speaker notes, audit và submission README với CI mới sau retarget #212.
 - Cập nhật speaker notes trong PPTX draft ở slide 16 và 23; ZIP integrity PASS, 23 slide XML/23 notes XML. Chỉ hai notes XML thay đổi; toàn bộ slide XML và media giữ nguyên. SHA256 mới: `70c2e0fd02a1bcdcffb4c84f8871944b6e58094f2df3d7049086d41dbcc9dac0`.
 - Các commit đồng bộ văn bản trên branch gồm `51218bf`, `a079680`, `29de073`, `ece68b3`, `13c9e63`, `c809fba`; commit PPTX/README `62019fc`; commit phân biệt retarget CI với frozen-SHA gate `c685d5536fa5cdc34e9045b913548af2a0c20e2d`. PR #214 vẫn OPEN, TV2 đang được request review; chưa có review/comment.
-- `git diff --check` PASS trong clone xác minh riêng; clone sạch sau commit. Workspace gốc vẫn ở `codex/tv5-w1-acceptance-evidence` và các mục untracked `.vs/`, `frontend/package-lock.json`, `reports/tv5-m01-local/` được giữ nguyên.
-- Không merge PR #214/#212, không đổi base PR #212, không bật C2/Finance, không tick/đóng Issue.
+- Clone riêng đã fetch GitHub `main@4b5bcb4` và merge vào branch tài liệu không conflict; merge commit local `f485738cc6eb7ef69761c03e13d1d5cee1780857`. Checklist/evidence guide đang được chuẩn bị trên clone, chưa push tại thời điểm audit này.
+- Workspace gốc vẫn ở `codex/tv5-w1-acceptance-evidence` và các mục untracked `.vs/`, `frontend/package-lock.json`, `reports/tv5-m01-local/` được giữ nguyên.
+- Không merge PR #214, không bật C2/Finance, không tick/đóng Issue.
 
-**Disposition:** PR #211 đã merge; post-merge readiness/frontend/E2E trên merge SHA đều SUCCESS. PR #212 đã retarget sang `main`; CI mới `44496245054` SUCCESS cả frontend và hai E2E cấu hình (OFF 24/24, ON 25/25, 0 skip), nhưng PR vẫn OPEN và TV2 chưa review exact HEAD `3483486`. PR #214 chờ TV2 review. Main `cee7c87d...` chưa được TV2 xác nhận frozen; Final UAT `NOT_RUN`; C2 OFF, Finance NOT_APPROVED, runtime flags NOT_VERIFIED. Release vẫn `PARTIAL / BLOCKED` cho tới khi #212 được review/quyết định tích hợp, TV2 công bố frozen SHA, có clean-stack/clone receipts, evidence 37 case áp dụng và hình 6.1–6.8.
+**Disposition:** PR #211/#212 đã merge; TV2 APPROVED #212 đúng HEAD `3483486`; retarget CI `44496245054` xanh (frontend, OFF 24/24, ON 25/25, 0 skip). Chưa xác minh được post-merge push CI #212 trên merge SHA `4b5bcb4`. PR #214 OPEN, chờ TV2 review; branch remote sau main 4 commits và đã được đồng bộ clean trong clone riêng. Main `4b5bcb4` chưa được TV2 xác nhận frozen; Final UAT `NOT RUN`; C2 OFF, Finance NOT_APPROVED, runtime flags NOT_VERIFIED. Release vẫn `PARTIAL / BLOCKED` cho tới khi có frozen SHA, post-merge/frozen-SHA CI, clean-stack/clone receipts, evidence 37 case áp dụng, xử lý P0/UNKNOWN/RET-05 và hình 6.1–6.8.
