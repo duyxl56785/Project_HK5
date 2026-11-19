@@ -67,4 +67,4 @@ MD11 làm rõ phạm vi của MD04 cho bản nộp và demo local, không đổi
 
 **Quan hệ với quyết định cũ:** MD13–MD25 mở rộng MD05 (nay có giảm giá cấp đơn của từng Store) và giữ điều khoản "không cộng dồn với voucher" của MD12. MD01–MD04, MD06–MD11 không đổi.
 
-**Review:** contract C1 yêu cầu TV5 review phần tiền của C2. Tại ngày 16/11/2026, TV5, TV3 và TV4 chưa xác nhận; trạng thái ghi ở mục 8 của file chi tiết. Quyết định này không đổi phân công trong [OWNERSHIP.md](../OWNERSHIP.md).
+**Review:** contract C1 yêu cầu TV5 review phần tiền của C2. Tại ngày 16/11/2026, TV5, TV3 và TV4 chưa xác nhận; trạng thái ghi ở mục 8 của file chi tiết. Cập nhật 19/11/2026: TV5 và TV4 đã approve #211 tại `4f3152b`; TV3 là tác giả #211 và #212. Cờ C2 vẫn mặc định tắt. Việc bật C2 ở UAT ngày 21/11 theo bốn điều kiện ghi trong file chi tiết. Quyết định này không đổi phân công trong [OWNERSHIP.md](../OWNERSHIP.md).
