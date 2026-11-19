@@ -30,7 +30,7 @@
 | G-03 | Clean clone/clean install receipt cùng frozen SHA | TV1/TV2 | Machine, command, exit code, receipt: ____________________ | NOT_RUN |
 | G-04 | PR #211 merged; TV2, TV4, TV5 reviews đủ; không còn thread tiền/fulfillment chưa xử lý | TV2/TV4/TV5 | Merge SHA + review URLs: `cee7c87d1c7437fc5ed0009405fd2d0fc394bfb2`; 3/3 APPROVED tại `4f3152b` | MERGED / 3-of-3 APPROVED; TV2 vẫn cần xác nhận P0 scope |
 | G-05 | PR #212 (PR B) merged vào main trước 18:00 20/11 | TV2 | Merge SHA + CI URL: ____________________ | BLOCKED — #212 vẫn OPEN; retarget CI `44496245054` đã SUCCESS cả 3 jobs; chờ TV2 review exact HEAD `3483486` và quyết định merge |
-| G-06 | CI frozen SHA có `voucher-c2.spec.ts` PASS, 0 skipped | TV2 | Run URL + exact summary: ____________________ | NOT_RUN — chưa có frozen SHA; run `44456964277` trước retarget không thay thế |
+| G-06 | CI frozen SHA có `voucher-c2.spec.ts` PASS, 0 skipped | TV2 | Run URL + exact summary: ____________________ | NOT_RUN — retarget CI `44496245054` đã PASS trên PR HEAD (C2 ON 25/25, 0 skip), nhưng chưa có frozen SHA nên chưa đáp ứng gate này |
 | G-07 | Không còn P0 mở liên quan C2; TV2 xác nhận scope | TV2 + TV3/TV4/TV5 | Issue/triage links: ____________________ | NOT_RUN |
 | G-08 | Nếu C2 ON: TV2 xác nhận cả `--approved-inventory-pair`, `--approved-finance-policy`, `--approved-voucher-c2`; Finance policy rate `0.05`, scale `0` | TV2 | Cờ đã duyệt + policy source: ____________________ | BLOCKED — #212 chưa merge; chưa có frozen-SHA CI/P0 triage hoặc Finance business approval; runtime env chưa được kiểm tra |
 | G-09 | Stack disposable riêng, DB/volume/network/port riêng, dữ liệu giả; không đụng stack dùng chung | TV2/TV1 | Compose project + image digest + DB ID: ____________________ | NOT_RUN |
