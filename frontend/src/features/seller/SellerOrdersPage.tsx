@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { api } from '../../shared/api';
 import { Badge, dateTime, ErrorNote, Loaded, money, shortId, StatusFilter, useAction } from '../../shared/ui';
+import { formatExactVnd } from '../checkout/checkoutApi';
 import type { StoreOrder } from '../orders/OrdersPage';
 import { FinanceTable } from '../finance/FinanceTable';
 import type { StoreSummary } from '../finance/FinanceTable';
@@ -25,7 +26,9 @@ function Row({ order }: { readonly order: StoreOrder }) {
     {order.shipping && <p>{order.shipping.name} · {order.shipping.phone}<br />{order.shipping.address}</p>}
     <ul className="list">{order.items.map((i) => <li key={i.productId} className="row row--between">
       <span>{i.name ?? i.sku} × {i.quantity}</span><span>{money(i.lineTotal)}</span></li>)}</ul>
-    <p>Tổng COD: <strong>{money(order.gross)}</strong>{order.sellerNet !== null && <> · Phí sàn {money(order.platformFee)} · Thực nhận {money(order.sellerNet)}</>}</p>
+    <p>Tổng COD: <strong>{order.grossExact ? formatExactVnd(order.grossExact) : money(order.gross)}</strong>
+      {order.sellerNet !== null && <> · Phí sàn {money(order.platformFee)} · Thực nhận {money(order.sellerNet)}</>}</p>
+    {order.voucherCode && order.voucherDiscount && <p>Voucher {order.voucherCode}: −{formatExactVnd(order.voucherDiscount)}</p>}
     {order.statusReason && <p className="muted">Lý do: {order.statusReason}</p>}
     <div className="row row--wrap">
       {next && <button type="button" className="btn btn--primary" disabled={act.isPending} onClick={() => act.mutate(next.action)}>{next.label}</button>}

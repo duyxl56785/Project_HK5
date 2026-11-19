@@ -1,11 +1,14 @@
 package com.projecthk5.orderservice.entity;
 
+import com.projecthk5.orderservice.domain.VoucherSnapshot;
 import com.projecthk5.orderservice.finance.FinanceRules;
 import com.projecthk5.orderservice.fulfillment.SellerOrderLifecycle;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 @Entity
 @Table(name="seller_orders")
@@ -18,6 +21,9 @@ public class SellerOrder {
     @Column(name="store_id",nullable=false,length=200) private String storeId;
     @Column(nullable=false,precision=19,scale=2) private BigDecimal gross;
     @Column(name="platform_fee",nullable=false,precision=19,scale=2) private BigDecimal platformFee;
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(name="voucher_snapshot", columnDefinition="jsonb", updatable=false)
+    private VoucherSnapshot voucher;
     @Enumerated(EnumType.STRING) @Column(nullable=false,length=32) private SellerOrderLifecycle.Status status=SellerOrderLifecycle.Status.PLACED;
     @Enumerated(EnumType.STRING) @Column(name="cod_status",nullable=false,length=16) private CodStatus codStatus=CodStatus.PENDING;
     @Column(name="status_reason",length=500) private String statusReason;
@@ -32,7 +38,17 @@ public class SellerOrder {
     private List<OrderItem> items=new ArrayList<>();
     protected SellerOrder() {}
     public SellerOrder(Order order,String sellerId,String storeId,BigDecimal gross,BigDecimal fee){
-        this.id=UUID.randomUUID();this.order=order;this.sellerId=sellerId;this.storeId=storeId;this.gross=gross;this.platformFee=fee;
+        this(order, sellerId, storeId, gross, fee, null);
+    }
+    public SellerOrder(Order order,String sellerId,String storeId,BigDecimal gross,BigDecimal fee,VoucherSnapshot voucher){
+        this(UUID.randomUUID(), order, sellerId, storeId, gross, fee, voucher, Instant.now());
+    }
+    public SellerOrder(UUID id, Order order, String sellerId, String storeId, BigDecimal gross, BigDecimal fee,
+                       VoucherSnapshot voucher, Instant updatedAt) {
+        if (voucher != null && gross.compareTo(voucher.gross()) != 0)
+            throw new IllegalArgumentException("Voucher and SellerOrder gross differ");
+        this.id=id;this.order=order;this.sellerId=sellerId;this.storeId=storeId;this.gross=gross;this.platformFee=fee;
+        this.voucher=voucher;this.updatedAt=updatedAt;
     }
     public UUID getId(){return id;}
     public Order getOrder(){return order;}
@@ -41,6 +57,13 @@ public class SellerOrder {
     public BigDecimal getGross(){return gross;}
     public BigDecimal getPlatformFee(){return platformFee;}
     public BigDecimal getSellerNet(){return gross.subtract(platformFee);}
+    public VoucherSnapshot getVoucher(){return voucher;}
+    public BigDecimal getMerchandiseAmount(){
+        return voucher == null ? gross : BigDecimal.valueOf(voucher.merchandiseAmount());
+    }
+    public BigDecimal getVoucherDiscount(){
+        return voucher == null ? BigDecimal.ZERO : BigDecimal.valueOf(voucher.discountAmount());
+    }
     public SellerOrderLifecycle.Status getStatus(){return status;}
     public CodStatus getCodStatus(){return codStatus;}
     public String getStatusReason(){return statusReason;}

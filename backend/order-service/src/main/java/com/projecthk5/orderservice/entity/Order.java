@@ -24,7 +24,10 @@ public class Order {
     public enum OverallStatus { PROCESSING, COMPLETED, CANCELLED }
     public record Shipping(String name,String phone,String address) {}
     protected Order() {}
-    public Order(UUID id,String customerId) {this.id=id;this.customerId=customerId;this.status=Status.PLACED;this.total=BigDecimal.ZERO;this.createdAt=Instant.now();}
+    public Order(UUID id,String customerId) { this(id, customerId, Instant.now()); }
+    public Order(UUID id,String customerId,Instant createdAt) {
+        this.id=id;this.customerId=customerId;this.status=Status.PLACED;this.total=BigDecimal.ZERO;this.createdAt=createdAt;
+    }
     public UUID getId(){return id;}
     public String getCustomerId(){return customerId;}
     public Status getStatus(){return status;}

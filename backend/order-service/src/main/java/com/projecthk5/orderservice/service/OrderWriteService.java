@@ -15,12 +15,28 @@ public class OrderWriteService {
             CheckoutDraftJournal drafts){this.orders=orders;this.attempts=attempts;this.outbox=outbox;this.drafts=drafts;}
     /** Independent commit before Inventory; deliberately does not create a successful Order or outbox row. */
     public void prepareDraft(com.projecthk5.orderservice.domain.CheckoutDraft draft){drafts.prepare(draft);}
+    public boolean draftCommitted(java.util.UUID attemptId){return drafts.committed(attemptId);}
     @Transactional
     public Order savePlaced(Order order,java.util.UUID attemptId,String outboxPayload){
+        return save(order, attemptId, outboxPayload, false);
+    }
+    @Transactional
+    public Order saveVoucherPlaced(Order order, String outboxPayload, VoucherCheckoutJournal journal,
+                                  VoucherCheckoutJournal.Lease lease) {
+        if (!order.getId().equals(lease.attemptId())) throw new IllegalArgumentException("Order and voucher attempt differ");
+        journal.requirePlacement(lease);
+        Order saved = save(order, lease.attemptId(), outboxPayload, true);
+        journal.placed(lease);
+        return saved;
+    }
+
+    private Order save(Order order, java.util.UUID attemptId, String outboxPayload, boolean recoverable) {
         Order saved=orders.saveAndFlush(order);
         outbox.save(new OutboxEvent("order.placed.v1",saved.getId(),outboxPayload));
         CheckoutAttempt a=attempts.findById(attemptId).orElseThrow();
-        if(a.getState()!=CheckoutAttempt.State.PROCESSING) throw new IllegalStateException("Checkout attempt changed");
+        if(a.getState()!=CheckoutAttempt.State.PROCESSING
+                && !(recoverable && a.getState()==CheckoutAttempt.State.NEEDS_RECONCILIATION))
+            throw new IllegalStateException("Checkout attempt changed");
         a.succeed(saved.getId());attempts.saveAndFlush(a);
         return saved;
     }

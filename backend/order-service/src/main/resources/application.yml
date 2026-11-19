@@ -42,3 +42,6 @@ app:
     current-key-b64: ${JWT_HS256_CURRENT_KEY_B64:}
     previous-kid: ${JWT_HS256_PREVIOUS_KID:}
     previous-key-b64: ${JWT_HS256_PREVIOUS_KEY_B64:}
+hk5:
+  voucher-c2:
+    enabled: ${HK5_VOUCHER_C2_ENABLED:false}

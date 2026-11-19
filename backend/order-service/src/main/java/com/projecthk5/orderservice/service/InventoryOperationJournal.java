@@ -99,6 +99,19 @@ public class InventoryOperationJournal {
         transitionFromInFlight(operationId, attempt, State.CONFIRMED, null);
     }
 
+    /** Applied receipt only: a missing or mismatched Inventory response never opens UNKNOWN. */
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void confirmVoucherReserveReceipt(java.util.UUID attemptId, String id, String fingerprint) {
+        int updated = db.update("""
+                UPDATE inventory_operation_journal SET state='CONFIRMED', last_error_code=NULL, updated_at=now()
+                WHERE checkout_attempt_id=? AND operation_id=? AND payload_fingerprint=? AND operation_type='RESERVE'
+                  AND state IN ('UNKNOWN','IN_FLIGHT')
+                  AND EXISTS (SELECT 1 FROM checkout_voucher_sagas WHERE attempt_id=? AND phase='INVENTORY')
+                """, attemptId, id, fingerprint, attemptId);
+        if (updated == 0 && load(id).state() != State.CONFIRMED)
+            throw new IllegalStateException("Inventory journal does not accept this receipt");
+    }
+
     /** Only a positive proof of an atomic rejected/no-commit response is definitive. */
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void reject(String operationId, int attempt, String code) {

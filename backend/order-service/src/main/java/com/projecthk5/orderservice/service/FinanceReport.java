@@ -1,5 +1,6 @@
 package com.projecthk5.orderservice.service;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.projecthk5.orderservice.entity.SellerOrder;
 import com.projecthk5.orderservice.repository.SellerOrderRepository;
 import com.projecthk5.orderservice.ports.StoreDirectory;
@@ -29,9 +30,11 @@ public class FinanceReport {
     }
 
     public record Row(UUID storeOrderId, UUID orderId, BigDecimal gross, BigDecimal platformFee, BigDecimal sellerNet,
-                      String codStatus, Instant deliveredAt, Instant codCollectedAt, Instant settledAt) {}
+                      String codStatus, Instant deliveredAt, Instant codCollectedAt, Instant settledAt,
+                      @JsonFormat(shape = JsonFormat.Shape.STRING) BigDecimal voucherDiscount) {}
     public record Totals(long deliveredOrders, BigDecimal gross, BigDecimal platformFee, BigDecimal sellerNet,
-                         BigDecimal codCollected, BigDecimal codPending, BigDecimal settledNet, BigDecimal payableNet) {}
+                         BigDecimal codCollected, BigDecimal codPending, BigDecimal settledNet, BigDecimal payableNet,
+                         @JsonFormat(shape = JsonFormat.Shape.STRING) BigDecimal voucherDiscount) {}
     public record StoreSummary(String storeId, String storeName, Totals totals, List<Row> rows) {}
     public record Platform(Totals totals, List<StoreSummary> stores) {}
 
@@ -56,10 +59,12 @@ public class FinanceReport {
     static Totals totals(List<SellerOrder> delivered) {
         BigDecimal gross = BigDecimal.ZERO, fee = BigDecimal.ZERO, net = BigDecimal.ZERO;
         BigDecimal collected = BigDecimal.ZERO, pending = BigDecimal.ZERO, settled = BigDecimal.ZERO, payable = BigDecimal.ZERO;
+        BigDecimal voucherDiscount = BigDecimal.ZERO;
         for (SellerOrder so : delivered) {
             gross = gross.add(so.getGross());
             fee = fee.add(so.getPlatformFee());
             net = net.add(so.getSellerNet());
+            voucherDiscount = voucherDiscount.add(so.getVoucherDiscount());
             if (so.getCodStatus() == SellerOrder.CodStatus.COLLECTED) {
                 collected = collected.add(so.getGross());
                 if (so.getSettledAt() != null) settled = settled.add(so.getSellerNet());
@@ -68,12 +73,13 @@ public class FinanceReport {
                 pending = pending.add(so.getGross());
             }
         }
-        return new Totals(delivered.size(), gross, fee, net, collected, pending, settled, payable);
+        return new Totals(delivered.size(), gross, fee, net, collected, pending, settled, payable, voucherDiscount);
     }
 
     private static Row row(SellerOrder so) {
         return new Row(so.getId(), so.getOrder().getId(), so.getGross(), so.getPlatformFee(), so.getSellerNet(),
-                so.getCodStatus().name(), so.getDeliveredAt(), so.getCodCollectedAt(), so.getSettledAt());
+                so.getCodStatus().name(), so.getDeliveredAt(), so.getCodCollectedAt(), so.getSettledAt(),
+                so.getVoucherDiscount());
     }
 
     private Map<String, String> names(Set<String> storeIds) {

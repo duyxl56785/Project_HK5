@@ -17,10 +17,15 @@ public class OrderItem {
     @Column(name="product_name",length=255) private String productName;
     protected OrderItem() {}
     public OrderItem(SellerOrder so,String productId,int quantity,BigDecimal unitPrice,BigDecimal lineTotal){
-        this.id=UUID.randomUUID();this.sellerOrder=so;this.productId=productId;this.quantity=quantity;this.unitPriceSnapshot=unitPrice;this.lineTotal=lineTotal;
+        this(UUID.randomUUID(), so, productId, quantity, unitPrice, lineTotal, null, null);
     }
     public OrderItem(SellerOrder so,String productId,int quantity,BigDecimal unitPrice,BigDecimal lineTotal,String sku,String productName){
-        this(so,productId,quantity,unitPrice,lineTotal);this.sku=sku;this.productName=productName;
+        this(UUID.randomUUID(), so, productId, quantity, unitPrice, lineTotal, sku, productName);
+    }
+    public OrderItem(UUID id, SellerOrder so, String productId, int quantity, BigDecimal unitPrice, BigDecimal lineTotal,
+                     String sku, String productName) {
+        this.id=id;this.sellerOrder=so;this.productId=productId;this.quantity=quantity;this.unitPriceSnapshot=unitPrice;
+        this.lineTotal=lineTotal;this.sku=sku;this.productName=productName;
     }
     public UUID getId(){return id;}
     public String getProductId(){return productId;}
