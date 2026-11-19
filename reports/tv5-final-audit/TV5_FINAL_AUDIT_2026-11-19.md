@@ -137,7 +137,7 @@ Trạng thái issue được fetch trực tiếp trong lượt làm mới 19/11:
 - Đồng bộ gate G-05 #212 MERGED và post-merge CI `44502375038` attempt 2 SUCCESS; G-06 vẫn chờ frozen SHA, G-07 chờ P0 triage.
 - Sửa 7 nhóm review TV2 trong ma trận 37 case, acceptance, report content, Markdown speaker notes, audit và submission README; tạo thêm evidence kit tại `reports/minh-chung-kiem-thu/tv5-final-uat-20261121/`.
 - Cập nhật speaker notes PPTX draft slide 8/16/23; ZIP integrity PASS, 23 slide/23 notes; so sánh ZIP với bản trước xác nhận chỉ 3 notes XML thay đổi, slide XML/media/notes khác giữ nguyên. SHA256 `daa79abdd3711390519c3b1aa703cf951313fe2f3c50ee071f1bd91aabfd08c0`.
-- Không đưa thông tin HEAD/compare/mergeable tự tham chiếu PR #214 vào audit/report/acceptance. PR description sẽ ghi đúng trạng thái review và đường dẫn M01 sau khi push.
+- Không đưa thông tin HEAD/compare/mergeable tự tham chiếu PR #214 vào audit/report/acceptance. PR description đã cập nhật theo commit `a1c0714`; TV5 đã phản hồi 7 nhóm review bằng top-level comment và request TV2 review lại. Không tự approve/merge.
 - Không merge PR #214, không bật C2/Finance, không tick/đóng Issue.
 
 **Disposition:** #211/#212 MERGED; #212 TV2 APPROVED exact HEAD; post-merge CI run `44502375038` attempt 2 SUCCESS trên `4b5bcb4`. PR #214 OPEN / CHANGES_REQUESTED; TV5 đang sửa 7 nhóm tài liệu. Main `4b5bcb4` chưa được TV2 xác nhận frozen; Final UAT `NOT RUN`. C2 OFF; Finance approved cho local demo/submission nhưng production NOT_APPROVED; runtime flags NOT_VERIFIED. Release vẫn `PARTIAL / BLOCKED` tới khi có frozen SHA/CI đúng SHA, clean-stack/clone receipts, evidence 37 case, xử lý P0/UNKNOWN/RET-05 và ảnh 6.1–6.8.
