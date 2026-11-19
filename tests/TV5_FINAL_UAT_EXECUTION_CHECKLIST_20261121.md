@@ -9,8 +9,8 @@
 ## 0. Quy tắc bắt buộc
 
 1. Chỉ chạy sau khi TV2 công bố bằng văn bản full 40-character frozen `main` SHA, thời điểm freeze, stack/project riêng, flags được phép và người vận hành. Ghi đúng SHA thực tế trên mọi receipt.
-2. C2 mặc định **OFF**. Không thêm `--approved-voucher-c2` hoặc tự sửa `HK5_VOUCHER_C2_ENABLED`. Finance giữ **NOT APPROVED**; không thêm `--approved-finance-policy` khi chưa có business/policy approval bằng văn bản. TV5 không tự bật bất kỳ flag nào.
-3. PR #212 đã merge tại `4b5bcb4ceb5a6a636e4c943db2d41c8a4c1bb14f`; review TV2 APPROVED đúng HEAD `3483486` và CI retarget trước merge đã xanh. Đây là bằng chứng tích hợp/CI, **không phải** frozen-SHA CI hoặc Final UAT receipt.
+2. C2 mặc định **OFF**. Không thêm `--approved-voucher-c2` hoặc tự sửa `HK5_VOUCHER_C2_ENABLED`. M01 MD01–MD11 đã được TV2 phê duyệt cho bản nộp và demo local; production chưa được phê duyệt. `HK5_FINANCE_POLICY_APPROVED` vẫn mặc định OFF và chỉ TV2 được opt-in trong `.env.demo` local theo đúng M01. TV5 không tự bật bất kỳ flag nào.
+3. PR #212 đã merge tại `4b5bcb4ceb5a6a636e4c943db2d41c8a4c1bb14f`; TV2 APPROVED đúng HEAD `3483486`. Post-merge push CI run `44502375038` attempt 2 SUCCESS đúng merge SHA: frontend PASS, E2E C2 OFF 24/24 và ON 25/25, 0 skip. Đây là CI trên merge SHA, **không tự trở thành Final UAT**; chỉ đáp ứng G-06 nếu TV2 xác nhận `4b5bcb4` là frozen SHA.
 4. Mọi giao dịch dùng actor và dữ liệu giả. Không dùng tiền thật, không tuyên bố chuyển tiền thật, không tự phát fault injection UNKNOWN, không tạo/điều chỉnh tồn kho ngoài fixture đã được owner duyệt.
 5. PASS/FAIL chỉ sau thao tác thực tế và có raw evidence. Chưa chạy ghi `NOT RUN`; thiếu điều kiện/owner/contract ghi `BLOCKED` kèm lý do. `N/A` chỉ dùng ở nhánh cấu hình mà ma trận gốc ghi rõ không áp dụng, không đổi thành PASS.
 6. Raw logs/JSON/JUnit/DB receipts giữ nguyên byte. Chỉ tạo bản redacted để chia sẻ. Tuyệt đối không lưu password, token, JWT, `.env`, dữ liệu cá nhân hoặc secret trong evidence/PR.
@@ -22,14 +22,14 @@
 
 | Trường | Giá trị thực tế |
 |---|---|
-| Frozen `main` SHA (40 ký tự) | `PENDING — TV2 cung cấp` |
+| Frozen `main` SHA (40 ký tự) | `PENDING — TV2 cung cấp; main candidate hiện tại 4b5bcb4 chưa được xác nhận frozen` |
 | Freeze timestamp (Asia/Ho_Chi_Minh) | `PENDING` |
 | CI readiness/frontend/E2E URLs + run IDs trên frozen SHA | `PENDING` |
 | Clean-clone receipt / máy / OS / tool versions | `PENDING` |
 | Clean-stack receipt / Compose project / image digests | `PENDING` |
 | DB identity / schema migration version / volume names | `PENDING` |
 | Ports / network / loopback binding | `PENDING` |
-| Flags thực tế và approval link cho từng flag | `PENDING — C2 OFF; Finance NOT APPROVED` |
+| Flags thực tế và approval link cho từng flag | `PENDING — default OFF; runtime NOT VERIFIED; M01 MD01–MD11 approved for local demo/submission only, production NOT APPROVED` |
 | Run ID / start-end time | `PENDING` |
 | TV2 operator / TV3 / TV4 / TV5 witness | `PENDING` |
 | Seed dataset version / fake actor IDs | `PENDING` |
@@ -201,12 +201,12 @@ Mỗi case phải có một thư mục riêng `evidence/<run-id>/<test-id>/` và
 
 ### UAT-14 — Finance snapshot
 - **Mục tiêu:** đối chiếu merchandise, discount, gross, platformFee và sellerNet theo policy có thẩm quyền.
-- **Điều kiện trước:** frozen SHA; Finance policy source và approval đúng phạm vi do TV2/business cung cấp; TV4 xác nhận COD state; không tự giả định rate/scale.
+- **Điều kiện trước:** frozen SHA; policy source `docs/project-report/M01_FINANCE_DECISION.md` (MD01–MD11: 5%, HALF_UP, scale 0, demo local/bản nộp) đã được TV2 chốt; TV2 cung cấp runtime/flag receipt trong môi trường demo được phép; TV4 xác nhận COD state. Không suy ra production approval.
 - **Các bước:** đọc SellerOrder snapshot và Store/platform report; đối chiếu từng thành phần; xác minh voucherDiscount riêng nếu có; kiểm settlement wording.
 - **Kết quả mong đợi:** fee/net theo policy đã ký; nếu policy 5%/scale 0 được phê duyệt thì fee tính trên gross, HALF_UP; sellerNet = gross − fee; `settledAt` không được diễn giải là chuyển tiền thật.
-- **Bằng chứng:** policy approval link, report/API JSON, DB read-only snapshot, calculation sheet với input/output và timestamp.
+- **Bằng chứng:** M01 policy link, report/API JSON, DB read-only snapshot, calculation sheet với input/output và timestamp.
 - **Owner cung cấp:** TV5 (Finance oracle/report), TV4 (COD source), TV2/business (policy approval).
-- **Trạng thái:** `BLOCKED` — Finance chưa được phê duyệt; không ký xác nhận rate hoặc settlement.
+- **Trạng thái:** `NOT RUN` — policy demo/local đã có; chờ frozen SHA, runtime/fixture và receipt thực tế. Không tuyên bố Finance production đã được phê duyệt.
 
 ### UAT-15 — Admin moderation / Seller approval
 - **Mục tiêu:** xác minh Admin xem moderation, Seller approval và COD/Finance read-only đúng quyền.
@@ -322,7 +322,7 @@ Mỗi case phải có một thư mục riêng `evidence/<run-id>/<test-id>/` và
 
 ## 6. Checklist 11 case Voucher C2
 
-**Gate:** tất cả C2 case dưới đây `BLOCKED` cho tới khi TV2 xác nhận #211/#212 merge, TV5 review tiền #211 theo đúng phạm vi, frozen-SHA CI có `voucher-c2.spec.ts` PASS 0 skip, P0 C2 triaged, và có business/Finance approval cho checkout có voucher. CI PR #212 run `44496245054` không thay frozen-SHA CI. Nếu gate không đạt, chạy UAT với C2 OFF và ghi “đã code, đã test, chưa bật trong bản nộp”.
+**Gate:** #211/#212 đã merge và TV5 đã formal APPROVED phần tiền #211 tại exact HEAD `4f3152b`; hai điều kiện này đã đạt. C2 ON vẫn `BLOCKED` cho tới khi TV2 xác nhận frozen SHA, CI trên đúng frozen SHA có `voucher-c2.spec.ts` PASS 0 skip, và TV2/TV3/TV4/TV5 triage xác nhận không còn P0 C2. Quyết định TV2 ngày 18/11 tại [PR #211](https://github.com/duyxl56785/Project_HK5/pull/211#issuecomment-6969662837) nêu đúng bốn điều kiện, không thêm một business approval riêng cho Checkout có voucher. M01 MD01–MD11 đã phê duyệt Finance 5%/HALF_UP cho demo local và bản nộp; production không được phê duyệt. CI retarget `44496245054` là synthetic merge ref cũ, không phải CI trên main; post-merge CI đúng `4b5bcb4` là [run `44502375038`](https://github.com/duyxl56785/Project_HK5/actions/runs/44502375038), attempt 2 C2 ON 25/25, 0 skip. Run này chỉ đáp ứng frozen-SHA CI nếu TV2 xác nhận `4b5bcb4` là SHA freeze; nếu main tiến thêm thì phải chạy lại. Nếu gate không đạt, chạy UAT với C2 OFF và ghi “đã code, đã test, chưa bật trong bản nộp”.
 
 ### C2-01 — Flag / capability
 - **Mục tiêu:** xác minh capability ON/OFF và fail-closed khi OFF.
@@ -331,7 +331,7 @@ Mỗi case phải có một thư mục riêng `evidence/<run-id>/<test-id>/` và
 - **Kết quả mong đợi:** ON `enabled=true`; OFF `enabled=false` và voucher request bị từ chối `VOUCHER_C2_DISABLED`; C1 management không bị ảnh hưởng.
 - **Bằng chứng:** runtime env receipt do TV2 cung cấp, capability HTTP JSON, OFF rejection, run/SHA.
 - **Owner cung cấp:** TV2 (flag/stack), TV3 (API/Checkout).
-- **Trạng thái:** `BLOCKED` — chưa có frozen-SHA CI/P0/Finance approval.
+- **Trạng thái:** `BLOCKED` — chờ TV2 xác nhận frozen SHA và P0 C2 triage; CI candidate `4b5bcb4` đã xanh nhưng chưa có xác nhận freeze. Runtime flags chưa xác minh.
 
 ### C2-02 — Per-Store voucher
 - **Mục tiêu:** xác minh tối đa một voucher cho mỗi Store trong Cart nhiều Store.
@@ -362,12 +362,12 @@ Mỗi case phải có một thư mục riêng `evidence/<run-id>/<test-id>/` và
 
 ### C2-05 — MD16 two-Store money oracle
 - **Mục tiêu:** đối chiếu discount, gross, fee, net và Parent Order hai Store.
-- **Điều kiện trước:** C2/Finance được duyệt; policy rate/scale có văn bản; TV3 cấp order fixture; TV5 xác nhận calculation oracle.
+- **Điều kiện trước:** C2 ON gate đủ; M01 MD01–MD11 áp dụng cho demo local/bản nộp; TV2 cung cấp runtime receipt; TV3 cấp order fixture; TV5 xác nhận calculation oracle. Không suy production approval.
 - **Các bước:** Store A `150.000 − 10.000`; Store B `280.000 − 5.000`; so quote, Checkout, Parent Order, hai SellerOrders và report.
 - **Kết quả mong đợi:** A gross 140.000, fee 7.000; B gross 275.000, fee 13.750; customer total 415.000; sellerNet lần lượt 133.000 và 261.250 nếu rate 5%/scale 0 được duyệt.
 - **Bằng chứng:** policy approval, quote/Order/SellerOrder JSON, DB read-only money snapshots, calculation sheet.
 - **Owner cung cấp:** TV3 (Order), TV5 (Finance oracle), TV2/business (policy).
-- **Trạng thái:** `BLOCKED` — Finance chưa được phê duyệt.
+- **Trạng thái:** `BLOCKED` — phụ thuộc C2 ON gate/frozen-SHA receipt; Finance demo/local policy đã được phê duyệt, production không nằm trong phạm vi.
 
 ### C2-06 — MD19 failed Checkout
 - **Mục tiêu:** xác minh Checkout thất bại không làm mất voucher use và cleanup idempotent.
@@ -389,12 +389,12 @@ Mỗi case phải có một thư mục riêng `evidence/<run-id>/<test-id>/` và
 
 ### C2-08 — MD20 Return gross
 - **Mục tiêu:** xác minh refundAmount dùng SellerOrder gross sau giảm.
-- **Điều kiện trước:** C2/Finance/Return scope được duyệt; COD Order có voucher, DELIVERED, chưa settled; TV4 xác nhận Return contract.
+- **Điều kiện trước:** C2 ON gate đủ; M01 MD20 cho phép hoàn theo gross; COD Order có voucher, DELIVERED, chưa settled; TV4 xác nhận Return contract và scope thực thi. Không suy production Finance approval hoặc tự chạy restock.
 - **Các bước:** đọc SellerOrder snapshot; tạo Return theo flow được phép; so refundAmount với gross đã lưu; không kích hoạt chuyển tiền thật.
 - **Kết quả mong đợi:** refundAmount = SellerOrder.gross sau discount; ví dụ gross 140.000 thì amount 140.000; không hoàn theo merchandise trước giảm.
 - **Bằng chứng:** Return response, SellerOrder voucher snapshot, refund calculation, policy/approval link.
 - **Owner cung cấp:** TV4 (Return), TV5 (gross oracle), TV3 (snapshot source).
-- **Trạng thái:** `BLOCKED` — C2/Finance approval và Return evidence còn thiếu.
+- **Trạng thái:** `BLOCKED` — C2 ON gate và TV4 Return contract/fixture còn thiếu; không phải do thiếu Finance approval cho demo/local. RET-05 restock vẫn ngoài case này và giữ BLOCKED riêng.
 
 ### C2-09 — MD21 immutable snapshot
 - **Mục tiêu:** xác minh voucher snapshot không thể bị thay đổi sau INSERT và money CHECK invariant giữ nguyên.
@@ -407,12 +407,12 @@ Mỗi case phải có một thư mục riêng `evidence/<run-id>/<test-id>/` và
 
 ### C2-10 — MD24 Finance report
 - **Mục tiêu:** xác minh report tách voucherDiscount khỏi platformFee và dùng snapshot sau giảm.
-- **Điều kiện trước:** Finance policy/business approval; SellerOrders đủ điều kiện report; C2 ON được duyệt; TV5 có oracle và report access.
+- **Điều kiện trước:** M01 MD01–MD11 cho demo local/bản nộp; SellerOrders đủ điều kiện report; C2 ON gate đủ nếu kiểm voucher discount; TV5 có oracle và report access.
 - **Các bước:** đọc report Store A/B và platform; đối chiếu gross, fee, net, voucherDiscount; so snapshot từng SellerOrder.
 - **Kết quả mong đợi:** voucherDiscount hiển thị riêng; không cộng vào platformFee; gross/fee/net theo snapshot; không tuyên bố settlement nếu chỉ có report.
 - **Bằng chứng:** policy approval, report JSON/export, SellerOrder snapshot, calculation sheet.
 - **Owner cung cấp:** TV5 (Finance/report), TV4 (COD state), TV2/business (approval).
-- **Trạng thái:** `BLOCKED` — Finance chưa được phê duyệt.
+- **Trạng thái:** `BLOCKED` — nhánh C2 report phụ thuộc C2 ON gate; không phải do thiếu Finance approval cho demo/local. Finance production vẫn NOT APPROVED.
 
 ### C2-11 — MD25 zero gross
 - **Mục tiêu:** xác minh voucher không tạo SellerOrder/COD gross bằng 0 hoặc âm.
@@ -427,12 +427,12 @@ Mỗi case phải có một thư mục riêng `evidence/<run-id>/<test-id>/` và
 
 | Nhóm | Số case | Trạng thái chuẩn bị | Điều kiện chuyển trạng thái |
 |---|---:|---|---|
-| Baseline UAT-01..15 | 15 | NOT RUN; UAT-14 BLOCKED do Finance approval | Frozen SHA + stack/clone receipts + owner evidence; UAT-14 cần policy approval |
+| Baseline UAT-01..15 | 15 | NOT RUN | Frozen SHA + stack/clone receipts + owner evidence; UAT-14 dùng M01 demo/local policy đã duyệt, cần runtime fixture/receipt |
 | UNKNOWN UAT-16..17 | 2 | BLOCKED | Runner/tuple/provider oracle/approval riêng và TV5 witness |
 | Voucher C1 | 5 | NOT RUN | Frozen SHA + fake actors + Voucher API/Store fixtures |
 | Promotion | 3 | NOT RUN | Frozen SHA + campaign/Product fixtures + TV2 approval |
 | PROMO-04 | 1 | BLOCKED ON; OFF N/A | C2 gate đủ cho ON; OFF ghi đúng “không áp dụng, chưa bật” |
-| Voucher C2 | 11 | BLOCKED (C2 OFF) | G-04..G-08, frozen-SHA CI ON 0 skip, P0 triage và Finance/business approval |
+| Voucher C2 | 11 | BLOCKED (C2 OFF) | G-04..G-08; #211/#212 merge và TV5 money review đã đạt; còn frozen-SHA CI + P0 C2 triage + TV2 runtime receipt |
 
 **Không phải 37 PASS.** Đây là checklist chuẩn bị; Final UAT chỉ được kết luận sau khi owner thực thi và TV5 xác minh receipts trên đúng frozen SHA.
 

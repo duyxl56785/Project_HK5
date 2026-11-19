@@ -4,6 +4,7 @@
 **Ngày dự kiến:** 21/11/2026
 **Checklist case:** [TV5_FINAL_UAT_EXECUTION_CHECKLIST_20261121.md](TV5_FINAL_UAT_EXECUTION_CHECKLIST_20261121.md)
 **Ma trận gốc:** [TV5_FINAL_UAT_W5_C2_MATRIX_20261119.md](TV5_FINAL_UAT_W5_C2_MATRIX_20261119.md)
+**Evidence kit:** [reports/minh-chung-kiem-thu/tv5-final-uat-20261121/](../reports/minh-chung-kiem-thu/tv5-final-uat-20261121/), gồm manifest mẫu, case-evidence map 37 ID, mẫu result/defect/biên bản/P0-P1-P2. Các file mẫu không phải receipt.
 
 ## 1. Quy tắc tiếp nhận
 
@@ -13,12 +14,12 @@
 - TV5 không nhận ảnh/log không có provenance, ảnh mock, screenshot từ CI thay cho live screen, hoặc bản log đã sửa. Raw artifacts giữ nguyên bytes; redacted copy là file riêng.
 - Không nhận credential, JWT, access/refresh token, `.env`, secret, PII hoặc dữ liệu thanh toán thật. Nếu raw log có dữ liệu nhạy cảm, không upload vào PR/Issue; operator phải lưu ở kho hạn chế truy cập và gửi bản redacted cùng hash raw.
 - Nếu thiếu một trường bắt buộc, TV5 trả receipt về `NEEDS_INFO`; không nâng case sang PASS.
+- Finance MD01–MD11 đã được TV2 phê duyệt cho bản nộp và demo local (5%, HALF_UP/scale 0); production Finance vẫn NOT_APPROVED. Hai cờ C2/Finance mặc định OFF; chỉ TV2 xác nhận runtime và opt-in `.env.demo` trong đúng phạm vi. Không thêm Finance business approval thành gate thứ năm của C2; bốn gate C2 theo quyết định TV2 ngày 18/11 được ghi trong matrix/checklist.
 
 ## 2. Cấu trúc thư mục bàn giao
 
 ```text
-evidence/
-  <run-id>/
+reports/minh-chung-kiem-thu/tv5-final-uat-20261121/<run-id>/
     run-manifest.json
     UAT-01/
       manifest.json
@@ -106,7 +107,7 @@ Tên folder chỉ là gợi ý. Không đổi tên hoặc sửa raw artifact sau
 | **TV4** | UAT-09..13; C2-06..08; COD/Inventory/Return; PROMO-03 nếu có stock effect | Inventory operation/tuple; stock before-after; SellerOrder transitions; COD collection receipt/audit; Return state; refund gross receipt; RET-05 restock exactly-once receipt nếu có contract/implementation; ảnh 6.7 và phần 6.8 liên quan COD |
 | **TV5** | UAT-14; C2-03..05/C2-08..10 money oracle; kiểm evidence toàn bộ case | Calculation sheet; report exports; gross/discount/fee/net snapshots; policy reference; manifest/checksum validation; screenshot-to-case mapping; QA disposition |
 
-TV2 là operator và người xác nhận frozen SHA/flags. TV3/TV4 không tự bật C2/Finance. TV5 không tự xác nhận business approval hoặc runtime state.
+TV2 là operator và người xác nhận frozen SHA/flags. M01 Finance policy MD01–MD11 đã được phê duyệt cho demo local/bản nộp; production approval không có. TV3/TV4 không tự bật C2/Finance. TV5 không tự xác nhận runtime state.
 
 ## 5. Loại bằng chứng chấp nhận
 
