@@ -1,5 +1,19 @@
 # Phần báo cáo TV5 về Review Finance và kiểm thử Soopi
 
+## Cập nhật kiểm chứng 19/11/2026 — PR #211, tích hợp và gate UAT
+
+PR #211 Voucher C2 hiện ở exact HEAD `4f3152bc2188511a26e2b41f64fc94c6f31968ba`. TV2, TV4 và TV5 đã formal `APPROVED` tại HEAD này; finding MD21 của TV5 được khắc phục bằng migration V10 trigger PostgreSQL bảo vệ `voucher_snapshot` sau INSERT và regression PostgreSQL. Thread review MD21 đã resolve. PR vẫn OPEN, chưa merge; base SHA của PR là `879143a1f081da4644ebc29c0950069429731f0f`, trong khi `main` hiện là `4471256cacb8ea66693970701250d92f0a9082c4`.
+
+TV5 so sánh nhánh và tạo ứng viên tích hợp trong worktree riêng từ `main@4471256` + PR #211. Git merge tự động, không có conflict. Trên cây tích hợp tạm, lệnh `:cart-service:test :inventory-service:test :order-service:test :product-service:test :seller-service:test --rerun-tasks` chạy lại toàn bộ 28 Gradle actions; 72 XML suites có **1.104 tests PASS, 0 fail/error/skip**. Frontend có **185/185 unit PASS**, `npm run typecheck` PASS, `npm run build` PASS và `git diff --check` PASS. Đây là unit/test-task preflight trên cây tích hợp local, không phải PostgreSQL integration, hosted CI, frozen SHA hay Final UAT.
+
+CI của PR #211 trên exact PR HEAD: Backend readiness báo PostgreSQL Order **156/156 PASS, 0 skipped**; frontend/E2E **24 passed, 1 skipped**, trong đó `voucher-c2.spec.ts` không chạy vì cấu hình C2 OFF. CI của PR #212 trên HEAD `3483486acd375e2c45616974ab333d2b850b9771`: E2E C2 ON **25/25 PASS**, C2 OFF **24/24 PASS**, cả hai 0 skip. Đây là CI trên PR head, không phải CI của frozen main; PR #212 còn base `codex/tv3-voucher-c2`, chưa được đổi base sau khi #211 merge. Review TV2 hiện có trên #212 là tại HEAD cũ `a43abf5`, chưa phải formal review của HEAD `3483486`.
+
+Main quan sát `4471256cacb8ea66693970701250d92f0a9082c4` **chưa được TV2 xác nhận frozen**. Theo lịch TV2 mới nhất trên PR #211, freeze trước 18:00 ngày 20/11/2026 và Final UAT ngày 21/11. Final UAT hiện `NOT_RUN`; chưa có frozen SHA, clean-stack receipt, clean-clone receipt hoặc ảnh Hình 6.1–6.8 trên frozen SHA. C2 và Finance vẫn `OFF / NOT_APPROVED` cho tới khi các gate được xác nhận. Nếu C2 không đạt toàn bộ điều kiện, bản nộp phải ghi “đã code, đã test, chưa bật trong bản nộp”, không ghi là tính năng đã nghiệm thu.
+
+**Giới hạn hồ sơ:** M01 hiện vẫn hiển thị chữ ký TV5/TV4 là `CHỜ` và lịch freeze 19/11; đây là tài liệu thuộc owner TV2, cần TV2 cập nhật theo formal reviews và lịch mới. Báo cáo Word chính thức `Bao_cao_Smart_ECommerce_ban_nop.docx` chưa có trong repository; TV5 không thay thế bằng DOCX draft của mình. Draft Word/PPTX 14/11 tiếp tục là nguồn nội dung, không phải bản nộp cuối.
+
+---
+
 **Cập nhật kiểm chứng 10/11/2026:** GitHub main `e61bbac2b2b8599384e0e035b89058a188e318ec` đã nhận #179/#182/#183/#184/#185/#186/#187/#188/#189. TV5 chạy trên đúng main: 29 PostgreSQL/MockMvc + 5 unit PASS; sau đó thêm assertion chỉ trong test, chạy lại 29 + 5 PASS tại commit [`6d45172`](https://github.com/duyxl56785/Project_HK5/commit/6d4517210ec92958931f046674e008f10fa9146e) với [raw XML/log/SHA256](../../reports/minh-chung-kiem-thu/tv5-return-finance-e61bbac-20261110/) và [ma trận RET-01..06](../../tests/TV5_RETURN_ACCEPTANCE_20261110.md). Hai lượt này là hai snapshot riêng, không cộng thành release total. #187 có [review APPROVED scoped](https://github.com/duyxl56785/Project_HK5/pull/187#pullrequestreview-5835076508). **Final UAT hai Store, UNKNOWN và Finance production chưa PASS**; B.1–B.5 là phiếu chụp chờ ảnh thật.
 
 **Quyết định TV2 ngày 10/11 khi đóng [#154](https://github.com/duyxl56785/Project_HK5/issues/154#issuecomment-6757433313):** hai ca UNKNOWN giữ `BLOCKED_DESIGN` cho W5, không chạy live fixture khi thiếu gate. TV2 cũng xác nhận Inventory UI #169/#190 là backlog sau nộp trong [review #192](https://github.com/duyxl56785/Project_HK5/pull/192#pullrequestreview-5844015364), không thuộc phạm vi merge release hiện tại. Đây là quyết định về phạm vi, không phải kết quả CI, quyền chạy fixture hay final UAT PASS.
@@ -63,7 +77,7 @@ Website và tester là hai tiến trình riêng. Dựng stack dữ liệu giả 
 
 | Trường bản nộp | Điều kiện điền |
 |---|---|
-| Final run SHA và CI URLs | Điền SHA đóng băng do TV2 công bố hết 19/11, rồi dẫn hosted checks và receipt E2E/clone sạch trên cùng SHA; `e61bbac2b2b8599384e0e035b89058a188e318ec` chỉ là mốc kiểm thử 10/11, không phải final run |
+| Final run SHA và CI URLs | Điền SHA đóng băng do TV2 công bố trước 18:00 ngày 20/11 theo comment 18/11 trên PR #211, rồi dẫn hosted checks và receipt E2E/clone sạch trên cùng SHA; `e61bbac2b2b8599384e0e035b89058a188e318ec` chỉ là mốc kiểm thử 10/11, không phải final run |
 | Ngày/môi trường/actor/seed | Receipt của project cô lập thực chạy, không lấy từ rehearsal |
 | Tổng test nghiệm thu | Chỉ một release run với denominator và skip/block giải thích |
 | Kết quả UNKNOWN | Actual immutable tuple/waiver, provider COMMIT/stock receipt, runner/stop và quyền chạy từng ca |

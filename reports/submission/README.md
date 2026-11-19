@@ -1,4 +1,4 @@
-# Bản ghép TV5 cho báo cáo và deck ngày 07/11/2026
+# Bản ghép TV5 cho báo cáo và deck ngày 14/11/2026
 
 Các tệp `Bao_cao_Soopi_TV5_DRAFT_*` và `Soopi_TV5_notes_DRAFT_*` là **nguồn nội dung TV5 để nhóm kiểm**, không phải bản nộp cuối hoặc xác nhận final UAT. Báo cáo nộp chính thức do TV2 ghép từ `Bao_cao_Smart_ECommerce.docx`; không nộp nhầm bản nháp TV5. Hai tệp nháp ngày 07/11 ở bảng dưới chỉ còn trong [lịch sử Git tại `e08a26d`](https://github.com/duyxl56785/Project_HK5/tree/e08a26d96c384ea3612ea369fd860cf63f4f1fc0/reports/submission); HEAD chỉ giữ hai bản ngày 14/11 để tránh trùng bản nhị phân.
 
@@ -16,8 +16,15 @@ Hai bản nháp mới giữ nguyên giới hạn nghiệm thu và chỉ đồng 
 | Tệp | Nội dung cập nhật | Kiểm tra thực tế | SHA256 |
 |---|---|---|---|
 | `Bao_cao_Soopi_TV5_DRAFT_2026-11-14.docx` | Cập nhật main quan sát `d023e10474408b959f8e0ec872cff217f101d151`, lịch Issue #158 (freeze 19/11, E2E/clone sạch 20/11, nộp 21/11) và trạng thái #179 đã merge. Ảnh B.1–B.5, Hình 6.4, UNKNOWN, RET-05, Finance production và final UAT vẫn chưa được nhận PASS. | `python-docx` mở lại: 453 paragraphs, 44 tables; ba đoạn cập nhật đọc lại đúng. Ngày 14/11, Microsoft Word xuất PDF 57 trang; PNG contact-sheet không thấy lỗi bố cục lớn. PDF nội bộ SHA256 `d3d492113032ba56b8a2230b5f8642554aab57f5f43c8f4280b5506c0c1d5c7b`. Chưa có sign-off trang-đến-trang/bản nộp cuối. | `81abe78af6ae6d1bbe80f0b92465750beb97afda69d2149738e8c857c2202c12` |
-| `Soopi_TV5_notes_DRAFT_2026-11-14.pptx` | Giữ 23 slide nhóm; bổ sung speaker notes TV5 tại slide 16 và 23 về CI trước freeze, lịch 19–21/11, ảnh `PENDING_UAT` và các gate BLOCKED. | Artifact tool import/export/re-import: 23 slides. Đã render 23/23 slide, xem montage và slide 16/23; không có thay đổi nội dung hiển thị hoặc ảnh minh chứng giả. | `6a13c61f45e9456452b7a228c3afef4706f5a4db47fc7f9c2914720b17539713` |
+| `Soopi_TV5_notes_DRAFT_2026-11-14.pptx` | Giữ 23 slide nhóm; speaker notes TV5 tại slide 8, 16 và 23 được cập nhật checkpoint 19/11 về PR #211 approvals/MD21, tiền kiểm tích hợp, CI #211/#212 và gate C2/Finance. Nội dung hiển thị của slide không thay đổi. | Đã kiểm ZIP integrity PASS, 23 slide XML + 23 notes XML; chỉ 3 phần `notesSlides` thay đổi, slide XML và media giữ nguyên. Lần render/visual review trước đó 14/11 vẫn áp dụng cho phần hiển thị; notes cần được mở kiểm trong PowerPoint thật trước khi nộp. | `8538a2ce0c976021377ca5c7619e3aa2e4d1a3f0dc4a714d158623004cac0f38` |
 
 Các tệp này vẫn là **DRAFT**. Chỉ ghép ảnh thật và kết luận UAT sau khi có SHA đóng băng cùng receipt E2E/clone sạch đúng SHA. Không dùng bản nháp này để tuyên bố Finance/COD/Settlement production đã được phê duyệt.
+
+## Cập nhật TV5 ngày 19/11/2026
+
+- `Bao_cao_Soopi_TV5_DRAFT_2026-11-14.docx` giữ nguyên byte, SHA256 `81abe78af6ae6d1bbe80f0b92465750beb97afda69d2149738e8c857c2202c12`; ZIP integrity PASS. Không chỉnh sửa draft này thành bản nộp vì TV2 đã chốt báo cáo chính thức là `Bao_cao_Smart_ECommerce_ban_nop.docx`, hiện chưa có trong repository.
+- `Soopi_TV5_notes_DRAFT_2026-11-14.pptx` đã cập nhật speaker notes ở slide 8, 16, 23; SHA256 mới ở bảng trên. Không thay nội dung hiển thị, ảnh, theme hoặc layout. Đây vẫn là deck draft/source, không phải final deck có ảnh frozen-SHA.
+- Nội dung báo cáo TV5 và lời trình bày đã cập nhật trong `docs/project-report/TV5_REPORT_CONTENT.md` và `TV5_DECK_SPEAKER_NOTES.md`. Báo cáo kiểm toán hiện hành: `reports/tv5-final-audit/TV5_FINAL_AUDIT_2026-11-19.md`.
+- Hình 6.1–6.8 trên frozen SHA và Final UAT vẫn NOT_RUN/BLOCKED; không dùng rehearsal hoặc CI PR-head để điền ảnh/kết quả final.
 
 Các script trong `reports/submission/.deck-build/` chỉ phục vụ render/kiểm cục bộ, không phải evidence QA của sản phẩm. Không stage chúng hoặc ảnh preview khi commit tài liệu. Source DOCX/PPTX ngoài repository không bị sửa.
