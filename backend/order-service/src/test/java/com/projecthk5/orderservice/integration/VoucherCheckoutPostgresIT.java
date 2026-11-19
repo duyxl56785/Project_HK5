@@ -33,6 +33,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Collectors;
 import org.junit.jupiter.api.*;
 import org.postgresql.util.PSQLException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -167,9 +168,15 @@ class VoucherCheckoutPostgresIT {
         var placed = place(request);
         money("263999", placed.total());
         assertEquals(2, placed.sellerOrderCount());
-        money("8500", new BigDecimal(placed.prices().getFirst().platformFee()));
-        money("4700", new BigDecimal(placed.prices().getLast().platformFee()));
-        assertEquals(placed, place(request));
+        var prices = pricesByStore(placed);
+        money("8500", new BigDecimal(prices.get(STORE_A).platformFee()));
+        money("4700", new BigDecimal(prices.get(STORE_B).platformFee()));
+        var replay = place(request);
+        assertEquals(placed.orderId(), replay.orderId());
+        assertEquals(placed.status(), replay.status());
+        assertEquals(placed.total(), replay.total());
+        assertEquals(placed.sellerOrderCount(), replay.sellerOrderCount());
+        assertEquals(prices, pricesByStore(replay));
         assertEquals("IDEMPOTENCY_PAYLOAD_MISMATCH", assertThrows(ResponseStatusException.class,
                 () -> place(new CheckoutRequest(ITEMS, 7L, List.of(request.vouchers().getFirst())))).getReason());
         assertEquals(2, ledger.size());
@@ -186,9 +193,10 @@ class VoucherCheckoutPostgresIT {
     @Test void oneVoucherDoesNotChangeTheOtherStoresGrossOrFinance() {
         var placed = place(request(false));
         money("269999", placed.total());
-        assertNull(placed.prices().getLast().voucherCode());
-        money("100000", new BigDecimal(placed.prices().getLast().gross()));
-        money("5000", new BigDecimal(placed.prices().getLast().platformFee()));
+        var otherStore = pricesByStore(placed).get(STORE_B);
+        assertNull(otherStore.voucherCode());
+        money("100000", new BigDecimal(otherStore.gross()));
+        money("5000", new BigDecimal(otherStore.platformFee()));
         assertEquals(1, ledger.size());
     }
 
@@ -261,6 +269,10 @@ class VoucherCheckoutPostgresIT {
         assertEquals("23514", sql.getSQLState());
         assertEquals("ck_seller_order_voucher_snapshot", sql.getServerErrorMessage().getConstraint());
         money("169999", db.queryForObject("select gross from seller_orders where id=?", BigDecimal.class, child));
+    }
+
+    private static Map<String, StorePrice> pricesByStore(CheckoutResult result) {
+        return result.prices().stream().collect(Collectors.toMap(StorePrice::storeId, price -> price));
     }
 
     private void assertSnapshotUpdateRejected(String update, UUID child) {
