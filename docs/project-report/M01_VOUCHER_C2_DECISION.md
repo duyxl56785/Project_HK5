@@ -1,6 +1,6 @@
 # M01 bổ sung cho Voucher C2 — MD13–MD25
 
-**Trạng thái:** ĐÃ CHỌN ngày 16/11/2026. TV2 chọn phương án **A cho cả MD13–MD24** và chốt **MD25** (đơn sau giảm tối thiểu 1 đồng). Đây là quyết định nghiệp vụ, **chưa** phải bằng chứng C2 đã được code, merge hay bật. Còn chờ TV5 review phần tiền và TV3, TV4 xác nhận khả thi (mục 8). Không dùng tài liệu này để bật cờ hay sửa báo cáo nộp.
+**Trạng thái:** ĐÃ CHỌN ngày 16/11/2026. TV2 chọn phương án **A cho cả MD13–MD24** và chốt **MD25** (đơn sau giảm tối thiểu 1 đồng). Đây là quyết định nghiệp vụ. Tại thời điểm chốt ngày 16/11/2026, C2 **chưa** được code, merge hay bật; còn chờ TV5 review phần tiền và TV3, TV4 xác nhận khả thi (mục 8). Trạng thái này đã được cập nhật ngày 19/11/2026 ở đoạn dưới và ở mục 8. Không dùng tài liệu này để bật cờ hay sửa báo cáo nộp.
 
 **Cập nhật 19/11/2026:** đã đủ chữ ký ở mục 8. C2 đã code và merge vào `main`: #211 tại `cee7c87`, #212 tại `4b5bcb4`. Cờ C2 vẫn mặc định tắt. TV2 quyết định bật hay tắt ở UAT ngày 21/11 theo bốn điều kiện ở mục **Lịch**. Tài liệu này vẫn chưa phải bằng chứng C2 đã bật.
 
