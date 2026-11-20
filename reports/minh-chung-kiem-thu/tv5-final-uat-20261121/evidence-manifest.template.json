@@ -1,0 +1,36 @@
+{
+  "repository": "duyxl56785/Project_HK5",
+  "test_id": "<one exact ID from case-evidence-map.md>",
+  "run_id": "<run ID from run-manifest.json>",
+  "frozen_sha": "<same full 40-character SHA as run-manifest.json>",
+  "started_at": "<ISO-8601 with +07:00>",
+  "finished_at": "<ISO-8601 with +07:00>",
+  "operator": "<person who actually performed the test>",
+  "actor": "<fake actor ID and role>",
+  "environment": {
+    "os": "<OS/version>",
+    "compose_project": "<isolated project>",
+    "image_digests": ["<image@sha256:digest>"],
+    "db_identity": "<non-secret identifier>",
+    "ports": ["<loopback-only ports>"],
+    "flags": {
+      "HK5_VOUCHER_C2_ENABLED": "<observed value or NOT_VERIFIED>",
+      "HK5_FINANCE_POLICY_APPROVED": "<observed value or NOT_VERIFIED>",
+      "INVENTORY_ORDER_PAIR_ENABLED": "<observed value or NOT_VERIFIED>"
+    }
+  },
+  "steps_performed": ["<only actions actually performed>"],
+  "expected_result": "<copied from approved checklist case>",
+  "actual_result": "<observed HTTP/UI/DB/Inventory/COD/Finance facts>",
+  "status": "NOT RUN",
+  "artifacts": [
+    {
+      "path": "raw/<filename>",
+      "kind": "<HTTP response/JUnit/DB receipt/Inventory receipt/screenshot/log>",
+      "size_bytes": "<integer>",
+      "sha256": "<64 lowercase hex characters>",
+      "redacted_copy": "redacted/<filename or NOT_APPLICABLE>"
+    }
+  ],
+  "notes_or_blocker": "<actual exception, blocker or empty string>"
+}
