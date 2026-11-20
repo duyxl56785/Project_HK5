@@ -75,4 +75,4 @@ Template có placeholder và trạng thái `NOT RUN`; không phải receipt. Ch�
 
 ## 7. Liên hệ trạng thái hiện tại
 
-Main candidate quan sát: `4b5bcb4ceb5a6a636e4c943db2d41c8a4c1bb14f`, chưa được TV2 xác nhận frozen. Post-merge CI candidate: [44502375038](https://github.com/duyxl56785/Project_HK5/actions/runs/44502375038), attempt 2 SUCCESS. Final UAT chưa chạy; không có receipt nào được tạo bởi bộ template này.
+Main candidate quan sát ngày 20/11: `1b652751c76e5558d76d0f1b9037c275cef3ba34` sau merge #215; chưa được TV2 xác nhận frozen. Post-merge CI [44502375038](https://github.com/duyxl56785/Project_HK5/actions/runs/44502375038), attempt 2 SUCCESS, gắn parent `4b5bcb4` trước #215, không phải CI trên main hiện tại. Final UAT chưa chạy; không có receipt nào được tạo bởi bộ template này.
