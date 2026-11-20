@@ -64,6 +64,8 @@ test('retraction view shows the owner voucher and offers only pause and cancel',
     endsAt: '2026-11-15T01:00:00Z', status: 'ACTIVE', version: '1',
   }], (host, paths) => {
     assert.match(host.textContent, /TEST01.*Đang hoạt động/);
+    assert.match(host.textContent, /Khách áp mã tại Checkout khi tính năng áp voucher được bật/);
+    assert.doesNotMatch(host.textContent, /Chưa thể dùng mã/);
     assert.deepEqual([...host.querySelectorAll('button')].map(button => button.textContent), ['Tạm dừng', 'Hủy']);
     assert.deepEqual(paths, [['/api/stores/me/vouchers?size=50', 'GET']]);
   });
