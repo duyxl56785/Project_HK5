@@ -20,9 +20,14 @@ Không tạo `manifest.json`, JUnit, log hay ảnh dưới danh nghĩa Final UAT
 2. quyết định P0/P1 và người vận hành;
 3. Compose project/DB/volume/network cô lập, dữ liệu/tài khoản giả và thông
    tin image digest; và
-4. flags thực chạy cùng link approval. Các cờ `INVENTORY_ORDER_PAIR_ENABLED`,
-   `HK5_FINANCE_POLICY_APPROVED` và Voucher C2 vẫn OFF nếu không có approval
-   riêng, có thể kiểm chứng.
+4. flags thực chạy cùng link approval:
+   - `INVENTORY_ORDER_PAIR_ENABLED` và `HK5_FINANCE_POLICY_APPROVED` bật trong
+     `.env.demo` local theo MD09 của
+     [`M01_FINANCE_DECISION.md`](project-report/M01_FINANCE_DECISION.md).
+     Mặc định trong `application.yml` vẫn tắt. Production chưa duyệt.
+   - Cờ Voucher C2 mặc định tắt (MD23). TV2 quyết định bật ở UAT 21/11 theo
+     bốn điều kiện trong
+     [comment TV2 ngày 18/11](https://github.com/duyxl56785/Project_HK5/pull/211#issuecomment-6969662837).
 
 Nếu thiếu bất kỳ mục nào, trạng thái mọi ca runtime bên dưới là
 `WAITING_FROZEN_SHA` hoặc `BLOCKED`, không phải `PASS`/`FAIL`.
@@ -30,7 +35,7 @@ Nếu thiếu bất kỳ mục nào, trạng thái mọi ca runtime bên dưới
 Sau gate, dùng đường dẫn do PR #214 quy định:
 
 ```text
-reports/minh-chung-kiem-thu/tv5-final-uat-20261121/evidence/<run-id>/<test-id>/
+reports/minh-chung-kiem-thu/tv5-final-uat-20261121/<run-id>/<test-id>/
 ```
 
 Mỗi thư mục chỉ được tạo sau lần chạy thật và phải chứa raw artifact không sửa
@@ -44,7 +49,7 @@ placeholder thành receipt.
 | UAT-09 | RESERVE đúng SKU/Store/quantity; replay không tạo RESERVE thứ hai; stock không âm | operation tuple/receipt, stock before-after, correlation với Checkout/replay | TV3 cung cấp Checkout correlation | `WAITING_FROZEN_SHA` |
 | UAT-10 | DISPATCHED tạo CONSUME một lần; cancel/reject hợp lệ tạo RELEASE một lần; không suy từ UI | state history, operation IDs, stock before-after, audit/log timestamp | TV3 xác nhận lifecycle/fixture | `WAITING_FROZEN_SHA` |
 | UAT-11 | Seller A/B chỉ đọc/thao tác Store của mình; cross-Store không lộ record và không có side effect | positive + negative HTTP receipts, actor/store mapping giả, audit, ảnh UI tùy chọn | TV2 xác nhận Auth/Store facts | `WAITING_FROZEN_SHA` |
-| UAT-12 | Return đúng quyền/trạng thái; `refundAmount` khớp gross snapshot; không hoàn voucher sau giao | Return API/audit, SellerOrder gross snapshot, phép đối chiếu refund | TV3 snapshot, TV5 money oracle | `WAITING_FROZEN_SHA`; REST-05 restock `BLOCKED` |
+| UAT-12 | Return đúng quyền/trạng thái; `refundAmount` khớp gross snapshot; không hoàn voucher sau giao | Return API/audit, SellerOrder gross snapshot, phép đối chiếu refund | TV3 snapshot, TV5 money oracle | `WAITING_FROZEN_SHA`; RET-05 restock `BLOCKED` |
 | UAT-13 | Admin thu COD sau DELIVERED, amount khớp gross, một collection duy nhất | HTTP positive/negative/duplicate, collection/audit actor-time-amount, SellerOrder state | TV5 đối chiếu amount | `WAITING_FROZEN_SHA` |
 | UAT-14 (hỗ trợ) | COD source đồng nhất với Finance snapshot, không diễn giải settled là chuyển tiền thật | COD state/collection read-only receipt | TV5/TV2 sở hữu money policy | `WAITING_FROZEN_SHA` |
 | UAT-15 (hỗ trợ) | COD read-only không lộ cho Seller/Customer; UI Admin/moderation đúng role | actor-role responses + audit; ảnh do owner chụp | TV2 owns Seller approval/moderation | `WAITING_FROZEN_SHA` |
@@ -91,6 +96,11 @@ khi đưa vào Git; giữ reference/redacted copy theo mẫu evidence intake TV5
 - PR #211: Backend readiness có Order PostgreSQL `156/156` PASS tại reviewed
   head `4f3152b`; PR #212: C2-on Playwright `25/25`, C2-off `24/24`, frontend
   `186/186` tại head `3483486`.
+- Push CI trên `main@4b5bcb4`: run
+  [44502375038](https://github.com/duyxl56785/Project_HK5/actions/runs/44502375038).
+  Lần 1, job C2 ON lỗi vì Gradle không tải được thư viện. Lần 2 SUCCESS:
+  frontend PASS, C2 OFF 24 passed, C2 ON 25 passed có `voucher-c2.spec.ts`,
+  smoke `FAILS=0`.
 
 Các số trên là evidence theo đúng head/scope của chúng; chúng không được ghi
 thành Final UAT PASS cho frozen main.
