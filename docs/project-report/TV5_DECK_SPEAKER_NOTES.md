@@ -2,6 +2,8 @@
 
 Bản soạn cập nhật 19/11/2026, dựa trên deck nguồn 23 slide và [nội dung báo cáo TV5](TV5_REPORT_CONTENT.md). Speaker notes trong PPTX draft 14/11 được cập nhật cùng checkpoint này; nội dung hiển thị của slide không thay đổi. Các mốc số là evidence của lượt chạy đã ghi, không phải tổng số test nghiệm thu cuối.
 
+**Lưu ý cập nhật trạng thái 20/11/2026 17:14 +07:** PR #218 đã merge; main hiện `950279e25df2b658c39acfc3a3c37640bb8e6cac`, Frontend/E2E [run 44700827386](https://github.com/duyxl56785/Project_HK5/actions/runs/44700827386) SUCCESS đúng SHA. Đây vẫn chỉ là CI. Final UAT 37 ca chưa chạy (0 PASS, 0 FAIL, 23 NOT RUN, 13 BLOCKED; UAT-12 mixed); TV2 chưa công bố Frozen SHA, clean-clone/stack, flags, seed/actors và P0/P1 triage. PR #216/#217 còn OPEN. Official DOCX và ảnh thật 6.1–6.8 chưa được bàn giao. PPTX hiện tại vẫn là DRAFT; phải cập nhật speaker notes và render lại sau khi nhận kết quả UAT thật, không trình bày các mốc main `1b652751` như trạng thái mới nhất.
+
 | Slide hiện có | Lời trình bày ngắn | Bằng chứng/cảnh báo khi đưa lên slide |
 |---|---|---|
 | **8 — F15/F16** | “Em phụ trách Review, Finance và QA. Với Voucher C2, TV5 đã review phần tiền MD15, MD16, MD20, MD21, MD24, MD25 và APPROVE PR #211 tại `4f3152b`; finding MD21 được sửa bằng trigger DB V10 và PostgreSQL regression. Chính sách Finance MD01–MD11 đã được TV2 phê duyệt cho bản nộp và demo local; không đồng nghĩa Finance production được phê duyệt.” | TV2, TV4, TV5 đều APPROVED #211 đúng HEAD. M01 Finance: phí 5%, HALF_UP/scale 0; opt-in Finance chỉ trong `.env.demo` local, default OFF; production NOT_APPROVED. PR #215 đã merge tại `1b652751`, decision records ghi nhận chữ ký TV5/TV4 và lịch freeze mới; runtime C2 vẫn OFF cho tới khi đủ bốn gate. |

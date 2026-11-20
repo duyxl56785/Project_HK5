@@ -5,7 +5,7 @@
 **Owner:** TV5 — QA Lead
 
 **Case set:** 37 (17 baseline + 5 Voucher C1 + 4 Promotion + 11 Voucher C2)
-**Execution status hiện tại:** `NOT RUN`; các gate/contract chưa đạt giữ `BLOCKED`.
+**Execution status hiện tại:** `0 PASS, 0 FAIL, 23 NOT RUN, 13 BLOCKED`; UAT-12 mixed (Return non-restock NOT RUN; RET-05 restock BLOCKED).
 
 ## 1. Nguồn chính thức
 
@@ -75,4 +75,4 @@ Template có placeholder và trạng thái `NOT RUN`; không phải receipt. Ch�
 
 ## 7. Liên hệ trạng thái hiện tại
 
-Main candidate quan sát ngày 20/11: `1b652751c76e5558d76d0f1b9037c275cef3ba34` sau merge #215; chưa được TV2 xác nhận frozen. Post-merge CI [44502375038](https://github.com/duyxl56785/Project_HK5/actions/runs/44502375038), attempt 2 SUCCESS, gắn parent `4b5bcb4` trước #215, không phải CI trên main hiện tại. Final UAT chưa chạy; không có receipt nào được tạo bởi bộ template này.
+Main hiện tại sau merge PR #218: `950279e25df2b658c39acfc3a3c37640bb8e6cac`; chưa được TV2 xác nhận Frozen SHA. Frontend/E2E [CI run 44700827386](https://github.com/duyxl56785/Project_HK5/actions/runs/44700827386) SUCCESS trên đúng SHA (Frontend, E2E C2 OFF và E2E C2 ON). Backend readiness gần nhất [run 44493061575](https://github.com/duyxl56785/Project_HK5/actions/runs/44493061575) gắn `cee7c87`; từ SHA đó đến main hiện tại không có thay đổi trong `backend/**`, `docker/**` hoặc workflow backend-readiness, nhưng TV2 vẫn cần xác nhận applicability cho bản freeze. CI không phải Final UAT. Không có raw Final UAT receipt nào được tạo từ bộ template này.

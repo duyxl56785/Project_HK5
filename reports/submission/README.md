@@ -1,5 +1,13 @@
 # Bản ghép TV5 cho báo cáo và deck ngày 14/11/2026
 
+## Checkpoint trạng thái mới nhất — 20/11/2026 17:14 +07
+
+- PR #218 đã merge; main hiện `950279e25df2b658c39acfc3a3c37640bb8e6cac`. Frontend/E2E [run 44700827386](https://github.com/duyxl56785/Project_HK5/actions/runs/44700827386) SUCCESS trên đúng SHA. Đây là CI, không phải Final UAT.
+- PR #216/#217 vẫn OPEN; TV4 cần xử lý review CHANGES_REQUESTED, merge follow-up docs #217 vào branch #216, cập nhật PR description và đồng bộ main.
+- Ma trận Final UAT 37 ca: 0 PASS, 0 FAIL, 23 NOT RUN, 13 BLOCKED; UAT-12 mixed. Không có raw Final UAT receipts hoặc ảnh thật 6.1–6.8.
+- Official `Bao_cao_Smart_ECommerce_ban_nop.docx` chưa có trong main tree; hai file Word/PPTX TV5 hiện có vẫn là DRAFT, không thay thế deliverable chính thức.
+- TV2 chưa công bố Frozen SHA/time/operator, clean clone/stack, runtime flags/seed/actors và P0/P1 triage. C2 giữ OFF; Finance production `NOT_APPROVED`.
+
 Các tệp `Bao_cao_Soopi_TV5_DRAFT_*` và `Soopi_TV5_notes_DRAFT_*` là **nguồn nội dung TV5 để nhóm kiểm**, không phải bản nộp cuối hoặc xác nhận final UAT. Báo cáo nộp chính thức do TV2 ghép từ `Bao_cao_Smart_ECommerce.docx`; không nộp nhầm bản nháp TV5. Hai tệp nháp ngày 07/11 ở bảng dưới chỉ còn trong [lịch sử Git tại `e08a26d`](https://github.com/duyxl56785/Project_HK5/tree/e08a26d96c384ea3612ea369fd860cf63f4f1fc0/reports/submission); HEAD chỉ giữ hai bản ngày 14/11 để tránh trùng bản nhị phân.
 
 | Tệp | Thay đổi thực tế | Kiểm tra đã chạy | Còn thiếu |

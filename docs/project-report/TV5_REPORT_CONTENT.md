@@ -1,5 +1,13 @@
 # Phần báo cáo TV5 về Review Finance và kiểm thử Soopi
 
+## Checkpoint GitHub mới nhất — 20/11/2026 17:14 +07
+
+PR #218 nâng Vite `6.4.4` lên `6.4.5` đã được merge vào `main`. Main hiện tại là `950279e25df2b658c39acfc3a3c37640bb8e6cac`. Frontend/E2E [run `44700827386`](https://github.com/duyxl56785/Project_HK5/actions/runs/44700827386) SUCCESS trên đúng SHA: job frontend, E2E C2 OFF và E2E C2 ON đều SUCCESS. Backend readiness gần nhất [run `44493061575`](https://github.com/duyxl56785/Project_HK5/actions/runs/44493061575) gắn `cee7c87`; từ SHA đó đến main hiện tại không có thay đổi trong `backend/**`, `docker/**` hoặc workflow backend-readiness. Đây là đối chiếu phạm vi file, không thay thế xác nhận applicability của TV2 trên Frozen SHA.
+
+PR #216 và #217 vẫn OPEN. #216 giữ HEAD `e057e5707c7545d5c1e8e9187532044de4588362`, branch có 4 commit phía main và 3 commit riêng phía branch; TV2 vẫn có review CHANGES_REQUESTED. #217 là follow-up docs HEAD `611a789cb4c2fb34c4a50856ebb2b1915e31200f`, cần TV4 merge vào branch #216, cập nhật mô tả PR và đồng bộ main an toàn trước khi review lại.
+
+Final UAT chưa chạy: ma trận 37 ca có 0 PASS, 0 FAIL, 23 NOT RUN, 13 BLOCKED; UAT-12 mixed (Return non-restock NOT RUN, RET-05 exactly-once restock BLOCKED). Không có raw Final UAT receipts, clean-clone/clean-stack receipts, official `Bao_cao_Smart_ECommerce_ban_nop.docx` hoặc ảnh thật 6.1–6.8 trong main tree. TV2 chưa xác nhận Frozen SHA/time/operator. C2 runtime giữ OFF; Finance production `NOT_APPROVED`. Không dùng CI SUCCESS làm bằng chứng UAT PASS.
+
 ## Cập nhật kiểm chứng 19/11/2026 — PR #211/#212 đã merge, gate Final UAT
 
 PR #211 Voucher C2 ở exact HEAD `4f3152bc2188511a26e2b41f64fc94c6f31968ba` đã được TV2, TV4 và TV5 formal `APPROVED`; finding MD21 được khắc phục bằng migration V10 trigger PostgreSQL bảo vệ `voucher_snapshot` sau INSERT và regression PostgreSQL. Thread review MD21 đã resolve. Merge commit #211 là `cee7c87d1c7437fc5ed0009405fd2d0fc394bfb2`.
