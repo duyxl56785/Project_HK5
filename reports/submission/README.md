@@ -1,8 +1,8 @@
 # Bản ghép TV5 cho báo cáo và deck ngày 14/11/2026
 
-## Checkpoint trạng thái mới nhất — 20/11/2026 17:14 +07
+## Checkpoint trạng thái mới nhất — 20/11/2026 20:56 +07
 
-- PR #218 đã merge; main hiện `950279e25df2b658c39acfc3a3c37640bb8e6cac`. Frontend/E2E [run 44700827386](https://github.com/duyxl56785/Project_HK5/actions/runs/44700827386) SUCCESS trên đúng SHA. Đây là CI, không phải Final UAT.
+- PR #220 đã merge; main hiện `eaf3bf270255b80db4525f836bfae7e495dc8651`. Post-merge CI [run 44746995567](https://github.com/duyxl56785/Project_HK5/actions/runs/44746995567): Frontend SUCCESS, E2E C2 OFF SUCCESS, E2E C2 ON IN_PROGRESS tại checkpoint này. Đây là CI, không phải Final UAT.
 - PR #216/#217 vẫn OPEN; TV4 cần xử lý review CHANGES_REQUESTED, merge follow-up docs #217 vào branch #216, cập nhật PR description và đồng bộ main.
 - Ma trận Final UAT 37 ca: 0 PASS, 0 FAIL, 23 NOT RUN, 13 BLOCKED; UAT-12 mixed. Không có raw Final UAT receipts hoặc ảnh thật 6.1–6.8.
 - Official `Bao_cao_Smart_ECommerce_ban_nop.docx` chưa có trong main tree; hai file Word/PPTX TV5 hiện có vẫn là DRAFT, không thay thế deliverable chính thức.

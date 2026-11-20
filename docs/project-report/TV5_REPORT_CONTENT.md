@@ -1,8 +1,8 @@
 # Phần báo cáo TV5 về Review Finance và kiểm thử Soopi
 
-## Checkpoint GitHub mới nhất — 20/11/2026 17:14 +07
+## Checkpoint GitHub mới nhất — 20/11/2026 20:56 +07
 
-PR #218 nâng Vite `6.4.4` lên `6.4.5` đã được merge vào `main`. Main hiện tại là `950279e25df2b658c39acfc3a3c37640bb8e6cac`. Frontend/E2E [run `44700827386`](https://github.com/duyxl56785/Project_HK5/actions/runs/44700827386) SUCCESS trên đúng SHA: job frontend, E2E C2 OFF và E2E C2 ON đều SUCCESS. Backend readiness gần nhất [run `44493061575`](https://github.com/duyxl56785/Project_HK5/actions/runs/44493061575) gắn `cee7c87`; từ SHA đó đến main hiện tại không có thay đổi trong `backend/**`, `docker/**` hoặc workflow backend-readiness. Đây là đối chiếu phạm vi file, không thay thế xác nhận applicability của TV2 trên Frozen SHA.
+PR #220 đã merge sau PR #218; main hiện tại là `eaf3bf270255b80db4525f836bfae7e495dc8651`. Post-merge CI [run `44746995567`](https://github.com/duyxl56785/Project_HK5/actions/runs/44746995567): Frontend SUCCESS, E2E C2 OFF SUCCESS, E2E C2 ON IN_PROGRESS tại checkpoint này. Backend readiness gần nhất [run `44493061575`](https://github.com/duyxl56785/Project_HK5/actions/runs/44493061575) gắn `cee7c87`; từ SHA đó đến main hiện tại không có thay đổi trong `backend/**`, `docker/**` hoặc workflow backend-readiness. Đây là đối chiếu phạm vi file, không thay thế xác nhận applicability của TV2 trên Frozen SHA.
 
 PR #216 và #217 vẫn OPEN. #216 giữ HEAD `e057e5707c7545d5c1e8e9187532044de4588362`, branch có 4 commit phía main và 3 commit riêng phía branch; TV2 vẫn có review CHANGES_REQUESTED. #217 là follow-up docs HEAD `611a789cb4c2fb34c4a50856ebb2b1915e31200f`, cần TV4 merge vào branch #216, cập nhật mô tả PR và đồng bộ main an toàn trước khi review lại.
 
