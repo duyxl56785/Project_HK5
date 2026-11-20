@@ -1,12 +1,23 @@
 # M01 bổ sung cho Voucher C2 — MD13–MD25
 
-**Trạng thái:** ĐÃ CHỌN ngày 16/11/2026. TV2 chọn phương án **A cho cả MD13–MD24** và chốt **MD25** (đơn sau giảm tối thiểu 1 đồng). Đây là quyết định nghiệp vụ, **chưa** phải bằng chứng C2 đã được code, merge hay bật. Còn chờ TV5 review phần tiền và TV3, TV4 xác nhận khả thi (mục 8). Không dùng tài liệu này để bật cờ hay sửa báo cáo nộp.
+**Trạng thái:** ĐÃ CHỌN ngày 16/11/2026. TV2 chọn phương án **A cho cả MD13–MD24** và chốt **MD25** (đơn sau giảm tối thiểu 1 đồng). Đây là quyết định nghiệp vụ. Tại thời điểm chốt ngày 16/11/2026, C2 **chưa** được code, merge hay bật; còn chờ TV5 review phần tiền và TV3, TV4 xác nhận khả thi (mục 8). Trạng thái này đã được cập nhật ngày 19/11/2026 ở đoạn dưới và ở mục 8. Không dùng tài liệu này để bật cờ hay sửa báo cáo nộp.
+
+**Cập nhật 19/11/2026:** đã đủ chữ ký ở mục 8. C2 đã code và merge vào `main`: #211 tại `cee7c87`, #212 tại `4b5bcb4`. Cờ C2 vẫn mặc định tắt. TV2 quyết định bật hay tắt ở UAT ngày 21/11 theo bốn điều kiện ở mục **Lịch**. Tài liệu này vẫn chưa phải bằng chứng C2 đã bật.
 
 **Người quyết định:** Nguyễn Văn Duy (`duyxl56785`), owner M01/Finance theo [M01_FINANCE_DECISION.md](M01_FINANCE_DECISION.md). Cột "Quyết định (A)" là phương án TV2 đã chọn. Cột "Phương án đã loại" giữ lại để biết đã cân nhắc gì.
 
 **Phạm vi:** FR-VC-05 giai đoạn C2, tức ba phần mà [contract C1](../FR_VC05_VOUCHER_C1_CONTRACT.md) mục 1 để lại: áp voucher vào Cart và Checkout; trừ và hoàn lượt dùng; tiền trên SellerOrder và phí sàn. Contract ghi C2 "cần M01 mới và TV5 review".
 
 **Lịch:** `main` đóng băng hết 19/11/2026. Quyết định này giả định C2 **không** vào bản nộp 21/11. Báo cáo nộp vẫn ghi "áp voucher khi thanh toán" là hướng phát triển.
+
+**Lịch, thay thế đoạn trên từ 17/11/2026:** TV2 dời lịch, `main` đóng băng lúc 18:00 ngày 20/11/2026, UAT ngày 21/11, nộp trước 23/11. Ngày 18/11, TV2 ghi trên [PR #211](https://github.com/duyxl56785/Project_HK5/pull/211#issuecomment-6969662837) rằng C2 chỉ được bật ở UAT khi đủ cả bốn điều kiện:
+
+1. #211 và PR B (#212) merge vào `main` trước 18:00 ngày 20/11.
+2. TV5 approve phần tiền của #211.
+3. CI trên SHA đóng băng chạy `voucher-c2.spec.ts` với kết quả PASS, không skip.
+4. Không còn P0 nào của C2 đang mở.
+
+Thiếu một điều kiện thì C2 tắt, và báo cáo ghi "đã code, đã test, chưa bật trong bản nộp".
 
 ## 1. Vì sao cần quyết định mới
 
@@ -95,9 +106,11 @@ So sánh MD16 cho dòng "PERCENT dưới trần": phương án A (đã chọn) p
 | Vai trò | Người | Việc | Trạng thái |
 |---|---|---|---|
 | Quyết định M01 | TV2 Nguyễn Văn Duy (`duyxl56785`) | Chọn A hoặc B cho MD13–MD24 | ĐÃ CHỌN 16/11/2026: A cho cả MD13–MD24; MD25 = tối thiểu 1 đồng |
-| Review tiền | TV5 Nguyễn Minh Duy | Review MD15, MD16, MD20, MD21, MD24, MD25 và ví dụ số | CHỜ |
-| Cart, Checkout, voucher | TV3 Trần Văn Chính | Xác nhận khả thi MD14, MD18, MD19, MD22; trả lời mục 6.3 | CHỜ |
-| Fulfillment, trả hàng | TV4 Phạm Thế Cường | Xác nhận MD19, MD20; trả lời mục 6.2 | CHỜ |
+| Review tiền | TV5 Nguyễn Minh Duy | Review MD15, MD16, MD20, MD21, MD24, MD25 và ví dụ số | ĐÃ DUYỆT 19/11/2026: [APPROVE #211 tại `4f3152b`](https://github.com/duyxl56785/Project_HK5/pull/211#pullrequestreview-5971620587). Lần review đầu tại `c5faad9` yêu cầu sửa MD21. Đã khắc phục bằng migration V10 (trigger PostgreSQL chặn sửa `voucher_snapshot`) và test PostgreSQL. |
+| Cart, Checkout, voucher | TV3 Trần Văn Chính | Xác nhận khả thi MD14, MD18, MD19, MD22; trả lời mục 6.3 | ĐÃ HIỆN THỰC: TV3 là tác giả #211 và #212, đã hiện thực MD14, MD18, MD19, MD22. Không có chữ ký riêng ngoài PR. |
+| Fulfillment, trả hàng | TV4 Phạm Thế Cường | Xác nhận MD19, MD20; trả lời mục 6.2 | ĐÃ DUYỆT 19/11/2026: [APPROVE #211 tại `4f3152b`](https://github.com/duyxl56785/Project_HK5/pull/211#pullrequestreview-5970989018), gồm phần hủy, từ chối, Return theo `gross` sau giảm và Inventory receipt. |
+
+TV2 approve #211 tại `4f3152b` ([review](https://github.com/duyxl56785/Project_HK5/pull/211#pullrequestreview-5970786506)) và approve #212 tại `3483486` ([review](https://github.com/duyxl56785/Project_HK5/pull/212#pullrequestreview-5972906520)).
 
 Phiên bản: `M01-VOUCHER-C2-v2; MD13=A, MD14=A, MD15=A, MD16=A, MD17=A, MD18=A, MD19=A, MD20=A, MD21=A, MD22=A, MD23=A, MD24=A, MD25=A`. Bản v1 gồm MD13–MD24; v2 thêm MD25 cùng ngày 16/11/2026.
 

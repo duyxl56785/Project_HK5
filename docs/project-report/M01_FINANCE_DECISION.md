@@ -49,6 +49,8 @@ MD11 làm rõ phạm vi của MD04 cho bản nộp và demo local, không đổi
 
 Đây là quyết định nghiệp vụ **cho FR-VC-05 giai đoạn C2**, không phải bằng chứng C2 đã được code, merge hoặc bật. C2 không nằm trong bản nộp 21/11/2026.
 
+**Cập nhật 19/11/2026:** câu "C2 không nằm trong bản nộp 21/11/2026" ở trên viết theo lịch cũ và không còn áp dụng. C2 đã code và merge vào `main`: #211 tại `cee7c87`, #212 tại `4b5bcb4`. Cờ C2 vẫn mặc định tắt theo MD23. TV2 quyết định bật hay tắt ở UAT ngày 21/11 theo bốn điều kiện ghi ở mục **Lịch** của [file chi tiết](M01_VOUCHER_C2_DECISION.md). Thiếu một điều kiện thì C2 tắt, và báo cáo ghi "đã code, đã test, chưa bật trong bản nộp". Cập nhật này không đổi MD13–MD25.
+
 | ID | Quyết định |
 | --- | --- |
 | MD13 | Seller chịu toàn bộ phần giảm của voucher; sàn không bù tiền. |
@@ -67,4 +69,4 @@ MD11 làm rõ phạm vi của MD04 cho bản nộp và demo local, không đổi
 
 **Quan hệ với quyết định cũ:** MD13–MD25 mở rộng MD05 (nay có giảm giá cấp đơn của từng Store) và giữ điều khoản "không cộng dồn với voucher" của MD12. MD01–MD04, MD06–MD11 không đổi.
 
-**Review:** contract C1 yêu cầu TV5 review phần tiền của C2. Tại ngày 16/11/2026, TV5, TV3 và TV4 chưa xác nhận; trạng thái ghi ở mục 8 của file chi tiết. Quyết định này không đổi phân công trong [OWNERSHIP.md](../OWNERSHIP.md).
+**Review:** contract C1 yêu cầu TV5 review phần tiền của C2. Tại ngày 16/11/2026, TV5, TV3 và TV4 chưa xác nhận; trạng thái ghi ở mục 8 của file chi tiết. Cập nhật 19/11/2026: TV5 và TV4 đã approve #211 tại `4f3152b`; TV3 là tác giả #211 và #212. Cờ C2 vẫn mặc định tắt. Việc bật C2 ở UAT ngày 21/11 theo bốn điều kiện ghi trong file chi tiết. Quyết định này không đổi phân công trong [OWNERSHIP.md](../OWNERSHIP.md).
