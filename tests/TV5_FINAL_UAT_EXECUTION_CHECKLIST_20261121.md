@@ -37,7 +37,7 @@
 
 ## 2. Chuẩn evidence tối thiểu
 
-Mỗi case phải có một thư mục riêng `evidence/<run-id>/<test-id>/` và manifest `manifest.json` (hoặc `.yaml`) ghi tối thiểu:
+Mỗi case phải có một thư mục riêng `reports/minh-chung-kiem-thu/tv5-final-uat-20261121/<run-id>/<test-id>/` và manifest `manifest.json` (hoặc `.yaml`) ghi tối thiểu:
 
 ```json
 {
