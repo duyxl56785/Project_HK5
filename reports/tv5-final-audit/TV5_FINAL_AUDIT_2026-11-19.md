@@ -6,7 +6,7 @@
 
 **Lần làm mới GitHub:** 19/11/2026; branch endpoint xác nhận `main=4b5bcb4ceb5a6a636e4c943db2d41c8a4c1bb14f` sau merge #212.
 
-> **Delta sau checkpoint cũ:** PR #212 đã được TV2 APPROVE đúng HEAD `3483486` và MERGED vào `main` lúc `2026-11-19T10:05:23Z`; merge SHA `4b5bcb4`. GitHub review mới trên PR #214 đã yêu cầu TV5 sửa tài liệu ở 7 nhóm; các cập nhật đang được xử lý trong phạm vi docs/QA. Không dùng các đoạn mô tả #212 còn OPEN trong tài liệu lịch sử làm trạng thái hiện hành.
+> **Delta sau checkpoint cũ:** PR #212 đã được TV2 APPROVE đúng HEAD `3483486` và MERGED vào `main` lúc `2026-11-19T10:05:23Z`; merge SHA `4b5bcb4`. TV5 đã sửa 7 nhóm theo review TV2 ngày 19/11. Không dùng các đoạn mô tả #212 còn OPEN trong tài liệu lịch sử làm trạng thái hiện hành.
 
 ## A. Trạng thái GitHub
 
@@ -42,7 +42,7 @@ Sau khi #211 merge, **TV2** đổi base #212 sang `main` và mở lại PR để
 
 ### PR #214 — tài liệu TV5
 
-PR vẫn OPEN và đã có formal review TV2 `CHANGES_REQUESTED` trên revision được review; chưa có inline review thread hoặc issue comment riêng. Review xác nhận số case 37, mã lỗi, giới hạn Voucher C1, ví dụ tiền C2-04/C2-05 và SHA256 PPTX trước đó đúng; yêu cầu TV5 sửa 7 nhóm: (1) phân biệt retarget synthetic merge ref với main; (2) ghi post-merge CI run `44502375038` attempt 1/2; (3) Finance MD01–MD11 approved cho demo local/bản nộp, production chưa được phê duyệt và C2 không có gate Finance approval riêng; (4) bỏ thông tin HEAD/compare/mergeable tự tham chiếu PR #214 khỏi tài liệu; (5) ghi đúng TV2 là người đổi base #212; (6) cập nhật speaker notes Markdown/PPTX; (7) sửa đường dẫn M01 Voucher C2 thành `docs/project-report/M01_VOUCHER_C2_DECISION.md`. TV5 xử lý các mục thuộc tài liệu/QA; decision file M01 do TV2 sở hữu và cần TV2 tự đồng bộ chữ ký/lịch/scope. Không merge PR #214.
+TV5 đã sửa 7 nhóm theo review TV2 ngày 19/11: (1) phân biệt retarget synthetic merge ref với main; (2) ghi post-merge CI run `44502375038` attempt 1/2; (3) Finance MD01–MD11 approved cho demo local/bản nộp, production chưa được phê duyệt và C2 không có gate Finance approval riêng; (4) bỏ thông tin tự tham chiếu PR #214 khỏi tài liệu; (5) ghi đúng TV2 là người đổi base #212; (6) cập nhật speaker notes Markdown/PPTX; (7) sửa đường dẫn M01 Voucher C2 thành `docs/project-report/M01_VOUCHER_C2_DECISION.md`. Decision file M01 do TV2 sở hữu; các cập nhật chữ ký/lịch/scope được ghi nhận tại PR #215.
 
 ### Main / freeze
 
@@ -112,7 +112,7 @@ Hình 6.1–6.8 phải được TV2 chụp trên frozen SHA theo mapping: 6.1 Ho
 |---|---|---|---|---|
 | #211 merge integration | MERGED; readiness SUCCESS; frontend SUCCESS; E2E SUCCESS | TV2 | Merge SHA `cee7c87d`; runs `44493061534` / `44493061575` | CI hậu merge bắt buộc đã xanh; vẫn không thay Final UAT |
 | #212 integration | MERGED | TV2 + TV3 | TV2 APPROVED exact HEAD `3483486`; merge SHA `4b5bcb4`; post-merge run `44502375038` attempt 2 SUCCESS (frontend, OFF 24/24, ON 25/25, 0 skip) | TV2 xác nhận frozen SHA; rerun nếu main tiến thêm |
-| #214 TV5 docs | OPEN / CHANGES_REQUESTED | TV5 + TV2 | Formal review TV2 yêu cầu sửa 7 nhóm tài liệu; không có inline threads/comments | TV5 cập nhật docs/PPTX/evidence kit; TV2 review lại; không tự approve/merge |
+| #214 TV5 docs | TV5 đã sửa 7 nhóm theo review TV2 ngày 19/11 | TV5 + TV2 | Các cập nhật docs/PPTX/evidence kit theo 7 nhóm review | TV2 review lại theo quy trình PR; không tự approve/merge |
 | Frozen SHA | BLOCKED | TV2 | Full SHA, freeze time, CI URLs, PR list | TV2 xác nhận bằng văn bản |
 | Final UAT #18 | BLOCKED / NOT_RUN | TV2/TV3/TV4/TV5 | Clean stack, exact SHA, HTTP/DB/Inventory/Finance receipts, screenshots | Bắt buộc cases đạt; P0 được xử lý/waiver rõ ràng |
 | #157 Return/Finance | OPEN | TV5 + TV3/TV4 | RET-05 stock-once, Return/settlement UAT và các checkbox còn lại | Mọi tiêu chí issue có evidence, TV5 cập nhật trong phạm vi |
@@ -132,7 +132,7 @@ Trạng thái issue được fetch trực tiếp trong lượt làm mới 19/11:
 
 ## G. Thay đổi TV5 trong phiên này
 
-- Làm mới trạng thái PR #211/#212/#214 và Issues #18/#157/#162 trực tiếp từ GitHub; xác minh review TV2 exact HEAD #212 `3483486`, merge commit `4b5bcb4`, PR #214 có review CHANGES_REQUESTED. Không chạy Final UAT hoặc stack runtime.
+- Làm mới trạng thái PR #211/#212 và Issues #18/#157/#162 trực tiếp từ GitHub; xác minh review TV2 exact HEAD #212 `3483486` và merge commit `4b5bcb4`. Không chạy Final UAT hoặc stack runtime.
 - Tạo `TV5_FINAL_UAT_EXECUTION_CHECKLIST_20261121.md` với mục tiêu, prerequisites, steps, expected result, evidence, evidence owner và status cho đủ 37 case; tạo `TV5_FINAL_UAT_EVIDENCE_INTAKE_20261121.md` cho cấu trúc folder/manifest, owner mapping, raw/redacted artifacts và receipt acceptance.
 - Đồng bộ gate G-05 #212 MERGED và post-merge CI `44502375038` attempt 2 SUCCESS; G-06 vẫn chờ frozen SHA, G-07 chờ P0 triage.
 - Sửa 7 nhóm review TV2 trong ma trận 37 case, acceptance, report content, Markdown speaker notes, audit và submission README; tạo thêm evidence kit tại `reports/minh-chung-kiem-thu/tv5-final-uat-20261121/`.
@@ -140,4 +140,4 @@ Trạng thái issue được fetch trực tiếp trong lượt làm mới 19/11:
 - Không đưa thông tin HEAD/compare/mergeable tự tham chiếu PR #214 vào audit/report/acceptance. PR description đã cập nhật theo commit `a1c0714`; TV5 đã phản hồi 7 nhóm review bằng top-level comment và request TV2 review lại. Không tự approve/merge.
 - Không merge PR #214, không bật C2/Finance, không tick/đóng Issue.
 
-**Disposition:** #211/#212 MERGED; #212 TV2 APPROVED exact HEAD; post-merge CI run `44502375038` attempt 2 SUCCESS trên `4b5bcb4`. PR #214 OPEN / CHANGES_REQUESTED; TV5 đang sửa 7 nhóm tài liệu. Main `4b5bcb4` chưa được TV2 xác nhận frozen; Final UAT `NOT RUN`. C2 OFF; Finance approved cho local demo/submission nhưng production NOT_APPROVED; runtime flags NOT_VERIFIED. Release vẫn `PARTIAL / BLOCKED` tới khi có frozen SHA/CI đúng SHA, clean-stack/clone receipts, evidence 37 case, xử lý P0/UNKNOWN/RET-05 và ảnh 6.1–6.8.
+**Disposition:** #211/#212 MERGED; #212 TV2 APPROVED exact HEAD; post-merge CI run `44502375038` attempt 2 SUCCESS trên `4b5bcb4`. TV5 đã sửa 7 nhóm theo review TV2 ngày 19/11. Main `4b5bcb4` chưa được TV2 xác nhận frozen; Final UAT `NOT RUN`. C2 OFF; Finance approved cho local demo/submission nhưng production NOT_APPROVED; runtime flags NOT_VERIFIED. Release vẫn `PARTIAL / BLOCKED` tới khi có frozen SHA/CI đúng SHA, clean-stack/clone receipts, evidence 37 case, xử lý P0/UNKNOWN/RET-05 và ảnh 6.1–6.8.
