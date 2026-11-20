@@ -138,7 +138,7 @@ Trạng thái issue được fetch trực tiếp trong lượt làm mới 20/11:
 ## G. Thay đổi TV5 trong phiên này
 
 - Làm mới trạng thái PR #211/#212/#214/#215 và Issues #18/#157/#162 trực tiếp từ GitHub; xác minh merge #215 tại `1b652751`, review TV5 exact HEAD #215 `be8aa539`, và PR #214 vẫn chờ review HEAD mới. Không chạy Final UAT hoặc stack runtime.
-- Tạo `TV5_FINAL_UAT_EXECUTION_CHECKLIST_20261121.md` với mục tiêu, prerequisites, steps, expected result, evidence, evidence owner và status cho đủ 37 case; tạo `TV5_FINAL_UAT_EVIDENCE_INTAKE_20261121.md` cho cấu trúc folder/manifest, owner mapping, raw/redacted artifacts và receipt acceptance.
+- Tạo `TV5_FINAL_UAT_EXECUTION_CHECKLIST_20261121.md` với mục tiêu, prerequisites, steps, expected result, evidence, evidence owner và status cho đủ 37 case; `case-evidence-map.md` hiện có evidence path template riêng theo `<run-id>/<test-id>` cho cả 37 case, owner và status; `TV5_FINAL_UAT_EVIDENCE_INTAKE_20261121.md` quy định manifest, raw/redacted artifacts và receipt acceptance.
 - Đồng bộ gate G-05 #212 MERGED và post-merge CI `44502375038` attempt 2 SUCCESS; G-06 vẫn chờ frozen SHA, G-07 chờ P0 triage.
 - Sửa 7 nhóm review TV2 trong ma trận 37 case, acceptance, report content, Markdown speaker notes, audit và submission README; tạo thêm evidence kit tại `reports/minh-chung-kiem-thu/tv5-final-uat-20261121/`.
 - Cập nhật speaker notes PPTX draft slide 8/16/23; sau cập nhật hậu merge #215, ZIP integrity PASS, 23 slide/23 notes; các nội dung slide hiển thị không đổi. SHA256 mới `0b45a394a3365922c854c7eb913d627193a5e8253d35ce9e8e3472bebe01aa16`.
