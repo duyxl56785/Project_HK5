@@ -1,0 +1,46 @@
+{
+  "repository": "duyxl56785/Project_HK5",
+  "run_id": "<operator-generated-unique-run-id>",
+  "run_type": "FINAL_UAT",
+  "frozen_sha": "<TV2-confirmed-full-40-character-main-sha>",
+  "freeze_confirmed_by": "<TV2 GitHub identity>",
+  "freeze_confirmed_at": "<ISO-8601 with +07:00>",
+  "started_at": "<ISO-8601 with +07:00>",
+  "finished_at": "<ISO-8601 with +07:00>",
+  "operator": "<actual operator identity>",
+  "witnesses": ["<TV3>", "<TV4>", "<TV5>"],
+  "environment": {
+    "os": "<OS and version>",
+    "tool_versions": {
+      "git": "<version>",
+      "node": "<version>",
+      "java": "<version>",
+      "docker": "<version>"
+    },
+    "compose_project": "<isolated project name>",
+    "image_digests": ["<image@sha256:digest>"],
+    "db_identity": "<non-secret DB identifier>",
+    "schema_versions": ["<migration/version>"],
+    "ports": ["<loopback-only mapping>"],
+    "network": "<isolated network identifier>",
+    "volumes": ["<new disposable volume names>"]
+  },
+  "flags": {
+    "HK5_VOUCHER_C2_ENABLED": "<observed true/false/NOT_VERIFIED>",
+    "HK5_FINANCE_POLICY_APPROVED": "<observed true/false/NOT_VERIFIED>",
+    "INVENTORY_ORDER_PAIR_ENABLED": "<observed true/false/NOT_VERIFIED>",
+    "approval_links": ["<TV2 decision URL for each opt-in>" ]
+  },
+  "ci": {
+    "readiness_url": "<URL or NOT_RUN with reason>",
+    "frontend_url": "<URL or NOT_RUN with reason>",
+    "e2e_url": "<URL or NOT_RUN with reason>",
+    "run_ids": ["<run-id>"]
+  },
+  "fake_actors": ["<actor ID + role; no real PII>"],
+  "seed_version": "<fixture/seed version>",
+  "test_ids": ["<IDs actually executed>"],
+  "overall_status": "NOT RUN",
+  "artifact_index": "<relative path to manifest/checksum index>",
+  "blockers": ["<actual blocker or empty list>"]
+}

@@ -164,7 +164,7 @@ export function SellerVouchersPage(){
   const requests=useQuery({queryKey:['voucher','requests',account?.userId],enabled:canManage,queryFn:()=>api<Request[]>(
     '/api/stores/me/voucher-limit-requests?size=50')});
   return <div className="stack"><h1>Voucher cửa hàng</h1>
-    <p className="muted">C1 chỉ quản lý voucher. Chưa thể dùng mã để giảm tiền tại Checkout.</p>
+    <p className="muted">Khách áp mã tại Checkout khi tính năng áp voucher được bật. Cửa hàng chịu toàn bộ phần giảm giá.</p>
     {canManage&&<><div className="panel stack"><h2>Hạn mức sử dụng</h2>
       <Loaded query={limit}>{item=><p><strong>{item.used}/{item.limit}</strong> slot
         {item.grant&&' · Grant đến '+dateTime(item.grant.validUntil)}</p>}</Loaded></div>
