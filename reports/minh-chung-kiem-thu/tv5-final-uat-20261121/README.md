@@ -15,7 +15,7 @@
 - [M01 Finance](../../../docs/project-report/M01_FINANCE_DECISION.md)
 - [M01 Voucher C2](../../../docs/project-report/M01_VOUCHER_C2_DECISION.md)
 
-Không dùng file template này thay cho matrix/checklist. Không có frozen SHA được xác nhận trong checkpoint hiện tại.
+Không dùng file template này thay cho matrix/checklist. Frozen SHA đã được TV2 xác nhận như mục 7; tuy nhiên hiện chưa có raw Final UAT receipt.
 
 ## 2. Cấu trúc thư mục khi có run thật
 
