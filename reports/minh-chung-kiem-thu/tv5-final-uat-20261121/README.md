@@ -5,7 +5,7 @@
 **Owner:** TV5 — QA Lead
 
 **Case set:** 37 (17 baseline + 5 Voucher C1 + 4 Promotion + 11 Voucher C2)
-**Execution status hiện tại:** `NOT RUN`; các gate/contract chưa đạt giữ `BLOCKED`.
+**Execution status hiện tại:** `0 PASS, 0 FAIL, 23 NOT RUN, 13 BLOCKED`; UAT-12 mixed (Return non-restock NOT RUN; RET-05 restock BLOCKED).
 
 ## 1. Nguồn chính thức
 
@@ -15,7 +15,7 @@
 - [M01 Finance](../../../docs/project-report/M01_FINANCE_DECISION.md)
 - [M01 Voucher C2](../../../docs/project-report/M01_VOUCHER_C2_DECISION.md)
 
-Không dùng file template này thay cho matrix/checklist. Không có frozen SHA được xác nhận trong checkpoint hiện tại.
+Không dùng file template này thay cho matrix/checklist. Frozen SHA đã được TV2 xác nhận như mục 7; tuy nhiên hiện chưa có raw Final UAT receipt.
 
 ## 2. Cấu trúc thư mục khi có run thật
 
@@ -75,4 +75,4 @@ Template có placeholder và trạng thái `NOT RUN`; không phải receipt. Ch�
 
 ## 7. Liên hệ trạng thái hiện tại
 
-Main candidate quan sát ngày 20/11: `1b652751c76e5558d76d0f1b9037c275cef3ba34` sau merge #215; chưa được TV2 xác nhận frozen. Post-merge CI [44502375038](https://github.com/duyxl56785/Project_HK5/actions/runs/44502375038), attempt 2 SUCCESS, gắn parent `4b5bcb4` trước #215, không phải CI trên main hiện tại. Final UAT chưa chạy; không có receipt nào được tạo bởi bộ template này.
+TV2 xác nhận Frozen SHA sau merge PR #220: `eaf3bf270255b80db4525f836bfae7e495dc8651`, freeze lúc 20/11/2026 20:44 +07; SHA này thay thế freeze cũ `950279e`. Post-merge [CI run 44746995567](https://github.com/duyxl56785/Project_HK5/actions/runs/44746995567): Frontend, E2E C2 OFF và E2E C2 ON đều SUCCESS trên đúng Frozen SHA. Backend readiness [run 44493061575](https://github.com/duyxl56785/Project_HK5/actions/runs/44493061575) gắn `cee7c87`; TV2 xác nhận run này còn áp dụng vì `backend/` không đổi từ `cee7c87` đến Frozen SHA. CI không phải Final UAT. Không có raw Final UAT receipt nào được tạo từ bộ template này.
