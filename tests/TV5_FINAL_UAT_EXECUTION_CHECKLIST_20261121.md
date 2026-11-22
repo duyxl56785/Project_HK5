@@ -25,15 +25,15 @@
 | Frozen `main` SHA (40 ký tự) | `eaf3bf270255b80db4525f836bfae7e495dc8651` — TV2 xác nhận tại Issue #158; thay thế freeze cũ `950279e` |
 | Freeze timestamp (Asia/Ho_Chi_Minh) | `2026-11-20 20:44 +07` — TV2 xác nhận tại Issue #158 |
 | CI readiness/frontend/E2E URLs + run IDs và applicability trên frozen SHA | `Frontend + E2E C2 OFF + E2E C2 ON: run 44746995567 SUCCESS trên exact Frozen SHA. Backend readiness: run 44493061575 trên cee7c87; TV2 xác nhận áp dụng vì backend không đổi tới Frozen SHA.` |
-| Clean-clone receipt / máy / OS / tool versions | `PENDING` |
-| Clean-stack receipt / Compose project / image digests | `PENDING` |
-| DB identity / schema migration version / volume names | `PENDING` |
-| Ports / network / loopback binding | `PENDING` |
-| Flags thực tế và approval link cho từng flag | `PENDING — default OFF; runtime NOT VERIFIED; M01 MD01–MD11 approved for local demo/submission only, production NOT APPROVED` |
-| Run ID / start-end time | `PENDING` |
-| TV2 operator / TV3 / TV4 / TV5 witness | `PENDING` |
-| Seed dataset version / fake actor IDs | `PENDING` |
-| Evidence root + manifest SHA256 | `PENDING` |
+| Clean-clone receipt / máy / OS / tool versions | TV2 separate clone tại Frozen SHA, `git status` sạch trước/sau; Windows 11, Git 2.55.0, JDK 21.0.12.1, Node 24.21.0, Docker 29.9.1. TV1 PR #226 xác nhận clone độc lập cùng máy; máy thứ hai vẫn NOT_RUN. |
+| Clean-stack receipt / Compose project / image digests | `hk5-promo-test-uat2111`; image digests của Temurin 21, frontend, PostgreSQL 16, Kafka 3.8.1, Redis 7 ghi trong run-manifest #221. |
+| DB identity / schema migration version / volume names | Container `hk5-promo-test-uat2111-postgres-1`, user `hk5`; auth V4, user V2, seller V11, product V10, inventory V2, cart V2, order V10, notification V2; volumes `..._pgdemo`, `..._productimages`. |
+| Ports / network / loopback binding | `127.0.0.1:5173→frontend:80`, `127.0.0.1:18080→api-gateway:8080`; network `hk5-promo-test-uat2111_default`, prefix `172.30.248`. |
+| Flags thực tế và approval link cho từng flag | Ba flags Inventory pair, Finance policy, Voucher C2 đều observed `true` trong `.env.demo`; capability `enabled=true`. Local UAT only; default OFF ngoài demo; Finance production NOT_APPROVED. Approval M01 MD09/MD23 và quyết định TV2 tại Issue #158. |
+| Run ID / start-end time | `tv2-uat-eaf3bf2-20261121`; `2026-11-21T11:54:02+07:00` → `2026-11-22T13:19:38+07:00`. |
+| TV2 operator / TV3 / TV4 / TV5 witness | Operator `duyxl56785 (TV2)`; `witnesses` để trống trong run-manifest; TV5 thực hiện hậu kiểm receipt, không tự nhận là witness tại phiên chạy. |
+| Seed dataset version / fake actor IDs | `scripts/demo/seed.mjs` tại Frozen SHA, chạy một lần trên DB trống; fake actor/account mapping được ghi trong run-manifest và raw receipts. |
+| Evidence root + manifest SHA256 | [PR #221](https://github.com/duyxl56785/Project_HK5/pull/221), thư mục `tv2-uat-eaf3bf2-20261121/`; 99 files, 98 checksum entries, 98/98 PASS; metadata của 37 case manifests khớp run-manifest. |
 
 ### 1A. Kết quả thực tế theo receipt TV2
 
@@ -47,7 +47,7 @@
 | C2-01..11 | 11 PASS | C2 ON trên stack UAT; nhánh OFF có CI `44746995567` |
 | **Tổng** | **34 PASS, 1 PARTIAL, 2 BLOCKED, 0 FAIL** | Không có P0/P1 theo TV2 triage |
 
-**Run metadata:** `tv2-uat-eaf3bf2-20261121`; operator TV2; Windows 11 / JDK 21 / Node 24 / Docker 29.9.1; Compose project `hk5-promo-test-uat2111`; run-manifest xác nhận flags trong `.env.demo` và capability `enabled=true`. Receipt đầy đủ ở `reports/minh-chung-kiem-thu/tv5-final-uat-20261121/tv2-uat-eaf3bf2-20261121/` sau khi PR #221 được merge.
+**Run metadata:** `tv2-uat-eaf3bf2-20261121`; operator TV2; Windows 11 / JDK 21.0.12.1 / Node 24.21.0 / Docker 29.9.1; Compose project `hk5-promo-test-uat2111`; run-manifest xác nhận flags trong `.env.demo` và capability `enabled=true`. Receipt đầy đủ đang ở PR #221 và sẽ xuất hiện trong `main` sau khi PR được owner merge.
 
 ## 2. Chuẩn evidence tối thiểu
 
