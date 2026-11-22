@@ -1,0 +1,26 @@
+status	testcase
+PASS	access.spec.ts :: forms validate in the browser before calling the API
+PASS	access.spec.ts :: a guest is sent to login and returned to the page
+PASS	access.spec.ts :: a wrong password shows the server error
+PASS	access.spec.ts :: a customer cannot open seller or admin pages
+PASS	access.spec.ts :: an admin hides a category from the public tree only
+PASS	access.spec.ts :: an admin locks an account, ending its session, and unlocks it
+PASS	access.spec.ts :: a signed-in customer is not sent to login while the session is restoring
+PASS	access.spec.ts :: a page chunk that fails to load offers a reload instead of a blank app
+PASS	access.spec.ts :: the home banner holds its slide while the pointer is on it
+PASS	access.spec.ts :: a guest page does not ask for a session it never had
+PASS	access.spec.ts :: a refresh outage does not end the session on the next load
+PASS	access.spec.ts :: a deep link and a refresh both load the app
+PASS	cart-refusal.spec.ts :: clearing the Cart asks first, and a closed Store is named on its own line
+PASS	order-journey.spec.ts :: an order goes from checkout to delivery, review, COD and payout
+PASS	promotion-pricing.spec.ts :: Seller clearance flows through Catalog and Checkout into Order price and fee
+PASS	return-access.spec.ts :: Return APIs refuse the wrong role and anonymous callers
+PASS	return-request.spec.ts :: delivered buyer requests one Return and replay with the same key keeps its ID
+PASS	review-moderation.spec.ts :: an admin hides a review with a reason and shows it again
+PASS	seller-onboarding.spec.ts :: an applicant is rejected, resubmits, opens a store and gets a product on sale
+PASS	seller-onboarding.spec.ts :: the marketplace rules are public and list the seller requirements
+PASS	seller-return.spec.ts :: Seller approves and receives a Return; other roles are refused
+PASS	two-store-order.spec.ts :: one customer order splits into two store orders and reserves stock in both
+PASS	voucher-c1.spec.ts :: seller publishes 20 vouchers, asks for 25, Admin approves, seller publishes 21st
+PASS	voucher-c1.spec.ts :: customer cannot open voucher administration
+SKIP	voucher-c2.spec.ts :: C2 uses two Store vouchers and an identical replay returns the same customer order
