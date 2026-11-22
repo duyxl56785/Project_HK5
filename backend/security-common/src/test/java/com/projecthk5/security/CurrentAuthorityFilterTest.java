@@ -72,6 +72,27 @@ class CurrentAuthorityFilterTest {
         assertTrue(response.getContentAsString().contains("AUTH_ACCESS_INVALID"));
     }
 
+    /** Regression W6: HEAD must check current authority like GET. */
+    @Test
+    void revokedAuthorityAlsoRejectsHeadWithoutTakingAWriteReservation() throws Exception {
+        auth = stub("{\"granted\":false}", 200, 204);
+        var response = run(new CurrentAuthorityFilter(url(), "pair"), "HEAD", "/api/admin/orders");
+        assertEquals(401, response.getStatus());
+        assertTrue(response.getContentAsString().contains("AUTH_ACCESS_INVALID"));
+        assertEquals(List.of("/internal/accounts/account-1/authority-checks"), checked);
+        assertTrue(released.isEmpty());
+    }
+
+    /** Auth outages must fail closed on HEAD instead of serving an old JWT. */
+    @Test
+    void headFailsClosedWhenAuthReturnsAnError() throws Exception {
+        auth = stub("{}", 500, 204);
+        var response = run(new CurrentAuthorityFilter(url(), "pair"), "HEAD", "/api/admin/orders");
+        assertEquals(503, response.getStatus());
+        assertTrue(response.getContentAsString().contains("AUTH_AUTHORITY_UNAVAILABLE"));
+        assertTrue(released.isEmpty());
+    }
+
     @Test
     void readFailsClosedWhenAuthIsUnavailable() throws Exception {
         var refused = run(new CurrentAuthorityFilter("http://127.0.0.1:1", "pair"), "GET", "/api/seller/products");
