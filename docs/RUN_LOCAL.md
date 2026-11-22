@@ -28,6 +28,12 @@ docker compose --env-file .env.demo -f docker/compose.demo.yml stop frontend
 cd frontend && npm ci && npm run dev
 ```
 
+## Chọn đúng script theo mục đích
+
+- **Demo đầy đủ Soopi:** dùng `node scripts/demo/up.mjs` theo phần Khởi động ở trên. Script dùng `scripts/demo/seed.mjs` với ba seller, ba Store và Catalog demo.
+- **Kiểm thử UAT cô lập:** `scripts/qa/uat/Start-IsolatedUat.ps1` có seed fixture riêng (6 sản phẩm, không có ảnh), dùng cho kiểm thử giới hạn; **không thay** `up.mjs` để dựng bản demo đầy đủ hoặc chụp ảnh Catalog.
+- Mọi script UAT phải dùng Compose project/volume/secret riêng và đúng phê duyệt; không sửa dữ liệu hoặc dọn volume của stack dùng chung.
+
 ## Tài khoản seed
 
 | Vai trò | Email | Mật khẩu (trong `.env.demo`) |
@@ -36,6 +42,7 @@ cd frontend && npm ci && npm run dev
 | Khách hàng | `customer@hk5.local` | `SEED_PASSWORD` |
 | Người bán 1 (Tiệm Áo Sài Gòn) | `seller1@hk5.local` | `SEED_PASSWORD` |
 | Người bán 2 (Nhà Xinh) | `seller2@hk5.local` | `SEED_PASSWORD` |
+| Người bán 3 (Góc Tiện Ích) | `seller3@hk5.local` | `SEED_PASSWORD` |
 
 `.env.demo` và `docker/secrets/` đã được git bỏ qua và chỉ dùng cho máy local. Compose nạp secret bằng Docker secrets, service đọc từ `/run/secrets` qua `configtree`, nên `docker inspect` không thấy mật khẩu hay token.
 
