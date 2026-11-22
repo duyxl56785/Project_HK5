@@ -1,0 +1,18 @@
+{
+  "id": "UAT-04",
+  "title": "Checkout COD",
+  "run": "B054914",
+  "sha": "eaf3bf270255b80db4525f836bfae7e495dc8651",
+  "stack": "hk5-promo-test-uat2111",
+  "startedAt": "2026-11-21T05:49:16.077Z",
+  "checks": [
+    {
+      "name": "exception",
+      "ok": false,
+      "actual": "Command failed: docker exec hk5-promo-test-uat2111-postgres-1 psql -U hk5 -d inventory_db -At -F | -c select available_quantity, reserved_quantity from inventory_item where product_id='939fc1d3-f919-4e8a-b9a8-53171afa97bc'\nERROR:  column \"product_id\" does not exist\nLINE 1: ...tity, reserved_quantity from inventory_item where product_id...\n                                                           "
+    }
+  ],
+  "data": {},
+  "finishedAt": "2026-11-21T05:49:16.545Z",
+  "result": "FAIL"
+}

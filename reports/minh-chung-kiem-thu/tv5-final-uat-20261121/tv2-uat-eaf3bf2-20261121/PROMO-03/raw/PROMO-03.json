@@ -1,0 +1,77 @@
+{
+  "id": "PROMO-03",
+  "title": "Clearance",
+  "run": "Q055816",
+  "sha": "eaf3bf270255b80db4525f836bfae7e495dc8651",
+  "stack": "hk5-promo-test-uat2111",
+  "startedAt": "2026-11-21T05:58:16.773Z",
+  "checks": [
+    {
+      "name": "Catalog effective 200000, base 260000, kind SELLER_CLEARANCE",
+      "ok": true,
+      "actual": {
+        "unitPrice": "200000",
+        "baseUnitPrice": "260000",
+        "promotion": {
+          "campaignId": "8f72393b-6d66-44cb-b2d7-9d619261bdc3",
+          "kind": "SELLER_CLEARANCE",
+          "endsAt": "2026-11-21T08:58:01.531Z"
+        },
+        "at": "2026-11-21T05:58:16.783Z",
+        "startsAt": "2026-11-21T05:58:01.531Z"
+      }
+    },
+    {
+      "name": "Catalog list shows the sale price too",
+      "ok": true,
+      "actual": {
+        "unitPrice": "200000"
+      }
+    },
+    {
+      "name": "Cart unit price 200000",
+      "ok": true,
+      "actual": {
+        "productId": "b36842a7-c6b8-4d02-8d5c-1ed077bf74e5",
+        "storeId": "841264c0-c4d5-478f-beb5-adfa3d61eb92",
+        "sellerId": "8777d0bf-3830-41f1-943e-02dfaedd020c",
+        "quantity": 1,
+        "unitPriceSnapshot": 200000
+      }
+    },
+    {
+      "name": "COD checkout without voucher 200",
+      "ok": true,
+      "actual": {
+        "status": 200,
+        "json": {
+          "orderId": "6d43e3a7-be0a-47f3-bef5-9c6d4fb0f211",
+          "status": "PLACED",
+          "total": 200000,
+          "sellerOrderCount": 1
+        }
+      }
+    },
+    {
+      "name": "Order snapshot: unit 200000, qty 1, gross 200000, fee 10000, no voucher",
+      "ok": true,
+      "actual": "200000|1|200000|10000|"
+    }
+  ],
+  "data": {
+    "catalog": {
+      "unitPrice": "200000",
+      "baseUnitPrice": "260000",
+      "promotion": {
+        "campaignId": "8f72393b-6d66-44cb-b2d7-9d619261bdc3",
+        "kind": "SELLER_CLEARANCE",
+        "endsAt": "2026-11-21T08:58:01.531Z"
+      },
+      "at": "2026-11-21T05:58:16.783Z",
+      "startsAt": "2026-11-21T05:58:01.531Z"
+    },
+    "orderSnapshot": "200000|1|200000|10000|"
+  },
+  "finishedAt": "2026-11-21T05:58:17.372Z",
+  "result": "PASS"
+}

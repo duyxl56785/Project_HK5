@@ -1,0 +1,87 @@
+{
+  "id": "C1-04",
+  "title": "Quota",
+  "run": "B054914",
+  "sha": "eaf3bf270255b80db4525f836bfae7e495dc8651",
+  "stack": "hk5-promo-test-uat2111",
+  "startedAt": "2026-11-21T05:49:19.197Z",
+  "checks": [
+    {
+      "name": "used = ACTIVE+SCHEDULED = 20, limit 20",
+      "ok": true,
+      "actual": {
+        "used": 20,
+        "limit": 20,
+        "counted": 20
+      }
+    },
+    {
+      "name": "DRAFT/PAUSED/CANCELLED not counted",
+      "ok": true,
+      "actual": "DRAFT,ACTIVE,ACTIVE,ACTIVE,ACTIVE,ACTIVE,ACTIVE,ACTIVE,ACTIVE,ACTIVE,ACTIVE,ACTIVE,ACTIVE,ACTIVE,ACTIVE,ACTIVE,ACTIVE,ACTIVE,ACTIVE,ACTIVE,SCHEDULED,CANCELLED,PAUSED"
+    },
+    {
+      "name": "publish 21st → 409 VOUCHER_QUOTA_EXCEEDED",
+      "ok": true,
+      "actual": {
+        "status": 409,
+        "json": {
+          "code": "VOUCHER_QUOTA_EXCEEDED",
+          "used": 20,
+          "message": "Voucher limit reached for this Store",
+          "limit": 20
+        },
+        "setCookie": []
+      }
+    },
+    {
+      "name": "resume PAUSED at full quota → 409 VOUCHER_QUOTA_EXCEEDED",
+      "ok": true,
+      "actual": {
+        "status": 409,
+        "json": {
+          "code": "VOUCHER_QUOTA_EXCEEDED",
+          "used": 20,
+          "message": "Voucher limit reached for this Store",
+          "limit": 20
+        },
+        "setCookie": []
+      }
+    },
+    {
+      "name": "no published voucher was cancelled",
+      "ok": true,
+      "actual": 23
+    }
+  ],
+  "data": {
+    "limitBefore": {
+      "used": 20,
+      "limit": 20,
+      "defaultLimit": 20,
+      "grant": null
+    },
+    "publish21": {
+      "status": 409,
+      "json": {
+        "code": "VOUCHER_QUOTA_EXCEEDED",
+        "used": 20,
+        "message": "Voucher limit reached for this Store",
+        "limit": 20
+      },
+      "setCookie": []
+    },
+    "resumePaused": {
+      "status": 409,
+      "json": {
+        "code": "VOUCHER_QUOTA_EXCEEDED",
+        "used": 20,
+        "message": "Voucher limit reached for this Store",
+        "limit": 20
+      },
+      "setCookie": []
+    }
+  },
+  "finishedAt": "2026-11-21T05:49:19.303Z",
+  "result": "PASS"
+}

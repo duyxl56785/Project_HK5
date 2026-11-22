@@ -1,0 +1,52 @@
+{
+  "id": "UAT-07",
+  "title": "Idempotency mismatch",
+  "run": "B055906",
+  "sha": "eaf3bf270255b80db4525f836bfae7e495dc8651",
+  "stack": "hk5-promo-test-uat2111",
+  "startedAt": "2026-11-21T05:59:13.129Z",
+  "checks": [
+    {
+      "name": "same key, different items → 409",
+      "ok": true,
+      "actual": {
+        "status": 409,
+        "json": {
+          "code": "REQUEST_REJECTED",
+          "message": "IDEMPOTENCY_PAYLOAD_MISMATCH"
+        },
+        "setCookie": []
+      }
+    },
+    {
+      "name": "no new Order",
+      "ok": true,
+      "actual": "11"
+    },
+    {
+      "name": "no new inventory operation",
+      "ok": true,
+      "actual": {
+        "before": 15,
+        "after": 15
+      }
+    },
+    {
+      "name": "original Order unchanged",
+      "ok": true,
+      "actual": 230000
+    }
+  ],
+  "data": {
+    "mismatch": {
+      "status": 409,
+      "json": {
+        "code": "REQUEST_REJECTED",
+        "message": "IDEMPOTENCY_PAYLOAD_MISMATCH"
+      },
+      "setCookie": []
+    }
+  },
+  "finishedAt": "2026-11-21T05:59:14.280Z",
+  "result": "PASS"
+}

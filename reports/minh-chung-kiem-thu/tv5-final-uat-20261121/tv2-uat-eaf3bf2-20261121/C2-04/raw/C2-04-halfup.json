@@ -1,0 +1,113 @@
+{
+  "id": "C2-04",
+  "subStep": "HALF_UP 199999 x 15%",
+  "run": "H051128",
+  "sha": "eaf3bf270255b80db4525f836bfae7e495dc8651",
+  "stack": "hk5-promo-test-uat2111",
+  "startedAt": "2026-11-21T05:11:28.924Z",
+  "checks": [
+    {
+      "name": "product ACTIVE in catalog at 199999",
+      "ok": true,
+      "actual": "199999"
+    },
+    {
+      "name": "199999×15%=29999.85, HALF_UP → 30000 (cap 50000 not hit)",
+      "ok": true,
+      "actual": {
+        "storeId": "841264c0-c4d5-478f-beb5-adfa3d61eb92",
+        "voucherCode": "HUH051128",
+        "quoteFingerprint": "9262e68d0f9f2774a784f4a7026a955247d313a02303b96a9a2ed254f1c6f45e",
+        "merchandiseAmount": "199999",
+        "discountAmount": "30000",
+        "gross": "169999",
+        "platformFee": "8500"
+      }
+    },
+    {
+      "name": "HALF_UP 30000 then cap 29999 → 29999 (one rounding, then min)",
+      "ok": true,
+      "actual": {
+        "storeId": "841264c0-c4d5-478f-beb5-adfa3d61eb92",
+        "voucherCode": "HCH051128",
+        "quoteFingerprint": "508f1a82301b52e7fd1fd5f921e21c428afd00a412f7bdf07eabbb1b3973fc80",
+        "merchandiseAmount": "199999",
+        "discountAmount": "29999",
+        "gross": "170000",
+        "platformFee": "8500"
+      }
+    },
+    {
+      "name": "product deactivated (seller 200)",
+      "ok": true,
+      "actual": 200
+    },
+    {
+      "name": "product absent from catalog list (total 24)",
+      "ok": true,
+      "actual": 24
+    },
+    {
+      "name": "inactive product cannot be added to cart (409)",
+      "ok": true,
+      "actual": "409 Product unavailable"
+    }
+  ],
+  "data": {
+    "product": {
+      "id": "407d117e-f236-46b1-833e-517f24c5037a",
+      "unitPrice": "199999",
+      "available": 5,
+      "store": "Tiệm Áo Sài Gòn"
+    },
+    "quotes": [
+      {
+        "voucher": {
+          "code": "HUH051128",
+          "max": 50000
+        },
+        "status": 200,
+        "store": {
+          "storeId": "841264c0-c4d5-478f-beb5-adfa3d61eb92",
+          "voucherCode": "HUH051128",
+          "quoteFingerprint": "9262e68d0f9f2774a784f4a7026a955247d313a02303b96a9a2ed254f1c6f45e",
+          "merchandiseAmount": "199999",
+          "discountAmount": "30000",
+          "gross": "169999",
+          "platformFee": "8500"
+        }
+      },
+      {
+        "voucher": {
+          "code": "HCH051128",
+          "max": 29999
+        },
+        "status": 200,
+        "store": {
+          "storeId": "841264c0-c4d5-478f-beb5-adfa3d61eb92",
+          "voucherCode": "HCH051128",
+          "quoteFingerprint": "508f1a82301b52e7fd1fd5f921e21c428afd00a412f7bdf07eabbb1b3973fc80",
+          "merchandiseAmount": "199999",
+          "discountAmount": "29999",
+          "gross": "170000",
+          "platformFee": "8500"
+        }
+      }
+    ],
+    "cleanup": {
+      "deactivate": 200,
+      "catalogAfter": 200
+    },
+    "cleanupNote": "Original cleanup check expected catalog detail 404; actual 200. That expectation was wrong for this API: detail by id stays readable. Re-checked at 2026-11-21T05:11:59.984Z: product absent from /api/catalog/products (total 24) and POST /api/cart/items returns 409 Product unavailable.",
+    "originalCleanupCheck": {
+      "name": "product deactivated, hidden from catalog",
+      "ok": false,
+      "actual": {
+        "deactivate": 200,
+        "catalogAfter": 200
+      }
+    }
+  },
+  "finishedAt": "2026-11-21T05:11:30.983Z",
+  "result": "PASS"
+}

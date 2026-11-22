@@ -1,0 +1,46 @@
+{
+  "id": "C2-09",
+  "title": "MD21 immutable snapshot",
+  "sha": "eaf3bf270255b80db4525f836bfae7e495dc8651",
+  "stack": "hk5-promo-test-uat2111",
+  "finishedAt": "2026-11-21T04:56:02.319Z",
+  "checks": [
+    {
+      "name": "UAT order_db: Flyway V9 and V10 applied",
+      "ok": true,
+      "actual": "9|t, 10|t"
+    },
+    {
+      "name": "UAT order_db: trigger seller_order_voucher_snapshot_immutable enabled (BEFORE UPDATE)",
+      "ok": true,
+      "actual": "tgenabled=O"
+    },
+    {
+      "name": "UAT order_db: all snapshot rows gross = merchandiseAmount - discountAmount (read-only)",
+      "ok": true,
+      "actual": "9/9"
+    },
+    {
+      "name": "Disposable PG16 (Testcontainers): VoucherCheckoutPostgresIT 16 tests, 0 skipped, 0 failures",
+      "ok": true,
+      "actual": "tests=16 skipped=0 failures=0 errors=0"
+    },
+    {
+      "name": "IT covers UPDATE/DELETE/attach rejection (SQLSTATE 23514, constraint seller_order_voucher_snapshot_immutable)",
+      "ok": true,
+      "actual": [
+        "nativeSqlCannotChangeOrRemoveTheVoucherSnapshot",
+        "nativeSqlCannotAttachAVoucherToAnOrderCreatedWithoutOne",
+        "immutableVoucherSnapshotKeepsGrossBoundToTheOriginalDiscount",
+        "unchangedSnapshotsAndFulfillmentUpdatesRemainAllowed"
+      ]
+    }
+  ],
+  "data": {
+    "command": "backend: ./gradlew --no-daemon -q :order-service:postgresIntegrationTest --tests com.projecthk5.orderservice.integration.VoucherCheckoutPostgresIT (JAVA_TOOL_OPTIONS=-Duser.timezone=Asia/Ho_Chi_Minh), exit 0",
+    "xml": "C2-09-VoucherCheckoutPostgresIT.xml",
+    "xmlSha256": "06bbba49f3922da65d96ee692d00ff1bde3a5308272f955e49f3b5bfbd43480f",
+    "note": "No SQL mutation on the shared UAT DB. Mutation probes ran only in the Testcontainers DB."
+  },
+  "result": "PASS"
+}

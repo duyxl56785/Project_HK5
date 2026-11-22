@@ -1,0 +1,154 @@
+{
+  "id": "C1-02",
+  "title": "Validation",
+  "run": "B054914",
+  "sha": "eaf3bf270255b80db4525f836bfae7e495dc8651",
+  "stack": "hk5-promo-test-uat2111",
+  "startedAt": "2026-11-21T05:49:18.571Z",
+  "checks": [
+    {
+      "name": "code 3 chars → 400",
+      "ok": true,
+      "actual": 400
+    },
+    {
+      "name": "code 21 chars → 400",
+      "ok": true,
+      "actual": 400
+    },
+    {
+      "name": "FIXED value 0 → 400",
+      "ok": true,
+      "actual": 400
+    },
+    {
+      "name": "FIXED with maxDiscount → 400",
+      "ok": true,
+      "actual": 400
+    },
+    {
+      "name": "FIXED minOrder < value → 400",
+      "ok": true,
+      "actual": 400
+    },
+    {
+      "name": "PERCENT 91 → 400",
+      "ok": true,
+      "actual": 400
+    },
+    {
+      "name": "PERCENT 0 → 400",
+      "ok": true,
+      "actual": 400
+    },
+    {
+      "name": "PERCENT without maxDiscount → 400",
+      "ok": true,
+      "actual": 400
+    },
+    {
+      "name": "usageLimit 0 → 400",
+      "ok": true,
+      "actual": 400
+    },
+    {
+      "name": "usageLimit 100001 → 400",
+      "ok": true,
+      "actual": 400
+    },
+    {
+      "name": "endsAt before startsAt → 400",
+      "ok": true,
+      "actual": 400
+    },
+    {
+      "name": "duration > 90 days → 400",
+      "ok": true,
+      "actual": 400
+    },
+    {
+      "name": "PERCENT 90 with maxDiscount accepted, code uppercased",
+      "ok": true,
+      "actual": {
+        "id": "b62846c9-7d59-4c88-91a3-6e28f201e93c",
+        "code": "POKB054914",
+        "name": "UAT C1 pokb054914",
+        "discountType": "PERCENT",
+        "discountValue": 90,
+        "maxDiscount": 10000,
+        "minOrderAmount": 0,
+        "usageLimit": 10,
+        "startsAt": "2026-11-21T04:49:18.838Z",
+        "endsAt": "2026-11-23T05:49:18.838Z",
+        "status": "DRAFT",
+        "version": "0"
+      }
+    }
+  ],
+  "data": {
+    "responses": [
+      [
+        "code 3 chars",
+        400,
+        "VALIDATION_FAILED"
+      ],
+      [
+        "code 21 chars",
+        400,
+        "VALIDATION_FAILED"
+      ],
+      [
+        "FIXED value 0",
+        400,
+        "VALIDATION_FAILED"
+      ],
+      [
+        "FIXED with maxDiscount",
+        400,
+        "VALIDATION_FAILED"
+      ],
+      [
+        "FIXED minOrder < value",
+        400,
+        "VALIDATION_FAILED"
+      ],
+      [
+        "PERCENT 91",
+        400,
+        "VALIDATION_FAILED"
+      ],
+      [
+        "PERCENT 0",
+        400,
+        "VALIDATION_FAILED"
+      ],
+      [
+        "PERCENT without maxDiscount",
+        400,
+        "VALIDATION_FAILED"
+      ],
+      [
+        "usageLimit 0",
+        400,
+        "VALIDATION_FAILED"
+      ],
+      [
+        "usageLimit 100001",
+        400,
+        "VALIDATION_FAILED"
+      ],
+      [
+        "endsAt before startsAt",
+        400,
+        "VALIDATION_FAILED"
+      ],
+      [
+        "duration > 90 days",
+        400,
+        "VALIDATION_FAILED"
+      ]
+    ]
+  },
+  "finishedAt": "2026-11-21T05:49:18.865Z",
+  "result": "PASS"
+}

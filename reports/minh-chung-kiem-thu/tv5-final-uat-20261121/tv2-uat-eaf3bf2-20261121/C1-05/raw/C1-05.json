@@ -1,0 +1,123 @@
+{
+  "id": "C1-05",
+  "title": "Limit request / Admin",
+  "run": "B055906",
+  "sha": "eaf3bf270255b80db4525f836bfae7e495dc8651",
+  "stack": "hk5-promo-test-uat2111",
+  "startedAt": "2026-11-21T05:59:27.623Z",
+  "checks": [
+    {
+      "name": "request created PENDING",
+      "ok": true,
+      "actual": {
+        "status": 201,
+        "json": {
+          "id": "e049de25-70bf-4de9-a277-167fb66c26db",
+          "storeId": "841264c0-c4d5-478f-beb5-adfa3d61eb92",
+          "requestedLimit": 25,
+          "reason": "UAT C1-05 mở rộng",
+          "budgetNote": null,
+          "requestedFrom": "2026-11-21T06:01:15.638Z",
+          "requestedUntil": "2026-12-01T05:59:27.638Z",
+          "status": "PENDING",
+          "approvedLimit": null,
+          "approvedFrom": null,
+          "approvedUntil": null,
+          "decidedBy": null,
+          "decidedAt": null,
+          "decisionReason": null,
+          "version": "0",
+          "createdAt": "2026-11-21T05:59:27.658469Z"
+        },
+        "setCookie": []
+      }
+    },
+    {
+      "name": "PENDING does not raise limit",
+      "ok": true,
+      "actual": 20
+    },
+    {
+      "name": "replay same key/body → same request",
+      "ok": true,
+      "actual": "e049de25-70bf-4de9-a277-167fb66c26db"
+    },
+    {
+      "name": "same key, different body → 409",
+      "ok": true,
+      "actual": 409
+    },
+    {
+      "name": "seller calling Admin approve → 403",
+      "ok": true,
+      "actual": 403
+    },
+    {
+      "name": "admin approves",
+      "ok": true,
+      "actual": {
+        "status": 200,
+        "json": {
+          "id": "e049de25-70bf-4de9-a277-167fb66c26db",
+          "storeId": "841264c0-c4d5-478f-beb5-adfa3d61eb92",
+          "requestedLimit": 25,
+          "reason": "UAT C1-05 mở rộng",
+          "budgetNote": null,
+          "requestedFrom": "2026-11-21T06:01:15.638Z",
+          "requestedUntil": "2026-12-01T05:59:27.638Z",
+          "status": "APPROVED",
+          "approvedLimit": 25,
+          "approvedFrom": "2026-11-21T06:01:15.638Z",
+          "approvedUntil": "2026-12-01T05:59:27.638Z",
+          "decidedBy": "36a4beff-38e4-450c-920b-46fd6f874bda",
+          "decidedAt": "2026-11-21T05:59:27.773149Z",
+          "decisionReason": null,
+          "version": "1",
+          "createdAt": "2026-11-21T05:59:27.658469Z"
+        },
+        "setCookie": []
+      }
+    },
+    {
+      "name": "limit becomes 25 once the grant window starts",
+      "ok": true,
+      "actual": {
+        "used": 13,
+        "limit": 25,
+        "defaultLimit": 20,
+        "grant": {
+          "limit": 25,
+          "validFrom": "2026-11-21T06:01:15.638Z",
+          "validUntil": "2026-12-01T05:59:27.638Z",
+          "sourceRequestId": "e049de25-70bf-4de9-a277-167fb66c26db",
+          "decidedBy": "36a4beff-38e4-450c-920b-46fd6f874bda",
+          "decidedAt": "2026-11-21T05:59:27.773149Z"
+        }
+      }
+    }
+  ],
+  "data": {
+    "limitBefore": {
+      "used": 13,
+      "limit": 20,
+      "defaultLimit": 20,
+      "grant": null
+    },
+    "limitAfter": {
+      "used": 13,
+      "limit": 25,
+      "defaultLimit": 20,
+      "grant": {
+        "limit": 25,
+        "validFrom": "2026-11-21T06:01:15.638Z",
+        "validUntil": "2026-12-01T05:59:27.638Z",
+        "sourceRequestId": "e049de25-70bf-4de9-a277-167fb66c26db",
+        "decidedBy": "36a4beff-38e4-450c-920b-46fd6f874bda",
+        "decidedAt": "2026-11-21T05:59:27.773149Z"
+      }
+    },
+    "selfModeration": "Admin has no Store in this system, so \"Admin approves own Store\" is not applicable."
+  },
+  "finishedAt": "2026-11-21T06:01:27.910Z",
+  "result": "PASS"
+}

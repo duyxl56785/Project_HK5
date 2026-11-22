@@ -1,0 +1,106 @@
+{
+  "id": "C2-04",
+  "title": "MD15 PERCENT / HALF_UP / cap",
+  "run": "R045402",
+  "sha": "eaf3bf270255b80db4525f836bfae7e495dc8651",
+  "stack": "hk5-promo-test-uat2111",
+  "startedAt": "2026-11-21T04:54:05.631Z",
+  "checks": [
+    {
+      "name": "under cap 150000×15%=22500",
+      "ok": true,
+      "actual": {
+        "storeId": "841264c0-c4d5-478f-beb5-adfa3d61eb92",
+        "voucherCode": "PCTR045402",
+        "quoteFingerprint": "e53e508ac9c238d71bb7083728111bd6bf1aed67a26d1f04f6c5f117ab405d4c",
+        "merchandiseAmount": "150000",
+        "discountAmount": "22500",
+        "gross": "127500",
+        "platformFee": "6375"
+      }
+    },
+    {
+      "name": "over cap 420000×15%=63000→30000",
+      "ok": true,
+      "actual": {
+        "storeId": "841264c0-c4d5-478f-beb5-adfa3d61eb92",
+        "voucherCode": "PCTR045402",
+        "quoteFingerprint": "165dad2c808d288ec90802cf37773f8e413cc56aaff802c0afb157df9a1376ef",
+        "merchandiseAmount": "420000",
+        "discountAmount": "30000",
+        "gross": "390000",
+        "platformFee": "19500"
+      }
+    },
+    {
+      "name": "over cap 210000×15%=31500→30000",
+      "ok": true,
+      "actual": {
+        "storeId": "841264c0-c4d5-478f-beb5-adfa3d61eb92",
+        "voucherCode": "PCTR045402",
+        "quoteFingerprint": "e07a0364454ad355d0a91bdf75676bc06d27a78483ebaa76a94adefa63fcdbc9",
+        "merchandiseAmount": "210000",
+        "discountAmount": "30000",
+        "gross": "180000",
+        "platformFee": "9000"
+      }
+    }
+  ],
+  "data": {
+    "voucher": {
+      "code": "PCTR045402",
+      "name": "UAT C2 PCT",
+      "discountType": "PERCENT",
+      "discountValue": 15,
+      "minOrderAmount": 0,
+      "usageLimit": 5,
+      "startsAt": "2026-11-21T03:54:05.631Z",
+      "endsAt": "2026-11-24T04:54:05.631Z",
+      "maxDiscount": 30000
+    },
+    "quotes": [
+      {
+        "name": "under cap 150000×15%=22500",
+        "status": 200,
+        "store": {
+          "storeId": "841264c0-c4d5-478f-beb5-adfa3d61eb92",
+          "voucherCode": "PCTR045402",
+          "quoteFingerprint": "e53e508ac9c238d71bb7083728111bd6bf1aed67a26d1f04f6c5f117ab405d4c",
+          "merchandiseAmount": "150000",
+          "discountAmount": "22500",
+          "gross": "127500",
+          "platformFee": "6375"
+        }
+      },
+      {
+        "name": "over cap 420000×15%=63000→30000",
+        "status": 200,
+        "store": {
+          "storeId": "841264c0-c4d5-478f-beb5-adfa3d61eb92",
+          "voucherCode": "PCTR045402",
+          "quoteFingerprint": "165dad2c808d288ec90802cf37773f8e413cc56aaff802c0afb157df9a1376ef",
+          "merchandiseAmount": "420000",
+          "discountAmount": "30000",
+          "gross": "390000",
+          "platformFee": "19500"
+        }
+      },
+      {
+        "name": "over cap 210000×15%=31500→30000",
+        "status": 200,
+        "store": {
+          "storeId": "841264c0-c4d5-478f-beb5-adfa3d61eb92",
+          "voucherCode": "PCTR045402",
+          "quoteFingerprint": "e07a0364454ad355d0a91bdf75676bc06d27a78483ebaa76a94adefa63fcdbc9",
+          "merchandiseAmount": "210000",
+          "discountAmount": "30000",
+          "gross": "180000",
+          "platformFee": "9000"
+        }
+      }
+    ],
+    "halfUp": "Seeded prices are multiples of 5000, so 15% never has a fraction. HALF_UP 199999×15% needs a 199999 product (see sub-step)."
+  },
+  "finishedAt": "2026-11-21T04:54:06.591Z",
+  "result": "PASS"
+}

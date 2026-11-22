@@ -1,0 +1,10 @@
+{
+  "id": "UAT-17",
+  "title": "UNKNOWN lost response",
+  "sha": "eaf3bf270255b80db4525f836bfae7e495dc8651",
+  "stack": "hk5-promo-test-uat2111",
+  "recordedAt": "2026-11-21T06:02:21.287Z",
+  "result": "BLOCKED",
+  "reason": "Không chạy theo checklist mặc định: thiếu runner, approval và provider COMMIT receipt. Không tự tạo timeout/fault.",
+  "checks": []
+}

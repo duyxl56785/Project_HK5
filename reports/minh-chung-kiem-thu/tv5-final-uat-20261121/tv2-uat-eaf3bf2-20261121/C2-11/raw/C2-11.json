@@ -1,0 +1,73 @@
+{
+  "id": "C2-11",
+  "title": "MD25 zero gross",
+  "run": "R045402",
+  "sha": "eaf3bf270255b80db4525f836bfae7e495dc8651",
+  "stack": "hk5-promo-test-uat2111",
+  "startedAt": "2026-11-21T04:54:28.099Z",
+  "checks": [
+    {
+      "name": "discount = merchandise 95000: VOUCHER_GROSS_TOO_LOW",
+      "ok": true,
+      "actual": {
+        "status": 409,
+        "json": {
+          "code": "VOUCHER_GROSS_TOO_LOW",
+          "message": "Checkout could not use the selected voucher or reserve stock"
+        }
+      }
+    },
+    {
+      "name": "discount 95001 > merchandise: refused",
+      "ok": true,
+      "actual": {
+        "status": 409,
+        "json": {
+          "code": "VOUCHER_MIN_ORDER_AMOUNT",
+          "message": "Checkout could not use the selected voucher or reserve stock"
+        }
+      }
+    },
+    {
+      "name": "no Order created",
+      "ok": true,
+      "actual": []
+    },
+    {
+      "name": "no redemption rows",
+      "ok": true,
+      "actual": [
+        "",
+        ""
+      ]
+    },
+    {
+      "name": "order_db has no SellerOrder gross <= 0",
+      "ok": true,
+      "actual": "0"
+    }
+  ],
+  "data": {
+    "discountEqualsMerch": {
+      "status": 409,
+      "json": {
+        "code": "VOUCHER_GROSS_TOO_LOW",
+        "message": "Checkout could not use the selected voucher or reserve stock"
+      }
+    },
+    "discountAboveMerch": {
+      "status": 409,
+      "json": {
+        "code": "VOUCHER_MIN_ORDER_AMOUNT",
+        "message": "Checkout could not use the selected voucher or reserve stock"
+      }
+    },
+    "ledger": [
+      "",
+      ""
+    ],
+    "negativeCheck": "0"
+  },
+  "finishedAt": "2026-11-21T04:54:29.200Z",
+  "result": "PASS"
+}

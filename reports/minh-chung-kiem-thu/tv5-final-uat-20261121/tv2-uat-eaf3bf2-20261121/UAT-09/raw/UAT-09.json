@@ -1,0 +1,51 @@
+{
+  "id": "UAT-09",
+  "title": "Inventory RESERVE",
+  "run": "B055906",
+  "sha": "eaf3bf270255b80db4525f836bfae7e495dc8651",
+  "stack": "hk5-promo-test-uat2111",
+  "startedAt": "2026-11-21T05:59:14.729Z",
+  "checks": [
+    {
+      "name": "tote: available −1, reserved +1",
+      "ok": true,
+      "actual": {
+        "before": "50|0",
+        "after": "49|1"
+      }
+    },
+    {
+      "name": "cafe: available −1, reserved +1",
+      "ok": true,
+      "actual": {
+        "before": "50|0",
+        "after": "49|1"
+      }
+    },
+    {
+      "name": "ops since checkout: RESERVE only (replays added none)",
+      "ok": true,
+      "actual": "RESERVE|1"
+    },
+    {
+      "name": "no negative stock in inventory_item",
+      "ok": true,
+      "actual": "checked"
+    }
+  ],
+  "data": {
+    "before": {
+      "tote": "50|0",
+      "cafe": "50|0",
+      "ops": 14,
+      "t": "2026-11-21 05:59:08.078462+00"
+    },
+    "after": {
+      "tote": "49|1",
+      "cafe": "49|1"
+    },
+    "opsSinceCheckout": "RESERVE|1"
+  },
+  "finishedAt": "2026-11-21T05:59:15.558Z",
+  "result": "PASS"
+}

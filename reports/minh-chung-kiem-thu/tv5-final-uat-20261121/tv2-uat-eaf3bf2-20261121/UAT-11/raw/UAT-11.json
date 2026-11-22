@@ -1,0 +1,48 @@
+{
+  "id": "UAT-11",
+  "title": "Seller isolation",
+  "run": "B054914",
+  "sha": "eaf3bf270255b80db4525f836bfae7e495dc8651",
+  "stack": "hk5-promo-test-uat2111",
+  "startedAt": "2026-11-21T05:49:16.553Z",
+  "checks": [
+    {
+      "name": "Seller A acting on Store B order → 403/404",
+      "ok": true,
+      "actual": 404
+    },
+    {
+      "name": "Seller A list has only Store A rows",
+      "ok": true,
+      "actual": 5
+    },
+    {
+      "name": "Seller A finance rows contain no Store B order",
+      "ok": true,
+      "actual": 1
+    },
+    {
+      "name": "returns lists do not overlap",
+      "ok": true,
+      "actual": {
+        "a": 1,
+        "b": 0
+      }
+    },
+    {
+      "name": "Seller B acting on Store A return → 403/404",
+      "ok": true,
+      "actual": 404
+    },
+    {
+      "name": "Seller B reading Store A product → 403/404",
+      "ok": true,
+      "actual": 404
+    }
+  ],
+  "data": {
+    "foreignOrder": "a835ddc8-d29f-4f0c-8db9-ad0c03fb7c2d"
+  },
+  "finishedAt": "2026-11-21T05:49:16.785Z",
+  "result": "PASS"
+}

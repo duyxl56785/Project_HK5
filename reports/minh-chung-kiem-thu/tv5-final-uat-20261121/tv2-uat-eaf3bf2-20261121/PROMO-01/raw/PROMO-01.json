@@ -1,0 +1,349 @@
+{
+  "id": "PROMO-01",
+  "title": "Campaign lifecycle",
+  "run": "P054601",
+  "sha": "eaf3bf270255b80db4525f836bfae7e495dc8651",
+  "stack": "hk5-promo-test-uat2111",
+  "startedAt": "2026-11-21T05:46:01.531Z",
+  "checks": [
+    {
+      "name": "seller creates clearance 201",
+      "ok": true,
+      "actual": {
+        "status": 201,
+        "json": {
+          "id": "8f72393b-6d66-44cb-b2d7-9d619261bdc3",
+          "name": "UAT xả kho P054601",
+          "kind": "SELLER_CLEARANCE",
+          "status": "DRAFT",
+          "storeId": "841264c0-c4d5-478f-beb5-adfa3d61eb92",
+          "startsAt": "2026-11-21T05:58:01.531Z",
+          "endsAt": "2026-11-21T08:58:01.531Z",
+          "submittedAt": null,
+          "version": 0
+        }
+      }
+    },
+    {
+      "name": "seller cannot call Admin promotion API (403)",
+      "ok": true,
+      "actual": 403
+    },
+    {
+      "name": "customer cannot create clearance (403)",
+      "ok": true,
+      "actual": 403
+    },
+    {
+      "name": "seller registers product at 200000",
+      "ok": true,
+      "actual": {
+        "status": 200,
+        "json": {
+          "productId": "b36842a7-c6b8-4d02-8d5c-1ed077bf74e5",
+          "productName": "Chân váy xếp ly",
+          "storeId": "841264c0-c4d5-478f-beb5-adfa3d61eb92",
+          "storeName": null,
+          "baseUnitPrice": 260000,
+          "promotionalUnitPrice": 200000,
+          "status": "PENDING",
+          "reason": null,
+          "version": 0
+        }
+      }
+    },
+    {
+      "name": "seller submits clearance",
+      "ok": true,
+      "actual": {
+        "status": 200,
+        "json": {
+          "id": "8f72393b-6d66-44cb-b2d7-9d619261bdc3",
+          "name": "UAT xả kho P054601",
+          "kind": "SELLER_CLEARANCE",
+          "status": "DRAFT",
+          "storeId": "841264c0-c4d5-478f-beb5-adfa3d61eb92",
+          "startsAt": "2026-11-21T05:58:01.531Z",
+          "endsAt": "2026-11-21T08:58:01.531Z",
+          "submittedAt": "2026-11-21T05:46:01.755839Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "name": "before approval: Catalog shows base price, no promotion",
+      "ok": true,
+      "actual": {
+        "unitPrice": "260000",
+        "promotion": null
+      }
+    },
+    {
+      "name": "admin approves campaign",
+      "ok": true,
+      "actual": {
+        "status": 200,
+        "json": {
+          "id": "8f72393b-6d66-44cb-b2d7-9d619261bdc3",
+          "name": "UAT xả kho P054601",
+          "kind": "SELLER_CLEARANCE",
+          "status": "APPROVED",
+          "storeId": "841264c0-c4d5-478f-beb5-adfa3d61eb92",
+          "startsAt": "2026-11-21T05:58:01.531Z",
+          "endsAt": "2026-11-21T08:58:01.531Z",
+          "submittedAt": "2026-11-21T05:46:01.755839Z",
+          "version": 2
+        }
+      }
+    },
+    {
+      "name": "admin approves product",
+      "ok": true,
+      "actual": {
+        "status": 200,
+        "json": {
+          "productId": "b36842a7-c6b8-4d02-8d5c-1ed077bf74e5",
+          "productName": "Chân váy xếp ly",
+          "storeId": "841264c0-c4d5-478f-beb5-adfa3d61eb92",
+          "storeName": null,
+          "baseUnitPrice": 260000,
+          "promotionalUnitPrice": 200000,
+          "status": "APPROVED",
+          "reason": null,
+          "version": 1
+        }
+      }
+    },
+    {
+      "name": "campaign APPROVED, registration APPROVED",
+      "ok": true,
+      "actual": {
+        "campaign": "APPROVED",
+        "product": "APPROVED"
+      }
+    },
+    {
+      "name": "approved but not started: Catalog still base price",
+      "ok": true,
+      "actual": {
+        "unitPrice": "260000"
+      }
+    },
+    {
+      "name": "admin creates Flash Sale for Saturday 21/11",
+      "ok": true,
+      "actual": {
+        "status": 201,
+        "json": {
+          "id": "e5876733-f11f-4932-a1ec-e1ea21c54047",
+          "name": "UAT Flash P054601",
+          "kind": "FLASH_SALE",
+          "status": "DRAFT",
+          "storeId": null,
+          "startsAt": "2026-11-21T15:00:00Z",
+          "endsAt": "2026-11-21T17:00:00Z",
+          "submittedAt": null,
+          "version": 0
+        }
+      }
+    },
+    {
+      "name": "Flash Sale on a non-Saturday refused (400)",
+      "ok": true,
+      "actual": {
+        "status": 400,
+        "json": {
+          "message": "Flash Sale date must be Saturday",
+          "code": "VALIDATION_FAILED"
+        }
+      }
+    },
+    {
+      "name": "admin creates Super Sale for 22/11",
+      "ok": true,
+      "actual": {
+        "status": 201,
+        "json": {
+          "id": "7e8b815e-0748-4e44-8cd1-de58dbbf761f",
+          "name": "UAT Super P054601",
+          "kind": "SUPER_SALE",
+          "status": "DRAFT",
+          "storeId": null,
+          "startsAt": "2026-11-21T17:00:00Z",
+          "endsAt": "2026-11-22T17:00:00Z",
+          "submittedAt": null,
+          "version": 0
+        }
+      }
+    },
+    {
+      "name": "flash: admin approves campaign",
+      "ok": true,
+      "actual": {
+        "status": 200,
+        "json": {
+          "id": "e5876733-f11f-4932-a1ec-e1ea21c54047",
+          "name": "UAT Flash P054601",
+          "kind": "FLASH_SALE",
+          "status": "APPROVED",
+          "storeId": null,
+          "startsAt": "2026-11-21T15:00:00Z",
+          "endsAt": "2026-11-21T17:00:00Z",
+          "submittedAt": null,
+          "version": 1
+        }
+      }
+    },
+    {
+      "name": "flash: seller registers product at 250000",
+      "ok": true,
+      "actual": {
+        "status": 200,
+        "json": {
+          "productId": "4395d502-5cc3-4c46-ae09-0297c94e5983",
+          "productName": "Áo sơ mi linen",
+          "storeId": "841264c0-c4d5-478f-beb5-adfa3d61eb92",
+          "storeName": null,
+          "baseUnitPrice": 320000,
+          "promotionalUnitPrice": 250000,
+          "status": "PENDING",
+          "reason": null,
+          "version": 0
+        }
+      }
+    },
+    {
+      "name": "flash: admin approves product",
+      "ok": true,
+      "actual": {
+        "status": 200,
+        "json": {
+          "productId": "4395d502-5cc3-4c46-ae09-0297c94e5983",
+          "productName": "Áo sơ mi linen",
+          "storeId": "841264c0-c4d5-478f-beb5-adfa3d61eb92",
+          "storeName": null,
+          "baseUnitPrice": 320000,
+          "promotionalUnitPrice": 250000,
+          "status": "APPROVED",
+          "reason": null,
+          "version": 1
+        }
+      }
+    },
+    {
+      "name": "flash: before window, Catalog base price",
+      "ok": true,
+      "actual": {
+        "unitPrice": "320000",
+        "promotion": null
+      }
+    },
+    {
+      "name": "super: admin approves campaign",
+      "ok": true,
+      "actual": {
+        "status": 200,
+        "json": {
+          "id": "7e8b815e-0748-4e44-8cd1-de58dbbf761f",
+          "name": "UAT Super P054601",
+          "kind": "SUPER_SALE",
+          "status": "APPROVED",
+          "storeId": null,
+          "startsAt": "2026-11-21T17:00:00Z",
+          "endsAt": "2026-11-22T17:00:00Z",
+          "submittedAt": null,
+          "version": 1
+        }
+      }
+    },
+    {
+      "name": "super: seller registers product at 199000",
+      "ok": true,
+      "actual": {
+        "status": 200,
+        "json": {
+          "productId": "d785509f-f8d8-4322-866a-755d7e20e3b9",
+          "productName": "Kệ gỗ treo tường",
+          "storeId": "5e234249-14c9-4c60-9bee-f40cc546329e",
+          "storeName": null,
+          "baseUnitPrice": 240000,
+          "promotionalUnitPrice": 199000,
+          "status": "PENDING",
+          "reason": null,
+          "version": 0
+        }
+      }
+    },
+    {
+      "name": "super: admin approves product",
+      "ok": true,
+      "actual": {
+        "status": 200,
+        "json": {
+          "productId": "d785509f-f8d8-4322-866a-755d7e20e3b9",
+          "productName": "Kệ gỗ treo tường",
+          "storeId": "5e234249-14c9-4c60-9bee-f40cc546329e",
+          "storeName": null,
+          "baseUnitPrice": 240000,
+          "promotionalUnitPrice": 199000,
+          "status": "APPROVED",
+          "reason": null,
+          "version": 1
+        }
+      }
+    },
+    {
+      "name": "super: before window, Catalog base price",
+      "ok": true,
+      "actual": {
+        "unitPrice": "240000",
+        "promotion": null
+      }
+    }
+  ],
+  "data": {
+    "clearance": {
+      "status": "APPROVED",
+      "submittedAt": "2026-11-21T05:46:01.755839Z",
+      "startsAt": "2026-11-21T05:58:01.531Z",
+      "endsAt": "2026-11-21T08:58:01.531Z",
+      "registration": {
+        "productId": "b36842a7-c6b8-4d02-8d5c-1ed077bf74e5",
+        "productName": "Chân váy xếp ly",
+        "storeId": "841264c0-c4d5-478f-beb5-adfa3d61eb92",
+        "storeName": "Tiệm Áo Sài Gòn",
+        "baseUnitPrice": 260000,
+        "promotionalUnitPrice": 200000,
+        "status": "APPROVED",
+        "reason": null,
+        "version": 1
+      }
+    },
+    "sellerFlashAttempt": 400,
+    "flash": {
+      "id": "e5876733-f11f-4932-a1ec-e1ea21c54047",
+      "name": "UAT Flash P054601",
+      "kind": "FLASH_SALE",
+      "status": "APPROVED",
+      "storeId": null,
+      "startsAt": "2026-11-21T15:00:00Z",
+      "endsAt": "2026-11-21T17:00:00Z",
+      "submittedAt": null,
+      "version": 1
+    },
+    "super": {
+      "id": "7e8b815e-0748-4e44-8cd1-de58dbbf761f",
+      "name": "UAT Super P054601",
+      "kind": "SUPER_SALE",
+      "status": "APPROVED",
+      "storeId": null,
+      "startsAt": "2026-11-21T17:00:00Z",
+      "endsAt": "2026-11-22T17:00:00Z",
+      "submittedAt": null,
+      "version": 1
+    }
+  },
+  "finishedAt": "2026-11-21T05:46:02.460Z",
+  "result": "PASS",
+  "note": "Lifecycle and approval checked now. \"Public Catalog shows effective price\" for clearance is verified in PROMO-03 after the real start time."
+}

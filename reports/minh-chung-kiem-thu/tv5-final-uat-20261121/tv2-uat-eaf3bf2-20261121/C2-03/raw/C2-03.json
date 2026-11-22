@@ -1,0 +1,75 @@
+{
+  "id": "C2-03",
+  "title": "MD15 FIXED / minOrder",
+  "run": "R045402",
+  "sha": "eaf3bf270255b80db4525f836bfae7e495dc8651",
+  "stack": "hk5-promo-test-uat2111",
+  "startedAt": "2026-11-21T04:54:04.963Z",
+  "checks": [
+    {
+      "name": "merchandise = minOrder 150000: 200",
+      "ok": true,
+      "actual": 200
+    },
+    {
+      "name": "discount 20000, gross 130000",
+      "ok": true,
+      "actual": {
+        "storeId": "841264c0-c4d5-478f-beb5-adfa3d61eb92",
+        "voucherCode": "FXMR045402",
+        "quoteFingerprint": "f3e0138dddcbe9530b79f44168285b50c79b22612a788d30dd97168073972b34",
+        "merchandiseAmount": "150000",
+        "discountAmount": "20000",
+        "gross": "130000",
+        "platformFee": "6500"
+      }
+    },
+    {
+      "name": "merchandise 120000 < minOrder: VOUCHER_MIN_ORDER_AMOUNT",
+      "ok": true,
+      "actual": {
+        "status": 409,
+        "json": {
+          "code": "VOUCHER_MIN_ORDER_AMOUNT",
+          "message": "Checkout could not use the selected voucher or reserve stock"
+        }
+      }
+    }
+  ],
+  "data": {
+    "voucher": {
+      "code": "FXMR045402",
+      "name": "UAT C2 FXM",
+      "discountType": "FIXED",
+      "discountValue": 20000,
+      "minOrderAmount": 150000,
+      "usageLimit": 5,
+      "startsAt": "2026-11-21T03:54:04.964Z",
+      "endsAt": "2026-11-24T04:54:04.964Z"
+    },
+    "atMin": {
+      "revision": 0,
+      "total": "130000",
+      "stores": [
+        {
+          "storeId": "841264c0-c4d5-478f-beb5-adfa3d61eb92",
+          "voucherCode": "FXMR045402",
+          "quoteFingerprint": "f3e0138dddcbe9530b79f44168285b50c79b22612a788d30dd97168073972b34",
+          "merchandiseAmount": "150000",
+          "discountAmount": "20000",
+          "gross": "130000",
+          "platformFee": "6500"
+        }
+      ]
+    },
+    "belowMin": {
+      "status": 409,
+      "json": {
+        "code": "VOUCHER_MIN_ORDER_AMOUNT",
+        "message": "Checkout could not use the selected voucher or reserve stock"
+      }
+    }
+  },
+  "finishedAt": "2026-11-21T04:54:05.629Z",
+  "result": "PASS"
+}

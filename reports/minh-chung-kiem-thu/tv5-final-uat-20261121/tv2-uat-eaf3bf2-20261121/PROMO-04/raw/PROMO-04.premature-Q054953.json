@@ -1,0 +1,76 @@
+{
+  "id": "PROMO-04",
+  "title": "Voucher conflict / MD17",
+  "run": "Q054953",
+  "sha": "eaf3bf270255b80db4525f836bfae7e495dc8651",
+  "stack": "hk5-promo-test-uat2111",
+  "startedAt": "2026-11-21T05:49:54.131Z",
+  "checks": [
+    {
+      "name": "Store A voucher ACTIVE",
+      "ok": true,
+      "actual": "ACTIVE"
+    },
+    {
+      "name": "C2 ON at run time",
+      "ok": true,
+      "actual": {
+        "enabled": true
+      }
+    },
+    {
+      "name": "quote → 409 VOUCHER_PROMOTION_CONFLICT",
+      "ok": false,
+      "actual": {
+        "status": 200,
+        "json": {
+          "revision": 0,
+          "total": "250000",
+          "stores": [
+            {
+              "storeId": "841264c0-c4d5-478f-beb5-adfa3d61eb92",
+              "voucherCode": "MD17Q054953",
+              "quoteFingerprint": "f0f1a58853d4e0cd211600c9ac9dfb446b1c16e6691d8ee2d96595414e8bf69e",
+              "merchandiseAmount": "260000",
+              "discountAmount": "10000",
+              "gross": "250000",
+              "platformFee": "12500"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "no Order created",
+      "ok": true,
+      "actual": "9"
+    },
+    {
+      "name": "no redemption (usage not taken)",
+      "ok": true,
+      "actual": "0"
+    }
+  ],
+  "data": {
+    "quote": {
+      "status": 200,
+      "json": {
+        "revision": 0,
+        "total": "250000",
+        "stores": [
+          {
+            "storeId": "841264c0-c4d5-478f-beb5-adfa3d61eb92",
+            "voucherCode": "MD17Q054953",
+            "quoteFingerprint": "f0f1a58853d4e0cd211600c9ac9dfb446b1c16e6691d8ee2d96595414e8bf69e",
+            "merchandiseAmount": "260000",
+            "discountAmount": "10000",
+            "gross": "250000",
+            "platformFee": "12500"
+          }
+        ]
+      }
+    }
+  },
+  "finishedAt": "2026-11-21T05:49:55.065Z",
+  "result": "FAIL"
+}

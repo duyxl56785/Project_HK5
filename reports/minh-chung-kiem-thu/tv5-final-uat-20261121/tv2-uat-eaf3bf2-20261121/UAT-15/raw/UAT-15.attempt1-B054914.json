@@ -1,0 +1,28 @@
+{
+  "id": "UAT-15",
+  "title": "Admin moderation / Seller approval",
+  "run": "B054914",
+  "sha": "eaf3bf270255b80db4525f836bfae7e495dc8651",
+  "stack": "hk5-promo-test-uat2111",
+  "startedAt": "2026-11-21T05:49:17.810Z",
+  "checks": [
+    {
+      "name": "register applicant 201",
+      "ok": true,
+      "actual": "uat-b054914-seller@hk5.local"
+    },
+    {
+      "name": "seller application submitted",
+      "ok": true,
+      "actual": 201
+    },
+    {
+      "name": "exception",
+      "ok": false,
+      "actual": "list.find is not a function"
+    }
+  ],
+  "data": {},
+  "finishedAt": "2026-11-21T05:49:18.122Z",
+  "result": "FAIL"
+}

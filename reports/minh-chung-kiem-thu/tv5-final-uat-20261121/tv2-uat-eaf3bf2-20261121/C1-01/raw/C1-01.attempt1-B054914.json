@@ -1,0 +1,88 @@
+{
+  "id": "C1-01",
+  "title": "Tạo voucher / Store ownership",
+  "run": "B054914",
+  "sha": "eaf3bf270255b80db4525f836bfae7e495dc8651",
+  "stack": "hk5-promo-test-uat2111",
+  "startedAt": "2026-11-21T05:49:18.123Z",
+  "checks": [
+    {
+      "name": "body storeId rejected (400, unknown field)",
+      "ok": true,
+      "actual": {
+        "message": "Invalid Voucher request",
+        "code": "VALIDATION_FAILED"
+      }
+    },
+    {
+      "name": "created DRAFT",
+      "ok": true,
+      "actual": {
+        "id": "997a038b-6db2-43e9-9390-3e02f5c7122d",
+        "code": "OWNB054914",
+        "name": "UAT C1 ownb054914",
+        "discountType": "FIXED",
+        "discountValue": 10000,
+        "maxDiscount": null,
+        "minOrderAmount": 50000,
+        "usageLimit": 10,
+        "startsAt": "2026-11-21T04:49:18.148Z",
+        "endsAt": "2026-11-23T05:49:18.148Z",
+        "status": "DRAFT",
+        "version": "0"
+      }
+    },
+    {
+      "name": "code normalized to uppercase",
+      "ok": true,
+      "actual": "OWNB054914"
+    },
+    {
+      "name": "DB owner is Store A, not Store B",
+      "ok": true,
+      "actual": "841264c0-c4d5-478f-beb5-adfa3d61eb92"
+    },
+    {
+      "name": "Seller B does not see it",
+      "ok": true,
+      "actual": 8
+    },
+    {
+      "name": "customer cannot create voucher (403)",
+      "ok": false,
+      "actual": 404
+    }
+  ],
+  "data": {
+    "create": {
+      "status": 400,
+      "json": {
+        "message": "Invalid Voucher request",
+        "code": "VALIDATION_FAILED"
+      },
+      "setCookie": []
+    },
+    "create2": {
+      "status": 201,
+      "json": {
+        "id": "997a038b-6db2-43e9-9390-3e02f5c7122d",
+        "code": "OWNB054914",
+        "name": "UAT C1 ownb054914",
+        "discountType": "FIXED",
+        "discountValue": 10000,
+        "maxDiscount": null,
+        "minOrderAmount": 50000,
+        "usageLimit": 10,
+        "startsAt": "2026-11-21T04:49:18.148Z",
+        "endsAt": "2026-11-23T05:49:18.148Z",
+        "status": "DRAFT",
+        "version": "0"
+      },
+      "setCookie": []
+    },
+    "id": "997a038b-6db2-43e9-9390-3e02f5c7122d",
+    "dbOwner": "841264c0-c4d5-478f-beb5-adfa3d61eb92"
+  },
+  "finishedAt": "2026-11-21T05:49:18.570Z",
+  "result": "FAIL"
+}

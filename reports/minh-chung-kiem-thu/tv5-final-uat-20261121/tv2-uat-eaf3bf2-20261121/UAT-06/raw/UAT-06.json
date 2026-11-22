@@ -1,0 +1,56 @@
+{
+  "id": "UAT-06",
+  "title": "Idempotency replay",
+  "run": "B055906",
+  "sha": "eaf3bf270255b80db4525f836bfae7e495dc8651",
+  "stack": "hk5-promo-test-uat2111",
+  "startedAt": "2026-11-21T05:59:08.641Z",
+  "checks": [
+    {
+      "name": "replay 200 same orderId",
+      "ok": true,
+      "actual": {
+        "status": 200,
+        "json": {
+          "orderId": "7ce73eb1-1818-4605-ad44-b98b6930623e",
+          "status": "PLACED",
+          "total": 230000,
+          "sellerOrderCount": 2
+        },
+        "setCookie": []
+      }
+    },
+    {
+      "name": "no new Order",
+      "ok": true,
+      "actual": "11"
+    },
+    {
+      "name": "no new SellerOrder",
+      "ok": true,
+      "actual": "14"
+    },
+    {
+      "name": "no new inventory operation",
+      "ok": true,
+      "actual": {
+        "before": 15,
+        "after": 15
+      }
+    }
+  ],
+  "data": {
+    "replay": {
+      "status": 200,
+      "json": {
+        "orderId": "7ce73eb1-1818-4605-ad44-b98b6930623e",
+        "status": "PLACED",
+        "total": 230000,
+        "sellerOrderCount": 2
+      },
+      "setCookie": []
+    }
+  },
+  "finishedAt": "2026-11-21T05:59:13.128Z",
+  "result": "PASS"
+}

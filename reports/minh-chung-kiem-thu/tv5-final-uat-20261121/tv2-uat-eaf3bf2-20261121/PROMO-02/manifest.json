@@ -1,0 +1,62 @@
+{
+  "repository": "duyxl56785/Project_HK5",
+  "test_id": "PROMO-02",
+  "run_id": "tv2-uat-eaf3bf2-20261121",
+  "frozen_sha": "eaf3bf270255b80db4525f836bfae7e495dc8651",
+  "started_at": "2026-11-21T13:02:07+07:00",
+  "finished_at": "2026-11-22T13:19:38+07:00",
+  "operator": "duyxl56785 (TV2)",
+  "actor": "seeded fake accounts (customer, seller1-3, admin bootstrap) and generated uat-*@hk5.local accounts; see raw receipt",
+  "environment": {
+    "os": "Microsoft Windows 11 Home Single Language 10.0.26300, Docker Desktop 29.9.1 (WSL2)",
+    "compose_project": "hk5-promo-test-uat2111",
+    "image_digests": [
+      "eclipse-temurin:21-jre@sha256:0b99b3376fbb50dbf9c0af8535fdd5b8eb0d3fdfc8b1e4967f383b6919f6901a (8 services, gateway, config, discovery; jars built from the frozen SHA)",
+      "hk5-promo-test-uat2111-frontend@sha256:f7258575a722172fc75b342d7e5e60a8c430db752337f516a9454ad31114170f",
+      "postgres:16@sha256:ca0bd484cb98bf4b24eb1010e73fb3fcbd6714d240fbc1a10eea5b7dbecb641d",
+      "apache/kafka:3.8.1@sha256:22c4bea38875408e8f9fe52aca8e3a6ee67f9aa0090db59af99a2f6647558db5",
+      "redis:7-alpine@sha256:8da19c7399dca900c6822a1cf30f9d2285585e2c4b457ff4095b0f4500054d3f"
+    ],
+    "db_identity": "container hk5-promo-test-uat2111-postgres-1, user hk5, one database per service (auth_db, user_db, seller_db, product_db, inventory_db, cart_db, order_db, notification_db)",
+    "ports": [
+      "127.0.0.1:5173 -> frontend:80",
+      "127.0.0.1:18080 -> api-gateway:8080"
+    ],
+    "flags": {
+      "HK5_VOUCHER_C2_ENABLED": "true (observed in .env.demo and GET /api/orders/voucher-capability enabled=true)",
+      "HK5_FINANCE_POLICY_APPROVED": "true (observed in .env.demo)",
+      "INVENTORY_ORDER_PAIR_ENABLED": "true (observed in .env.demo)"
+    }
+  },
+  "steps_performed": [
+    "FLASH_SALE: outside window, Catalog base 320000, no promotion: ok",
+    "FLASH_SALE: outside window, Cart base price: ok",
+    "SUPER_SALE: outside window, Catalog base 240000, no promotion: ok",
+    "SUPER_SALE: outside window, Cart base price: ok",
+    "FLASH_SALE: outside window, Catalog base 320000, no promotion: ok",
+    "FLASH_SALE: outside window, Cart base price: ok",
+    "SUPER_SALE: Catalog effective 199000, base 240000: ok",
+    "SUPER_SALE: promotion kind is SUPER_SALE: ok",
+    "SUPER_SALE: Cart uses effective price: ok"
+  ],
+  "expected_result": "As written for PROMO-02 in tests/TV5_FINAL_UAT_EXECUTION_CHECKLIST_20261121.md",
+  "actual_result": "PASS (4/4 checks ok); PASS (5/5 checks ok)",
+  "status": "PARTIAL",
+  "artifacts": [
+    {
+      "path": "raw/PROMO-02-outside-window.json",
+      "kind": "HTTP + read-only DB receipt (JSON)",
+      "size_bytes": 1970,
+      "sha256": "525d5fd56bbadc65dfa6a433c16445f9cc18744cb317836b935dd640b7f3a57e",
+      "redacted_copy": "NOT_APPLICABLE (fake data only; no token, password or real PII)"
+    },
+    {
+      "path": "raw/PROMO-02-super.json",
+      "kind": "HTTP + read-only DB receipt (JSON)",
+      "size_bytes": 2484,
+      "sha256": "2799e5e710b2028bda255bd7a1ab72081857c044719cf34e71a54b56d807fae7",
+      "redacted_copy": "NOT_APPLICABLE (fake data only; no token, password or real PII)"
+    }
+  ],
+  "notes_or_blocker": "Super Sale in window PASS (22/11 13:19 +07:00). Flash Sale outside the window PASS before and after it. Flash Sale in window 22:00-24:00 21/11 NOT_RUN: Docker on the UAT machine had stopped. The next window (28/11) is after submission."
+}

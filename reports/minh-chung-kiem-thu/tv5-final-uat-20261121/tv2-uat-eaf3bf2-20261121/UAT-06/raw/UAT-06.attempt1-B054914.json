@@ -1,0 +1,18 @@
+{
+  "id": "UAT-06",
+  "title": "Idempotency replay",
+  "run": "B054914",
+  "sha": "eaf3bf270255b80db4525f836bfae7e495dc8651",
+  "stack": "hk5-promo-test-uat2111",
+  "startedAt": "2026-11-21T05:49:16.547Z",
+  "checks": [
+    {
+      "name": "exception",
+      "ok": false,
+      "actual": "needs UAT-04"
+    }
+  ],
+  "data": {},
+  "finishedAt": "2026-11-21T05:49:16.547Z",
+  "result": "FAIL"
+}

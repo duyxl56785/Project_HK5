@@ -1,0 +1,123 @@
+{
+  "id": "C2-02",
+  "title": "Per-Store voucher",
+  "run": "R045402",
+  "sha": "eaf3bf270255b80db4525f836bfae7e495dc8651",
+  "stack": "hk5-promo-test-uat2111",
+  "startedAt": "2026-11-21T04:54:03.038Z",
+  "checks": [
+    {
+      "name": "two Stores, one code each: 200",
+      "ok": true,
+      "actual": 200
+    },
+    {
+      "name": "Store A discount 10000",
+      "ok": true,
+      "actual": {
+        "storeId": "841264c0-c4d5-478f-beb5-adfa3d61eb92",
+        "voucherCode": "PSAR045402",
+        "quoteFingerprint": "56ead41887486e13a05ce39f34da49d29980400dddcc0e05d9fc7ae3be5188c5",
+        "merchandiseAmount": "150000",
+        "discountAmount": "10000",
+        "gross": "140000",
+        "platformFee": "7000"
+      }
+    },
+    {
+      "name": "Store B discount 5000",
+      "ok": true,
+      "actual": {
+        "storeId": "5e234249-14c9-4c60-9bee-f40cc546329e",
+        "voucherCode": "PSB1R045402",
+        "quoteFingerprint": "bad97b1445d74404d5a96b504c4df110df3b9e7f7d4a477e1dc92d55932c454b",
+        "merchandiseAmount": "280000",
+        "discountAmount": "5000",
+        "gross": "275000",
+        "platformFee": "13750"
+      }
+    },
+    {
+      "name": "two codes same Store: VOUCHER_DUPLICATE_STORE",
+      "ok": true,
+      "actual": {
+        "status": 400,
+        "json": {
+          "code": "VOUCHER_DUPLICATE_STORE",
+          "message": "Each Store accepts at most one voucher"
+        }
+      }
+    },
+    {
+      "name": "code of Store not in Cart: VOUCHER_STORE_MISMATCH",
+      "ok": true,
+      "actual": {
+        "status": 400,
+        "json": {
+          "code": "VOUCHER_STORE_MISMATCH",
+          "message": "Voucher Store is absent from this Checkout"
+        }
+      }
+    },
+    {
+      "name": "Store B code sent as Store A: refused",
+      "ok": true,
+      "actual": {
+        "status": 409,
+        "json": {
+          "code": "VOUCHER_NOT_FOUND",
+          "message": "Checkout could not use the selected voucher or reserve stock"
+        }
+      }
+    }
+  ],
+  "data": {
+    "okQuote": {
+      "revision": 1,
+      "total": "415000",
+      "stores": [
+        {
+          "storeId": "841264c0-c4d5-478f-beb5-adfa3d61eb92",
+          "voucherCode": "PSAR045402",
+          "quoteFingerprint": "56ead41887486e13a05ce39f34da49d29980400dddcc0e05d9fc7ae3be5188c5",
+          "merchandiseAmount": "150000",
+          "discountAmount": "10000",
+          "gross": "140000",
+          "platformFee": "7000"
+        },
+        {
+          "storeId": "5e234249-14c9-4c60-9bee-f40cc546329e",
+          "voucherCode": "PSB1R045402",
+          "quoteFingerprint": "bad97b1445d74404d5a96b504c4df110df3b9e7f7d4a477e1dc92d55932c454b",
+          "merchandiseAmount": "280000",
+          "discountAmount": "5000",
+          "gross": "275000",
+          "platformFee": "13750"
+        }
+      ]
+    },
+    "duplicate": {
+      "status": 400,
+      "json": {
+        "code": "VOUCHER_DUPLICATE_STORE",
+        "message": "Each Store accepts at most one voucher"
+      }
+    },
+    "mismatch": {
+      "status": 400,
+      "json": {
+        "code": "VOUCHER_STORE_MISMATCH",
+        "message": "Voucher Store is absent from this Checkout"
+      }
+    },
+    "codeOfOtherStoreOnA": {
+      "status": 409,
+      "json": {
+        "code": "VOUCHER_NOT_FOUND",
+        "message": "Checkout could not use the selected voucher or reserve stock"
+      }
+    }
+  },
+  "finishedAt": "2026-11-21T04:54:04.963Z",
+  "result": "PASS"
+}

@@ -1,0 +1,166 @@
+{
+  "id": "UAT-13",
+  "title": "COD collection",
+  "run": "B055906",
+  "sha": "eaf3bf270255b80db4525f836bfae7e495dc8651",
+  "stack": "hk5-promo-test-uat2111",
+  "startedAt": "2026-11-21T05:59:26.061Z",
+  "checks": [
+    {
+      "name": "collect before DELIVERED refused",
+      "ok": true,
+      "actual": {
+        "status": 409,
+        "json": {
+          "code": "COD_NOT_COLLECTABLE",
+          "message": "COD can only be collected after delivery"
+        },
+        "setCookie": []
+      }
+    },
+    {
+      "name": "seller cannot collect (403)",
+      "ok": true,
+      "actual": 403
+    },
+    {
+      "name": "collect after DELIVERED 2xx",
+      "ok": true,
+      "actual": {
+        "status": 200,
+        "json": {
+          "id": "d240cfd8-652a-406f-a832-06f7746089f2",
+          "orderId": "7ce73eb1-1818-4605-ad44-b98b6930623e",
+          "storeId": "841264c0-c4d5-478f-beb5-adfa3d61eb92",
+          "storeName": "Tiệm Áo Sài Gòn",
+          "status": "DELIVERED",
+          "codStatus": "COLLECTED",
+          "statusReason": null,
+          "gross": 120000,
+          "platformFee": 6000,
+          "sellerNet": 114000,
+          "createdAt": "2026-11-21T05:59:08.224538Z",
+          "updatedAt": "2026-11-21T05:59:26.436248620Z",
+          "deliveredAt": "2026-11-21T05:59:16.321304Z",
+          "codCollectedAt": "2026-11-21T05:59:26.436248620Z",
+          "settledAt": null,
+          "version": "5",
+          "shipping": {
+            "name": "Khách UAT",
+            "phone": "0900000000",
+            "address": "Địa chỉ thử nghiệm UAT"
+          },
+          "items": [
+            {
+              "productId": "939fc1d3-f919-4e8a-b9a8-53171afa97bc",
+              "name": "Túi tote canvas",
+              "sku": "TUI-001",
+              "quantity": 1,
+              "unitPrice": 120000,
+              "lineTotal": 120000
+            }
+          ],
+          "merchandiseAmount": "120000.00",
+          "voucherDiscount": "0",
+          "voucherCode": null,
+          "grossExact": "120000.00"
+        },
+        "setCookie": []
+      }
+    },
+    {
+      "name": "second collect refused",
+      "ok": true,
+      "actual": {
+        "status": 409,
+        "json": {
+          "code": "COD_NOT_COLLECTABLE",
+          "message": "COD already COLLECTED"
+        },
+        "setCookie": []
+      }
+    },
+    {
+      "name": "COLLECTED once, amount = gross 120000",
+      "ok": true,
+      "actual": {
+        "id": "d240cfd8-652a-406f-a832-06f7746089f2",
+        "orderId": "7ce73eb1-1818-4605-ad44-b98b6930623e",
+        "storeId": "841264c0-c4d5-478f-beb5-adfa3d61eb92",
+        "storeName": "Tiệm Áo Sài Gòn",
+        "status": "DELIVERED",
+        "codStatus": "COLLECTED",
+        "statusReason": null,
+        "gross": 120000,
+        "platformFee": 6000,
+        "sellerNet": 114000,
+        "createdAt": "2026-11-21T05:59:08.224538Z",
+        "updatedAt": "2026-11-21T05:59:26.436249Z",
+        "deliveredAt": "2026-11-21T05:59:16.321304Z",
+        "codCollectedAt": "2026-11-21T05:59:26.436249Z",
+        "settledAt": null,
+        "version": "6",
+        "shipping": {
+          "name": "Khách UAT",
+          "phone": "0900000000",
+          "address": "Địa chỉ thử nghiệm UAT"
+        },
+        "items": [
+          {
+            "productId": "939fc1d3-f919-4e8a-b9a8-53171afa97bc",
+            "name": "Túi tote canvas",
+            "sku": "TUI-001",
+            "quantity": 1,
+            "unitPrice": 120000,
+            "lineTotal": 120000
+          }
+        ],
+        "merchandiseAmount": "120000.00",
+        "voucherDiscount": "0",
+        "voucherCode": null,
+        "grossExact": "120000.00"
+      }
+    }
+  ],
+  "data": {
+    "row": {
+      "id": "d240cfd8-652a-406f-a832-06f7746089f2",
+      "orderId": "7ce73eb1-1818-4605-ad44-b98b6930623e",
+      "storeId": "841264c0-c4d5-478f-beb5-adfa3d61eb92",
+      "storeName": "Tiệm Áo Sài Gòn",
+      "status": "DELIVERED",
+      "codStatus": "COLLECTED",
+      "statusReason": null,
+      "gross": 120000,
+      "platformFee": 6000,
+      "sellerNet": 114000,
+      "createdAt": "2026-11-21T05:59:08.224538Z",
+      "updatedAt": "2026-11-21T05:59:26.436249Z",
+      "deliveredAt": "2026-11-21T05:59:16.321304Z",
+      "codCollectedAt": "2026-11-21T05:59:26.436249Z",
+      "settledAt": null,
+      "version": "6",
+      "shipping": {
+        "name": "Khách UAT",
+        "phone": "0900000000",
+        "address": "Địa chỉ thử nghiệm UAT"
+      },
+      "items": [
+        {
+          "productId": "939fc1d3-f919-4e8a-b9a8-53171afa97bc",
+          "name": "Túi tote canvas",
+          "sku": "TUI-001",
+          "quantity": 1,
+          "unitPrice": 120000,
+          "lineTotal": 120000
+        }
+      ],
+      "merchandiseAmount": "120000.00",
+      "voucherDiscount": "0",
+      "voucherCode": null,
+      "grossExact": "120000.00"
+    }
+  },
+  "finishedAt": "2026-11-21T05:59:26.501Z",
+  "result": "PASS"
+}

@@ -1,0 +1,18 @@
+{
+  "id": "C2-10",
+  "title": "MD24 Finance report",
+  "run": "R045402",
+  "sha": "eaf3bf270255b80db4525f836bfae7e495dc8651",
+  "stack": "hk5-promo-test-uat2111",
+  "startedAt": "2026-11-21T04:54:28.099Z",
+  "checks": [
+    {
+      "name": "exception",
+      "ok": false,
+      "actual": "needs C2-05 order"
+    }
+  ],
+  "data": {},
+  "finishedAt": "2026-11-21T04:54:28.099Z",
+  "result": "FAIL"
+}

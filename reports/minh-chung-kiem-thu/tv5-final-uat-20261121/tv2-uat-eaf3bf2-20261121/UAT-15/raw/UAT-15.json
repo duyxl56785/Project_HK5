@@ -1,0 +1,103 @@
+{
+  "id": "UAT-15",
+  "title": "Admin moderation / Seller approval",
+  "run": "B055906",
+  "sha": "eaf3bf270255b80db4525f836bfae7e495dc8651",
+  "stack": "hk5-promo-test-uat2111",
+  "startedAt": "2026-11-21T05:59:26.762Z",
+  "checks": [
+    {
+      "name": "register applicant 201",
+      "ok": true,
+      "actual": "uat-b055906-seller@hk5.local"
+    },
+    {
+      "name": "seller application submitted",
+      "ok": true,
+      "actual": 201
+    },
+    {
+      "name": "admin sees the PENDING_REVIEW application",
+      "ok": true,
+      "actual": {
+        "id": "ccc3f016-693a-4874-a817-76587302ee3c",
+        "status": "PENDING_REVIEW"
+      }
+    },
+    {
+      "name": "customer reading Admin seller list → 403",
+      "ok": true,
+      "actual": 403
+    },
+    {
+      "name": "customer approving → 403",
+      "ok": true,
+      "actual": 403
+    },
+    {
+      "name": "seller reading Admin seller list → 403",
+      "ok": true,
+      "actual": 403
+    },
+    {
+      "name": "seller approving → 403",
+      "ok": true,
+      "actual": 403
+    },
+    {
+      "name": "admin approves 2xx",
+      "ok": true,
+      "actual": {
+        "status": 200,
+        "json": {
+          "id": "ccc3f016-693a-4874-a817-76587302ee3c",
+          "version": "2",
+          "status": "APPROVED",
+          "reviewReason": null
+        },
+        "setCookie": []
+      }
+    },
+    {
+      "name": "history records the approval with an admin actor",
+      "ok": true,
+      "actual": [
+        {
+          "fromStatus": null,
+          "toStatus": "PENDING_REVIEW",
+          "reason": null,
+          "reviewedBy": null,
+          "at": "2026-11-21T05:59:26.94615Z"
+        },
+        {
+          "fromStatus": "PENDING_REVIEW",
+          "toStatus": "APPROVED",
+          "reason": null,
+          "reviewedBy": "36a4beff-38e4-450c-920b-46fd6f874bda",
+          "at": "2026-11-21T05:59:27.038712Z"
+        }
+      ]
+    }
+  ],
+  "data": {
+    "pendingCount": 2,
+    "history": [
+      {
+        "fromStatus": null,
+        "toStatus": "PENDING_REVIEW",
+        "reason": null,
+        "reviewedBy": null,
+        "at": "2026-11-21T05:59:26.94615Z"
+      },
+      {
+        "fromStatus": "PENDING_REVIEW",
+        "toStatus": "APPROVED",
+        "reason": null,
+        "reviewedBy": "36a4beff-38e4-450c-920b-46fd6f874bda",
+        "at": "2026-11-21T05:59:27.038712Z"
+      }
+    ]
+  },
+  "finishedAt": "2026-11-21T05:59:27.110Z",
+  "result": "PASS"
+}

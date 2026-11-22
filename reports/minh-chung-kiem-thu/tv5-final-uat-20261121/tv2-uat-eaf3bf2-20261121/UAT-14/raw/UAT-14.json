@@ -1,0 +1,115 @@
+{
+  "id": "UAT-14",
+  "title": "Finance snapshot",
+  "run": "B055906",
+  "sha": "eaf3bf270255b80db4525f836bfae7e495dc8651",
+  "stack": "hk5-promo-test-uat2111",
+  "startedAt": "2026-11-21T05:59:26.502Z",
+  "checks": [
+    {
+      "name": "admin settle after COLLECTED 2xx",
+      "ok": true,
+      "actual": {
+        "status": 200,
+        "json": {
+          "id": "d240cfd8-652a-406f-a832-06f7746089f2",
+          "orderId": "7ce73eb1-1818-4605-ad44-b98b6930623e",
+          "storeId": "841264c0-c4d5-478f-beb5-adfa3d61eb92",
+          "storeName": "Tiệm Áo Sài Gòn",
+          "status": "DELIVERED",
+          "codStatus": "COLLECTED",
+          "statusReason": null,
+          "gross": 120000,
+          "platformFee": 6000,
+          "sellerNet": 114000,
+          "createdAt": "2026-11-21T05:59:08.224538Z",
+          "updatedAt": "2026-11-21T05:59:26.520885050Z",
+          "deliveredAt": "2026-11-21T05:59:16.321304Z",
+          "codCollectedAt": "2026-11-21T05:59:26.436249Z",
+          "settledAt": "2026-11-21T05:59:26.520885050Z",
+          "version": "6",
+          "shipping": {
+            "name": "Khách UAT",
+            "phone": "0900000000",
+            "address": "Địa chỉ thử nghiệm UAT"
+          },
+          "items": [
+            {
+              "productId": "939fc1d3-f919-4e8a-b9a8-53171afa97bc",
+              "name": "Túi tote canvas",
+              "sku": "TUI-001",
+              "quantity": 1,
+              "unitPrice": 120000,
+              "lineTotal": 120000
+            }
+          ],
+          "merchandiseAmount": "120000.00",
+          "voucherDiscount": "0",
+          "voucherCode": null,
+          "grossExact": "120000.00"
+        },
+        "setCookie": []
+      }
+    },
+    {
+      "name": "gross 120000, fee 6000 (5% HALF_UP), net 114000",
+      "ok": true,
+      "actual": {
+        "storeOrderId": "d240cfd8-652a-406f-a832-06f7746089f2",
+        "orderId": "7ce73eb1-1818-4605-ad44-b98b6930623e",
+        "gross": 120000,
+        "platformFee": 6000,
+        "sellerNet": 114000,
+        "codStatus": "COLLECTED",
+        "deliveredAt": "2026-11-21T05:59:16.321304Z",
+        "codCollectedAt": "2026-11-21T05:59:26.436249Z",
+        "settledAt": "2026-11-21T05:59:26.520885Z",
+        "voucherDiscount": "0"
+      }
+    },
+    {
+      "name": "settledAt recorded",
+      "ok": true,
+      "actual": "2026-11-21T05:59:26.520885Z"
+    },
+    {
+      "name": "no voucherDiscount on a non-voucher order",
+      "ok": true,
+      "actual": "0"
+    },
+    {
+      "name": "DB snapshot gross 120000, fee 6000, settled; derived net 114000 matches report",
+      "ok": true,
+      "actual": "120000|6000|t"
+    }
+  ],
+  "data": {
+    "row": {
+      "storeOrderId": "d240cfd8-652a-406f-a832-06f7746089f2",
+      "orderId": "7ce73eb1-1818-4605-ad44-b98b6930623e",
+      "gross": 120000,
+      "platformFee": 6000,
+      "sellerNet": 114000,
+      "codStatus": "COLLECTED",
+      "deliveredAt": "2026-11-21T05:59:16.321304Z",
+      "codCollectedAt": "2026-11-21T05:59:26.436249Z",
+      "settledAt": "2026-11-21T05:59:26.520885Z",
+      "voucherDiscount": "0"
+    },
+    "totals": {
+      "deliveredOrders": 4,
+      "gross": 450000,
+      "platformFee": 22500,
+      "sellerNet": 427500,
+      "codCollected": 120000,
+      "codPending": 330000,
+      "settledNet": 114000,
+      "payableNet": 0,
+      "voucherDiscount": "10000"
+    },
+    "originalException": "Command failed: docker exec hk5-promo-test-uat2111-postgres-1 psql -U hk5 -d order_db -At -F | -c select gross::bigint, platform_fee::bigint, seller_net::bigint from seller_orders where id='d240cfd8-6",
+    "correction": "seller_orders has no seller_net column; net is derived as gross − platform_fee. DB re-read at 2026-11-21T06:02:01.446Z."
+  },
+  "finishedAt": "2026-11-21T05:59:26.762Z",
+  "result": "PASS"
+}

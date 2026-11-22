@@ -1,0 +1,69 @@
+{
+  "id": "C2-08",
+  "title": "MD20 Return gross",
+  "run": "R045440",
+  "sha": "eaf3bf270255b80db4525f836bfae7e495dc8651",
+  "stack": "hk5-promo-test-uat2111",
+  "startedAt": "2026-11-21T04:54:42.509Z",
+  "checks": [
+    {
+      "name": "Store A DELIVERED, not settled",
+      "ok": true,
+      "actual": {
+        "status": "DELIVERED",
+        "grossExact": "140000.00",
+        "voucherDiscount": "10000",
+        "settledAt": null
+      }
+    },
+    {
+      "name": "return requested 2xx",
+      "ok": true,
+      "actual": {
+        "status": 201,
+        "json": {
+          "requestId": "d246bae7-de68-4034-ba1d-625a2d59b021",
+          "orderId": "985c5c49-5ab1-4039-9855-dfdf88f83070",
+          "storeOrderId": "ab876ce0-20ce-4b99-a040-0734d46e0e06",
+          "status": "REQUESTED",
+          "reason": "UAT trả hàng C2-08",
+          "requestedAt": "2026-11-21T04:54:42.851586150Z",
+          "refundAmount": "140000.00"
+        }
+      }
+    },
+    {
+      "name": "refundAmount = gross after discount 140000",
+      "ok": true,
+      "actual": "140000.00"
+    },
+    {
+      "name": "Return does not release voucher use",
+      "ok": true,
+      "actual": "COMMITTED||150000|10000"
+    }
+  ],
+  "data": {
+    "storeOrder": {
+      "status": "DELIVERED",
+      "grossExact": "140000.00",
+      "voucherDiscount": "10000",
+      "settledAt": null
+    },
+    "return": {
+      "status": 201,
+      "json": {
+        "requestId": "d246bae7-de68-4034-ba1d-625a2d59b021",
+        "orderId": "985c5c49-5ab1-4039-9855-dfdf88f83070",
+        "storeOrderId": "ab876ce0-20ce-4b99-a040-0734d46e0e06",
+        "status": "REQUESTED",
+        "reason": "UAT trả hàng C2-08",
+        "requestedAt": "2026-11-21T04:54:42.851586150Z",
+        "refundAmount": "140000.00"
+      }
+    },
+    "ledgerAfterReturn": "COMMITTED||150000|10000"
+  },
+  "finishedAt": "2026-11-21T04:54:43.069Z",
+  "result": "PASS"
+}
