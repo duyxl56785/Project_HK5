@@ -4,7 +4,7 @@
 **Vai trò:** TV5 QA Lead
 **Nguồn test:** `TV5_FINAL_UAT_W5_C2_MATRIX_20261119.md`
 **Tổng số case:** 37 (17 baseline + 5 Voucher C1 + 4 Promotion + 11 Voucher C2)
-**Trạng thái của checklist trước phiên UAT (sáng 21/11):** `NOT RUN`; các case có gate/contract chưa đạt được ghi `BLOCKED`. TV2 xác nhận đã thực hiện phiên UAT trên Frozen SHA và sẽ đăng kết quả sau PROMO-02. Cho tới khi TV5 nhận run-manifest và raw receipts, các trạng thái trong checklist này vẫn là snapshot chưa đối chiếu, không được coi là kết quả sau chạy hoặc tự chuyển thành PASS/FAIL.
+**Kết quả sau đối chiếu receipt 22/11:** TV2 Final UAT trên Frozen SHA `eaf3bf270255b80db4525f836bfae7e495dc8651` đạt **34 PASS, 1 PARTIAL, 2 BLOCKED, 0 FAIL**. TV5 đã kiểm tra PR #221: 37 manifests, 98 checksum, toàn bộ artifact path/size/SHA256 và case status khớp run-manifest. Kết quả nguồn: [Issue #158](https://github.com/duyxl56785/Project_HK5/issues/158#issuecomment-7075353935); receipt: [PR #221](https://github.com/duyxl56785/Project_HK5/pull/221). Các dòng `Trạng thái` trong phần kịch bản bên dưới là trạng thái kế hoạch trước khi chạy; **trạng thái thực tế được quyết định bởi bảng receipt ở mục 1A**, không đọc các dòng mẫu cũ như kết quả cuối.
 
 ## 0. Quy tắc bắt buộc
 
@@ -34,6 +34,20 @@
 | TV2 operator / TV3 / TV4 / TV5 witness | `PENDING` |
 | Seed dataset version / fake actor IDs | `PENDING` |
 | Evidence root + manifest SHA256 | `PENDING` |
+
+### 1A. Kết quả thực tế theo receipt TV2
+
+| Nhóm / case | Kết quả đã xác minh | Ghi chú |
+|---|---:|---|
+| UAT-01..15 | 15 PASS | Bao gồm Return không restock ở UAT-12; không suy ra RET-05 |
+| UAT-16..17 | 2 BLOCKED | Thiếu runner được review, provider oracle/receipt và approval riêng |
+| C1-01..05 | 5 PASS | Receipt từng case và hash đã đối chiếu |
+| PROMO-01, 03, 04 | 3 PASS | PROMO-04 có C2 ON trong UAT theo quyền TV2 |
+| PROMO-02 | PARTIAL | Super Sale in-window PASS; Flash Sale 22:00–24:00 ngày 21/11 NOT_RUN vì Docker đã tắt |
+| C2-01..11 | 11 PASS | C2 ON trên stack UAT; nhánh OFF có CI `44746995567` |
+| **Tổng** | **34 PASS, 1 PARTIAL, 2 BLOCKED, 0 FAIL** | Không có P0/P1 theo TV2 triage |
+
+**Run metadata:** `tv2-uat-eaf3bf2-20261121`; operator TV2; Windows 11 / JDK 21 / Node 24 / Docker 29.9.1; Compose project `hk5-promo-test-uat2111`; run-manifest xác nhận flags trong `.env.demo` và capability `enabled=true`. Receipt đầy đủ ở `reports/minh-chung-kiem-thu/tv5-final-uat-20261121/tv2-uat-eaf3bf2-20261121/` sau khi PR #221 được merge.
 
 ## 2. Chuẩn evidence tối thiểu
 
@@ -188,7 +202,7 @@ Mỗi case phải có một thư mục riêng `reports/minh-chung-kiem-thu/tv5-f
 - **Kết quả mong đợi:** quyền/state đúng; refundAmount bằng gross đã lưu; Return sau DELIVERED không tự hoàn lượt voucher; không tự restock nếu RET-05 chưa có contract/receipt.
 - **Bằng chứng:** Return API/audit, SellerOrder snapshot, refund calculation receipt, Inventory restock receipt nếu được phép.
 - **Owner cung cấp:** TV4 (Return/fulfillment/Inventory), TV3 (Order contract), TV5 (gross/refund oracle).
-- **Trạng thái:** `BLOCKED` cho mọi tuyên bố restock RET-05; phần Return không-restock vẫn `NOT RUN` đến khi có frozen SHA và fixture.
+- **Trạng thái thực tế:** UAT-12 Return không-restock `PASS`; RET-05 exactly-once restock vẫn `BLOCKED` và chưa triển khai.
 
 ### UAT-13 — COD collection
 - **Mục tiêu:** xác minh Admin thu COD đúng thời điểm, đúng amount, đúng một lần.
@@ -206,7 +220,7 @@ Mỗi case phải có một thư mục riêng `reports/minh-chung-kiem-thu/tv5-f
 - **Kết quả mong đợi:** fee/net theo policy đã ký; nếu policy 5%/scale 0 được phê duyệt thì fee tính trên gross, HALF_UP; sellerNet = gross − fee; `settledAt` không được diễn giải là chuyển tiền thật.
 - **Bằng chứng:** M01 policy link, report/API JSON, DB read-only snapshot, calculation sheet với input/output và timestamp.
 - **Owner cung cấp:** TV5 (Finance oracle/report), TV4 (COD source), TV2/business (policy approval).
-- **Trạng thái:** `NOT RUN` — policy demo/local đã có; chờ frozen SHA, runtime/fixture và receipt thực tế. Không tuyên bố Finance production đã được phê duyệt.
+- **Trạng thái thực tế:** UAT-14 `PASS` theo receipt TV2; M01 chỉ áp dụng cho demo/local và bản nộp, Finance production `NOT_APPROVED`.
 
 ### UAT-15 — Admin moderation / Seller approval
 - **Mục tiêu:** xác minh Admin xem moderation, Seller approval và COD/Finance read-only đúng quyền.
@@ -331,7 +345,7 @@ Mỗi case phải có một thư mục riêng `reports/minh-chung-kiem-thu/tv5-f
 - **Kết quả mong đợi:** ON `enabled=true`; OFF `enabled=false` và voucher request bị từ chối `VOUCHER_C2_DISABLED`; C1 management không bị ảnh hưởng.
 - **Bằng chứng:** runtime env receipt do TV2 cung cấp, capability HTTP JSON, OFF rejection, run/SHA.
 - **Owner cung cấp:** TV2 (flag/stack), TV3 (API/Checkout).
-- **Trạng thái:** `BLOCKED_PENDING_P0_TRIAGE` — Frozen SHA và CI applicability đã được TV2 xác nhận; còn thiếu kết quả triage P0 C2 và runtime flag snapshot. Frontend/E2E `44746995567` xanh trên exact Frozen SHA `eaf3bf270255b80db4525f836bfae7e495dc8651`.
+- **Trạng thái thực tế:** C2-01 `PASS`; triage UAT không phát hiện P0 C2, capability trả `enabled=true` trên stack UAT. Nhánh C2 OFF được kiểm qua CI `44746995567`.
 
 ### C2-02 — Per-Store voucher
 - **Mục tiêu:** xác minh tối đa một voucher cho mỗi Store trong Cart nhiều Store.
@@ -427,12 +441,12 @@ Mỗi case phải có một thư mục riêng `reports/minh-chung-kiem-thu/tv5-f
 
 | Nhóm | Số case | Trạng thái chuẩn bị | Điều kiện chuyển trạng thái |
 |---|---:|---|---|
-| Baseline UAT-01..15 | 15 | NOT RUN | Frozen SHA + stack/clone receipts + owner evidence; UAT-14 dùng M01 demo/local policy đã duyệt, cần runtime fixture/receipt |
+| Baseline UAT-01..15 | 15 | PASS | Receipt TV2 trên Frozen SHA; UAT-12 chỉ xác nhận Return không-restock |
 | UNKNOWN UAT-16..17 | 2 | BLOCKED | Runner/tuple/provider oracle/approval riêng và TV5 witness |
-| Voucher C1 | 5 | NOT RUN | Frozen SHA + fake actors + Voucher API/Store fixtures |
-| Promotion | 3 | NOT RUN | Frozen SHA + campaign/Product fixtures + TV2 approval |
-| PROMO-04 | 1 | BLOCKED ON; OFF N/A | C2 gate đủ cho ON; OFF ghi đúng “không áp dụng, chưa bật” |
-| Voucher C2 | 11 | BLOCKED (C2 OFF) | G-04..G-08; #211/#212 merge và TV5 money review đã đạt; còn frozen-SHA CI + P0 C2 triage + TV2 runtime receipt |
+| Voucher C1 | 5 | PASS | Receipt TV2 trên Frozen SHA |
+| Promotion | 3 | PASS | PROMO-01/03/04 PASS; PROMO-02 tách riêng PARTIAL |
+| PROMO-04 | 1 | PASS | C2 ON được TV2 vận hành trong UAT |
+| Voucher C2 | 11 | PASS | Receipt TV2; C2 ON trong stack UAT, CI OFF/ON trên Frozen SHA |
 
 **Không phải 37 PASS.** Đây là checklist chuẩn bị; Final UAT chỉ được kết luận sau khi owner thực thi và TV5 xác minh receipts trên đúng frozen SHA.
 
