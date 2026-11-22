@@ -15,6 +15,7 @@ TV5 QA/Finance sign-off or final UAT.
 | Notification | Unproven persistence failures are sent to retry/DLT rather than acknowledged as duplicates. | [PR #168](https://github.com/duyxl56785/Project_HK5/pull/168), `d290559` |
 | Seller Return | Seller Store scope and `REQUESTED → APPROVED|REJECTED`, `APPROVED → RECEIVED`; receipt evidence is enforced in PostgreSQL. Return/settlement share the SellerOrder lock. | [PR #182](https://github.com/duyxl56785/Project_HK5/pull/182), merge `9de2697` |
 | Return / Finance boundary | A received return leaves `gross`, `platform_fee`, COD state and settlement unchanged. An open return blocks settlement under the same SellerOrder lock; this does not approve refund, payout reversal or restock. | [PR #191](https://github.com/duyxl56785/Project_HK5/pull/191), merge `f0b5090` |
+| Voucher C2 review boundary | Reviewed the TV4 scope of voucher cancellation/rejection, Return and Inventory RESERVE receipt. Cancellation/rejection after a legal pre-dispatch transition releases voucher usage through the durable recovery journal; Return preserves the voucher and uses recorded post-discount `gross`. | [PR #211](https://github.com/duyxl56785/Project_HK5/pull/211), TV4 approval at `4f3152b` |
 
 ## Tests with bounded claims
 
@@ -45,11 +46,11 @@ TV5 QA/Finance sign-off or final UAT.
   receipt, not a refund, COD reversal, payout reversal or Inventory movement.
   An active Return blocks settlement; whether `payableNet` means merely
   unsettled or eligible-to-pay remains a TV2/TV5 business decision.
-- **Inventory UI:** [PR #169](https://github.com/duyxl56785/Project_HK5/pull/169)
-  and [PR #190](https://github.com/duyxl56785/Project_HK5/pull/190) remain
-  Draft. There is no approved Store-scoped inventory read/list contract or
-  SellerProductsPage integration point; TV2 has placed that work in the
-  post-submission backlog.
+- **Inventory UI:** [PR #190](https://github.com/duyxl56785/Project_HK5/pull/190)
+  merged only into the Inventory-UI candidate; [PR #169](https://github.com/duyxl56785/Project_HK5/pull/169)
+  was subsequently closed without merge. There is no approved Store-scoped
+  inventory read/list contract or SellerProductsPage integration point; this
+  remains post-submission backlog.
 
 ## Safety boundaries retained
 
@@ -73,3 +74,24 @@ TV5 QA/Finance sign-off or final UAT.
 Describe module-level and PostgreSQL/Kafka evidence as **PASS within the stated
 scope**. Keep two-Store recovery, live UNKNOWN and exactly-once restock as
 **NOT_RUN/BLOCKED**, never as production acceptance.
+
+## Pre-final checkpoint — 19/11/2026
+
+- **Current observed main:** `4b5bcb4ceb5a6a636e4c943db2d41c8a4c1bb14f`.
+  It merges [PR #212](https://github.com/duyxl56785/Project_HK5/pull/212) after
+  [PR #211](https://github.com/duyxl56785/Project_HK5/pull/211). The backend
+  tree at this main SHA matches the reviewed #211 head `4f3152b`.
+- **C2-related CI evidence:** #211 Backend readiness reports Order PostgreSQL
+  `156/156` PASS. #212 reports C2-on Playwright `25/25` PASS, C2-off `24/24`
+  PASS, frontend `186/186` PASS, and Gateway/V7 smoke `FAILS=0` at #212 head
+  `3483486`. These are CI receipts on their stated heads, not Final UAT on
+  frozen main.
+- **Existing TV4 raw evidence:** all `66/66` files listed in
+  `reports/evidence/tv4-final-verification-20261116/SHA256SUMS.txt` verify.
+  Its focused JUnit scopes total 313 test units with zero failures/errors;
+  the bounded combined PostgreSQL run remains exit `124` and is not PASS.
+- **Final UAT status:** `WAITING_FROZEN_SHA`. TV2 had not published a frozen
+  SHA/receipt at this checkpoint. Run the two-Seller, two-Store Final UAT only
+  on that SHA and only with its approved isolated demo flags. Do not use this
+  checkpoint to claim live UNKNOWN recovery, RET-05 restock, Finance production
+  settlement, or Final UAT acceptance.
