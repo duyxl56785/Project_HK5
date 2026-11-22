@@ -21,4 +21,4 @@ Bản soạn cập nhật 19/11/2026, dựa trên deck nguồn 23 slide và [n�
 - **“Hai UNKNOWN đã PASS chưa?”** Chưa. Proxy fake-loopback/contract test là chuẩn bị; claim-conflict và lost-response thật cần runner, immutable tuple, provider COMMIT/stock receipt và quyền chạy từng fixture.
 - **“Ảnh minh chứng lấy từ đâu?”** Từ screenshot thật của run trên main đủ gate, lưu theo case trong `reports/minh-chung-kiem-thu/`, kèm SHA256 và raw HTTP/JUnit/log tương ứng. Không tạo ảnh màn hình giả.
 
-Trước khi trình chiếu, người tổng hợp cần thay các mốc `main`/PR bằng frozen SHA và receipt final sau 21/11, cập nhật trạng thái Hình 6.1–6.8 theo ảnh thật, rồi render kiểm layout. Không điền `PASS`, số test hoặc ảnh khi chưa thực thi đúng SHA.
+Trước khi trình chiếu, người tổng hợp cần đối chiếu DOCX chính thức do TV2 giữ ngoài repo (TV2 xác nhận đã chèn ảnh 6.1–6.8), đồng bộ kết quả từng case theo raw UAT receipts sau PROMO-02, rồi render kiểm layout. Không điền `PASS`, số test hoặc ảnh dựa trên thông báo đã chạy khi chưa có receipt kiểm chứng.

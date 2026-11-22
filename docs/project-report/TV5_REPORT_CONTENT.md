@@ -89,7 +89,7 @@ Website và tester là hai tiến trình riêng. Dựng stack dữ liệu giả 
 
 | Trường bản nộp | Điều kiện điền |
 |---|---|
-| Final run SHA và CI URLs | Điền SHA đóng băng do TV2 công bố trước 18:00 ngày 20/11 theo comment 18/11 trên PR #211, rồi dẫn hosted checks và receipt E2E/clone sạch trên cùng SHA; `e61bbac2b2b8599384e0e035b89058a188e318ec` chỉ là mốc kiểm thử 10/11, không phải final run |
+| Final run SHA và CI URLs | Frozen SHA đã xác nhận: `eaf3bf270255b80db4525f836bfae7e495dc8651`; Frontend/E2E CI [44746995567](https://github.com/duyxl56785/Project_HK5/actions/runs/44746995567) SUCCESS trên exact SHA; Backend readiness [44493061575](https://github.com/duyxl56785/Project_HK5/actions/runs/44493061575) được TV2 xác nhận áp dụng. Còn thiếu run-manifest/raw UAT receipts và clean-clone/stack receipt để kết luận |
 | Ngày/môi trường/actor/seed | Receipt của project cô lập thực chạy, không lấy từ rehearsal |
 | Tổng test nghiệm thu | Chỉ một release run với denominator và skip/block giải thích |
 | Kết quả UNKNOWN | Actual immutable tuple/waiver, provider COMMIT/stock receipt, runner/stop và quyền chạy từng ca |
