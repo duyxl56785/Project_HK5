@@ -5,7 +5,7 @@
 **Owner:** TV5 — QA Lead
 
 **Case set:** 37 (17 baseline + 5 Voucher C1 + 4 Promotion + 11 Voucher C2)
-**Execution status hiện tại:** `0 PASS, 0 FAIL, 23 NOT RUN, 13 BLOCKED`; UAT-12 mixed (Return non-restock NOT RUN; RET-05 restock BLOCKED).
+**Snapshot trước phiên UAT (sáng 21/11):** `0 PASS, 0 FAIL, 23 NOT RUN, 13 BLOCKED`; UAT-12 mixed (Return non-restock NOT RUN; RET-05 restock BLOCKED). Đây không phải kết quả sau phiên chạy. TV2 xác nhận đã thực hiện UAT trên Frozen SHA và sẽ đăng kết quả/receipt sau PROMO-02; TV5 chưa nhận được raw case receipts để xác minh hoặc cập nhật matrix.
 
 ## 1. Nguồn chính thức
 
@@ -15,7 +15,7 @@
 - [M01 Finance](../../../docs/project-report/M01_FINANCE_DECISION.md)
 - [M01 Voucher C2](../../../docs/project-report/M01_VOUCHER_C2_DECISION.md)
 
-Không dùng file template này thay cho matrix/checklist. Frozen SHA đã được TV2 xác nhận như mục 7; tuy nhiên hiện chưa có raw Final UAT receipt.
+Không dùng file template này thay cho matrix/checklist. Frozen SHA đã được TV2 xác nhận; TV2 báo đã thực hiện phiên UAT, nhưng tại thời điểm cập nhật chưa có kết quả/receipt sau chạy được bàn giao cho TV5. Vì vậy không suy ra PASS/FAIL từ thông báo đã chạy.
 
 ## 2. Cấu trúc thư mục khi có run thật
 
@@ -31,7 +31,7 @@ tv5-final-uat-20261121/
       screenshots/
 ```
 
-Không tạo `<run-id>` cho đến khi TV2 công bố frozen SHA và xác nhận môi trường. Mỗi case có một manifest; `run-manifest.json` liên kết các case trong cùng lượt.
+Không tự tạo `<run-id>` hoặc manifest thay người vận hành. Chỉ lập hồ sơ từ run ID, manifest và raw artifacts thực tế do TV2/owner bàn giao; Frozen SHA đã được công bố nhưng kết quả sau chạy vẫn đang chờ receipt.
 
 ## 3. Bộ template
 
@@ -75,4 +75,4 @@ Template có placeholder và trạng thái `NOT RUN`; không phải receipt. Ch�
 
 ## 7. Liên hệ trạng thái hiện tại
 
-TV2 xác nhận Frozen SHA sau merge PR #220: `eaf3bf270255b80db4525f836bfae7e495dc8651`, freeze lúc 20/11/2026 20:44 +07; SHA này thay thế freeze cũ `950279e`. Post-merge [CI run 44746995567](https://github.com/duyxl56785/Project_HK5/actions/runs/44746995567): Frontend, E2E C2 OFF và E2E C2 ON đều SUCCESS trên đúng Frozen SHA. Backend readiness [run 44493061575](https://github.com/duyxl56785/Project_HK5/actions/runs/44493061575) gắn `cee7c87`; TV2 xác nhận run này còn áp dụng vì `backend/` không đổi từ `cee7c87` đến Frozen SHA. CI không phải Final UAT. Không có raw Final UAT receipt nào được tạo từ bộ template này.
+TV2 xác nhận Frozen SHA sau merge PR #220: `eaf3bf270255b80db4525f836bfae7e495dc8651`, freeze lúc 20/11/2026 20:44 +07; SHA này thay thế freeze cũ `950279e`. Post-merge [CI run 44746995567](https://github.com/duyxl56785/Project_HK5/actions/runs/44746995567): Frontend, E2E C2 OFF và E2E C2 ON đều SUCCESS trên đúng Frozen SHA. Backend readiness [run 44493061575](https://github.com/duyxl56785/Project_HK5/actions/runs/44493061575) gắn `cee7c87`; TV2 xác nhận run này còn áp dụng vì `backend/` không đổi từ `cee7c87` đến Frozen SHA. CI không phải Final UAT. TV2 đã xác nhận phiên UAT ngày 21/11 được thực hiện, nhưng kết quả PROMO-02 và raw receipts chưa được đăng/bàn giao; evidence kit này vẫn chỉ chứa template, không phải receipt.

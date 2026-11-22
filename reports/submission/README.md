@@ -3,10 +3,10 @@
 ## Checkpoint trạng thái mới nhất — 21/11/2026
 
 - PR #220 đã merge; main hiện `eaf3bf270255b80db4525f836bfae7e495dc8651`. Post-merge CI [run 44746995567](https://github.com/duyxl56785/Project_HK5/actions/runs/44746995567): Frontend, E2E C2 OFF và E2E C2 ON đều SUCCESS trên đúng SHA. Đây là CI, không phải Final UAT.
-- TV2 xác nhận Frozen SHA `eaf3bf270255b80db4525f836bfae7e495dc8651` lúc 20/11/2026 20:44 +07; freeze cũ `950279e` đã được thay thế. PR #217 đã MERGED vào branch #216; PR #216 vẫn OPEN, đã tích hợp docs follow-up và chờ TV2 re-review.
-- Ma trận Final UAT 37 ca: 0 PASS, 0 FAIL, 23 NOT RUN, 13 BLOCKED; UAT-12 mixed. Không có raw Final UAT receipts hoặc ảnh thật 6.1–6.8.
-- Official `Bao_cao_Smart_ECommerce_ban_nop.docx` chưa có trong main tree; hai file Word/PPTX TV5 hiện có vẫn là DRAFT, không thay thế deliverable chính thức.
-- TV2 đã công bố Frozen SHA/time. Clean-clone/clean-stack receipts, runtime flag snapshot, seed/actors và P0/P1 triage vẫn chưa có trong evidence kit TV5. C2 được phép opt-in riêng cho UAT local khi đủ gate và do TV2 vận hành; Finance production `NOT_APPROVED`.
+- TV2 xác nhận Frozen SHA `eaf3bf270255b80db4525f836bfae7e495dc8651` lúc 20/11/2026 20:44 +07; freeze cũ `950279e` đã được thay thế. PR #217 đã MERGED vào branch #216; PR #216 đã được TV2 APPROVED tại exact HEAD `8cb67b6` và vẫn OPEN, chờ merge sau UAT.
+- TV2 xác nhận đã thực hiện Final UAT trên Frozen SHA ngày 21/11 và sẽ đăng kết quả/receipt sau PROMO-02. Snapshot 37 case `0 PASS, 0 FAIL, 23 NOT RUN, 13 BLOCKED` là trạng thái trước phiên chạy buổi sáng, không phải kết quả sau UAT; TV5 chưa nhận raw receipts để cập nhật case.
+- TV2 xác nhận ảnh thật 6.1–6.8 đã chụp và chèn vào official `Bao_cao_Smart_ECommerce_ban_nop.docx`, hiện giữ ngoài repository. Main tree chưa chứa DOCX/ảnh; hai file Word/PPTX TV5 hiện có vẫn là DRAFT, không thay thế deliverable chính thức.
+- Clean-clone/clean-stack receipts, runtime flag snapshot, seed/actors và P0/P1 triage vẫn cần bàn giao/kiểm chứng. C2 chỉ opt-in UAT local khi đủ gate và do TV2 vận hành; Finance production `NOT_APPROVED`.
 
 Các tệp `Bao_cao_Soopi_TV5_DRAFT_*` và `Soopi_TV5_notes_DRAFT_*` là **nguồn nội dung TV5 để nhóm kiểm**, không phải bản nộp cuối hoặc xác nhận final UAT. Báo cáo nộp chính thức do TV2 ghép từ `Bao_cao_Smart_ECommerce.docx`; không nộp nhầm bản nháp TV5. Hai tệp nháp ngày 07/11 ở bảng dưới chỉ còn trong [lịch sử Git tại `e08a26d`](https://github.com/duyxl56785/Project_HK5/tree/e08a26d96c384ea3612ea369fd860cf63f4f1fc0/reports/submission); HEAD chỉ giữ hai bản ngày 14/11 để tránh trùng bản nhị phân.
 
@@ -30,7 +30,7 @@ Các tệp này vẫn là **DRAFT**. Chỉ ghép ảnh thật và kết luận U
 
 ## Cập nhật TV5 ngày 19/11/2026
 
-- `Bao_cao_Soopi_TV5_DRAFT_2026-11-14.docx` giữ nguyên byte, SHA256 `81abe78af6ae6d1bbe80f0b92465750beb97afda69d2149738e8c857c2202c12`; ZIP integrity PASS. Không chỉnh sửa draft này thành bản nộp vì TV2 đã chốt báo cáo chính thức là `Bao_cao_Smart_ECommerce_ban_nop.docx`, hiện chưa có trong repository.
+- `Bao_cao_Soopi_TV5_DRAFT_2026-11-14.docx` giữ nguyên byte, SHA256 `81abe78af6ae6d1bbe80f0b92465750beb97afda69d2149738e8c857c2202c12`; ZIP integrity PASS. Không chỉnh sửa draft này thành bản nộp vì TV2 đã chốt báo cáo chính thức là `Bao_cao_Smart_ECommerce_ban_nop.docx`, hiện được TV2 giữ ngoài repository sau khi chèn ảnh 6.1–6.8.
 - `Soopi_TV5_notes_DRAFT_2026-11-14.pptx` đã cập nhật speaker notes ở slide 8, 16, 23. SHA256 mới ở bảng trên. Không thay nội dung hiển thị, ảnh, theme hoặc layout. Đây vẫn là deck draft/source, không phải final deck có ảnh frozen-SHA.
 - Nội dung báo cáo TV5 và lời trình bày đã cập nhật trong `docs/project-report/TV5_REPORT_CONTENT.md` và `TV5_DECK_SPEAKER_NOTES.md`. Báo cáo kiểm toán hiện hành: `reports/tv5-final-audit/TV5_FINAL_AUDIT_2026-11-19.md`.
 - Ma trận acceptance hiện hành có checkpoint hậu #215: [TV5_UAT_ACCEPTANCE_CURRENT.md](../../tests/TV5_UAT_ACCEPTANCE_CURRENT.md). Checklist Final UAT chi tiết đủ 37 case: [TV5_FINAL_UAT_EXECUTION_CHECKLIST_20261121.md](../../tests/TV5_FINAL_UAT_EXECUTION_CHECKLIST_20261121.md). Hướng dẫn TV2/TV3/TV4 gửi evidence đúng manifest, owner và checksum: [TV5_FINAL_UAT_EVIDENCE_INTAKE_20261121.md](../../tests/TV5_FINAL_UAT_EVIDENCE_INTAKE_20261121.md). Đây là tài liệu chuẩn bị, không phải Final UAT receipt.

@@ -4,7 +4,7 @@
 **Vai trò:** TV5 QA Lead
 **Nguồn test:** `TV5_FINAL_UAT_W5_C2_MATRIX_20261119.md`
 **Tổng số case:** 37 (17 baseline + 5 Voucher C1 + 4 Promotion + 11 Voucher C2)
-**Trạng thái trước khi chạy:** `NOT RUN`; các case có gate/contract chưa đạt được ghi `BLOCKED`, không suy thành PASS.
+**Trạng thái của checklist trước phiên UAT (sáng 21/11):** `NOT RUN`; các case có gate/contract chưa đạt được ghi `BLOCKED`. TV2 xác nhận đã thực hiện phiên UAT trên Frozen SHA và sẽ đăng kết quả sau PROMO-02. Cho tới khi TV5 nhận run-manifest và raw receipts, các trạng thái trong checklist này vẫn là snapshot chưa đối chiếu, không được coi là kết quả sau chạy hoặc tự chuyển thành PASS/FAIL.
 
 ## 0. Quy tắc bắt buộc
 
