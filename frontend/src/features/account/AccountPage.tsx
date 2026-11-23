@@ -46,8 +46,9 @@ function ProfileForm({ profile }: { readonly profile: Profile }) {
   const form = useForm<ProfileInput>({ resolver: zodResolver(profileSchema),
     defaultValues: { displayName: profile.displayName ?? '', phoneCode: stored.code, phone: stored.local } });
   const { errors } = form.formState;
+  // User rejects a blank name, so an empty field clears it (null) like the phone.
   const save = useAction(({ displayName, phoneCode, phone }: ProfileInput) =>
-    api('/api/users/me', { method: 'PATCH', body: { displayName, phone: toE164(phoneCode, phone) || null } }), ['profile']);
+    api('/api/users/me', { method: 'PATCH', body: { displayName: displayName || null, phone: toE164(phoneCode, phone) || null } }), ['profile']);
   return <form className="panel stack" noValidate onSubmit={form.handleSubmit((value) => save.mutate(value))}>
     <h2>Hồ sơ</h2>
     <Field label="Tên hiển thị" error={errors.displayName}><input {...form.register('displayName')} /></Field>

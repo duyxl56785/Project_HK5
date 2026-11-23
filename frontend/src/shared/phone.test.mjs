@@ -30,6 +30,13 @@ test('a stored number is split back into the code and the national part', () => 
   assert.deepEqual(splitE164('+4420712345'), { code: '+84', local: '+4420712345' });
 });
 
+test('a stored number with a code not in the list is saved back unchanged', () => {
+  const stored = splitE164('+447911123456');
+  assert.deepEqual(stored, { code: '+84', local: '+447911123456' });
+  assert.equal(toE164(stored.code, stored.local), '+447911123456');
+  assert.deepEqual(errors(true, stored.local, stored.code), []);
+});
+
 const schema = (required) => z.object({ phoneCode: z.string(), phone: z.string() }).superRefine(checkPhone(required));
 const errors = (required, phone, phoneCode = '+84') => {
   const result = schema(required).safeParse({ phoneCode, phone });
