@@ -1,0 +1,97 @@
+{
+  "id": "C2-06",
+  "title": "MD19 failed Checkout",
+  "run": "R045402",
+  "sha": "eaf3bf270255b80db4525f836bfae7e495dc8651",
+  "stack": "hk5-promo-test-uat2111",
+  "startedAt": "2026-11-21T04:54:08.659Z",
+  "checks": [
+    {
+      "name": "quote 200",
+      "ok": true,
+      "actual": 200
+    },
+    {
+      "name": "stale Checkout refused 409",
+      "ok": true,
+      "actual": {
+        "status": 409,
+        "json": {
+          "code": "BUSINESS_CONFLICT",
+          "message": "Cart changed or is reserved by another checkout"
+        }
+      }
+    },
+    {
+      "name": "no Order created",
+      "ok": true,
+      "actual": {
+        "before": 0,
+        "after": 0
+      }
+    },
+    {
+      "name": "ledger has no active redemption",
+      "ok": true,
+      "actual": ""
+    },
+    {
+      "name": "same customer can still use the usageLimit=1 voucher",
+      "ok": true,
+      "actual": {
+        "status": 200,
+        "json": {
+          "orderId": "6b055668-e09f-4696-9215-7b2d26451352",
+          "status": "PLACED",
+          "total": 140000,
+          "sellerOrderCount": 1,
+          "prices": [
+            {
+              "storeId": "841264c0-c4d5-478f-beb5-adfa3d61eb92",
+              "voucherCode": "FAILR045402",
+              "quoteFingerprint": null,
+              "merchandiseAmount": "150000",
+              "discountAmount": "10000",
+              "gross": "140000.00",
+              "platformFee": "7000.00"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "data": {
+    "scenario": "Stale Cart revision: quote, then change the Cart, then Checkout with the old revision (fails before Order creation). Chosen by TV2; no fault injection.",
+    "failed": {
+      "status": 409,
+      "json": {
+        "code": "BUSINESS_CONFLICT",
+        "message": "Cart changed or is reserved by another checkout"
+      }
+    },
+    "ledgerAfterFail": "",
+    "retry": {
+      "status": 200,
+      "json": {
+        "orderId": "6b055668-e09f-4696-9215-7b2d26451352",
+        "status": "PLACED",
+        "total": 140000,
+        "sellerOrderCount": 1,
+        "prices": [
+          {
+            "storeId": "841264c0-c4d5-478f-beb5-adfa3d61eb92",
+            "voucherCode": "FAILR045402",
+            "quoteFingerprint": null,
+            "merchandiseAmount": "150000",
+            "discountAmount": "10000",
+            "gross": "140000.00",
+            "platformFee": "7000.00"
+          }
+        ]
+      }
+    },
+    "ledgerAfterRetry": "COMMITTED||150000|10000"
+  },
+  "finishedAt": "2026-11-21T04:54:09.867Z",
+  "result": "PASS"
+}

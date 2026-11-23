@@ -1,0 +1,142 @@
+{
+  "id": "UAT-12",
+  "title": "Return",
+  "run": "B055906",
+  "sha": "eaf3bf270255b80db4525f836bfae7e495dc8651",
+  "stack": "hk5-promo-test-uat2111",
+  "startedAt": "2026-11-21T05:59:21.576Z",
+  "checks": [
+    {
+      "name": "return before DELIVERED refused",
+      "ok": true,
+      "actual": 409
+    },
+    {
+      "name": "return REQUESTED, refundAmount 95000 = gross",
+      "ok": true,
+      "actual": {
+        "requestId": "4ce11561-fdd3-4558-bc73-990ef416d19b",
+        "orderId": "e2dfe9a1-938f-47ef-a8f5-36dadb0f25fa",
+        "storeOrderId": "e1c6094b-da69-4ebc-ac40-5a4b4eafbb1c",
+        "status": "REQUESTED",
+        "reason": "UAT trả hàng",
+        "requestedAt": "2026-11-21T05:59:22.146371848Z",
+        "refundAmount": "95000.00"
+      }
+    },
+    {
+      "name": "replay same key → same requestId",
+      "ok": true,
+      "actual": {
+        "status": 200,
+        "json": {
+          "requestId": "4ce11561-fdd3-4558-bc73-990ef416d19b",
+          "orderId": "e2dfe9a1-938f-47ef-a8f5-36dadb0f25fa",
+          "storeOrderId": "e1c6094b-da69-4ebc-ac40-5a4b4eafbb1c",
+          "status": "REQUESTED",
+          "reason": "UAT trả hàng",
+          "requestedAt": "2026-11-21T05:59:22.146372Z",
+          "refundAmount": "95000.00"
+        },
+        "setCookie": []
+      }
+    },
+    {
+      "name": "other customer cannot read the return",
+      "ok": true,
+      "actual": 404
+    },
+    {
+      "name": "Seller B cannot approve Store A return",
+      "ok": true,
+      "actual": 404
+    },
+    {
+      "name": "Seller A approves",
+      "ok": true,
+      "actual": {
+        "status": 200,
+        "json": {
+          "requestId": "4ce11561-fdd3-4558-bc73-990ef416d19b",
+          "orderId": "e2dfe9a1-938f-47ef-a8f5-36dadb0f25fa",
+          "storeOrderId": "e1c6094b-da69-4ebc-ac40-5a4b4eafbb1c",
+          "status": "APPROVED",
+          "reason": "UAT trả hàng",
+          "requestedAt": "2026-11-21T05:59:22.146372Z",
+          "reviewedAt": "2026-11-21T05:59:22.614333Z",
+          "receivedAt": null,
+          "receiptReference": null,
+          "refundAmount": "95000.00"
+        },
+        "setCookie": []
+      }
+    },
+    {
+      "name": "Seller A receives",
+      "ok": true,
+      "actual": {
+        "status": 200,
+        "json": {
+          "requestId": "4ce11561-fdd3-4558-bc73-990ef416d19b",
+          "orderId": "e2dfe9a1-938f-47ef-a8f5-36dadb0f25fa",
+          "storeOrderId": "e1c6094b-da69-4ebc-ac40-5a4b4eafbb1c",
+          "status": "RECEIVED",
+          "reason": "UAT trả hàng",
+          "requestedAt": "2026-11-21T05:59:22.146372Z",
+          "reviewedAt": "2026-11-21T05:59:22.614333Z",
+          "receivedAt": "2026-11-21T05:59:22.642963Z",
+          "receiptReference": "PN-UAT-B055906",
+          "refundAmount": "95000.00"
+        },
+        "setCookie": []
+      }
+    },
+    {
+      "name": "no automatic restock (available unchanged 48; no restock operation after RECEIVED)",
+      "ok": true,
+      "actual": {
+        "available": [
+          "48",
+          "48"
+        ],
+        "ops": "RESERVE,CONSUME,RESERVE"
+      }
+    }
+  ],
+  "data": {
+    "request": {
+      "requestId": "4ce11561-fdd3-4558-bc73-990ef416d19b",
+      "orderId": "e2dfe9a1-938f-47ef-a8f5-36dadb0f25fa",
+      "storeOrderId": "e1c6094b-da69-4ebc-ac40-5a4b4eafbb1c",
+      "status": "REQUESTED",
+      "reason": "UAT trả hàng",
+      "requestedAt": "2026-11-21T05:59:22.146371848Z",
+      "refundAmount": "95000.00"
+    },
+    "replay": {
+      "requestId": "4ce11561-fdd3-4558-bc73-990ef416d19b",
+      "orderId": "e2dfe9a1-938f-47ef-a8f5-36dadb0f25fa",
+      "storeOrderId": "e1c6094b-da69-4ebc-ac40-5a4b4eafbb1c",
+      "status": "REQUESTED",
+      "reason": "UAT trả hàng",
+      "requestedAt": "2026-11-21T05:59:22.146372Z",
+      "refundAmount": "95000.00"
+    },
+    "stockBeforeAfterReceive": [
+      "48|1",
+      "48|0"
+    ],
+    "ret05": "RECEIVED does not restock (known limitation RET-05, BLOCKED). Recorded, not a pass condition.",
+    "originalCheck": {
+      "name": "no automatic restock claimed (stock unchanged)",
+      "ok": false,
+      "actual": [
+        "48|1",
+        "48|0"
+      ]
+    },
+    "correction": "Original check compared available|reserved. reserved 1→0 came from the async CONSUME of the delivery (inventory_operation CONSUME at 05:59:23Z), not from the return. Re-checked at 2026-11-21T06:02:01.446Z: available stays 48; operations since case start = RESERVE,CONSUME,RESERVE (no RELEASE/restock after RECEIVED; the second RESERVE is the UAT-13 order of another SKU)."
+  },
+  "finishedAt": "2026-11-21T05:59:26.060Z",
+  "result": "PASS"
+}

@@ -1,0 +1,2 @@
+# Evidence must keep exact bytes so checksums.sha256 verifies on every OS.
+* -text

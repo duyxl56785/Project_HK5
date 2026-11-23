@@ -1,0 +1,112 @@
+{
+  "id": "C2-10",
+  "title": "MD24 Finance report",
+  "run": "R045440",
+  "sha": "eaf3bf270255b80db4525f836bfae7e495dc8651",
+  "stack": "hk5-promo-test-uat2111",
+  "startedAt": "2026-11-21T04:54:43.070Z",
+  "checks": [
+    {
+      "name": "seller finance 200",
+      "ok": true,
+      "actual": 200
+    },
+    {
+      "name": "row voucherDiscount 10000 separate",
+      "ok": true,
+      "actual": {
+        "storeOrderId": "ab876ce0-20ce-4b99-a040-0734d46e0e06",
+        "orderId": "985c5c49-5ab1-4039-9855-dfdf88f83070",
+        "gross": 140000,
+        "platformFee": 7000,
+        "sellerNet": 133000,
+        "codStatus": "PENDING",
+        "deliveredAt": "2026-11-21T04:54:42.758463Z",
+        "codCollectedAt": null,
+        "settledAt": null,
+        "voucherDiscount": "10000"
+      }
+    },
+    {
+      "name": "row gross 140000, fee 7000, net 133000",
+      "ok": true,
+      "actual": {
+        "storeOrderId": "ab876ce0-20ce-4b99-a040-0734d46e0e06",
+        "orderId": "985c5c49-5ab1-4039-9855-dfdf88f83070",
+        "gross": 140000,
+        "platformFee": 7000,
+        "sellerNet": 133000,
+        "codStatus": "PENDING",
+        "deliveredAt": "2026-11-21T04:54:42.758463Z",
+        "codCollectedAt": null,
+        "settledAt": null,
+        "voucherDiscount": "10000"
+      }
+    },
+    {
+      "name": "totals expose voucherDiscount separately",
+      "ok": true,
+      "actual": {
+        "deliveredOrders": 1,
+        "gross": 140000,
+        "platformFee": 7000,
+        "sellerNet": 133000,
+        "codCollected": 0,
+        "codPending": 140000,
+        "settledNet": 0,
+        "payableNet": 0,
+        "voucherDiscount": "10000"
+      }
+    },
+    {
+      "name": "admin finance 200",
+      "ok": true,
+      "actual": 200
+    }
+  ],
+  "data": {
+    "sellerTotals": {
+      "deliveredOrders": 1,
+      "gross": 140000,
+      "platformFee": 7000,
+      "sellerNet": 133000,
+      "codCollected": 0,
+      "codPending": 140000,
+      "settledNet": 0,
+      "payableNet": 0,
+      "voucherDiscount": "10000"
+    },
+    "sellerRow": {
+      "storeOrderId": "ab876ce0-20ce-4b99-a040-0734d46e0e06",
+      "orderId": "985c5c49-5ab1-4039-9855-dfdf88f83070",
+      "gross": 140000,
+      "platformFee": 7000,
+      "sellerNet": 133000,
+      "codStatus": "PENDING",
+      "deliveredAt": "2026-11-21T04:54:42.758463Z",
+      "codCollectedAt": null,
+      "settledAt": null,
+      "voucherDiscount": "10000"
+    },
+    "admin": {
+      "status": 200,
+      "totals": {
+        "deliveredOrders": 1,
+        "gross": 140000,
+        "platformFee": 7000,
+        "sellerNet": 133000,
+        "codCollected": 0,
+        "codPending": 140000,
+        "settledNet": 0,
+        "payableNet": 0,
+        "voucherDiscount": "10000"
+      },
+      "keys": [
+        "totals",
+        "stores"
+      ]
+    }
+  },
+  "finishedAt": "2026-11-21T04:54:43.123Z",
+  "result": "PASS"
+}

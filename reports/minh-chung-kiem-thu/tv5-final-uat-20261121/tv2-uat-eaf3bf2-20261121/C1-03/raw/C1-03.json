@@ -1,0 +1,60 @@
+{
+  "id": "C1-03",
+  "title": "Draft / edit / state transitions",
+  "run": "B054914",
+  "sha": "eaf3bf270255b80db4525f836bfae7e495dc8651",
+  "stack": "hk5-promo-test-uat2111",
+  "startedAt": "2026-11-21T05:49:18.867Z",
+  "checks": [
+    {
+      "name": "edit DRAFT 200",
+      "ok": true,
+      "actual": 200
+    },
+    {
+      "name": "stale version → 409",
+      "ok": true,
+      "actual": 409
+    },
+    {
+      "name": "publish → ACTIVE (startsAt in past)",
+      "ok": true,
+      "actual": "ACTIVE"
+    },
+    {
+      "name": "edit after publish refused",
+      "ok": true,
+      "actual": 409
+    },
+    {
+      "name": "pause → PAUSED",
+      "ok": true,
+      "actual": "PAUSED"
+    },
+    {
+      "name": "resume → ACTIVE",
+      "ok": true,
+      "actual": "ACTIVE"
+    },
+    {
+      "name": "cancel → CANCELLED",
+      "ok": true,
+      "actual": "CANCELLED"
+    },
+    {
+      "name": "resume after cancel refused",
+      "ok": true,
+      "actual": 409
+    },
+    {
+      "name": "future start publish → SCHEDULED",
+      "ok": true,
+      "actual": "SCHEDULED"
+    }
+  ],
+  "data": {
+    "history": "No voucher history endpoint in the UI/API; transitions verified by API response states."
+  },
+  "finishedAt": "2026-11-21T05:49:19.196Z",
+  "result": "PASS"
+}

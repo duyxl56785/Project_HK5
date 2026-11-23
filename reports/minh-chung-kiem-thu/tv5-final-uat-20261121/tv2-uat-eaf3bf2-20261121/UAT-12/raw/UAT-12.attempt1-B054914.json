@@ -1,0 +1,82 @@
+{
+  "id": "UAT-12",
+  "title": "Return",
+  "run": "B054914",
+  "sha": "eaf3bf270255b80db4525f836bfae7e495dc8651",
+  "stack": "hk5-promo-test-uat2111",
+  "startedAt": "2026-11-21T05:49:16.786Z",
+  "checks": [
+    {
+      "name": "return before DELIVERED refused",
+      "ok": true,
+      "actual": 409
+    },
+    {
+      "name": "return REQUESTED, refundAmount 95000 = gross",
+      "ok": true,
+      "actual": {
+        "requestId": "3a809e49-0d41-4627-a45e-9d4b09323ca3",
+        "orderId": "cebe5673-41eb-473e-a367-803e08a2ab32",
+        "storeOrderId": "1ad48ff4-9651-46fa-8b7f-b31850d7d8fc",
+        "status": "REQUESTED",
+        "reason": "UAT trả hàng",
+        "requestedAt": "2026-11-21T05:49:17.367168621Z",
+        "refundAmount": "95000.00"
+      }
+    },
+    {
+      "name": "replay same key → same requestId",
+      "ok": true,
+      "actual": {
+        "status": 200,
+        "json": {
+          "requestId": "3a809e49-0d41-4627-a45e-9d4b09323ca3",
+          "orderId": "cebe5673-41eb-473e-a367-803e08a2ab32",
+          "storeOrderId": "1ad48ff4-9651-46fa-8b7f-b31850d7d8fc",
+          "status": "REQUESTED",
+          "reason": "UAT trả hàng",
+          "requestedAt": "2026-11-21T05:49:17.367169Z",
+          "refundAmount": "95000.00"
+        },
+        "setCookie": []
+      }
+    },
+    {
+      "name": "other customer cannot read the return",
+      "ok": true,
+      "actual": 404
+    },
+    {
+      "name": "Seller B cannot approve Store A return",
+      "ok": true,
+      "actual": 404
+    },
+    {
+      "name": "exception",
+      "ok": false,
+      "actual": "Command failed: docker exec hk5-promo-test-uat2111-postgres-1 psql -U hk5 -d inventory_db -At -F | -c select available_quantity, reserved_quantity from inventory_item where product_id='2e8edd4e-5ffa-44f8-8249-2700c11e40ba'\nERROR:  column \"product_id\" does not exist\nLINE 1: ...tity, reserved_quantity from inventory_item where product_id...\n                                                           "
+    }
+  ],
+  "data": {
+    "request": {
+      "requestId": "3a809e49-0d41-4627-a45e-9d4b09323ca3",
+      "orderId": "cebe5673-41eb-473e-a367-803e08a2ab32",
+      "storeOrderId": "1ad48ff4-9651-46fa-8b7f-b31850d7d8fc",
+      "status": "REQUESTED",
+      "reason": "UAT trả hàng",
+      "requestedAt": "2026-11-21T05:49:17.367168621Z",
+      "refundAmount": "95000.00"
+    },
+    "replay": {
+      "requestId": "3a809e49-0d41-4627-a45e-9d4b09323ca3",
+      "orderId": "cebe5673-41eb-473e-a367-803e08a2ab32",
+      "storeOrderId": "1ad48ff4-9651-46fa-8b7f-b31850d7d8fc",
+      "status": "REQUESTED",
+      "reason": "UAT trả hàng",
+      "requestedAt": "2026-11-21T05:49:17.367169Z",
+      "refundAmount": "95000.00"
+    }
+  },
+  "finishedAt": "2026-11-21T05:49:17.807Z",
+  "result": "FAIL"
+}

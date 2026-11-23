@@ -1,0 +1,70 @@
+{
+  "id": "UAT-04",
+  "title": "Checkout COD",
+  "run": "B055906",
+  "sha": "eaf3bf270255b80db4525f836bfae7e495dc8651",
+  "stack": "hk5-promo-test-uat2111",
+  "startedAt": "2026-11-21T05:59:07.063Z",
+  "checks": [
+    {
+      "name": "checkout 200 with orderId",
+      "ok": true,
+      "actual": {
+        "status": 200,
+        "json": {
+          "orderId": "7ce73eb1-1818-4605-ad44-b98b6930623e",
+          "status": "PLACED",
+          "total": 230000,
+          "sellerOrderCount": 2
+        },
+        "setCookie": []
+      }
+    },
+    {
+      "name": "COD total 230000 = 120000 + 110000",
+      "ok": true,
+      "actual": 230000
+    },
+    {
+      "name": "every SellerOrder codStatus PENDING (no capture)",
+      "ok": true,
+      "actual": [
+        "PENDING",
+        "PENDING"
+      ]
+    }
+  ],
+  "data": {
+    "request": {
+      "expectedItems": [
+        {
+          "productId": "59cd58b9-72dc-4ecc-a76f-6e2fb1ec8680",
+          "quantity": 1
+        },
+        {
+          "productId": "939fc1d3-f919-4e8a-b9a8-53171afa97bc",
+          "quantity": 1
+        }
+      ],
+      "expectedRevision": 1,
+      "shipping": {
+        "name": "Khách UAT",
+        "phone": "0900000000",
+        "address": "Địa chỉ thử nghiệm UAT"
+      },
+      "idempotencyKey": "redacted-uuid"
+    },
+    "response": {
+      "status": 200,
+      "json": {
+        "orderId": "7ce73eb1-1818-4605-ad44-b98b6930623e",
+        "status": "PLACED",
+        "total": 230000,
+        "sellerOrderCount": 2
+      },
+      "setCookie": []
+    }
+  },
+  "finishedAt": "2026-11-21T05:59:08.347Z",
+  "result": "PASS"
+}

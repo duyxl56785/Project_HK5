@@ -1,0 +1,84 @@
+{
+  "id": "UAT-05",
+  "title": "Parent Order / hai SellerOrders",
+  "run": "B055906",
+  "sha": "eaf3bf270255b80db4525f836bfae7e495dc8651",
+  "stack": "hk5-promo-test-uat2111",
+  "startedAt": "2026-11-21T05:59:08.348Z",
+  "checks": [
+    {
+      "name": "two SellerOrders with different ids",
+      "ok": true,
+      "actual": [
+        {
+          "id": "83d97504-48a6-4922-8821-4754ab291ce8",
+          "storeId": "5e234249-14c9-4c60-9bee-f40cc546329e",
+          "gross": 110000,
+          "status": "PLACED"
+        },
+        {
+          "id": "d240cfd8-652a-406f-a832-06f7746089f2",
+          "storeId": "841264c0-c4d5-478f-beb5-adfa3d61eb92",
+          "gross": 120000,
+          "status": "PLACED"
+        }
+      ]
+    },
+    {
+      "name": "children belong to Store A and B",
+      "ok": true,
+      "actual": [
+        {
+          "id": "83d97504-48a6-4922-8821-4754ab291ce8",
+          "storeId": "5e234249-14c9-4c60-9bee-f40cc546329e",
+          "gross": 110000,
+          "status": "PLACED"
+        },
+        {
+          "id": "d240cfd8-652a-406f-a832-06f7746089f2",
+          "storeId": "841264c0-c4d5-478f-beb5-adfa3d61eb92",
+          "gross": 120000,
+          "status": "PLACED"
+        }
+      ]
+    },
+    {
+      "name": "DB read-only: 2 rows, gross 110000 and 120000",
+      "ok": true,
+      "actual": "5e234249-14c9-4c60-9bee-f40cc546329e|6b0c2479-d326-428a-85ed-37d0f3d41b2f|110000\n841264c0-c4d5-478f-beb5-adfa3d61eb92|8777d0bf-3830-41f1-943e-02dfaedd020c|120000"
+    },
+    {
+      "name": "parent total = sum of child gross",
+      "ok": true,
+      "actual": 230000
+    },
+    {
+      "name": "Seller A sees only its child, Seller B only its child",
+      "ok": true,
+      "actual": {
+        "a": 9,
+        "b": 5
+      }
+    }
+  ],
+  "data": {
+    "parent": "7ce73eb1-1818-4605-ad44-b98b6930623e",
+    "children": [
+      {
+        "id": "83d97504-48a6-4922-8821-4754ab291ce8",
+        "storeId": "5e234249-14c9-4c60-9bee-f40cc546329e",
+        "gross": 110000,
+        "status": "PLACED"
+      },
+      {
+        "id": "d240cfd8-652a-406f-a832-06f7746089f2",
+        "storeId": "841264c0-c4d5-478f-beb5-adfa3d61eb92",
+        "gross": 120000,
+        "status": "PLACED"
+      }
+    ],
+    "db": "5e234249-14c9-4c60-9bee-f40cc546329e|6b0c2479-d326-428a-85ed-37d0f3d41b2f|110000\n841264c0-c4d5-478f-beb5-adfa3d61eb92|8777d0bf-3830-41f1-943e-02dfaedd020c|120000"
+  },
+  "finishedAt": "2026-11-21T05:59:08.641Z",
+  "result": "PASS"
+}

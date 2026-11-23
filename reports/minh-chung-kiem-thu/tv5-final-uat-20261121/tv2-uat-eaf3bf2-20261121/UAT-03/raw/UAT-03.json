@@ -1,0 +1,115 @@
+{
+  "id": "UAT-03",
+  "title": "Cart hai Store",
+  "run": "B054914",
+  "sha": "eaf3bf270255b80db4525f836bfae7e495dc8651",
+  "stack": "hk5-promo-test-uat2111",
+  "startedAt": "2026-11-21T05:49:15.743Z",
+  "checks": [
+    {
+      "name": "change quantity 2xx",
+      "ok": true,
+      "actual": 200
+    },
+    {
+      "name": "two Store groups",
+      "ok": true,
+      "actual": [
+        "841264c0-c4d5-478f-beb5-adfa3d61eb92",
+        "5e234249-14c9-4c60-9bee-f40cc546329e"
+      ]
+    },
+    {
+      "name": "A qty 2 × 150000 = 300000",
+      "ok": true,
+      "actual": {
+        "productId": "430ed701-6735-4904-b962-bd56188126c7",
+        "storeId": "841264c0-c4d5-478f-beb5-adfa3d61eb92",
+        "sellerId": "8777d0bf-3830-41f1-943e-02dfaedd020c",
+        "quantity": 2,
+        "unitPriceSnapshot": 150000
+      }
+    },
+    {
+      "name": "B qty 1 × 280000 = 280000",
+      "ok": true,
+      "actual": {
+        "productId": "f867207e-d62e-4ea0-855d-dc6fa761fe40",
+        "storeId": "5e234249-14c9-4c60-9bee-f40cc546329e",
+        "sellerId": "6b0c2479-d326-428a-85ed-37d0f3d41b2f",
+        "quantity": 1,
+        "unitPriceSnapshot": 280000
+      }
+    },
+    {
+      "name": "reload returns same Cart",
+      "ok": true,
+      "actual": {
+        "rev1": 2,
+        "rev2": 2
+      }
+    },
+    {
+      "name": "owner ids match Store owners",
+      "ok": true,
+      "actual": {
+        "a": "841264c0-c4d5-478f-beb5-adfa3d61eb92",
+        "b": "5e234249-14c9-4c60-9bee-f40cc546329e"
+      }
+    }
+  ],
+  "data": {
+    "cart": {
+      "customerId": "d5e04614-256d-4b66-a129-18b42d1d9b8f",
+      "revision": 2,
+      "claimed": false,
+      "items": [
+        {
+          "productId": "430ed701-6735-4904-b962-bd56188126c7",
+          "storeId": "841264c0-c4d5-478f-beb5-adfa3d61eb92",
+          "sellerId": "8777d0bf-3830-41f1-943e-02dfaedd020c",
+          "quantity": 2,
+          "unitPriceSnapshot": 150000
+        },
+        {
+          "productId": "f867207e-d62e-4ea0-855d-dc6fa761fe40",
+          "storeId": "5e234249-14c9-4c60-9bee-f40cc546329e",
+          "sellerId": "6b0c2479-d326-428a-85ed-37d0f3d41b2f",
+          "quantity": 1,
+          "unitPriceSnapshot": 280000
+        }
+      ],
+      "groups": [
+        {
+          "storeId": "841264c0-c4d5-478f-beb5-adfa3d61eb92",
+          "sellerId": "8777d0bf-3830-41f1-943e-02dfaedd020c",
+          "items": [
+            {
+              "productId": "430ed701-6735-4904-b962-bd56188126c7",
+              "storeId": "841264c0-c4d5-478f-beb5-adfa3d61eb92",
+              "sellerId": "8777d0bf-3830-41f1-943e-02dfaedd020c",
+              "quantity": 2,
+              "unitPriceSnapshot": 150000
+            }
+          ]
+        },
+        {
+          "storeId": "5e234249-14c9-4c60-9bee-f40cc546329e",
+          "sellerId": "6b0c2479-d326-428a-85ed-37d0f3d41b2f",
+          "items": [
+            {
+              "productId": "f867207e-d62e-4ea0-855d-dc6fa761fe40",
+              "storeId": "5e234249-14c9-4c60-9bee-f40cc546329e",
+              "sellerId": "6b0c2479-d326-428a-85ed-37d0f3d41b2f",
+              "quantity": 1,
+              "unitPriceSnapshot": 280000
+            }
+          ]
+        }
+      ]
+    },
+    "totalExpected": 580000
+  },
+  "finishedAt": "2026-11-21T05:49:16.077Z",
+  "result": "PASS"
+}

@@ -1,0 +1,56 @@
+{
+  "repository": "duyxl56785/Project_HK5",
+  "test_id": "UAT-04",
+  "run_id": "tv2-uat-eaf3bf2-20261121",
+  "frozen_sha": "eaf3bf270255b80db4525f836bfae7e495dc8651",
+  "started_at": "2026-11-21T12:59:07+07:00",
+  "finished_at": "2026-11-21T12:59:08+07:00",
+  "operator": "duyxl56785 (TV2)",
+  "actor": "seeded fake accounts (customer, seller1-3, admin bootstrap) and generated uat-*@hk5.local accounts; see raw receipt",
+  "environment": {
+    "os": "Microsoft Windows 11 Home Single Language 10.0.26300, Docker Desktop 29.9.1 (WSL2)",
+    "compose_project": "hk5-promo-test-uat2111",
+    "image_digests": [
+      "eclipse-temurin:21-jre@sha256:0b99b3376fbb50dbf9c0af8535fdd5b8eb0d3fdfc8b1e4967f383b6919f6901a (8 services, gateway, config, discovery; jars built from the frozen SHA)",
+      "hk5-promo-test-uat2111-frontend@sha256:f7258575a722172fc75b342d7e5e60a8c430db752337f516a9454ad31114170f",
+      "postgres:16@sha256:ca0bd484cb98bf4b24eb1010e73fb3fcbd6714d240fbc1a10eea5b7dbecb641d",
+      "apache/kafka:3.8.1@sha256:22c4bea38875408e8f9fe52aca8e3a6ee67f9aa0090db59af99a2f6647558db5",
+      "redis:7-alpine@sha256:8da19c7399dca900c6822a1cf30f9d2285585e2c4b457ff4095b0f4500054d3f"
+    ],
+    "db_identity": "container hk5-promo-test-uat2111-postgres-1, user hk5, one database per service (auth_db, user_db, seller_db, product_db, inventory_db, cart_db, order_db, notification_db)",
+    "ports": [
+      "127.0.0.1:5173 -> frontend:80",
+      "127.0.0.1:18080 -> api-gateway:8080"
+    ],
+    "flags": {
+      "HK5_VOUCHER_C2_ENABLED": "true (observed in .env.demo and GET /api/orders/voucher-capability enabled=true)",
+      "HK5_FINANCE_POLICY_APPROVED": "true (observed in .env.demo)",
+      "INVENTORY_ORDER_PAIR_ENABLED": "true (observed in .env.demo)"
+    }
+  },
+  "steps_performed": [
+    "checkout 200 with orderId: ok",
+    "COD total 230000 = 120000 + 110000: ok",
+    "every SellerOrder codStatus PENDING (no capture): ok"
+  ],
+  "expected_result": "As written for UAT-04 in tests/TV5_FINAL_UAT_EXECUTION_CHECKLIST_20261121.md",
+  "actual_result": "PASS (3/3 checks ok)",
+  "status": "PASS",
+  "artifacts": [
+    {
+      "path": "raw/UAT-04.attempt1-B054914.json",
+      "kind": "HTTP + read-only DB receipt (JSON)",
+      "size_bytes": 780,
+      "sha256": "42c42009978bc07cc26100333b01e0fb295478fc25d3ce74279972a2d45b804d",
+      "redacted_copy": "NOT_APPLICABLE (fake data only; no token, password or real PII)"
+    },
+    {
+      "path": "raw/UAT-04.json",
+      "kind": "HTTP + read-only DB receipt (JSON)",
+      "size_bytes": 1611,
+      "sha256": "d207d333642cc1503f7e7249d98bba165472262639b471a818013d4e4cf8417a",
+      "redacted_copy": "NOT_APPLICABLE (fake data only; no token, password or real PII)"
+    }
+  ],
+  "notes_or_blocker": "Earlier receipts kept unchanged and not counted (script error, or run before the campaign start): UAT-04.attempt1-B054914.json."
+}

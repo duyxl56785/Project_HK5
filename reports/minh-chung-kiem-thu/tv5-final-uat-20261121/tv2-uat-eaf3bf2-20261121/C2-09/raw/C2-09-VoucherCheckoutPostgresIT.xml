@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.projecthk5.orderservice.integration.VoucherCheckoutPostgresIT" tests="16" skipped="0" failures="0" errors="0" timestamp="2026-11-21T04:55:37" hostname="DESKTOP-1E75HAV" time="3.324">
+  <properties/>
+  <testcase name="inventoryDefinitiveRejectionAbortsTheRedeemAndReleasesTheCart()" classname="com.projecthk5.orderservice.integration.VoucherCheckoutPostgresIT" time="0.351"/>
+  <testcase name="immutableVoucherSnapshotKeepsGrossBoundToTheOriginalDiscount()" classname="com.projecthk5.orderservice.integration.VoucherCheckoutPostgresIT" time="0.151"/>
+  <testcase name="orderRollbackKeepsConfirmedStockAndScannerCommitsOnlyAfterPlacement()" classname="com.projecthk5.orderservice.integration.VoucherCheckoutPostgresIT" time="0.154"/>
+  <testcase name="nativeSqlCannotAttachAVoucherToAnOrderCreatedWithoutOne()" classname="com.projecthk5.orderservice.integration.VoucherCheckoutPostgresIT" time="0.082"/>
+  <testcase name="cancellationAndRejectionReleaseOnceAcrossLostReplyAndRecovery()" classname="com.projecthk5.orderservice.integration.VoucherCheckoutPostgresIT" time="0.195"/>
+  <testcase name="crashBoundaryBeforeRedeemAndLostReplyAfterRedeemReuseTheDurableIntent()" classname="com.projecthk5.orderservice.integration.VoucherCheckoutPostgresIT" time="0.09"/>
+  <testcase name="nativeSqlCannotChangeOrRemoveTheVoucherSnapshot()" classname="com.projecthk5.orderservice.integration.VoucherCheckoutPostgresIT" time="0.073"/>
+  <testcase name="oneVoucherDoesNotChangeTheOtherStoresGrossOrFinance()" classname="com.projecthk5.orderservice.integration.VoucherCheckoutPostgresIT" time="0.067"/>
+  <testcase name="abruptJvmHaltAfterC2DraftCommitLeavesTheSameSellerOrderForRecovery()" classname="com.projecthk5.orderservice.integration.VoucherCheckoutPostgresIT" time="1.521"/>
+  <testcase name="deliveredCodAndReturnUseTheDiscountedGrossAndKeepTheRedemption()" classname="com.projecthk5.orderservice.integration.VoucherCheckoutPostgresIT" time="0.157"/>
+  <testcase name="promotionMustBeAuthoritativeAndQuoteCannotBeRepricedSilently()" classname="com.projecthk5.orderservice.integration.VoucherCheckoutPostgresIT" time="0.026"/>
+  <testcase name="inventoryUnknownKeepsVoucherUntilMatchingPositiveReceipt()" classname="com.projecthk5.orderservice.integration.VoucherCheckoutPostgresIT" time="0.116"/>
+  <testcase name="sameKeyConcurrentlyCannotAcquireTwoLeasesOrRedeemTwice()" classname="com.projecthk5.orderservice.integration.VoucherCheckoutPostgresIT" time="0.087"/>
+  <testcase name="unchangedSnapshotsAndFulfillmentUpdatesRemainAllowed()" classname="com.projecthk5.orderservice.integration.VoucherCheckoutPostgresIT" time="0.105"/>
+  <testcase name="draftRollbackIsProvenBeforeReleasingTheCartAndNeverRedeems()" classname="com.projecthk5.orderservice.integration.VoucherCheckoutPostgresIT" time="0.025"/>
+  <testcase name="twoStoreReplayAndImmutableFinanceBasis()" classname="com.projecthk5.orderservice.integration.VoucherCheckoutPostgresIT" time="0.109"/>
+  <system-out><![CDATA[11:55:22.884 [Test worker] INFO org.testcontainers.images.PullPolicy -- Image pull policy will be performed by: DefaultPullPolicy()
+11:55:22.888 [Test worker] INFO org.testcontainers.utility.ImageNameSubstitutor -- Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+11:55:23.095 [Test worker] INFO org.testcontainers.dockerclient.DockerClientProviderStrategy -- Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+11:55:23.387 [Test worker] INFO org.testcontainers.dockerclient.DockerClientProviderStrategy -- Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
+11:55:23.387 [Test worker] INFO org.testcontainers.DockerClientFactory -- Docker host IP address is localhost
+11:55:23.407 [Test worker] INFO org.testcontainers.DockerClientFactory -- Connected to docker: 
+  Server Version: 29.9.1
+  API Version: 1.56
+  Operating System: Docker Desktop
+  Total Memory: 7753 MB
+11:55:23.659 [Test worker] INFO tc.testcontainers/ryuk:0.7.0 -- Creating container for image: testcontainers/ryuk:0.7.0
+11:55:23.923 [Test worker] INFO org.testcontainers.utility.RegistryAuthLocator -- Credential helper/store (docker-credential-desktop) does not have credentials for https://index.docker.io/v1/
+11:55:24.055 [Test worker] INFO tc.testcontainers/ryuk:0.7.0 -- Container testcontainers/ryuk:0.7.0 is starting: 0abac29ba79ab6eaed4f6468f19b45877701246493391f9ac45a6153ef412aa2
+11:55:24.385 [Test worker] INFO tc.testcontainers/ryuk:0.7.0 -- Container testcontainers/ryuk:0.7.0 started in PT0.7264359S
+11:55:24.395 [Test worker] INFO org.testcontainers.utility.RyukResourceReaper -- Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+11:55:24.395 [Test worker] INFO org.testcontainers.DockerClientFactory -- Checking the system...
+11:55:24.395 [Test worker] INFO org.testcontainers.DockerClientFactory -- ✔︎ Docker server version should be at least 1.6.0
+11:55:24.396 [Test worker] INFO tc.postgres:16.6-alpine -- Creating container for image: postgres:16.6-alpine
+11:55:24.490 [Test worker] INFO tc.postgres:16.6-alpine -- Container postgres:16.6-alpine is starting: 5bbe23a721f5d55795125afbe7a7b85dbbfe56bf04e93595dcfde13111a1d1d7
+11:55:26.841 [Test worker] INFO tc.postgres:16.6-alpine -- Container postgres:16.6-alpine started in PT2.4448997S
+11:55:26.842 [Test worker] INFO tc.postgres:16.6-alpine -- Container is started (JDBC URL: jdbc:postgresql://localhost:53327/test?loggerLevel=OFF)
+11:55:26.931 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.projecthk5.orderservice.integration.VoucherCheckoutPostgresIT]: VoucherCheckoutPostgresIT does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+11:55:27.094 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.projecthk5.orderservice.OrderServiceApplication for test class com.projecthk5.orderservice.integration.VoucherCheckoutPostgresIT
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.5)
+
+2026-11-21T11:55:28.581+07:00  INFO 13220 --- [order-service] [    Test worker] c.p.o.i.VoucherCheckoutPostgresIT        : Starting VoucherCheckoutPostgresIT using Java 21.0.12.1 with PID 13220 (started by ADMIN in D:\hk5-uat-2111\backend\order-service)
+2026-11-21T11:55:28.582+07:00  INFO 13220 --- [order-service] [    Test worker] c.p.o.i.VoucherCheckoutPostgresIT        : No active profile set, falling back to 1 default profile: "default"
+2026-11-21T11:55:29.603+07:00  INFO 13220 --- [order-service] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-11-21T11:55:29.760+07:00  INFO 13220 --- [order-service] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 155 ms. Found 4 JPA repository interfaces.
+2026-11-21T11:55:30.010+07:00  INFO 13220 --- [order-service] [    Test worker] o.s.cloud.context.scope.GenericScope     : BeanFactory id=978de200-92ad-3b66-8b88-617018c7e0c1
+2026-11-21T11:55:31.682+07:00  INFO 13220 --- [order-service] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-11-21T11:55:31.847+07:00  INFO 13220 --- [order-service] [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@6418075c
+2026-11-21T11:55:31.847+07:00  INFO 13220 --- [order-service] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-11-21T11:55:31.863+07:00  INFO 13220 --- [order-service] [    Test worker] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://localhost:53327/test (PostgreSQL 16.6)
+2026-11-21T11:55:32.007+07:00  INFO 13220 --- [order-service] [    Test worker] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table "public"."flyway_schema_history" does not exist yet
+2026-11-21T11:55:32.011+07:00  INFO 13220 --- [order-service] [    Test worker] o.f.core.internal.command.DbValidate     : Successfully validated 10 migrations (execution time 00:00.111s)
+2026-11-21T11:55:32.027+07:00  INFO 13220 --- [order-service] [    Test worker] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table "public"."flyway_schema_history" ...
+2026-11-21T11:55:32.063+07:00  INFO 13220 --- [order-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Current version of schema "public": << Empty Schema >>
+2026-11-21T11:55:32.076+07:00  INFO 13220 --- [order-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "1 - checkout baseline"
+2026-11-21T11:55:32.115+07:00  INFO 13220 --- [order-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "2 - inventory operation journal"
+2026-11-21T11:55:32.138+07:00  INFO 13220 --- [order-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "3 - fulfillment cod shipping outbox"
+2026-11-21T11:55:32.166+07:00  INFO 13220 --- [order-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "4 - write fence abort"
+2026-11-21T11:55:32.181+07:00  INFO 13220 --- [order-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "5 - checkout order drafts"
+2026-11-21T11:55:32.196+07:00  INFO 13220 --- [order-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "6 - customer return requests"
+2026-11-21T11:55:32.217+07:00  INFO 13220 --- [order-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "7 - return receipt evidence"
+2026-11-21T11:55:32.232+07:00  INFO 13220 --- [order-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "8 - return receipt reference nonblank"
+2026-11-21T11:55:32.247+07:00  INFO 13220 --- [order-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "9 - voucher checkout"
+2026-11-21T11:55:32.272+07:00  INFO 13220 --- [order-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "10 - seller order voucher snapshot immutable"
+2026-11-21T11:55:32.286+07:00  INFO 13220 --- [order-service] [    Test worker] o.f.core.internal.command.DbMigrate      : Successfully applied 10 migrations to schema "public", now at version v10 (execution time 00:00.102s)
+2026-11-21T11:55:32.382+07:00  INFO 13220 --- [order-service] [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-11-21T11:55:32.470+07:00  INFO 13220 --- [order-service] [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2026-11-21T11:55:32.504+07:00  INFO 13220 --- [order-service] [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-11-21T11:55:32.631+07:00  INFO 13220 --- [order-service] [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-11-21T11:55:33.503+07:00  INFO 13220 --- [order-service] [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-11-21T11:55:33.543+07:00  INFO 13220 --- [order-service] [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-11-21T11:55:33.835+07:00  INFO 13220 --- [order-service] [    Test worker] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-11-21T11:55:35.115+07:00  INFO 13220 --- [order-service] [    Test worker] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-11-21T11:55:36.856+07:00  INFO 13220 --- [order-service] [    Test worker] o.s.cloud.commons.util.InetUtils         : Cannot determine local hostname
+2026-11-21T11:55:36.871+07:00  INFO 13220 --- [order-service] [    Test worker] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestTemplate.
+2026-11-21T11:55:36.913+07:00  WARN 13220 --- [order-service] [    Test worker] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2026-11-21T11:55:36.966+07:00  INFO 13220 --- [order-service] [    Test worker] c.p.o.i.VoucherCheckoutPostgresIT        : Started VoucherCheckoutPostgresIT in 9.722 seconds (process running for 15.055)
+2026-11-21T11:55:37.620+07:00  WARN 13220 --- [order-service] [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Error: 0, SQLState: 23514
+2026-11-21T11:55:37.620+07:00 ERROR 13220 --- [order-service] [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : ERROR: new row for relation "outbox_events" violates check constraint "c2_fixture_cut"
+  Detail: Failing row contains (7717c53a-0198-4b64-a0fe-12bea48e4a0d, order.placed.v1, 9c220eb0-3019-47d1-950d-0acc1f15e423, {"orderId":"9c220eb0-3019-47d1-950d-0acc1f15e423","sellerOrderCo..., 2026-11-21 11:55:37.616339+07, null, 0, null, f).
+2026-11-21T11:55:37.630+07:00  WARN 13220 --- [order-service] [    Test worker] c.p.o.service.VoucherCheckoutSaga        : Voucher checkout 9c220eb0-3019-47d1-950d-0acc1f15e423 awaits reconciliation (DataIntegrityViolationException)
+2026-11-21T11:55:37.679+07:00  WARN 13220 --- [order-service] [    Test worker] c.p.o.service.VoucherCheckoutSaga        : Voucher checkout 9c220eb0-3019-47d1-950d-0acc1f15e423 awaits reconciliation (IllegalStateException)
+2026-11-21T11:55:37.688+07:00  WARN 13220 --- [order-service] [    Test worker] c.p.o.service.VoucherCheckoutSaga        : Voucher checkout 9c220eb0-3019-47d1-950d-0acc1f15e423 awaits reconciliation (IllegalStateException)
+2026-11-21T11:55:37.972+07:00  WARN 13220 --- [order-service] [    Test worker] c.p.o.service.VoucherCheckoutSaga        : Voucher checkout 075b7677-f1e2-4753-8634-e5f47730125d awaits reconciliation (IllegalStateException)
+2026-11-21T11:55:38.020+07:00  WARN 13220 --- [order-service] [    Test worker] c.p.o.service.VoucherCheckoutSaga        : Voucher checkout 48748221-8ffa-4414-b02a-d066468e7f42 awaits reconciliation (IllegalStateException)
+2026-11-21T11:55:38.031+07:00  WARN 13220 --- [order-service] [    Test worker] c.p.o.service.VoucherCheckoutSaga        : Voucher checkout 48748221-8ffa-4414-b02a-d066468e7f42 awaits reconciliation (IllegalStateException)
+2026-11-21T11:55:39.967+07:00  WARN 13220 --- [order-service] [    Test worker] c.p.o.service.VoucherCheckoutSaga        : Voucher checkout 59f524cd-e20e-4784-94ae-df026f1a7a2d awaits reconciliation (IllegalStateException)
+2026-11-21T11:55:39.979+07:00  WARN 13220 --- [order-service] [    Test worker] c.p.o.service.VoucherCheckoutSaga        : Voucher checkout 59f524cd-e20e-4784-94ae-df026f1a7a2d awaits reconciliation (IllegalStateException)
+]]></system-out>
+  <system-err><![CDATA[WARNING: A Java agent has been loaded dynamically (C:\Users\ADMIN\.gradle\caches\modules-2\files-2.1\net.bytebuddy\byte-buddy-agent\1.14.19\154da3a65b4f4a909d3e5bdec55d1b2b4cbb6ce1\byte-buddy-agent-1.14.19.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+]]></system-err>
+</testsuite>

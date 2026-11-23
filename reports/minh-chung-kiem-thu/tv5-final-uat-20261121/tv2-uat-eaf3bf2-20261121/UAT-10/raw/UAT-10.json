@@ -1,0 +1,98 @@
+{
+  "id": "UAT-10",
+  "title": "Inventory lifecycle",
+  "run": "B055906",
+  "sha": "eaf3bf270255b80db4525f836bfae7e495dc8651",
+  "stack": "hk5-promo-test-uat2111",
+  "startedAt": "2026-11-21T05:59:15.559Z",
+  "checks": [
+    {
+      "name": "Store B reject at PLACED 2xx",
+      "ok": true,
+      "actual": {
+        "status": 200,
+        "json": {
+          "id": "83d97504-48a6-4922-8821-4754ab291ce8",
+          "orderId": "7ce73eb1-1818-4605-ad44-b98b6930623e",
+          "storeId": "5e234249-14c9-4c60-9bee-f40cc546329e",
+          "storeName": "Nhà Xinh",
+          "status": "REJECTED",
+          "codStatus": "VOID",
+          "statusReason": "UAT từ chối UAT-10",
+          "gross": 110000,
+          "platformFee": 5500,
+          "sellerNet": 104500,
+          "createdAt": "2026-11-21T05:59:08.224538Z",
+          "updatedAt": "2026-11-21T05:59:16.359788631Z",
+          "deliveredAt": null,
+          "codCollectedAt": null,
+          "settledAt": null,
+          "version": "0",
+          "shipping": {
+            "name": "Khách UAT",
+            "phone": "0900000000",
+            "address": "Địa chỉ thử nghiệm UAT"
+          },
+          "items": [
+            {
+              "productId": "59cd58b9-72dc-4ecc-a76f-6e2fb1ec8680",
+              "name": "Cà phê rang xay",
+              "sku": "TP-001",
+              "quantity": 1,
+              "unitPrice": 110000,
+              "lineTotal": 110000
+            }
+          ],
+          "merchandiseAmount": "110000.00",
+          "voucherDiscount": "0",
+          "voucherCode": null,
+          "grossExact": "110000.00"
+        },
+        "setCookie": []
+      }
+    },
+    {
+      "name": "A delivered: reserved −1, available unchanged (CONSUME)",
+      "ok": true,
+      "actual": [
+        "49|1",
+        "49|0"
+      ]
+    },
+    {
+      "name": "B rejected: reserved −1, available +1 (RELEASE)",
+      "ok": true,
+      "actual": [
+        "49|1",
+        "50|0"
+      ]
+    },
+    {
+      "name": "repeat reject/deliver refused, no extra operation",
+      "ok": true,
+      "actual": {
+        "replay": 409,
+        "again": 409,
+        "ops": "CONSUME|1\nRELEASE|1"
+      }
+    },
+    {
+      "name": "ops since lifecycle: one CONSUME, one RELEASE",
+      "ok": true,
+      "actual": "CONSUME|1\nRELEASE|1"
+    }
+  ],
+  "data": {
+    "tote": [
+      "49|1",
+      "49|0"
+    ],
+    "cafe": [
+      "49|1",
+      "50|0"
+    ],
+    "ops": "CONSUME|1\nRELEASE|1"
+  },
+  "finishedAt": "2026-11-21T05:59:21.576Z",
+  "result": "PASS"
+}

@@ -1,0 +1,48 @@
+{
+  "id": "UAT-08",
+  "title": "Shipping mismatch",
+  "run": "B055906",
+  "sha": "eaf3bf270255b80db4525f836bfae7e495dc8651",
+  "stack": "hk5-promo-test-uat2111",
+  "startedAt": "2026-11-21T05:59:14.282Z",
+  "checks": [
+    {
+      "name": "same key, different shipping → 409",
+      "ok": true,
+      "actual": {
+        "status": 409,
+        "json": {
+          "code": "REQUEST_REJECTED",
+          "message": "IDEMPOTENCY_PAYLOAD_MISMATCH"
+        },
+        "setCookie": []
+      }
+    },
+    {
+      "name": "no new Order",
+      "ok": true,
+      "actual": "11"
+    },
+    {
+      "name": "Order shipping unchanged",
+      "ok": true,
+      "actual": {
+        "name": "Khách UAT",
+        "phone": "0900000000",
+        "address": "Địa chỉ thử nghiệm UAT"
+      }
+    }
+  ],
+  "data": {
+    "mismatch": {
+      "status": 409,
+      "json": {
+        "code": "REQUEST_REJECTED",
+        "message": "IDEMPOTENCY_PAYLOAD_MISMATCH"
+      },
+      "setCookie": []
+    }
+  },
+  "finishedAt": "2026-11-21T05:59:14.728Z",
+  "result": "PASS"
+}

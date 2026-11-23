@@ -1,0 +1,92 @@
+{
+  "id": "UAT-01",
+  "title": "Auth / RBAC",
+  "run": "B054914",
+  "sha": "eaf3bf270255b80db4525f836bfae7e495dc8651",
+  "stack": "hk5-promo-test-uat2111",
+  "startedAt": "2026-11-21T05:49:14.731Z",
+  "checks": [
+    {
+      "name": "anonymous /api/orders?size=5 → 401",
+      "ok": true,
+      "actual": 401
+    },
+    {
+      "name": "anonymous /api/cart → 401",
+      "ok": true,
+      "actual": 401
+    },
+    {
+      "name": "anonymous /api/seller/orders → 401",
+      "ok": true,
+      "actual": 401
+    },
+    {
+      "name": "anonymous /api/admin/finance → 401",
+      "ok": true,
+      "actual": 401
+    },
+    {
+      "name": "customer /api/seller/orders → 403",
+      "ok": true,
+      "actual": 403
+    },
+    {
+      "name": "customer /api/admin/finance → 403",
+      "ok": true,
+      "actual": 403
+    },
+    {
+      "name": "customer /api/admin/sellers → 403",
+      "ok": true,
+      "actual": 403
+    },
+    {
+      "name": "seller /api/admin/finance → 403",
+      "ok": true,
+      "actual": 403
+    },
+    {
+      "name": "seller /api/admin/store-orders → 403",
+      "ok": true,
+      "actual": 403
+    },
+    {
+      "name": "customer own orders → 200",
+      "ok": true,
+      "actual": 200
+    },
+    {
+      "name": "tampered token → 401",
+      "ok": true,
+      "actual": 401
+    },
+    {
+      "name": "refresh with cookie → 200",
+      "ok": true,
+      "actual": 200
+    },
+    {
+      "name": "logout → 2xx",
+      "ok": true,
+      "actual": 204
+    },
+    {
+      "name": "refresh after logout → 401",
+      "ok": true,
+      "actual": 401
+    },
+    {
+      "name": "old rotated refresh cookie → 401",
+      "ok": true,
+      "actual": 401
+    }
+  ],
+  "data": {
+    "refreshCookieNames": [
+      "refresh_token"
+    ]
+  },
+  "finishedAt": "2026-11-21T05:49:15.237Z",
+  "result": "PASS"
+}

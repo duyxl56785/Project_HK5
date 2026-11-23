@@ -1,0 +1,48 @@
+{
+  "id": "C2-01",
+  "title": "Flag / capability",
+  "run": "R045402",
+  "sha": "eaf3bf270255b80db4525f836bfae7e495dc8651",
+  "stack": "hk5-promo-test-uat2111",
+  "startedAt": "2026-11-21T04:54:02.773Z",
+  "checks": [
+    {
+      "name": ".env.demo HK5_VOUCHER_C2_ENABLED=true",
+      "ok": true,
+      "actual": "true"
+    },
+    {
+      "name": "anonymous capability 401",
+      "ok": true,
+      "actual": 401
+    },
+    {
+      "name": "customer capability enabled=true",
+      "ok": true,
+      "actual": {
+        "status": 200,
+        "json": {
+          "enabled": true
+        }
+      }
+    },
+    {
+      "name": "C1 seller voucher list still 200",
+      "ok": true,
+      "actual": 200
+    }
+  ],
+  "data": {
+    "envFlag": "true",
+    "anonymous": 401,
+    "customer": {
+      "status": 200,
+      "json": {
+        "enabled": true
+      }
+    },
+    "offBranch": "Not runnable on this ON stack without changing the flag; OFF fail-closed is covered by CI 44746995567 job \"E2E C2 OFF\" on eaf3bf2."
+  },
+  "finishedAt": "2026-11-21T04:54:03.036Z",
+  "result": "PASS"
+}

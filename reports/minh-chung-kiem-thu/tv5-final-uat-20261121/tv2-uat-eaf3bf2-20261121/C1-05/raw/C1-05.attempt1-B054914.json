@@ -1,0 +1,74 @@
+{
+  "id": "C1-05",
+  "title": "Limit request / Admin",
+  "run": "B054914",
+  "sha": "eaf3bf270255b80db4525f836bfae7e495dc8651",
+  "stack": "hk5-promo-test-uat2111",
+  "startedAt": "2026-11-21T05:49:19.304Z",
+  "checks": [
+    {
+      "name": "request created PENDING",
+      "ok": false,
+      "actual": {
+        "status": 409,
+        "json": {
+          "message": "A request is already pending",
+          "code": "VOUCHER_LIMIT_REQUEST_PENDING_EXISTS"
+        },
+        "setCookie": []
+      }
+    },
+    {
+      "name": "PENDING does not raise limit",
+      "ok": true,
+      "actual": 20
+    },
+    {
+      "name": "replay same key/body → same request",
+      "ok": false
+    },
+    {
+      "name": "same key, different body → 409",
+      "ok": true,
+      "actual": 409
+    },
+    {
+      "name": "seller calling Admin approve → 403",
+      "ok": true,
+      "actual": 403
+    },
+    {
+      "name": "admin approves",
+      "ok": false,
+      "actual": {
+        "status": 400,
+        "json": {
+          "message": "Malformed request",
+          "code": "VALIDATION_FAILED"
+        },
+        "setCookie": []
+      }
+    },
+    {
+      "name": "limit becomes 25 once the grant window starts",
+      "ok": false,
+      "actual": {
+        "used": 20,
+        "limit": 20,
+        "defaultLimit": 20,
+        "grant": null
+      }
+    }
+  ],
+  "data": {
+    "limitAfter": {
+      "used": 20,
+      "limit": 20,
+      "defaultLimit": 20,
+      "grant": null
+    },
+    "selfModeration": "Admin has no Store in this system, so \"Admin approves own Store\" is not applicable."
+  },
+  "finishedAt": "2026-11-21T05:54:19.693Z",
+  "result": "FAIL"
+}

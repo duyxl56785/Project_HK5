@@ -1,0 +1,54 @@
+{
+  "id": "PROMO-04",
+  "title": "Voucher conflict / MD17",
+  "run": "Q055816",
+  "sha": "eaf3bf270255b80db4525f836bfae7e495dc8651",
+  "stack": "hk5-promo-test-uat2111",
+  "startedAt": "2026-11-21T05:58:17.373Z",
+  "checks": [
+    {
+      "name": "Store A voucher ACTIVE",
+      "ok": true,
+      "actual": "ACTIVE"
+    },
+    {
+      "name": "C2 ON at run time",
+      "ok": true,
+      "actual": {
+        "enabled": true
+      }
+    },
+    {
+      "name": "quote → 409 VOUCHER_PROMOTION_CONFLICT",
+      "ok": true,
+      "actual": {
+        "status": 409,
+        "json": {
+          "code": "VOUCHER_PROMOTION_CONFLICT",
+          "message": "A product in this Store already uses a Promotion"
+        }
+      }
+    },
+    {
+      "name": "no Order created",
+      "ok": true,
+      "actual": "10"
+    },
+    {
+      "name": "no redemption (usage not taken)",
+      "ok": true,
+      "actual": "0"
+    }
+  ],
+  "data": {
+    "quote": {
+      "status": 409,
+      "json": {
+        "code": "VOUCHER_PROMOTION_CONFLICT",
+        "message": "A product in this Store already uses a Promotion"
+      }
+    }
+  },
+  "finishedAt": "2026-11-21T05:58:18.337Z",
+  "result": "PASS"
+}

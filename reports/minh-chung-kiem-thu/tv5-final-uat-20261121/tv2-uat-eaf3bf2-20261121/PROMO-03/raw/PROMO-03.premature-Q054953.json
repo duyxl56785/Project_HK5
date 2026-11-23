@@ -1,0 +1,69 @@
+{
+  "id": "PROMO-03",
+  "title": "Clearance",
+  "run": "Q054953",
+  "sha": "eaf3bf270255b80db4525f836bfae7e495dc8651",
+  "stack": "hk5-promo-test-uat2111",
+  "startedAt": "2026-11-21T05:49:53.366Z",
+  "checks": [
+    {
+      "name": "Catalog effective 200000, base 260000, kind SELLER_CLEARANCE",
+      "ok": false,
+      "actual": {
+        "unitPrice": "260000",
+        "baseUnitPrice": "260000",
+        "promotion": null,
+        "at": "2026-11-21T05:49:53.417Z",
+        "startsAt": "2026-11-21T05:58:01.531Z"
+      }
+    },
+    {
+      "name": "Catalog list shows the sale price too",
+      "ok": false,
+      "actual": {
+        "unitPrice": "260000"
+      }
+    },
+    {
+      "name": "Cart unit price 200000",
+      "ok": false,
+      "actual": {
+        "productId": "b36842a7-c6b8-4d02-8d5c-1ed077bf74e5",
+        "storeId": "841264c0-c4d5-478f-beb5-adfa3d61eb92",
+        "sellerId": "8777d0bf-3830-41f1-943e-02dfaedd020c",
+        "quantity": 1,
+        "unitPriceSnapshot": 260000
+      }
+    },
+    {
+      "name": "COD checkout without voucher 200",
+      "ok": true,
+      "actual": {
+        "status": 200,
+        "json": {
+          "orderId": "cd6e65e7-b7f3-47af-9cc3-5b905a080d0a",
+          "status": "PLACED",
+          "total": 260000,
+          "sellerOrderCount": 1
+        }
+      }
+    },
+    {
+      "name": "Order snapshot: unit 200000, qty 1, gross 200000, fee 10000, no voucher",
+      "ok": false,
+      "actual": "260000|1|260000|13000|"
+    }
+  ],
+  "data": {
+    "catalog": {
+      "unitPrice": "260000",
+      "baseUnitPrice": "260000",
+      "promotion": null,
+      "at": "2026-11-21T05:49:53.417Z",
+      "startsAt": "2026-11-21T05:58:01.531Z"
+    },
+    "orderSnapshot": "260000|1|260000|13000|"
+  },
+  "finishedAt": "2026-11-21T05:49:54.130Z",
+  "result": "FAIL"
+}

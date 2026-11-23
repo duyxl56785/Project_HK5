@@ -1,0 +1,204 @@
+{
+  "id": "C2-05",
+  "title": "MD16 two-Store money oracle",
+  "run": "R045402",
+  "sha": "eaf3bf270255b80db4525f836bfae7e495dc8651",
+  "stack": "hk5-promo-test-uat2111",
+  "startedAt": "2026-11-21T04:54:06.592Z",
+  "checks": [
+    {
+      "name": "quote total 415000",
+      "ok": true,
+      "actual": "415000"
+    },
+    {
+      "name": "checkout 200 with orderId",
+      "ok": true,
+      "actual": {
+        "status": 200,
+        "json": {
+          "orderId": "c1876573-c383-46cc-afbc-43ca95b5a5ef",
+          "status": "PLACED",
+          "total": 415000,
+          "sellerOrderCount": 2,
+          "prices": [
+            {
+              "storeId": "841264c0-c4d5-478f-beb5-adfa3d61eb92",
+              "voucherCode": "MNAR045402",
+              "quoteFingerprint": null,
+              "merchandiseAmount": "150000",
+              "discountAmount": "10000",
+              "gross": "140000.00",
+              "platformFee": "7000.00"
+            },
+            {
+              "storeId": "5e234249-14c9-4c60-9bee-f40cc546329e",
+              "voucherCode": "MNBR045402",
+              "quoteFingerprint": null,
+              "merchandiseAmount": "280000",
+              "discountAmount": "5000",
+              "gross": "275000.00",
+              "platformFee": "13750.00"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "parent total 415000",
+      "ok": true,
+      "actual": 415000
+    },
+    {
+      "name": "exception",
+      "ok": false,
+      "actual": "Cannot convert 140000.00 to a BigInt"
+    }
+  ],
+  "data": {
+    "quote": {
+      "revision": 1,
+      "total": "415000",
+      "stores": [
+        {
+          "storeId": "841264c0-c4d5-478f-beb5-adfa3d61eb92",
+          "voucherCode": "MNAR045402",
+          "quoteFingerprint": "72617c65d34e3faf2f0978c7a4d229a2b6704a8af274290c53b30cbac6d73375",
+          "merchandiseAmount": "150000",
+          "discountAmount": "10000",
+          "gross": "140000",
+          "platformFee": "7000"
+        },
+        {
+          "storeId": "5e234249-14c9-4c60-9bee-f40cc546329e",
+          "voucherCode": "MNBR045402",
+          "quoteFingerprint": "71941ecaa028f3c3ee0464eadfa222e2c918234a5ce0359ed8504cff64092a2a",
+          "merchandiseAmount": "280000",
+          "discountAmount": "5000",
+          "gross": "275000",
+          "platformFee": "13750"
+        }
+      ]
+    },
+    "checkout": {
+      "status": 200,
+      "json": {
+        "orderId": "c1876573-c383-46cc-afbc-43ca95b5a5ef",
+        "status": "PLACED",
+        "total": 415000,
+        "sellerOrderCount": 2,
+        "prices": [
+          {
+            "storeId": "841264c0-c4d5-478f-beb5-adfa3d61eb92",
+            "voucherCode": "MNAR045402",
+            "quoteFingerprint": null,
+            "merchandiseAmount": "150000",
+            "discountAmount": "10000",
+            "gross": "140000.00",
+            "platformFee": "7000.00"
+          },
+          {
+            "storeId": "5e234249-14c9-4c60-9bee-f40cc546329e",
+            "voucherCode": "MNBR045402",
+            "quoteFingerprint": null,
+            "merchandiseAmount": "280000",
+            "discountAmount": "5000",
+            "gross": "275000.00",
+            "platformFee": "13750.00"
+          }
+        ]
+      }
+    },
+    "order": {
+      "id": "c1876573-c383-46cc-afbc-43ca95b5a5ef",
+      "status": "PLACED",
+      "overallStatus": "PROCESSING",
+      "total": 415000,
+      "paymentMethod": "COD",
+      "createdAt": "2026-11-21T04:54:07.451545Z",
+      "shipping": {
+        "name": "Khách UAT",
+        "phone": "0900000000",
+        "address": "Địa chỉ thử nghiệm UAT"
+      },
+      "storeOrders": [
+        {
+          "id": "58ee5933-7d93-4a73-8152-047f75375823",
+          "orderId": "c1876573-c383-46cc-afbc-43ca95b5a5ef",
+          "storeId": "841264c0-c4d5-478f-beb5-adfa3d61eb92",
+          "storeName": "Tiệm Áo Sài Gòn",
+          "status": "PLACED",
+          "codStatus": "PENDING",
+          "statusReason": null,
+          "gross": 140000,
+          "platformFee": 7000,
+          "sellerNet": 133000,
+          "createdAt": "2026-11-21T04:54:07.451545Z",
+          "updatedAt": "2026-11-21T04:54:07.489085Z",
+          "deliveredAt": null,
+          "codCollectedAt": null,
+          "settledAt": null,
+          "version": "0",
+          "shipping": {
+            "name": "Khách UAT",
+            "phone": "0900000000",
+            "address": "Địa chỉ thử nghiệm UAT"
+          },
+          "items": [
+            {
+              "productId": "430ed701-6735-4904-b962-bd56188126c7",
+              "name": "Áo thun cotton",
+              "sku": "AO-001",
+              "quantity": 1,
+              "unitPrice": 150000,
+              "lineTotal": 150000
+            }
+          ],
+          "merchandiseAmount": "150000",
+          "voucherDiscount": "10000",
+          "voucherCode": "MNAR045402",
+          "grossExact": "140000.00"
+        },
+        {
+          "id": "6a524184-fdae-4c74-864e-9938a5bc3825",
+          "orderId": "c1876573-c383-46cc-afbc-43ca95b5a5ef",
+          "storeId": "5e234249-14c9-4c60-9bee-f40cc546329e",
+          "storeName": "Nhà Xinh",
+          "status": "PLACED",
+          "codStatus": "PENDING",
+          "statusReason": null,
+          "gross": 275000,
+          "platformFee": 13750,
+          "sellerNet": 261250,
+          "createdAt": "2026-11-21T04:54:07.451545Z",
+          "updatedAt": "2026-11-21T04:54:07.494739Z",
+          "deliveredAt": null,
+          "codCollectedAt": null,
+          "settledAt": null,
+          "version": "0",
+          "shipping": {
+            "name": "Khách UAT",
+            "phone": "0900000000",
+            "address": "Địa chỉ thử nghiệm UAT"
+          },
+          "items": [
+            {
+              "productId": "f867207e-d62e-4ea0-855d-dc6fa761fe40",
+              "name": "Đèn bàn gỗ",
+              "sku": "DEN-001",
+              "quantity": 1,
+              "unitPrice": 280000,
+              "lineTotal": 280000
+            }
+          ],
+          "merchandiseAmount": "280000",
+          "voucherDiscount": "5000",
+          "voucherCode": "MNBR045402",
+          "grossExact": "275000.00"
+        }
+      ]
+    }
+  },
+  "finishedAt": "2026-11-21T04:54:08.658Z",
+  "result": "FAIL"
+}

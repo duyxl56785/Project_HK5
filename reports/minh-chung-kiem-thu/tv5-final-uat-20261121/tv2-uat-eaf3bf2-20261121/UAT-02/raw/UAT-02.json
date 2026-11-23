@@ -1,0 +1,108 @@
+{
+  "id": "UAT-02",
+  "title": "Catalog / Product / Store facts",
+  "run": "B054914",
+  "sha": "eaf3bf270255b80db4525f836bfae7e495dc8651",
+  "stack": "hk5-promo-test-uat2111",
+  "startedAt": "2026-11-21T05:49:15.238Z",
+  "checks": [
+    {
+      "name": "A: Tiệm Áo, 150000, store id = seller1 store",
+      "ok": true,
+      "actual": {
+        "id": "430ed701-6735-4904-b962-bd56188126c7",
+        "sku": "AO-001",
+        "unitPrice": "150000",
+        "store": {
+          "id": "841264c0-c4d5-478f-beb5-adfa3d61eb92",
+          "name": "Tiệm Áo Sài Gòn",
+          "slug": "tiem-ao-sai-gon"
+        },
+        "available": 46
+      }
+    },
+    {
+      "name": "B: Nhà Xinh, 280000, store id = seller2 store",
+      "ok": true,
+      "actual": {
+        "id": "f867207e-d62e-4ea0-855d-dc6fa761fe40",
+        "sku": "DEN-001",
+        "unitPrice": "280000",
+        "store": {
+          "id": "5e234249-14c9-4c60-9bee-f40cc546329e",
+          "name": "Nhà Xinh",
+          "slug": "nha-xinh"
+        },
+        "available": 47
+      }
+    },
+    {
+      "name": "seller view SKU/price/status match Catalog",
+      "ok": true,
+      "actual": {
+        "sku": "AO-001",
+        "status": "ACTIVE"
+      }
+    },
+    {
+      "name": "seller1 reading Store B product → 403/404",
+      "ok": true,
+      "actual": 404
+    },
+    {
+      "name": "unknown product → 404",
+      "ok": true,
+      "actual": 404
+    },
+    {
+      "name": "unknown product into Cart refused",
+      "ok": true,
+      "actual": {
+        "status": 404,
+        "json": {
+          "message": "Product not found",
+          "code": "REQUEST_REJECTED"
+        },
+        "setCookie": []
+      }
+    },
+    {
+      "name": "Checkout with items not in Cart refused (fail closed)",
+      "ok": true,
+      "actual": {
+        "status": 409,
+        "json": {
+          "code": "BUSINESS_CONFLICT",
+          "message": "Cart and expectedItems differ"
+        },
+        "setCookie": []
+      }
+    }
+  ],
+  "data": {
+    "a": {
+      "id": "430ed701-6735-4904-b962-bd56188126c7",
+      "sku": "AO-001",
+      "unitPrice": "150000",
+      "store": {
+        "id": "841264c0-c4d5-478f-beb5-adfa3d61eb92",
+        "name": "Tiệm Áo Sài Gòn",
+        "slug": "tiem-ao-sai-gon"
+      },
+      "available": 46
+    },
+    "b": {
+      "id": "f867207e-d62e-4ea0-855d-dc6fa761fe40",
+      "sku": "DEN-001",
+      "unitPrice": "280000",
+      "store": {
+        "id": "5e234249-14c9-4c60-9bee-f40cc546329e",
+        "name": "Nhà Xinh",
+        "slug": "nha-xinh"
+      },
+      "available": 47
+    }
+  },
+  "finishedAt": "2026-11-21T05:49:15.742Z",
+  "result": "PASS"
+}

@@ -1,0 +1,89 @@
+{
+  "id": "PROMO-02",
+  "title": "Flash Sale / Super Sale",
+  "run": "Q061934",
+  "sha": "eaf3bf270255b80db4525f836bfae7e495dc8651",
+  "stack": "hk5-promo-test-uat2111",
+  "startedAt": "2026-11-22T06:19:36.027Z",
+  "checks": [
+    {
+      "name": "FLASH_SALE: outside window, Catalog base 320000, no promotion",
+      "ok": true,
+      "actual": {
+        "at": "2026-11-22T06:19:36.027Z",
+        "unitPrice": "320000",
+        "baseUnitPrice": "320000",
+        "promotion": null,
+        "cartUnit": 320000
+      }
+    },
+    {
+      "name": "FLASH_SALE: outside window, Cart base price",
+      "ok": true,
+      "actual": {
+        "productId": "4395d502-5cc3-4c46-ae09-0297c94e5983",
+        "storeId": "841264c0-c4d5-478f-beb5-adfa3d61eb92",
+        "sellerId": "8777d0bf-3830-41f1-943e-02dfaedd020c",
+        "quantity": 1,
+        "unitPriceSnapshot": 320000
+      }
+    },
+    {
+      "name": "SUPER_SALE: Catalog effective 199000, base 240000",
+      "ok": true,
+      "actual": {
+        "at": "2026-11-22T06:19:36.027Z",
+        "unitPrice": "199000",
+        "baseUnitPrice": "240000",
+        "promotion": {
+          "campaignId": "7e8b815e-0748-4e44-8cd1-de58dbbf761f",
+          "kind": "SUPER_SALE",
+          "endsAt": "2026-11-22T17:00:00Z"
+        },
+        "cartUnit": 199000
+      }
+    },
+    {
+      "name": "SUPER_SALE: promotion kind is SUPER_SALE",
+      "ok": true,
+      "actual": {
+        "campaignId": "7e8b815e-0748-4e44-8cd1-de58dbbf761f",
+        "kind": "SUPER_SALE",
+        "endsAt": "2026-11-22T17:00:00Z"
+      }
+    },
+    {
+      "name": "SUPER_SALE: Cart uses effective price",
+      "ok": true,
+      "actual": {
+        "productId": "d785509f-f8d8-4322-866a-755d7e20e3b9",
+        "storeId": "5e234249-14c9-4c60-9bee-f40cc546329e",
+        "sellerId": "6b0c2479-d326-428a-85ed-37d0f3d41b2f",
+        "quantity": 1,
+        "unitPriceSnapshot": 199000
+      }
+    }
+  ],
+  "data": {
+    "flash": {
+      "at": "2026-11-22T06:19:36.027Z",
+      "unitPrice": "320000",
+      "baseUnitPrice": "320000",
+      "promotion": null,
+      "cartUnit": 320000
+    },
+    "super": {
+      "at": "2026-11-22T06:19:36.027Z",
+      "unitPrice": "199000",
+      "baseUnitPrice": "240000",
+      "promotion": {
+        "campaignId": "7e8b815e-0748-4e44-8cd1-de58dbbf761f",
+        "kind": "SUPER_SALE",
+        "endsAt": "2026-11-22T17:00:00Z"
+      },
+      "cartUnit": 199000
+    }
+  },
+  "finishedAt": "2026-11-22T06:19:38.453Z",
+  "result": "PASS"
+}

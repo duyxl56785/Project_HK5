@@ -1,0 +1,238 @@
+{
+  "id": "C2-05",
+  "title": "MD16 two-Store money oracle",
+  "run": "R045440",
+  "sha": "eaf3bf270255b80db4525f836bfae7e495dc8651",
+  "stack": "hk5-promo-test-uat2111",
+  "startedAt": "2026-11-21T04:54:41.192Z",
+  "checks": [
+    {
+      "name": "quote total 415000",
+      "ok": true,
+      "actual": "415000"
+    },
+    {
+      "name": "checkout 200 with orderId",
+      "ok": true,
+      "actual": {
+        "status": 200,
+        "json": {
+          "orderId": "985c5c49-5ab1-4039-9855-dfdf88f83070",
+          "status": "PLACED",
+          "total": 415000,
+          "sellerOrderCount": 2,
+          "prices": [
+            {
+              "storeId": "841264c0-c4d5-478f-beb5-adfa3d61eb92",
+              "voucherCode": "MNAR045440",
+              "quoteFingerprint": null,
+              "merchandiseAmount": "150000",
+              "discountAmount": "10000",
+              "gross": "140000.00",
+              "platformFee": "7000.00"
+            },
+            {
+              "storeId": "5e234249-14c9-4c60-9bee-f40cc546329e",
+              "voucherCode": "MNBR045440",
+              "quoteFingerprint": null,
+              "merchandiseAmount": "280000",
+              "discountAmount": "5000",
+              "gross": "275000.00",
+              "platformFee": "13750.00"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "parent total 415000",
+      "ok": true,
+      "actual": 415000
+    },
+    {
+      "name": "Tiệm Áo Sài Gòn: merch 150000, discount 10000, gross 140000, fee 7000",
+      "ok": true,
+      "actual": {
+        "m": "150000",
+        "d": "10000",
+        "g": "140000.00",
+        "f": 7000,
+        "net": 133000
+      }
+    },
+    {
+      "name": "Nhà Xinh: merch 280000, discount 5000, gross 275000, fee 13750",
+      "ok": true,
+      "actual": {
+        "m": "280000",
+        "d": "5000",
+        "g": "275000.00",
+        "f": 13750,
+        "net": 261250
+      }
+    },
+    {
+      "name": "two SellerOrders",
+      "ok": true,
+      "actual": 2
+    },
+    {
+      "name": "ledger A one active redemption 150000/10000",
+      "ok": true,
+      "actual": "COMMITTED||150000|10000"
+    },
+    {
+      "name": "ledger B one active redemption 280000/5000",
+      "ok": true,
+      "actual": "COMMITTED||280000|5000"
+    }
+  ],
+  "data": {
+    "quote": {
+      "revision": 1,
+      "total": "415000",
+      "stores": [
+        {
+          "storeId": "841264c0-c4d5-478f-beb5-adfa3d61eb92",
+          "voucherCode": "MNAR045440",
+          "quoteFingerprint": "a3018d2d1557f491fc8b6f09e26e6275c0101b3b9b998f8b80929a2299ece74f",
+          "merchandiseAmount": "150000",
+          "discountAmount": "10000",
+          "gross": "140000",
+          "platformFee": "7000"
+        },
+        {
+          "storeId": "5e234249-14c9-4c60-9bee-f40cc546329e",
+          "voucherCode": "MNBR045440",
+          "quoteFingerprint": "a1cd6b177779020d0cf62beb50ed5ed657a5795d1d0af49c97262f36e8f4064e",
+          "merchandiseAmount": "280000",
+          "discountAmount": "5000",
+          "gross": "275000",
+          "platformFee": "13750"
+        }
+      ]
+    },
+    "checkout": {
+      "status": 200,
+      "json": {
+        "orderId": "985c5c49-5ab1-4039-9855-dfdf88f83070",
+        "status": "PLACED",
+        "total": 415000,
+        "sellerOrderCount": 2,
+        "prices": [
+          {
+            "storeId": "841264c0-c4d5-478f-beb5-adfa3d61eb92",
+            "voucherCode": "MNAR045440",
+            "quoteFingerprint": null,
+            "merchandiseAmount": "150000",
+            "discountAmount": "10000",
+            "gross": "140000.00",
+            "platformFee": "7000.00"
+          },
+          {
+            "storeId": "5e234249-14c9-4c60-9bee-f40cc546329e",
+            "voucherCode": "MNBR045440",
+            "quoteFingerprint": null,
+            "merchandiseAmount": "280000",
+            "discountAmount": "5000",
+            "gross": "275000.00",
+            "platformFee": "13750.00"
+          }
+        ]
+      }
+    },
+    "order": {
+      "id": "985c5c49-5ab1-4039-9855-dfdf88f83070",
+      "status": "PLACED",
+      "overallStatus": "PROCESSING",
+      "total": 415000,
+      "paymentMethod": "COD",
+      "createdAt": "2026-11-21T04:54:41.785910Z",
+      "shipping": {
+        "name": "Khách UAT",
+        "phone": "0900000000",
+        "address": "Địa chỉ thử nghiệm UAT"
+      },
+      "storeOrders": [
+        {
+          "id": "ab876ce0-20ce-4b99-a040-0734d46e0e06",
+          "orderId": "985c5c49-5ab1-4039-9855-dfdf88f83070",
+          "storeId": "841264c0-c4d5-478f-beb5-adfa3d61eb92",
+          "storeName": "Tiệm Áo Sài Gòn",
+          "status": "PLACED",
+          "codStatus": "PENDING",
+          "statusReason": null,
+          "gross": 140000,
+          "platformFee": 7000,
+          "sellerNet": 133000,
+          "createdAt": "2026-11-21T04:54:41.785910Z",
+          "updatedAt": "2026-11-21T04:54:41.820858Z",
+          "deliveredAt": null,
+          "codCollectedAt": null,
+          "settledAt": null,
+          "version": "0",
+          "shipping": {
+            "name": "Khách UAT",
+            "phone": "0900000000",
+            "address": "Địa chỉ thử nghiệm UAT"
+          },
+          "items": [
+            {
+              "productId": "430ed701-6735-4904-b962-bd56188126c7",
+              "name": "Áo thun cotton",
+              "sku": "AO-001",
+              "quantity": 1,
+              "unitPrice": 150000,
+              "lineTotal": 150000
+            }
+          ],
+          "merchandiseAmount": "150000",
+          "voucherDiscount": "10000",
+          "voucherCode": "MNAR045440",
+          "grossExact": "140000.00"
+        },
+        {
+          "id": "a835ddc8-d29f-4f0c-8db9-ad0c03fb7c2d",
+          "orderId": "985c5c49-5ab1-4039-9855-dfdf88f83070",
+          "storeId": "5e234249-14c9-4c60-9bee-f40cc546329e",
+          "storeName": "Nhà Xinh",
+          "status": "PLACED",
+          "codStatus": "PENDING",
+          "statusReason": null,
+          "gross": 275000,
+          "platformFee": 13750,
+          "sellerNet": 261250,
+          "createdAt": "2026-11-21T04:54:41.785910Z",
+          "updatedAt": "2026-11-21T04:54:41.826590Z",
+          "deliveredAt": null,
+          "codCollectedAt": null,
+          "settledAt": null,
+          "version": "0",
+          "shipping": {
+            "name": "Khách UAT",
+            "phone": "0900000000",
+            "address": "Địa chỉ thử nghiệm UAT"
+          },
+          "items": [
+            {
+              "productId": "f867207e-d62e-4ea0-855d-dc6fa761fe40",
+              "name": "Đèn bàn gỗ",
+              "sku": "DEN-001",
+              "quantity": 1,
+              "unitPrice": 280000,
+              "lineTotal": 280000
+            }
+          ],
+          "merchandiseAmount": "280000",
+          "voucherDiscount": "5000",
+          "voucherCode": "MNBR045440",
+          "grossExact": "275000.00"
+        }
+      ]
+    },
+    "ledgerA": "COMMITTED||150000|10000",
+    "ledgerB": "COMMITTED||280000|5000"
+  },
+  "finishedAt": "2026-11-21T04:54:42.509Z",
+  "result": "PASS"
+}
