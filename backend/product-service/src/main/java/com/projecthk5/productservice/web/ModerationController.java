@@ -4,6 +4,7 @@ import com.projecthk5.productservice.product.ProductApplicationService;
 import com.projecthk5.productservice.product.ProductStatus;
 import com.projecthk5.productservice.product.http.ProductManagementResponse;
 import com.projecthk5.productservice.product.persistence.ProductEntity;
+import com.projecthk5.productservice.product.persistence.ProductPersistenceAdapter.StoredProduct;
 import com.projecthk5.productservice.review.ReviewRules;
 import com.projecthk5.productservice.review.ReviewableItems;
 import com.projecthk5.security.Actor;
@@ -20,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -34,14 +36,16 @@ public class ModerationController {
     private final SellerStoreClient stores;
     private final ReviewRepository reviews;
     private final ReviewableItems reviewable;
+    private final VariantGroups groups;
 
     public ModerationController(ProductApplicationService application, EntityManager em, SellerStoreClient stores,
-                                ReviewRepository reviews, ReviewableItems reviewable) {
+                                ReviewRepository reviews, ReviewableItems reviewable, VariantGroups groups) {
         this.application = application;
         this.em = em;
         this.stores = stores;
         this.reviews = reviews;
         this.reviewable = reviewable;
+        this.groups = groups;
     }
 
     public record ModerationRequest(@NotBlank String expectedVersion, @Size(max = 500) String reason) {}
@@ -65,17 +69,23 @@ public class ModerationController {
                 Long.toString(p.getVersion())), names.getOrDefault(p.getStoreId(), "?"), p.getReviewReason())).toList();
     }
 
+    /** A decision on a variant group's lead also applies to the variants waiting in the same state. */
     @PostMapping("/api/admin/products/{id}/{action}")
+    @Transactional
     public ProductManagementResponse moderate(@PathVariable UUID id, @PathVariable String action, @Valid @RequestBody ModerationRequest req) {
         String admin = Actor.current().id();
         long version = SellerProductController.version(req.expectedVersion());
-        return ProductManagementResponse.from(switch (action) {
-            case "approve" -> application.approve(admin, id, version);
-            case "reject" -> application.reject(admin, id, version, req.reason());
-            case "suspend" -> application.suspend(admin, id, version, req.reason());
-            case "unsuspend" -> application.unsuspend(admin, id, version);
+        BiFunction<UUID, Long, StoredProduct> step = switch (action) {
+            case "approve" -> (product, expected) -> application.approve(admin, product, expected);
+            case "reject" -> (product, expected) -> application.reject(admin, product, expected, req.reason());
+            case "suspend" -> (product, expected) -> application.suspend(admin, product, expected, req.reason());
+            case "unsuspend" -> (product, expected) -> application.unsuspend(admin, product, expected);
             default -> throw ApiException.notFound("ROUTE_NOT_FOUND", "Unknown moderation action");
-        });
+        };
+        ProductStatus before = groups.statusOf(id);
+        StoredProduct decided = step.apply(id, version);
+        groups.follow(id, before, step);
+        return ProductManagementResponse.from(decided);
     }
 
     @GetMapping("/api/admin/reviews")

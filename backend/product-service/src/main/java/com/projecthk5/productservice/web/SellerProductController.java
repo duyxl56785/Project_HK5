@@ -21,6 +21,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.function.BiFunction;
 import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionSynchronization;
@@ -40,10 +41,13 @@ public class SellerProductController {
     private final ImageRepository images;
     private final ImageStorage storage;
     private final ProductImageValidator validator;
+    private final VariantRepository variants;
+    private final VariantGroups groups;
 
     public SellerProductController(ProductManagementHandler handler, ProductApplicationService application,
                                    SellerStoreClient stores, DependencyClients dependencies, DetailsRepository details,
-                                   ImageRepository images, ImageStorage storage, ProductImageValidator validator) {
+                                   ImageRepository images, ImageStorage storage, ProductImageValidator validator,
+                                   VariantRepository variants, VariantGroups groups) {
         this.handler = handler;
         this.application = application;
         this.stores = stores;
@@ -52,11 +56,22 @@ public class SellerProductController {
         this.images = images;
         this.storage = storage;
         this.validator = validator;
+        this.variants = variants;
+        this.groups = groups;
     }
 
-    public record CreateRequest(@NotNull UUID categoryId, @NotBlank @Size(max = 128) String sku, @NotBlank @Size(max = 255) String name,
-                                @NotNull BigDecimal unitPrice, @Size(max = 5000) String description,
-                                @PositiveOrZero @Max(1_000_000) Long initialStock) {}
+    /** Without variants, sku and unitPrice are required; with variants each variant carries its own. */
+    public record CreateRequest(@NotNull UUID categoryId, @Size(max = 128) String sku, @NotBlank @Size(max = 255) String name,
+                                BigDecimal unitPrice, @Size(max = 5000) String description,
+                                @PositiveOrZero @Max(1_000_000) Long initialStock,
+                                @Valid @Size(max = ProductVariantRules.MAX_VARIANTS) List<VariantInput> variants) {}
+    public record VariantInput(@Size(max = ProductVariantRules.MAX_SIZE) String size,
+                               @Size(max = ProductVariantRules.MAX_COLOR) String color,
+                               @NotBlank @Size(max = 128) String sku, @NotNull BigDecimal unitPrice,
+                               @PositiveOrZero @Max(1_000_000) Long initialStock) {}
+    public record VariantView(UUID groupId, int position, String size, String color) {}
+    public record VariantRow(UUID id, String sku, String name, String size, String color, String unitPrice,
+                             ProductStatus status, String version, Long available) {}
     public record EditRequest(@NotNull UUID categoryId, @NotBlank @Size(max = 255) String name, @NotNull BigDecimal unitPrice,
                               @Size(max = 5000) String description, @NotBlank String expectedVersion) {}
     public record VersionRequest(@NotBlank String expectedVersion) {}
@@ -64,8 +79,9 @@ public class SellerProductController {
     public record ImageView(UUID id, int displayOrder, String url) {
         static ImageView of(ProductExtras.Image i) { return new ImageView(i.getId(), i.getDisplayOrder(), "/api/catalog/images/" + i.getId()); }
     }
+    /** variant is null and variants empty for a Product without size/color; variants lists the whole group. */
     public record SellerProduct(ProductManagementResponse product, String description, List<ImageView> images,
-                                Long available, Long reserved) {}
+                                Long available, Long reserved, VariantView variant, List<VariantRow> variants) {}
 
     @GetMapping
     public ProductManagementHandler.OwnedPage list(@RequestParam(required = false) String term,
@@ -86,6 +102,9 @@ public class SellerProductController {
     public SellerProduct create(@Valid @RequestBody CreateRequest req) {
         String actor = Actor.current().id();
         UUID storeId = stores.currentManagementStore(actor);
+        if (req.variants() != null && !req.variants().isEmpty()) return view(ProductManagementResponse.from(createGroup(actor, storeId, req)));
+        if (req.sku() == null || req.sku().isBlank() || req.unitPrice() == null)
+            throw ApiException.badRequest("VALIDATION_FAILED", "SKU and unit price are required");
         StoredProduct created = application.create(actor, storeId, req.categoryId(), req.sku().strip(), req.name(),
                 req.unitPrice(), "VND");
         details.save(new ProductExtras.Details(created.listing().id(), req.description() == null ? "" : req.description().strip()));
@@ -94,33 +113,100 @@ public class SellerProductController {
         return view(ProductManagementResponse.from(created));
     }
 
+    /** One Product per size/color option; stock is set only after every row is stored, so a refused group moves no stock. */
+    private StoredProduct createGroup(String actor, UUID storeId, CreateRequest req) {
+        List<ProductVariantRules.Option> options = req.variants().stream()
+                .map(v -> ProductVariantRules.option(v.size(), v.color())).toList();
+        ProductVariantRules.requireGroup(options);
+        List<StoredProduct> created = new ArrayList<>();
+        for (int i = 0; i < options.size(); i++) {
+            VariantInput input = req.variants().get(i);
+            StoredProduct product = application.create(actor, storeId, req.categoryId(), input.sku().strip(),
+                    ProductVariantRules.variantName(req.name(), options.get(i)), input.unitPrice(), "VND");
+            UUID groupId = created.isEmpty() ? product.listing().id() : created.get(0).listing().id();
+            variants.saveAndFlush(new ProductExtras.Variant(product.listing().id(), groupId, i + 1,
+                    options.get(i).size(), options.get(i).color()));
+            created.add(product);
+        }
+        StoredProduct lead = created.get(0);
+        details.save(new ProductExtras.Details(lead.listing().id(), req.description() == null ? "" : req.description().strip()));
+        for (int i = 0; i < created.size(); i++) {
+            Long initial = req.variants().get(i).initialStock();
+            StoredProduct product = created.get(i);
+            if (initial != null && initial > 0)
+                dependencies.setAvailable(product.listing().sku(), initial, "stock-init-" + product.listing().id());
+        }
+        return lead;
+    }
+
     @PutMapping("/{id}")
     @Transactional
     public SellerProduct edit(@PathVariable UUID id, @Valid @RequestBody EditRequest req) {
+        String actor = Actor.current().id();
+        ProductExtras.Variant variant = groups.of(id).orElse(null);
+        if (variant != null && !variant.isLead()) return view(ProductManagementResponse.from(editVariant(actor, variant, req)));
         boolean descriptionChanged = req.description() != null && !req.description().strip().equals(
                 details.findById(id).map(ProductExtras.Details::getDescription).orElse(""));
-        StoredProduct edited = application.edit(Actor.current().id(), id, version(req.expectedVersion()), req.categoryId(),
-                req.name(), req.unitPrice(), "VND", descriptionChanged);
+        String name = variant == null ? req.name() : ProductVariantRules.variantName(req.name(), variant.option());
+        StoredProduct edited = application.edit(actor, id, version(req.expectedVersion()), req.categoryId(),
+                name, req.unitPrice(), "VND", descriptionChanged);
         if (req.description() != null) {
             details.findById(id).ifPresentOrElse(d -> d.setDescription(req.description().strip()),
                     () -> details.save(new ProductExtras.Details(id, req.description().strip())));
         }
+        if (variant != null) renameGroup(actor, variant, req);
         return view(ProductManagementResponse.from(edited));
     }
 
+    /** The lead's name and category are the group's; each other variant keeps its own price. */
+    private void renameGroup(String actor, ProductExtras.Variant lead, EditRequest req) {
+        for (ProductExtras.Variant member : groups.group(lead.getGroupId())) {
+            if (member.isLead()) continue;
+            StoredProduct current = groups.current(member.getProductId());
+            String name = ProductVariantRules.variantName(req.name(), member.option());
+            if (name.equals(current.listing().name()) && req.categoryId().equals(current.listing().categoryId())) continue;
+            application.edit(actor, member.getProductId(), current.version(), req.categoryId(), name,
+                    current.listing().unitPrice(), "VND", false);
+        }
+    }
+
+    /** A non-lead variant changes only its price here; name, category and description belong to the lead. */
+    private StoredProduct editVariant(String actor, ProductExtras.Variant variant, EditRequest req) {
+        var current = application.findById(actor, variant.getProductId()).listing();
+        String base = ProductVariantRules.baseName(current.name(), variant.option());
+        if (!base.equals(req.name().strip()) || !current.categoryId().equals(req.categoryId()))
+            throw ApiException.conflict("VARIANT_GROUP_FIELD", "Change the name and category on the first variant");
+        return application.edit(actor, variant.getProductId(), version(req.expectedVersion()), current.categoryId(),
+                current.name(), req.unitPrice(), "VND", false);
+    }
+
     @PostMapping("/{id}/submit")
+    @Transactional
     public SellerProduct submit(@PathVariable UUID id, @Valid @RequestBody VersionRequest req) {
-        return view(ProductManagementResponse.from(application.submit(Actor.current().id(), id, version(req.expectedVersion()))));
+        String actor = Actor.current().id();
+        return view(step(id, req, (product, version) -> application.submit(actor, product, version)));
     }
 
     @PostMapping("/{id}/activate")
+    @Transactional
     public SellerProduct activate(@PathVariable UUID id, @Valid @RequestBody VersionRequest req) {
-        return view(ProductManagementResponse.from(application.activate(Actor.current().id(), id, version(req.expectedVersion()))));
+        String actor = Actor.current().id();
+        return view(step(id, req, (product, version) -> application.activate(actor, product, version)));
     }
 
     @PostMapping("/{id}/deactivate")
+    @Transactional
     public SellerProduct deactivate(@PathVariable UUID id, @Valid @RequestBody VersionRequest req) {
-        return view(ProductManagementResponse.from(application.deactivate(Actor.current().id(), id, version(req.expectedVersion()))));
+        String actor = Actor.current().id();
+        return view(step(id, req, (product, version) -> application.deactivate(actor, product, version)));
+    }
+
+    /** A step on the lead also moves the variants that were in the lead's state; a variant on its own moves alone. */
+    private ProductManagementResponse step(UUID id, VersionRequest req, BiFunction<UUID, Long, StoredProduct> step) {
+        ProductStatus before = groups.statusOf(id);
+        StoredProduct changed = step.apply(id, version(req.expectedVersion()));
+        groups.follow(id, before, step);
+        return ProductManagementResponse.from(changed);
     }
 
     @PutMapping("/{id}/stock")
@@ -182,9 +268,22 @@ public class SellerProductController {
 
     private SellerProduct view(ProductManagementResponse product) {
         DependencyClients.Balance balance = dependencies.balance(product.sku());
+        ProductExtras.Variant variant = groups.of(product.id()).orElse(null);
+        List<VariantRow> rows = variant == null ? List.of() : groups.group(variant.getGroupId()).stream().map(this::row).toList();
         return new SellerProduct(product, details.findById(product.id()).map(ProductExtras.Details::getDescription).orElse(""),
                 images.findByProductIdOrderByDisplayOrder(product.id()).stream().map(ImageView::of).toList(),
-                balance == null ? null : balance.availableQuantity(), balance == null ? null : balance.reservedQuantity());
+                balance == null ? null : balance.availableQuantity(), balance == null ? null : balance.reservedQuantity(),
+                variant == null ? null : new VariantView(variant.getGroupId(), variant.getPosition(), variant.getSize(), variant.getColor()),
+                rows);
+    }
+
+    private VariantRow row(ProductExtras.Variant variant) {
+        StoredProduct stored = groups.current(variant.getProductId());
+        var listing = stored.listing();
+        DependencyClients.Balance balance = dependencies.balance(listing.sku());
+        return new VariantRow(listing.id(), listing.sku(), listing.name(), variant.getSize(), variant.getColor(),
+                listing.unitPrice().toBigIntegerExact().toString(), listing.status(), Long.toString(stored.version()),
+                balance == null ? null : balance.availableQuantity());
     }
 
     static long version(String text) {
