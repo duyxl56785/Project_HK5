@@ -7,8 +7,8 @@
 ## Chức năng chính
 
 - **Khách hàng:** đăng ký, đăng nhập, hồ sơ, địa chỉ; tìm kiếm/lọc/sắp xếp sản phẩm, giỏ hàng đa cửa hàng, Checkout COD; theo dõi/hủy đơn hợp lệ, đánh giá hàng đã giao.
-- **Người bán:** đăng ký và quản lý cửa hàng/sản phẩm/SKU/ảnh; xử lý đơn con theo từng cửa hàng; voucher và một số loại chương trình khuyến mãi.
-- **Quản trị:** duyệt/khóa người bán, kiểm duyệt sản phẩm/danh mục/đánh giá, xác nhận thu COD, xem số liệu tài chính và ghi nhận đối soát theo nghiệp vụ demo.
+- **Người bán:** đăng ký và quản lý cửa hàng/sản phẩm/SKU/ảnh; xử lý đơn con theo từng cửa hàng; tạo và quản lý voucher cửa hàng, tạo đợt xả kho theo quy trình duyệt. Flash Sale và Super Sale do Admin lập lịch.
+- **Quản trị:** duyệt/khóa người bán, kiểm duyệt sản phẩm/danh mục/đánh giá; xét duyệt hạn mức voucher, quản lý lịch Flash Sale và Super Sale, duyệt đợt xả kho; xác nhận thu COD, xem số liệu tài chính và ghi nhận đối soát theo nghiệp vụ demo.
 - **Tính đúng nghiệp vụ:** Checkout tạo một đơn tổng và các đơn con theo Store; idempotency, ràng buộc tồn kho, phân quyền trên backend và outbox/retry ở các luồng được triển khai.
 
 Xem [bảng đối chiếu F01–F17](docs/project-report/REQUIREMENTS_TRACEABILITY.md) và [hướng dẫn demo](docs/RUN_LOCAL.md) để xác nhận phạm vi từng chức năng, không suy rằng mọi trường hợp ngoại lệ đã được nghiệm thu.
@@ -71,13 +71,12 @@ Không commit `.env.demo`, `docker/secrets/`, JWT, cookie, password hoặc dữ 
 - Các trường hợp UNKNOWN liên service chưa có live acceptance; khi outcome không chắc chắn, giữ `NEEDS_RECONCILIATION`, không tự hoàn kho/retry mù.
 - Ranh giới khóa tài khoản / access token, HTTPS, cookie/proxy, service-pair credentials và runtime flags cần review riêng trước khi dùng ngoài local. [Xem hạn chế bảo mật cụ thể](docs/RUN_LOCAL.md#giới-hạn-của-bản-demo).
 
-## Nhóm và quy trình GitHub
+## Nhóm theo báo cáo nộp và quy trình GitHub
 
 | Thành viên | Trách nhiệm/đóng góp |
 | --- | --- |
-| TV1 — Lê Xuân Bảo (`lexuanbao258-collab`) | Giai đoạn đầu: Auth/JWT contract, Auth persistence, Gradle/DB infrastructure, Gateway/frontend shared preparation, technical reviews. Từ **01/11/2026**, đã bàn giao ownership; nhận thêm Issue [#222](https://github.com/duyxl56785/Project_HK5/issues/222), [#223](https://github.com/duyxl56785/Project_HK5/issues/223) và [#158](https://github.com/duyxl56785/Project_HK5/issues/158) theo phạm vi TV2 giao. |
 | TV2 — Nguyễn Văn Duy (`duyxl56785`) | Seller/Store/Product/Catalog; từ 01/11 tiếp nhận Auth, User, Gateway, Docker/CI và frontend shared, tích hợp và chốt demo. |
-| TV3 — Trần Văn Chính | Cart, Checkout/Order creation, idempotency. |
+| TV3 — Trần Văn Chính | Cart, Checkout/Order creation, idempotency, trả hàng phía khách; Voucher cửa hàng và Khuyến mãi. |
 | TV4 — Phạm Thế Cường | Inventory, Fulfillment/COD/Notification. |
 | TV5 — Nguyễn Minh Duy | Product Review, Finance/Settlement, QA, báo cáo/UAT. |
 
