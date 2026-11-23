@@ -4,13 +4,13 @@
 **Vai trò:** TV5 QA Lead
 **Nguồn test:** `TV5_FINAL_UAT_W5_C2_MATRIX_20261119.md`
 **Tổng số case:** 37 (17 baseline + 5 Voucher C1 + 4 Promotion + 11 Voucher C2)
-**Trạng thái trước khi chạy:** `NOT RUN`; các case có gate/contract chưa đạt được ghi `BLOCKED`, không suy thành PASS.
+**Kết quả sau đối chiếu receipt 22/11:** TV2 Final UAT trên Frozen SHA `eaf3bf270255b80db4525f836bfae7e495dc8651` đạt **34 PASS, 1 PARTIAL, 2 BLOCKED, 0 FAIL**. TV5 đã kiểm tra PR #221: 37 manifests, 98 checksum, toàn bộ artifact path/size/SHA256 và case status khớp run-manifest. Kết quả nguồn: [Issue #158](https://github.com/duyxl56785/Project_HK5/issues/158#issuecomment-7075353935); receipt: [PR #221](https://github.com/duyxl56785/Project_HK5/pull/221). Các dòng `Trạng thái` trong phần kịch bản bên dưới là trạng thái kế hoạch trước khi chạy; **trạng thái thực tế được quyết định bởi bảng receipt ở mục 1A**, không đọc các dòng mẫu cũ như kết quả cuối.
 
 ## 0. Quy tắc bắt buộc
 
-1. Chỉ chạy sau khi TV2 công bố bằng văn bản full 40-character frozen `main` SHA, thời điểm freeze, stack/project riêng, flags được phép và người vận hành. Ghi đúng SHA thực tế trên mọi receipt.
+1. TV2 đã công bố Frozen `main` SHA `eaf3bf270255b80db4525f836bfae7e495dc8651`, freeze lúc 20/11/2026 20:44 +07; SHA này thay thế freeze cũ `950279e`. Ghi đúng SHA này trên mọi receipt. Vẫn phải có clean-clone/stack receipt và xác nhận người vận hành trước khi ghi kết quả runtime.
 2. C2 mặc định **OFF**. Không thêm `--approved-voucher-c2` hoặc tự sửa `HK5_VOUCHER_C2_ENABLED`. M01 MD01–MD11 đã được TV2 phê duyệt cho bản nộp và demo local; production chưa được phê duyệt. `HK5_FINANCE_POLICY_APPROVED` vẫn mặc định OFF và chỉ TV2 được opt-in trong `.env.demo` local theo đúng M01. TV5 không tự bật bất kỳ flag nào.
-3. PR #212 đã merge tại `4b5bcb4ceb5a6a636e4c943db2d41c8a4c1bb14f`; TV2 APPROVED đúng HEAD `3483486`. PR #215 sau đó được TV5 APPROVED đúng HEAD `be8aa539` và squash-merged tại `1b652751c76e5558d76d0f1b9037c275cef3ba34` (decision records only, no source/runtime change). Post-merge push CI run `44502375038` attempt 2 SUCCESS trên parent `4b5bcb4`: frontend PASS, E2E C2 OFF 24/24 và ON 25/25, 0 skip. Đây là CI trên SHA cũ, **không tự trở thành Final UAT hoặc CI trên main mới `1b652751`**; nếu TV2 freeze `1b652751` thì cần CI trên đúng SHA đó.
+3. PR #212 đã merge tại `4b5bcb4ceb5a6a636e4c943db2d41c8a4c1bb14f`; PR #215 decision records, PR #218 Vite 6.4.5 và PR #220 voucher helper text đã merge. TV2 xác nhận Frozen SHA `eaf3bf270255b80db4525f836bfae7e495dc8651` lúc 20/11/2026 20:44 +07. Frontend, E2E C2 OFF và E2E C2 ON đều SUCCESS trên post-merge [run 44746995567](https://github.com/duyxl56785/Project_HK5/actions/runs/44746995567) đúng SHA. Backend readiness [run 44493061575](https://github.com/duyxl56785/Project_HK5/actions/runs/44493061575) gắn `cee7c87`; TV2 xác nhận áp dụng vì `backend/` không đổi từ đó tới Frozen SHA. Đây là CI, **không phải Final UAT**.
 4. Mọi giao dịch dùng actor và dữ liệu giả. Không dùng tiền thật, không tuyên bố chuyển tiền thật, không tự phát fault injection UNKNOWN, không tạo/điều chỉnh tồn kho ngoài fixture đã được owner duyệt.
 5. PASS/FAIL chỉ sau thao tác thực tế và có raw evidence. Chưa chạy ghi `NOT RUN`; thiếu điều kiện/owner/contract ghi `BLOCKED` kèm lý do. `N/A` chỉ dùng ở nhánh cấu hình mà ma trận gốc ghi rõ không áp dụng, không đổi thành PASS.
 6. Raw logs/JSON/JUnit/DB receipts giữ nguyên byte. Chỉ tạo bản redacted để chia sẻ. Tuyệt đối không lưu password, token, JWT, `.env`, dữ liệu cá nhân hoặc secret trong evidence/PR.
@@ -22,18 +22,32 @@
 
 | Trường | Giá trị thực tế |
 |---|---|
-| Frozen `main` SHA (40 ký tự) | `PENDING — TV2 cung cấp; main candidate hiện tại 1b652751c76e5558d76d0f1b9037c275cef3ba34 chưa được xác nhận frozen` |
-| Freeze timestamp (Asia/Ho_Chi_Minh) | `PENDING` |
-| CI readiness/frontend/E2E URLs + run IDs và applicability trên frozen SHA | `PENDING — nếu freeze SHA chỉ khác CI-tested SHA ở docs, TV2 cung cấp diff chứng minh không đổi frontend/backend/docker/scripts/demo/.github/workflows và xác nhận run nào bao phủ code frozen; nếu các path này đổi thì cần CI phù hợp trên code SHA mới` |
-| Clean-clone receipt / máy / OS / tool versions | `PENDING` |
-| Clean-stack receipt / Compose project / image digests | `PENDING` |
-| DB identity / schema migration version / volume names | `PENDING` |
-| Ports / network / loopback binding | `PENDING` |
-| Flags thực tế và approval link cho từng flag | `PENDING — default OFF; runtime NOT VERIFIED; M01 MD01–MD11 approved for local demo/submission only, production NOT APPROVED` |
-| Run ID / start-end time | `PENDING` |
-| TV2 operator / TV3 / TV4 / TV5 witness | `PENDING` |
-| Seed dataset version / fake actor IDs | `PENDING` |
-| Evidence root + manifest SHA256 | `PENDING` |
+| Frozen `main` SHA (40 ký tự) | `eaf3bf270255b80db4525f836bfae7e495dc8651` — TV2 xác nhận tại Issue #158; thay thế freeze cũ `950279e` |
+| Freeze timestamp (Asia/Ho_Chi_Minh) | `2026-11-20 20:44 +07` — TV2 xác nhận tại Issue #158 |
+| CI readiness/frontend/E2E URLs + run IDs và applicability trên frozen SHA | `Frontend + E2E C2 OFF + E2E C2 ON: run 44746995567 SUCCESS trên exact Frozen SHA. Backend readiness: run 44493061575 trên cee7c87; TV2 xác nhận áp dụng vì backend không đổi tới Frozen SHA.` |
+| Clean-clone receipt / máy / OS / tool versions | TV2 separate clone tại Frozen SHA, `git status` sạch trước/sau; Windows 11, Git 2.55.0, JDK 21.0.12.1, Node 24.21.0, Docker 29.9.1. TV1 PR #226 xác nhận clone độc lập cùng máy; máy thứ hai vẫn NOT_RUN. |
+| Clean-stack receipt / Compose project / image digests | `hk5-promo-test-uat2111`; image digests của Temurin 21, frontend, PostgreSQL 16, Kafka 3.8.1, Redis 7 ghi trong run-manifest #221. |
+| DB identity / schema migration version / volume names | Container `hk5-promo-test-uat2111-postgres-1`, user `hk5`; auth V4, user V2, seller V11, product V10, inventory V2, cart V2, order V10, notification V2; volumes `..._pgdemo`, `..._productimages`. |
+| Ports / network / loopback binding | `127.0.0.1:5173→frontend:80`, `127.0.0.1:18080→api-gateway:8080`; network `hk5-promo-test-uat2111_default`, prefix `172.30.248`. |
+| Flags thực tế và approval link cho từng flag | Ba flags Inventory pair, Finance policy, Voucher C2 đều observed `true` trong `.env.demo`; capability `enabled=true`. Local UAT only; default OFF ngoài demo; Finance production NOT_APPROVED. Approval M01 MD09/MD23 và quyết định TV2 tại Issue #158. |
+| Run ID / start-end time | `tv2-uat-eaf3bf2-20261121`; `2026-11-21T11:54:02+07:00` → `2026-11-22T13:19:38+07:00`. |
+| TV2 operator / TV3 / TV4 / TV5 witness | Operator `duyxl56785 (TV2)`; `witnesses` để trống trong run-manifest; TV5 thực hiện hậu kiểm receipt, không tự nhận là witness tại phiên chạy. |
+| Seed dataset version / fake actor IDs | `scripts/demo/seed.mjs` tại Frozen SHA, chạy một lần trên DB trống; fake actor/account mapping được ghi trong run-manifest và raw receipts. |
+| Evidence root + manifest SHA256 | [PR #221](https://github.com/duyxl56785/Project_HK5/pull/221), thư mục `tv2-uat-eaf3bf2-20261121/`; 99 files, 98 checksum entries, 98/98 PASS; metadata của 37 case manifests khớp run-manifest. |
+
+### 1A. Kết quả thực tế theo receipt TV2
+
+| Nhóm / case | Kết quả đã xác minh | Ghi chú |
+|---|---:|---|
+| UAT-01..15 | 15 PASS | Bao gồm Return không restock ở UAT-12; không suy ra RET-05 |
+| UAT-16..17 | 2 BLOCKED | Thiếu runner được review, provider oracle/receipt và approval riêng |
+| C1-01..05 | 5 PASS | Receipt từng case và hash đã đối chiếu |
+| PROMO-01, 03, 04 | 3 PASS | PROMO-04 có C2 ON trong UAT theo quyền TV2 |
+| PROMO-02 | PARTIAL | Super Sale in-window PASS; Flash Sale 22:00–24:00 ngày 21/11 NOT_RUN vì Docker đã tắt |
+| C2-01..11 | 11 PASS | C2 ON trên stack UAT; nhánh OFF có CI `44746995567` |
+| **Tổng** | **34 PASS, 1 PARTIAL, 2 BLOCKED, 0 FAIL** | Không có P0/P1 theo TV2 triage |
+
+**Run metadata:** `tv2-uat-eaf3bf2-20261121`; operator TV2; Windows 11 / JDK 21.0.12.1 / Node 24.21.0 / Docker 29.9.1; Compose project `hk5-promo-test-uat2111`; run-manifest xác nhận flags trong `.env.demo` và capability `enabled=true`. Receipt đầy đủ đang ở PR #221 và sẽ xuất hiện trong `main` sau khi PR được owner merge.
 
 ## 2. Chuẩn evidence tối thiểu
 
@@ -188,7 +202,7 @@ Mỗi case phải có một thư mục riêng `reports/minh-chung-kiem-thu/tv5-f
 - **Kết quả mong đợi:** quyền/state đúng; refundAmount bằng gross đã lưu; Return sau DELIVERED không tự hoàn lượt voucher; không tự restock nếu RET-05 chưa có contract/receipt.
 - **Bằng chứng:** Return API/audit, SellerOrder snapshot, refund calculation receipt, Inventory restock receipt nếu được phép.
 - **Owner cung cấp:** TV4 (Return/fulfillment/Inventory), TV3 (Order contract), TV5 (gross/refund oracle).
-- **Trạng thái:** `BLOCKED` cho mọi tuyên bố restock RET-05; phần Return không-restock vẫn `NOT RUN` đến khi có frozen SHA và fixture.
+- **Trạng thái thực tế:** UAT-12 Return không-restock `PASS`; RET-05 exactly-once restock vẫn `BLOCKED` và chưa triển khai.
 
 ### UAT-13 — COD collection
 - **Mục tiêu:** xác minh Admin thu COD đúng thời điểm, đúng amount, đúng một lần.
@@ -206,7 +220,7 @@ Mỗi case phải có một thư mục riêng `reports/minh-chung-kiem-thu/tv5-f
 - **Kết quả mong đợi:** fee/net theo policy đã ký; nếu policy 5%/scale 0 được phê duyệt thì fee tính trên gross, HALF_UP; sellerNet = gross − fee; `settledAt` không được diễn giải là chuyển tiền thật.
 - **Bằng chứng:** M01 policy link, report/API JSON, DB read-only snapshot, calculation sheet với input/output và timestamp.
 - **Owner cung cấp:** TV5 (Finance oracle/report), TV4 (COD source), TV2/business (policy approval).
-- **Trạng thái:** `NOT RUN` — policy demo/local đã có; chờ frozen SHA, runtime/fixture và receipt thực tế. Không tuyên bố Finance production đã được phê duyệt.
+- **Trạng thái thực tế:** UAT-14 `PASS` theo receipt TV2; M01 chỉ áp dụng cho demo/local và bản nộp, Finance production `NOT_APPROVED`.
 
 ### UAT-15 — Admin moderation / Seller approval
 - **Mục tiêu:** xác minh Admin xem moderation, Seller approval và COD/Finance read-only đúng quyền.
@@ -322,7 +336,7 @@ Mỗi case phải có một thư mục riêng `reports/minh-chung-kiem-thu/tv5-f
 
 ## 6. Checklist 11 case Voucher C2
 
-**Gate:** #211/#212 đã merge và TV5 đã formal APPROVED phần tiền #211 tại exact HEAD `4f3152b`; hai điều kiện này đã đạt. PR #215 đã merge decision records tại `1b652751`. C2 ON vẫn `BLOCKED` cho tới khi TV2 xác nhận frozen SHA, CI coverage/applicability cho code frozen có `voucher-c2.spec.ts` PASS 0 skip, và TV2/TV3/TV4/TV5 triage xác nhận không còn P0 C2. Quyết định TV2 ngày 18/11 tại [PR #211](https://github.com/duyxl56785/Project_HK5/pull/211#issuecomment-6969662837) nêu đúng bốn điều kiện, không thêm một business approval riêng cho Checkout có voucher. M01 MD01–MD11 đã phê duyệt Finance 5%/HALF_UP cho demo local và bản nộp; production không được phê duyệt. CI retarget `44496245054` là synthetic merge ref cũ, không phải CI trên main; post-merge CI [run `44502375038`](https://github.com/duyxl56785/Project_HK5/actions/runs/44502375038) attempt 2 C2 ON 25/25, 0 skip, gắn `4b5bcb4` trước merge #215. Frontend/E2E workflow chỉ trigger khi thay frontend/backend/docker/scripts/demo/workflow; Backend readiness chỉ trigger khi thay backend/docker/workflow. `git diff 4b5bcb4..1b652751` chỉ có hai decision docs M01 và không đổi các code/workflow paths. Nếu frozen SHA là `1b652751`, TV2 cần xác nhận bằng văn bản run `44502375038` áp dụng cho code frozen; nếu SHA freeze có code/workflow delta thì cần CI phù hợp. Nếu gate không đạt, chạy UAT với C2 OFF và ghi “đã code, đã test, chưa bật trong bản nộp”.
+**Gate:** #211/#212 đã merge và TV5 đã formal APPROVED phần tiền #211 tại exact HEAD `4f3152b`; PR #215 decision records, PR #218 dependency fix và PR #220 voucher helper text cũng đã merge. TV2 xác nhận Frozen SHA `eaf3bf270255b80db4525f836bfae7e495dc8651`. Frontend/E2E [run 44746995567](https://github.com/duyxl56785/Project_HK5/actions/runs/44746995567) SUCCESS trên đúng SHA, gồm C2 OFF và C2 ON; backend readiness `44493061575` trên `cee7c87` được TV2 xác nhận áp dụng vì backend không đổi. Ba trong bốn điều kiện C2 đã đạt; C2 ON chỉ `BLOCKED` nếu P0 triage chưa xác nhận không còn P0. Quyết định TV2 ngày 18/11 tại [PR #211](https://github.com/duyxl56785/Project_HK5/pull/211#issuecomment-6969662837) nêu đúng bốn điều kiện, không thêm một business approval riêng cho Checkout có voucher. M01 MD01–MD11 đã phê duyệt Finance 5%/HALF_UP cho demo local và bản nộp; production không được phê duyệt. Runtime flags thực tế chưa được xác minh. Nếu P0 triage không đạt, chạy UAT với C2 OFF và ghi “đã code, đã test, chưa bật trong bản nộp”.
 
 ### C2-01 — Flag / capability
 - **Mục tiêu:** xác minh capability ON/OFF và fail-closed khi OFF.
@@ -331,7 +345,7 @@ Mỗi case phải có một thư mục riêng `reports/minh-chung-kiem-thu/tv5-f
 - **Kết quả mong đợi:** ON `enabled=true`; OFF `enabled=false` và voucher request bị từ chối `VOUCHER_C2_DISABLED`; C1 management không bị ảnh hưởng.
 - **Bằng chứng:** runtime env receipt do TV2 cung cấp, capability HTTP JSON, OFF rejection, run/SHA.
 - **Owner cung cấp:** TV2 (flag/stack), TV3 (API/Checkout).
-- **Trạng thái:** `BLOCKED` — chờ TV2 xác nhận frozen SHA và P0 C2 triage; CI `44502375038` xanh trên parent `4b5bcb4`, không phải main mới `1b652751`. Runtime flags chưa xác minh.
+- **Trạng thái thực tế:** C2-01 `PASS`; triage UAT không phát hiện P0 C2, capability trả `enabled=true` trên stack UAT. Nhánh C2 OFF được kiểm qua CI `44746995567`.
 
 ### C2-02 — Per-Store voucher
 - **Mục tiêu:** xác minh tối đa một voucher cho mỗi Store trong Cart nhiều Store.
@@ -427,12 +441,12 @@ Mỗi case phải có một thư mục riêng `reports/minh-chung-kiem-thu/tv5-f
 
 | Nhóm | Số case | Trạng thái chuẩn bị | Điều kiện chuyển trạng thái |
 |---|---:|---|---|
-| Baseline UAT-01..15 | 15 | NOT RUN | Frozen SHA + stack/clone receipts + owner evidence; UAT-14 dùng M01 demo/local policy đã duyệt, cần runtime fixture/receipt |
+| Baseline UAT-01..15 | 15 | PASS | Receipt TV2 trên Frozen SHA; UAT-12 chỉ xác nhận Return không-restock |
 | UNKNOWN UAT-16..17 | 2 | BLOCKED | Runner/tuple/provider oracle/approval riêng và TV5 witness |
-| Voucher C1 | 5 | NOT RUN | Frozen SHA + fake actors + Voucher API/Store fixtures |
-| Promotion | 3 | NOT RUN | Frozen SHA + campaign/Product fixtures + TV2 approval |
-| PROMO-04 | 1 | BLOCKED ON; OFF N/A | C2 gate đủ cho ON; OFF ghi đúng “không áp dụng, chưa bật” |
-| Voucher C2 | 11 | BLOCKED (C2 OFF) | G-04..G-08; #211/#212 merge và TV5 money review đã đạt; còn frozen-SHA CI + P0 C2 triage + TV2 runtime receipt |
+| Voucher C1 | 5 | PASS | Receipt TV2 trên Frozen SHA |
+| Promotion | 3 | PASS | PROMO-01/03/04 PASS; PROMO-02 tách riêng PARTIAL |
+| PROMO-04 | 1 | PASS | C2 ON được TV2 vận hành trong UAT |
+| Voucher C2 | 11 | PASS | Receipt TV2; C2 ON trong stack UAT, CI OFF/ON trên Frozen SHA |
 
 **Không phải 37 PASS.** Đây là checklist chuẩn bị; Final UAT chỉ được kết luận sau khi owner thực thi và TV5 xác minh receipts trên đúng frozen SHA.
 

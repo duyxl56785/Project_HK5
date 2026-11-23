@@ -1,14 +1,18 @@
 # TV5 — Ma trận Final UAT W5, C2 bật/tắt
 
-**Mục đích:** ma trận thực thi cho Final UAT ngày 21/11/2026, trên đúng full SHA `main` do TV2 đóng băng. Đây là checklist trống để ghi nhận kết quả thật, không phải receipt hay kết quả rehearsal.
+**Mục đích:** ma trận thực thi và đối chiếu kết quả Final UAT ngày 21/11/2026 trên Frozen SHA `eaf3bf270255b80db4525f836bfae7e495dc8651`. Kết quả thực tế được lấy từ run-manifest và raw receipts PR #221, không suy từ checklist trống.
+
+**Kết quả receipt 22/11:** 34 PASS, 1 PARTIAL (PROMO-02), 2 BLOCKED (UAT-16/17), 0 FAIL; không có P0/P1. TV5 xác minh 37 case manifests và 98 checksum, không có sai lệch. [Kết quả #158](https://github.com/duyxl56785/Project_HK5/issues/158#issuecomment-7075353935) · [Receipt PR #221](https://github.com/duyxl56785/Project_HK5/pull/221).
 
 **Tài liệu thao tác:** dùng [checklist chi tiết đủ 37 case](TV5_FINAL_UAT_EXECUTION_CHECKLIST_20261121.md) khi thực thi; TV2/TV3/TV4 gửi receipt theo [hướng dẫn evidence intake](TV5_FINAL_UAT_EVIDENCE_INTAKE_20261121.md). Ma trận này vẫn là nguồn mapping ID và kết quả gốc.
 
-**Nguồn quyết định hiện hành:** comment TV2 ngày 18/11/2026 trên [PR #211](https://github.com/duyxl56785/Project_HK5/pull/211#issuecomment-6969662837): đóng băng main trước 18:00 ngày 20/11; TV2 chạy UAT/E2E ngày 21/11. Quyết định này mới hơn lịch freeze 19/11 trong các ghi chú cũ.
+**Nguồn quyết định hiện hành:** TV2 xác nhận tại Issue #158: Frozen SHA `eaf3bf270255b80db4525f836bfae7e495dc8651`, freeze lúc 20/11/2026 20:44 +07, thay thế freeze cũ `950279e`. TV2 vận hành UAT/E2E ngày 21/11.
 
-**Quyết định C2:** TV2 dự định bật C2 trong demo/UAT cuối, nhưng chỉ khi đủ cả bốn điều kiện: (1) #211 và PR B (hiện là #212) đã merge vào main trước 18:00 20/11; (2) TV5 approve phần tiền #211; (3) CI trên frozen SHA xanh và `voucher-c2.spec.ts` PASS, không skip; (4) không còn P0 mở cho C2. Thiếu bất kỳ điều kiện nào thì UAT chạy C2 OFF; báo cáo ghi **“đã code, đã test, chưa bật trong bản nộp”**. Voucher C1 và Khuyến mãi vẫn kiểm thử độc lập.
+**Quyết định C2:** TV2 cho phép opt-in C2 riêng trong `.env.demo` local cho UAT 21/11 khi đủ bốn điều kiện. Receipt xác nhận C2 đã ON trên stack UAT; triage không phát hiện P0 C2 và capability trả `enabled=true`. C2 OFF được kiểm qua CI trên Frozen SHA. Đây là quyền chạy demo/UAT local, không phải production approval.
 
-**Checkpoint GitHub làm mới 20/11/2026:** PR #211 đã MERGED tại `cee7c87d1c7437fc5ed0009405fd2d0fc394bfb2`; TV2, TV4 và TV5 formal `APPROVED` đúng HEAD `4f3152b`, MD21 V10 PostgreSQL trigger/regression đã được review. PR #212 HEAD `3483486acd375e2c45616974ab333d2b850b9771` đã nhận formal review TV2 **APPROVED đúng HEAD** lúc `2026-11-19T10:04:12Z`; PR #212 MERGED lúc `2026-11-19T10:05:23Z` tại `4b5bcb4ceb5a6a636e4c943db2d41c8a4c1bb14f`. Run `44496245054` SUCCESS 3 jobs nhưng checkout log cho thấy nó chạy trên synthetic merge ref `90a09ea` với nền PR #211 `4f3152b`, không phải `main@cee7c87d` (nền còn thiếu #213 `4471256`); chỉ ghi nhận là CI của PR merge-ref cũ, không dùng làm CI main sau tích hợp. **Post-merge push CI đúng `main@4b5bcb4`** là run [44502375038](https://github.com/duyxl56785/Project_HK5/actions/runs/44502375038), workflow Frontend and E2E, attempt 2 SUCCESS: frontend typecheck/unit/build SUCCESS; E2E C2 OFF 24 passed, 0 skipped; E2E C2 ON 25 passed, `voucher-c2.spec.ts` PASS, 0 skipped; smoke `FAILS=0`. Attempt 1 có frontend và OFF SUCCESS nhưng ON dừng trước Playwright tại bước `up.mjs` do Gradle Plugin Portal không resolve dependency (lỗi tải dependency); TV2 rerun job ON và attempt 2 hoàn tất xanh. Backend readiness không được trigger bởi push này vì #212 chỉ đổi frontend/workflow; backend readiness gần nhất `44493061575` gắn `cee7c87` sau merge #211. PR #215 sau đó được TV5 APPROVED đúng HEAD `be8aa539` và squash-merged vào main tại `1b652751c76e5558d76d0f1b9037c275cef3ba34`; PR chỉ cập nhật decision records, không thay source/runtime. Main hiện tại `1b65275` chưa được TV2 xác nhận frozen SHA; run `44502375038` là CI của parent `4b5bcb4`, không được coi là CI trên SHA `1b652751`. Final UAT vẫn NOT RUN.
+**Checkpoint GitHub làm mới 22/11/2026:** lịch sử #211/#212/#215/#218/#220 được giữ bên dưới làm provenance CI/review. Frozen SHA hiện hành là `eaf3bf270255b80db4525f836bfae7e495dc8651`; CI đúng SHA `44746995567` Frontend, C2 OFF và C2 ON SUCCESS; backend readiness `44493061575` còn áp dụng vì backend không đổi. Final UAT đã có receipt: 34 PASS, 1 PARTIAL, 2 BLOCKED, 0 FAIL. #216 đã MERGED vào `main@dafb95f`. Xem bảng receipt ở đầu file và [run-manifest/receipt PR #221](https://github.com/duyxl56785/Project_HK5/pull/221).
+
+**Checkpoint bổ sung 21/11/2026 sau merge PR #220 (đã được cập nhật bằng receipt 22/11):** Frozen SHA `eaf3bf270255b80db4525f836bfae7e495dc8651`; CI đúng SHA `44746995567` và backend readiness `44493061575` được TV2 xác nhận áp dụng. Final UAT receipt hiện có 34 PASS, 1 PARTIAL, 2 BLOCKED, 0 FAIL. PROMO-02 Flash Sale in-window NOT_RUN; UAT-16/17 BLOCKED; RET-05 restock BLOCKED. Snapshot 0 PASS/23 NOT RUN/13 BLOCKED bên dưới là lịch sử trước khi chạy.
 
 **Tiền kiểm tích hợp do TV5 thực hiện (worktree disposable, không commit/merge):** `git merge --no-commit --no-ff` PR #211 vào `main@4471256` tự động, không conflict. Lệnh `:cart-service:test :inventory-service:test :order-service:test :product-service:test :seller-service:test --rerun-tasks` chạy lại toàn bộ 28 Gradle actions; 72 XML suites có 1.104 backend tests PASS (0 fail/error/skip; không phải PostgreSQL integration). Frontend 185/185 PASS, typecheck PASS, build PASS, `git diff --check` PASS. Đây là local preflight của ứng viên tích hợp, không phải hosted CI, không phải frozen SHA và không phải Final UAT. PR #211 backend CI PostgreSQL 156/156 là evidence riêng trên PR HEAD.
 
@@ -27,15 +31,15 @@
 
 | Gate | Điều kiện bắt buộc | Người xác nhận | Receipt / giá trị cần ghi | Trạng thái hiện tại |
 |---|---|---|---|---|
-| G-01 | TV2 công bố full frozen `main` SHA sau freeze trước 20/11 18:00 | TV2 | SHA 40 ký tự: ____________________ | NOT_RUN |
-| G-02 | Hosted readiness, frontend, E2E đều xanh trên đúng frozen SHA | TV2 | URLs + workflow run IDs: ____________________ | NOT_RUN |
-| G-03 | Clean clone/clean install receipt cùng frozen SHA | TV1/TV2 | Machine, command, exit code, receipt: ____________________ | NOT_RUN |
+| G-01 | TV2 công bố full frozen `main` SHA và thời điểm freeze | TV2 | `eaf3bf270255b80db4525f836bfae7e495dc8651`; 20/11/2026 20:44 +07; Issue #158 | PASS — TV2 xác nhận; thay freeze cũ `950279e` |
+| G-02 | Hosted readiness, frontend, E2E xanh hoặc có xác nhận applicability trên đúng Frozen SHA | TV2 | Frontend/E2E run `44746995567` trên exact SHA; Backend readiness `44493061575` trên `cee7c87` | PASS — 3 job Frontend/E2E SUCCESS trên Frozen SHA; TV2 xác nhận backend readiness áp dụng vì backend không đổi |
+| G-03 | Clean clone/clean install receipt cùng frozen SHA | TV1/TV2 | TV2 run-manifest #221 ghi separate clone tại exact Frozen SHA, git status sạch trước/sau; TV1 PR #226 bổ sung clone độc lập cùng máy và E2E C2 OFF | PASS — clean clone đã được chứng minh; tiêu chí máy thứ hai của Issue #158 vẫn NOT_RUN |
 | G-04 | PR #211 merged; TV2, TV4, TV5 reviews đủ; không còn thread tiền/fulfillment chưa xử lý | TV2/TV4/TV5 | Merge SHA + review URLs: `cee7c87d1c7437fc5ed0009405fd2d0fc394bfb2`; 3/3 APPROVED tại `4f3152b` | MERGED / 3-of-3 APPROVED; TV2 vẫn xác nhận P0 scope |
 | G-05 | PR #212 (PR B) merged vào main trước 18:00 20/11 | TV2 | Merge SHA + CI URL: `4b5bcb4ceb5a6a636e4c943db2d41c8a4c1bb14f`; TV2 review exact HEAD `3483486` APPROVED | DONE — merged 19/11 17:05:23 +07; post-merge push run `44502375038` attempt 2 SUCCESS đúng merge SHA: frontend PASS, C2 OFF 24/24, C2 ON 25/25, 0 skip; attempt 1 ON gặp lỗi tải Gradle dependency và đã rerun thành công |
-| G-06 | CI frozen SHA có `voucher-c2.spec.ts` PASS, 0 skipped | TV2 | Run URL + exact summary: ____________________ | NOT RUN — TV2 chưa công bố frozen SHA; run `44502375038` chứng minh CI trên candidate `4b5bcb4`, chỉ được tính là frozen-SHA CI nếu TV2 xác nhận đúng SHA này là frozen; nếu main tiến thêm phải rerun trên SHA freeze |
-| G-07 | Không còn P0 mở liên quan C2; TV2 xác nhận scope | TV2 + TV3/TV4/TV5 | Issue/triage links: ____________________ | NOT_RUN |
-| G-08 | Nếu C2 ON: TV2 xác nhận ba opt-in trong `.env.demo` local (`--approved-inventory-pair`, `--approved-finance-policy`, `--approved-voucher-c2`) và policy MD01–MD11 đúng phạm vi demo/local | TV2 | Link M01 + runtime receipt/flag snapshot: `docs/project-report/M01_FINANCE_DECISION.md` và `docs/project-report/M01_VOUCHER_C2_DECISION.md` (PR #215 đã merge decision records tại `1b652751`) | BLOCKED — Finance MD01–MD11 đã duyệt cho demo/local; production NOT_APPROVED. Runtime flags chưa được xác minh, mặc định giữ OFF. C2 vẫn chờ CI đúng frozen SHA và P0 C2 triage theo bốn điều kiện TV2; không phải do thiếu Finance approval cho demo. |
-| G-09 | Stack disposable riêng, DB/volume/network/port riêng, dữ liệu giả; không đụng stack dùng chung | TV2/TV1 | Compose project + image digest + DB ID: ____________________ | NOT_RUN |
+| G-06 | CI frozen SHA có `voucher-c2.spec.ts` PASS, 0 skipped | TV2 | [Run 44746995567](https://github.com/duyxl56785/Project_HK5/actions/runs/44746995567), job E2E C2 ON: 25 passed, 0 skipped | PASS — exact Frozen SHA `eaf3bf2`; TV2 xác nhận C2 được opt-in cho UAT nếu gate P0 còn lại đạt |
+| G-07 | Không còn P0 mở liên quan C2; TV2 xác nhận scope | TV2 + TV3/TV4/TV5 | [TV2 triage tại Issue #158](https://github.com/duyxl56785/Project_HK5/issues/158#issuecomment-7075353935): không có P0/P1 | PASS — TV2 xác nhận không có P0/P1; không suy từ CI |
+| G-08 | Nếu C2 ON: TV2 xác nhận ba opt-in trong `.env.demo` local (`--approved-inventory-pair`, `--approved-finance-policy`, `--approved-voucher-c2`) và policy MD01–MD11 đúng phạm vi demo/local | TV2 | [Run-manifest PR #221](https://github.com/duyxl56785/Project_HK5/pull/221): ba flags observed true trong `.env.demo`, capability `enabled=true`; M01 MD09/MD23 và quyết định tại Issue #158 | PASS — receipt runtime xác nhận C2 ON cho UAT local sau triage không P0. Finance production vẫn NOT_APPROVED. |
+| G-09 | Stack disposable riêng, DB/volume/network/port riêng, dữ liệu giả; không đụng stack dùng chung | TV2/TV1 | [Run-manifest PR #221](https://github.com/duyxl56785/Project_HK5/pull/221): project `hk5-promo-test-uat2111`, DB mới, network/volumes/ports và image digests riêng | PASS — stack UAT riêng được ghi nhận; không phải production |
 
 ## 3. Ma trận Final UAT — luồng nền hai Store
 
@@ -106,18 +110,11 @@ Các ca C2 chỉ chạy khi toàn bộ gate G-04..G-08 đạt. Nếu C2 OFF, m�
 
 ## 5. Đối chiếu hình ảnh và bản nộp
 
-Theo quyết định TV2 tại [Issue #162 ngày 16/11](https://github.com/duyxl56785/Project_HK5/issues/162#issuecomment-6907759709), báo cáo nộp chỉ có **một file** `Bao_cao_Smart_ECommerce_ban_nop.docx`, do TV2 ghép từ `Bao_cao_Smart_ECommerce.docx`. Bản Word đó chưa có trong repository tại checkpoint này. Không dùng DOCX nháp TV5 thay thế.
+Theo quyết định TV2 tại [Issue #162 ngày 16/11](https://github.com/duyxl56785/Project_HK5/issues/162#issuecomment-6907759709), báo cáo nộp chỉ có **một file** `Bao_cao_Smart_ECommerce_ban_nop.docx`, do TV2 ghép từ `Bao_cao_Smart_ECommerce.docx`. TV2 xác nhận tại [kết quả Final UAT #158](https://github.com/duyxl56785/Project_HK5/issues/158#issuecomment-7075353935) đã chụp ảnh 6.1–6.8 trên Frozen SHA và chèn vào DOCX chính thức; DOCX/ảnh hiện được TV2 giữ ngoài repository nên TV5 chưa thể kiểm hash hoặc nội dung file. Không dùng DOCX nháp TV5 thay thế.
 
 | Hình | Nội dung đúng theo TV2 | Bằng chứng cần đối chiếu | SHA / KQ / Evidence |
 |---|---|---|---|
-| 6.1 | Trang chủ: banner, danh mục, sản phẩm | Ảnh TV2 chụp lại trên frozen SHA, full SHA + viewport + SHA256 | SHA: ____; KQ: ____; Evidence: ____ |
-| 6.2 | Trang chủ trên điện thoại 390 px | Ảnh live viewport 390 px trên frozen SHA | SHA: ____; KQ: ____; Evidence: ____ |
-| 6.3 | Người bán quản lý sản phẩm | Seller actor giả, Product/Store response cùng run | SHA: ____; KQ: ____; Evidence: ____ |
-| 6.4 | Admin duyệt và quản lý người bán | Admin actor giả, Seller approval screen/audit; không dùng ảnh Checkout | SHA: ____; KQ: ____; Evidence: ____ |
-| 6.5 | Giỏ hàng có sản phẩm của hai cửa hàng | Một Cart/session, đúng hai Store, subtotal và total khớp response | SHA: ____; KQ: ____; Evidence: ____ |
-| 6.6 | Một Parent Order tách thành hai SellerOrders | Cùng Order ID/run, hai child ID/Store khác nhau, read-only DB receipt | SHA: ____; KQ: ____; Evidence: ____ |
-| 6.7 | Người bán chỉ thấy đơn con của cửa hàng mình | Seller A/B request/response redacted và cross-Store negative test | SHA: ____; KQ: ____; Evidence: ____ |
-| 6.8 | Tài chính sàn: doanh thu, phí 5%, COD | Finance report snapshot và COD collection evidence; caption dùng “đã ghi nhận đối soát”, không nói đã chuyển tiền thật | SHA: ____; KQ: ____; Evidence: ____ |
+| 6.1–6.8 | Bộ ảnh báo cáo chính thức | TV2 xác nhận đã chụp trên Frozen SHA và chèn vào DOCX chính thức tại Issue #158; file gốc giữ ngoài repo | TV2 xác nhận hoàn tất; TV5 chưa kiểm trực tiếp bytes/hash vì file ngoài repo |
 
 Ảnh chỉ được chụp lại trên frozen SHA. Không dùng ảnh rehearsal, ảnh cũ khác theme, ảnh Cart trống, ảnh mock hoặc ảnh từ CI làm hình nộp.
 
@@ -130,24 +127,36 @@ Theo quyết định TV2 tại [Issue #162 ngày 16/11](https://github.com/duyxl
 | Inventory lifecycle/Return restock RET-05 | BLOCKED nếu chưa có contract và exactly-once receipt | TV4 | Không tuyên bố restock PASS; không tạo stock effect giả |
 | Admin COD collection | P0 nếu demo/báo cáo tuyên bố có | TV4 | Receipt thật, actor, amount, timestamp, idempotency và audit |
 | Finance settlement | BLOCKED nếu thiếu business approval/runtime/reconciliation | TV2 + business owner + TV5 | `settledAt` chỉ là ghi nhận trong ứng dụng, không phải chuyển tiền thật |
-| C2 | Bật chỉ khi G-04..G-08 đủ; nếu thiếu ghi “đã code, đã test, chưa bật” | TV2 quyết định; TV5 review tiền | Review #211, merge #212, CI frozen SHA 0 skip, không P0 |
+| C2 | Đã bật cho UAT local sau khi đủ G-04..G-08; mặc định OFF ngoài `.env.demo` local | TV2 quyết định; TV5 review tiền | PR #221 run-manifest xác nhận flags/capability; triage #158 không P0; production vẫn NOT_APPROVED |
 | Flash Sale/Super Sale live Checkout | NOT_RUN nếu chỉ có unit/PG/clearance E2E; ghi đúng loại Promotion đã thực chạy | TV2/TV3 | Mỗi campaign cần live evidence riêng |
 
-## 7. Kết quả Final UAT (để trống trước ngày chạy)
+## 7. Kết quả Final UAT và disposition của TV5
 
-| Trường | Giá trị cần điền sau khi TV2 chạy |
+| Trường | Giá trị đã đối chiếu |
 |---|---|
-| Frozen main SHA | ________________________________ |
-| Main freeze timestamp (Asia/Ho_Chi_Minh) | ________________________________ |
-| CI readiness/frontend/E2E URLs | ________________________________ |
-| Clean clone machine + receipt | ________________________________ |
-| C2 decision | `đã bật` / `đã code, đã test, chưa bật` |
-| Flags actually used (TV2 records) | ________________________________ |
-| Compose project / image digests | ________________________________ |
-| Run ID / start-end time | ________________________________ |
-| TV2 operator / TV3 / TV4 / TV5 witness | ________________________________ |
-| P0 open / P1 backlog | ________________________________ |
-| Raw evidence folder + manifest SHA256 | ________________________________ |
-| TV5 final disposition | ________________________________ |
+| Frozen main SHA | `eaf3bf270255b80db4525f836bfae7e495dc8651` |
+| Main freeze timestamp (Asia/Ho_Chi_Minh) | `2026-11-20 20:44 +07` |
+| CI readiness/frontend/E2E URLs | Frontend + C2 OFF/ON: [44746995567](https://github.com/duyxl56785/Project_HK5/actions/runs/44746995567); backend applicability: [44493061575](https://github.com/duyxl56785/Project_HK5/actions/runs/44493061575) |
+| Clean clone machine + receipt | TV2 separate clone, clean status before/after, run-manifest #221; TV1 independent clone on same Windows machine, [PR #226](https://github.com/duyxl56785/Project_HK5/pull/226). Second physical/virtual machine: NOT_RUN. |
+| C2 decision | `ON` for this local UAT only; TV2 triage found no P0/P1 |
+| Flags actually used (TV2 records) | Inventory pair, Finance policy and Voucher C2 observed `true` in `.env.demo`; capability `enabled=true`; defaults remain OFF outside local demo |
+| Compose project / image digests | `hk5-promo-test-uat2111`; DB/network/volumes/ports and image digests recorded in run-manifest #221 |
+| Run ID / start-end time | `tv2-uat-eaf3bf2-20261121`; `2026-11-21T11:54:02+07:00` → `2026-11-22T13:19:38+07:00` |
+| TV2 operator / TV3 / TV4 / TV5 witness | Operator: `duyxl56785 (TV2)`; no witness recorded in run-manifest; TV5 performed post-run receipt audit |
+| P0 open / P1 backlog | TV2 triage: no P0/P1; known scope blockers UAT-16/17 and RET-05 remain separately BLOCKED; PROMO-02 Flash Sale in-window NOT_RUN |
+| Raw evidence folder + manifest SHA256 | [PR #221](https://github.com/duyxl56785/Project_HK5/pull/221), 99 files; 98 checksum entries; all checksum and artifact metadata verified |
+| TV5 final disposition | Receipt integrity verified; accept 34 PASS, 1 PARTIAL, 2 BLOCKED, 0 FAIL as TV2's local Final UAT result. Not production acceptance or full closure of Issue #158/#162. |
 
-**Trạng thái trước Final UAT:** `NOT_RUN`. Không tick Issue #18 hoặc #162 từ việc chuẩn bị ma trận này.
+### 7A. Case-level result from the TV2 run-manifest
+
+| Case set | Result | Disposition |
+|---|---:|---|
+| UAT-01..15 | 15 PASS | UAT-12 return non-restock PASS; RET-05 restock remains BLOCKED and is not included |
+| UAT-16..17 | 2 BLOCKED | UNKNOWN claim-conflict/lost-response not executed |
+| C1-01..05 | 5 PASS | All five case manifests and referenced artifacts verified |
+| PROMO-01, PROMO-03, PROMO-04 | 3 PASS | PROMO-04 tested with C2 ON under TV2 authorization |
+| PROMO-02 | PARTIAL | Super Sale PASS in-window; Flash Sale in-window NOT_RUN because Docker stopped during the 21/11 window |
+| C2-01..11 | 11 PASS | C2 ON local UAT; C2 OFF CI is separate evidence |
+| **Total** | **34 PASS, 1 PARTIAL, 2 BLOCKED, 0 FAIL** | No P0/P1 per TV2 triage |
+
+**Trạng thái sau Final UAT:** receipt của TV2 xác nhận 34 PASS, 1 PARTIAL, 2 BLOCKED, 0 FAIL. Không tự tick/đóng Issue #18 hoặc #162 chỉ từ kết quả của TV2; các issue còn yêu cầu đối chiếu deliverable chính thức và các blocker được nêu riêng.

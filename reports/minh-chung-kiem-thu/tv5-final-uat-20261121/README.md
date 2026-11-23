@@ -5,7 +5,7 @@
 **Owner:** TV5 — QA Lead
 
 **Case set:** 37 (17 baseline + 5 Voucher C1 + 4 Promotion + 11 Voucher C2)
-**Execution status hiện tại:** `NOT RUN`; các gate/contract chưa đạt giữ `BLOCKED`.
+**Kết quả Final UAT TV2:** `34 PASS, 1 PARTIAL (PROMO-02), 2 BLOCKED (UAT-16, UAT-17), 0 FAIL`; không có P0/P1. Kết quả và receipt được công bố tại [Issue #158](https://github.com/duyxl56785/Project_HK5/issues/158#issuecomment-7075353935) và [PR #221](https://github.com/duyxl56785/Project_HK5/pull/221). Snapshot `0 PASS, 0 FAIL, 23 NOT RUN, 13 BLOCKED` phía dưới là trạng thái trước phiên chạy sáng 21/11, chỉ giữ làm lịch sử.
 
 ## 1. Nguồn chính thức
 
@@ -15,7 +15,7 @@
 - [M01 Finance](../../../docs/project-report/M01_FINANCE_DECISION.md)
 - [M01 Voucher C2](../../../docs/project-report/M01_VOUCHER_C2_DECISION.md)
 
-Không dùng file template này thay cho matrix/checklist. Không có frozen SHA được xác nhận trong checkpoint hiện tại.
+Không dùng file template này thay cho matrix/checklist. Receipt chính thức hiện ở `tv2-uat-eaf3bf2-20261121/` trong PR #221; thư mục hiện tại vẫn là template và tài liệu intake của TV5.
 
 ## 2. Cấu trúc thư mục khi có run thật
 
@@ -31,7 +31,7 @@ tv5-final-uat-20261121/
       screenshots/
 ```
 
-Không tạo `<run-id>` cho đến khi TV2 công bố frozen SHA và xác nhận môi trường. Mỗi case có một manifest; `run-manifest.json` liên kết các case trong cùng lượt.
+Không tự tạo `<run-id>` hoặc manifest thay người vận hành. Run ID và raw artifacts đã được TV2 bàn giao trong PR #221; TV5 giữ nguyên nguồn, không chỉnh sửa raw receipt.
 
 ## 3. Bộ template
 
@@ -75,4 +75,4 @@ Template có placeholder và trạng thái `NOT RUN`; không phải receipt. Ch�
 
 ## 7. Liên hệ trạng thái hiện tại
 
-Main candidate quan sát ngày 20/11: `1b652751c76e5558d76d0f1b9037c275cef3ba34` sau merge #215; chưa được TV2 xác nhận frozen. Post-merge CI [44502375038](https://github.com/duyxl56785/Project_HK5/actions/runs/44502375038), attempt 2 SUCCESS, gắn parent `4b5bcb4` trước #215, không phải CI trên main hiện tại. Final UAT chưa chạy; không có receipt nào được tạo bởi bộ template này.
+TV2 xác nhận Frozen SHA sau merge PR #220: `eaf3bf270255b80db4525f836bfae7e495dc8651`. CI [44746995567](https://github.com/duyxl56785/Project_HK5/actions/runs/44746995567) trên đúng SHA: Frontend, E2E C2 OFF và E2E C2 ON SUCCESS; backend readiness [44493061575](https://github.com/duyxl56785/Project_HK5/actions/runs/44493061575) được TV2 xác nhận còn áp dụng. Final UAT result [#158](https://github.com/duyxl56785/Project_HK5/issues/158#issuecomment-7075353935): 34 PASS, 1 PARTIAL, 2 BLOCKED, 0 FAIL. TV5 đã xác minh PR #221 có 37 case manifests, 98 checksum hợp lệ và artifact metadata/hash khớp. PROMO-02 Flash Sale trong khung giờ NOT_RUN; UAT-16/17 BLOCKED; RET-05 exactly-once restock chưa triển khai. DOCX/ảnh 6.1–6.8 TV2 giữ ngoài repo.
