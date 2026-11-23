@@ -52,6 +52,8 @@ input[readonly] { background: var(--brand-50); color: var(--muted); }
 .field { display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 500; color: var(--brand-deep); }
 .field input, .field select, .field textarea { font-weight: 400; color: var(--ink); }
 .field__error { color: var(--danger); font-weight: 400; }
+.phone-field select { flex: none; width: 9.5em; }
+.phone-field input { flex: 1; min-width: 0; }
 .field--inline { flex-direction: row; align-items: center; gap: 8px; }
 .field--inline input[type=number] { width: 110px; }
 .check { display: flex; gap: 8px; align-items: center; }
