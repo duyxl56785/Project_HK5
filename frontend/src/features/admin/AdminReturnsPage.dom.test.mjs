@@ -36,6 +36,7 @@ test('Admin sees Return rows with status filter and no action buttons', async ()
   globalThis.fetch = async (path, options) => {
     paths.push(String(path));
     assert.equal(options?.method ?? 'GET', 'GET');
+    if (String(path) === '/api/stores') return Response.json([{ id: 'store-1', name: 'Tiệm Áo Sài Gòn', slug: 'tiem-ao' }]);
     return new Response(JSON.stringify([{
       requestId: 'cccccccc-cccc-4ccc-8ccc-cccccccccccc', orderId: 'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa',
       storeOrderId: 'bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb', storeId: 'store-1', status: 'REQUESTED',
@@ -52,17 +53,19 @@ test('Admin sees Return rows with status filter and no action buttons', async ()
     });
     await until(() => /Sai kích thước/.test(host.textContent));
     assert.match(host.textContent, /Sai kích thước/);
-    assert.match(host.textContent, /store-1/);
+    // The Store is named, not shown by its id.
+    await until(() => /Tiệm Áo Sài Gòn/.test(host.textContent));
+    assert.doesNotMatch(host.textContent, /store-1/);
     assert.match(host.textContent, /Đã yêu cầu trả/);
     assert.equal(host.querySelector('button'), null);
-    assert.equal(paths[0], '/api/admin/returns');
+    assert.ok(paths.includes('/api/admin/returns'));
 
     await act(async () => {
       const select = host.querySelector('select');
       select.value = 'RECEIVED';
       select.dispatchEvent(new environment.Event('change', { bubbles: true }));
     });
-    await until(() => paths.length > 1);
+    await until(() => paths.at(-1) !== '/api/stores' && paths.filter((p) => p.startsWith('/api/admin/returns')).length > 1);
     assert.equal(paths.at(-1), '/api/admin/returns?status=RECEIVED');
   } finally {
     globalThis.fetch = originalFetch;

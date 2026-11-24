@@ -72,16 +72,18 @@ test('retraction view shows the owner voucher and offers only pause and cancel',
 });
 
 test('Admin sees the pending request and needs a reason before rejecting', async () => {
-  await render(pages.AdminVoucherLimitsPage, () => [{
+  await render(pages.AdminVoucherLimitsPage, (path) => path === '/api/stores' ? [] : [{
     id: 'request-1', storeId: 'store-12345678', requestedLimit: 30, reason: 'Mở rộng chương trình',
     requestedFrom: '2026-11-14T01:00:00Z', requestedUntil: '2026-11-15T01:00:00Z', version: '0',
   }], (host, paths) => {
     assert.match(host.textContent, /Xin 30 slot/);
+    // A Store missing from the public list shows a short label, never the raw id.
+    assert.match(host.textContent, /Cửa hàng #STORE-12/);
     const [approve, reject] = host.querySelectorAll('article button');
     assert.equal(approve.textContent, 'Duyệt');
     assert.equal(approve.disabled, false);
     assert.equal(reject.textContent, 'Từ chối');
     assert.equal(reject.disabled, true);
-    assert.deepEqual(paths, [['/api/admin/voucher-limit-requests?status=PENDING&size=50', 'GET']]);
+    assert.deepEqual(paths.filter(([path]) => path !== '/api/stores'), [['/api/admin/voucher-limit-requests?status=PENDING&size=50', 'GET']]);
   });
 });
