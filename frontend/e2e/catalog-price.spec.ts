@@ -23,4 +23,10 @@ test('a shopper types a price range and presses Enter; both bounds are applied',
   await page.getByRole('button', { name: 'Áp dụng' }).click();
   await expect(page).not.toHaveURL(/maxPrice=/);
   await expect(page).toHaveURL(/minPrice=200000/);
+
+  // One button clears every filter and empties the price fields.
+  await page.getByRole('button', { name: 'Xóa bộ lọc' }).click();
+  await expect(page).not.toHaveURL(/minPrice=/);
+  await expect(page.getByLabel('Giá từ')).toHaveValue('');
+  await expect(page.getByRole('button', { name: 'Xóa bộ lọc' })).toHaveCount(0);
 });

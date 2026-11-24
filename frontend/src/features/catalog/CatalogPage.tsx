@@ -4,6 +4,7 @@ import { api } from '../../shared/api';
 import { Loaded, money } from '../../shared/ui';
 import { CategoryBrowser } from './CategoryBrowser';
 import { PriceFilter } from './PriceFilter';
+import { clearFilters, hasFilters } from './catalogFilters';
 import type { CategoryDto } from './categoryTypes';
 
 export interface StoreRef { readonly id: string; readonly name: string; readonly slug: string }
@@ -55,6 +56,7 @@ export function CatalogPage({ store }: { readonly store?: StoreRef }) {
   return <div className="catalog">
     <details className="filters" open={matchMedia('(min-width: 721px)').matches}>
       <summary>Bộ lọc</summary>
+      {hasFilters(params) && <button type="button" className="btn" onClick={() => setParams(clearFilters(params))}>Xóa bộ lọc</button>}
       <PriceFilter min={params.get('minPrice') ?? ''} max={params.get('maxPrice') ?? ''} onApply={(range) => update({ ...range })} />
       {!store && params.get('storeId') && <button type="button" className="btn" onClick={() => update({ storeId: null })}>Bỏ lọc cửa hàng</button>}
       <CategoryBrowser selectedId={params.get('categoryId')} onSelect={(c) => update({ categoryId: c.id })}

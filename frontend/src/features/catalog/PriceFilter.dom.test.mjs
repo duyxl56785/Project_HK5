@@ -58,6 +58,14 @@ test('leaving a field unchanged applies nothing, so the current page is kept', a
   await act(async () => root.unmount());
 });
 
+test('the fields follow bounds changed from outside, such as clearing all filters', async () => {
+  const props = { min: '100000', max: '500000', onApply: () => {} };
+  const { host, root } = await mount(props);
+  await act(async () => root.render(createElement(PriceFilter, { ...props, min: '', max: '' })));
+  assert.deepEqual([...host.querySelectorAll('input')].map((input) => input.value), ['', '']);
+  await act(async () => root.unmount());
+});
+
 test('an emptied field clears that bound', async () => {
   const applied = [];
   const { host, root } = await mount({ min: '100000', max: '500000', onApply: (range) => applied.push(range) });
