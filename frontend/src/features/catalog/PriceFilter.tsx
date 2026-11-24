@@ -11,12 +11,10 @@ export function PriceFilter({ min, max, onApply }: {
 }) {
   const field = (form: HTMLFormElement, name: string) => form.elements.namedItem(name) as HTMLInputElement;
   const ref = useRef<HTMLFormElement>(null);
-  // Bounds changed from outside (clearing all filters, Back) must show in the fields too.
-  useEffect(() => {
-    if (!ref.current) return;
-    field(ref.current, 'minPrice').value = min;
-    field(ref.current, 'maxPrice').value = max;
-  }, [min, max]);
+  // Bounds changed from outside (clearing all filters, Back) must show in the fields too. Each field follows
+  // only its own bound: applying "Giá từ" on leaving it must not wipe the "đến" the shopper is typing.
+  useEffect(() => { if (ref.current) field(ref.current, 'minPrice').value = min; }, [min]);
+  useEffect(() => { if (ref.current) field(ref.current, 'maxPrice').value = max; }, [max]);
   const apply = (form: HTMLFormElement) => {
     const value = (name: string) => field(form, name).value.trim();
     const range = { minPrice: value('minPrice'), maxPrice: value('maxPrice') };
