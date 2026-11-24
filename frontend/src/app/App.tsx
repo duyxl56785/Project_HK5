@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { BrowserRouter, Link, NavLink, Outlet, Route, Routes, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { api } from '../shared/api';
 import { useAuth, Guard } from '../shared/auth';
+import { authLink } from '../shared/authLinks';
 import { useCart } from '../features/cart/cartApi';
 import { NotificationBell, NotificationsPage } from '../features/notifications/Notifications';
 
@@ -105,7 +106,7 @@ function SearchBar() {
 function Layout() {
   const { account, has, logout } = useAuth();
   const navigate = useNavigate();
-  const { pathname } = useLocation();
+  const { pathname, search } = useLocation();
   return <>
     <header className="topbar">
       <nav className="topbar__strip" aria-label="Điều hướng chính">
@@ -128,7 +129,7 @@ function Layout() {
           <NotificationBell />
           <NavLink to="/account">Tài khoản</NavLink>
           <button type="button" className="link" onClick={() => void logout().finally(() => navigate('/'))}>Đăng xuất</button>
-        </> : <><NavLink to="/login">Đăng nhập</NavLink><NavLink to="/register">Đăng ký</NavLink></>}
+        </> : <><NavLink to={authLink('/login', pathname, search)}>Đăng nhập</NavLink><NavLink to={authLink('/register', pathname, search)}>Đăng ký</NavLink></>}
       </nav>
       <div className="topbar__main">
         <Link to="/" className="brand" aria-label="Soopi, trang chủ">
