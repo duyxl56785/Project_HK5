@@ -106,7 +106,13 @@ public class CatalogController {
         if (storeIds.isEmpty()) return new Page(List.of(), 0, page, size);
         StringBuilder where = new StringBuilder(" from ProductEntity p where p.status = :status and p.storeId in :stores");
         Map<String, Object> params = new HashMap<>(Map.of("status", ProductStatus.ACTIVE, "stores", storeIds));
-        if (q != null && !q.isBlank()) { where.append(" and lower(p.name) like :q"); params.put("q", "%" + q.strip().toLowerCase() + "%"); }
+        if (q != null && !q.isBlank()) {
+            // Accent-insensitive: "ao thun" finds "Áo thun" (see SearchText).
+            where.append(" and cast(function('translate', lower(p.name), :vietnamese, :ascii) as String) like :q");
+            params.put("vietnamese", com.projecthk5.productservice.catalog.SearchText.VIETNAMESE);
+            params.put("ascii", com.projecthk5.productservice.catalog.SearchText.ASCII);
+            params.put("q", "%" + com.projecthk5.productservice.catalog.SearchText.fold(q.strip()) + "%");
+        }
         if (categoryId != null) { where.append(" and p.categoryId in :cats"); params.put("cats", withDescendants(categoryId)); }
         if (minPrice != null) { where.append(" and p.unitPrice >= :min"); params.put("min", minPrice); }
         if (maxPrice != null) { where.append(" and p.unitPrice <= :max"); params.put("max", maxPrice); }
