@@ -83,6 +83,28 @@ test('an invalid quantity is not sent and the field shows the Cart quantity agai
   await act(async () => root.unmount());
 });
 
+test('a quantity above the stock is not sent and says how many are left', async () => {
+  const changes = [];
+  const { host, root } = await mount({ stock: { p1: 3 }, onQuantityChange: (id, quantity) => changes.push(quantity) });
+  const input = host.querySelector('#qty-p1');
+  assert.equal(input.max, '3');
+  await type(input, '5');
+  await act(async () => { input.focus(); input.blur(); });
+  assert.deepEqual(changes, []);
+  assert.equal(input.value, '2');
+  assert.match(host.textContent, /Chỉ còn 3 sản phẩm/);
+  await type(input, '3');
+  await act(async () => { input.focus(); input.blur(); });
+  assert.deepEqual(changes, [3]);
+  await act(async () => root.unmount());
+});
+
+test('a line already above the stock is flagged so the customer lowers it before ordering', async () => {
+  const { host, root } = await mount({ stock: { p1: 1 }, onQuantityChange: () => {} });
+  assert.match(host.textContent, /Chỉ còn 1 sản phẩm/);
+  await act(async () => root.unmount());
+});
+
 test('clearing the Cart asks on the page, so it also works where browser dialogs are blocked', async () => {
   let cleared = 0;
   const { host, root } = await mount({ onClear: () => { cleared += 1; } });

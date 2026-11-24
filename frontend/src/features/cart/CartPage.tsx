@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { api, ApiError } from '../../shared/api';
 import { ErrorNote, useAction } from '../../shared/ui';
 import { CartView } from './CartView';
-import { useCart } from './cartApi';
+import { useCart, useCartStock } from './cartApi';
 
 export function CartPage() {
   const cart = useCart();
@@ -10,13 +10,14 @@ export function CartPage() {
     api(`/api/cart/items/${productId}`, { method: 'PATCH', body: { quantity } }), ['cart']);
   const remove = useAction((productId: string) => api(`/api/cart/items/${productId}`, { method: 'DELETE' }), ['cart']);
   const clear = useAction(() => api('/api/cart', { method: 'DELETE' }), ['cart']);
+  const stock = useCartStock(cart.data?.snapshot.items.map((item) => item.productId) ?? []);
 
   if (cart.isPending) return <CartView state={{ status: 'loading' }} />;
   if (cart.error) return <CartView onRetry={() => void cart.refetch()}
     state={{ status: cart.error instanceof ApiError && cart.error.status === 503 ? 'unavailable' : 'error' }} />;
   const { snapshot, storeNames } = cart.data;
   return <div className="stack">
-    <CartView state={{ status: 'ready', snapshot }} storeNames={storeNames}
+    <CartView state={{ status: 'ready', snapshot }} storeNames={storeNames} stock={stock}
       onQuantityChange={(productId, quantity) => change.mutate({ productId, quantity })}
       onRemove={(productId) => remove.mutate(productId)}
       onClear={() => clear.mutate(undefined)} />

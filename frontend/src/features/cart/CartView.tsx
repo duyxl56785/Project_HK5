@@ -11,6 +11,8 @@ export interface CartViewProps {
   readonly onRetry?: () => void;
   /** Display names by Store id; the id is shown when a name is unknown. */
   readonly storeNames?: Readonly<Record<string, string>>;
+  /** Units in stock by Product id, when known. The Cart API does not check stock; Checkout does. */
+  readonly stock?: Readonly<Record<string, number>>;
 }
 
 const messages = {
@@ -25,22 +27,30 @@ const messages = {
  * The typed number is sent once, when the shopper leaves the field or presses Enter.
  * Sending each keystroke made "12" arrive as 1, then reset the field before the 2 was typed.
  */
-function QuantityInput({ id, quantity, disabled, onCommit }: {
-  readonly id: string; readonly quantity: number; readonly disabled: boolean; readonly onCommit: (quantity: number) => void;
+function QuantityInput({ id, quantity, stock, disabled, onCommit }: {
+  readonly id: string; readonly quantity: number; readonly stock: number | undefined; readonly disabled: boolean;
+  readonly onCommit: (quantity: number) => void;
 }) {
+  const max = Math.min(1000, stock ?? 1000);
   const [draft, setDraft] = useState(String(quantity));
+  const [refused, setRefused] = useState(false);
   // Enter then leaving the field must not send the same number twice before the Cart reloads.
   const sent = useRef(quantity);
   useEffect(() => { setDraft(String(quantity)); sent.current = quantity; }, [quantity]);
   const commit = () => {
     const number = Number(draft);
-    if (draft.trim() !== '' && Number.isInteger(number) && number >= 1 && number <= 1000) {
+    const valid = draft.trim() !== '' && Number.isInteger(number) && number >= 1;
+    setRefused(valid && number > max && stock !== undefined);
+    if (valid && number <= max) {
       if (number !== sent.current) { sent.current = number; onCommit(number); }
     } else setDraft(String(quantity));
   };
-  return <input id={id} type="number" min={1} max={1000} step={1} inputMode="numeric" value={draft} disabled={disabled}
-    onChange={(event) => setDraft(event.currentTarget.value)} onBlur={commit}
-    onKeyDown={(event) => { if (event.key === 'Enter') commit(); }} />;
+  return <>
+    <input id={id} type="number" min={1} max={max} step={1} inputMode="numeric" value={draft} disabled={disabled}
+      onChange={(event) => setDraft(event.currentTarget.value)} onBlur={commit}
+      onKeyDown={(event) => { if (event.key === 'Enter') commit(); }} />
+    {stock !== undefined && (refused || quantity > stock) && <small className="tv3-cart__stock" role="alert">{stock === 0 ? 'Sản phẩm đã hết hàng' : `Chỉ còn ${stock} sản phẩm`}</small>}
+  </>;
 }
 
 /** Asks on the page: browsers that block dialogs made window.confirm return false without showing anything. */
@@ -55,7 +65,7 @@ function ClearCart({ onClear }: { readonly onClear: () => void }) {
 }
 
 /** Presentation only. Parent owns trusted Cart API, actor identity and revision control. */
-export function CartView({ state, onQuantityChange, onRemove, onClear, onRetry, storeNames }: CartViewProps) {
+export function CartView({ state, onQuantityChange, onRemove, onClear, onRetry, storeNames, stock }: CartViewProps) {
   if (state.status !== 'ready') {
     return <section className="tv3-cart" aria-busy={state.status === 'loading'}>
       <h2>Giỏ hàng</h2>
@@ -93,7 +103,7 @@ export function CartView({ state, onQuantityChange, onRemove, onClear, onRetry, 
           </div>
           <div className="tv3-cart__actions">
             <label htmlFor={'qty-' + line.productId}>Số lượng</label>
-            <QuantityInput id={'qty-' + line.productId} quantity={line.quantity} disabled={cart.claimed || !onQuantityChange}
+            <QuantityInput id={'qty-' + line.productId} quantity={line.quantity} stock={stock?.[line.productId]} disabled={cart.claimed || !onQuantityChange}
               onCommit={(quantity) => onQuantityChange?.(line.productId, quantity, cart.revision)} />
             <button type="button" disabled={cart.claimed || !onRemove}
               onClick={() => onRemove?.(line.productId, cart.revision)}>Xóa</button>
