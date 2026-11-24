@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import type { ReactNode } from 'react';
 import { ApiError } from './api';
+import { apiErrorText } from './apiErrors';
 
 const vnd = new Intl.NumberFormat('vi-VN');
 export const money = (value: number | string | null | undefined) => `${vnd.format(Number(value ?? 0))} ₫`;
@@ -8,7 +9,7 @@ export const dateTime = (value: string | null | undefined) => value ? new Date(v
 export const shortId = (id: string) => id.slice(0, 8).toUpperCase();
 
 export function errorText(error: unknown) {
-  if (error instanceof ApiError) return error.message;
+  if (error instanceof ApiError) return apiErrorText(error);
   return 'Không kết nối được máy chủ. Vui lòng thử lại.';
 }
 
