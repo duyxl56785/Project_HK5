@@ -19,7 +19,7 @@ export function CartPage() {
     <CartView state={{ status: 'ready', snapshot }} storeNames={storeNames}
       onQuantityChange={(productId, quantity) => change.mutate({ productId, quantity })}
       onRemove={(productId) => remove.mutate(productId)}
-      onClear={() => { if (window.confirm('Xóa toàn bộ sản phẩm trong giỏ hàng?')) clear.mutate(undefined); }} />
+      onClear={() => clear.mutate(undefined)} />
     <ErrorNote error={change.error ?? remove.error ?? clear.error} />
     {snapshot.items.length > 0 && !snapshot.claimed && <Link className="btn btn--primary" to="/checkout">Tiến hành đặt hàng</Link>}
     {snapshot.items.length === 0 && <Link to="/">Tiếp tục mua sắm</Link>}

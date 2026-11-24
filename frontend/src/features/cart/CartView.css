@@ -23,3 +23,4 @@
 .tv3-cart__total>div{display:flex;justify-content:space-between;gap:1rem}
 .tv3-cart__total small{display:block;color:#475569;margin-top:.6rem}
 @media(max-width:700px){.tv3-cart__line{grid-template-columns:1fr;gap:.6rem}.tv3-cart__price{justify-self:start}}
+.tv3-cart__confirm{display:flex;gap:.4rem;align-items:center;flex-wrap:wrap}
