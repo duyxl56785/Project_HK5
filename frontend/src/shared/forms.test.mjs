@@ -2,10 +2,10 @@ import assert from 'node:assert/strict';
 import { after, before, test } from 'node:test';
 import { createServer } from 'vite';
 
-let vite, sellerApplicationSchema, TERMS_VERSION;
+let vite, sellerApplicationSchema, text, TERMS_VERSION;
 before(async () => {
   vite = await createServer({ server: { middlewareMode: true, hmr: false, watch: null }, optimizeDeps: { noDiscovery: true }, logLevel: 'silent' });
-  ({ sellerApplicationSchema } = await vite.ssrLoadModule('/src/shared/forms.ts'));
+  ({ sellerApplicationSchema, text } = await vite.ssrLoadModule('/src/shared/forms.ts'));
   ({ TERMS_VERSION } = await vite.ssrLoadModule('/src/features/policy/terms.ts'));
 });
 after(() => vite?.close());
@@ -40,4 +40,10 @@ test('the rules must be accepted and a business needs a tax code', () => {
 
 test('the rules version matches the server', () => {
   assert.equal(TERMS_VERSION, '2026-11-11');
+});
+
+test('an empty field names it in lower case, but an acronym such as SKU keeps its capitals', () => {
+  const message = (label) => text(label, 10).safeParse('').error.issues[0].message;
+  assert.equal(message('SKU'), 'Nhập SKU');
+  assert.equal(message('Tên sản phẩm'), 'Nhập tên sản phẩm');
 });
