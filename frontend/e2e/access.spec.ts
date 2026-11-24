@@ -75,8 +75,9 @@ test('an admin locks an account, ending its session, and unlocks it', async ({ b
   await admin.goto('/admin/accounts');
   await admin.getByLabel('Tìm theo email').fill(account.email);
   const row = admin.getByRole('row', { name: account.email });
-  admin.once('dialog', (dialog) => void dialog.accept());
   await row.getByRole('button', { name: 'Khóa', exact: true }).click();
+  // The lock is confirmed on the page, not in a browser dialog.
+  await row.getByRole('button', { name: 'Xác nhận khóa', exact: true }).click();
   await expect(row.getByText('Đã khóa')).toBeVisible();
 
   await page.reload();
