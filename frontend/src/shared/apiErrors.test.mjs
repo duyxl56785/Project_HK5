@@ -15,6 +15,19 @@ test('a refused review does not claim it was already reviewed, since the code al
   assert.match(text, /đã giao/);
 });
 
+test('a settlement held by a Return says so, not "the data changed, reload"', () => {
+  const text = apiErrorText({ status: 409, code: 'SETTLEMENT_RETURN_OPEN', message: 'A pending or received Return blocks settlement' });
+  assert.match(text, /trả hàng/);
+  assert.doesNotMatch(text, /tải lại/);
+});
+
+test('promotion schedule rules say which rule was broken', () => {
+  const text = (message) => apiErrorText({ status: 400, code: 'VALIDATION_FAILED', message });
+  assert.match(text('Flash Sale date must be Saturday'), /thứ Bảy/);
+  assert.match(text('Campaign must start in the future'), /tương lai/);
+  assert.match(text('Clearance duration must be between one hour and 30 days'), /1 giờ.*30 ngày/);
+});
+
 test('an unknown English refusal falls back to a Vietnamese message for its status', () => {
   assert.match(apiErrorText({ status: 404, code: 'SOMETHING_NEW', message: 'Thing not found' }), /^Không tìm thấy/);
   assert.match(apiErrorText({ status: 503, code: 'X_UNAVAILABLE', message: 'Unavailable' }), /^Hệ thống đang bận/);

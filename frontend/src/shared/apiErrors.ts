@@ -31,6 +31,14 @@ const byCode: Readonly<Record<string, string>> = {
   VOUCHER_QUOTA_EXCEEDED: 'Cửa hàng đã dùng hết hạn mức voucher.',
   VOUCHER_LIMIT_REQUEST_PENDING_EXISTS: 'Đã có một yêu cầu đang chờ duyệt.',
   VOUCHER_LIMIT_REQUEST_INVALID_STATE: 'Yêu cầu này không còn ở trạng thái chờ duyệt.',
+  SETTLEMENT_RETURN_OPEN: 'Chưa thanh toán được cho cửa hàng: đơn đang có yêu cầu trả hàng chưa đóng (chờ duyệt, đã duyệt hoặc đã nhận hàng trả).',
+};
+
+// Promotion rules all answer VALIDATION_FAILED, so only the message says which rule was broken.
+const byMessage: Readonly<Record<string, string>> = {
+  'Flash Sale date must be Saturday': 'Flash Sale chỉ chạy vào thứ Bảy, từ 22:00 đến 24:00. Hãy chọn một ngày thứ Bảy.',
+  'Campaign must start in the future': 'Chương trình phải bắt đầu trong tương lai.',
+  'Clearance duration must be between one hour and 30 days': 'Chương trình xả kho phải kéo dài từ 1 giờ đến 30 ngày.',
 };
 
 const byStatus = (status: number) =>
@@ -47,5 +55,6 @@ const isVietnamese = (message: string) => /[^\x00-\x7F]/.test(message);
 
 export function apiErrorText({ status, code, message }: { readonly status: number; readonly code: string; readonly message: string }) {
   if (isVietnamese(message)) return message;
+  if (Object.hasOwn(byMessage, message)) return byMessage[message];
   return Object.hasOwn(byCode, code) ? byCode[code] : byStatus(status);
 }
