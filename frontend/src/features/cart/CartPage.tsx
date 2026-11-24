@@ -18,7 +18,7 @@ export function CartPage() {
   const { snapshot, storeNames } = cart.data;
   return <div className="stack">
     <CartView state={{ status: 'ready', snapshot }} storeNames={storeNames} stock={stock}
-      onQuantityChange={(productId, quantity) => change.mutate({ productId, quantity })}
+      onQuantityChange={(productId, quantity) => change.mutateAsync({ productId, quantity })}
       onRemove={(productId) => remove.mutate(productId)}
       onClear={() => clear.mutate(undefined)} />
     <ErrorNote error={change.error ?? remove.error ?? clear.error} />

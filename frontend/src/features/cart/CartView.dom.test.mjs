@@ -99,6 +99,27 @@ test('a quantity above the stock is not sent and says how many are left', async 
   await act(async () => root.unmount());
 });
 
+test('a quantity the server refused can be sent again without typing another number', async () => {
+  const changes = [];
+  let fail = true;
+  const { host, root } = await mount({ onQuantityChange: (id, quantity) => {
+    changes.push(quantity);
+    return fail ? Promise.reject(new Error('503')) : Promise.resolve();
+  } });
+  const input = host.querySelector('#qty-p1');
+  await type(input, '5');
+  await act(async () => { input.focus(); input.blur(); });
+  assert.deepEqual(changes, [5]);
+  // The Cart reload after the failure still says 2, so nothing resets the field from outside.
+  fail = false;
+  await act(async () => { input.focus(); input.blur(); });
+  assert.deepEqual(changes, [5, 5]);
+  // Once a send is accepted, Enter then leaving the field still sends it only once.
+  await act(async () => { input.focus(); input.blur(); });
+  assert.deepEqual(changes, [5, 5]);
+  await act(async () => root.unmount());
+});
+
 test('a line already above the stock is flagged so the customer lowers it before ordering', async () => {
   const { host, root } = await mount({ stock: { p1: 1 }, onQuantityChange: () => {} });
   assert.match(host.textContent, /Chỉ còn 1 sản phẩm/);

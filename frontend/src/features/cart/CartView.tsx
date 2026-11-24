@@ -5,7 +5,8 @@ import './CartView.css';
 
 export interface CartViewProps {
   readonly state: CartUiState;
-  readonly onQuantityChange?: (productId: string, quantity: number, expectedRevision: string) => void;
+  /** Return the request so a refused quantity can be sent again; a void return counts as sent. */
+  readonly onQuantityChange?: (productId: string, quantity: number, expectedRevision: string) => void | Promise<unknown>;
   readonly onRemove?: (productId: string, expectedRevision: string) => void;
   readonly onClear?: () => void;
   readonly onRetry?: () => void;
@@ -29,7 +30,7 @@ const messages = {
  */
 function QuantityInput({ id, quantity, stock, disabled, onCommit }: {
   readonly id: string; readonly quantity: number; readonly stock: number | undefined; readonly disabled: boolean;
-  readonly onCommit: (quantity: number) => void;
+  readonly onCommit: (quantity: number) => void | Promise<unknown>;
 }) {
   const max = Math.min(1000, stock ?? 1000);
   const [draft, setDraft] = useState(String(quantity));
@@ -42,7 +43,11 @@ function QuantityInput({ id, quantity, stock, disabled, onCommit }: {
     const valid = draft.trim() !== '' && Number.isInteger(number) && number >= 1;
     setRefused(valid && number > max && stock !== undefined);
     if (valid && number <= max) {
-      if (number !== sent.current) { sent.current = number; onCommit(number); }
+      if (number !== sent.current) {
+        sent.current = number;
+        // A refused change leaves the Cart quantity as it was, so nothing else would let the same number be sent again.
+        Promise.resolve(onCommit(number)).catch(() => { if (sent.current === number) sent.current = quantity; });
+      }
     } else setDraft(String(quantity));
   };
   return <>
