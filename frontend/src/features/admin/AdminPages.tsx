@@ -6,6 +6,8 @@ import { z } from 'zod';
 import { api } from '../../shared/api';
 import { text } from '../../shared/forms';
 import { Badge, dateTime, ErrorNote, Loaded, money, shortId, StatusFilter, useAction } from '../../shared/ui';
+import { nameOr } from '../../shared/names';
+import { useAccountEmails, useStoreNames } from '../../shared/useNames';
 import type { CategoryDto, CategoryStatus } from '../catalog/categoryTypes';
 import { BUSINESS_TYPES } from '../policy/terms';
 import type { BusinessType } from '../policy/terms';
@@ -75,6 +77,7 @@ const SELLER_ACTIONS: Record<string, { action: string; label: string }[]> = {
 };
 
 export function AdminSellersPage() {
+  const emails = useAccountEmails();
   const [status, setStatus] = useState('PENDING_REVIEW');
   const list = useQuery({ queryKey: ['admin-sellers', status], queryFn: () => api<SellerRow[]>(`/api/admin/sellers${status && `?status=${status}`}`) });
   const moderate = useAction(({ row, action, reason }: { row: SellerRow; action: string; reason: string }) =>
@@ -87,7 +90,7 @@ export function AdminSellersPage() {
     <Loaded query={list} empty={(rows) => rows.length === 0}>{(rows) => <table className="table" tabIndex={0}>
       <thead><tr><th>Tài khoản</th><th>Hồ sơ</th><th>Cửa hàng</th><th>Trạng thái</th><th>Thao tác</th></tr></thead>
       <tbody>{rows.map((row) => <tr key={row.id}>
-        <td><code>{row.ownerReference}</code></td>
+        <td title={row.ownerReference}>{nameOr(emails, row.ownerReference, 'Tài khoản')}</td>
         <td><SellerContact contact={row.contact} /></td>
         <td>{row.store?.name ?? '—'}</td>
         <td><Badge value={row.status} />{row.reviewReason && <small className="muted"> {row.reviewReason}</small>}</td>
@@ -213,6 +216,7 @@ export function AdminAccountsPage() {
 }
 
 export function AdminOrdersPage() {
+  const storeNames = useStoreNames();
   const [cod, setCod] = useState('');
   const list = useQuery({ queryKey: ['admin-orders', cod], queryFn: () => api<StoreOrder[]>(`/api/admin/store-orders${cod && `?cod=${cod}`}`) });
   const act = useAction(({ id, action }: { id: string; action: string }) => api(`/api/admin/store-orders/${id}/${action}`, { method: 'POST' }), ['admin-orders', 'admin-finance']);
@@ -223,7 +227,7 @@ export function AdminOrdersPage() {
     <Loaded query={list} empty={(rows) => rows.length === 0}>{(rows) => <table className="table" tabIndex={0}>
       <thead><tr><th>Đơn</th><th>Cửa hàng</th><th>Trạng thái</th><th>COD</th><th>Số tiền</th><th>Thao tác</th></tr></thead>
       <tbody>{rows.map((o) => <tr key={o.id}>
-        <td>#{shortId(o.orderId)}</td><td>{o.storeName ?? o.storeId}</td><td><Badge value={o.status} /></td><td><Badge value={o.codStatus} /></td><td>{money(o.gross)}</td>
+        <td>#{shortId(o.orderId)}</td><td>{o.storeName ?? nameOr(storeNames, o.storeId, 'Cửa hàng')}</td><td><Badge value={o.status} /></td><td><Badge value={o.codStatus} /></td><td>{money(o.gross)}</td>
         <td>
           {o.status === 'DELIVERED' && o.codStatus === 'PENDING' && <button type="button" className="btn" disabled={act.isPending} onClick={() => act.mutate({ id: o.id, action: 'cod-collected' })}>Xác nhận đã thu</button>}
           {o.codStatus === 'COLLECTED' && !o.settledAt && <button type="button" className="btn btn--primary" disabled={act.isPending} onClick={() => act.mutate({ id: o.id, action: 'settle' })}>Thanh toán {money(o.sellerNet)}</button>}
@@ -240,6 +244,7 @@ interface AdminReturn {
 
 /** Read-only (#154/#155): the Seller approves/receives; Admin only oversees. */
 export function AdminReturnsPage() {
+  const storeNames = useStoreNames();
   const [status, setStatus] = useState('');
   const list = useQuery({ queryKey: ['admin-returns', status], queryFn: () => api<AdminReturn[]>(`/api/admin/returns${status && `?status=${status}`}`) });
   return <div className="stack">
@@ -250,7 +255,7 @@ export function AdminReturnsPage() {
     <Loaded query={list} empty={(rows) => rows.length === 0}>{(rows) => <table className="table" tabIndex={0}>
       <thead><tr><th>Đơn</th><th>Cửa hàng</th><th>Trạng thái</th><th>Lý do</th><th>Gửi lúc</th></tr></thead>
       <tbody>{rows.map((r) => <tr key={r.requestId}>
-        <td>#{shortId(r.orderId)}</td><td>{r.storeId}</td><td><Badge value={r.status} /></td>
+        <td>#{shortId(r.orderId)}</td><td>{nameOr(storeNames, r.storeId, 'Cửa hàng')}</td><td><Badge value={r.status} /></td>
         <td>{r.reason}</td><td>{dateTime(r.requestedAt)}</td>
       </tr>)}</tbody></table>}</Loaded>
   </div>;
@@ -259,6 +264,7 @@ export function AdminReturnsPage() {
 interface Dead { readonly id: string; readonly topic: string; readonly attempts: number; readonly lastError: string | null; readonly createdAt: string }
 
 export function AdminFinancePage() {
+  const storeNames = useStoreNames();
   const report = useQuery({ queryKey: ['admin-finance'], queryFn: () => api<{ totals: Totals; stores: StoreSummary[] }>('/api/admin/finance') });
   const dead = useQuery({ queryKey: ['admin-dead'], queryFn: () => api<Dead[]>('/api/admin/outbox/dead') });
   return <div className="stack">
@@ -268,7 +274,7 @@ export function AdminFinancePage() {
       {data.stores.length > 0 && <table className="table" tabIndex={0}>
         <thead><tr><th>Cửa hàng</th><th>Đơn</th><th>Doanh thu</th><th>Phí sàn</th><th>COD chờ thu</th><th>Còn phải trả</th></tr></thead>
         <tbody>{data.stores.map((s) => <tr key={s.storeId}>
-          <td>{s.storeName ?? s.storeId}</td><td>{s.totals.deliveredOrders}</td><td>{money(s.totals.gross)}</td>
+          <td>{s.storeName ?? nameOr(storeNames, s.storeId, 'Cửa hàng')}</td><td>{s.totals.deliveredOrders}</td><td>{money(s.totals.gross)}</td>
           <td>{money(s.totals.platformFee)}</td><td>{money(s.totals.codPending)}</td><td>{money(s.totals.payableNet)}</td>
         </tr>)}</tbody></table>}
     </>}</Loaded>
