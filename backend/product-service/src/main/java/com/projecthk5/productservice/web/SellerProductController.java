@@ -107,13 +107,19 @@ public class SellerProductController {
             throw ApiException.badRequest("VALIDATION_FAILED", "SKU and unit price are required");
         StoredProduct created = application.create(actor, storeId, req.categoryId(), req.sku().strip(), req.name(),
                 req.unitPrice(), "VND");
-        details.save(new ProductExtras.Details(created.listing().id(), req.description() == null ? "" : req.description().strip()));
-        if (req.initialStock() != null && req.initialStock() > 0)
-            dependencies.setAvailable(created.listing().sku(), req.initialStock(), "stock-init-" + created.listing().id());
+        details.saveAndFlush(new ProductExtras.Details(created.listing().id(), req.description() == null ? "" : req.description().strip()));
+        InitialStock.apply(dependencies, List.of(stockLine(created, req.initialStock())));
         return view(ProductManagementResponse.from(created));
     }
 
-    /** One Product per size/color option; stock is set only after every row is stored, so a refused group moves no stock. */
+    private static InitialStock.Line stockLine(StoredProduct product, Long initial) {
+        return new InitialStock.Line(product.listing().sku(), initial == null ? 0 : initial, "stock-init-" + product.listing().id());
+    }
+
+    /**
+     * One Product per size/color option, all in this transaction: a refused variant leaves no row of the group.
+     * Stock is set only after every row is stored, and InitialStock takes it back if the transaction rolls back.
+     */
     private StoredProduct createGroup(String actor, UUID storeId, CreateRequest req) {
         List<ProductVariantRules.Option> options = req.variants().stream()
                 .map(v -> ProductVariantRules.option(v.size(), v.color())).toList();
@@ -129,13 +135,10 @@ public class SellerProductController {
             created.add(product);
         }
         StoredProduct lead = created.get(0);
-        details.save(new ProductExtras.Details(lead.listing().id(), req.description() == null ? "" : req.description().strip()));
-        for (int i = 0; i < created.size(); i++) {
-            Long initial = req.variants().get(i).initialStock();
-            StoredProduct product = created.get(i);
-            if (initial != null && initial > 0)
-                dependencies.setAvailable(product.listing().sku(), initial, "stock-init-" + product.listing().id());
-        }
+        details.saveAndFlush(new ProductExtras.Details(lead.listing().id(), req.description() == null ? "" : req.description().strip()));
+        List<InitialStock.Line> stock = new ArrayList<>();
+        for (int i = 0; i < created.size(); i++) stock.add(stockLine(created.get(i), req.variants().get(i).initialStock()));
+        InitialStock.apply(dependencies, stock);
         return lead;
     }
 

@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -14,6 +15,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.projecthk5.productservice.catalog.CurrentStoreFactsSource.StoreFacts;
 import com.projecthk5.productservice.product.ProductAccessPolicy.StoreAccess;
+import com.projecthk5.security.ApiException;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -128,6 +130,51 @@ class SellerProductVariantIntegrationTest {
         assertEquals(0, db.queryForObject("SELECT count(*) FROM products WHERE inventory_sku=?", Integer.class, sku + "-FREE"));
         assertEquals(0, db.queryForObject("SELECT count(*) FROM product_variants v JOIN products p ON p.id=v.product_id "
                 + "WHERE p.store_id=?", Integer.class, store));
+    }
+
+    @Test void aFailureAtTheThirdVariantLeavesNoPartOfTheGroup() throws Exception {
+        String sku = sku();
+        // The first two Products are stored and flushed before the domain refuses the third one's price.
+        MockHttpServletResponse refused = send(post("/api/seller/products"), seller(), Map.of(
+                "categoryId", category, "name", "Áo", "variants", List.of(
+                        variant("M", null, sku + "-M", 100000, 3), variant("L", null, sku + "-L", 100000, 3),
+                        variant("XL", null, sku + "-XL", 0, 3))));
+        assertEquals(400, refused.getStatus(), refused.getContentAsString(java.nio.charset.StandardCharsets.UTF_8));
+        assertEquals(0, productsLike(sku));
+        assertEquals(0, groupsInStore());
+        verify(inventory, never()).setAvailable(anyString(), any(Long.class), anyString());
+    }
+
+    @Test void aStockFailureMidwayStoresNoRowsAndUndoesTheStockAlreadySet() throws Exception {
+        String sku = sku();
+        doThrow(ApiException.unavailable("INVENTORY_UNAVAILABLE", "Inventory unavailable"))
+                .when(inventory).setAvailable(eq(sku + "-L"), any(Long.class), anyString());
+        MockHttpServletResponse refused = send(post("/api/seller/products"), seller(), Map.of(
+                "categoryId", category, "name", "Áo", "variants", List.of(
+                        variant("M", null, sku + "-M", 100000, 5), variant("L", null, sku + "-L", 100000, 4),
+                        variant("XL", null, sku + "-XL", 100000, 2))));
+        assertEquals(503, refused.getStatus(), refused.getContentAsString(java.nio.charset.StandardCharsets.UTF_8));
+        assertEquals(0, productsLike(sku));
+        assertEquals(0, groupsInStore());
+        assertEquals(0L, stock.get(sku + "-M"), "stock set before the failure is taken back");
+        assertNull(stock.get(sku + "-XL"));
+    }
+
+    @Test void aRetryResetsStockLeftByAnEarlierAttempt() throws Exception {
+        String sku = sku();
+        stock.put(sku + "-L-DO", 7L); // an earlier attempt failed after Inventory accepted this SKU
+        created(sku);
+        assertEquals(0L, stock.get(sku + "-L-DO"));
+        assertEquals(5L, stock.get(sku + "-M-DO"));
+    }
+
+    private int productsLike(String sku) {
+        return db.queryForObject("SELECT count(*) FROM products WHERE inventory_sku LIKE ?", Integer.class, sku + "%");
+    }
+
+    private int groupsInStore() {
+        return db.queryForObject("SELECT count(*) FROM product_variants v JOIN products p ON p.id=v.product_id "
+                + "WHERE p.store_id=?", Integer.class, store);
     }
 
     @Test void plainProductStillNeedsItsSkuAndPrice() throws Exception {
