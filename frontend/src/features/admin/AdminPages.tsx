@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useQuery } from '@tanstack/react-query';
+import { useQueries, useQuery } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { api } from '../../shared/api';
@@ -215,8 +215,21 @@ export function AdminAccountsPage() {
   </div>;
 }
 
+// The server refuses to settle a Store order while one of its Returns is in these states.
+const HOLDING_RETURN = ['REQUESTED', 'APPROVED', 'RECEIVED'] as const;
+
+/** Store orders whose payout a Return holds. Empty while unknown: the server still refuses a held payout. */
+function useReturnHolds() {
+  const lists = useQueries({ queries: HOLDING_RETURN.map((status) => ({
+    queryKey: ['admin-returns', status],
+    queryFn: () => api<{ storeOrderId: string }[]>(`/api/admin/returns?status=${status}`),
+  })) });
+  return new Set(lists.flatMap((list) => list.data ?? []).map((row) => row.storeOrderId));
+}
+
 export function AdminOrdersPage() {
   const storeNames = useStoreNames();
+  const held = useReturnHolds();
   const [cod, setCod] = useState('');
   const list = useQuery({ queryKey: ['admin-orders', cod], queryFn: () => api<StoreOrder[]>(`/api/admin/store-orders${cod && `?cod=${cod}`}`) });
   const act = useAction(({ id, action }: { id: string; action: string }) => api(`/api/admin/store-orders/${id}/${action}`, { method: 'POST' }), ['admin-orders', 'admin-finance']);
@@ -230,7 +243,8 @@ export function AdminOrdersPage() {
         <td>#{shortId(o.orderId)}</td><td>{o.storeName ?? nameOr(storeNames, o.storeId, 'Cửa hàng')}</td><td><Badge value={o.status} /></td><td><Badge value={o.codStatus} /></td><td>{money(o.gross)}</td>
         <td>
           {o.status === 'DELIVERED' && o.codStatus === 'PENDING' && <button type="button" className="btn" disabled={act.isPending} onClick={() => act.mutate({ id: o.id, action: 'cod-collected' })}>Xác nhận đã thu</button>}
-          {o.codStatus === 'COLLECTED' && !o.settledAt && <button type="button" className="btn btn--primary" disabled={act.isPending} onClick={() => act.mutate({ id: o.id, action: 'settle' })}>Thanh toán {money(o.sellerNet)}</button>}
+          {o.codStatus === 'COLLECTED' && !o.settledAt && held.has(o.id) && <small className="muted">Chưa thanh toán được: đơn đang có yêu cầu trả hàng</small>}
+          {o.codStatus === 'COLLECTED' && !o.settledAt && !held.has(o.id) && <button type="button" className="btn btn--primary" disabled={act.isPending} onClick={() => act.mutate({ id: o.id, action: 'settle' })}>Thanh toán {money(o.sellerNet)}</button>}
           {o.settledAt && <small className="muted">Đã thanh toán {dateTime(o.settledAt)}</small>}
         </td>
       </tr>)}</tbody></table>}</Loaded>
