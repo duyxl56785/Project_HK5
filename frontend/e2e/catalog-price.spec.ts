@@ -12,11 +12,11 @@ test('a shopper types a price range and presses Enter; both bounds are applied',
 
   await expect(page).toHaveURL(/minPrice=200000/);
   await expect(page).toHaveURL(/maxPrice=400000/);
-  await expect(page.locator('.product').first()).toBeVisible();
-  for (const price of await prices(page)) {
-    expect(price).toBeGreaterThanOrEqual(200000);
-    expect(price).toBeLessThanOrEqual(400000);
-  }
+  // The list keeps the previous results on screen while the filtered page loads, so wait for it to settle.
+  await expect.poll(async () => {
+    const shown = await prices(page);
+    return shown.length > 0 && shown.every((price) => price >= 200000 && price <= 400000);
+  }).toBe(true);
 
   // Clearing "đến" with the button lifts the upper bound again.
   await page.getByLabel('đến').fill('');
