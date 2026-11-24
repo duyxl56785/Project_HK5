@@ -3,6 +3,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { api } from '../../shared/api';
 import { Loaded, money } from '../../shared/ui';
 import { CategoryBrowser } from './CategoryBrowser';
+import { PriceFilter } from './PriceFilter';
 import type { CategoryDto } from './categoryTypes';
 
 export interface StoreRef { readonly id: string; readonly name: string; readonly slug: string }
@@ -54,12 +55,7 @@ export function CatalogPage({ store }: { readonly store?: StoreRef }) {
   return <div className="catalog">
     <details className="filters" open={matchMedia('(min-width: 721px)').matches}>
       <summary>Bộ lọc</summary>
-      <div className="row row--wrap">
-        <label className="field field--inline">Giá từ
-          <input type="number" min={0} defaultValue={params.get('minPrice') ?? ''} onBlur={(e) => update({ minPrice: e.currentTarget.value })} /></label>
-        <label className="field field--inline">đến
-          <input type="number" min={0} defaultValue={params.get('maxPrice') ?? ''} onBlur={(e) => update({ maxPrice: e.currentTarget.value })} /></label>
-      </div>
+      <PriceFilter min={params.get('minPrice') ?? ''} max={params.get('maxPrice') ?? ''} onApply={(range) => update({ ...range })} />
       {!store && params.get('storeId') && <button type="button" className="btn" onClick={() => update({ storeId: null })}>Bỏ lọc cửa hàng</button>}
       <CategoryBrowser selectedId={params.get('categoryId')} onSelect={(c) => update({ categoryId: c.id })}
         state={categories.data ? { status: 'ready', categories: categories.data }
