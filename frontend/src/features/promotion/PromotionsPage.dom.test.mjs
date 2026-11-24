@@ -126,6 +126,15 @@ test('Admin can pause and approve an offer and needs a rejection reason', async 
     });
 });
 
+test('Admin is told the run times before choosing a date', async () => {
+  await render(pages.AdminPromotionsPage, path => path.endsWith('/products') ? [registration] : [campaign],
+    host => {
+      const form = host.querySelector('form[aria-label="Tạo chương trình khuyến mãi"]');
+      assert.match(form.textContent, /Flash Sale chạy thứ Bảy, 22:00–24:00/);
+      assert.match(form.textContent, /Super Sale chạy cả ngày/);
+    });
+});
+
 test('Admin and Seller see the same approval deadline without changing decided registrations', async () => {
   const expired = {
     ...campaign, kind: 'SELLER_CLEARANCE', startsAt: '2020-01-01T15:00:00Z',
