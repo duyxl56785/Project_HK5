@@ -1,15 +1,19 @@
+import { useEffect, useRef, useState } from 'react';
 import type { CartUiState } from './cartTypes.ts';
 import { projectCart } from './cartModel.ts';
 import './CartView.css';
 
 export interface CartViewProps {
   readonly state: CartUiState;
-  readonly onQuantityChange?: (productId: string, quantity: number, expectedRevision: string) => void;
+  /** Return the request so a refused quantity can be sent again; a void return counts as sent. */
+  readonly onQuantityChange?: (productId: string, quantity: number, expectedRevision: string) => void | Promise<unknown>;
   readonly onRemove?: (productId: string, expectedRevision: string) => void;
   readonly onClear?: () => void;
   readonly onRetry?: () => void;
   /** Display names by Store id; the id is shown when a name is unknown. */
   readonly storeNames?: Readonly<Record<string, string>>;
+  /** Units in stock by Product id, when known. The Cart API does not check stock; Checkout does. */
+  readonly stock?: Readonly<Record<string, number>>;
 }
 
 const messages = {
@@ -20,8 +24,53 @@ const messages = {
   error: 'Không thể tải giỏ hàng',
 } as const;
 
+/**
+ * The typed number is sent once, when the shopper leaves the field or presses Enter.
+ * Sending each keystroke made "12" arrive as 1, then reset the field before the 2 was typed.
+ */
+function QuantityInput({ id, quantity, stock, disabled, onCommit }: {
+  readonly id: string; readonly quantity: number; readonly stock: number | undefined; readonly disabled: boolean;
+  readonly onCommit: (quantity: number) => void | Promise<unknown>;
+}) {
+  const max = Math.min(1000, stock ?? 1000);
+  const [draft, setDraft] = useState(String(quantity));
+  const [refused, setRefused] = useState(false);
+  // Enter then leaving the field must not send the same number twice before the Cart reloads.
+  const sent = useRef(quantity);
+  useEffect(() => { setDraft(String(quantity)); sent.current = quantity; }, [quantity]);
+  const commit = () => {
+    const number = Number(draft);
+    const valid = draft.trim() !== '' && Number.isInteger(number) && number >= 1;
+    setRefused(valid && number > max && stock !== undefined);
+    if (valid && number <= max) {
+      if (number !== sent.current) {
+        sent.current = number;
+        // A refused change leaves the Cart quantity as it was, so nothing else would let the same number be sent again.
+        Promise.resolve(onCommit(number)).catch(() => { if (sent.current === number) sent.current = quantity; });
+      }
+    } else setDraft(String(quantity));
+  };
+  return <>
+    <input id={id} type="number" min={1} max={max} step={1} inputMode="numeric" value={draft} disabled={disabled}
+      onChange={(event) => setDraft(event.currentTarget.value)} onBlur={commit}
+      onKeyDown={(event) => { if (event.key === 'Enter') commit(); }} />
+    {stock !== undefined && (refused || quantity > stock) && <small className="tv3-cart__stock" role="alert">{stock === 0 ? 'Sản phẩm đã hết hàng' : `Chỉ còn ${stock} sản phẩm`}</small>}
+  </>;
+}
+
+/** Asks on the page: browsers that block dialogs made window.confirm return false without showing anything. */
+function ClearCart({ onClear }: { readonly onClear: () => void }) {
+  const [asking, setAsking] = useState(false);
+  if (!asking) return <button type="button" onClick={() => setAsking(true)}>Xóa giỏ hàng</button>;
+  return <div className="tv3-cart__confirm" role="group" aria-label="Xác nhận xóa giỏ hàng">
+    <span>Xóa toàn bộ sản phẩm trong giỏ?</span>
+    <button type="button" onClick={() => { setAsking(false); onClear(); }}>Xóa hết</button>
+    <button type="button" onClick={() => setAsking(false)}>Không</button>
+  </div>;
+}
+
 /** Presentation only. Parent owns trusted Cart API, actor identity and revision control. */
-export function CartView({ state, onQuantityChange, onRemove, onClear, onRetry, storeNames }: CartViewProps) {
+export function CartView({ state, onQuantityChange, onRemove, onClear, onRetry, storeNames, stock }: CartViewProps) {
   if (state.status !== 'ready') {
     return <section className="tv3-cart" aria-busy={state.status === 'loading'}>
       <h2>Giỏ hàng</h2>
@@ -44,7 +93,7 @@ export function CartView({ state, onQuantityChange, onRemove, onClear, onRetry, 
     <header className="tv3-cart__header">
       <div><h2>Giỏ hàng của bạn</h2></div>
       <p>{cart.itemCount} sản phẩm</p>
-      {onClear && !cart.claimed && <button type="button" onClick={onClear}>Xóa giỏ hàng</button>}
+      {onClear && !cart.claimed && <ClearCart onClear={onClear} />}
     </header>
     {cart.claimed && <p className="tv3-cart__warning" role="status">
       Giỏ hàng đang được giữ cho Checkout. Không thể chỉnh sửa cho đến khi được xác nhận.
@@ -59,13 +108,8 @@ export function CartView({ state, onQuantityChange, onRemove, onClear, onRetry, 
           </div>
           <div className="tv3-cart__actions">
             <label htmlFor={'qty-' + line.productId}>Số lượng</label>
-            <input id={'qty-' + line.productId} type="number" min={1} max={1000} step={1}
-              value={line.quantity} disabled={cart.claimed || !onQuantityChange}
-              onChange={(event) => {
-                const number = Number(event.currentTarget.value);
-                if (Number.isInteger(number) && number >= 1 && number <= 1000 && !cart.claimed)
-                  onQuantityChange?.(line.productId, number, cart.revision);
-              }} />
+            <QuantityInput id={'qty-' + line.productId} quantity={line.quantity} stock={stock?.[line.productId]} disabled={cart.claimed || !onQuantityChange}
+              onCommit={(quantity) => onQuantityChange?.(line.productId, quantity, cart.revision)} />
             <button type="button" disabled={cart.claimed || !onRemove}
               onClick={() => onRemove?.(line.productId, cart.revision)}>Xóa</button>
           </div>

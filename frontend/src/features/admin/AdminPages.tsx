@@ -197,9 +197,8 @@ export function AdminAccountsPage() {
   const [term, setTerm] = useState('');
   const list = useQuery({ queryKey: ['admin-accounts', term], queryFn: () => api<AccountRow[]>(`/api/admin/accounts?term=${encodeURIComponent(term)}`) });
   const act = useAction(({ id, action }: { id: string; action: string }) => api(`/api/admin/accounts/${id}/${action}`, { method: 'POST' }), ['admin-accounts']);
-  const lock = (row: AccountRow) => {
-    if (window.confirm(`Khóa ${row.email}? Mọi phiên đăng nhập của tài khoản này sẽ kết thúc.`)) act.mutate({ id: row.id, action: 'disable' });
-  };
+  // Asks on the page: a browser that blocks dialogs made window.confirm do nothing.
+  const [asking, setAsking] = useState<string | null>(null);
   return <div className="stack">
     <h1>Tài khoản</h1>
     <input aria-label="Tìm theo email" placeholder="Tìm theo email" maxLength={254} value={term} onChange={(e) => setTerm(e.target.value)} />
@@ -209,7 +208,14 @@ export function AdminAccountsPage() {
       <tbody>{rows.map((r) => <tr key={r.id} className={r.status === 'ACTIVE' ? '' : 'muted'}>
         <td>{r.email}</td><td>{r.roles.join(', ')}</td><td>{r.status === 'ACTIVE' ? 'Hoạt động' : 'Đã khóa'}</td><td>{dateTime(r.createdAt)}</td>
         <td>{!r.roles.includes('ADMIN') && (r.status === 'ACTIVE'
-          ? <button type="button" className="btn" disabled={act.isPending} onClick={() => lock(r)}>Khóa</button>
+          ? asking === r.id
+            ? <div className="row row--wrap" role="group" aria-label={`Xác nhận khóa ${r.email}`}>
+                <span>Khóa {r.email}? Mọi phiên đăng nhập của tài khoản này sẽ kết thúc.</span>
+                <button type="button" className="btn btn--danger" disabled={act.isPending}
+                  onClick={() => { setAsking(null); act.mutate({ id: r.id, action: 'disable' }); }}>Xác nhận khóa</button>
+                <button type="button" className="btn" onClick={() => setAsking(null)}>Không</button>
+              </div>
+            : <button type="button" className="btn" disabled={act.isPending} onClick={() => setAsking(r.id)}>Khóa</button>
           : <button type="button" className="btn" disabled={act.isPending} onClick={() => act.mutate({ id: r.id, action: 'enable' })}>Mở khóa</button>)}</td>
       </tr>)}</tbody></table>}</Loaded>
   </div>;

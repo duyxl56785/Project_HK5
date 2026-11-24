@@ -220,7 +220,6 @@ function CheckoutCodReady({ cart, storeNames, request, checkoutKey, onConfirm, o
             <dt>Tiền hàng trước giảm</dt><dd>{formatExactVnd(applied.get(store.storeId)!.merchandiseAmount)}</dd>
             <dt>Voucher {applied.get(store.storeId)!.voucherCode}</dt><dd>−{formatExactVnd(applied.get(store.storeId)!.discountAmount)}</dd>
             <dt>Phải trả cửa hàng</dt><dd>{formatExactVnd(applied.get(store.storeId)!.gross)}</dd>
-            <dt>Phí sàn do cửa hàng chịu</dt><dd>{formatExactVnd(applied.get(store.storeId)!.platformFee)}</dd>
           </dl>}
         </div>}
       </article>)}

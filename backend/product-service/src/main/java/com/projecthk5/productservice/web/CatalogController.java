@@ -45,13 +45,14 @@ public class CatalogController {
     private final CatalogCache cache;
     private final ObjectMapper json;
     private final com.projecthk5.productservice.promotion.PromotionService promotions;
+    private final VariantRepository variants;
     private final String cartToken;
     private final String orderToken;
 
     public CatalogController(EntityManager em, SellerStoreClient stores, CategoryRepository categories, DetailsRepository details,
                              ImageRepository images, ReviewRepository reviews, ImageStorage storage,
                              DependencyClients dependencies, CatalogSnapshotSource snapshots, CatalogCache cache, ObjectMapper json,
-                             com.projecthk5.productservice.promotion.PromotionService promotions,
+                             com.projecthk5.productservice.promotion.PromotionService promotions, VariantRepository variants,
                              @Value("${CART_PRODUCT_TOKEN:}") String cartToken,
                              @Value("${ORDER_PRODUCT_TOKEN:}") String orderToken) {
         this.em = em;
@@ -66,6 +67,7 @@ public class CatalogController {
         this.cache = cache;
         this.json = json;
         this.promotions = promotions;
+        this.variants = variants;
         this.cartToken = cartToken;
         this.orderToken = orderToken;
     }
@@ -77,7 +79,11 @@ public class CatalogController {
     public record Rating(long count, BigDecimal average) {}
     public record Detail(UUID id, String name, String sku, String unitPrice, String currency, UUID categoryId, String description,
                          StoreRef store, List<String> images, long available, Rating rating,
-                         String baseUnitPrice, com.projecthk5.productservice.promotion.PromotionService.Promotion promotion) {}
+                         String baseUnitPrice, com.projecthk5.productservice.promotion.PromotionService.Promotion promotion,
+                         List<VariantOffer> variants) {}
+    /** One buyable size/color option; its id is the productId that Cart and Order use. Empty for a plain Product. */
+    public record VariantOffer(UUID id, String size, String color, String sku, String unitPrice, String baseUnitPrice,
+                               com.projecthk5.productservice.promotion.PromotionService.Promotion promotion, long available) {}
     public record ReviewView(UUID id, int rating, String comment, java.time.Instant createdAt) {}
     public record NameRef(UUID id, String name, String imageUrl) {}
     /** Internal snapshot for Cart/Order; sellerId is the Seller profile id. */
@@ -93,7 +99,7 @@ public class CatalogController {
                        @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "12") int size) {
         if (page < 0 || size < 1 || size > 60 || (q != null && q.length() > 100))
             throw ApiException.badRequest("VALIDATION_FAILED", "Invalid search parameters");
-        String key = String.join("|", "catalog:search:v2", String.valueOf(q), String.valueOf(categoryId),
+        String key = String.join("|", "catalog:search:v3", String.valueOf(q), String.valueOf(categoryId),
                 String.valueOf(minPrice), String.valueOf(maxPrice), String.valueOf(storeId), sort,
                 String.valueOf(page), String.valueOf(size));
         return cache.read(key, json.constructType(Page.class),
@@ -104,7 +110,9 @@ public class CatalogController {
         Map<UUID, SellerStoreClient.Facts> eligible = eligibleStores();
         Set<UUID> storeIds = storeId == null ? eligible.keySet() : eligible.containsKey(storeId) ? Set.of(storeId) : Set.of();
         if (storeIds.isEmpty()) return new Page(List.of(), 0, page, size);
-        StringBuilder where = new StringBuilder(" from ProductEntity p where p.status = :status and p.storeId in :stores");
+        // A variant group is listed once, by its lead.
+        StringBuilder where = new StringBuilder(" from ProductEntity p where p.status = :status and p.storeId in :stores"
+                + " and not exists (select 1 from Variant v where v.productId = p.id and v.groupId <> p.id)");
         Map<String, Object> params = new HashMap<>(Map.of("status", ProductStatus.ACTIVE, "stores", storeIds));
         if (q != null && !q.isBlank()) {
             // Accent-insensitive: "ao thun" finds "Áo thun" (see SearchText).
@@ -128,30 +136,62 @@ public class CatalogController {
         List<ProductEntity> found = rows.setFirstResult(page * size).setMaxResults(size).getResultList();
         var now = java.time.Instant.now();
         var facts = promotionStores(found.stream().map(ProductEntity::getStoreId).collect(Collectors.toSet()));
+        Map<UUID, ProductExtras.Variant> leads = found.isEmpty() ? Map.of() : variants.findByProductIdIn(
+                found.stream().map(ProductEntity::getId).toList()).stream()
+                .collect(Collectors.toMap(ProductExtras.Variant::getProductId, Function.identity()));
         return new Page(found.stream().map(p -> summary(p, eligible.get(p.getStoreId()),
-                quote(p, facts.get(p.getStoreId()), now))).toList(), count.getSingleResult(), page, size);
+                quote(p, facts.get(p.getStoreId()), now), leads.get(p.getId()))).toList(), count.getSingleResult(), page, size);
     }
 
     @GetMapping("/api/catalog/products/{id}")
     @Transactional(readOnly = true)
     public Detail detail(@PathVariable UUID id) {
-        return cache.read("catalog:product:v2:" + id, json.constructType(Detail.class), () -> detailNow(id));
+        return cache.read("catalog:product:v3:" + id, json.constructType(Detail.class), () -> detailNow(id));
     }
 
-    private Detail detailNow(UUID id) {
+    /** A variant's id opens its whole group, shown through the lead; only ACTIVE variants are offered. */
+    private Detail detailNow(UUID requested) {
+        ProductExtras.Variant variant = variants.findById(requested).orElse(null);
+        UUID id = variant == null ? requested : variant.getGroupId();
         ProductEntity p = em.find(ProductEntity.class, id);
         SellerStoreClient.Facts store = p == null ? null : eligibleStores().get(p.getStoreId());
         if (p == null || p.getStatus() != ProductStatus.ACTIVE || store == null)
             throw ApiException.notFound("PRODUCT_NOT_FOUND", "Product not found");
-        DependencyClients.Balance balance = dependencies.balance(p.getInventorySku());
         Object[] summary = reviews.publicSummary(id).get(0);
         BigDecimal avg = summary[1] == null ? BigDecimal.ZERO : new BigDecimal(summary[1].toString()).setScale(2, java.math.RoundingMode.HALF_UP);
-        var quote = quote(p, promotionStores(Set.of(p.getStoreId())).get(p.getStoreId()), java.time.Instant.now());
-        return new Detail(p.getId(), p.getName(), p.getInventorySku(), quote.unitPrice().toPlainString(), p.getCurrency(), p.getCategoryId(),
+        var now = java.time.Instant.now();
+        var storeFacts = promotionStores(Set.of(p.getStoreId())).get(p.getStoreId());
+        var quote = quote(p, storeFacts, now);
+        List<VariantOffer> offers = variant == null ? List.of() : offers(id, storeFacts, now);
+        long available = variant == null ? available(p.getInventorySku()) : offers.stream().mapToLong(VariantOffer::available).sum();
+        String name = variant == null ? p.getName()
+                : ProductVariantRules.baseName(p.getName(), variants.findById(id).orElseThrow().option());
+        return new Detail(p.getId(), name, p.getInventorySku(), quote.unitPrice().toPlainString(), p.getCurrency(), p.getCategoryId(),
                 details.findById(id).map(ProductExtras.Details::getDescription).orElse(""),
                 new StoreRef(store.storeId(), store.name(), store.slug()),
                 images.findByProductIdOrderByDisplayOrder(id).stream().map(i -> "/api/catalog/images/" + i.getId()).toList(),
-                balance == null ? 0 : balance.availableQuantity(), new Rating((Long) summary[0], avg), price(p), quote.promotion());
+                available, new Rating((Long) summary[0], avg), price(p), quote.promotion(), offers);
+    }
+
+    private List<VariantOffer> offers(UUID groupId,
+            com.projecthk5.productservice.catalog.CurrentStoreFactsSource.StoreFacts storeFacts, java.time.Instant now) {
+        List<ProductExtras.Variant> group = variants.findByGroupIdOrderByPosition(groupId);
+        Map<UUID, ProductEntity> rows = em.createQuery("select p from ProductEntity p where p.id in :ids and p.status = :status",
+                        ProductEntity.class)
+                .setParameter("ids", group.stream().map(ProductExtras.Variant::getProductId).toList())
+                .setParameter("status", ProductStatus.ACTIVE).getResultList().stream()
+                .collect(Collectors.toMap(ProductEntity::getId, Function.identity()));
+        return group.stream().filter(v -> rows.containsKey(v.getProductId())).map(v -> {
+            ProductEntity row = rows.get(v.getProductId());
+            var offer = quote(row, storeFacts, now);
+            return new VariantOffer(row.getId(), v.getSize(), v.getColor(), row.getInventorySku(),
+                    offer.unitPrice().toPlainString(), price(row), offer.promotion(), available(row.getInventorySku()));
+        }).toList();
+    }
+
+    private long available(String sku) {
+        DependencyClients.Balance balance = dependencies.balance(sku);
+        return balance == null ? 0 : balance.availableQuantity();
     }
 
     @GetMapping("/api/catalog/products/{id}/reviews")
@@ -166,7 +206,7 @@ public class CatalogController {
         if (ids.size() > 100) throw ApiException.badRequest("VALIDATION_FAILED", "At most 100 ids");
         return em.createQuery("select p from ProductEntity p where p.id in :ids", ProductEntity.class)
                 .setParameter("ids", ids).getResultList().stream()
-                .map(p -> new NameRef(p.getId(), p.getName(), firstImage(p.getId()))).toList();
+                .map(p -> new NameRef(p.getId(), p.getName(), imageOf(p.getId()))).toList();
     }
 
     @GetMapping("/api/catalog/images/{imageId}")
@@ -231,9 +271,17 @@ public class CatalogController {
     }
 
     private Summary summary(ProductEntity p, SellerStoreClient.Facts store,
-            com.projecthk5.productservice.promotion.PromotionService.Quote quote) {
-        return new Summary(p.getId(), p.getName(), quote.unitPrice().toPlainString(), p.getCurrency(), p.getCategoryId(),
+            com.projecthk5.productservice.promotion.PromotionService.Quote quote, ProductExtras.Variant lead) {
+        String name = lead == null ? p.getName() : ProductVariantRules.baseName(p.getName(), lead.option());
+        return new Summary(p.getId(), name, quote.unitPrice().toPlainString(), p.getCurrency(), p.getCategoryId(),
                 new StoreRef(store.storeId(), store.name(), store.slug()), firstImage(p.getId()), price(p), quote.promotion());
+    }
+
+    /** A variant without its own image shows its group's. */
+    private String imageOf(UUID productId) {
+        String own = firstImage(productId);
+        if (own != null) return own;
+        return variants.findById(productId).filter(v -> !v.isLead()).map(v -> firstImage(v.getGroupId())).orElse(null);
     }
 
     private String firstImage(UUID productId) {

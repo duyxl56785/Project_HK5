@@ -9,10 +9,11 @@ const addToCart = async (customer: Page, productId: string) => {
   expect((await added).ok()).toBeTruthy();
 };
 
+// The Cart asks on the page, not with a browser dialog that phones may block.
 const clearCart = async (customer: Page, answer: 'accept' | 'dismiss') => {
   await customer.goto('/cart');
-  customer.once('dialog', (dialog) => void dialog[answer]());
   await customer.getByRole('button', { name: 'Xóa giỏ hàng' }).click();
+  await customer.getByRole('button', { name: answer === 'accept' ? 'Xóa hết' : 'Không', exact: true }).click();
 };
 
 test('clearing the Cart asks first, and a closed Store is named on its own line', async ({ browser }) => {
