@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { Link, Navigate, useNavigate, useSearchParams } from 'react-router-dom';
 import { z } from 'zod';
 import { useAuth } from '../../shared/auth';
+import { safeNext } from '../../shared/authLinks';
 import { ErrorNote, Field } from '../../shared/ui';
 
 const email = z.string().trim().pipe(z.email('Email không hợp lệ'));
@@ -19,9 +20,8 @@ function AuthForm({ mode }: { readonly mode: 'login' | 'register' }) {
   const form = useForm<Credentials>({ resolver: zodResolver(login ? loginSchema : registerSchema), defaultValues: { email: '', password: '' } });
   const { errors, isSubmitting } = form.formState;
   const [error, setError] = useState<unknown>(null);
-  const raw = params.get('next') ?? '/';
-  // Only same-site paths: "//host" would be an open redirect.
-  const next = raw.startsWith('/') && !raw.startsWith('//') ? raw : '/';
+  // Only same-site paths: "//host" or "/\host" would be an open redirect.
+  const next = safeNext(params.get('next'), window.location.origin);
 
   if (auth.account) return <Navigate to={next} replace />;
 
