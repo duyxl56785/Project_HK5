@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQueries, useQuery } from '@tanstack/react-query';
 import { api } from '../../shared/api';
 import { useAuth } from '../../shared/auth';
 import type { CartSnapshot } from './cartTypes';
@@ -46,4 +46,22 @@ async function loadCart(): Promise<LoadedCart> {
 export function useCart() {
   const { has } = useAuth();
   return useQuery({ queryKey: ['cart'], queryFn: loadCart, enabled: has('CUSTOMER') });
+}
+
+/** Most carts hold a few lines; past this many, stock is left to Checkout to keep the page light. */
+const STOCK_LOOKUP_LIMIT = 30;
+
+/**
+ * Units in stock per Product, read from the public Product page data. The Cart API does not check
+ * stock, so this lets the Cart warn early; Checkout still refuses a quantity above stock.
+ */
+export function useCartStock(productIds: readonly string[]): Readonly<Record<string, number>> {
+  const ids = productIds.length <= STOCK_LOOKUP_LIMIT ? productIds : [];
+  const results = useQueries({ queries: ids.map((id) => ({
+    queryKey: ['product-stock', id],
+    queryFn: () => api<{ available: number }>(`/api/catalog/products/${id}`),
+    select: (product: { available: number }) => product.available,
+    retry: false,
+  })) });
+  return Object.fromEntries(ids.flatMap((id, i) => results[i].data === undefined ? [] : [[id, results[i].data]]));
 }

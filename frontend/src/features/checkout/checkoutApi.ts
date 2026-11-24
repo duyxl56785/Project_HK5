@@ -6,7 +6,7 @@ export interface Shipping { readonly name: string; readonly phone: string; reado
 
 const voucherMessages: Readonly<Record<string, string>> = {
   VOUCHER_NOT_FOUND: 'Không tìm thấy mã voucher của cửa hàng này.',
-  VOUCHER_CHANGED: 'Mã đã hết hạn, tạm dừng hoặc báo giá đã đổi. Hãy áp dụng lại mã.',
+  VOUCHER_CHANGED: 'Mã không còn dùng được (hết hạn hoặc đang tạm dừng) hoặc báo giá đã thay đổi. Hãy bỏ mã, hoặc bấm Áp dụng voucher để kiểm tra lại.',
   VOUCHER_ALREADY_USED: 'Tài khoản này đã dùng voucher.',
   VOUCHER_USAGE_LIMIT_REACHED: 'Voucher đã hết lượt.',
   VOUCHER_MIN_ORDER_AMOUNT: 'Tiền hàng chưa đạt mức tối thiểu của voucher.',
