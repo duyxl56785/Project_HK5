@@ -68,6 +68,39 @@ public final class ProductExtras {
         public int getDisplayOrder() { return displayOrder; }
     }
 
+    /** Groups size/color variant Products behind their lead (V11 migration); the lead's groupId is its own id. */
+    @Entity(name = "Variant")
+    @Table(name = "product_variants")
+    public static class Variant {
+        @Id
+        @Column(name = "product_id")
+        private UUID productId;
+        @Column(name = "group_id", nullable = false)
+        private UUID groupId;
+        @Column(nullable = false)
+        private int position;
+        @Column(length = 20)
+        private String size;
+        @Column(length = 30)
+        private String color;
+
+        protected Variant() {}
+        public Variant(UUID productId, UUID groupId, int position, String size, String color) {
+            this.productId = productId;
+            this.groupId = groupId;
+            this.position = position;
+            this.size = size;
+            this.color = color;
+        }
+        public UUID getProductId() { return productId; }
+        public UUID getGroupId() { return groupId; }
+        public int getPosition() { return position; }
+        public String getSize() { return size; }
+        public String getColor() { return color; }
+        public boolean isLead() { return productId.equals(groupId); }
+        public ProductVariantRules.Option option() { return new ProductVariantRules.Option(size, color); }
+    }
+
     @Entity(name = "Review")
     @Table(name = "product_reviews")
     public static class Review {

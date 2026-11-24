@@ -5,33 +5,36 @@ import { api } from '../../shared/api';
 import { useAuth } from '../../shared/auth';
 import { dateTime, ErrorNote, Loaded, money, useAction } from '../../shared/ui';
 import type { StoreRef } from './CatalogPage';
+import { initialSelection, optionValues, pickVariant, type Selection, type VariantOffer } from './variantModel';
 
 interface Detail {
   readonly id: string; readonly name: string; readonly unitPrice: string; readonly baseUnitPrice?: string; readonly promotion?: { readonly kind: string; readonly endsAt: string } | null; readonly description: string;
   readonly store: StoreRef; readonly images: readonly string[]; readonly available: number;
   readonly rating: { readonly count: number; readonly average: number };
+  /** Size/color options; empty for a Product without variants. */
+  readonly variants?: readonly VariantOffer[];
 }
 interface Review { readonly id: string; readonly rating: number; readonly comment: string | null; readonly createdAt: string }
 
 const stars = (n: number) => '★'.repeat(n) + '☆'.repeat(5 - n);
 
-function Buy({ product }: { readonly product: Detail }) {
+function Buy({ productId, available }: { readonly productId: string; readonly available: number }) {
   const { account, ready, has } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const [quantity, setQuantity] = useState(1);
-  const add = useAction(() => api('/api/cart/items', { method: 'POST', body: { productId: product.id, quantity } }), ['cart']);
+  const add = useAction(() => api('/api/cart/items', { method: 'POST', body: { productId, quantity } }), ['cart']);
   const buyNow = useAction(async () => {
-    await api('/api/cart/items', { method: 'POST', body: { productId: product.id, quantity } });
+    await api('/api/cart/items', { method: 'POST', body: { productId, quantity } });
     navigate('/cart');
   }, ['cart']);
   const toLogin = () => navigate(`/login?next=${encodeURIComponent(location.pathname)}`);
   const blocked = !ready || add.isPending || buyNow.isPending || (account !== null && !has('CUSTOMER'));
-  if (product.available < 1) return <p className="note note--error">Sản phẩm tạm hết hàng.</p>;
+  if (available < 1) return <p className="note note--error">Sản phẩm tạm hết hàng.</p>;
   return <div className="stack">
     <div className="row">
       <label className="field field--inline">Số lượng
-        <input type="number" min={1} max={Math.min(1000, product.available)} value={quantity}
+        <input type="number" min={1} max={Math.min(1000, available)} value={quantity}
           onChange={(e) => setQuantity(Math.max(1, Math.trunc(Number(e.currentTarget.value)) || 1))} /></label>
     </div>
     <div className="row row--wrap">
@@ -42,6 +45,34 @@ function Buy({ product }: { readonly product: Detail }) {
     </div>
     <ErrorNote error={add.error ?? buyNow.error} />
     {add.isSuccess && <p className="note" role="status">Đã thêm vào giỏ. <Link to="/cart">Xem giỏ hàng</Link></p>}
+  </div>;
+}
+
+function OptionGroup({ label, values, value, onPick }: {
+  readonly label: string; readonly values: readonly string[]; readonly value: string | null; readonly onPick: (value: string) => void;
+}) {
+  if (values.length === 0) return null;
+  return <div className="stack" role="group" aria-label={label}>
+    <span className="muted">{label}{value && `: ${value}`}</span>
+    <div className="row row--wrap">{values.map((v) => <button key={v} type="button" aria-pressed={v === value}
+      className={v === value ? 'btn btn--primary' : 'btn btn--soft'} onClick={() => onPick(v)}>{v}</button>)}</div>
+  </div>;
+}
+
+/** Price, stock and buttons for the chosen size/color; the Cart gets that variant's own productId. */
+function VariantBuy({ product, requestedId }: { readonly product: Detail; readonly requestedId: string }) {
+  const offers = product.variants ?? [];
+  const [selection, setSelection] = useState<Selection>(() => initialSelection(offers, requestedId));
+  const { sizes, colors } = optionValues(offers);
+  const chosen = pickVariant(offers, selection);
+  return <div className="stack">
+    <OptionGroup label="Size" values={sizes} value={selection.size} onPick={(size) => setSelection({ ...selection, size })} />
+    <OptionGroup label="Màu" values={colors} value={selection.color} onPick={(color) => setSelection({ ...selection, color })} />
+    {chosen ? <>
+      <p className="price price--large">{chosen.promotion && <del>{money(chosen.baseUnitPrice)}</del>} {money(chosen.unitPrice)}</p>
+      <p className="muted">Còn {chosen.available} sản phẩm · SKU {chosen.sku}</p>
+      <Buy key={chosen.id} productId={chosen.id} available={chosen.available} />
+    </> : <p className="note note--error" role="status">Không có mẫu với size và màu đã chọn.</p>}
   </div>;
 }
 
@@ -60,11 +91,17 @@ export function ProductPage() {
       </div>
       <div className="stack">
         <h1>{p.name}</h1>
-        <p className="price price--large">{p.promotion && <del>{money(p.baseUnitPrice)}</del>} {money(p.unitPrice)}</p>
-        {p.promotion && <p>Đang khuyến mãi đến {new Date(p.promotion.endsAt).toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' })}</p>}
-        <p className="muted">Cửa hàng: <Link to={`/stores/${p.store.slug}`}>{p.store.name}</Link> · Còn {p.available} sản phẩm</p>
-        <p className="muted">{p.rating.count > 0 ? `${stars(Math.round(p.rating.average))} ${p.rating.average}/5 (${p.rating.count} đánh giá)` : 'Chưa có đánh giá'}</p>
-        <Buy product={p} />
+        {p.variants?.length ? <>
+          <p className="muted">Cửa hàng: <Link to={`/stores/${p.store.slug}`}>{p.store.name}</Link></p>
+          <p className="muted">{p.rating.count > 0 ? `${stars(Math.round(p.rating.average))} ${p.rating.average}/5 (${p.rating.count} đánh giá)` : 'Chưa có đánh giá'}</p>
+          <VariantBuy key={p.id} product={p} requestedId={id} />
+        </> : <>
+          <p className="price price--large">{p.promotion && <del>{money(p.baseUnitPrice)}</del>} {money(p.unitPrice)}</p>
+          {p.promotion && <p>Đang khuyến mãi đến {new Date(p.promotion.endsAt).toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' })}</p>}
+          <p className="muted">Cửa hàng: <Link to={`/stores/${p.store.slug}`}>{p.store.name}</Link> · Còn {p.available} sản phẩm</p>
+          <p className="muted">{p.rating.count > 0 ? `${stars(Math.round(p.rating.average))} ${p.rating.average}/5 (${p.rating.count} đánh giá)` : 'Chưa có đánh giá'}</p>
+          <Buy productId={p.id} available={p.available} />
+        </>}
       </div>
     </div>
     <section className="panel stack">

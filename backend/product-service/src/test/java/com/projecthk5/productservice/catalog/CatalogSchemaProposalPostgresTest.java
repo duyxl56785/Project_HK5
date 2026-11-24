@@ -57,7 +57,7 @@ class CatalogSchemaProposalPostgresTest {
              var rows = statement.executeQuery("SELECT string_agg(version, ',' ORDER BY installed_rank)"
                      + " FROM flyway_schema_history WHERE success AND version IS NOT NULL")) {
             assertTrue(rows.next());
-            assertEquals("1,2,3,4,5,6,7,8,9,10", rows.getString(1), "Runtime Flyway history includes promotion V10");
+            assertEquals("1,2,3,4,5,6,7,8,9,10,11", rows.getString(1), "Runtime Flyway history includes variants V11");
         }
         try (Connection connection = connect(); var statement = connection.createStatement();
              var rows = statement.executeQuery("SELECT count(*) FROM flyway_schema_history"
@@ -142,9 +142,9 @@ class CatalogSchemaProposalPostgresTest {
                 .locations("classpath:db/migration").load();
         runtime.validate();
         assertEquals(0, runtime.migrate().migrationsExecuted);
-        assertEquals(java.util.List.of("1", "2", "3", "4", "5", "6", "7", "8", "9", "10"), java.util.Arrays.stream(runtime.info().applied())
+        assertEquals(java.util.List.of("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"), java.util.Arrays.stream(runtime.info().applied())
                 .map(migration -> migration.getVersion().toString()).toList());
-        assertEquals("10", runtime.info().current().getVersion().toString());
+        assertEquals("11", runtime.info().current().getVersion().toString());
     }
 
     @ParameterizedTest
