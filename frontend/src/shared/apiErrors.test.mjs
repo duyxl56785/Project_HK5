@@ -9,6 +9,12 @@ test('known English refusals are shown in Vietnamese', () => {
     'Thông tin chưa hợp lệ. Hãy kiểm tra lại các ô đã nhập.');
 });
 
+test('a refused review does not claim it was already reviewed, since the code also means "not delivered yet"', () => {
+  const text = apiErrorText({ status: 409, code: 'REVIEW_NOT_ALLOWED', message: 'Review requires a purchased product in a delivered order' });
+  assert.doesNotMatch(text, /đã đánh giá/i);
+  assert.match(text, /đã giao/);
+});
+
 test('an unknown English refusal falls back to a Vietnamese message for its status', () => {
   assert.match(apiErrorText({ status: 404, code: 'SOMETHING_NEW', message: 'Thing not found' }), /^Không tìm thấy/);
   assert.match(apiErrorText({ status: 503, code: 'X_UNAVAILABLE', message: 'Unavailable' }), /^Hệ thống đang bận/);

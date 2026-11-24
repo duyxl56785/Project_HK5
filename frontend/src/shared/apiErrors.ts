@@ -19,7 +19,8 @@ const byCode: Readonly<Record<string, string>> = {
   INSUFFICIENT_STOCK: 'Không đủ hàng trong kho.',
   RETURN_ALREADY_OPEN: 'Đơn này đã có yêu cầu trả hàng đang xử lý.',
   RETURN_NOT_ELIGIBLE: 'Đơn này không còn đủ điều kiện trả hàng.',
-  REVIEW_NOT_ALLOWED: 'Bạn đã đánh giá sản phẩm này trong đơn hàng.',
+  // The service sends this code both before delivery and after a review, so the text covers both.
+  REVIEW_NOT_ALLOWED: 'Chưa gửi được nhận xét. Chỉ nhận xét được khi đơn đã giao, và mỗi sản phẩm trong đơn chỉ nhận xét một lần.',
   PROMOTION_OVERLAP: 'Đã có chương trình khuyến mãi khác trùng thời gian.',
   PROMOTION_SCHEDULE_CONFLICT: 'Khung thời gian này đã có chương trình khác.',
   PROMOTION_PRICE_CONFLICT: 'Giá khuyến mãi phải thấp hơn giá gốc.',
