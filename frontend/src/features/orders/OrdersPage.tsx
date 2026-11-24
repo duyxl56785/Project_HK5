@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQuery } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
@@ -7,6 +6,7 @@ import { z } from 'zod';
 import { api } from '../../shared/api';
 import { optionalText } from '../../shared/forms';
 import { Badge, dateTime, ErrorNote, Loaded, money, shortId, useAction } from '../../shared/ui';
+import { CancelStoreOrder } from './CancelStoreOrder';
 import { ReturnRequestPanel } from './ReturnRequestPanel';
 import type { ReturnView } from './ReturnRequestPanel';
 import { formatExactVnd } from '../checkout/checkoutApi';
@@ -65,8 +65,7 @@ function StoreOrderCard({ order, reviewed, existingReturn, returnsLoading, retur
   readonly order: StoreOrder; readonly reviewed: ReadonlySet<string>;
   readonly existingReturn: ReturnView | undefined; readonly returnsLoading: boolean; readonly returnsError: unknown;
 }) {
-  const [reason, setReason] = useState('');
-  const cancel = useAction(() => api(`/api/orders/${order.orderId}/store-orders/${order.id}/cancel`, { method: 'POST', body: { reason } }), ['orders', 'order']);
+  const cancel = useAction((reason: string) => api(`/api/orders/${order.orderId}/store-orders/${order.id}/cancel`, { method: 'POST', body: { reason } }), ['orders', 'order']);
   return <article className="panel stack">
     <div className="row row--between"><h2>{order.storeName ?? 'Cửa hàng'}</h2><Badge value={order.status} /></div>
     {order.statusReason && <p className="muted">Lý do: {order.statusReason}</p>}
@@ -83,10 +82,7 @@ function StoreOrderCard({ order, reviewed, existingReturn, returnsLoading, retur
       <p>Voucher {order.voucherCode}: −{formatExactVnd(order.voucherDiscount)}</p>
     </>}
     <p>Tạm tính: <strong>{order.grossExact ? formatExactVnd(order.grossExact) : money(order.gross)}</strong></p>
-    {order.status === 'PLACED' && <div className="row row--wrap">
-      <input aria-label="Lý do hủy" className="grow" placeholder="Lý do hủy (không bắt buộc)" maxLength={500} value={reason} onChange={(e) => setReason(e.currentTarget.value)} />
-      <button type="button" className="btn btn--danger" disabled={cancel.isPending} onClick={() => cancel.mutate(undefined)}>Hủy đơn của cửa hàng này</button>
-    </div>}
+    {order.status === 'PLACED' && <CancelStoreOrder pending={cancel.isPending} onCancel={(reason) => cancel.mutate(reason)} />}
     <ErrorNote error={cancel.error} />
     <ReturnRequestPanel key={`${order.id}:${existingReturn?.requestId ?? 'none'}:${existingReturn?.status ?? 'none'}`}
       orderId={order.orderId} storeOrderId={order.id}
