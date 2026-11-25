@@ -39,3 +39,16 @@ test('a message the server already wrote in Vietnamese is kept as it is', () => 
   assert.equal(apiErrorText({ status: 429, code: 'RATE_LIMITED', message }), message);
   assert.equal(apiErrorText({ status: 400, code: 'VALIDATION_FAILED', message: 'Lý do hủy quá dài' }), 'Lý do hủy quá dài');
 });
+
+test('an English message with typographic punctuation is not taken for Vietnamese', () => {
+  // Curly quotes, dashes, ellipses and the ₫ sign are outside ASCII but appear in English messages too.
+  assert.match(apiErrorText({ status: 409, code: 'SOMETHING_NEW', message: 'Can’t update – the item changed…' }), /^Dữ liệu vừa thay đổi/);
+  assert.equal(apiErrorText({ status: 400, code: 'VALIDATION_FAILED', message: '“Price” must be at least 1000 ₫' }),
+    'Thông tin chưa hợp lệ. Hãy kiểm tra lại các ô đã nhập.');
+});
+
+test('a Vietnamese message written without tone marks on its first words is still kept', () => {
+  assert.equal(apiErrorText({ status: 400, code: 'VALIDATION_FAILED', message: 'Đơn hàng không hợp lệ' }), 'Đơn hàng không hợp lệ');
+  assert.equal(apiErrorText({ status: 400, code: 'VALIDATION_FAILED', message: 'San pham het hang, vui lòng thử lại' }),
+    'San pham het hang, vui lòng thử lại');
+});

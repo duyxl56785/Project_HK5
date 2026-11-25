@@ -50,8 +50,9 @@ const byStatus = (status: number) =>
   : status >= 500 ? 'Hệ thống đang bận. Vui lòng thử lại sau.'
   : 'Yêu cầu không thành công. Vui lòng thử lại.';
 
-// Any letter outside ASCII (á, ơ, đ…) means the server already answered in Vietnamese.
-const isVietnamese = (message: string) => /[^\x00-\x7F]/.test(message);
+// A Vietnamese letter (đ, or a vowel carrying a Vietnamese tone or vowel mark) means the server already
+// answered in Vietnamese. Curly quotes, dashes, "…" and "₫" are outside ASCII too, but English messages use them.
+const isVietnamese = (message: string) => /[đĐ]|[aeiouyAEIOUY][̛̣̀́̂̃̆̉]/.test(message.normalize('NFD'));
 
 export function apiErrorText({ status, code, message }: { readonly status: number; readonly code: string; readonly message: string }) {
   if (isVietnamese(message)) return message;
