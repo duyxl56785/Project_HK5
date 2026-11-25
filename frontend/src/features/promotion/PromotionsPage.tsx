@@ -57,6 +57,7 @@ function CampaignForm({ admin, path }: { readonly admin: boolean; readonly path:
         <Field label="Kết thúc (giờ Việt Nam)"><input required type="datetime-local" name="endsAt" /></Field>
       </>}
     </div>
+    {admin && <small className="muted">Flash Sale chạy thứ Bảy, 22:00–24:00. Super Sale chạy cả ngày đã chọn.</small>}
     <div className="row row--wrap">
       <button type="submit" className="btn btn--primary" disabled={save.isPending}>Tạo chương trình</button>
     </div>

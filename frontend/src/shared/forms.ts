@@ -1,8 +1,10 @@
 import { z } from 'zod';
 
 /** Rules the browser can check before calling the API. The server stays the authority. */
+// An acronym label such as "SKU" keeps its capitals: "Nhập SKU", not "Nhập sku".
+const lowerLabel = (label: string) => label === label.toUpperCase() ? label : label.toLowerCase();
 export const text = (label: string, max: number) => z.string().trim()
-  .min(1, `Nhập ${label.toLowerCase()}`).max(max, `${label} tối đa ${max} ký tự`);
+  .min(1, `Nhập ${lowerLabel(label)}`).max(max, `${label} tối đa ${max} ký tự`);
 export const optionalText = (label: string, max: number) => z.string().trim().max(max, `${label} tối đa ${max} ký tự`);
 
 /** E.164, as User stores it. */

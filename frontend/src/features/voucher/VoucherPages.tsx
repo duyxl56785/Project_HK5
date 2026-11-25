@@ -5,6 +5,8 @@ import { api } from '../../shared/api';
 import { useAuth } from '../../shared/auth';
 import { toIsoVN, toVNInput as vnInput } from './voucherTime';
 import { Badge, dateTime, ErrorNote, Loaded, money, useAction } from '../../shared/ui';
+import { nameOr } from '../../shared/names';
+import { useStoreNames } from '../../shared/useNames';
 
 type State = 'DRAFT' | 'SCHEDULED' | 'ACTIVE' | 'PAUSED' | 'EXPIRED' | 'CANCELLED';
 interface Voucher {
@@ -181,6 +183,7 @@ export function SellerVouchersPage(){
   </div>;
 }
 function DecisionCard({item}:{readonly item:Request}){
+  const storeNames=useStoreNames();
   const [limit,setLimit]=useState(String(item.requestedLimit));
   const [from,setFrom]=useState(vnInput(item.requestedFrom));
   const [until,setUntil]=useState(vnInput(item.requestedUntil));
@@ -217,7 +220,7 @@ function DecisionCard({item}:{readonly item:Request}){
     }
   }
   return <article className="panel stack">
-    <h2>Store {item.storeId} — Xin {item.requestedLimit} slot</h2>
+    <h2>{nameOr(storeNames,item.storeId,'Cửa hàng')} — Xin {item.requestedLimit} slot</h2>
     <p>{item.reason}</p>
     <small>{dateTime(item.requestedFrom)} đến {dateTime(item.requestedUntil)}</small>
     <label className="field">Số slot duyệt<input type="number" min="21" max={item.requestedLimit}
